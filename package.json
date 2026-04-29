@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rodrigo-barraza/components.git"
+    "url": "git+https://github.com/rodrigo-barraza/components-library.git"
   },
   "keywords": [
     "react",
