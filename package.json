@@ -1,0 +1,57 @@
+{
+  "name": "@rodrigo-barraza/components",
+  "version": "0.1.0",
+  "description": "Shared React component library",
+  "type": "module",
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    },
+    "./styles": "./dist/esm/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "rollup": "^4.44.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.1",
+    "@babel/preset-react": "^7.27.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "eslint": "^9",
+    "prettier": "^3.8.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigo-barraza/components.git"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui"
+  ],
+  "author": "Rodrigo Barraza <hello@rod.dev>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
