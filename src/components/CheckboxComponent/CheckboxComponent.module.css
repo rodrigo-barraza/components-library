@@ -1,0 +1,80 @@
+/* ── CheckboxComponent ────────────────────────────── */
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Hidden native input */
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Visual box */
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 3px;
+  background: var(--select-bg);
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+  flex-shrink: 0;
+}
+
+.box:hover {
+  border-color: color-mix(in srgb, var(--accent-color) 50%, transparent);
+}
+
+.checked {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.checked:hover {
+  background: var(--accent-hover, var(--accent-color));
+  border-color: var(--accent-hover, var(--accent-color));
+}
+
+/* SVG checkmark */
+.checkmark {
+  width: 12px;
+  height: 12px;
+  color: #fff;
+  animation: checkIn 0.15s ease-out;
+}
+
+@keyframes checkIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Label text */
+.label {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
