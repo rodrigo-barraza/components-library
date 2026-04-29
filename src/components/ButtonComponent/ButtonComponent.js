@@ -1,8 +1,17 @@
+"use client";
+
 import { forwardRef } from "react";
 import styles from "./ButtonComponent.module.css";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
- * ButtonComponent — Standardized, themeable button.
+ * ButtonComponent — Standardized, themeable button with optional
+ * spatial audio feedback.
+ *
+ * Audio is enabled when the app is wrapped with
+ * `<ComponentsProvider sound>`. Without the provider, the button
+ * renders silently.
  *
  * Relies on CSS custom properties from the consuming app's global
  * stylesheet for theming (see README for the full list).
@@ -34,6 +43,7 @@ const ButtonComponent = forwardRef(function ButtonComponent(
   },
   ref,
 ) {
+  const { sound } = useComponents();
   const isSubmit = variant === "submit";
 
   const classes = [
@@ -54,8 +64,14 @@ const ButtonComponent = forwardRef(function ButtonComponent(
       className={classes}
       disabled={disabled || loading}
       type={isSubmit ? "submit" : "button"}
-      onMouseEnter={onMouseEnter}
-      onClick={onClick}
+      onMouseEnter={(e) => {
+        if (sound) SoundService.playHoverButton({ event: e });
+        onMouseEnter?.(e);
+      }}
+      onClick={(e) => {
+        if (sound) SoundService.playClickButton({ event: e });
+        onClick?.(e);
+      }}
       {...rest}
     >
       {loading ? (
