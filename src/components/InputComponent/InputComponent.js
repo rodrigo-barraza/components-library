@@ -47,7 +47,7 @@ const InputComponent = forwardRef(function InputComponent(
     <div className={classes}>
       {Icon && (
         <span className={styles.iconSlot}>
-          {typeof Icon === "function" ? (
+          {typeof Icon === "function" || Icon.$$typeof ? (
             <Icon size={size === "sm" ? 12 : size === "lg" ? 18 : 14} />
           ) : (
             Icon
