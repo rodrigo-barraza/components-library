@@ -8,6 +8,7 @@ export { default as CollapsibleBlockComponent } from "./components/CollapsibleBl
 export { default as CopyButtonComponent } from "./components/CopyButtonComponent/CopyButtonComponent.js";
 export { default as CountBadgeComponent } from "./components/CountBadgeComponent/CountBadgeComponent.js";
 export { default as DatePickerComponent } from "./components/DatePickerComponent/DatePickerComponent.js";
+export { default as DiscordChatComponent } from "./components/DiscordChatComponent/DiscordChatComponent.js";
 export { default as EmptyStateComponent } from "./components/EmptyStateComponent/EmptyStateComponent.js";
 export {
   default as FormGroupComponent,
