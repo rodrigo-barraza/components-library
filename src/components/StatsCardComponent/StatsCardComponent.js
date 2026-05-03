@@ -5,7 +5,7 @@ import styles from "./StatsCardComponent.module.css";
 /**
  * StatsCardComponent — Metric display card with icon, value, and optional loading skeleton.
  *
- * Merged from retina-client (loading skeleton, variant colors) and
+ * Merged from prism-client (loading skeleton, variant colors) and
  * portal-client (CSS accent color, glow bar, animation delay).
  *
  * @param {string} label — Metric label

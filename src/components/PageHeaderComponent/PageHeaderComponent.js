@@ -6,7 +6,7 @@ import styles from "./PageHeaderComponent.module.css";
 /**
  * PageHeaderComponent — Unified page header with optional back navigation.
  *
- * Merges the retina (sticky, blur, back arrow) and portal (simple flex)
+ * Merges the prism-client (sticky, blur, back arrow) and portal (simple flex)
  * variants. The `sticky` prop controls whether the header sticks to the top.
  *
  * @param {string} title
