@@ -17,6 +17,7 @@ export {
 export { default as IconButtonComponent } from "./components/IconButtonComponent/IconButtonComponent.js";
 export { default as InputComponent } from "./components/InputComponent/InputComponent.js";
 export { default as ModalComponent } from "./components/ModalComponent/ModalComponent.js";
+export { default as NavigationSidebarComponent } from "./components/NavigationSidebarComponent/NavigationSidebarComponent.js";
 export { default as PageHeaderComponent } from "./components/PageHeaderComponent/PageHeaderComponent.js";
 export { default as PaginationComponent } from "./components/PaginationComponent/PaginationComponent.js";
 export { default as SearchInputComponent } from "./components/SearchInputComponent/SearchInputComponent.js";

@@ -1,0 +1,141 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import * as Icons from "lucide-react";
+import TooltipComponent from "../TooltipComponent/TooltipComponent";
+import styles from "./NavigationSidebarComponent.module.css";
+
+/**
+ * Generic Navigation Sidebar Component
+ * Supports collapsed state, theming, custom links, and icon strings from lucide-react.
+ */
+export default function NavigationSidebarComponent({
+  brandIcon, // string (url) or ReactNode
+  brandLabel, // string
+  items = [], // Array<{ id|key, label, href?, icon }>
+  activeItem, // matches id or key or href
+  onNavigate, // function(id, item)
+  theme = "light",
+  onToggleTheme,
+  LinkComponent, // Custom Next/Link component, falls back to native <a> if href exists, otherwise <button>
+  collapsible = true,
+  defaultCollapsed = false,
+  bottomActions, // ReactNode for extra footer actions
+}) {
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const [navReady, setNavReady] = useState(false);
+
+  useEffect(() => {
+    requestAnimationFrame(() => setNavReady(true));
+  }, []);
+
+  const toggleCollapse = () => setCollapsed((prev) => !prev);
+  const isDark = theme === "dark";
+
+  return (
+    <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ""} ${!navReady ? styles.noTransition : ""}`}>
+      <aside className={styles.sidebar}>
+        
+        {/* Brand */}
+        {(brandIcon || brandLabel) && (
+          <div className={styles.brand}>
+            {typeof brandIcon === "string" ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={brandIcon} alt={brandLabel || "Brand"} className={styles.brandIconImg} />
+            ) : brandIcon ? (
+              <div className={styles.brandIconNode}>{brandIcon}</div>
+            ) : null}
+            {brandLabel && <span className={styles.brandLabel}>{brandLabel}</span>}
+            {collapsible && (
+              <button className={styles.collapseBtn} onClick={toggleCollapse} title="Toggle Sidebar">
+                <Icons.ChevronsLeft size={16} />
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Nav List */}
+        <nav className={styles.navList}>
+          {items.map((item) => {
+            const id = item.id || item.key;
+            const IconComponent = typeof item.icon === "string" ? Icons[item.icon] : item.icon;
+            
+            // Check if active: matches provided activeItem ID or matches href path start
+            const isActive = activeItem === id || (item.href && activeItem && activeItem.startsWith(item.href));
+
+            const content = (
+              <>
+                {IconComponent && <IconComponent size={18} strokeWidth={1.8} className={styles.navIcon} />}
+                <span className={styles.navLabel}>{item.label}</span>
+                {isActive && <div className={styles.activeIndicator} />}
+              </>
+            );
+
+            const linkProps = {
+              className: `${styles.navItem} ${isActive ? styles.active : ""}`,
+              onClick: (e) => {
+                if (onNavigate) {
+                  // If we use Next Link, we still want to call onNavigate if provided
+                  onNavigate(id, item);
+                }
+              }
+            };
+
+            let LinkElement;
+            if (LinkComponent && item.href) {
+              LinkElement = (
+                <LinkComponent href={item.href} {...linkProps}>
+                  {content}
+                </LinkComponent>
+              );
+            } else if (item.href) {
+              LinkElement = (
+                <a href={item.href} {...linkProps} onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate(id, item);
+                  }
+                }}>
+                  {content}
+                </a>
+              );
+            } else {
+              LinkElement = (
+                <button type="button" {...linkProps}>
+                  {content}
+                </button>
+              );
+            }
+
+            return collapsible ? (
+              <TooltipComponent key={id} label={item.label} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
+                {LinkElement}
+              </TooltipComponent>
+            ) : (
+              <React.Fragment key={id}>
+                {LinkElement}
+              </React.Fragment>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Actions */}
+        <div className={styles.bottomActions}>
+          {bottomActions}
+          {onToggleTheme && (
+            <TooltipComponent label={isDark ? "Light Mode" : "Dark Mode"} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
+              <button
+                className={styles.themeToggle}
+                onClick={onToggleTheme}
+                title={`Switch to ${isDark ? "light" : "dark"} mode`}
+              >
+                {isDark ? <Icons.Sun size={18} strokeWidth={1.8} className={styles.navIcon} /> : <Icons.Moon size={18} strokeWidth={1.8} className={styles.navIcon} />}
+                <span className={styles.themeLabel}>{isDark ? "Light" : "Dark"}</span>
+              </button>
+            </TooltipComponent>
+          )}
+        </div>
+      </aside>
+    </div>
+  );
+}
