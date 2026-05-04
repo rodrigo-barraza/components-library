@@ -11,6 +11,8 @@
   transition: all var(--transition-fast);
   white-space: nowrap;
   line-height: 1;
+  padding: 8px 16px;
+  font-size: 13px;
 }
 
 .btn:disabled {
@@ -19,28 +21,6 @@
   border-color: var(--border-color);
   cursor: not-allowed;
   box-shadow: none;
-}
-
-/* Sizes */
-.xs {
-  padding: 4px 10px;
-  font-size: 11px;
-  gap: 4px;
-}
-
-.sm {
-  padding: 5px 10px;
-  font-size: 12px;
-}
-
-.md {
-  padding: 8px 16px;
-  font-size: 13px;
-}
-
-.lg {
-  padding: 10px 20px;
-  font-size: 14px;
 }
 
 /* Variants */

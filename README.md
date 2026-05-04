@@ -26,7 +26,7 @@ A standardized, themeable button with multiple variants, sizes, and states.
 import { ButtonComponent } from "@rodrigo-barraza/components";
 import { Send } from "lucide-react";
 
-<ButtonComponent variant="primary" size="md" icon={Send}>
+<ButtonComponent variant="primary" icon={Send}>
   Send Message
 </ButtonComponent>
 ```
