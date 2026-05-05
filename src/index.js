@@ -49,3 +49,16 @@ export {
   formatDateDisplay,
   getActiveDatePreset,
 } from "./utils/datePresets.js";
+
+// ── Hooks ───────────────────────────────────────────────
+export { default as useLocalStorage } from "./hooks/useLocalStorage.js";
+export { default as usePolling } from "./hooks/usePolling.js";
+export { default as useFetch } from "./hooks/useFetch.js";
+export { default as useCrud } from "./hooks/useCrud.js";
+export { default as useDateRange } from "./hooks/useDateRange.js";
+export { default as useSetToggle } from "./hooks/useSetToggle.js";
+export { default as useDebounce } from "./hooks/useDebounce.js";
+export { default as useClipboard } from "./hooks/useClipboard.js";
+export { default as useClickOutside } from "./hooks/useClickOutside.js";
+export { default as useKeyboard } from "./hooks/useKeyboard.js";
+export { default as useMediaQuery } from "./hooks/useMediaQuery.js";
