@@ -33,6 +33,8 @@ export { default as TextAreaComponent } from "./components/TextAreaComponent/Tex
 export { default as ToastComponent, useToast } from "./components/ToastComponent/ToastComponent.js";
 export { default as ToggleComponent } from "./components/ToggleComponent/ToggleComponent.js";
 export { default as TooltipComponent } from "./components/TooltipComponent/TooltipComponent.js";
+export { default as LoadingStateComponent } from "./components/LoadingStateComponent/LoadingStateComponent.js";
+export { default as VisibilityBadgeComponent } from "./components/VisibilityBadgeComponent/VisibilityBadgeComponent.js";
 
 // ── Providers ───────────────────────────────────────────
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
