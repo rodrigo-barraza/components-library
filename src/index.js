@@ -36,6 +36,7 @@ export { default as TooltipComponent } from "./components/TooltipComponent/Toolt
 
 // ── Providers ───────────────────────────────────────────
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
+export { ThemeProvider, useTheme } from "./components/ThemeProvider/ThemeProvider.js";
 
 // ── Services ────────────────────────────────────────────
 export { default as SoundService } from "./services/SoundService.js";
