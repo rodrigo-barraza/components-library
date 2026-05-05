@@ -44,7 +44,11 @@
 }
 
 .wrapper.collapsed .collapseBtn {
-  display: none;
+  opacity: 1;
+}
+
+.wrapper.collapsed .collapseBtn svg {
+  transform: scaleX(-1);
 }
 
 .wrapper.collapsed .navItem {
@@ -55,6 +59,10 @@
 .wrapper.collapsed .themeToggle {
   justify-content: center;
   padding: 10px 0;
+}
+
+.wrapper.collapsed .bottomActions span {
+  display: none;
 }
 
 /* ── Brand ── */

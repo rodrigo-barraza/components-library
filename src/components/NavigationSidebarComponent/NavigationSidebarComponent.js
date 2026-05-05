@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as Icons from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent";
 import styles from "./NavigationSidebarComponent.module.css";
 
 /**
  * Generic Navigation Sidebar Component
- * Supports collapsed state, theming, custom links, and icon strings from lucide-react.
+ * Supports collapsed state with localStorage persistence, theming,
+ * custom links, and icon strings from lucide-react.
  */
 export default function NavigationSidebarComponent({
   brandIcon, // string (url) or ReactNode
@@ -20,16 +21,48 @@ export default function NavigationSidebarComponent({
   LinkComponent, // Custom Next/Link component, falls back to native <a> if href exists, otherwise <button>
   collapsible = true,
   defaultCollapsed = false,
+  storageKey, // string — localStorage key for persisting collapsed state (e.g. "ledger-nav-collapsed")
+  onCollapse, // function(collapsed: boolean) — called when collapsed state changes
   bottomActions, // ReactNode for extra footer actions
 }) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [navReady, setNavReady] = useState(false);
 
+  // Restore collapsed state from localStorage on mount
   useEffect(() => {
-    requestAnimationFrame(() => setNavReady(true));
-  }, []);
+    if (!collapsible || !storageKey) return;
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored !== null) {
+        setCollapsed(stored === "true");
+      }
+    // eslint-disable-next-line no-empty
+    } catch {}
+    // Enable transitions after first paint (double-RAF prevents FOUC)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setNavReady(true));
+    });
+  }, [collapsible, storageKey]);
 
-  const toggleCollapse = () => setCollapsed((prev) => !prev);
+  // Fallback: enable transitions if no storageKey
+  useEffect(() => {
+    if (storageKey) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setNavReady(true));
+    });
+  }, [storageKey]);
+
+  const toggleCollapse = useCallback(() => {
+    setCollapsed((prev) => {
+      const next = !prev;
+      if (storageKey) {
+        // eslint-disable-next-line no-empty
+        try { localStorage.setItem(storageKey, String(next)); } catch {}
+      }
+      onCollapse?.(next);
+      return next;
+    });
+  }, [storageKey, onCollapse]);
   const isDark = theme === "dark";
 
   return (
@@ -73,9 +106,8 @@ export default function NavigationSidebarComponent({
 
             const linkProps = {
               className: `${styles.navItem} ${isActive ? styles.active : ""}`,
-              onClick: (e) => {
+              onClick: () => {
                 if (onNavigate) {
-                  // If we use Next Link, we still want to call onNavigate if provided
                   onNavigate(id, item);
                 }
               }
