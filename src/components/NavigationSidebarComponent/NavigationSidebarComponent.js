@@ -63,7 +63,12 @@ export default function NavigationSidebarComponent({
       return next;
     });
   }, [storageKey, onCollapse]);
-  const isDark = theme === "dark";
+  const THEME_META = {
+    dark:     { nextLabel: "Light",    NextIcon: Icons.Sun,      title: "Switch to light mode" },
+    light:    { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
+    tropical: { nextLabel: "Dark",     NextIcon: Icons.Moon,     title: "Switch to dark mode" },
+  };
+  const themeMeta = THEME_META[theme] || THEME_META.dark;
 
   return (
     <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ""} ${!navReady ? styles.noTransition : ""}`}>
@@ -155,14 +160,14 @@ export default function NavigationSidebarComponent({
         <div className={styles.bottomActions}>
           {bottomActions}
           {onToggleTheme && (
-            <TooltipComponent label={isDark ? "Light Mode" : "Dark Mode"} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
+             <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
               <button
                 className={styles.themeToggle}
                 onClick={onToggleTheme}
-                title={`Switch to ${isDark ? "light" : "dark"} mode`}
+                title={themeMeta.title}
               >
-                {isDark ? <Icons.Sun size={18} strokeWidth={1.8} className={styles.navIcon} /> : <Icons.Moon size={18} strokeWidth={1.8} className={styles.navIcon} />}
-                <span className={styles.themeLabel}>{isDark ? "Light" : "Dark"}</span>
+                <themeMeta.NextIcon size={18} strokeWidth={1.8} className={styles.navIcon} />
+                <span className={styles.themeLabel}>{themeMeta.nextLabel}</span>
               </button>
             </TooltipComponent>
           )}

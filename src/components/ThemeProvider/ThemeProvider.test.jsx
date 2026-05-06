@@ -54,13 +54,17 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("toggles between dark and light", async () => {
+  it("toggles through dark → light → tropical", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("light");
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("tropical");
+    expect(document.documentElement.getAttribute("data-theme")).toBe("tropical");
 
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("dark");
@@ -110,20 +114,35 @@ describe("ThemeProvider", () => {
     expect(screen.getByTestId("theme").textContent).toBe("dark");
   });
 
+  it("setTheme accepts tropical via toggle cycle", async () => {
+    const user = userEvent.setup();
+    renderWithTheme();
+
+    // Cycle dark → light → tropical
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("light");
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("tropical");
+    expect(document.documentElement.getAttribute("data-theme")).toBe("tropical");
+  });
+
   it("cycles through custom multi-theme list", async () => {
     const user = userEvent.setup();
     renderWithTheme({
-      themes: ["dark", "light", "midnight"],
+      themes: ["dark", "light", "midnight", "tropical"],
       defaultTheme: "dark",
     });
 
-    expect(screen.getByTestId("themes").textContent).toBe("dark,light,midnight");
+    expect(screen.getByTestId("themes").textContent).toBe("dark,light,midnight,tropical");
 
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("light");
 
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("midnight");
+
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("tropical");
 
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("dark");

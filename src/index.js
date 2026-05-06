@@ -34,6 +34,7 @@ export { default as ToastComponent, useToast } from "./components/ToastComponent
 export { default as ToggleComponent } from "./components/ToggleComponent/ToggleComponent.js";
 export { default as TooltipComponent } from "./components/TooltipComponent/TooltipComponent.js";
 export { default as LoadingStateComponent } from "./components/LoadingStateComponent/LoadingStateComponent.js";
+export { default as ResponseTimeBadgeComponent } from "./components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.js";
 export { default as VisibilityBadgeComponent } from "./components/VisibilityBadgeComponent/VisibilityBadgeComponent.js";
 
 // ── Providers ───────────────────────────────────────────
