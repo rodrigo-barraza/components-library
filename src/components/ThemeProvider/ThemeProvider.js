@@ -16,7 +16,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  * names. Toggle cycles through them in order; `setTheme` sets directly.
  *
  * @example
- *   import { ThemeProvider, useTheme } from "@rodrigo-barraza/components";
+ *   import { ThemeProvider, useTheme } from "@rodrigo-barraza/components-library";
  *
  *   // In layout:
  *   <ThemeProvider storageKey="portal:theme" defaultTheme="dark">

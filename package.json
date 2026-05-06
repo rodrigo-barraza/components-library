@@ -1,5 +1,5 @@
 {
-  "name": "@rodrigo-barraza/components",
+  "name": "@rodrigo-barraza/components-library",
   "version": "0.1.0",
   "description": "Shared React component library",
   "type": "module",

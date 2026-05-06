@@ -3,13 +3,13 @@
 import { createContext, useContext } from "react";
 
 /**
- * ComponentsContext — Global configuration for @rodrigo-barraza/components.
+ * ComponentsContext — Global configuration for @rodrigo-barraza/components-library.
  *
  * Wrap your app with <ComponentsProvider> to enable features like
  * spatial audio feedback on interactive components.
  *
  * @example
- *   import { ComponentsProvider } from "@rodrigo-barraza/components";
+ *   import { ComponentsProvider } from "@rodrigo-barraza/components-library";
  *
  *   <ComponentsProvider sound>
  *     <App />

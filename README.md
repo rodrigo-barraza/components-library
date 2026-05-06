@@ -1,11 +1,11 @@
-# @rodrigo-barraza/components
+# @rodrigo-barraza/components-library
 
 Shared React component library for the Sun ecosystem. Provides a standardized set of UI primitives, layout components, hooks, and providers used across all client applications (`prism-client`, `portal-client`, `ledger-client`, `lights-client`, `messages-client`, `clock-crew-client`).
 
 ## Installation
 
 ```bash
-npm install @rodrigo-barraza/components
+npm install @rodrigo-barraza/components-library
 ```
 
 **Peer dependencies:** `react >= 18.0.0`, `react-dom >= 18.0.0`, `lucide-react >= 0.300.0`
@@ -15,13 +15,13 @@ npm install @rodrigo-barraza/components
 Import the component styles in your app's root layout or entry point:
 
 ```js
-import "@rodrigo-barraza/components/styles";
+import "@rodrigo-barraza/components-library/styles";
 ```
 
 Wrap your app with the providers:
 
 ```jsx
-import { ThemeProvider, ComponentsProvider } from "@rodrigo-barraza/components";
+import { ThemeProvider, ComponentsProvider } from "@rodrigo-barraza/components-library";
 
 function RootLayout({ children }) {
   return (
