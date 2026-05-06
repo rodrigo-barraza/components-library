@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useEffect, useState } from "react";
+import { useCallback, useRef, useEffect, useState, isValidElement } from "react";
 import * as Icons from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
@@ -47,11 +47,18 @@ export default function NavigationRailComponent({
   const destinationsRef = useRef(null);
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
-  // Resolve a Lucide icon from string name or pass ReactComponent through
+  // Resolve a Lucide icon from string name, React component, or rendered JSX element
   const resolveIcon = useCallback((icon) => {
     if (!icon) return null;
-    if (typeof icon === "string") return Icons[icon] || null;
-    return icon;
+    // Already a rendered React element — pass through directly
+    if (isValidElement(icon)) return { element: icon };
+    // String lookup in lucide-react
+    if (typeof icon === "string") {
+      const Comp = Icons[icon] || null;
+      return Comp ? { Component: Comp } : null;
+    }
+    // Component reference (function or class)
+    return { Component: icon };
   }, []);
 
   // Keyboard navigation within the destination group
@@ -125,7 +132,7 @@ export default function NavigationRailComponent({
       >
         {items.map((item, index) => {
           const id = item.id || item.key;
-          const IconComp = resolveIcon(item.icon);
+          const resolvedIcon = resolveIcon(item.icon);
           const isActive = activeItem === id;
 
           const handleClick = () => {
@@ -142,13 +149,15 @@ export default function NavigationRailComponent({
               >
                 {/* State layer for hover/focus/press */}
                 <span className={styles.stateLayer} />
-                {IconComp && (
-                  <IconComp
+                {resolvedIcon?.element ? (
+                  <span className={styles.icon}>{resolvedIcon.element}</span>
+                ) : resolvedIcon?.Component ? (
+                  <resolvedIcon.Component
                     size={24}
                     strokeWidth={isActive ? 2 : 1.6}
                     className={styles.icon}
                   />
-                )}
+                ) : null}
                 {/* Badge overlay */}
                 {item.badge != null && (
                   <span className={styles.badgeOverlay}>

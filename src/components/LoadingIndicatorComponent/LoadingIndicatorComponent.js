@@ -26,6 +26,7 @@ import styles from "./LoadingIndicatorComponent.module.css";
  * @param {"circular"|"linear"} [variant="circular"]  — Indicator shape
  * @param {"indeterminate"|"determinate"} [mode="indeterminate"] — Animation mode
  * @param {number}  [value=0]              — Progress 0–100 (determinate only)
+ * @param {number|null} [buffer=null]      — 0–100 buffer fill (linear determinate only)
  * @param {"small"|"medium"|"large"} [size="medium"] — Circular size preset
  * @param {"thin"|"default"|"thick"} [trackSize="default"] — Linear track height
  * @param {"primary"|"secondary"|"tertiary"|"error"|"inherit"} [color="primary"]
@@ -39,6 +40,7 @@ export default function LoadingIndicatorComponent({
   variant = "circular",
   mode = "indeterminate",
   value = 0,
+  buffer = null,
   size = "medium",
   trackSize = "default",
   color = "primary",
@@ -71,6 +73,7 @@ export default function LoadingIndicatorComponent({
     <LinearIndicator
       isIndeterminate={isIndeterminate}
       value={clampedValue}
+      buffer={buffer}
       trackSize={trackSize}
       color={color}
       label={label}
@@ -200,6 +203,7 @@ function CircularIndicator({
 function LinearIndicator({
   isIndeterminate,
   value,
+  buffer = null,
   trackSize,
   color,
   label,
@@ -247,8 +251,15 @@ function LinearIndicator({
             <div className={`${styles.linearIndicator} ${styles.linearBar2}`} />
           </>
         ) : (
-          /* Determinate: single bar + optional stop indicator */
+          /* Determinate: single bar + optional buffer + stop indicator */
           <>
+            {/* Buffer layer (e.g. media buffering) — shown behind active fill */}
+            {buffer !== null && buffer !== undefined && (
+              <div
+                className={styles.linearBuffer}
+                style={{ width: `${clamp(buffer)}%` }}
+              />
+            )}
             <div
               className={styles.linearIndicator}
               style={{ width: `${clamp(value)}%` }}

@@ -29,7 +29,6 @@ export { default as NavigationRailComponent } from "./components/NavigationRailC
 export { default as NavigationSidebarComponent } from "./components/NavigationSidebarComponent/NavigationSidebarComponent.js";
 export { default as PageHeaderComponent } from "./components/PageHeaderComponent/PageHeaderComponent.js";
 export { default as PaginationComponent } from "./components/PaginationComponent/PaginationComponent.js";
-export { default as ProgressIndicatorComponent } from "./components/ProgressIndicatorComponent/ProgressIndicatorComponent.js";
 export { default as RadioComponent } from "./components/RadioComponent/RadioComponent.js";
 export { default as SearchInputComponent } from "./components/SearchInputComponent/SearchInputComponent.js";
 export { default as SelectComponent } from "./components/SelectComponent/SelectComponent.js";

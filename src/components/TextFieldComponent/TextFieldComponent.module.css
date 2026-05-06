@@ -211,6 +211,11 @@
   left: 12px;
 }
 
+/* Populated (unfocused) label — on-surface-variant for legibility */
+.populated:not(.focused) .label {
+  color: var(--text-secondary, #49454f);
+}
+
 /* Focused label color */
 .focused .label {
   color: var(--accent-color, #6750a4);

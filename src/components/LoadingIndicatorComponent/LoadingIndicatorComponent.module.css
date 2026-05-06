@@ -148,6 +148,22 @@
   will-change: width, transform;
 }
 
+/* ── Buffer layer (e.g. media loading) ───────────────── */
+/* Sits behind active indicator at reduced opacity         */
+
+.linearBuffer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  opacity: 0.24;
+  z-index: 0;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+}
+
 /* ── Stop indicator — M3 end-stop dot ────────────────── */
 /* Visible in determinate mode to mark the end of fill    */
 
