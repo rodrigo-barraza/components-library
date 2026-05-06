@@ -1,0 +1,304 @@
+/* ═══════════════════════════════════════════════════════════
+   NavigationRailComponent — Material Design 3 Navigation Rail
+   
+   M3 Spec Reference:
+   • Rail width: 80px
+   • Active indicator: 56×32 pill, secondaryContainer fill
+   • Icon: 24px, on-secondary-container when active
+   • Label: label-medium (12px / 500 weight)
+   • Destination height: 56px (indicator) + label
+   • Spacing between destinations: 12px (M3) → we use 4px gap
+     because label takes vertical space
+   • State layers: hover 8%, focus 10%, pressed 10%
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Rail Container ─────────────────────────────────────── */
+
+.rail {
+  width: 80px;
+  min-width: 80px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-secondary, #1e1e1e);
+  border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  padding: 0;
+  position: relative;
+  z-index: 100;
+  flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Menu Slot ──────────────────────────────────────────── */
+
+.menuSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+/* ── FAB Slot ───────────────────────────────────────────── */
+
+.fabSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0 4px;
+  flex-shrink: 0;
+}
+
+/* ── Destinations Container ─────────────────────────────── */
+
+.destinations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.align-top {
+  margin-bottom: auto;
+}
+
+.align-center {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* ── Single Destination ─────────────────────────────────── */
+
+.destinationWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.destination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+.destination:focus-visible {
+  outline: 2px solid var(--accent-color, #6366f1);
+  outline-offset: -2px;
+  border-radius: 16px;
+}
+
+.destinationInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  width: 100%;
+}
+
+/* ── Active Indicator Pill ──────────────────────────────── */
+
+.indicatorPill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  transition:
+    width 0.3s cubic-bezier(0.2, 0, 0, 1),
+    background-color 0.2s ease;
+  will-change: width;
+  overflow: hidden;
+}
+
+.indicatorPill.indicatorActive {
+  width: 56px;
+  background: var(--secondary-container, rgba(99, 102, 241, 0.16));
+}
+
+/* ── State Layer (hover / focus / pressed) ──────────────── */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: transparent;
+  transition: background-color 0.15s ease;
+  pointer-events: none;
+}
+
+.destination:hover .stateLayer {
+  background: var(--on-surface-hover, rgba(255, 255, 255, 0.08));
+}
+
+.destination:focus-visible .stateLayer {
+  background: var(--on-surface-focus, rgba(255, 255, 255, 0.10));
+}
+
+.destination:active .stateLayer {
+  background: var(--on-surface-pressed, rgba(255, 255, 255, 0.10));
+}
+
+/* Active destination — state layers use on-secondary-container */
+.destination.active:hover .stateLayer {
+  background: var(--on-secondary-container-hover, rgba(99, 102, 241, 0.08));
+}
+
+.destination.active:focus-visible .stateLayer {
+  background: var(--on-secondary-container-focus, rgba(99, 102, 241, 0.10));
+}
+
+.destination.active:active .stateLayer {
+  background: var(--on-secondary-container-pressed, rgba(99, 102, 241, 0.10));
+}
+
+/* ── Icon ───────────────────────────────────────────────── */
+
+.icon {
+  position: relative;
+  z-index: 1;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.destination.active .icon {
+  color: var(--on-secondary-container, var(--accent-color, #818cf8));
+}
+
+.destination:hover .icon {
+  color: var(--text-primary, #fff);
+}
+
+.destination.active:hover .icon {
+  color: var(--on-secondary-container, var(--accent-color, #818cf8));
+}
+
+/* ── Label ──────────────────────────────────────────────── */
+
+.label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72px;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.label.labelActive {
+  color: var(--on-secondary-container, var(--accent-color, #818cf8));
+  font-weight: 600;
+}
+
+.destination:hover .label {
+  color: var(--text-primary, #fff);
+}
+
+.destination.active:hover .label {
+  color: var(--on-secondary-container, var(--accent-color, #818cf8));
+}
+
+/* ── Badge Overlay ──────────────────────────────────────── */
+
+.badgeOverlay {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.badgeDot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--error-color, #f87171);
+}
+
+/* ── Bottom Slot ────────────────────────────────────────── */
+
+.bottomSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 0;
+  margin-top: auto;
+  width: 100%;
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+}
+
+/* ── Active Indicator entrance animation ────────────────── */
+
+@keyframes pillExpand {
+  from {
+    width: 32px;
+    background-color: transparent;
+  }
+  to {
+    width: 56px;
+    background-color: var(--secondary-container, rgba(99, 102, 241, 0.16));
+  }
+}
+
+.indicatorPill.indicatorActive {
+  animation: pillExpand 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* ── Ripple-like press feedback ─────────────────────────── */
+
+.destination::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-color, rgba(99, 102, 241, 0.2));
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0, 0, 1),
+    opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.destination:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition:
+    transform 0.15s cubic-bezier(0.2, 0, 0, 1),
+    opacity 0.05s ease;
+}

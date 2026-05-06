@@ -1,0 +1,351 @@
+/* ══════════════════════════════════════════════════════════════════════
+   NavigationDrawerComponent — Material Design 3
+   Two types: standard (persistent) and modal (overlay + scrim)
+   Specs: https://m3.material.io/components/navigation-drawer/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Scrim — modal variant backdrop ──────────────────────────────── */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgb(0 0 0 / 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms cubic-bezier(0.2, 0, 0, 1),
+    visibility 0s 300ms;
+}
+
+.scrim.open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 300ms cubic-bezier(0.2, 0, 0, 1),
+    visibility 0s 0s;
+}
+
+/* ── Drawer container ────────────────────────────────────────────── */
+/* M3 spec: 360px standard width, 16px corner radius (end side)    */
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: calc(100vw - 56px);
+  height: 100dvh;
+  background: var(--bg-secondary, #1e1e1e);
+  color: var(--text-primary, #e0e0e0);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: width 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Standard variant ────────────────────────────────────────────── */
+/* Persistent in-flow drawer with end-side border                   */
+
+.standard {
+  border-right: 1px solid var(--border-color, #333);
+  position: relative;
+  z-index: 1;
+}
+
+.standard.closed {
+  width: 0;
+  min-width: 0;
+  border-right: none;
+  overflow: hidden;
+}
+
+/* ── Modal variant ───────────────────────────────────────────────── */
+/* Overlays content with elevation, rounded end corners              */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  border-radius: 0 16px 16px 0;
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.30),
+    0 4px 8px 3px rgb(0 0 0 / 0.15);
+  transform: translateX(-100%);
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+}
+
+.modal.open {
+  transform: translateX(0);
+}
+
+/* ── RTL support ─────────────────────────────────────────────────── */
+
+[dir="rtl"] .modal {
+  left: auto;
+  right: 0;
+  border-radius: 16px 0 0 16px;
+  transform: translateX(100%);
+}
+
+[dir="rtl"] .modal.open {
+  transform: translateX(0);
+}
+
+[dir="rtl"] .standard {
+  border-right: none;
+  border-left: 1px solid var(--border-color, #333);
+}
+
+/* ── end anchor variant ──────────────────────────────────────────── */
+
+.anchorEnd {
+  right: 0;
+  left: auto;
+  border-radius: 16px 0 0 16px;
+  transform: translateX(100%);
+}
+
+.anchorEnd.open {
+  transform: translateX(0);
+}
+
+/* ── Headline ────────────────────────────────────────────────────── */
+/* M3 spec: title-small, 28dp height, 28px start padding           */
+
+.headline {
+  padding: 28px 28px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #e0e0e0);
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+/* ── Content scrollable area ─────────────────────────────────────── */
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted, #555) transparent;
+}
+
+.content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--text-muted, #555);
+  border-radius: 4px;
+}
+
+/* ── Section header ──────────────────────────────────────────────── */
+/* M3 spec: title-small, 56dp height (includes padding)            */
+
+.sectionHeader {
+  padding: 18px 16px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted, #888);
+  user-select: none;
+}
+
+/* ── Divider ─────────────────────────────────────────────────────── */
+
+.divider {
+  height: 1px;
+  margin: 4px 16px;
+  background: var(--border-color, #333);
+  flex-shrink: 0;
+}
+
+/* ── Navigation item ─────────────────────────────────────────────── */
+/* M3 spec: 56dp height, 28dp start padding, end-capped indicator  */
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 24px 0 16px;
+  border-radius: 28px;
+  color: var(--text-secondary, #aaa);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition:
+    background 150ms cubic-bezier(0.2, 0, 0, 1),
+    color 150ms cubic-bezier(0.2, 0, 0, 1);
+  isolation: isolate;
+}
+
+/* ── State layer ─────────────────────────────────────────────────── */
+/* M3 spec: on-surface state layer overlay for interaction feedback */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--text-primary, #fff);
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  z-index: -1;
+}
+
+.item:hover .stateLayer {
+  opacity: 0.08;
+}
+
+.item:focus-visible .stateLayer {
+  opacity: 0.1;
+}
+
+.item:active .stateLayer {
+  opacity: 0.12;
+}
+
+/* ── Active state ────────────────────────────────────────────────── */
+/* M3 spec: secondary-container background, on-secondary-container text */
+
+.item.active {
+  background: var(--accent-subtle, rgba(99, 102, 241, 0.12));
+  color: var(--accent-color, #818cf8);
+  font-weight: 600;
+}
+
+.item.active .stateLayer {
+  background: var(--accent-color, #818cf8);
+}
+
+.item.active:hover .stateLayer {
+  opacity: 0.08;
+}
+
+.item.active:active .stateLayer {
+  opacity: 0.12;
+}
+
+.item.active .itemIcon {
+  color: var(--accent-color, #818cf8);
+}
+
+/* ── Focus ring ──────────────────────────────────────────────────── */
+
+.item:focus-visible {
+  outline: 2px solid var(--accent-color, #818cf8);
+  outline-offset: 2px;
+}
+
+/* ── Disabled ────────────────────────────────────────────────────── */
+
+.item.disabled {
+  color: var(--text-muted, #666);
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+/* ── Icon ────────────────────────────────────────────────────────── */
+
+.itemIcon {
+  flex-shrink: 0;
+  color: var(--text-secondary, #aaa);
+  transition: color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Label ───────────────────────────────────────────────────────── */
+
+.itemLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Badge ───────────────────────────────────────────────────────── */
+/* M3 spec: large badge at trailing end of the item                */
+
+.itemBadge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary, #aaa);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.item.active .itemBadge {
+  color: var(--accent-color, #818cf8);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+
+.footer {
+  padding: 12px;
+  border-top: 1px solid var(--border-color, #333);
+  flex-shrink: 0;
+}
+
+/* ── Wrapper for standard layout ─────────────────────────────────── */
+
+.wrapper {
+  display: flex;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+/* ── Animation — suppress during initial render ──────────────────── */
+
+.noTransition,
+.noTransition * {
+  transition-duration: 0s !important;
+}
+
+/* ── Slide-in entrance ───────────────────────────────────────────── */
+
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(-16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.standard:not(.closed) .content {
+  animation: drawerSlideIn 300ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+/* ── Responsive — modal on small viewports ───────────────────────── */
+
+@media (max-width: 599px) {
+  .drawer {
+    width: min(360px, calc(100vw - 56px));
+  }
+}

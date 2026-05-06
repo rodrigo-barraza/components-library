@@ -1,0 +1,183 @@
+/* ══════════════════════════════════════════════════════════════════════
+   BottomAppBarComponent — Material Design 3 Bottom App Bar
+   Displays navigation actions and an optional FAB at the bottom.
+
+   M3 spec:
+     • 80dp height
+     • Up to 4 trailing icon actions (left-aligned)
+     • Optional FAB docked on the right
+     • Surface color with elevation 2
+     • Hides on scroll down, reveals on scroll up
+
+   Specs:  https://m3.material.io/components/app-bars/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Root container ──────────────────────────────────────────────── */
+
+.bottomAppBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 16px 0 8px;
+  background: var(--bg-surface, var(--bg-secondary));
+  color: var(--text-primary);
+  z-index: 10;
+  box-shadow:
+    0 -1px 2px 0 rgb(0 0 0 / 0.06),
+    0 -2px 6px 2px rgb(0 0 0 / 0.04);
+  transition:
+    transform 300ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
+  animation: bottomBarSlideIn 300ms cubic-bezier(0, 0, 0, 1) both;
+  will-change: transform;
+}
+
+/* ── Positioning modes ───────────────────────────────────────────── */
+
+.relative {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  right: auto;
+}
+
+/* ── Hide on scroll ──────────────────────────────────────────────── */
+/* M3 behavior: bar slides out when scrolling down, returns on up   */
+
+.hidden {
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+/* ── Actions slot (leading) ──────────────────────────────────────── */
+/* M3 spec: up to 4 icon buttons, 48×48dp touch targets             */
+
+.actionsSlot {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary, var(--text-primary));
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition:
+    background 150ms cubic-bezier(0.2, 0, 0, 1),
+    color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+.actionButton:hover {
+  background: var(--hover-overlay, rgb(0 0 0 / 0.06));
+}
+
+.actionButton:active {
+  background: var(--press-overlay, rgb(0 0 0 / 0.1));
+}
+
+.actionButton[disabled] {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.actionActive {
+  color: var(--accent-color);
+}
+
+/* ── State layer (action button hover/focus/press) ───────────────── */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.actionButton:hover .stateLayer {
+  opacity: 0.08;
+}
+
+.actionButton:focus-visible .stateLayer {
+  opacity: 0.1;
+}
+
+.actionButton:active .stateLayer {
+  opacity: 0.12;
+}
+
+/* ── FAB slot (trailing) ─────────────────────────────────────────── */
+/* M3 spec: 56×56dp FAB docked on the right side                    */
+
+.fabSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  /* Slight upward shift to break the rigid edge — wabi-sabi detail */
+  margin-top: -4px;
+}
+
+/* ── Overflow menu indicator ─────────────────────────────────────── */
+/* Subtle dot showing there are more actions in an overflow menu     */
+
+.overflowDot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-tertiary, var(--text-secondary));
+  opacity: 0.6;
+  flex-shrink: 0;
+  margin: 0 12px;
+}
+
+/* ── Entrance animation ──────────────────────────────────────────── */
+
+@keyframes bottomBarSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Safe area padding (mobile notches) ──────────────────────────── */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottomAppBar {
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(80px + env(safe-area-inset-bottom));
+  }
+}

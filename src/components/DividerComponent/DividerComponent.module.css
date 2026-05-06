@@ -1,0 +1,127 @@
+/* ══════════════════════════════════════════════════════════════════════
+   DividerComponent — Material Design 3 divider
+   A thin line that groups content in lists and containers.
+   Specs: https://m3.material.io/components/divider/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+/* M3 spec: 1px thick line using outline-variant color.
+   Mapped to --border-color from our theme tokens.                    */
+
+.divider {
+  --_divider-color: var(--divider-color, var(--border-color));
+  --_divider-thickness: var(--divider-thickness, 1px);
+  --_divider-inset-start: 0px;
+  --_divider-inset-end: 0px;
+
+  border: none;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* ── Horizontal (default) ─────────────────────────────────────────── */
+/* M3 horizontal divider: full width of its container.
+   Height = thickness (1px). Inset via margin-inline.                 */
+
+.horizontal {
+  display: block;
+  width: auto;
+  height: var(--_divider-thickness);
+  background: var(--_divider-color);
+  margin-inline-start: var(--_divider-inset-start);
+  margin-inline-end: var(--_divider-inset-end);
+}
+
+/* ── Vertical ─────────────────────────────────────────────────────── */
+/* M3 vertical divider: full height of its container.
+   Width = thickness (1px). Inset via margin-block.
+   Self-stretches via align-self: stretch in flex contexts.           */
+
+.vertical {
+  display: inline-block;
+  width: var(--_divider-thickness);
+  height: auto;
+  align-self: stretch;
+  background: var(--_divider-color);
+  margin-block-start: var(--_divider-inset-start);
+  margin-block-end: var(--_divider-inset-end);
+}
+
+/* ── Variant: Inset ──────────────────────────────────────────────── */
+/* M3 spec: 16px leading inset, 0px trailing.
+   For lists, this aligns the divider with the text, not the icon.   */
+
+.inset {
+  --_divider-inset-start: 16px;
+}
+
+/* ── Variant: Middle inset ───────────────────────────────────────── */
+/* M3 spec: 16px inset on both leading and trailing edges.           */
+
+.middleInset {
+  --_divider-inset-start: 16px;
+  --_divider-inset-end: 16px;
+}
+
+/* ── Spacing ─────────────────────────────────────────────────────── */
+/* Opt-in vertical margins around horizontal dividers,
+   or horizontal margins around vertical dividers.
+   M3 doesn't prescribe spacing — it depends on context.
+   We expose 3 preset sizes consumers can pick.                      */
+
+.horizontal.spacingSm {
+  margin-block: 4px;
+}
+
+.horizontal.spacingMd {
+  margin-block: 8px;
+}
+
+.horizontal.spacingLg {
+  margin-block: 16px;
+}
+
+.vertical.spacingSm {
+  margin-inline: 4px;
+}
+
+.vertical.spacingMd {
+  margin-inline: 8px;
+}
+
+.vertical.spacingLg {
+  margin-inline: 16px;
+}
+
+/* ── Subheader divider ───────────────────────────────────────────── */
+/* Composite variant: a thin line with a centered text label.
+   Not in the base M3 divider spec, but commonly seen in M3 list
+   subheaders and section separators. Think of it as the
+   <li role="presentation"> subheader from M2.                       */
+
+.subheader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-inline-start: var(--_divider-inset-start);
+  margin-inline-end: var(--_divider-inset-end);
+}
+
+.subheaderLine {
+  flex: 1;
+  height: var(--_divider-thickness);
+  background: var(--_divider-color);
+}
+
+.subheaderLabel {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary, var(--text-secondary));
+  white-space: nowrap;
+  user-select: none;
+  padding-inline: 4px;
+}

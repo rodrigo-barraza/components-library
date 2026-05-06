@@ -1,0 +1,332 @@
+/* ============================================================
+   DialogComponent — M3 Dialog (AlertDialog)
+   Spec: https://m3.material.io/components/dialogs/specs
+   ============================================================
+
+   M3 Dialog anatomy:
+   ┌─────────────────────────────────┐
+   │          [icon]                 │  ← optional, centered
+   │          Headline               │  ← optional
+   │                                 │
+   │   Supporting text goes here     │  ← required
+   │   and can wrap multiple lines   │
+   │                                 │
+   │              [Cancel] [Confirm] │  ← action buttons, end-aligned
+   └─────────────────────────────────┘
+
+   Elevation: Level 3
+   Shape: 28dp (extra-large top)
+   Scrim: on-surface at 32% opacity
+   Container: surface-container-high
+   Min width: 280dp
+   Max width: 560dp
+*/
+
+/* ── Scrim (overlay) ──────────────────────────────────── */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+
+  /* M3 spec: scrim is on-surface @ 32% — we blend with theme */
+  background: var(--dialog-scrim, rgba(0, 0, 0, 0.32));
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+
+  animation: dialogScrimFadeIn 200ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  will-change: opacity;
+}
+
+.scrim[data-closing="true"] {
+  animation: dialogScrimFadeOut 150ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* ── Container ────────────────────────────────────────── */
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  /* M3 spec: min 280, max 560 */
+  min-width: 280px;
+  max-width: 560px;
+  width: 100%;
+
+  max-height: calc(100vh - 96px);
+
+  /* M3 spec: surface-container-high, 28dp corner radius */
+  background: var(--dialog-container-bg, var(--bg-secondary, #2a2a2e));
+  border: 1px solid var(--dialog-border, var(--border-color, rgba(255, 255, 255, 0.06)));
+  border-radius: 28px;
+
+  /* M3 Level 3 elevation */
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  /* Enter: standard easing, 300ms */
+  animation: dialogContainerEnter 300ms cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.container[data-closing="true"] {
+  animation: dialogContainerExit 200ms cubic-bezier(0.3, 0, 0.8, 0.15) forwards;
+}
+
+/* ── Icon (optional) ──────────────────────────────────── */
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 24px 0;
+  color: var(--dialog-icon-color, var(--accent-color, #8b5cf6));
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* ── Headline ─────────────────────────────────────────── */
+
+.headline {
+  padding: 16px 24px 0;
+  margin: 0;
+
+  /* M3 headline-small: 24/32 */
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 500;
+  letter-spacing: 0;
+
+  color: var(--dialog-headline-color, var(--text-primary, #f0f0f0));
+}
+
+/* When icon is present, headline is centered */
+.headlineCentered {
+  text-align: center;
+}
+
+/* ── Supporting text ──────────────────────────────────── */
+
+.body {
+  padding: 16px 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* Subtle scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color, rgba(255, 255, 255, 0.1)) transparent;
+
+  /* M3 body-medium: 14/20 */
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.25px;
+
+  color: var(--dialog-body-color, var(--text-secondary, #a0a0a0));
+}
+
+/* ── Divider (optional, for scrollable content) ──────── */
+
+.divider {
+  height: 1px;
+  background: var(--dialog-divider, var(--border-color, rgba(255, 255, 255, 0.06)));
+  margin: 0;
+  border: none;
+  flex-shrink: 0;
+}
+
+/* ── Actions ──────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px 24px;
+  flex-shrink: 0;
+}
+
+/* M3 Dialog action buttons — text buttons per spec */
+.actionBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 48px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+
+  /* M3 label-large: 14/20, weight 500 */
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: 0.1px;
+
+  color: var(--dialog-action-color, var(--accent-color, #8b5cf6));
+  transition:
+    background-color 200ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* State layer setup */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.actionBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+}
+
+/* M3 hover state layer: 8% */
+.actionBtn:hover::before {
+  opacity: 0.08;
+}
+
+/* M3 focus state layer: 12% */
+.actionBtn:focus-visible {
+  outline: none;
+}
+
+.actionBtn:focus-visible::before {
+  opacity: 0.12;
+}
+
+/* M3 pressed state layer: 12% */
+.actionBtn:active::before {
+  opacity: 0.12;
+}
+
+/* Primary (confirm) action — filled tonal per spec for emphasis */
+.actionBtnPrimary {
+  background: var(--dialog-primary-bg, var(--accent-color, #8b5cf6));
+  color: var(--dialog-primary-text, var(--bg-primary, #0f0f0f));
+}
+
+.actionBtnPrimary::before {
+  background: var(--dialog-primary-text, var(--bg-primary, #0f0f0f));
+}
+
+/* Destructive action variant */
+.actionBtnDestructive {
+  color: var(--dialog-destructive-color, var(--color-error, #f87171));
+}
+
+/* Disabled state */
+.actionBtn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.actionBtn:disabled::before {
+  opacity: 0;
+}
+
+/* ── Fullscreen variant (mobile) ─────────────────────── */
+
+.fullscreen .container {
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.fullscreen .headline {
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+}
+
+.fullscreen .actions {
+  padding: 12px 16px;
+}
+
+/* ── Animations ───────────────────────────────────────── */
+
+@keyframes dialogScrimFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes dialogScrimFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes dialogContainerEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+  /* Fast ramp to visible, then settle */
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dialogContainerExit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.92) translateY(4px);
+  }
+}
+
+/* ── Responsive — small viewports ─────────────────────── */
+
+@media (max-width: 600px) {
+  .scrim {
+    padding: 16px;
+  }
+
+  .container {
+    min-width: unset;
+    max-width: 100%;
+    border-radius: 28px;
+  }
+
+  .headline {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .container,
+  .scrim[data-closing="true"],
+  .container[data-closing="true"] {
+    animation-duration: 1ms !important;
+  }
+}

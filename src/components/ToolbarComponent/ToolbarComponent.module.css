@@ -1,0 +1,264 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ToolbarComponent — Material Design 3 toolbar
+   Horizontal (or vertical) bar grouping contextual action icons.
+   Specs: https://m3.material.io/components/toolbars/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Base toolbar ────────────────────────────────────────────────── */
+
+.toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface, var(--bg-secondary));
+  color: var(--text-primary);
+  flex-shrink: 0;
+  transition:
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+    background 200ms cubic-bezier(0.2, 0, 0, 1);
+  animation: toolbarFadeIn 200ms ease-out;
+}
+
+/* ── Orientation ─────────────────────────────────────────────────── */
+
+.horizontal {
+  flex-direction: row;
+  padding: 0 8px;
+  gap: 2px;
+}
+
+.vertical {
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 2px;
+}
+
+/* ── Variant: Standard ───────────────────────────────────────────── */
+/* M3 spec: 64dp height, comfortable touch targets                  */
+
+.standard.horizontal {
+  height: 64px;
+  min-height: 64px;
+}
+
+.standard.vertical {
+  width: 64px;
+  min-width: 64px;
+}
+
+/* ── Variant: Dense ──────────────────────────────────────────────── */
+/* M3 spec: 48dp height for compressed / compact contexts           */
+
+.dense.horizontal {
+  height: 48px;
+  min-height: 48px;
+}
+
+.dense.vertical {
+  width: 48px;
+  min-width: 48px;
+}
+
+/* ── Divider ─────────────────────────────────────────────────────── */
+
+.divider.horizontal {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.divider.vertical {
+  border-right: 1px solid var(--border-color);
+}
+
+/* ── Sticky ──────────────────────────────────────────────────────── */
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Elevated ────────────────────────────────────────────────────── */
+/* M3 surface tint + subtle elevation shadow                        */
+
+.elevated {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.08),
+    0 1px 3px 1px rgb(0 0 0 / 0.06);
+}
+
+/* ── Group ───────────────────────────────────────────────────────── */
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.vertical .group {
+  flex-direction: column;
+}
+
+/* ── Item (icon button within toolbar) ───────────────────────────── */
+/* M3 spec: 48×48dp touch target, 24dp icon, state layers           */
+
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border: none;
+  border-radius: var(--border-radius-sm, 8px);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition:
+    color 150ms cubic-bezier(0.2, 0, 0, 1),
+    background 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+/* ── State layer ─────────────────────────────────────────────────── */
+/* M3 specifies transparent overlays for hover / focus / press       */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.item:hover .stateLayer {
+  opacity: 0.08;
+}
+
+.item:focus-visible .stateLayer {
+  opacity: 0.1;
+}
+
+.item:active .stateLayer {
+  opacity: 0.12;
+}
+
+/* ── Item states ─────────────────────────────────────────────────── */
+
+.itemActive {
+  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+}
+
+.itemActive .stateLayer {
+  background: var(--accent-color);
+}
+
+.itemDisabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Item icon / label ───────────────────────────────────────────── */
+
+.itemIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.itemLabel {
+  /* M3 label-large: 14px / 500 weight */
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* ── Separator ───────────────────────────────────────────────────── */
+/* M3 spec: 1px outline-variant, 24dp in the cross-axis             */
+
+.separator {
+  flex-shrink: 0;
+  background: var(--border-color);
+}
+
+.horizontal .separator {
+  width: 1px;
+  height: 24px;
+  margin: 0 6px;
+}
+
+.vertical .separator {
+  height: 1px;
+  width: 24px;
+  margin: 6px 0;
+}
+
+/* ── Title ───────────────────────────────────────────────────────── */
+/* M3 title-medium: 16px / 500 weight                               */
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+}
+
+/* ── Spacer ──────────────────────────────────────────────────────── */
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* ── Entrance animation ──────────────────────────────────────────── */
+
+@keyframes toolbarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vertical .toolbar {
+  animation-name: toolbarFadeInVertical;
+}
+
+@keyframes toolbarFadeInVertical {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

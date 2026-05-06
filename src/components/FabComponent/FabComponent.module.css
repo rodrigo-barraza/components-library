@@ -1,0 +1,421 @@
+/* ══════════════════════════════════════════════════════════════════════
+   FabComponent — Material Design 3 Floating Action Button
+   Three sizes: small (40), standard (56), large (96)
+   Four color variants: primary, surface, secondary, tertiary
+   Specs: https://m3.material.io/components/floating-action-button/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Base ────────────────────────────────────────────────────────────
+   M3 FAB foundation — icon-centric, no label (see Extended FAB).
+   Elevation level 3 at rest per M3 spec.
+   Container uses GPU-composited transitions for buttery animation.
+   ──────────────────────────────────────────────────────────────────── */
+
+.fab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  isolation: isolate;
+  font-family: inherit;
+  padding: 0;
+  flex-shrink: 0;
+
+  /* M3 FAB standard: 56×56, corner radius 16 */
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+
+  /* M3 elevation level 3 — the resting elevation for FABs */
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.30),
+    0 4px 8px 3px rgb(0 0 0 / 0.15);
+
+  /* M3 standard easing across all animated properties */
+  transition:
+    box-shadow 280ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* GPU compositing hint for smooth hover/press */
+  will-change: box-shadow, transform;
+}
+
+/* ── Icon container ─────────────────────────────────────────────────
+   Ensures icon sits above the state layer.
+   M3 standard FAB icon: 24px.
+   ──────────────────────────────────────────────────────────────────── */
+
+.icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: inherit;
+  pointer-events: none;
+}
+
+/* ── State layer ─────────────────────────────────────────────────────
+   M3 state layer overlay — sits above container, below content.
+   Opacity values per M3 spec:
+     Hover: 0.08  |  Focus: 0.10  |  Pressed: 0.10
+   Uses ::before to avoid extra DOM elements.
+   ──────────────────────────────────────────────────────────────────── */
+
+.fab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  background: currentColor;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.fab:hover:not(:disabled)::before {
+  opacity: 0.08;
+}
+
+.fab:focus-visible:not(:disabled)::before {
+  opacity: 0.10;
+}
+
+.fab:active:not(:disabled)::before {
+  opacity: 0.10;
+}
+
+/* ── Hover elevation ─────────────────────────────────────────────────
+   M3: FABs lift to elevation level 4 on hover.
+   Subtle upward translation sells the "lift" beyond just shadow.
+   ──────────────────────────────────────────────────────────────────── */
+
+.fab:hover:not(:disabled) {
+  box-shadow:
+    0 2px 3px 0 rgb(0 0 0 / 0.30),
+    0 6px 10px 4px rgb(0 0 0 / 0.15);
+  transform: translateY(-1px);
+}
+
+/* ── Active / Pressed ────────────────────────────────────────────────
+   M3: returns to elevation level 3 on press (no uplift).
+   ──────────────────────────────────────────────────────────────────── */
+
+.fab:active:not(:disabled) {
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.30),
+    0 4px 8px 3px rgb(0 0 0 / 0.15);
+  transform: translateY(0);
+}
+
+/* ── Focus ring ──────────────────────────────────────────────────────
+   M3 focus indicator — 3px offset outline.
+   ──────────────────────────────────────────────────────────────────── */
+
+.fab:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* ── Disabled ────────────────────────────────────────────────────────
+   M3 spec: container 12% on-surface, icon 38% on-surface.
+   No elevation when disabled.
+   ──────────────────────────────────────────────────────────────────── */
+
+.fab:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent) !important;
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIZE VARIANTS
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Small FAB ──────────────────────────────────────────────────────
+   M3: 40×40px, 12px corner radius.
+   Icon remains 24px per spec.
+   ──────────────────────────────────────────────────────────────────── */
+
+.small {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+/* ── Large FAB ──────────────────────────────────────────────────────
+   M3: 96×96px, 28px corner radius.
+   Icon scales to 36px per spec.
+   ──────────────────────────────────────────────────────────────────── */
+
+.large {
+  width: 96px;
+  height: 96px;
+  border-radius: 28px;
+}
+
+.large .icon {
+  width: 36px;
+  height: 36px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   COLOR VARIANTS
+   M3 FAB uses container color roles, not the button color roles.
+   Each maps to: container → icon-color relationship.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Primary (default) ──────────────────────────────────────────────
+   Container: primary-container  |  Icon: on-primary-container
+   The flagship FAB color — bold and prominent.
+   ──────────────────────────────────────────────────────────────────── */
+
+.primary {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* ── Surface ────────────────────────────────────────────────────────
+   Container: surface-container-high  |  Icon: primary
+   A low-emphasis FAB that sits naturally on the surface.
+   M3 calls this the "surface" FAB — blends with background.
+   ──────────────────────────────────────────────────────────────────── */
+
+.surface {
+  background-color: var(--bg-secondary);
+  color: var(--accent-color);
+}
+
+/* ── Secondary ──────────────────────────────────────────────────────
+   Container: secondary-container  |  Icon: on-secondary-container
+   A tonal FAB using the secondary color palette.
+   ──────────────────────────────────────────────────────────────────── */
+
+.secondary {
+  background-color: var(
+    --accent-subtle,
+    color-mix(in srgb, var(--accent-color) 12%, var(--bg-secondary))
+  );
+  color: var(--accent-color);
+}
+
+/* ── Tertiary ───────────────────────────────────────────────────────
+   Container: tertiary-container  |  Icon: on-tertiary-container
+   A complementary FAB for secondary actions.
+   ──────────────────────────────────────────────────────────────────── */
+
+.tertiary {
+  background-color: var(
+    --tertiary-container,
+    color-mix(in srgb, var(--accent-color) 20%, var(--bg-primary))
+  );
+  color: var(--tertiary-on-container, var(--accent-color));
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   LOWERED VARIANT
+   M3 guidelines: FABs can sit at elevation 1 when used inline
+   or when less visual prominence is desired.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.lowered {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.lowered:hover:not(:disabled) {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 2px 6px 2px rgb(0 0 0 / 0.10);
+}
+
+.lowered:active:not(:disabled) {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   RIPPLE ANIMATION
+   GPU-composited radial expansion for tactile feedback.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: currentColor;
+  transform: scale(0);
+  opacity: 0.12;
+  animation: fabRippleExpand 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+@keyframes fabRippleExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   EXTENDED FAB
+   M3 Extended FAB: height 56px, min-width 80px, rounded-full radius.
+   Contains icon (optional) + label text.
+   Typography: label-large (500, 14px, 20px line-height).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.extended {
+  width: auto;
+  height: 56px;
+  border-radius: 16px;
+  padding: 0 16px;
+  gap: 12px;
+  min-width: 80px;
+}
+
+.extended .icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Extended label ─────────────────────────────────────────────────
+   M3 label-large: 500 weight, 14px, 20px line-height.
+   ──────────────────────────────────────────────────────────────────── */
+
+.label {
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Extended without icon ──────────────────────────────────────────
+   M3: when no icon, padding adjusts to 24px on both sides.
+   ──────────────────────────────────────────────────────────────────── */
+
+.extendedNoIcon {
+  padding: 0 24px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   POSITIONING HELPER
+   A positioned container for fixed/absolute FAB placement.
+   M3 guidelines: 16px margin from screen edges, positioned
+   bottom-end for LTR, bottom-start for RTL.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.fixed {
+  position: fixed;
+  z-index: 1000;
+}
+
+.bottomEnd {
+  bottom: 16px;
+  right: 16px;
+}
+
+.bottomStart {
+  bottom: 16px;
+  left: 16px;
+}
+
+.bottomCenter {
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Override hover transform for centered FABs so they don't jitter */
+.bottomCenter:hover:not(:disabled) {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+.bottomCenter:active:not(:disabled) {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SCROLL BEHAVIOR
+   M3 guidelines: FABs can auto-hide on scroll-down
+   and reappear on scroll-up. Uses GPU-friendly transforms.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.hidden {
+  transform: translateY(calc(100% + 32px)) !important;
+  transition:
+    transform 280ms cubic-bezier(0.4, 0, 1, 1),
+    box-shadow 280ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.bottomCenter.hidden {
+  transform: translateX(-50%) translateY(calc(100% + 32px)) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MEDIA QUERIES
+   M3 responsive: FABs should use large size on expanded windows,
+   standard on medium, and can collapse to small on compact.
+   ══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 599px) {
+  .bottomEnd,
+  .bottomStart {
+    bottom: 16px;
+  }
+}
+
+@media (min-width: 600px) {
+  .bottomEnd,
+  .bottomStart {
+    bottom: 24px;
+  }
+
+  .bottomEnd {
+    right: 24px;
+  }
+
+  .bottomStart {
+    left: 24px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   Respect user preferences — collapse all animation to instant.
+   ══════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .fab,
+  .fab::before,
+  .hidden {
+    transition-duration: 0ms !important;
+  }
+
+  .ripple {
+    animation: none !important;
+  }
+}

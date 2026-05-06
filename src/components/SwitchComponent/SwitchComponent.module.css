@@ -1,0 +1,253 @@
+/* ── SwitchComponent · M3 Spec ───────────────────────── */
+/* M3 Track:       52×32px, 16px border-radius (fully rounded)   */
+/* M3 Handle:      unchecked 16px → selected 24px, with icon opt */
+/* M3 State Layer: 40×40px circular, centered on handle          */
+/* M3 Touch Target: minimum 48×48px                              */
+/* Spec: https://m3.material.io/components/switch/specs           */
+
+/* ── Root label ──────────────────────────────────────── */
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 48px;           /* M3 48px min touch target */
+}
+
+.switch.labelStart {
+  flex-direction: row-reverse;
+}
+
+.switch.disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Hidden native input ─────────────────────────────── */
+
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── Track — 52×32px M3 capsule ──────────────────────── */
+
+.track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 52px;
+  height: 32px;
+  border-radius: 16px;        /* fully rounded */
+  background: var(--switch-track-bg, var(--surface-variant, #e7e0ec));
+  border: 2px solid var(--switch-track-outline, var(--border-color, #79747e));
+  transition:
+    background 0.2s cubic-bezier(0.2, 0, 0, 1),
+    border-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ── Track — Selected state ──────────────────────────── */
+
+.track.selected {
+  background: var(--accent-color, #6750a4);
+  border-color: var(--accent-color, #6750a4);
+}
+
+/* ── Track — Hover ───────────────────────────────────── */
+
+.switch:hover .track:not(.selected) {
+  border-color: var(--text-primary, #1d1b20);
+}
+
+.switch:hover .track.selected {
+  background: var(--accent-color-hover, var(--accent-color, #6750a4));
+  filter: brightness(1.08);
+}
+
+/* ── Handle container — manages positioning + state layer ── */
+
+.handleContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* Unselected position: handle centered at left of track */
+  left: -4px;
+  transition: left 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Selected position: handle slides to right */
+.track.selected .handleContainer {
+  left: 16px;
+}
+
+/* ── State layer — 40×40px circular ──────────────────── */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s ease;
+  will-change: background;
+  pointer-events: none;
+}
+
+/* Hover — unselected */
+.switch:hover .track:not(.selected) .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, transparent);
+}
+
+/* Hover — selected */
+.switch:hover .track.selected .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+}
+
+/* Focus-visible — keyboard nav */
+.hiddenInput:focus-visible ~ .track .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+.hiddenInput:focus-visible ~ .track.selected .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* Active / pressed — unselected */
+.switch:active .track:not(.selected) .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+/* Active / pressed — selected */
+.switch:active .track.selected .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* ── Handle — the draggable thumb ────────────────────── */
+
+.handle {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--switch-handle-bg, var(--border-color, #79747e));
+  transition:
+    width 0.2s cubic-bezier(0.2, 0, 0, 1),
+    height 0.2s cubic-bezier(0.2, 0, 0, 1),
+    background 0.2s cubic-bezier(0.2, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Handle — selected state: grows to 24px, changes color */
+.track.selected .handle {
+  width: 24px;
+  height: 24px;
+  background: var(--switch-handle-selected-bg, var(--text-on-accent, #fff));
+}
+
+/* Handle — pressed state: grows to 28px */
+.switch:active .handle {
+  width: 28px;
+  height: 28px;
+}
+
+/* Handle — hover state (unselected): subtle size increase */
+.switch:hover .track:not(.selected) .handle {
+  background: var(--text-primary, #1d1b20);
+}
+
+/* ── Icon inside handle ──────────────────────────────── */
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: var(--accent-color, #6750a4);
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity 0.15s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+  flex-shrink: 0;
+}
+
+/* Icon visible only on selected handle */
+.track.selected .icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Unselected icon (shown when showIcons is true) */
+.iconUnselected {
+  width: 16px;
+  height: 16px;
+  color: var(--switch-track-outline, var(--surface-variant, #e7e0ec));
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity 0.15s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+  flex-shrink: 0;
+}
+
+/* Show unselected icon when track is not selected */
+.track:not(.selected) .iconUnselected {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hide unselected icon when selected */
+.track.selected .iconUnselected {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* ── With icon variant — handle starts at 24px even unselected ── */
+
+.withIcons .track:not(.selected) .handle {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Label text ──────────────────────────────────────── */
+
+.label {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary, #1d1b20);
+  letter-spacing: 0.025em;
+}
+
+/* ── Focus ring — visible keyboard outline on track ──── */
+
+.hiddenInput:focus-visible ~ .track {
+  outline: 2px solid var(--accent-color, #6750a4);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ──────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .handle,
+  .track,
+  .handleContainer,
+  .stateLayer,
+  .icon,
+  .iconUnselected {
+    transition-duration: 0.01ms !important;
+  }
+}

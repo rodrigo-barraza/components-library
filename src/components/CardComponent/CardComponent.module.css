@@ -1,10 +1,118 @@
-/* ── CardComponent ────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════
+   CardComponent — Material Design 3 card variants
+   Three types: elevated, filled, outlined
+   Specs: https://m3.material.io/components/cards/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Base card ────────────────────────────────────────────────────── */
 
 .card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  position: relative;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--border-radius-md);
   overflow: hidden;
+  color: var(--text-primary);
+  transition:
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    background 200ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: box-shadow, transform;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Variant: Elevated ───────────────────────────────────────────── */
+/* M3 spec: surface-container-low + shadow level 1
+   Hover → level 2, Pressed/Focus → level 1, Dragged → level 4    */
+
+.elevated {
+  background: var(--bg-secondary);
+  border: 1px solid transparent;
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.12),
+    0 1px 3px 1px rgb(0 0 0 / 0.08);
+}
+
+.elevated.interactive:hover {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.15),
+    0 2px 6px 2px rgb(0 0 0 / 0.1);
+  transform: translateY(-1px);
+}
+
+.elevated.interactive:active {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.12),
+    0 1px 3px 1px rgb(0 0 0 / 0.08);
+  transform: translateY(0);
+}
+
+.elevated.draggable:active {
+  box-shadow:
+    0 2px 3px 0 rgb(0 0 0 / 0.18),
+    0 6px 10px 4px rgb(0 0 0 / 0.12);
+  transform: translateY(-4px);
+}
+
+/* ── Variant: Filled ─────────────────────────────────────────────── */
+/* M3 spec: surface-container-highest, no shadow
+   Hover → shadow level 1, Pressed/Focus → level 0               */
+
+.filled {
+  background: var(--bg-tertiary, var(--bg-primary));
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.filled.interactive:hover {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.12),
+    0 1px 3px 1px rgb(0 0 0 / 0.08);
+  transform: translateY(-1px);
+}
+
+.filled.interactive:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.filled.draggable:active {
+  box-shadow:
+    0 2px 3px 0 rgb(0 0 0 / 0.18),
+    0 6px 10px 4px rgb(0 0 0 / 0.12);
+  transform: translateY(-4px);
+}
+
+/* ── Variant: Outlined (default) ─────────────────────────────────── */
+/* M3 spec: surface + outline, no shadow
+   Hover → shadow level 1, Pressed/Focus → level 0               */
+
+.outlined {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.outlined.interactive:hover {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.12),
+    0 1px 3px 1px rgb(0 0 0 / 0.08);
+  transform: translateY(-1px);
+}
+
+.outlined.interactive:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.outlined.draggable:active {
+  box-shadow:
+    0 2px 3px 0 rgb(0 0 0 / 0.18),
+    0 6px 10px 4px rgb(0 0 0 / 0.12);
+  transform: translateY(-4px);
 }
 
 /* ── Header ──────────────────────────────────────────────────────── */
@@ -41,10 +149,42 @@
   margin-left: auto;
 }
 
+/* ── Media ───────────────────────────────────────────────────────── */
+/* M3 cards support full-bleed media at top, bottom, or full.
+   The image fills the container via object-fit: cover.            */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.media-top {
+  /* first child in card: respects card border-radius at top */
+}
+
+.media-bottom {
+  /* last child in card: respects card border-radius at bottom */
+  order: 999;
+}
+
+.media-full {
+  /* when media is the only element */
+}
+
+.mediaImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ── Body ────────────────────────────────────────────────────────── */
 
 .body {
-  padding: 0;
+  padding: 16px 24px;
+  flex: 1 1 auto;
 }
 
 /* ── Footer ──────────────────────────────────────────────────────── */
@@ -53,6 +193,55 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 8px;
   padding: 12px 24px;
   border-top: 1px solid var(--border-color);
+}
+
+/* ── Action Area ─────────────────────────────────────────────────── */
+/* M3 "Clickable card" — the entire card is tappable.
+   Uses a state layer for hover/press/focus feedback.              */
+
+.actionArea {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.actionArea:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* State layer — semi-transparent overlay for interaction feedback  */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--text-primary);
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  z-index: 1;
+}
+
+.actionArea:hover .stateLayer {
+  opacity: 0.06;
+}
+
+.actionArea:active .stateLayer {
+  opacity: 0.1;
+}
+
+.actionArea:focus-visible .stateLayer {
+  opacity: 0.08;
 }

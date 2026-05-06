@@ -1,28 +1,60 @@
+"use client";
+
+import { forwardRef } from "react";
 import styles from "./CardComponent.module.css";
 
 /**
- * CardComponent — generic compound card with header, body, and footer slots.
+ * CardComponent — M3-inspired compound card with elevated / filled / outlined variants.
+ *
+ * Material Design 3 defines three card types:
+ *   • elevated  — surface-tint + shadow elevation (default)
+ *   • filled   — highest surface container color, no outline
+ *   • outlined — thin outline border, no elevation
  *
  * Compound sub-components:
- *   CardComponent.Header   — top bar with icon, title, subtitle, and trailing actions
- *   CardComponent.Body     — main content area
- *   CardComponent.Footer   — bottom bar (e.g. reset / action buttons)
+ *   CardComponent.Header      — top bar with icon, title, subtitle, trailing actions
+ *   CardComponent.Media       — full-bleed media slot (images, video, illustration)
+ *   CardComponent.Body        — main content area with padding
+ *   CardComponent.Footer      — bottom bar (e.g. action buttons)
+ *   CardComponent.ActionArea  — makes the card (or a region) clickable with ripple
  *
- * Props (root):
- *   className — optional extra class
- *   children  — CardComponent.Header / Body / Footer
- *   style     — optional inline styles (use --card-accent to theme)
+ * @param {"elevated"|"filled"|"outlined"} [variant="outlined"] — M3 card variant
+ * @param {boolean}   [interactive=false]   — enables hover / press state layer
+ * @param {boolean}   [draggable=false]     — adds dragged state elevation
+ * @param {boolean}   [fullWidth=false]     — stretches to container width
+ * @param {string}    [className]
+ * @param {object}    [style]               — use --card-accent to theme
+ * @param {React.ReactNode} children
  */
-export default function CardComponent({ className, style, children }) {
+export default function CardComponent({
+  variant = "outlined",
+  interactive = false,
+  draggable: isDraggable = false,
+  fullWidth = false,
+  className,
+  style,
+  children,
+  ...rest
+}) {
+  const classes = [
+    styles.card,
+    styles[variant],
+    interactive && styles.interactive,
+    isDraggable && styles.draggable,
+    fullWidth && styles.fullWidth,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div
-      className={`${styles.card}${className ? ` ${className}` : ""}`}
-      style={style}
-    >
+    <div className={classes} style={style} {...rest}>
       {children}
     </div>
   );
 }
+
+/* ── Header ──────────────────────────────────────────────────────── */
 
 function CardHeader({ icon: Icon, title, subtitle, children, className }) {
   return (
@@ -35,6 +67,56 @@ function CardHeader({ icon: Icon, title, subtitle, children, className }) {
   );
 }
 
+/* ── Media ───────────────────────────────────────────────────────── */
+
+/**
+ * CardMedia — M3 media slot for full-bleed images, video, or illustrations.
+ *
+ * @param {string}   [src]        — image source URL
+ * @param {string}   [alt]        — alt text for image
+ * @param {number}   [height]     — fixed height in px (default: auto, aspect-ratio used if set)
+ * @param {string}   [aspectRatio] — CSS aspect-ratio value, e.g. "16/9"
+ * @param {"top"|"bottom"|"full"} [position="top"] — clip-path rounding position
+ * @param {string}   [className]
+ * @param {React.ReactNode} children — custom content (overrides src/alt)
+ */
+function CardMedia({
+  src,
+  alt = "",
+  height,
+  aspectRatio,
+  position = "top",
+  className,
+  children,
+}) {
+  const mediaStyle = {};
+  if (height) mediaStyle.height = typeof height === "number" ? `${height}px` : height;
+  if (aspectRatio) mediaStyle.aspectRatio = aspectRatio;
+
+  return (
+    <div
+      className={[styles.media, styles[`media-${position}`], className]
+        .filter(Boolean)
+        .join(" ")}
+      style={Object.keys(mediaStyle).length ? mediaStyle : undefined}
+    >
+      {children || (
+        src ? (
+          <img
+            src={src}
+            alt={alt}
+            className={styles.mediaImage}
+            loading="lazy"
+            draggable={false}
+          />
+        ) : null
+      )}
+    </div>
+  );
+}
+
+/* ── Body ────────────────────────────────────────────────────────── */
+
 function CardBody({ children, className }) {
   return (
     <div className={`${styles.body}${className ? ` ${className}` : ""}`}>
@@ -42,6 +124,8 @@ function CardBody({ children, className }) {
     </div>
   );
 }
+
+/* ── Footer ──────────────────────────────────────────────────────── */
 
 function CardFooter({ children, className }) {
   return (
@@ -51,6 +135,44 @@ function CardFooter({ children, className }) {
   );
 }
 
+/* ── Action Area ─────────────────────────────────────────────────── */
+
+/**
+ * CardActionArea — wraps card content to make it clickable / tappable.
+ * Renders a full-surface interactive layer with ripple and state layer.
+ *
+ * @param {Function}  onClick
+ * @param {string}    [href]   — if provided, renders an <a> instead
+ * @param {string}    [className]
+ * @param {React.ReactNode} children
+ */
+const CardActionArea = forwardRef(function CardActionArea(
+  { onClick, href, className, children, ...rest },
+  ref,
+) {
+  const classes = [styles.actionArea, className].filter(Boolean).join(" ");
+
+  if (href) {
+    return (
+      <a ref={ref} href={href} className={classes} {...rest}>
+        <span className={styles.stateLayer} />
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button ref={ref} type="button" onClick={onClick} className={classes} {...rest}>
+      <span className={styles.stateLayer} />
+      {children}
+    </button>
+  );
+});
+
+/* ── Attach sub-components ───────────────────────────────────────── */
+
 CardComponent.Header = CardHeader;
+CardComponent.Media = CardMedia;
 CardComponent.Body = CardBody;
 CardComponent.Footer = CardFooter;
+CardComponent.ActionArea = CardActionArea;

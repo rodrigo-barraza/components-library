@@ -1,0 +1,545 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SplitButtonComponent — Material Design 3 Split Button
+   A compound button with two interactive zones (leading + trailing)
+   sharing a continuous container, separated by a divider.
+
+   Specs: https://m3.material.io/components/split-button/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Container group ────────────────────────────────────────────────
+   The outer wrapper that forms the continuous pill shape.
+   M3 Split Button height: 40px (standard), with full-rounded ends.
+   The two buttons are flush; the divider is visually overlaid.
+   ──────────────────────────────────────────────────────────────────── */
+
+.splitGroup {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
+  vertical-align: middle;
+  min-height: 40px;
+
+  transition:
+    box-shadow 280ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Shared button base ─────────────────────────────────────────────
+   Both leading and trailing share this reset + layout.
+   ──────────────────────────────────────────────────────────────────── */
+
+.leading,
+.trailing {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  background: transparent;
+  color: inherit;
+  margin: 0;
+  z-index: 1;
+
+  transition:
+    background 200ms cubic-bezier(0.2, 0, 0, 1),
+    color 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Leading button ─────────────────────────────────────────────────
+   M3 spec: 24px right padding, 24px left padding (16px with icon).
+   Contains icon + label text.
+   ──────────────────────────────────────────────────────────────────── */
+
+.leading {
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 20px 0 0 20px;
+}
+
+/* When leading has an icon alongside text, left padding reduces */
+.leading.hasIcon {
+  padding-left: 16px;
+}
+
+/* When leading is icon-only (no label text) */
+.leading.iconOnly {
+  padding: 10px 12px;
+  min-width: 48px;
+}
+
+/* ── Trailing button ────────────────────────────────────────────────
+   M3 spec: compact square-ish zone. 48px wide, icon centered.
+   Only the right side has border-radius (pill end cap).
+   ──────────────────────────────────────────────────────────────────── */
+
+.trailing {
+  padding: 10px 12px;
+  border-radius: 0 20px 20px 0;
+  min-width: 48px;
+}
+
+/* ── Divider ────────────────────────────────────────────────────────
+   Thin vertical separator between the two zones.
+   M3 spec: 1px wide, same color as outline or on-surface at ~20%.
+   Sits atop the junction — no gap in container.
+   ──────────────────────────────────────────────────────────────────── */
+
+.divider {
+  position: relative;
+  z-index: 2;
+  width: 1px;
+  align-self: stretch;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   STATE LAYER
+   M3 overlay that sits below content but above the container.
+   Opacity: 0 (rest) → 0.08 (hover) → 0.10 (focus/pressed)
+   Each button half has its own independent state layer.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.leading:hover:not(:disabled) .stateLayer,
+.trailing:hover:not(:disabled) .stateLayer {
+  opacity: 0.08;
+}
+
+.leading:focus-visible:not(:disabled) .stateLayer,
+.trailing:focus-visible:not(:disabled) .stateLayer {
+  opacity: 0.10;
+}
+
+.leading:active:not(:disabled) .stateLayer,
+.trailing:active:not(:disabled) .stateLayer {
+  opacity: 0.10;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   RIPPLE INDICATOR
+   Radial expansion from touch/click point — GPU-composited.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  transform: scale(0);
+  opacity: 0.12;
+  background: currentColor;
+  animation: rippleExpand 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   FOCUS RING
+   M3 focus indicator — 2px outline offset for each button half.
+   Split button uses inset focus ring to stay within container bounds.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.leading:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+  z-index: 3;
+}
+
+.trailing:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+  z-index: 3;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   VARIANT: FILLED (highest emphasis)
+   Container: primary  |  Label/Icon: on-primary
+   State layer color: on-primary (white)
+   Hover: elevate to shadow level 1
+   ══════════════════════════════════════════════════════════════════════ */
+
+.filled {
+  background: var(--accent-color);
+  color: white;
+}
+
+.filled .stateLayer {
+  background: white;
+}
+
+.filled .divider {
+  background: color-mix(in srgb, white 20%, transparent);
+}
+
+.filled:hover {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.filled.disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  box-shadow: none;
+}
+
+.filled.disabled .divider {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   VARIANT: TONAL (medium emphasis — secondary container)
+   Container: secondary-container  |  Label: on-secondary-container
+   State layer: on-secondary-container
+   ══════════════════════════════════════════════════════════════════════ */
+
+.tonal {
+  background: var(
+    --accent-subtle,
+    color-mix(in srgb, var(--accent-color) 12%, var(--bg-secondary))
+  );
+  color: var(--accent-color);
+}
+
+.tonal .stateLayer {
+  background: var(--accent-color);
+}
+
+.tonal .divider {
+  background: color-mix(in srgb, var(--accent-color) 20%, transparent);
+}
+
+.tonal:hover {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.tonal.disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  box-shadow: none;
+}
+
+.tonal.disabled .divider {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   VARIANT: OUTLINED
+   Container: transparent + 1px border  |  Label: primary
+   State layer color: primary (accent)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.outlined {
+  background: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+}
+
+.outlined .stateLayer {
+  background: var(--accent-color);
+}
+
+.outlined .divider {
+  background: var(--border-color);
+}
+
+.outlined:hover {
+  border-color: var(--border-color);
+}
+
+.outlined .leading:focus-visible,
+.outlined .trailing:focus-visible {
+  outline-color: var(--accent-color);
+}
+
+.outlined.disabled {
+  background: transparent;
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+.outlined.disabled .divider {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* Outlined needs inner border-radius adjustments for the border */
+.outlined .leading {
+  border-radius: 19px 0 0 19px;
+}
+
+.outlined .trailing {
+  border-radius: 0 19px 19px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   VARIANT: ELEVATED
+   Container: surface-container-low + shadow level 1  |  Label: primary
+   Hover: shadow level 2
+   ══════════════════════════════════════════════════════════════════════ */
+
+.elevated {
+  background: var(--bg-secondary);
+  color: var(--accent-color);
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.elevated .stateLayer {
+  background: var(--accent-color);
+}
+
+.elevated .divider {
+  background: color-mix(in srgb, var(--text-primary) 16%, transparent);
+}
+
+.elevated:hover {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 2px 6px 2px rgb(0 0 0 / 0.10);
+}
+
+.elevated.disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  box-shadow: none;
+}
+
+.elevated.disabled .divider {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   DISABLED STATE
+   M3: 12% on-surface container, 38% on-surface content.
+   Applies to the whole group — pointer-events disabled.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.disabled {
+  pointer-events: none;
+}
+
+.disabled .leading,
+.disabled .trailing {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIZE: SMALL (32px height)
+   Compact for dense UIs — reduced padding, smaller text.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.small {
+  min-height: 32px;
+  border-radius: 16px;
+}
+
+.small .leading {
+  padding: 6px 16px;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 16px 0 0 16px;
+}
+
+.small .leading.hasIcon {
+  padding-left: 12px;
+}
+
+.small .leading.iconOnly {
+  padding: 6px 8px;
+  min-width: 36px;
+}
+
+.small .trailing {
+  padding: 6px 8px;
+  min-width: 36px;
+  border-radius: 0 16px 16px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIZE: LARGE (48px height)
+   Prominent for key actions — bigger touch target, larger type.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.large {
+  min-height: 48px;
+  border-radius: 24px;
+}
+
+.large .leading {
+  padding: 14px 32px;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 24px 0 0 24px;
+}
+
+.large .leading.hasIcon {
+  padding-left: 24px;
+}
+
+.large .leading.iconOnly {
+  padding: 14px 16px;
+  min-width: 56px;
+}
+
+.large .trailing {
+  padding: 14px 16px;
+  min-width: 56px;
+  border-radius: 0 24px 24px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MODIFIERS
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Full width — splits proportionally */
+.fullWidth {
+  width: 100%;
+}
+
+.fullWidth .leading {
+  flex: 1;
+}
+
+/* Loading — no pointer events on whole group */
+.loading {
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   INNER ELEMENTS
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Icon wrapper ───────────────────────────────────────────────────
+   Sits above state layer. Flex-centered, no shrink.
+   ──────────────────────────────────────────────────────────────────── */
+
+.icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Label ──────────────────────────────────────────────────────────
+   Above state layer. Inherits font styles from button.
+   ──────────────────────────────────────────────────────────────────── */
+
+.label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Trailing icon wrapper ──────────────────────────────────────────
+   Centered in trailing button. Rotates 180° when toggled.
+   GPU-composited transform for buttery animation.
+   ──────────────────────────────────────────────────────────────────── */
+
+.trailingIconWrap {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 250ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+}
+
+.trailingIconRotated {
+  transform: rotate(180deg);
+}
+
+/* ── Spinner ────────────────────────────────────────────────────────
+   Loading spinner in leading button zone.
+   ──────────────────────────────────────────────────────────────────── */
+
+.spinner {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: splitSpin 600ms linear infinite;
+}
+
+.small .spinner {
+  width: 12px;
+  height: 12px;
+  border-width: 1.5px;
+}
+
+.large .spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 2.5px;
+}
+
+@keyframes splitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   OUTLINED SPECIAL: inset radius compensation for 1px border
+   ══════════════════════════════════════════════════════════════════════ */
+
+.outlined.small .leading {
+  border-radius: 15px 0 0 15px;
+}
+
+.outlined.small .trailing {
+  border-radius: 0 15px 15px 0;
+}
+
+.outlined.large .leading {
+  border-radius: 23px 0 0 23px;
+}
+
+.outlined.large .trailing {
+  border-radius: 0 23px 23px 0;
+}

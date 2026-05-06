@@ -1,19 +1,31 @@
-/* ── CheckboxComponent ────────────────────────────── */
+/* ── CheckboxComponent · M3 Spec ─────────────────────── */
+/* M3 Container: 18×18px • 2px border-radius               */
+/* M3 State Layer: 40×40px circular touch target            */
+/* M3 Icon: checkmark / dash, animated with stroke-dash     */
+
+/* ── Root label ──────────────────────────────────────── */
 
 .checkbox {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   cursor: pointer;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.checkbox.labelStart {
+  flex-direction: row-reverse;
 }
 
 .checkbox.disabled {
-  opacity: 0.4;
+  opacity: 0.38;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
-/* Hidden native input */
+/* ── Hidden native input ─────────────────────────────── */
+
 .hiddenInput {
   position: absolute;
   opacity: 0;
@@ -22,59 +34,151 @@
   pointer-events: none;
 }
 
-/* Visual box */
-.box {
+/* ── Container (holds state-layer + box) ─────────────── */
+
+.container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid var(--border-color);
-  border-radius: 3px;
-  background: var(--select-bg);
-  transition:
-    background 0.15s,
-    border-color 0.15s,
-    box-shadow 0.15s;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
 }
 
-.box:hover {
-  border-color: color-mix(in srgb, var(--accent-color) 50%, transparent);
+/* ── State layer — 40×40 circular ripple target ──────── */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s ease;
+  will-change: background;
+  pointer-events: none;
 }
 
-.checked {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
+/* Hover — unchecked */
+.checkbox:hover .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, transparent);
 }
 
-.checked:hover {
-  background: var(--accent-hover, var(--accent-color));
-  border-color: var(--accent-hover, var(--accent-color));
+/* Hover — checked/indeterminate (selected) */
+.checkbox:hover .selected ~ .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
 }
 
-/* SVG checkmark */
-.checkmark {
-  width: 12px;
-  height: 12px;
-  color: #fff;
-  animation: checkIn 0.15s ease-out;
+/* Focus-visible (keyboard navigation) */
+.hiddenInput:focus-visible ~ .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
-@keyframes checkIn {
+/* Active / pressed — unchecked */
+.checkbox:active .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+/* Active / pressed — selected */
+.checkbox:active .selected ~ .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* ── Error state layer overrides ─────────────────────── */
+
+.error:hover .stateLayer {
+  background: color-mix(in srgb, var(--color-error, #b3261e) 8%, transparent);
+}
+
+.error:active .stateLayer {
+  background: color-mix(in srgb, var(--color-error, #b3261e) 12%, transparent);
+}
+
+/* ── Visual box — the 18×18 checkbox container ───────── */
+
+.box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-color, #49454f);
+  border-radius: 2px;
+  background: transparent;
+  transition:
+    background 0.2s cubic-bezier(0.2, 0, 0, 1),
+    border-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Checked / indeterminate — filled state */
+.box.selected {
+  background: var(--accent-color, #6750a4);
+  border-color: var(--accent-color, #6750a4);
+}
+
+/* Error unchecked */
+.box.errorBox {
+  border-color: var(--color-error, #b3261e);
+}
+
+/* Error + checked */
+.box.errorBox.selected {
+  background: var(--color-error, #b3261e);
+  border-color: var(--color-error, #b3261e);
+}
+
+/* ── Icon — SVG checkmark / dash ─────────────────────── */
+
+.icon {
+  width: 14px;
+  height: 14px;
+  color: var(--checkbox-icon-color, #fff);
+  flex-shrink: 0;
+}
+
+/* Checkmark draw-in animation via stroke-dashoffset (GPU-composited) */
+.checkPath {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: checkDraw 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes checkDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Dash scale-in animation */
+.dashPath {
+  animation: dashIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dashIn {
   from {
-    transform: scale(0.5);
     opacity: 0;
+    transform: scaleX(0);
+    transform-origin: center;
   }
   to {
-    transform: scale(1);
     opacity: 1;
+    transform: scaleX(1);
+    transform-origin: center;
   }
 }
 
-/* Label text */
+/* ── Label text ──────────────────────────────────────── */
+
 .label {
-  font-size: 13px;
-  color: var(--text-primary);
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary, #1d1b20);
+  letter-spacing: 0.025em;
+}
+
+/* Error label */
+.error .label {
+  color: var(--color-error, #b3261e);
 }

@@ -1,178 +1,286 @@
-/* ── SliderComponent ──────────────────────────────────
-   Premium custom slider with gradient fill, glassmorphic
-   knob, and GPU-accelerated hover/drag interactions.
-   Matches the design language of ToggleSwitch.
-   ───────────────────────────────────────────────────── */
+/* ── SliderComponent · M3 Spec ───────────────────────────
+   M3 Active track:    4px height, primary color, 2px radius
+   M3 Inactive track:  4px height, surface-variant color
+   M3 Handle (thumb):  20px diameter, primary fill, shadow
+   M3 State layer:     40px diameter, centered on thumb
+   M3 Value indicator: rounded label above thumb on drag
+   M3 Tick marks:      4×4px circles on track at each step
+   M3 Stop indicators: 4×4px dots at track endpoints
+   ──────────────────────────────────────────────────────── */
 
-/* ── Root ── */
+/* ── Root ────────────────────────────────────────────── */
+
 .slider {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   width: 100%;
-  padding: 4px 0;
-  cursor: pointer;
+  padding: 8px 0;
   user-select: none;
   touch-action: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .slider.disabled {
-  opacity: 0.35;
+  opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* ── Track ── */
+/* ── Track wrapper — ensures proper spacing for thumbs ─ */
+
+.trackWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* Extra horizontal padding for thumb overhang (10px = half of 20px thumb) */
+  padding: 0 10px;
+}
+
+/* ── Track — the interactive hit area ────────────────── */
+
 .track {
   position: relative;
   width: 100%;
-  height: 6px;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
-  overflow: visible;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  height: 44px;               /* M3 48dp minimum touch target via padding */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-.slider.hovered .track,
-.slider.dragging .track {
-  border-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-color) 8%, transparent);
-}
+/* ── Inactive track — background rail ────────────────── */
 
-.slider.dragging .track {
-  border-color: color-mix(in srgb, var(--accent-color) 55%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 12%, transparent);
-}
-
-/* ── Fill gradient ── */
-.fill {
+.inactiveTrack {
   position: absolute;
-  top: -1px;
-  left: -1px;
-  height: calc(100% + 2px);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--accent-color) 70%, #6366f1) 0%,
-    var(--accent-color) 100%
-  );
-  border-radius: 3px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--slider-inactive-track, var(--surface-variant, color-mix(in srgb, var(--text-primary, #49454f) 12%, var(--bg-primary, #e7e0ec))));
+  border-radius: 2px;
   pointer-events: none;
-  transition: width 0.06s linear;
-  will-change: width;
+}
+
+/* ── Active track — filled portion ───────────────────── */
+
+.activeTrack {
+  position: absolute;
+  height: 4px;
+  background: var(--slider-active-track, var(--accent-color, #6750a4));
+  border-radius: 2px;
+  pointer-events: none;
+  transition: width 0.05s linear;
+  will-change: width, left;
   min-width: 0;
 }
 
-/* ── Knob wrapper (positions the knob + optional glow) ── */
-.knobWrap {
+/* ── Stop indicators — 4×4 dots at track endpoints ───── */
+
+.stopIndicator {
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  pointer-events: none;
-  will-change: left;
-}
-
-/* ── Knob circle ── */
-.knob {
-  width: 14px;
-  height: 14px;
-  background: #fff;
-  border: 2px solid var(--accent-color);
-  border-radius: 50%;
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.25),
-    0 0 0 0 transparent;
-  transition:
-    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.15s;
-  will-change: transform;
-}
-
-.slider.hovered .knob {
-  transform: scale(1.12);
-  box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.3),
-    0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent);
-}
-
-.slider.dragging .knob {
-  transform: scale(1.2);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.35),
-    0 0 0 5px color-mix(in srgb, var(--accent-color) 20%, transparent);
-  border-color: var(--accent-hover, var(--accent-color));
-}
-
-/* ── Knob glow ring (only visible during drag) ── */
-.knobGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 28px;
-  height: 28px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--accent-color) 12%, transparent);
-  animation: pulseGlow 1.2s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
-}
-
-/* ── Compact variant ── */
-.slider.compact {
-  padding: 2px 0;
-}
-
-.compact .track {
+  width: 4px;
   height: 4px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.compact .knob {
-  width: 10px;
-  height: 10px;
-  border-width: 1.5px;
+.stopStart {
+  left: 0;
+  background: var(--slider-stop-active, var(--accent-color, #6750a4));
 }
 
-.compact .slider.hovered .knob {
-  transform: scale(1.1);
+.stopEnd {
+  right: 0;
+  background: var(--slider-stop-inactive, var(--text-secondary, #49454f));
 }
 
-.compact .slider.dragging .knob {
-  transform: scale(1.15);
+/* Show stop indicators when there's some fill */
+.track .stopStart,
+.track .stopEnd {
+  opacity: 0.38;
 }
 
-.compact .knobGlow {
+/* ── Tick marks — discrete step indicators ───────────── */
+
+.tickMark {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  z-index: 1;
+}
+
+.tickActive {
+  background: var(--slider-tick-active, color-mix(in srgb, var(--accent-color, #6750a4) 38%, transparent));
+}
+
+.tickInactive {
+  background: var(--slider-tick-inactive, color-mix(in srgb, var(--text-primary, #49454f) 38%, transparent));
+}
+
+/* ── Thumb container — positions thumb + state layer ─── */
+
+.thumbContainer {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: left;
+  outline: none;
+}
+
+/* ── State layer — 40×40 M3 circular hover/press zone ── */
+
+.stateLayer {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s ease;
+  will-change: background;
+  pointer-events: none;
+}
+
+/* Hover state */
+.thumbContainer:hover .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+}
+
+/* Focus-visible state (keyboard) */
+.thumbContainer:focus-visible .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* Active / pressed state */
+.thumbPressed .stateLayer,
+.thumbDragging .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* ── Thumb handle — the 20px primary circle ──────────── */
+
+.thumb {
+  position: relative;
   width: 20px;
   height: 20px;
+  border-radius: 50%;
+  background: var(--slider-thumb, var(--accent-color, #6750a4));
+  box-shadow:
+    0 1px 3px 1px rgba(0, 0, 0, 0.15),
+    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+  z-index: 1;
 }
 
-/* ── Tick marks ── */
-.ticks {
+/* Hover — slight scale-up */
+.thumbContainer:hover .thumb {
+  box-shadow:
+    0 2px 4px 1px rgba(0, 0, 0, 0.18),
+    0 1px 3px 0 rgba(0, 0, 0, 0.33);
+}
+
+/* Pressed/dragging — thumb grows per M3 spec */
+.thumbPressed .thumb,
+.thumbDragging .thumb {
+  transform: scale(1.1);
+  box-shadow:
+    0 2px 6px 2px rgba(0, 0, 0, 0.15),
+    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+
+/* Focus-visible ring (keyboard) */
+.thumbContainer:focus-visible .thumb {
+  outline: 2px solid var(--slider-focus-ring, var(--accent-color, #6750a4));
+  outline-offset: 2px;
+}
+
+/* ── Value indicator — M3 teardrop label ─────────────── */
+
+.valueIndicator {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
   display: flex;
-  justify-content: space-between;
-  padding: 0 1px;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 14px;
+  background: var(--slider-indicator-bg, var(--accent-color, #6750a4));
+  color: var(--slider-indicator-color, var(--accent-text, #fff));
+  pointer-events: none;
+  z-index: 10;
+  /* Scale-in entrance animation */
+  animation: indicatorIn 0.15s cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
-.tick {
-  font-size: 9px;
-  color: var(--text-tertiary);
+@keyframes indicatorIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+}
+
+/* ── Indicator stem (pseudo-element teardrop tail) ───── */
+
+.valueIndicator::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--slider-indicator-bg, var(--accent-color, #6750a4));
+}
+
+.valueLabel {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
-  opacity: 0.6;
-  transition: opacity 0.15s;
 }
 
-.slider.hovered .tick {
-  opacity: 0.9;
+/* ── Disabled-specific overrides ─────────────────────── */
+
+.disabled .inactiveTrack {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+.disabled .activeTrack {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
+}
+
+.disabled .thumb {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
+  box-shadow: none;
+}
+
+.disabled .tickActive,
+.disabled .tickInactive {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
 }

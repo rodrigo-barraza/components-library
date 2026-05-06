@@ -1,0 +1,191 @@
+/* ── RadioComponent · M3 Spec ────────────────────────── */
+/* M3 Container: 20×20px • fully circular (border-radius: 50%)  */
+/* M3 State Layer: 40×40px circular touch target                 */
+/* M3 Icon: 10×10px inner filled dot, animated with scale        */
+/* M3 Outline: 2px ring in on-surface-variant (unchecked)        */
+/* M3 Selected: primary color ring + primary fill dot            */
+
+/* ── Root label ──────────────────────────────────────── */
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio.labelStart {
+  flex-direction: row-reverse;
+}
+
+.radio.disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Hidden native input ─────────────────────────────── */
+
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── Container (holds state-layer + circle) ──────────── */
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+/* ── State layer — 40×40 circular ripple target ──────── */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s ease;
+  will-change: background;
+  pointer-events: none;
+}
+
+/* Hover — unselected */
+.radio:hover .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, transparent);
+}
+
+/* Hover — selected */
+.radio:hover .selected ~ .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+}
+
+/* Focus-visible (keyboard navigation) — unselected */
+.hiddenInput:focus-visible ~ .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+/* Focus-visible (keyboard navigation) — selected */
+.hiddenInput:focus-visible ~ .selected ~ .stateLayer,
+.selected ~ .hiddenInput:focus-visible ~ .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* Active / pressed — unselected */
+.radio:active .stateLayer {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+/* Active / pressed — selected */
+.radio:active .selected ~ .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* ── Error state layer overrides ─────────────────────── */
+
+.error:hover .stateLayer {
+  background: color-mix(in srgb, var(--color-error, #b3261e) 8%, transparent);
+}
+
+.error:active .stateLayer {
+  background: color-mix(in srgb, var(--color-error, #b3261e) 12%, transparent);
+}
+
+/* ── Visual circle — the 20×20 radio outer ring ──────── */
+
+.circle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color, #49454f);
+  border-radius: 50%;
+  background: transparent;
+  transition:
+    border-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Selected — primary-colored ring */
+.circle.selected {
+  border-color: var(--accent-color, #6750a4);
+}
+
+/* Error — unselected */
+.circle.errorCircle {
+  border-color: var(--color-error, #b3261e);
+}
+
+/* Error — selected */
+.circle.errorCircle.selected {
+  border-color: var(--color-error, #b3261e);
+}
+
+/* ── Inner dot — 10×10 filled indicator ──────────────── */
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-color, #6750a4);
+  animation: dotIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Error dot */
+.errorDot {
+  background: var(--color-error, #b3261e);
+}
+
+/* Dot scale-in animation (GPU-composited via transform) */
+@keyframes dotIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Label text ──────────────────────────────────────── */
+
+.label {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary, #1d1b20);
+  letter-spacing: 0.025em;
+}
+
+/* Error label */
+.error .label {
+  color: var(--color-error, #b3261e);
+}
+
+/* ── RadioGroup — vertical/horizontal layout ─────────── */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.group.horizontal {
+  flex-direction: row;
+  gap: 16px;
+  flex-wrap: wrap;
+}
