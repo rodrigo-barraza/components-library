@@ -61,6 +61,9 @@ export const DATE_PRESETS = [
   { label: "All Time", getValue: () => ({ from: "", to: "" }) },
 ];
 
+/** Date-only presets — excludes sub-day time-based presets. */
+export const DATE_PRESETS_DATE_ONLY = DATE_PRESETS.filter((p) => !p.relative);
+
 /**
  * Parse a date string. Handles both YYYY-MM-DD and ISO datetime formats.
  */

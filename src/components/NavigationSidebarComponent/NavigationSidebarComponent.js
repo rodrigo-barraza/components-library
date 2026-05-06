@@ -66,7 +66,8 @@ export default function NavigationSidebarComponent({
   const THEME_META = {
     dark:     { nextLabel: "Light",    NextIcon: Icons.Sun,      title: "Switch to light mode" },
     light:    { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
-    tropical: { nextLabel: "Dark",     NextIcon: Icons.Moon,     title: "Switch to dark mode" },
+    tropical: { nextLabel: "Oceanic",  NextIcon: Icons.Waves,    title: "Switch to oceanic mode" },
+    oceanic:  { nextLabel: "Dark",     NextIcon: Icons.Moon,     title: "Switch to dark mode" },
   };
   const themeMeta = THEME_META[theme] || THEME_META.dark;
 

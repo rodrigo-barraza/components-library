@@ -54,7 +54,7 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("toggles through dark → light → tropical", async () => {
+  it("toggles through dark → light → tropical → oceanic", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
@@ -65,6 +65,10 @@ describe("ThemeProvider", () => {
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("tropical");
     expect(document.documentElement.getAttribute("data-theme")).toBe("tropical");
+
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("oceanic");
+    expect(document.documentElement.getAttribute("data-theme")).toBe("oceanic");
 
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("dark");
@@ -114,16 +118,19 @@ describe("ThemeProvider", () => {
     expect(screen.getByTestId("theme").textContent).toBe("dark");
   });
 
-  it("setTheme accepts tropical via toggle cycle", async () => {
+  it("setTheme accepts tropical and oceanic via toggle cycle", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    // Cycle dark → light → tropical
+    // Cycle dark → light → tropical → oceanic
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("light");
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("tropical");
     expect(document.documentElement.getAttribute("data-theme")).toBe("tropical");
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("oceanic");
+    expect(document.documentElement.getAttribute("data-theme")).toBe("oceanic");
   });
 
   it("cycles through custom multi-theme list", async () => {

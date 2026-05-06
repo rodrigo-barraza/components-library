@@ -9,7 +9,8 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *
  *   :root { --bg-primary: #0a0a0f; }                    ← dark (default)
  *   [data-theme="light"]    { --bg-primary: #f5f5f7; }  ← light override
- *   [data-theme="tropical"] { --bg-primary: #0c1a1a; }  ← tropical override
+ *   [data-theme="tropical"] { --bg-primary: #1a120e; }  ← tropical override
+ *   [data-theme="oceanic"]  { --bg-primary: #060d18; }  ← oceanic override
  *
  * Designed for extensibility — `themes` prop accepts an array of valid theme
  * names. Toggle cycles through them in order; `setTheme` sets directly.
@@ -26,7 +27,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *   const { theme, toggleTheme, setTheme } = useTheme();
  */
 
-const THEMES_DEFAULT = ["dark", "light", "tropical"];
+const THEMES_DEFAULT = ["dark", "light", "tropical", "oceanic"];
 
 const ThemeContext = createContext({
   theme: "dark",
@@ -40,7 +41,7 @@ const ThemeContext = createContext({
  * @param {Object} props
  * @param {string}   [props.storageKey="app:theme"]  — localStorage key for persistence
  * @param {string}   [props.defaultTheme="dark"]     — fallback when nothing is stored
- * @param {string[]} [props.themes=["dark","light","tropical"]] — ordered list of valid theme names
+ * @param {string[]} [props.themes=["dark","light","tropical","oceanic"]] — ordered list of valid theme names
  * @param {string}   [props.attribute="data-theme"]  — HTML attribute set on <html>
  * @param {React.ReactNode} props.children
  */

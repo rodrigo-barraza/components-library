@@ -115,6 +115,8 @@ export default function DatePickerComponent({
   defaultOpen = false,
   onClose,
   hideTrigger = false,
+  presets = DATE_PRESETS,
+  showTime = true,
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const [viewDate, setViewDate] = useState(() => {
@@ -336,7 +338,7 @@ export default function DatePickerComponent({
           style={{ top: dropdownPos.top, left: dropdownPos.left }}
         >
           <div className={styles.presets}>
-            {DATE_PRESETS.map((p) => {
+            {presets.map((p) => {
               const isActive = getActiveDatePreset(from, to) === p.label;
               return (
                 <button
@@ -382,7 +384,7 @@ export default function DatePickerComponent({
               <div className={styles.selectHint}>Click a second date to complete the range</div>
             )}
 
-            {showTimeRow && !selecting && (
+            {showTime && showTimeRow && !selecting && (
               <div className={styles.timeRow}>
                 <div className={styles.timeField}>
                   <Clock size={12} className={styles.timeIcon} />
