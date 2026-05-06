@@ -1,6 +1,6 @@
 # @rodrigo-barraza/components
 
-Shared React component library for the Sun ecosystem. Provides a standardized set of UI primitives, layout components, hooks, and providers used across all client applications (`prism-client`, `portal-client`, `ledger-client`, `lights-client`, `buzzer-client`, `messages-client`, `clock-crew-client`).
+Shared React component library for the Sun ecosystem. Provides a standardized set of UI primitives, layout components, hooks, and providers used across all client applications (`prism-client`, `portal-client`, `ledger-client`, `lights-client`, `messages-client`, `clock-crew-client`).
 
 ## Installation
 
