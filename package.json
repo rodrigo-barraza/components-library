@@ -19,6 +19,7 @@
   },
   "peerDependencies": {
     "lucide-react": ">=0.300.0",
+    "luxon": ">=3.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
