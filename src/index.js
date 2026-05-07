@@ -10,6 +10,7 @@ export { default as CollapsibleBlockComponent } from "./components/CollapsibleBl
 export { default as CopyButtonComponent } from "./components/CopyButtonComponent/CopyButtonComponent.js";
 export { default as CountBadgeComponent } from "./components/CountBadgeComponent/CountBadgeComponent.js";
 export { default as DatePickerComponent } from "./components/DatePickerComponent/DatePickerComponent.js";
+export { default as DateTimeBadgeComponent } from "./components/DateTimeBadgeComponent/DateTimeBadgeComponent.js";
 export { default as DialogComponent } from "./components/DialogComponent/DialogComponent.js";
 export { default as DividerComponent } from "./components/DividerComponent/DividerComponent.js";
 export { default as DiscordChatComponent } from "./components/DiscordChatComponent/DiscordChatComponent.js";

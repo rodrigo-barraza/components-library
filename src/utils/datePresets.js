@@ -3,18 +3,9 @@
  * Single source of truth for DatePickerComponent.
  */
 
-export function fmtDate(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
+import { toLocalDateString as fmtDate, daysAgo } from "@rodrigo-barraza/utilities-library";
 
-export function daysAgo(n) {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d;
-}
+export { fmtDate, daysAgo };
 
 function isoAgo(ms) {
   return new Date(Date.now() - ms).toISOString();

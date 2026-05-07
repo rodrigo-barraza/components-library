@@ -52,5 +52,8 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@rodrigo-barraza/utilities-library": "github:rodrigo-barraza/utilities-library"
   }
 }
