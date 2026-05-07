@@ -1,0 +1,17 @@
+/* ── AddressBadgeComponent ─────────────────────────── */
+
+.badge {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.link:hover .badge {
+  border-color: color-mix(in srgb, var(--info) 45%, transparent);
+}

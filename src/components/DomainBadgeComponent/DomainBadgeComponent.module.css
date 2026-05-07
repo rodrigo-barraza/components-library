@@ -1,0 +1,17 @@
+/* ── DomainBadgeComponent ──────────────────────────── */
+
+.badge {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 10px;
+}
+
+.link {
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.link:hover .badge {
+  border-color: color-mix(in srgb, var(--accent-color) 50%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-color) 15%, transparent);
+}

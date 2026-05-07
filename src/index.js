@@ -58,7 +58,13 @@ export {
   MenuGroupLabel,
   SubMenu,
 } from "./components/MenuComponent/MenuComponent.js";
+export { default as AddressBadgeComponent } from "./components/AddressBadgeComponent/AddressBadgeComponent.js";
+export { default as DeviceBadgeComponent } from "./components/DeviceBadgeComponent/DeviceBadgeComponent.js";
+export { default as DomainBadgeComponent } from "./components/DomainBadgeComponent/DomainBadgeComponent.js";
+export { default as PortBadgeComponent } from "./components/PortBadgeComponent/PortBadgeComponent.js";
+export { default as RepositoryBadgeComponent } from "./components/RepositoryBadgeComponent/RepositoryBadgeComponent.js";
 export { default as ResponseTimeBadgeComponent } from "./components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.js";
+export { default as StatusBadgeComponent } from "./components/StatusBadgeComponent/StatusBadgeComponent.js";
 export { default as VisibilityBadgeComponent } from "./components/VisibilityBadgeComponent/VisibilityBadgeComponent.js";
 
 // ── Providers ───────────────────────────────────────────
