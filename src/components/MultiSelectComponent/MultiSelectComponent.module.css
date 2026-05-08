@@ -1,0 +1,251 @@
+.dropdown {
+  position: relative;
+  width: fit-content;
+  min-width: fit-content;
+}
+
+/* ── Trigger ─────────────────────────────────────────── */
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  min-height: var(--input-height, 36px);
+  padding: 4px 10px 4px 10px;
+  background: var(--select-bg, var(--bg-secondary));
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-sm);
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  user-select: none;
+}
+
+.trigger:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.triggerOpen {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.triggerDisabled {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ── Trigger content area ────────────────────────────── */
+
+.triggerContent {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+.triggerIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Placeholder / "All" label */
+.triggerLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+/* ── Selected value chips ────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-color);
+  background: var(--accent-subtle, rgba(99, 102, 241, 0.1));
+  border-radius: var(--border-radius-sm, 4px);
+  white-space: nowrap;
+  line-height: 1.4;
+  animation: chipIn 0.15s ease-out;
+}
+
+.chipRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  opacity: 0.6;
+  cursor: pointer;
+  border-radius: 50%;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+  flex-shrink: 0;
+}
+
+.chipRemove:hover {
+  opacity: 1;
+  background: rgba(99, 102, 241, 0.15);
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Chevron ─────────────────────────────────────────── */
+
+.chevron {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  margin-left: 2px;
+  transition: transform 0.2s;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Menu ────────────────────────────────────────────── */
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  background: var(--select-option-bg, var(--bg-surface));
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 4px;
+  animation: slideDown 0.15s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Option row ──────────────────────────────────────── */
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  background: none;
+  border: none;
+  border-radius: 2px;
+  color: var(--select-option-text, var(--text-primary));
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.option:hover {
+  background: var(--accent-glow, rgba(99, 102, 241, 0.08));
+}
+
+.optionSelected {
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.optionDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.optionDisabled:hover {
+  background: none;
+}
+
+/* ── Inline checkbox indicator ───────────────────────── */
+
+.optionCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.optionCheckSelected {
+  background: var(--accent-color, #6366f1);
+  border-color: var(--accent-color, #6366f1);
+}
+
+.optionCheckIcon {
+  width: 10px;
+  height: 10px;
+  color: #fff;
+}
+
+.optionCheckPath {
+  stroke-dasharray: 14;
+  stroke-dashoffset: 14;
+  animation: checkDraw 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes checkDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.optionIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.optionLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

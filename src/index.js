@@ -25,6 +25,7 @@ export {
 export { default as IconButtonComponent } from "./components/IconButtonComponent/IconButtonComponent.js";
 export { default as InputComponent } from "./components/InputComponent/InputComponent.js";
 export { default as ModalComponent } from "./components/ModalComponent/ModalComponent.js";
+export { default as MultiSelectComponent } from "./components/MultiSelectComponent/MultiSelectComponent.js";
 export { default as NavigationDrawerComponent } from "./components/NavigationDrawerComponent/NavigationDrawerComponent.js";
 export { default as NavigationRailComponent } from "./components/NavigationRailComponent/NavigationRailComponent.js";
 export { default as NavigationSidebarComponent } from "./components/NavigationSidebarComponent/NavigationSidebarComponent.js";
