@@ -449,6 +449,11 @@
   position: relative;
 }
 
+/* Ensure messageContent lands in the 1fr content column, not the 40px avatar column */
+.messageRowReply .messageContent {
+  grid-column: 2;
+}
+
 /* ── Reply Context Bar ─────────────────────────────────────────── */
 /* Compact bar showing who was replied to — spans full width above
    the avatar + message body, matching Discord's native reply UI. */

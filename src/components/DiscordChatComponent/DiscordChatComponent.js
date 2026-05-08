@@ -584,18 +584,19 @@ function MessageActions({ messageId, onOpenPicker, pickerMessageId }) {
   );
 }
 
-// ── Emoji Reactions ──────────────────────────────────────────────
+// ── Emoji Reactions ──────────────────────────────────────────
 // Renders emoji reaction pills below message content, matching
 // Discord's native reaction capsules with count badges.
 // Clicking a pill triggers a reaction via the bot. Already-reacted
 // pills show a blurple highlight and are non-repeatable.
-function Reactions({ reactions, messageId, reactedSet, onReact, onOpenPicker }) {
-  const addBtnRef = useRef(null);
-  // Show nothing if no existing reactions and no react capability
-  if (!reactions?.length && !onReact) return null;
+// The "+" add-reaction button lives in the hover MessageActions bar,
+// not inline here — matching Discord's native UX.
+function Reactions({ reactions, messageId, reactedSet, onReact }) {
+  // Show nothing if no existing reactions
+  if (!reactions?.length) return null;
   return (
     <div className={styles.reactions}>
-      {reactions?.map((r, i) => {
+      {reactions.map((r, i) => {
         const emoji = r.emoji;
         const emojiIdentifier = emoji.id ? `${emoji.name}:${emoji.id}` : emoji.name;
         const reactKey = buildReactKey(messageId, emojiIdentifier);
@@ -637,18 +638,6 @@ function Reactions({ reactions, messageId, reactedSet, onReact, onOpenPicker }) 
           </button>
         );
       })}
-      {/* Add reaction "+" pill inline with existing reactions */}
-      {onReact && (
-        <button
-          ref={addBtnRef}
-          className={styles.addReactionPill}
-          type="button"
-          onClick={() => onOpenPicker?.(messageId, addBtnRef)}
-          title="Add Reaction"
-        >
-          +
-        </button>
-      )}
     </div>
   );
 }
@@ -836,6 +825,19 @@ export default function DiscordChatComponent({
             if (firstMsg.guildName) {
               setServerName((prev) => prev || firstMsg.guildName);
             }
+            // Build guild icon/banner CDN URLs from stored hashes
+            if (firstMsg.guildIcon && firstMsg.guildId) {
+              const ext = firstMsg.guildIcon.startsWith("a_") ? "gif" : "png";
+              const url = `https://cdn.discordapp.com/icons/${firstMsg.guildId}/${firstMsg.guildIcon}.${ext}?size=128`;
+              setServerIcon((prev) => prev || url);
+            }
+            if (firstMsg.guildBanner && firstMsg.guildId) {
+              const url = `https://cdn.discordapp.com/banners/${firstMsg.guildId}/${firstMsg.guildBanner}.png?size=480`;
+              setServerBannerUrl((prev) => prev || url);
+            } else if (firstMsg.guildSplash && firstMsg.guildId) {
+              const url = `https://cdn.discordapp.com/splashes/${firstMsg.guildId}/${firstMsg.guildSplash}.png?size=480`;
+              setServerBannerUrl((prev) => prev || url);
+            }
             // Build channel name map from all messages in the batch
             setChannels((prev) => {
               // If we already have real names (not just IDs), keep them
@@ -884,6 +886,25 @@ export default function DiscordChatComponent({
           setMessages((prev) => prev.filter((msg) => !deletedSet.has(msg.id)));
         } catch (err) {
           console.error("[DiscordChat] Delete event parse error:", err);
+        }
+      });
+
+      // Reaction (and other field) changes on existing messages.
+      // The server detects when a message's reactions fingerprint
+      // changes and sends the full updated message object.
+      es.addEventListener("update", (e) => {
+        try {
+          const { messages: updatedMsgs } = JSON.parse(e.data);
+          if (!updatedMsgs?.length) return;
+          const updateMap = new Map(updatedMsgs.map((m) => [m.id, m]));
+          setMessages((prev) =>
+            prev.map((msg) => {
+              const updated = updateMap.get(msg.id);
+              return updated ? { ...msg, reactions: updated.reactions } : msg;
+            }),
+          );
+        } catch (err) {
+          console.error("[DiscordChat] Update event parse error:", err);
         }
       });
 
@@ -956,6 +977,33 @@ export default function DiscordChatComponent({
       persistReactedSet(next);
       return next;
     });
+
+    // Optimistic: update message reactions in-place so the UI reflects the change immediately.
+    // Parses the emojiIdentifier ("name:id" for custom, raw string for Unicode) and either
+    // increments an existing reaction's count or appends a new reaction entry.
+    setMessages((prev) =>
+      prev.map((msg) => {
+        if (msg.id !== messageId) return msg;
+        const reactions = msg.reactions ? [...msg.reactions] : [];
+        const isCustom = /^\w+:\d+$/.test(emojiIdentifier);
+        const idx = reactions.findIndex((r) => {
+          if (isCustom) return r.emoji.id === emojiIdentifier.split(":")[1];
+          return r.emoji.name === emojiIdentifier && !r.emoji.id;
+        });
+        if (idx >= 0) {
+          reactions[idx] = { ...reactions[idx], count: reactions[idx].count + 1 };
+        } else {
+          // New reaction
+          if (isCustom) {
+            const [name, id] = emojiIdentifier.split(":");
+            reactions.push({ emoji: { id, name, animated: false }, count: 1 });
+          } else {
+            reactions.push({ emoji: { id: null, name: emojiIdentifier, animated: false }, count: 1 });
+          }
+        }
+        return { ...msg, reactions };
+      }),
+    );
 
     try {
       const res = await fetch(reactUrl, {
@@ -1179,7 +1227,6 @@ export default function DiscordChatComponent({
                             messageId={msg.id}
                             reactedSet={reactedSet}
                             onReact={handleReact}
-                            onOpenPicker={handleOpenPicker}
                           />
                         </div>
                       </div>
@@ -1225,7 +1272,6 @@ export default function DiscordChatComponent({
                             messageId={msg.id}
                             reactedSet={reactedSet}
                             onReact={handleReact}
-                            onOpenPicker={handleOpenPicker}
                           />
                         </div>
                       </div>
