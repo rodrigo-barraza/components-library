@@ -477,10 +477,11 @@ export default function DiscordChatComponent({
       .then((data) => {
         if (cancelled) return;
         if (data.guildName) setServerName(data.guildName);
-        // Filter to only the whitelisted channels, preserve order
-        const filtered = CHANNEL_IDS
-          .map((id) => data.channels?.find((ch) => ch.id === id))
-          .filter(Boolean);
+        // Filter to only the whitelisted channels, sorted by Discord position
+        const idSet = new Set(CHANNEL_IDS);
+        const filtered = (data.channels || [])
+          .filter((ch) => idSet.has(ch.id))
+          .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
         setChannels(filtered.length > 0 ? filtered : CHANNEL_IDS.map((id) => ({ id, name: id })));
       })
       .catch(() => {
