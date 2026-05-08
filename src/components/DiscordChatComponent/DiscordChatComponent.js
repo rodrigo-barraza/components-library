@@ -17,6 +17,32 @@ function getFallbackColor(userId) {
   return ROLE_COLORS[Math.abs(hash) % ROLE_COLORS.length];
 }
 
+// ── Role Color Style Resolver ────────────────────────────────────
+// Returns an inline style object for name color. If the author has
+// Discord's Enhanced Role Styles (gradient or holographic), this
+// produces a CSS `background-clip: text` gradient. Otherwise, it
+// returns a simple `color` property.
+function resolveRoleColorStyle(author) {
+  const roleColors = author.roleColors;
+  if (roleColors?.secondary) {
+    // Build gradient stops: primary → secondary, optionally tertiary
+    const stops = [roleColors.primary, roleColors.secondary];
+    if (roleColors.tertiary) stops.push(roleColors.tertiary);
+    return {
+      background: `linear-gradient(90deg, ${stops.join(", ")})`,
+      backgroundClip: "text",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      color: "transparent",
+      // Underline decoration color must be explicit — color: transparent
+      // would make text-decoration invisible without this.
+      textDecorationColor: roleColors.primary,
+    };
+  }
+  // Flat color (solid or fallback)
+  return { color: author.roleColor || getFallbackColor(author.id) };
+}
+
 const AVATAR_COLORS = [
   "#5865f2", "#57f287", "#fee75c", "#eb459e", "#ed4245",
   "#3ba55d", "#faa61a", "#99aab5",
@@ -349,42 +375,280 @@ function ReplyContext({ replyTo, messageMap }) {
   if (!ref) {
     // Referenced message is outside the loaded window — show fallback
     return (
-      <div className={styles.replyBar}>
+      <>
         <div className={styles.replySpine} />
-        <span className={styles.replyContent}>
-          <span className={styles.replyUnknown}>Original message was deleted or is not loaded</span>
-        </span>
-      </div>
+        <div className={styles.replyBar}>
+          <span className={styles.replyContent}>
+            <span className={styles.replyUnknown}>Original message was deleted or is not loaded</span>
+          </span>
+        </div>
+      </>
     );
   }
-  const nameColor = ref.author.roleColor || getFallbackColor(ref.author.id);
+  const nameStyle = resolveRoleColorStyle(ref.author);
   const snippet = ref.content || ref.cleanContent || "";
   const truncated = snippet.length > 80 ? snippet.slice(0, 77) + "…" : snippet;
   const hasAttachment = ref.attachments?.length > 0 || ref.embeds?.length > 0;
   return (
-    <div className={styles.replyBar}>
+    <>
       <div className={styles.replySpine} />
-      {ref.author.avatarUrl ? (
-        <img src={ref.author.avatarUrl} alt="" className={styles.replyAvatar} loading="lazy" />
-      ) : (
-        <div className={styles.replyAvatarFallback} style={{ background: getAvatarColor(ref.author.id) }}>
-          {(ref.author.displayName || "?")[0].toUpperCase()}
-        </div>
-      )}
-      {ref.author.isBot && (
-        <span className={styles.replyBotBadge}>
-          <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
-            <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
-          </svg>
-          APP
+      <div className={styles.replyBar}>
+        {ref.author.avatarUrl ? (
+          <img src={ref.author.avatarUrl} alt="" className={styles.replyAvatar} loading="lazy" />
+        ) : (
+          <div className={styles.replyAvatarFallback} style={{ background: getAvatarColor(ref.author.id) }}>
+            {(ref.author.displayName || "?")[0].toUpperCase()}
+          </div>
+        )}
+        {ref.author.isBot && (
+          <span className={styles.replyBotBadge}>
+            <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+              <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
+            </svg>
+            APP
+          </span>
+        )}
+        <span className={styles.replyAuthor} style={nameStyle}>
+          @{ref.author.displayName}
         </span>
+        <span className={styles.replyContent}>
+          {truncated || (hasAttachment ? <>Click to see attachment <span aria-hidden="true">🖼️</span></> : "…")}
+        </span>
+      </div>
+    </>
+  );
+}
+
+// ── Default Unicode Emojis for the picker ────────────────────────
+const DEFAULT_UNICODE_EMOJIS = [
+  "👍", "👎", "❤️", "😂", "😮", "😢", "😡", "🔥",
+  "🎉", "✅", "👀", "💯", "🙏", "💀", "🤣", "😭",
+  "🥺", "😤", "🤔", "👏", "💪", "🫡", "🤡", "💩",
+];
+
+// ── localStorage helpers for reaction dedup ──────────────────────
+const REACT_STORAGE_KEY = "discord-reactions";
+const REACT_MAX_ENTRIES = 500;
+
+function loadReactedSet() {
+  try {
+    const raw = localStorage.getItem(REACT_STORAGE_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function persistReactedSet(set) {
+  try {
+    let arr = Array.from(set);
+    // FIFO eviction if over limit
+    if (arr.length > REACT_MAX_ENTRIES) {
+      arr = arr.slice(arr.length - REACT_MAX_ENTRIES);
+    }
+    localStorage.setItem(REACT_STORAGE_KEY, JSON.stringify(arr));
+  } catch {
+    // localStorage full or unavailable — silent
+  }
+}
+
+function buildReactKey(messageId, emoji) {
+  // For custom emojis the identifier is "name:id", for Unicode it's the char
+  return `${messageId}:${emoji}`;
+}
+
+// ── Emoji Picker ─────────────────────────────────────────────────
+// A floating popover showing Unicode + server custom emojis with
+// search filtering. Opens relative to a trigger element.
+function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
+  const pickerRef = useRef(null);
+  const searchRef = useRef(null);
+  const [filter, setFilter] = useState("");
+
+  // Auto-focus the search input when picker opens
+  useEffect(() => {
+    searchRef.current?.focus();
+  }, []);
+
+  // Position the picker below the anchor
+  useEffect(() => {
+    const anchor = anchorRef?.current;
+    const picker = pickerRef.current;
+    if (!anchor || !picker) return;
+    const rect = anchor.getBoundingClientRect();
+    picker.style.top = `${rect.bottom + 4}px`;
+    picker.style.right = `${window.innerWidth - rect.right}px`;
+    picker.style.left = "auto";
+    // Ensure it doesn't go off-screen left
+    const pickerRect = picker.getBoundingClientRect();
+    if (pickerRect.left < 8) {
+      picker.style.right = "auto";
+      picker.style.left = "8px";
+    }
+  }, [anchorRef]);
+
+  const lowerFilter = filter.toLowerCase();
+
+  const filteredUnicode = filter
+    ? DEFAULT_UNICODE_EMOJIS // Unicode emojis can't be searched by name easily, show all
+    : DEFAULT_UNICODE_EMOJIS;
+
+  const filteredCustom = serverEmojis
+    ? serverEmojis.filter((e) => !filter || e.name.toLowerCase().includes(lowerFilter))
+    : [];
+
+  return (
+    <>
+      <div className={styles.emojiPickerOverlay} onClick={onClose} />
+      <div className={styles.emojiPicker} ref={pickerRef}>
+        <input
+          ref={searchRef}
+          className={styles.emojiPickerSearch}
+          type="text"
+          placeholder="Search emojis…"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+        <div className={styles.emojiPickerBody}>
+          {/* Unicode section */}
+          {(!filter || filteredUnicode.length > 0) && (
+            <>
+              <div className={styles.emojiPickerSection}>Frequently Used</div>
+              <div className={styles.emojiPickerGrid}>
+                {filteredUnicode.map((emoji) => (
+                  <button
+                    key={emoji}
+                    className={styles.emojiPickerItem}
+                    type="button"
+                    onClick={() => onSelect(emoji)}
+                    title={emoji}
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+          {/* Server custom emoji section */}
+          {filteredCustom.length > 0 && (
+            <>
+              <div className={styles.emojiPickerSection}>Server Emojis</div>
+              <div className={styles.emojiPickerGrid}>
+                {filteredCustom.map((emoji) => (
+                  <button
+                    key={emoji.id}
+                    className={styles.emojiPickerItem}
+                    type="button"
+                    onClick={() => onSelect(`${emoji.name}:${emoji.id}`)}
+                    title={`:${emoji.name}:`}
+                  >
+                    <img
+                      src={emojiUrl(emoji.id, emoji.animated)}
+                      alt={`:${emoji.name}:`}
+                      className={styles.emojiPickerCustomImg}
+                      draggable={false}
+                      loading="lazy"
+                    />
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+          {filter && filteredUnicode.length === 0 && filteredCustom.length === 0 && (
+            <div className={styles.emojiPickerEmpty}>No emojis found</div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Message Actions (hover bar) ──────────────────────────────────
+// Floating action buttons that appear top-right on message hover.
+function MessageActions({ messageId, onOpenPicker, pickerMessageId }) {
+  const btnRef = useRef(null);
+  const isPickerOpen = pickerMessageId === messageId;
+
+  return (
+    <div className={`${styles.messageActions} ${isPickerOpen ? styles.messageActionsVisible : ""}`}>
+      <button
+        ref={btnRef}
+        className={styles.actionBtn}
+        type="button"
+        onClick={() => onOpenPicker(messageId, btnRef)}
+        title="Add Reaction"
+      >
+        😀
+      </button>
+    </div>
+  );
+}
+
+// ── Emoji Reactions ──────────────────────────────────────────────
+// Renders emoji reaction pills below message content, matching
+// Discord's native reaction capsules with count badges.
+// Clicking a pill triggers a reaction via the bot. Already-reacted
+// pills show a blurple highlight and are non-repeatable.
+function Reactions({ reactions, messageId, reactedSet, onReact, onOpenPicker }) {
+  const addBtnRef = useRef(null);
+  // Show nothing if no existing reactions and no react capability
+  if (!reactions?.length && !onReact) return null;
+  return (
+    <div className={styles.reactions}>
+      {reactions?.map((r, i) => {
+        const emoji = r.emoji;
+        const emojiIdentifier = emoji.id ? `${emoji.name}:${emoji.id}` : emoji.name;
+        const reactKey = buildReactKey(messageId, emojiIdentifier);
+        const hasReacted = reactedSet?.has(reactKey);
+        const pillClass = hasReacted ? styles.reactionPillReacted : styles.reactionPill;
+
+        // Custom server emoji → CDN image
+        if (emoji.id) {
+          return (
+            <button
+              key={`${emoji.id}-${i}`}
+              className={pillClass}
+              type="button"
+              onClick={() => !hasReacted && onReact?.(messageId, emojiIdentifier)}
+              title={hasReacted ? "You reacted" : `:${emoji.name}:`}
+            >
+              <img
+                src={emojiUrl(emoji.id, emoji.animated)}
+                alt={`:${emoji.name}:`}
+                className={styles.reactionEmoji}
+                loading="lazy"
+                draggable={false}
+              />
+              <span className={styles.reactionCount}>{r.count}</span>
+            </button>
+          );
+        }
+        // Unicode emoji
+        return (
+          <button
+            key={`${emoji.name}-${i}`}
+            className={pillClass}
+            type="button"
+            onClick={() => !hasReacted && onReact?.(messageId, emojiIdentifier)}
+            title={hasReacted ? "You reacted" : emoji.name}
+          >
+            <span className={styles.reactionUnicode}>{emoji.name}</span>
+            <span className={styles.reactionCount}>{r.count}</span>
+          </button>
+        );
+      })}
+      {/* Add reaction "+" pill inline with existing reactions */}
+      {onReact && (
+        <button
+          ref={addBtnRef}
+          className={styles.addReactionPill}
+          type="button"
+          onClick={() => onOpenPicker?.(messageId, addBtnRef)}
+          title="Add Reaction"
+        >
+          +
+        </button>
       )}
-      <span className={styles.replyAuthor} style={{ color: nameColor }}>
-        {ref.author.displayName}
-      </span>
-      <span className={styles.replyContent}>
-        {truncated || (hasAttachment ? "Click to see attachment" : "…")}
-      </span>
     </div>
   );
 }
@@ -427,9 +691,25 @@ function MemberItem({ member }) {
         <StatusDot status={member.status} />
       </div>
       <div className={styles.memberInfo}>
-        <span className={styles.memberName} style={{ color: member.roleColor || "#dbdee1" }}>
-          {member.displayName}
-        </span>
+        <div className={styles.memberNameRow}>
+          <span
+            className={styles.memberName}
+            style={member.roleColors?.secondary
+              ? resolveRoleColorStyle(member)
+              : { color: member.roleColor || "#dbdee1" }
+            }
+          >
+            {member.displayName}
+          </span>
+          {member.isBot && (
+            <span className={styles.memberBotBadge}>
+              <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+                <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
+              </svg>
+              APP
+            </span>
+          )}
+        </div>
         {member.activity && (
           <span className={styles.memberActivity}>{member.activity}</span>
         )}
@@ -452,11 +732,17 @@ export default function DiscordChatComponent({
   streamUrl = "/api/discord/stream",
   membersUrl = "/api/discord/members",
   tenorOembedUrl = "/api/tenor/oembed",
+  reactUrl = "/api/discord/react",
+  emojisUrl = "/api/discord/emojis",
   serverIconUrl,
+  serverBannerUrl: serverBannerUrlProp,
+  servers = [],
 }) {
   const CHANNEL_IDS = channelIds;
   const [channels, setChannels] = useState([]);
   const [serverName, setServerName] = useState("");
+  const [serverIcon, setServerIcon] = useState(serverIconUrl || null);
+  const [serverBannerUrl, setServerBannerUrl] = useState(serverBannerUrlProp || null);
   const [activeChannelId, setActiveChannelId] = useState(CHANNEL_IDS[0]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -465,6 +751,12 @@ export default function DiscordChatComponent({
   const scrollRef = useRef(null);
   const isFirstLoad = useRef(true);
   const shouldSnapToBottom = useRef(false);
+
+  // ── Reaction state ──────────────────────────────────────────────
+  const [serverEmojis, setServerEmojis] = useState(null);
+  const [reactedSet, setReactedSet] = useState(() => loadReactedSet());
+  const [pickerMessageId, setPickerMessageId] = useState(null);
+  const pickerAnchorRef = useRef(null);
 
   // Derive active channel object from fetched data
   const activeChannel = channels.find((ch) => ch.id === activeChannelId) || { id: activeChannelId, name: "chat" };
@@ -477,6 +769,9 @@ export default function DiscordChatComponent({
       .then((data) => {
         if (cancelled) return;
         if (data.guildName) setServerName(data.guildName);
+        if (data.guildIcon) setServerIcon((prev) => prev || data.guildIcon);
+        if (data.guildBanner) setServerBannerUrl((prev) => prev || data.guildBanner);
+        else if (data.guildSplash) setServerBannerUrl((prev) => prev || data.guildSplash);
         // Filter to only the whitelisted channels, sorted by Discord position
         const idSet = new Set(CHANNEL_IDS);
         const filtered = (data.channels || [])
@@ -634,6 +929,87 @@ export default function DiscordChatComponent({
     isFirstLoad.current = true;
   }, []);
 
+  // ── Fetch server emojis for the picker ───────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+    fetch(emojisUrl)
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data) => {
+        if (!cancelled && data.emojis) setServerEmojis(data.emojis);
+      })
+      .catch(() => {
+        // Non-critical — picker will only show Unicode emojis
+      });
+    return () => { cancelled = true; };
+  }, [emojisUrl]);
+
+  // ── Handle emoji reaction ───────────────────────────────────────
+  const handleReact = useCallback(async (messageId, emojiIdentifier) => {
+    const reactKey = buildReactKey(messageId, emojiIdentifier);
+    // Already reacted — bail
+    if (reactedSet.has(reactKey)) return;
+
+    // Optimistic: mark as reacted immediately
+    setReactedSet((prev) => {
+      const next = new Set(prev);
+      next.add(reactKey);
+      persistReactedSet(next);
+      return next;
+    });
+
+    try {
+      const res = await fetch(reactUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          channelId: activeChannelId,
+          messageId,
+          emoji: emojiIdentifier,
+        }),
+      });
+
+      // 409 = already reacted (bot already had that reaction)
+      // That's fine — keep the localStorage entry
+      if (!res.ok && res.status !== 409) {
+        // Revert optimistic update on real failure
+        console.warn("[DiscordChat] React failed:", res.status);
+        setReactedSet((prev) => {
+          const next = new Set(prev);
+          next.delete(reactKey);
+          persistReactedSet(next);
+          return next;
+        });
+      }
+    } catch (err) {
+      console.error("[DiscordChat] React error:", err);
+      // Revert optimistic update
+      setReactedSet((prev) => {
+        const next = new Set(prev);
+        next.delete(reactKey);
+        persistReactedSet(next);
+        return next;
+      });
+    }
+  }, [reactedSet, reactUrl, activeChannelId]);
+
+  // ── Picker open/close handlers ──────────────────────────────────
+  const handleOpenPicker = useCallback((messageId, anchorRef) => {
+    pickerAnchorRef.current = anchorRef;
+    setPickerMessageId((prev) => (prev === messageId ? null : messageId));
+  }, []);
+
+  const handleClosePicker = useCallback(() => {
+    setPickerMessageId(null);
+    pickerAnchorRef.current = null;
+  }, []);
+
+  const handlePickerSelect = useCallback((emojiIdentifier) => {
+    if (pickerMessageId) {
+      handleReact(pickerMessageId, emojiIdentifier);
+    }
+    handleClosePicker();
+  }, [pickerMessageId, handleReact, handleClosePicker]);
+
   return (
     <div className={styles.container} id="discord-chat">
       {/* ── Title Bar ─────────────────────────────────────────── */}
@@ -644,8 +1020,8 @@ export default function DiscordChatComponent({
           <span className={styles.trafficDot} />
         </div>
         <span className={styles.titleBarCenter}>
-          {serverIconUrl && (
-            <img src={serverIconUrl} alt="" className={styles.titleBarClock} aria-hidden="true" />
+          {serverIcon && (
+            <img src={serverIcon} alt="" className={styles.titleBarClock} aria-hidden="true" />
           )}
           <span className={styles.channelName}>{serverName || "Discord"}</span>
         </span>
@@ -657,11 +1033,64 @@ export default function DiscordChatComponent({
         )}
       </div>
 
-      {/* ── Three-Panel Layout ─────────────────────────────────── */}
+      {/* ── Four-Panel Layout (Guild Bar + Channels + Chat + Members) */}
       <div className={styles.panelLayout}>
+        {/* ── Guild Bar (Server List Rail) ─────────────────────── */}
+        <nav className={styles.guildBar} aria-label="Servers">
+          {/* Home / DM button */}
+          <button className={styles.guildBarHome} title="Direct Messages">
+            <svg width="28" height="20" viewBox="0 0 28 20" fill="currentColor">
+              <path d="M23.0212 1.67671C21.3107 0.879656 19.5079 0.318797 17.6584 0C17.4062 0.461742 17.1749 0.934541 16.966 1.4184C15.0099 1.11706 13.0236 1.11706 11.0675 1.4184C10.8585 0.934541 10.6272 0.461742 10.3749 0C8.52404 0.320819 6.72029 0.882524 5.00882 1.68093C1.47767 7.01788 0.404834 12.216 0.93776 17.3363C3.01815 18.8838 5.37198 19.9903 7.87029 20.5984C8.39591 19.8931 8.86441 19.1447 9.27153 18.3603C8.51536 18.0784 7.78792 17.7241 7.09936 17.3023C7.28989 17.1629 7.47591 17.0186 7.65739 16.8744C12.0547 18.9136 16.9758 18.9136 21.376 16.8744C21.5575 17.0186 21.7435 17.1629 21.934 17.3023C21.2447 17.7248 20.5165 18.0797 19.7597 18.3624C20.1661 19.1454 20.6337 19.8925 21.1583 20.5963C23.6581 19.99 26.0132 18.8845 28.0936 17.3384C28.7196 11.3653 27.1385 6.21906 23.0212 1.67671Z" />
+            </svg>
+          </button>
+          <div className={styles.guildBarSeparator} />
+
+          {/* Current server */}
+          <button
+            className={`${styles.guildBarItem} ${styles.guildBarItemActive}`}
+            title={serverName || "Discord"}
+          >
+            {serverIcon ? (
+              <img src={serverIcon} alt="" className={styles.guildBarIcon} />
+            ) : (
+              <span className={styles.guildBarInitial}>
+                {(serverName || "D")[0].toUpperCase()}
+              </span>
+            )}
+            <span className={styles.guildBarPill} />
+          </button>
+
+          {/* Additional servers from props */}
+          {servers.map((srv) => (
+            <button
+              key={srv.id || srv.name}
+              className={styles.guildBarItem}
+              title={srv.name}
+            >
+              {srv.iconUrl ? (
+                <img src={srv.iconUrl} alt="" className={styles.guildBarIcon} />
+              ) : (
+                <span className={styles.guildBarInitial}>
+                  {(srv.name || "?")[0].toUpperCase()}
+                </span>
+              )}
+            </button>
+          ))}
+        </nav>
+
         {/* ── Left Sidebar: Channels ──────────────────────────── */}
         <aside className={styles.channelSidebar}>
-          <div className={styles.serverHeader}>
+          {/* Server Banner / Header */}
+          <div className={`${styles.serverHeader} ${serverBannerUrl ? styles.serverHeaderBanner : ""}`}>
+            {serverBannerUrl && (
+              <img
+                src={serverBannerUrl}
+                alt=""
+                className={styles.serverBannerImage}
+                loading="lazy"
+                draggable={false}
+              />
+            )}
             <span className={styles.serverName}>{serverName || "Discord"}</span>
           </div>
           <div className={styles.channelList}>
@@ -724,7 +1153,7 @@ export default function DiscordChatComponent({
                 const prev = i > 0 ? messages[i - 1] : null;
                 const grouped = shouldGroup(msg, prev);
                 const newDay = isDifferentDay(msg, prev);
-                const nameColor = msg.author.roleColor || getFallbackColor(msg.author.id);
+                const nameStyle = resolveRoleColorStyle(msg.author);
                 return (
                   <div key={msg.id}>
                     {newDay && (
@@ -735,11 +1164,23 @@ export default function DiscordChatComponent({
                     {grouped && !newDay ? (
                       <div className={styles.messageRowGrouped}>
                         <span className={styles.timestampInline}>{formatShortTime(msg.createdAtISO)}</span>
+                        <MessageActions
+                          messageId={msg.id}
+                          onOpenPicker={handleOpenPicker}
+                          pickerMessageId={pickerMessageId}
+                        />
                         <div className={styles.messageContent}>
                           <p className={styles.messageText}>{formatContent(msg.content, msg.cleanContent)}</p>
                           <TenorEmbeds content={msg.content} tenorOembedUrl={tenorOembedUrl} />
                           <ImageAttachments attachments={msg.attachments} />
                           <EmbedMedia embeds={msg.embeds} />
+                          <Reactions
+                            reactions={msg.reactions}
+                            messageId={msg.id}
+                            reactedSet={reactedSet}
+                            onReact={handleReact}
+                            onOpenPicker={handleOpenPicker}
+                          />
                         </div>
                       </div>
                     ) : (
@@ -755,9 +1196,14 @@ export default function DiscordChatComponent({
                             {(msg.author.displayName || "?")[0].toUpperCase()}
                           </div>
                         )}
+                        <MessageActions
+                          messageId={msg.id}
+                          onOpenPicker={handleOpenPicker}
+                          pickerMessageId={pickerMessageId}
+                        />
                         <div className={styles.messageContent}>
                           <div className={styles.messageHeader}>
-                            <span className={styles.authorName} style={{ color: nameColor }}>
+                            <span className={styles.authorName} style={nameStyle}>
                               {msg.author.displayName}
                             </span>
                             {msg.author.isBot && (
@@ -774,6 +1220,13 @@ export default function DiscordChatComponent({
                           <TenorEmbeds content={msg.content} tenorOembedUrl={tenorOembedUrl} />
                           <ImageAttachments attachments={msg.attachments} />
                           <EmbedMedia embeds={msg.embeds} />
+                          <Reactions
+                            reactions={msg.reactions}
+                            messageId={msg.id}
+                            reactedSet={reactedSet}
+                            onReact={handleReact}
+                            onOpenPicker={handleOpenPicker}
+                          />
                         </div>
                       </div>
                     )}
@@ -842,6 +1295,16 @@ export default function DiscordChatComponent({
           )}
         </aside>
       </div>
+
+      {/* ── Emoji Picker Portal ────────────────────────────────── */}
+      {pickerMessageId && (
+        <EmojiPicker
+          anchorRef={pickerAnchorRef.current}
+          serverEmojis={serverEmojis}
+          onSelect={handlePickerSelect}
+          onClose={handleClosePicker}
+        />
+      )}
     </div>
   );
 }
