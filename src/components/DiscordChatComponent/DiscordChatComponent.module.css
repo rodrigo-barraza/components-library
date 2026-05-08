@@ -283,6 +283,123 @@
   background: rgba(0, 0, 0, 0.06);
 }
 
+/* Reply variant — uses CSS grid so the reply bar spans above avatar + content */
+.messageRowReply {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 16px;
+  padding-top: 8px;
+}
+
+/* ── Reply Context Bar ─────────────────────────────────────────── */
+/* Compact bar showing who was replied to — spans full width above
+   the avatar + message body, matching Discord's native reply UI. */
+
+.replyBar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 36px;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
+  font-size: 13px;
+  line-height: 1.15;
+  color: #b5bac1;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.replyBar:hover .replyContent {
+  color: #dbdee1;
+}
+
+/* Curved connector spine — matches Discord's ╰ reply connector */
+.replySpine {
+  position: absolute;
+  left: 36px;
+  width: 25px;
+  height: 14px;
+  border-left: 2px solid #4e5058;
+  border-bottom: 2px solid #4e5058;
+  border-bottom-left-radius: 6px;
+  margin-top: -14px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.replyAvatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.replyAvatarFallback {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.replyBotBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 3px;
+  height: 14px;
+  border-radius: 3px;
+  background: #5865f2;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  line-height: 14px;
+}
+
+.replyBotBadge .botBadgeIcon {
+  width: 10px;
+  height: 10px;
+}
+
+.replyAuthor {
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.replyAuthor:hover {
+  text-decoration: underline;
+}
+
+.replyContent {
+  font-size: 13px;
+  color: #949ba4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 100ms ease;
+}
+
+.replyUnknown {
+  font-style: italic;
+  color: #6d6f78;
+  font-size: 12px;
+}
+
 @keyframes messageAppear {
   from {
     opacity: 0;

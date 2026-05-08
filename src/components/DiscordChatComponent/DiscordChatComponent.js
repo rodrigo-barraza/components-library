@@ -136,6 +136,8 @@ function formatDateSeparator(isoString) {
 // ── Message grouping ─────────────────────────────────────────────
 function shouldGroup(current, previous) {
   if (!previous) return false;
+  // Replies always break grouping (matches real Discord behavior)
+  if (current.replyTo) return false;
   if (current.author.id !== previous.author.id) return false;
   const diff = new Date(previous.createdAtISO) - new Date(current.createdAtISO);
   return Math.abs(diff) < 7 * 60 * 1000;
@@ -336,6 +338,55 @@ function EmbedVideo({ embed }) {
     );
   }
   return null;
+}
+
+// ── Reply Context Bar ────────────────────────────────────────────
+// Renders a compact bar above the message showing who the user
+// replied to, their avatar, and a truncated snippet of the
+// referenced message — matching Discord's native reply UI.
+function ReplyContext({ replyTo, messageMap }) {
+  const ref = messageMap?.get(replyTo);
+  if (!ref) {
+    // Referenced message is outside the loaded window — show fallback
+    return (
+      <div className={styles.replyBar}>
+        <div className={styles.replySpine} />
+        <span className={styles.replyContent}>
+          <span className={styles.replyUnknown}>Original message was deleted or is not loaded</span>
+        </span>
+      </div>
+    );
+  }
+  const nameColor = ref.author.roleColor || getFallbackColor(ref.author.id);
+  const snippet = ref.content || ref.cleanContent || "";
+  const truncated = snippet.length > 80 ? snippet.slice(0, 77) + "…" : snippet;
+  const hasAttachment = ref.attachments?.length > 0 || ref.embeds?.length > 0;
+  return (
+    <div className={styles.replyBar}>
+      <div className={styles.replySpine} />
+      {ref.author.avatarUrl ? (
+        <img src={ref.author.avatarUrl} alt="" className={styles.replyAvatar} loading="lazy" />
+      ) : (
+        <div className={styles.replyAvatarFallback} style={{ background: getAvatarColor(ref.author.id) }}>
+          {(ref.author.displayName || "?")[0].toUpperCase()}
+        </div>
+      )}
+      {ref.author.isBot && (
+        <span className={styles.replyBotBadge}>
+          <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
+          </svg>
+          APP
+        </span>
+      )}
+      <span className={styles.replyAuthor} style={{ color: nameColor }}>
+        {ref.author.displayName}
+      </span>
+      <span className={styles.replyContent}>
+        {truncated || (hasAttachment ? "Click to see attachment" : "…")}
+      </span>
+    </div>
+  );
 }
 
 // ── Status Indicator ─────────────────────────────────────────────
@@ -646,63 +697,70 @@ export default function DiscordChatComponent({
                 <span>Couldn&apos;t load messages</span>
               </div>
             )}
-            {!loading && !error && messages.map((msg, i) => {
-              const prev = i > 0 ? messages[i - 1] : null;
-              const grouped = shouldGroup(msg, prev);
-              const newDay = isDifferentDay(msg, prev);
-              const nameColor = msg.author.roleColor || getFallbackColor(msg.author.id);
-              return (
-                <div key={msg.id}>
-                  {newDay && (
-                    <div className={styles.dateSeparator}>
-                      <span className={styles.dateSeparatorText}>{formatDateSeparator(msg.createdAtISO)}</span>
-                    </div>
-                  )}
-                  {grouped && !newDay ? (
-                    <div className={styles.messageRowGrouped}>
-                      <span className={styles.timestampInline}>{formatShortTime(msg.createdAtISO)}</span>
-                      <div className={styles.messageContent}>
-                        <p className={styles.messageText}>{formatContent(msg.content, msg.cleanContent)}</p>
-                        <TenorEmbeds content={msg.content} tenorOembedUrl={tenorOembedUrl} />
-                        <ImageAttachments attachments={msg.attachments} />
-                        <EmbedMedia embeds={msg.embeds} />
+            {!loading && !error && (() => {
+              // Build a lookup map for reply references
+              const messageMap = new Map(messages.map((m) => [m.id, m]));
+              return messages.map((msg, i) => {
+                const prev = i > 0 ? messages[i - 1] : null;
+                const grouped = shouldGroup(msg, prev);
+                const newDay = isDifferentDay(msg, prev);
+                const nameColor = msg.author.roleColor || getFallbackColor(msg.author.id);
+                return (
+                  <div key={msg.id}>
+                    {newDay && (
+                      <div className={styles.dateSeparator}>
+                        <span className={styles.dateSeparatorText}>{formatDateSeparator(msg.createdAtISO)}</span>
                       </div>
-                    </div>
-                  ) : (
-                    <div className={styles.messageRow}>
-                      {msg.author.avatarUrl ? (
-                        <img className={styles.avatar} src={msg.author.avatarUrl}
-                          alt={msg.author.displayName} width={40} height={40} loading="lazy" />
-                      ) : (
-                        <div className={styles.avatarFallback} style={{ background: getAvatarColor(msg.author.id) }}>
-                          {(msg.author.displayName || "?")[0].toUpperCase()}
+                    )}
+                    {grouped && !newDay ? (
+                      <div className={styles.messageRowGrouped}>
+                        <span className={styles.timestampInline}>{formatShortTime(msg.createdAtISO)}</span>
+                        <div className={styles.messageContent}>
+                          <p className={styles.messageText}>{formatContent(msg.content, msg.cleanContent)}</p>
+                          <TenorEmbeds content={msg.content} tenorOembedUrl={tenorOembedUrl} />
+                          <ImageAttachments attachments={msg.attachments} />
+                          <EmbedMedia embeds={msg.embeds} />
                         </div>
-                      )}
-                      <div className={styles.messageContent}>
-                        <div className={styles.messageHeader}>
-                          <span className={styles.authorName} style={{ color: nameColor }}>
-                            {msg.author.displayName}
-                          </span>
-                          {msg.author.isBot && (
-                            <span className={styles.botBadge}>
-                              <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
-                                <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
-                              </svg>
-                              BOT
+                      </div>
+                    ) : (
+                      <div className={`${styles.messageRow} ${msg.replyTo ? styles.messageRowReply : ""}`}>
+                        {msg.replyTo && (
+                          <ReplyContext replyTo={msg.replyTo} messageMap={messageMap} />
+                        )}
+                        {msg.author.avatarUrl ? (
+                          <img className={styles.avatar} src={msg.author.avatarUrl}
+                            alt={msg.author.displayName} width={40} height={40} loading="lazy" />
+                        ) : (
+                          <div className={styles.avatarFallback} style={{ background: getAvatarColor(msg.author.id) }}>
+                            {(msg.author.displayName || "?")[0].toUpperCase()}
+                          </div>
+                        )}
+                        <div className={styles.messageContent}>
+                          <div className={styles.messageHeader}>
+                            <span className={styles.authorName} style={{ color: nameColor }}>
+                              {msg.author.displayName}
                             </span>
-                          )}
-                          <span className={styles.timestamp}>{formatTimestamp(msg.createdAtISO)}</span>
+                            {msg.author.isBot && (
+                              <span className={styles.botBadge}>
+                                <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+                                  <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
+                                </svg>
+                                BOT
+                              </span>
+                            )}
+                            <span className={styles.timestamp}>{formatTimestamp(msg.createdAtISO)}</span>
+                          </div>
+                          <p className={styles.messageText}>{formatContent(msg.content, msg.cleanContent)}</p>
+                          <TenorEmbeds content={msg.content} tenorOembedUrl={tenorOembedUrl} />
+                          <ImageAttachments attachments={msg.attachments} />
+                          <EmbedMedia embeds={msg.embeds} />
                         </div>
-                        <p className={styles.messageText}>{formatContent(msg.content, msg.cleanContent)}</p>
-                        <TenorEmbeds content={msg.content} tenorOembedUrl={tenorOembedUrl} />
-                        <ImageAttachments attachments={msg.attachments} />
-                        <EmbedMedia embeds={msg.embeds} />
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                  </div>
+                );
+              });
+            })()}
           </div>
 
           {/* ── Input Bar / Join CTA ──────────────────────────── */}
