@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import * as Icons from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent";
+import ThemePickerComponent from "../ThemePickerComponent/ThemePickerComponent";
 import styles from "./NavigationSidebarComponent.module.css";
 
 /**
@@ -34,7 +35,9 @@ export default function NavigationSidebarComponent({
   activeItem, // matches id or key or href
   onNavigate, // function(id, item)
   theme = "light",
-  onToggleTheme,
+  themes, // string[] — ordered list of available theme names (enables ThemePicker dropup)
+  setTheme, // function(theme: string) — set theme directly (used by ThemePicker)
+  onToggleTheme, // function — legacy: cycle to next theme (still works if themes/setTheme not provided)
   LinkComponent, // Custom Next/Link component, falls back to native <a> if href exists, otherwise <button>
   collapsible = true,
   defaultCollapsed = false,
@@ -87,6 +90,10 @@ export default function NavigationSidebarComponent({
     });
   }, [storageKey, onCollapse]);
 
+  // Resolve whether we use the new ThemePicker or fallback to legacy toggle
+  const hasThemePicker = Boolean(themes?.length && setTheme);
+
+  // Legacy: THEME_META for backward-compatible single-button toggle
   const THEME_META = {
     dark:     { nextLabel: "Light",    NextIcon: Icons.Sun,      title: "Switch to light mode" },
     light:    { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
@@ -197,7 +204,14 @@ export default function NavigationSidebarComponent({
         {/* Bottom Actions */}
         <div className={styles.bottomActions}>
           {bottomActions}
-          {onToggleTheme && (
+          {hasThemePicker ? (
+            <ThemePickerComponent
+              theme={theme}
+              themes={themes}
+              onSelectTheme={setTheme}
+              collapsed={collapsed}
+            />
+          ) : onToggleTheme ? (
              <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
               <button
                 className={styles.themeToggle}
@@ -208,7 +222,7 @@ export default function NavigationSidebarComponent({
                 <span className={styles.themeLabel}>{themeMeta.nextLabel}</span>
               </button>
             </TooltipComponent>
-          )}
+          ) : null}
         </div>
       </aside>
     </div>
