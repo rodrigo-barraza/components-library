@@ -37,6 +37,19 @@
   display: none;
 }
 
+.wrapper.collapsed .navDivider {
+  padding: 0;
+  margin: 0;
+}
+
+.wrapper.collapsed .navDivider > span {
+  display: none;
+}
+
+.wrapper.collapsed .navDivider::after {
+  margin: 4px 10px;
+}
+
 .wrapper.collapsed .brand {
   justify-content: center;
   padding-left: 0;
@@ -226,6 +239,32 @@
 .themeToggle:hover {
   background: var(--accent-subtle, rgba(255,255,255,0.05));
   color: var(--text-primary, #fff);
+}
+
+/* ── Section Divider ── */
+
+.navDivider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px 4px;
+  margin-top: 4px;
+}
+
+.navDivider > span {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted, #888);
+  white-space: nowrap;
+}
+
+.navDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-color, #333);
 }
 
 .tooltipFill {

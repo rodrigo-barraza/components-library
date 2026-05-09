@@ -82,10 +82,10 @@ function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
       {tipMounted &&
         createPortal(
           <span
-            className={`${tooltipStyles.bubble} ${tooltipStyles.bottom} ${tipVisible ? tooltipStyles.visible : ""}`}
+            className={`${tooltipStyles.bubble} ${tooltipStyles.plain} ${tooltipStyles.bottom} ${tipVisible ? tooltipStyles.visible : ""}`}
             style={{ top: tipCoords.top, left: tipCoords.left }}
           >
-            {col.description}
+            <span className={tooltipStyles.plainLabel}>{col.description}</span>
           </span>,
           document.body,
         )}
