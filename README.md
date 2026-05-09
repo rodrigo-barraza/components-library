@@ -46,7 +46,7 @@ components-library/
 ├── tests/
 ```
 
-## Components (30)
+## Components (31)
 
 ### Layout
 
@@ -88,6 +88,7 @@ components-library/
 | `ResponseTimeBadgeComponent` | Color-coded latency badge (green < 50ms, yellow < 100ms, red > 100ms) |
 | `VisibilityBadgeComponent` | Public/private visibility indicator |
 | `LoadingStateComponent` | Skeleton/spinner loading placeholder |
+| `SkeletonComponent` | Shimmer-animated content placeholder (text lines, circular avatars, rectangular cards) with `SkeletonGroup` compound component |
 
 ### Feedback
 

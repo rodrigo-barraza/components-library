@@ -7,6 +7,10 @@ import SoundService from "../../services/SoundService.js";
 /**
  * ToggleComponent — iOS-style toggle switch with optional spatial audio.
  *
+ * @deprecated Use `SwitchComponent` instead — it is a strict superset of this
+ * component's API with M3-compliant styling, ARIA attributes, optional icons,
+ * label placement, and state layer animations.
+ *
  *  checked   : boolean
  *  onChange  : (checked: boolean) => void
  *  label?    : string  — optional label text rendered beside the track
