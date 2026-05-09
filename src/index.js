@@ -17,6 +17,7 @@ export { default as DialogComponent } from "./components/DialogComponent/DialogC
 export { default as DiscordChatComponent } from "./components/DiscordChatComponent/DiscordChatComponent.js";
 export { default as DividerComponent } from "./components/DividerComponent/DividerComponent.js";
 export { default as DomainBadgeComponent } from "./components/DomainBadgeComponent/DomainBadgeComponent.js";
+export { default as DrawerComponent } from "./components/DrawerComponent/DrawerComponent.js";
 export { default as EmptyStateComponent } from "./components/EmptyStateComponent/EmptyStateComponent.js";
 export { default as ExtendedFabComponent } from "./components/ExtendedFabComponent/ExtendedFabComponent.js";
 export { default as FabComponent } from "./components/FabComponent/FabComponent.js";
