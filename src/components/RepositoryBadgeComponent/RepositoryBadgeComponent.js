@@ -17,11 +17,22 @@ export default function RepositoryBadgeComponent({ repo, icons, className, ...re
   if (!repo) return null;
 
   const { Github } = icons || {};
-  const slug = repo.replace("https://github.com/", "");
+
+  // Normalize SSH (git@github.com:owner/repo.git) and HTTPS URLs to owner/repo slug
+  let slug = repo;
+  let href = repo;
+
+  const sshMatch = repo.match(/^git@github\.com:(.+?)(?:\.git)?$/);
+  if (sshMatch) {
+    slug = sshMatch[1];
+    href = `https://github.com/${slug}`;
+  } else {
+    slug = repo.replace("https://github.com/", "");
+  }
 
   return (
     <a
-      href={repo}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className={styles.link}
