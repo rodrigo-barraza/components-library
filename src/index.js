@@ -71,6 +71,7 @@ export { default as ToolbarComponent } from "./components/ToolbarComponent/Toolb
 export { default as TooltipComponent } from "./components/TooltipComponent/TooltipComponent.js";
 export { default as TopAppBarComponent } from "./components/TopAppBarComponent/TopAppBarComponent.js";
 export { default as VisibilityBadgeComponent } from "./components/VisibilityBadgeComponent/VisibilityBadgeComponent.js";
+export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.js";
 
 // ── Providers ───────────────────────────────────────────
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
@@ -78,6 +79,7 @@ export { ThemeProvider, useTheme } from "./components/ThemeProvider/ThemeProvide
 
 // ── Services ────────────────────────────────────────────
 export { default as SoundService } from "./services/SoundService.js";
+export { createApiClient } from "./services/ApiClient.js";
 
 // ── Utilities ───────────────────────────────────────────
 export {
@@ -89,6 +91,14 @@ export {
   formatDateDisplay,
   getActiveDatePreset,
 } from "./utils/datePresets.js";
+export {
+  formatBytes,
+  formatPercent,
+  formatDuration,
+  formatCurrency,
+  formatCompact,
+} from "./utils/formatters.js";
+export { generateThemeInitScript } from "./utils/themeInit.js";
 
 // ── Hooks ───────────────────────────────────────────────
 export { default as useClickOutside } from "./hooks/useClickOutside.js";
