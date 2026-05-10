@@ -544,11 +544,35 @@ function ReplyContext({ replyTo, messageMap }) {
   );
 }
 
-// ── Default Unicode Emojis for the picker ────────────────────────
-const DEFAULT_UNICODE_EMOJIS = [
-  "👍", "👎", "❤️", "😂", "😮", "😢", "😡", "🔥",
-  "🎉", "✅", "👀", "💯", "🙏", "💀", "🤣", "😭",
-  "🥺", "😤", "🤔", "👏", "💪", "🫡", "🤡", "💩",
+// ── Comprehensive Unicode Emojis for the picker (categorized) ────
+const EMOJI_CATEGORIES = [
+  { id: "frequent", name: "Frequently Used", icon: "🕐", emojis: [
+    "👍","👎","❤️","😂","😮","😢","😡","🔥","🎉","✅","👀","💯","🙏","💀","🤣","😭","🥺","😤","🤔","👏","💪","🫡","🤡","💩",
+  ]},
+  { id: "people", name: "People & Faces", icon: "😀", emojis: [
+    "😀","😃","😄","😁","😆","😅","🤣","😂","🙂","🙃","🫠","😉","😊","😇","🥰","😍","🤩","😘","😗","😚","😙","🥲","😋","😛","😜","🤪","😝","🤑","🤗","🤭","🫢","🫣","🤫","🤔","🫡","🤐","🤨","😐","😑","😶","🫥","😏","😒","🙄","😬","🤥","😌","😔","😪","🤤","😴","😷","🤒","🤕","🤢","🤮","🥵","🥶","🥴","😵","🤯","🤠","🥳","🥸","😎","🤓","🧐","😕","🫤","😟","🙁","😮","😯","😲","😳","🥺","🥹","😦","😧","😨","😰","😥","😢","😭","😱","😖","😣","😞","😓","😩","😫","🥱","😤","😡","😠","🤬","😈","👿","💀","☠️","💩","🤡","👹","👺","👻","👽","👾","🤖","😺","😸","😹","😻","😼","😽","🙀","😿","😾","🙈","🙉","🙊","💌","💘","💝","💖","💗","💓","💞","💕","💟","❣️","💔","❤️‍🔥","❤️‍🩹","❤️","🩷","🧡","💛","💚","💙","🩵","💜","🤎","🖤","🩶","🤍","👋","🤚","🖐️","✋","🖖","🫱","🫲","🫳","🫴","🫷","🫸","👌","🤌","🤏","✌️","🤞","🫰","🤟","🤘","🤙","👈","👉","👆","🖕","👇","☝️","🫵","👍","👎","✊","👊","🤛","🤜","👏","🙌","🫶","👐","🤲","🤝","🙏","✍️","💅","🤳","💪","🦾","🦿","🦵","🦶","👂","🦻","👃","🧠","🫀","🫁","🦷","🦴","👀","👁️","👅","👄","🫦","👶","🧒","👦","👧","🧑","👱","👨","🧔","👩","🧓","👴","👵",
+  ]},
+  { id: "nature", name: "Nature", icon: "🌿", emojis: [
+    "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐻‍❄️","🐨","🐯","🦁","🐮","🐷","🐽","🐸","🐵","🙈","🙉","🙊","🐒","🐔","🐧","🐦","🐤","🐣","🐥","🦆","🦅","🦉","🦇","🐺","🐗","🐴","🦄","🫎","🐝","🪱","🐛","🦋","🐌","🐞","🐜","🪲","🪳","🦟","🦗","🕷️","🦂","🐢","🐍","🦎","🦖","🦕","🐙","🦑","🦐","🦞","🦀","🐡","🐠","🐟","🐬","🐳","🐋","🦈","🪸","🐊","🐅","🐆","🦓","🫏","🦍","🦧","🐘","🦛","🦏","🐪","🐫","🦒","🦘","🦬","🐃","🐂","🐄","🐎","🐖","🐏","🐑","🦙","🐐","🦌","🐕","🐩","🦮","🐕‍🦺","🐈","🐈‍⬛","🪶","🐓","🦃","🦤","🦚","🦜","🦢","🪿","🦩","🕊️","🐇","🦝","🦨","🦡","🦫","🦦","🦥","🐁","🐀","🐿️","🦔","🐾","🐉","🐲","🌵","🎄","🌲","🌳","🌴","🪵","🌱","🌿","☘️","🍀","🎍","🪴","🎋","🍃","🍂","🍁","🪺","🪹","🍄","🌾","💐","🌷","🌹","🥀","🌺","🌸","🌼","🌻","🌞","🌝","🌛","🌜","🌚","🌕","🌖","🌗","🌘","🌑","🌒","🌓","🌔","🌙","🌎","🌍","🌏","🪐","💫","⭐","🌟","✨","⚡","☄️","💥","🔥","🌪️","🌈","☀️","🌤️","⛅","🌥️","☁️","🌦️","🌧️","⛈️","🌩️","🌨️","❄️","☃️","⛄","🌬️","💨","💧","💦","🫧","☔","☂️","🌊","🌫️",
+  ]},
+  { id: "food", name: "Food & Drink", icon: "🍔", emojis: [
+    "🍇","🍈","🍉","🍊","🍋","🍌","🍍","🥭","🍎","🍏","🍐","🍑","🍒","🍓","🫐","🥝","🍅","🫒","🥥","🥑","🍆","🥔","🥕","🌽","🌶️","🫑","🥒","🥬","🥦","🧄","🧅","🍄","🥜","🫘","🌰","🍞","🥐","🥖","🫓","🥨","🥯","🥞","🧇","🧀","🍖","🍗","🥩","🥓","🍔","🍟","🍕","🌭","🥪","🌮","🌯","🫔","🥙","🧆","🥚","🍳","🥘","🍲","🫕","🥣","🥗","🍿","🧈","🧂","🥫","🍱","🍘","🍙","🍚","🍛","🍜","🍝","🍠","🍢","🍣","🍤","🍥","🥮","🍡","🥟","🥠","🥡","🦀","🦞","🦐","🦑","🦪","🍦","🍧","🍨","🍩","🍪","🎂","🍰","🧁","🥧","🍫","🍬","🍭","🍮","🍯","🍼","🥛","☕","🫖","🍵","🍶","🍾","🍷","🍸","🍹","🍺","🍻","🥂","🥃","🫗","🥤","🧋","🧃","🧉","🧊",
+  ]},
+  { id: "activities", name: "Activities", icon: "⚽", emojis: [
+    "⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓","🏸","🏒","🏑","🥍","🏏","🪃","🥅","⛳","🪁","🏹","🎣","🤿","🥊","🥋","🎽","🛹","🛼","🛷","⛸️","🥌","🎿","⛷️","🏂","🪂","🏋️","🤼","🤸","🤺","⛹️","🤾","🏌️","🏇","🧘","🏄","🏊","🤽","🚣","🧗","🚵","🚴","🏆","🥇","🥈","🥉","🏅","🎖️","🏵️","🎗️","🎪","🤹","🎭","🩰","🎨","🎬","🎤","🎧","🎼","🎹","🥁","🪘","🎷","🎺","🪗","🎸","🪕","🎻","🪈","🎲","♟️","🎯","🎳","🎮","🕹️","🎰",
+  ]},
+  { id: "travel", name: "Travel & Places", icon: "✈️", emojis: [
+    "🚗","🚕","🚙","🚌","🚎","🏎️","🚓","🚑","🚒","🚐","🛻","🚚","🚛","🚜","🏍️","🛵","🦽","🦼","🛺","🚲","🛴","🛹","🛼","🚏","🛣️","🛤️","🛞","⛽","🛟","🚨","🚥","🚦","🛑","🚧","⚓","🛟","⛵","🛶","🚤","🛳️","⛴️","🛥️","🚢","✈️","🛩️","🛫","🛬","🪂","💺","🚁","🚟","🚠","🚡","🛰️","🚀","🛸","🛎️","🧳","⏰","🕐","🕑","🕒","🕓","🕔","🕕","🕖","🕗","🕘","🕙","🕚","🕛","🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘","🌙","🌚","🌛","🌜","☀️","🌝","🌞","⭐","🌟","🌠","🏠","🏡","🏢","🏣","🏤","🏥","🏦","🏨","🏩","🏪","🏫","🏬","🏭","🏯","🏰","💒","🗼","🗽","⛪","🕌","🛕","🕍","⛩️","🕋","⛲","⛺","🌁","🌃","🏙️","🌄","🌅","🌆","🌇","🌉","♨️","🎠","🛝","🎡","🎢","💈","🎪","🗺️","🧭","🏔️","⛰️","🌋","🗻","🏕️","🏖️","🏜️","🏝️","🏞️",
+  ]},
+  { id: "objects", name: "Objects", icon: "💡", emojis: [
+    "⌚","📱","📲","💻","⌨️","🖥️","🖨️","🖱️","🖲️","🕹️","🗜️","💾","💿","📀","📼","📷","📸","📹","🎥","📽️","🎞️","📞","☎️","📟","📠","📺","📻","🎙️","🎚️","🎛️","🧭","⏱️","⏲️","⏰","🕰️","⌛","⏳","📡","🔋","🪫","🔌","💡","🔦","🕯️","🪔","🧯","🛢️","💸","💵","💴","💶","💷","🪙","💰","💳","🪪","💎","⚖️","🪜","🧰","🪛","🔧","🔨","⚒️","🛠️","⛏️","🪚","🔩","⚙️","🪤","🧱","⛓️","🧲","🔫","💣","🧨","🪓","🔪","🗡️","⚔️","🛡️","🚬","⚰️","🪦","⚱️","🏺","🔮","📿","🧿","🪬","💈","⚗️","🔭","🔬","🕳️","🩹","🩺","🩻","🩼","💊","💉","🩸","🧬","🦠","🧫","🧪","🌡️","🧹","🪠","🧺","🧻","🪣","🧼","🫧","🪥","🧽","🧴","🛎️","🔑","🗝️","🚪","🪑","🛋️","🛏️","🛌","🧸","🪆","🖼️","🪞","🪟","🛍️","🛒","🎁","🎈","🎏","🎀","🪄","🪅","🎊","🎉","🎎","🏮","🎐","🧧","✉️","📩","📨","📧","💌","📥","📤","📦","🏷️","🪧","📪","📫","📬","📭","📮","📯","📜","📃","📄","📑","🧾","📊","📈","📉","🗒️","🗓️","📆","📅","🗑️","📇","🗃️","🗳️","🗄️","📋","📁","📂","🗂️","🗞️","📰","📓","📔","📒","📕","📗","📘","📙","📚","📖","🔖","🧷","🔗","📎","🖇️","📐","📏","🧮","📌","📍","✂️","🖊️","🖋️","✒️","🖌️","🖍️","📝","✏️","🔍","🔎","🔏","🔐","🔒","🔓",
+  ]},
+  { id: "symbols", name: "Symbols", icon: "💠", emojis: [
+    "❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💔","❤️‍🔥","❤️‍🩹","❣️","💕","💞","💓","💗","💖","💘","💝","💟","☮️","✝️","☪️","🕉️","☸️","✡️","🔯","🕎","☯️","☦️","🛐","⛎","♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓","🆔","⚛️","🉑","☢️","☣️","📴","📳","🈶","🈚","🈸","🈺","🈷️","✴️","🆚","💮","🉐","㊙️","㊗️","🈴","🈵","🈹","🈲","🅰️","🅱️","🆎","🆑","🅾️","🆘","❌","⭕","🛑","⛔","📛","🚫","💯","💢","♨️","🚷","🚯","🚳","🚱","🔞","📵","🚭","❗","❕","❓","❔","‼️","⁉️","🔅","🔆","〽️","⚠️","🚸","🔱","⚜️","🔰","♻️","✅","🈯","💹","❇️","✳️","❎","🌐","💠","Ⓜ️","🌀","💤","🏧","🚾","♿","🅿️","🛗","🈳","🈂️","🛂","🛃","🛄","🛅","🚹","🚺","🚼","⚧️","🚻","🚮","🎦","📶","🈁","🔣","ℹ️","🔤","🔡","🔠","🆖","🆗","🆙","🆒","🆕","🆓","0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟","🔢","#️⃣","*️⃣","⏏️","▶️","⏸️","⏯️","⏹️","⏺️","⏭️","⏮️","⏩","⏪","⏫","⏬","◀️","🔼","🔽","➡️","⬅️","⬆️","⬇️","↗️","↘️","↙️","↖️","↕️","↔️","↪️","↩️","⤴️","⤵️","🔀","🔁","🔂","🔄","🔃","🎵","🎶","➕","➖","➗","✖️","🟰","♾️","💲","💱","™️","©️","®️","〰️","➰","➿","🔚","🔙","🔛","🔝","🔜","✔️","☑️","🔘","🔴","🟠","🟡","🟢","🔵","🟣","⚫","⚪","🟤","🔺","🔻","🔸","🔹","🔶","🔷","🔳","🔲","▪️","▫️","◾","◽","◼️","◻️","🟥","🟧","🟨","🟩","🟦","🟪","⬛","⬜","🟫","🔈","🔇","🔉","🔊","🔔","🔕","📣","📢","👁️‍🗨️","💬","💭","🗯️","♠️","♣️","♥️","♦️","🃏","🎴","🀄",
+  ]},
+  { id: "flags", name: "Flags", icon: "🏳️", emojis: [
+    "🏁","🚩","🎌","🏴","🏳️","🏳️‍🌈","🏳️‍⚧️","🏴‍☠️","🇺🇸","🇬🇧","🇨🇦","🇦🇺","🇩🇪","🇫🇷","🇪🇸","🇮🇹","🇯🇵","🇰🇷","🇨🇳","🇷🇺","🇧🇷","🇲🇽","🇮🇳","🇳🇱","🇸🇪","🇳🇴","🇩🇰","🇫🇮","🇵🇱","🇹🇷","🇦🇷","🇨🇱","🇨🇴","🇵🇪","🇻🇪","🇨🇺","🇵🇷","🇺🇦","🇮🇱","🇸🇦","🇦🇪","🇪🇬","🇿🇦","🇳🇬","🇰🇪","🇬🇭","🇹🇭","🇻🇳","🇮🇩","🇵🇭","🇲🇾","🇸🇬","🇳🇿","🇵🇹","🇬🇷","🇨🇿","🇦🇹","🇨🇭","🇧🇪","🇮🇪","🇭🇺","🇷🇴",
+  ]},
 ];
 
 // ── localStorage helpers for reaction dedup ──────────────────────
@@ -584,24 +608,34 @@ function buildReactKey(messageId, emoji) {
 
 // ── Emoji Picker ─────────────────────────────────────────────────
 // A floating popover showing Unicode + server custom emojis with
-// search filtering. Opens relative to a trigger element.
+// search filtering, category tabs, and server emoji integration.
+// Opens above the trigger element like Discord's native picker.
 function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
   const pickerRef = useRef(null);
   const searchRef = useRef(null);
+  const bodyRef = useRef(null);
   const [filter, setFilter] = useState("");
+  const [activeCategory, setActiveCategory] = useState(
+    serverEmojis?.length ? "server" : "frequent",
+  );
 
   // Auto-focus the search input when picker opens
   useEffect(() => {
     searchRef.current?.focus();
   }, []);
 
-  // Position the picker below the anchor
+  // Position the picker above the anchor (Discord-style)
   useEffect(() => {
     const anchor = anchorRef?.current;
     const picker = pickerRef.current;
     if (!anchor || !picker) return;
     const rect = anchor.getBoundingClientRect();
-    picker.style.top = `${rect.bottom + 4}px`;
+    const pickerH = picker.offsetHeight || 460;
+    // Position above the trigger
+    let top = rect.top - pickerH - 8;
+    // If it goes off-screen top, position below instead
+    if (top < 8) top = rect.bottom + 8;
+    picker.style.top = `${top}px`;
     picker.style.right = `${window.innerWidth - rect.right}px`;
     picker.style.left = "auto";
     // Ensure it doesn't go off-screen left
@@ -614,13 +648,30 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
 
   const lowerFilter = filter.toLowerCase();
 
-  const filteredUnicode = filter
-    ? DEFAULT_UNICODE_EMOJIS // Unicode emojis can't be searched by name easily, show all
-    : DEFAULT_UNICODE_EMOJIS;
+  // Build all category tabs (server emojis first, if present)
+  const allCategories = [];
+  if (serverEmojis?.length) {
+    allCategories.push({ id: "server", name: "Server Emojis", icon: "🏠" });
+  }
+  for (const cat of EMOJI_CATEGORIES) {
+    allCategories.push(cat);
+  }
 
+  // Filter server emojis
   const filteredCustom = serverEmojis
     ? serverEmojis.filter((e) => !filter || e.name.toLowerCase().includes(lowerFilter))
     : [];
+
+  // Scroll to a category section
+  const scrollToCategory = (catId) => {
+    setActiveCategory(catId);
+    if (filter) setFilter(""); // clear search when clicking a category
+    const el = bodyRef.current?.querySelector(`[data-category="${catId}"]`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // When searching, show filtered results from all categories
+  const isSearching = filter.length > 0;
 
   return (
     <>
@@ -634,54 +685,133 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
-        <div className={styles.emojiPickerBody}>
-          {/* Unicode section */}
-          {(!filter || filteredUnicode.length > 0) && (
-            <>
-              <div className={styles.emojiPickerSection}>Frequently Used</div>
-              <div className={styles.emojiPickerGrid}>
-                {filteredUnicode.map((emoji) => (
-                  <button
-                    key={emoji}
-                    className={styles.emojiPickerItem}
-                    type="button"
-                    onClick={() => onSelect(emoji)}
-                    title={emoji}
-                  >
-                    {emoji}
-                  </button>
+        <div className={styles.emojiPickerMain}>
+          {/* Category sidebar tabs */}
+          <div className={styles.emojiCategorySidebar}>
+            {allCategories.map((cat) => (
+              <button
+                key={cat.id}
+                className={`${styles.emojiCategoryTab} ${activeCategory === cat.id ? styles.emojiCategoryTabActive : ""}`}
+                type="button"
+                onClick={() => scrollToCategory(cat.id)}
+                title={cat.name}
+              >
+                {cat.id === "server" && serverEmojis?.[0] ? (
+                  <img
+                    src={emojiUrl(serverEmojis[0].id, serverEmojis[0].animated)}
+                    alt=""
+                    className={styles.emojiCategoryTabImg}
+                    draggable={false}
+                  />
+                ) : (
+                  <span>{cat.icon}</span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Emoji grid body */}
+          <div className={styles.emojiPickerBody} ref={bodyRef}>
+            {isSearching ? (
+              /* ── Search results view ────────────────────────── */
+              <>
+                {filteredCustom.length > 0 && (
+                  <>
+                    <div className={styles.emojiPickerSection}>Server Emojis</div>
+                    <div className={styles.emojiPickerGrid}>
+                      {filteredCustom.map((emoji) => (
+                        <button
+                          key={emoji.id}
+                          className={styles.emojiPickerItem}
+                          type="button"
+                          onClick={() => onSelect(`${emoji.name}:${emoji.id}`)}
+                          title={`:${emoji.name}:`}
+                        >
+                          <img
+                            src={emojiUrl(emoji.id, emoji.animated)}
+                            alt={`:${emoji.name}:`}
+                            className={styles.emojiPickerCustomImg}
+                            draggable={false}
+                            loading="lazy"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+                {/* Unicode categories that match are harder to search, show all */}
+                {EMOJI_CATEGORIES.map((cat) => (
+                  <div key={cat.id}>
+                    <div className={styles.emojiPickerSection}>{cat.name}</div>
+                    <div className={styles.emojiPickerGrid}>
+                      {cat.emojis.map((emoji) => (
+                        <button
+                          key={emoji}
+                          className={styles.emojiPickerItem}
+                          type="button"
+                          onClick={() => onSelect(emoji)}
+                          title={emoji}
+                        >
+                          {emoji}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
-              </div>
-            </>
-          )}
-          {/* Server custom emoji section */}
-          {filteredCustom.length > 0 && (
-            <>
-              <div className={styles.emojiPickerSection}>Server Emojis</div>
-              <div className={styles.emojiPickerGrid}>
-                {filteredCustom.map((emoji) => (
-                  <button
-                    key={emoji.id}
-                    className={styles.emojiPickerItem}
-                    type="button"
-                    onClick={() => onSelect(`${emoji.name}:${emoji.id}`)}
-                    title={`:${emoji.name}:`}
-                  >
-                    <img
-                      src={emojiUrl(emoji.id, emoji.animated)}
-                      alt={`:${emoji.name}:`}
-                      className={styles.emojiPickerCustomImg}
-                      draggable={false}
-                      loading="lazy"
-                    />
-                  </button>
+                {filteredCustom.length === 0 && (
+                  <div className={styles.emojiPickerEmpty}>No matching emojis found</div>
+                )}
+              </>
+            ) : (
+              /* ── Category browsing view ─────────────────────── */
+              <>
+                {/* Server emojis (first, if present) */}
+                {serverEmojis?.length > 0 && (
+                  <div data-category="server">
+                    <div className={styles.emojiPickerSection}>Server Emojis</div>
+                    <div className={styles.emojiPickerGrid}>
+                      {serverEmojis.map((emoji) => (
+                        <button
+                          key={emoji.id}
+                          className={styles.emojiPickerItem}
+                          type="button"
+                          onClick={() => onSelect(`${emoji.name}:${emoji.id}`)}
+                          title={`:${emoji.name}:`}
+                        >
+                          <img
+                            src={emojiUrl(emoji.id, emoji.animated)}
+                            alt={`:${emoji.name}:`}
+                            className={styles.emojiPickerCustomImg}
+                            draggable={false}
+                            loading="lazy"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {/* Unicode categories */}
+                {EMOJI_CATEGORIES.map((cat) => (
+                  <div key={cat.id} data-category={cat.id}>
+                    <div className={styles.emojiPickerSection}>{cat.name}</div>
+                    <div className={styles.emojiPickerGrid}>
+                      {cat.emojis.map((emoji) => (
+                        <button
+                          key={emoji}
+                          className={styles.emojiPickerItem}
+                          type="button"
+                          onClick={() => onSelect(emoji)}
+                          title={emoji}
+                        >
+                          {emoji}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
-              </div>
-            </>
-          )}
-          {filter && filteredUnicode.length === 0 && filteredCustom.length === 0 && (
-            <div className={styles.emojiPickerEmpty}>No emojis found</div>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>
