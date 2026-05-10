@@ -617,6 +617,8 @@
   object-fit: cover;
   cursor: pointer;
   transition: opacity 150ms ease;
+  position: relative;
+  z-index: 1;
 }
 
 .avatar:hover {
@@ -638,6 +640,8 @@
   color: #fff;
   cursor: pointer;
   transition: opacity 150ms ease;
+  position: relative;
+  z-index: 1;
 }
 
 .avatarFallback:hover {
