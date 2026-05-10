@@ -56,6 +56,131 @@ function getAvatarColor(userId) {
   return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
 }
 
+// ── Discord Profile Badge Icons ──────────────────────────────
+// SVG path data for each badge identifier. These are compact
+// versions of Discord's official badge icons, rendered inline
+// as 18×18 SVGs next to the username.
+const BADGE_ICONS = {
+  staff: {
+    color: "#5865f2",
+    label: "Discord Staff",
+    path: "M10.56 1.1c-.46-.46-1.2-.46-1.66 0L7.71 2.29 5.81 1.66c-.57-.19-1.2.08-1.45.63L3.72 4H2.1c-.61 0-1.1.49-1.1 1.1v1.62L.37 7.36c-.55.25-.82.88-.63 1.45l.63 1.9-1.19 1.19c-.46.46-.46 1.2 0 1.66l1.19 1.19-.63 1.9c-.19.57.08 1.2.63 1.45L1 17.74v1.16c0 .61.49 1.1 1.1 1.1h1.62l.64 1.63c.25.55.88.82 1.45.63l1.9-.63 1.19 1.19c.46.46 1.2.46 1.66 0l1.19-1.19 1.9.63c.57.19 1.2-.08 1.45-.63l.64-1.63H17.9c.61 0 1.1-.49 1.1-1.1v-1.16l.63-.64c.55-.25.82-.88.63-1.45l-.63-1.9 1.19-1.19c.46-.46.46-1.2 0-1.66L19.63 9.26l.63-1.9c.19-.57-.08-1.2-.63-1.45L18 5.27V4.11c0-.61-.49-1.1-1.1-1.1h-1.62l-.64-1.63c-.25-.55-.88-.82-1.45-.63l-1.9.63L10.56 1.1zM8.03 9.47l1.72 1.31 3.5-4.5 1.5 1.17-4.5 5.78-2.97-2.28.75-.48z",
+  },
+  partner: {
+    color: "#5865f2",
+    label: "Partnered Server Owner",
+    path: "M10.56 1.1c-.46-.46-1.2-.46-1.66 0L7.71 2.29 5.81 1.66c-.57-.19-1.2.08-1.45.63L3.72 4H2.1c-.61 0-1.1.49-1.1 1.1v1.62L.37 7.36c-.55.25-.82.88-.63 1.45l.63 1.9-1.19 1.19c-.46.46-.46 1.2 0 1.66l1.19 1.19-.63 1.9c-.19.57.08 1.2.63 1.45L1 17.74v1.16c0 .61.49 1.1 1.1 1.1h1.62l.64 1.63c.25.55.88.82 1.45.63l1.9-.63 1.19 1.19c.46.46 1.2.46 1.66 0l1.19-1.19 1.9.63c.57.19 1.2-.08 1.45-.63l.64-1.63H17.9c.61 0 1.1-.49 1.1-1.1v-1.16l.63-.64c.55-.25.82-.88.63-1.45l-.63-1.9 1.19-1.19c.46-.46.46-1.2 0-1.66L19.63 9.26l.63-1.9c.19-.57-.08-1.2-.63-1.45L18 5.27V4.11c0-.61-.49-1.1-1.1-1.1h-1.62l-.64-1.63c-.25-.55-.88-.82-1.45-.63l-1.9.63L10.56 1.1zM8.03 9.47l1.72 1.31 3.5-4.5 1.5 1.17-4.5 5.78-2.97-2.28.75-.48z",
+  },
+  hypesquad: {
+    color: "#f47b67",
+    label: "HypeSquad Events",
+    path: "M2 5l8-4 8 4-8 12L2 5z",
+  },
+  hypesquad_bravery: {
+    color: "#9c84ef",
+    label: "HypeSquad Bravery",
+    path: "M5.01 3L10 1l4.99 2L10 19 5.01 3zM10 7.5L7.5 4H12.5L10 7.5z",
+  },
+  hypesquad_brilliance: {
+    color: "#f47b67",
+    label: "HypeSquad Brilliance",
+    path: "M10 1l3 5.5L10 19 7 6.5 10 1zM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",
+  },
+  hypesquad_balance: {
+    color: "#45ddc0",
+    label: "HypeSquad Balance",
+    path: "M10 1l8 5v8l-8 5-8-5V6l8-5zm0 3L5 7v6l5 3 5-3V7l-5-3z",
+  },
+  bug_hunter_1: {
+    color: "#49ad5a",
+    label: "Bug Hunter Level 1",
+    path: "M7 2a4 4 0 0 1 6 0l1.5 2H17v3h-1l-1 8H5L4 7H3V4h2.5L7 2zm3 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4z",
+  },
+  bug_hunter_2: {
+    color: "#f0b132",
+    label: "Bug Hunter Level 2",
+    path: "M7 2a4 4 0 0 1 6 0l1.5 2H17v3h-1l-1 8H5L4 7H3V4h2.5L7 2zm3 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM6 16l4 3 4-3H6z",
+  },
+  early_supporter: {
+    color: "#7289da",
+    label: "Early Supporter",
+    path: "M10 1.5l2.5 4.5h5L13 10l2 7-5-3.5L5 17l2-7-4.5-4h5L10 1.5z",
+  },
+  verified_developer: {
+    color: "#5865f2",
+    label: "Early Verified Bot Developer",
+    path: "M7.5 3L10 1l2.5 2h3v3L18 8.5 15.5 11v3h-3L10 16.5 7.5 14h-3v-3L2 8.5 4.5 6V3h3zM7 8l2 2 4-4 1.5 1.5L9 13 5.5 9.5 7 8z",
+  },
+  certified_moderator: {
+    color: "#5865f2",
+    label: "Moderator Programs Alumni",
+    path: "M3 4.5V6l7 7 7-7V4.5L10 10 3 4.5zM3 11v1.5l7 7 7-7V11l-7 5.5L3 11z",
+  },
+  active_developer: {
+    color: "#23a559",
+    label: "Active Developer",
+    path: "M6.5 2L2 6.5V14l4.5 4.5H14l4.5-4.5V6.5L14 2H6.5zM8 7h4v2H8V7zm0 4h4v2H8v-2z",
+  },
+};
+
+// ── User Profile Badges ──────────────────────────────────────
+// Renders a row of small SVG badge icons next to the username,
+// matching Discord's native badge display behavior.
+function UserBadges({ badges }) {
+  if (!badges?.length) return null;
+  return (
+    <span className={styles.userBadges}>
+      {badges.map((badge) => {
+        // badge can be a string ID or { id, label } object
+        const id = typeof badge === "string" ? badge : badge.id;
+        const icon = BADGE_ICONS[id];
+        if (!icon) return null;
+        return (
+          <span key={id} className={styles.badgeIcon} title={icon.label}>
+            <svg viewBox="0 0 20 20" fill={icon.color} width="18" height="18">
+              <path d={icon.path} />
+            </svg>
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+// ── Role Tags ────────────────────────────────────────────────
+// Renders colored role pill badges next to the username — matching
+// Discord's native role tag display to the right of the name.
+function RoleTags({ roleTags }) {
+  if (!roleTags?.length) return null;
+  return (
+    <span className={styles.roleTags}>
+      {roleTags.map((tag) => (
+        <span
+          key={tag.name}
+          className={styles.roleTag}
+          style={{
+            "--role-color": tag.color || "#99aab5",
+          }}
+          title={tag.name}
+        >
+          {tag.iconUrl && (
+            <img
+              src={tag.iconUrl}
+              alt=""
+              className={styles.roleTagIcon}
+              width={14}
+              height={14}
+              loading="lazy"
+              draggable={false}
+            />
+          )}
+          <span className={styles.roleTagName}>{tag.name}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 // ── Tenor URL detection ──────────────────────────────────────────
 const TENOR_URL_RE = /https?:\/\/tenor\.com\/view\/[\w-]+/g;
 
@@ -698,7 +823,11 @@ function MemberItem({ member }) {
               APP
             </span>
           )}
+          <UserBadges badges={member.badges} />
         </div>
+        {member.roleTags?.length > 0 && (
+          <RoleTags roleTags={member.roleTags} />
+        )}
         {member.activity && (
           <span className={styles.memberActivity}>{member.activity}</span>
         )}
@@ -1261,6 +1390,8 @@ export default function DiscordChatComponent({
                                 BOT
                               </span>
                             )}
+                            <UserBadges badges={msg.author.badges} />
+                            <RoleTags roleTags={msg.author.roleTags} />
                             <span className={styles.timestamp}>{formatTimestamp(msg.createdAtISO)}</span>
                           </div>
                           <p className={styles.messageText}>{formatContent(msg.content, msg.cleanContent)}</p>

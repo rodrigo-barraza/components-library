@@ -657,9 +657,10 @@
 
 .messageHeader {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
   line-height: 1.375;
+  flex-wrap: wrap;
 }
 
 .authorName {
@@ -705,6 +706,88 @@
   width: 12px;
   height: 12px;
   flex-shrink: 0;
+}
+
+/* ── User Profile Badges (inline SVG icons) ───────────────────── */
+
+.userBadges {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  vertical-align: top;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.badgeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.badgeIcon:hover {
+  transform: scale(1.2);
+  opacity: 0.85;
+}
+
+.badgeIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Role Tags (colored pill badges next to username) ──────────── */
+
+.roleTags {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.roleTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 6px;
+  height: 18px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--role-color) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--role-color) 40%, transparent);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--role-color);
+  line-height: 18px;
+  white-space: nowrap;
+  cursor: default;
+  transition: background-color 150ms ease, border-color 150ms ease;
+  vertical-align: top;
+  margin-top: 2px;
+}
+
+.roleTag:hover {
+  background: color-mix(in srgb, var(--role-color) 30%, transparent);
+  border-color: color-mix(in srgb, var(--role-color) 60%, transparent);
+}
+
+.roleTagIcon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.roleTagName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
 }
 
 .timestamp {
