@@ -25,7 +25,6 @@ const DEFAULT_LABEL_MAP = {
 /**
  * ThemeToggleButtonComponent — one-click theme cycling button.
  *
- * Replaces the duplicated icon-ternary-chain in lights-client and ledger-client.
  * Uses IconButtonComponent internally and gets theme state from ThemeProvider.
  *
  * @param {Object}  props

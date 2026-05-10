@@ -1,9 +1,6 @@
 /**
  * ApiClient — Reusable HTTP fetch factory for service clients.
  *
- * Eliminates the identical request() boilerplate that was duplicated across
- * portal-client, lights-client, ledger-client, dygest-client, and messages-client.
- *
  * @example
  *   import { createApiClient } from "@rodrigo-barraza/components-library";
  *

@@ -6,9 +6,9 @@ import { useState, useCallback, useEffect, useRef } from "react";
  * useSetToggle — manages a Set<string> with toggle/toggleAll semantics and
  * optional localStorage persistence.
  *
- * Extracted from useToolToggles — the pattern of toggling items in/out
- * of a set and persisting to storage is reusable across any multi-select
- * toggle interface (tool toggles, feature flags, column visibility, etc.).
+ * The pattern of toggling items in/out of a set and persisting to storage
+ * is reusable across any multi-select toggle interface (tool toggles,
+ * feature flags, column visibility, etc.).
  *
  * @param {object} [options]
  * @param {string} [options.storageKey] — persist to localStorage under this key

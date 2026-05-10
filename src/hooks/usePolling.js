@@ -5,8 +5,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 /**
  * usePolling — periodic data fetching with automatic cleanup.
  *
- * Extracts the pattern duplicated across useLights, useAutomation,
- * and useMessages: fetch on mount → poll at interval → cleanup on unmount.
+ * Fetches on mount, polls at interval, and cleans up on unmount.
  *
  * @param {() => Promise<T>} fetcher — async function that returns data
  * @param {number} intervalMs — polling interval in milliseconds (0 = no polling)
