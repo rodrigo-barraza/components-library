@@ -37,6 +37,7 @@ export {
   MenuGroupLabel,
   SubMenu,
 } from "./components/MenuComponent/MenuComponent.js";
+export { default as MobileHeaderComponent } from "./components/MobileHeaderComponent/MobileHeaderComponent.js";
 export { default as ModalComponent } from "./components/ModalComponent/ModalComponent.js";
 export { default as MultiSelectComponent } from "./components/MultiSelectComponent/MultiSelectComponent.js";
 export { default as NavigationDrawerComponent } from "./components/NavigationDrawerComponent/NavigationDrawerComponent.js";

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import * as Icons from "lucide-react";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import TooltipComponent from "../TooltipComponent/TooltipComponent";
 import ThemePickerComponent from "../ThemePickerComponent/ThemePickerComponent";
 import styles from "./NavigationSidebarComponent.module.css";
@@ -26,6 +27,10 @@ import styles from "./NavigationSidebarComponent.module.css";
  *
  * Additional features: collapsed state with localStorage persistence, theming,
  * custom link components, and icon strings resolved from lucide-react.
+ *
+ * **Mobile Responsive:** On viewports ≤ mobileBreakpoint, the sidebar renders as
+ * a slide-over drawer with a scrim backdrop. Controlled by `mobileOpen` /
+ * `onMobileClose` props.
  */
 export default function NavigationSidebarComponent({
   brandIcon, // string (url) or ReactNode
@@ -44,9 +49,16 @@ export default function NavigationSidebarComponent({
   storageKey, // string — localStorage key for persisting collapsed state (e.g. "ledger-nav-collapsed")
   onCollapse, // function(collapsed: boolean) — called when collapsed state changes
   bottomActions, // ReactNode for extra footer actions
+  // ── Mobile drawer props ──────────────────────────────────────────
+  mobileOpen, // boolean — controls drawer visibility on mobile
+  onMobileClose, // function — called when drawer should close (scrim tap, nav click, Escape)
+  mobileBreakpoint = 768, // number — viewport width below which drawer mode activates
 }) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [navReady, setNavReady] = useState(false);
+
+  // ── Mobile detection ──────────────────────────────────────────────
+  const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
 
   // Normalize to sections format — single unnamed section when using flat items
   const resolvedSections = useMemo(
@@ -90,6 +102,30 @@ export default function NavigationSidebarComponent({
     });
   }, [storageKey, onCollapse]);
 
+  // ── Mobile: Escape key to close ───────────────────────────────────
+  useEffect(() => {
+    if (!isMobile || !mobileOpen || !onMobileClose) return;
+
+    const handleKey = (e) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        onMobileClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [isMobile, mobileOpen, onMobileClose]);
+
+  // ── Mobile: prevent body scroll when drawer is open ───────────────
+  useEffect(() => {
+    if (!isMobile || !mobileOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobile, mobileOpen]);
+
   // Resolve whether we use the new ThemePicker or fallback to legacy toggle
   const hasThemePicker = Boolean(themes?.length && setTheme);
 
@@ -124,6 +160,10 @@ export default function NavigationSidebarComponent({
         if (onNavigate) {
           onNavigate(id, item);
         }
+        // Auto-close mobile drawer on navigation
+        if (isMobile && onMobileClose) {
+          onMobileClose();
+        }
       },
     };
 
@@ -141,6 +181,9 @@ export default function NavigationSidebarComponent({
             e.preventDefault();
             onNavigate(id, item);
           }
+          if (isMobile && onMobileClose) {
+            onMobileClose();
+          }
         }}>
           {content}
         </a>
@@ -153,7 +196,10 @@ export default function NavigationSidebarComponent({
       );
     }
 
-    return collapsible ? (
+    // On mobile, always show labels (no collapsed tooltips)
+    const showTooltip = collapsible && !isMobile;
+
+    return showTooltip ? (
       <TooltipComponent key={id} label={item.label} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
         {LinkElement}
       </TooltipComponent>
@@ -164,8 +210,28 @@ export default function NavigationSidebarComponent({
     );
   };
 
+  // ── Determine wrapper classes ─────────────────────────────────────
+  const wrapperClasses = [
+    styles.wrapper,
+    collapsed && !isMobile ? styles.collapsed : "",
+    !navReady ? styles.noTransition : "",
+    isMobile ? styles.mobileWrapper : "",
+    isMobile && mobileOpen ? styles.mobileOpen : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ""} ${!navReady ? styles.noTransition : ""}`}>
+    <div className={wrapperClasses}>
+      {/* ── Mobile scrim backdrop ── */}
+      {isMobile && mobileOpen && (
+        <div
+          className={styles.mobileScrim}
+          onClick={onMobileClose}
+          aria-hidden="true"
+        />
+      )}
+
       <aside className={styles.sidebar}>
         
         {/* Brand */}
@@ -178,11 +244,17 @@ export default function NavigationSidebarComponent({
               <div className={styles.brandIconNode}>{brandIcon}</div>
             ) : null}
             {brandLabel && <span className={styles.brandLabel}>{brandLabel}</span>}
-            {collapsible && (
+
+            {/* Desktop: collapse toggle | Mobile: close button */}
+            {isMobile ? (
+              <button className={styles.mobileCloseBtn} onClick={onMobileClose} title="Close menu" aria-label="Close navigation menu">
+                <Icons.X size={20} />
+              </button>
+            ) : collapsible ? (
               <button className={styles.collapseBtn} onClick={toggleCollapse} title="Toggle Sidebar">
                 <Icons.ChevronsLeft size={16} />
               </button>
-            )}
+            ) : null}
           </div>
         )}
 
@@ -209,10 +281,10 @@ export default function NavigationSidebarComponent({
               theme={theme}
               themes={themes}
               onSelectTheme={setTheme}
-              collapsed={collapsed}
+              collapsed={isMobile ? false : collapsed}
             />
           ) : onToggleTheme ? (
-             <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
+             <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={isMobile || !collapsed} className={styles.tooltipFill}>
               <button
                 className={styles.themeToggle}
                 onClick={onToggleTheme}
