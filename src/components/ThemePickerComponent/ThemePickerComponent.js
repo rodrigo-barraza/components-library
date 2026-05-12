@@ -35,6 +35,12 @@ const THEME_CATALOG = {
     color: "#00b4d8",     // cerulean accent
     bg: "#060d18",
   },
+  punk: {
+    label: "Punk",
+    icon: "Skull",
+    color: "#ff2d9b",     // hot fuchsia accent
+    bg: "#0e0a10",
+  },
 };
 
 /**

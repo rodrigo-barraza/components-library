@@ -22,7 +22,7 @@
  */
 export function generateThemeInitScript(
   storageKey,
-  validThemes = ["light", "dark", "tropical", "oceanic"],
+  validThemes = ["light", "dark", "tropical", "oceanic", "punk"],
 ) {
   const themeList = JSON.stringify(validThemes);
   return `(function(){try{var r=localStorage.getItem(${JSON.stringify(storageKey)});if(r){var t=JSON.parse(r);if(${themeList}.indexOf(t)!==-1){document.documentElement.setAttribute("data-theme",t)}}}catch(e){}})();`;

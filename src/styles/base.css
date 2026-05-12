@@ -274,6 +274,55 @@
   --select-option-text: #d0e8f2;
 }
 
+/* ── Theme: Punk ───────────────────────────────────────────── */
+/* Riotous palette — gunmetal surfaces, hot fuchsia accent,
+   amber gold highlights, spiked shadows. Spray-painted club terminal
+   with neon glow and leather grain. */
+
+[data-theme="punk"] {
+  --bg-primary: #0e0a10;
+  --bg-secondary: #171119;
+  --bg-tertiary: #211828;
+  --bg-surface: rgba(23, 17, 25, 0.72);
+  --bg-card: rgba(23, 17, 25, 0.94);
+  --bg-card-hover: rgba(33, 24, 40, 0.96);
+  --bg-panel: rgba(23, 17, 25, 0.85);
+  --bg-input: rgba(23, 17, 25, 0.6);
+  --bg-input-hover: rgba(33, 24, 40, 0.7);
+  --bg-sidebar: rgba(14, 10, 16, 0.97);
+
+  --border-color: rgba(255, 45, 155, 0.14);
+  --border-subtle: rgba(255, 45, 155, 0.06);
+  --border-medium: rgba(255, 45, 155, 0.18);
+  --border-accent: rgba(255, 45, 155, 0.24);
+
+  --text-primary: #f0e6f4;
+  --text-secondary: #b893c4;
+  --text-tertiary: #7d5f8e;
+  --text-muted: #5e4570;
+  --text-inverse: #0e0a10;
+
+  --danger: #ff3d5a;
+  --danger-subtle: rgba(255, 61, 90, 0.14);
+  --success: #39ff76;
+  --success-subtle: rgba(57, 255, 118, 0.14);
+  --warning: #f0b429;
+  --warning-subtle: rgba(240, 180, 41, 0.14);
+  --info: #a78bfa;
+  --info-subtle: rgba(167, 139, 250, 0.14);
+  --color-success: var(--success);
+  --color-error: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --select-bg: rgba(23, 17, 25, 0.65);
+  --select-option-bg: #171119;
+  --select-option-text: #f0e6f4;
+}
 /* ── Body Defaults ──────────────────────────────────────────── */
 
 body {

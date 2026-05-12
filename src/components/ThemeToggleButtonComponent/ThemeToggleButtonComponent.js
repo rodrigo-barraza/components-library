@@ -12,14 +12,16 @@ const DEFAULT_ICON_MAP = {
   dark: "Sun",
   light: "Palmtree",
   tropical: "Waves",
-  oceanic: "Moon",
+  oceanic: "Skull",
+  punk: "Moon",
 };
 
 const DEFAULT_LABEL_MAP = {
   dark: "light",
   light: "tropical",
   tropical: "oceanic",
-  oceanic: "dark",
+  oceanic: "punk",
+  punk: "dark",
 };
 
 /**

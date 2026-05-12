@@ -27,7 +27,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *   const { theme, toggleTheme, setTheme } = useTheme();
  */
 
-const THEMES_DEFAULT = ["dark", "light", "tropical", "oceanic"];
+const THEMES_DEFAULT = ["dark", "light", "tropical", "oceanic", "punk"];
 
 const ThemeContext = createContext({
   theme: "dark",
