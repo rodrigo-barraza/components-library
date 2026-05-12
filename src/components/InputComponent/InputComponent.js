@@ -16,6 +16,7 @@ import styles from "./InputComponent.module.css";
  * @param {string}   [id]          — Element ID for accessibility
  * @param {React.ReactNode} [icon] — Leading icon element
  * @param {string}   [size="md"]   — "sm" | "md" | "lg"
+ * @param {string}   [label]       — Optional inline label rendered before the input
  */
 const InputComponent = forwardRef(function InputComponent(
   {
@@ -29,6 +30,7 @@ const InputComponent = forwardRef(function InputComponent(
     id,
     icon: Icon,
     size = "md",
+    label = null,
     ...rest
   },
   ref,
@@ -43,7 +45,7 @@ const InputComponent = forwardRef(function InputComponent(
     .filter(Boolean)
     .join(" ");
 
-  return (
+  const inputEl = (
     <div className={classes}>
       {Icon && (
         <span className={styles.iconSlot}>
@@ -68,6 +70,17 @@ const InputComponent = forwardRef(function InputComponent(
       />
     </div>
   );
+
+  if (label) {
+    return (
+      <div className={styles.labelWrapper}>
+        <span className={styles.label}>{label}</span>
+        {inputEl}
+      </div>
+    );
+  }
+
+  return inputEl;
 });
 
 export default InputComponent;

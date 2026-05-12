@@ -88,3 +88,21 @@
 .hasIcon .input {
   padding-left: 6px;
 }
+
+/* ── Inline label wrapper ─────────────────────────── */
+
+.labelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+}

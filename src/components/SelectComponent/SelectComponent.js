@@ -11,6 +11,7 @@ import styles from "./SelectComponent.module.css";
  *
  *  options:        [{ value, label, icon?, disabled?, tooltip? }]
  *  triggerTooltip  — optional tooltip shown on the trigger button hover
+ *  label           — optional inline label rendered before the trigger
  */
 export default function SelectComponent({
   value,
@@ -20,6 +21,7 @@ export default function SelectComponent({
   icon = null,
   disabled = false,
   triggerTooltip = null,
+  label = null,
 }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -109,7 +111,8 @@ export default function SelectComponent({
   );
 
   return (
-    <div className={styles.dropdown} ref={containerRef}>
+    <div className={`${styles.dropdown} ${label ? styles.hasLabel : ""}`} ref={containerRef}>
+      {label && <span className={styles.label}>{label}</span>}
       <div className={styles.sizer} aria-hidden="true">
         {options.map((opt) => (
           <span key={opt.value} className={styles.sizerItem}>

@@ -16,6 +16,7 @@ import styles from "./MultiSelectComponent.module.css";
  *  icon:        optional leading icon for the trigger
  *  disabled:    disables the entire select
  *  compact:     if true, shows count badge instead of chips (e.g. "3 selected")
+ *  label:       optional inline label rendered before the trigger
  */
 export default function MultiSelectComponent({
   value = [],
@@ -26,6 +27,7 @@ export default function MultiSelectComponent({
   icon = null,
   disabled = false,
   compact = false,
+  label = null,
 }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -84,7 +86,8 @@ export default function MultiSelectComponent({
   );
 
   return (
-    <div className={styles.dropdown} ref={containerRef}>
+    <div className={`${styles.dropdown} ${label ? styles.hasLabel : ""}`} ref={containerRef}>
+      {label && <span className={styles.label}>{label}</span>}
       {/* ── Trigger ── */}
       <button
         type="button"
