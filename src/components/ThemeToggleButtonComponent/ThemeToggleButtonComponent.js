@@ -10,7 +10,8 @@ import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
  */
 const DEFAULT_ICON_MAP = {
   dark: "Sun",
-  light: "Palmtree",
+  light: "CloudFog",
+  muted: "Palmtree",
   tropical: "Waves",
   oceanic: "Skull",
   punk: "Moon",
@@ -18,7 +19,8 @@ const DEFAULT_ICON_MAP = {
 
 const DEFAULT_LABEL_MAP = {
   dark: "light",
-  light: "tropical",
+  light: "muted",
+  muted: "tropical",
   tropical: "oceanic",
   oceanic: "punk",
   punk: "dark",

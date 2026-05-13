@@ -180,6 +180,56 @@
   --select-option-text: #1a1a2e;
 }
 
+/* ── Theme: Muted ──────────────────────────────────────────── */
+/* Desaturated warm-grey light palette — same structural intent as
+   Light but with lower luminance and contrast. Easier on the eyes
+   for extended sessions without going full dark. */
+
+[data-theme="muted"] {
+  --bg-primary: #dddee3;
+  --bg-secondary: #e8e9ed;
+  --bg-tertiary: #d2d4da;
+  --bg-surface: rgba(221, 222, 227, 0.78);
+  --bg-card: rgba(228, 229, 234, 0.92);
+  --bg-card-hover: rgba(218, 219, 226, 0.95);
+  --bg-panel: rgba(228, 229, 234, 0.88);
+  --bg-input: rgba(212, 214, 220, 0.8);
+  --bg-input-hover: rgba(202, 204, 212, 0.88);
+  --bg-sidebar: rgba(224, 225, 230, 0.97);
+
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --border-accent: rgba(0, 0, 0, 0.16);
+
+  --text-primary: #2c2e36;
+  --text-secondary: #5e6272;
+  --text-tertiary: #787c8e;
+  --text-muted: #959aac;
+  --text-inverse: #e8e9ed;
+
+  --danger: #c92a2a;
+  --danger-subtle: rgba(201, 42, 42, 0.08);
+  --success: #0c8346;
+  --success-subtle: rgba(12, 131, 70, 0.08);
+  --warning: #c77c08;
+  --warning-subtle: rgba(199, 124, 8, 0.08);
+  --info: #1d6fdb;
+  --info-subtle: rgba(29, 111, 219, 0.08);
+  --color-success: var(--success);
+  --color-error: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  --select-bg: #e8e9ed;
+  --select-option-bg: #e8e9ed;
+  --select-option-text: #2c2e36;
+}
+
 /* ── Theme: Tropical ────────────────────────────────────────── */
 
 [data-theme="tropical"] {

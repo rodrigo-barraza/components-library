@@ -10,6 +10,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *   :root { --bg-primary: #0a0a0f; }                    ← dark (default)
  *   [data-theme="light"]    { --bg-primary: #f5f5f7; }  ← light override
  *   [data-theme="tropical"] { --bg-primary: #1a120e; }  ← tropical override
+ *   [data-theme="muted"]    { --bg-primary: #dddee3; }  ← muted override
  *   [data-theme="oceanic"]  { --bg-primary: #060d18; }  ← oceanic override
  *
  * Designed for extensibility — `themes` prop accepts an array of valid theme
@@ -27,7 +28,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *   const { theme, toggleTheme, setTheme } = useTheme();
  */
 
-const THEMES_DEFAULT = ["dark", "light", "tropical", "oceanic", "punk"];
+const THEMES_DEFAULT = ["dark", "light", "muted", "tropical", "oceanic", "punk"];
 
 const ThemeContext = createContext({
   theme: "dark",
