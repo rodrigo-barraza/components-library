@@ -844,6 +844,9 @@ function MessageActions({ messageId, onOpenPicker, pickerMessageId }) {
 // Discord's native reaction capsules with count badges.
 // Clicking a pill triggers a reaction via the bot. Already-reacted
 // pills show a blurple highlight and are non-repeatable.
+// `r.me` indicates the bot (Lupos) already has this reaction —
+// since all website reactions go through Lupos, treat `me` the
+// same as a localStorage hit.
 // The "+" add-reaction button lives in the hover MessageActions bar,
 // not inline here — matching Discord's native UX.
 function Reactions({ reactions, messageId, reactedSet, onReact }) {
@@ -855,7 +858,9 @@ function Reactions({ reactions, messageId, reactedSet, onReact }) {
         const emoji = r.emoji;
         const emojiIdentifier = emoji.id ? `${emoji.name}:${emoji.id}` : emoji.name;
         const reactKey = buildReactKey(messageId, emojiIdentifier);
-        const hasReacted = reactedSet?.has(reactKey);
+        // Treat as "already reacted" if either the user clicked it this session
+        // (localStorage) OR the bot already holds this reaction (`r.me`).
+        const hasReacted = reactedSet?.has(reactKey) || r.me === true;
         const pillClass = hasReacted ? styles.reactionPillReacted : styles.reactionPill;
 
         // Custom server emoji → CDN image
