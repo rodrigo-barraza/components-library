@@ -158,11 +158,8 @@
 }
 
 /* ── Focus ring on bar ────────────────────────────────────────────── */
-
-.searchBar:focus-within {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-color) 15%, transparent);
-}
+/* M3 search bars rely on caret + expanded-view morphing for focus
+   indication — no outline ring on the collapsed bar container. */
 
 /* ── Expanded state (search view) ────────────────────────────────── */
 /* M3: The bar morphs into a full search view with rounded-top corners
