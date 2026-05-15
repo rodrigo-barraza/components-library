@@ -373,6 +373,213 @@
   --select-option-bg: #171119;
   --select-option-text: #f0e6f4;
 }
+
+/* ── Theme: Ember ──────────────────────────────────────────── */
+/* Warm charcoal with amber/orange fire tones — forge-lit terminal
+   with smouldering edges and burnished copper highlights. */
+
+[data-theme="ember"] {
+  --bg-primary: #120c08;
+  --bg-secondary: #1c1410;
+  --bg-tertiary: #261c16;
+  --bg-surface: rgba(28, 20, 16, 0.72);
+  --bg-card: rgba(28, 20, 16, 0.94);
+  --bg-card-hover: rgba(38, 28, 22, 0.96);
+  --bg-panel: rgba(28, 20, 16, 0.85);
+  --bg-input: rgba(28, 20, 16, 0.6);
+  --bg-input-hover: rgba(38, 28, 22, 0.7);
+  --bg-sidebar: rgba(18, 12, 8, 0.97);
+
+  --border-color: rgba(245, 158, 11, 0.12);
+  --border-subtle: rgba(245, 158, 11, 0.06);
+  --border-medium: rgba(245, 158, 11, 0.16);
+  --border-accent: rgba(245, 158, 11, 0.22);
+
+  --text-primary: #f5ebe0;
+  --text-secondary: #c2a68a;
+  --text-tertiary: #8b7260;
+  --text-muted: #6b5546;
+  --text-inverse: #120c08;
+
+  --danger: #ef4444;
+  --danger-subtle: rgba(239, 68, 68, 0.14);
+  --success: #34d399;
+  --success-subtle: rgba(52, 211, 153, 0.14);
+  --warning: #fbbf24;
+  --warning-subtle: rgba(251, 191, 36, 0.14);
+  --info: #60a5fa;
+  --info-subtle: rgba(96, 165, 250, 0.14);
+  --color-success: var(--success);
+  --color-error: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --select-bg: rgba(28, 20, 16, 0.65);
+  --select-option-bg: #1c1410;
+  --select-option-text: #f5ebe0;
+}
+
+/* ── Theme: Arctic ─────────────────────────────────────────── */
+/* Ice-cold desaturated blue-grey — frosted glass, subtle cyan
+   highlights, minimal contrast for focus-heavy work. */
+
+[data-theme="arctic"] {
+  --bg-primary: #0a0e14;
+  --bg-secondary: #111820;
+  --bg-tertiary: #18212c;
+  --bg-surface: rgba(17, 24, 32, 0.72);
+  --bg-card: rgba(17, 24, 32, 0.94);
+  --bg-card-hover: rgba(24, 33, 44, 0.96);
+  --bg-panel: rgba(17, 24, 32, 0.85);
+  --bg-input: rgba(17, 24, 32, 0.6);
+  --bg-input-hover: rgba(24, 33, 44, 0.7);
+  --bg-sidebar: rgba(10, 14, 20, 0.97);
+
+  --border-color: rgba(148, 204, 224, 0.1);
+  --border-subtle: rgba(148, 204, 224, 0.05);
+  --border-medium: rgba(148, 204, 224, 0.14);
+  --border-accent: rgba(148, 204, 224, 0.2);
+
+  --text-primary: #dce8f0;
+  --text-secondary: #8aa4b8;
+  --text-tertiary: #5c7a8e;
+  --text-muted: #3e5a6e;
+  --text-inverse: #0a0e14;
+
+  --danger: #f87171;
+  --danger-subtle: rgba(248, 113, 113, 0.12);
+  --success: #6ee7b7;
+  --success-subtle: rgba(110, 231, 183, 0.12);
+  --warning: #fcd34d;
+  --warning-subtle: rgba(252, 211, 77, 0.12);
+  --info: #7dd3fc;
+  --info-subtle: rgba(125, 211, 252, 0.12);
+  --color-success: var(--success);
+  --color-error: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  --select-bg: rgba(17, 24, 32, 0.65);
+  --select-option-bg: #111820;
+  --select-option-text: #dce8f0;
+}
+
+/* ── Theme: Forest ─────────────────────────────────────────── */
+/* Deep woodland — mossy greens over rich dark earth, golden
+   dappled-light highlights, soft canopy shadows. */
+
+[data-theme="forest"] {
+  --bg-primary: #080e08;
+  --bg-secondary: #101a10;
+  --bg-tertiary: #182418;
+  --bg-surface: rgba(16, 26, 16, 0.72);
+  --bg-card: rgba(16, 26, 16, 0.94);
+  --bg-card-hover: rgba(24, 36, 24, 0.96);
+  --bg-panel: rgba(16, 26, 16, 0.85);
+  --bg-input: rgba(16, 26, 16, 0.6);
+  --bg-input-hover: rgba(24, 36, 24, 0.7);
+  --bg-sidebar: rgba(8, 14, 8, 0.97);
+
+  --border-color: rgba(74, 222, 128, 0.1);
+  --border-subtle: rgba(74, 222, 128, 0.05);
+  --border-medium: rgba(74, 222, 128, 0.14);
+  --border-accent: rgba(74, 222, 128, 0.2);
+
+  --text-primary: #e2f0e2;
+  --text-secondary: #8caa8c;
+  --text-tertiary: #5e7a5e;
+  --text-muted: #3f5c3f;
+  --text-inverse: #080e08;
+
+  --danger: #f87171;
+  --danger-subtle: rgba(248, 113, 113, 0.12);
+  --success: #4ade80;
+  --success-subtle: rgba(74, 222, 128, 0.12);
+  --warning: #fbbf24;
+  --warning-subtle: rgba(251, 191, 36, 0.12);
+  --info: #67e8f9;
+  --info-subtle: rgba(103, 232, 249, 0.12);
+  --color-success: var(--success);
+  --color-error: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --select-bg: rgba(16, 26, 16, 0.65);
+  --select-option-bg: #101a10;
+  --select-option-text: #e2f0e2;
+}
+
+/* ── Theme: Mono ───────────────────────────────────────────── */
+/* True monochromatic — applies a GPU-composited grayscale filter
+   on the root element, stripping all chroma from surfaces, text,
+   images, accents, and status indicators. Base palette is a warm
+   neutral dark to maintain legibility once desaturated. */
+
+[data-theme="mono"] {
+  --bg-primary: #101010;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #242424;
+  --bg-surface: rgba(26, 26, 26, 0.72);
+  --bg-card: rgba(26, 26, 26, 0.94);
+  --bg-card-hover: rgba(36, 36, 36, 0.96);
+  --bg-panel: rgba(26, 26, 26, 0.85);
+  --bg-input: rgba(26, 26, 26, 0.6);
+  --bg-input-hover: rgba(36, 36, 36, 0.7);
+  --bg-sidebar: rgba(16, 16, 16, 0.97);
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(255, 255, 255, 0.18);
+
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #787878;
+  --text-muted: #585858;
+  --text-inverse: #101010;
+
+  --danger: #d4d4d4;
+  --danger-subtle: rgba(212, 212, 212, 0.1);
+  --success: #c8c8c8;
+  --success-subtle: rgba(200, 200, 200, 0.1);
+  --warning: #d0d0d0;
+  --warning-subtle: rgba(208, 208, 208, 0.1);
+  --info: #bcbcbc;
+  --info-subtle: rgba(188, 188, 188, 0.1);
+  --color-success: var(--success);
+  --color-error: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  --select-bg: rgba(26, 26, 26, 0.65);
+  --select-option-bg: #1a1a1a;
+  --select-option-text: #e8e8e8;
+}
+
+/* Grayscale filter — applied at root for full-page desaturation.
+   Uses GPU-composited filter pipeline; contrast(1.05) compensates
+   for the perceptual flattening that grayscale introduces. */
+html[data-theme="mono"] {
+  filter: grayscale(1) contrast(1.05);
+  -webkit-filter: grayscale(1) contrast(1.05);
+}
+
 /* ── Body Defaults ──────────────────────────────────────────── */
 
 body {

@@ -41,6 +41,36 @@ const THEME_CATALOG = {
     color: "#ff2d9b",     // hot fuchsia accent
     bg: "#0e0a10",
   },
+  muted: {
+    label: "Muted",
+    icon: "CloudFog",
+    color: "#7c8290",     // cool slate accent
+    bg: "#dddee3",
+  },
+  ember: {
+    label: "Ember",
+    icon: "Flame",
+    color: "#f59e0b",     // amber accent
+    bg: "#120c08",
+  },
+  arctic: {
+    label: "Arctic",
+    icon: "Snowflake",
+    color: "#94cce0",     // ice-cyan accent
+    bg: "#0a0e14",
+  },
+  forest: {
+    label: "Forest",
+    icon: "TreePine",
+    color: "#4ade80",     // moss-green accent
+    bg: "#080e08",
+  },
+  mono: {
+    label: "Mono",
+    icon: "Contrast",
+    color: "#a0a0a0",     // neutral grey
+    bg: "#101010",
+  },
 };
 
 /**

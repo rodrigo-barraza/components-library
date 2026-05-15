@@ -28,7 +28,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *   const { theme, toggleTheme, setTheme } = useTheme();
  */
 
-const THEMES_DEFAULT = ["dark", "light", "muted", "tropical", "oceanic", "punk"];
+const THEMES_DEFAULT = ["dark", "light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono"];
 
 const ThemeContext = createContext({
   theme: "dark",
@@ -42,7 +42,7 @@ const ThemeContext = createContext({
  * @param {Object} props
  * @param {string}   [props.storageKey="app:theme"]  — localStorage key for persistence
  * @param {string}   [props.defaultTheme="dark"]     — fallback when nothing is stored
- * @param {string[]} [props.themes=["dark","light","tropical","oceanic"]] — ordered list of valid theme names
+ * @param {string[]} [props.themes] — ordered list of valid theme names (defaults to all built-in themes)
  * @param {string}   [props.attribute="data-theme"]  — HTML attribute set on <html>
  * @param {React.ReactNode} props.children
  */
