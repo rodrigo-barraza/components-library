@@ -38,6 +38,7 @@ export {
   MenuGroupLabel,
   SubMenu,
 } from "./components/MenuComponent/MenuComponent.js";
+export { default as MetricBadgeComponent } from "./components/MetricBadgeComponent/MetricBadgeComponent.js";
 export { default as MobileHeaderComponent } from "./components/MobileHeaderComponent/MobileHeaderComponent.js";
 export { default as ModalComponent } from "./components/ModalComponent/ModalComponent.js";
 export { default as MultiSelectComponent } from "./components/MultiSelectComponent/MultiSelectComponent.js";
@@ -45,12 +46,14 @@ export { default as NavigationDrawerComponent } from "./components/NavigationDra
 export { default as NavigationRailComponent } from "./components/NavigationRailComponent/NavigationRailComponent.js";
 export { default as NavigationSidebarComponent } from "./components/NavigationSidebarComponent/NavigationSidebarComponent.js";
 export { default as PageHeaderComponent } from "./components/PageHeaderComponent/PageHeaderComponent.js";
+export { default as PageLayoutComponent } from "./components/PageLayoutComponent/PageLayoutComponent.js";
 export { default as PaginationComponent } from "./components/PaginationComponent/PaginationComponent.js";
 export { default as PortBadgeComponent } from "./components/PortBadgeComponent/PortBadgeComponent.js";
 export { default as RadioComponent } from "./components/RadioComponent/RadioComponent.js";
 export { default as RepositoryBadgeComponent } from "./components/RepositoryBadgeComponent/RepositoryBadgeComponent.js";
 export { default as ResponseTimeBadgeComponent } from "./components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.js";
 export { default as SearchInputComponent } from "./components/SearchInputComponent/SearchInputComponent.js";
+export { default as SessionTrackerComponent } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
 export { default as SelectComponent } from "./components/SelectComponent/SelectComponent.js";
 export { default as SkeletonComponent, SkeletonGroup } from "./components/SkeletonComponent/SkeletonComponent.js";
 export { default as SliderComponent } from "./components/SliderComponent/SliderComponent.js";
@@ -82,6 +85,7 @@ export { ThemeProvider, useTheme } from "./components/ThemeProvider/ThemeProvide
 // ── Services ────────────────────────────────────────────
 export { default as SoundService } from "./services/SoundService.js";
 export { createApiClient } from "./services/ApiClient.js";
+export { createSessionService } from "./services/SessionService.js";
 
 // ── Utilities ───────────────────────────────────────────
 export {
@@ -114,3 +118,4 @@ export { default as useLocalStorage } from "./hooks/useLocalStorage.js";
 export { default as useMediaQuery } from "./hooks/useMediaQuery.js";
 export { default as usePolling } from "./hooks/usePolling.js";
 export { default as useSetToggle } from "./hooks/useSetToggle.js";
+export { default as useTweenValue } from "./hooks/useTweenValue.js";
