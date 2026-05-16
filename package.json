@@ -25,6 +25,7 @@
     "test": "vitest run --passWithNoTests",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build && vitest run"
   },
   "peerDependencies": {
