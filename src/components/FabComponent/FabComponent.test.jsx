@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import FabComponent from "./FabComponent.js";
-import { ComponentsProvider } from "../ComponentsProvider.js";
+import FabComponent from "./FabComponent.tsx";
+import { ComponentsProvider } from "../ComponentsProvider.tsx";
 
 /* ── Stub icon ───────────────────────────────────────────────────── */
 function PlusIcon({ size = 24, ...rest }) {

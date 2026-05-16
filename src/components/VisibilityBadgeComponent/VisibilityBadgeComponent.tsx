@@ -1,6 +1,7 @@
+// @ts-nocheck
 "use client";
 
-import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
+import BadgeComponent from "../BadgeComponent/BadgeComponent.tsx";
 
 /**
  * VisibilityBadgeComponent — Renders an "External" or "Internal" badge

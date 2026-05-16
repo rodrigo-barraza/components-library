@@ -8,13 +8,13 @@ import { describe, it, expect, vi } from "vitest";
 
 // ── Global mocks for ComponentsProvider + SoundService ─────────
 vi.mock(
-  "@/components/ComponentsProvider.js",
+  "@/components/ComponentsProvider.tsx",
   () => ({
     useComponents: () => ({ sound: false }),
   }),
 );
 
-vi.mock("@/services/SoundService.js", () => ({
+vi.mock("@/services/SoundService.tsx", () => ({
   default: {
     playHoverButton: vi.fn(),
     playClickButton: vi.fn(),
@@ -36,52 +36,52 @@ vi.mock("@/services/SoundService.js", () => ({
 }));
 
 // ── Import all untested components ─────────────────────────────
-import AvatarComponent from "@/components/AvatarComponent/AvatarComponent.js";
-import CardComponent from "@/components/CardComponent/CardComponent.js";
-import CheckboxComponent from "@/components/CheckboxComponent/CheckboxComponent.js";
-import ChipComponent from "@/components/ChipComponent/ChipComponent.js";
-import CloseButtonComponent from "@/components/CloseButtonComponent/CloseButtonComponent.js";
-import EmptyStateComponent from "@/components/EmptyStateComponent/EmptyStateComponent.js";
-import IconButtonComponent from "@/components/IconButtonComponent/IconButtonComponent.js";
-import InputComponent from "@/components/InputComponent/InputComponent.js";
-import LoadingIndicatorComponent from "@/components/LoadingIndicatorComponent/LoadingIndicatorComponent.js";
-import ModalComponent from "@/components/ModalComponent/ModalComponent.js";
-import ProgressBarComponent from "@/components/ProgressBarComponent/ProgressBarComponent.js";
-import RadioComponent from "@/components/RadioComponent/RadioComponent.js";
-import SearchInputComponent from "@/components/SearchInputComponent/SearchInputComponent.js";
-import SelectComponent from "@/components/SelectComponent/SelectComponent.js";
-import SkeletonComponent from "@/components/SkeletonComponent/SkeletonComponent.js";
-import SliderComponent from "@/components/SliderComponent/SliderComponent.js";
-import SwitchComponent from "@/components/SwitchComponent/SwitchComponent.js";
-import TabBarComponent from "@/components/TabBarComponent/TabBarComponent.js";
-import TextAreaComponent from "@/components/TextAreaComponent/TextAreaComponent.js";
-import TextFieldComponent from "@/components/TextFieldComponent/TextFieldComponent.js";
-import ToggleComponent from "@/components/ToggleComponent/ToggleComponent.js";
-import TooltipComponent from "@/components/TooltipComponent/TooltipComponent.js";
-import ToolbarComponent from "@/components/ToolbarComponent/ToolbarComponent.js";
+import AvatarComponent from "@/components/AvatarComponent/AvatarComponent.tsx";
+import CardComponent from "@/components/CardComponent/CardComponent.tsx";
+import CheckboxComponent from "@/components/CheckboxComponent/CheckboxComponent.tsx";
+import ChipComponent from "@/components/ChipComponent/ChipComponent.tsx";
+import CloseButtonComponent from "@/components/CloseButtonComponent/CloseButtonComponent.tsx";
+import EmptyStateComponent from "@/components/EmptyStateComponent/EmptyStateComponent.tsx";
+import IconButtonComponent from "@/components/IconButtonComponent/IconButtonComponent.tsx";
+import InputComponent from "@/components/InputComponent/InputComponent.tsx";
+import LoadingIndicatorComponent from "@/components/LoadingIndicatorComponent/LoadingIndicatorComponent.tsx";
+import ModalComponent from "@/components/ModalComponent/ModalComponent.tsx";
+import ProgressBarComponent from "@/components/ProgressBarComponent/ProgressBarComponent.tsx";
+import RadioComponent from "@/components/RadioComponent/RadioComponent.tsx";
+import SearchInputComponent from "@/components/SearchInputComponent/SearchInputComponent.tsx";
+import SelectComponent from "@/components/SelectComponent/SelectComponent.tsx";
+import SkeletonComponent from "@/components/SkeletonComponent/SkeletonComponent.tsx";
+import SliderComponent from "@/components/SliderComponent/SliderComponent.tsx";
+import SwitchComponent from "@/components/SwitchComponent/SwitchComponent.tsx";
+import TabBarComponent from "@/components/TabBarComponent/TabBarComponent.tsx";
+import TextAreaComponent from "@/components/TextAreaComponent/TextAreaComponent.tsx";
+import TextFieldComponent from "@/components/TextFieldComponent/TextFieldComponent.tsx";
+import ToggleComponent from "@/components/ToggleComponent/ToggleComponent.tsx";
+import TooltipComponent from "@/components/TooltipComponent/TooltipComponent.tsx";
+import ToolbarComponent from "@/components/ToolbarComponent/ToolbarComponent.tsx";
 
 // ── Badge variants ─────────────────────────────────────────────
-import AddressBadgeComponent from "@/components/AddressBadgeComponent/AddressBadgeComponent.js";
-import CountBadgeComponent from "@/components/CountBadgeComponent/CountBadgeComponent.js";
+import AddressBadgeComponent from "@/components/AddressBadgeComponent/AddressBadgeComponent.tsx";
+import CountBadgeComponent from "@/components/CountBadgeComponent/CountBadgeComponent.tsx";
 // DateTimeBadgeComponent excluded — requires luxon (not in devDependencies)
-import DeviceBadgeComponent from "@/components/DeviceBadgeComponent/DeviceBadgeComponent.js";
-import DomainBadgeComponent from "@/components/DomainBadgeComponent/DomainBadgeComponent.js";
-import PortBadgeComponent from "@/components/PortBadgeComponent/PortBadgeComponent.js";
-import RepositoryBadgeComponent from "@/components/RepositoryBadgeComponent/RepositoryBadgeComponent.js";
-import ResponseTimeBadgeComponent from "@/components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.js";
-import StatusBadgeComponent from "@/components/StatusBadgeComponent/StatusBadgeComponent.js";
-import VisibilityBadgeComponent from "@/components/VisibilityBadgeComponent/VisibilityBadgeComponent.js";
+import DeviceBadgeComponent from "@/components/DeviceBadgeComponent/DeviceBadgeComponent.tsx";
+import DomainBadgeComponent from "@/components/DomainBadgeComponent/DomainBadgeComponent.tsx";
+import PortBadgeComponent from "@/components/PortBadgeComponent/PortBadgeComponent.tsx";
+import RepositoryBadgeComponent from "@/components/RepositoryBadgeComponent/RepositoryBadgeComponent.tsx";
+import ResponseTimeBadgeComponent from "@/components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.tsx";
+import StatusBadgeComponent from "@/components/StatusBadgeComponent/StatusBadgeComponent.tsx";
+import VisibilityBadgeComponent from "@/components/VisibilityBadgeComponent/VisibilityBadgeComponent.tsx";
 
 // ── Layout & Navigation ────────────────────────────────────────
-import BreadcrumbComponent from "@/components/BreadcrumbComponent/BreadcrumbComponent.js";
-import CollapsibleBlockComponent from "@/components/CollapsibleBlockComponent/CollapsibleBlockComponent.js";
-import CopyButtonComponent from "@/components/CopyButtonComponent/CopyButtonComponent.js";
-import FormGroupComponent from "@/components/FormGroupComponent/FormGroupComponent.js";
-import PageHeaderComponent from "@/components/PageHeaderComponent/PageHeaderComponent.js";
-import PaginationComponent from "@/components/PaginationComponent/PaginationComponent.js";
-import StatsCardComponent from "@/components/StatsCardComponent/StatsCardComponent.js";
-import ThemeToggleButtonComponent from "@/components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.js";
-import TopAppBarComponent from "@/components/TopAppBarComponent/TopAppBarComponent.js";
+import BreadcrumbComponent from "@/components/BreadcrumbComponent/BreadcrumbComponent.tsx";
+import CollapsibleBlockComponent from "@/components/CollapsibleBlockComponent/CollapsibleBlockComponent.tsx";
+import CopyButtonComponent from "@/components/CopyButtonComponent/CopyButtonComponent.tsx";
+import FormGroupComponent from "@/components/FormGroupComponent/FormGroupComponent.tsx";
+import PageHeaderComponent from "@/components/PageHeaderComponent/PageHeaderComponent.tsx";
+import PaginationComponent from "@/components/PaginationComponent/PaginationComponent.tsx";
+import StatsCardComponent from "@/components/StatsCardComponent/StatsCardComponent.tsx";
+import ThemeToggleButtonComponent from "@/components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.tsx";
+import TopAppBarComponent from "@/components/TopAppBarComponent/TopAppBarComponent.tsx";
 
 // ═══════════════════════════════════════════════════════════════
 // Tests

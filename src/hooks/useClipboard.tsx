@@ -7,13 +7,16 @@ import { useState, useCallback, useEffect, useRef } from "react";
  *
  * Used across CopyButtonComponent and any "copy to clipboard" interaction.
  * Returns a stable copy function and a `copied` boolean that auto-resets.
- *
- * @param {number} [resetMs=2000] — time before `copied` resets to false
- * @returns {{ copy: (text: string) => Promise<boolean>, copied: boolean }}
  */
-export default function useClipboard(resetMs = 2000) {
+
+export interface UseClipboardResult {
+  copy: (text: string) => Promise<boolean>;
+  copied: boolean;
+}
+
+export default function useClipboard(resetMs = 2000): UseClipboardResult {
   const [copied, setCopied] = useState(false);
-  const timerRef = useRef(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -23,7 +26,7 @@ export default function useClipboard(resetMs = 2000) {
   }, []);
 
   const copy = useCallback(
-    async (text) => {
+    async (text: string): Promise<boolean> => {
       try {
         await navigator.clipboard.writeText(text);
         setCopied(true);

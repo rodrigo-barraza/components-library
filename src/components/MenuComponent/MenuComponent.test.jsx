@@ -6,14 +6,14 @@ import MenuComponent, {
   MenuDivider,
   MenuGroupLabel,
   SubMenu,
-} from "./MenuComponent.js";
+} from "./MenuComponent.tsx";
 
 // ── Minimal ComponentsProvider mock ──────────────────────
-vi.mock("../ComponentsProvider.js", () => ({
+vi.mock("../ComponentsProvider.tsx", () => ({
   useComponents: () => ({ sound: false }),
 }));
 
-vi.mock("../../services/SoundService.js", () => ({
+vi.mock("../../services/SoundService.tsx", () => ({
   default: {
     playClickButton: vi.fn(),
     playHoverButton: vi.fn(),

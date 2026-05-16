@@ -10,27 +10,27 @@
  *   export const createFiscalYear = (data) => request("POST", "/fiscal-years", data);
  */
 
+export interface ApiClientOptions {
+  /** headers merged into every request */
+  defaultHeaders?: Record<string, string>;
+  /** set `cache: "no-store"` on every request */
+  noCache?: boolean;
+}
+
+type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: unknown) => Promise<T>;
+
 /**
  * Create a pre-configured fetch helper bound to a base URL.
  *
- * @param {string}  baseUrl         — API root (e.g. "/api/ledger", "https://api.example.com")
- * @param {Object}  [options]
- * @param {Object}  [options.defaultHeaders]  — headers merged into every request
- * @param {boolean} [options.noCache=false]   — set `cache: "no-store"` on every request
- * @returns {Function} request(method, path, body?) → Promise<any>
+ * @param baseUrl — API root (e.g. "/api/ledger", "https://api.example.com")
+ * @param options — optional configuration
+ * @returns request(method, path, body?) → Promise<any>
  */
-export function createApiClient(baseUrl, { defaultHeaders = {}, noCache = false } = {}) {
-  /**
-   * Execute an HTTP request.
-   *
-   * @param {string}       method  — HTTP method (GET, POST, PUT, PATCH, DELETE)
-   * @param {string}       path    — endpoint path appended to baseUrl
-   * @param {Object|null}  [body]  — request body (auto-stringified)
-   * @returns {Promise<any>}       — parsed JSON response
-   * @throws {Error}               — on non-2xx status
-   */
-  return async function request(method, path, body = null) {
-    const options = {
+export function createApiClient(baseUrl: string, { defaultHeaders = {}, noCache = false }: ApiClientOptions = {}): ApiRequestFn {
+  return async function request<T = unknown>(method: HttpMethod, path: string, body: unknown = null): Promise<T> {
+    const options: RequestInit = {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -53,6 +53,6 @@ export function createApiClient(baseUrl, { defaultHeaders = {}, noCache = false 
       throw new Error(data.error || data.message || `Request failed with status ${response.status}`);
     }
 
-    return data;
+    return data as T;
   };
 }

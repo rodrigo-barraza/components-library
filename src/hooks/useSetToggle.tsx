@@ -9,30 +9,35 @@ import { useState, useCallback, useEffect, useRef } from "react";
  * The pattern of toggling items in/out of a set and persisting to storage
  * is reusable across any multi-select toggle interface (tool toggles,
  * feature flags, column visibility, etc.).
- *
- * @param {object} [options]
- * @param {string} [options.storageKey] — persist to localStorage under this key
- * @param {string} [options.storageField] — nested field name within the stored object
- * @returns {{
- *   selected: Set<string>,
- *   toggle: (item: string) => void,
- *   toggleAll: (items: string[], enable: boolean) => void,
- *   has: (item: string) => boolean,
- *   clear: () => void,
- *   setSelected: Function,
- * }}
  */
-export default function useSetToggle(options = {}) {
+
+export interface UseSetToggleOptions {
+  /** persist to localStorage under this key */
+  storageKey?: string;
+  /** nested field name within the stored object */
+  storageField?: string;
+}
+
+export interface UseSetToggleResult {
+  selected: Set<string>;
+  toggle: (item: string) => void;
+  toggleAll: (items: string[], enable: boolean) => void;
+  has: (item: string) => boolean;
+  clear: () => void;
+  setSelected: React.Dispatch<React.SetStateAction<Set<string>>>;
+}
+
+export default function useSetToggle(options: UseSetToggleOptions = {}): UseSetToggleResult {
   const { storageKey, storageField = "items" } = options;
 
-  const [selected, setSelected] = useState(() => {
+  const [selected, setSelected] = useState<Set<string>>(() => {
     if (storageKey) {
       try {
         const raw = localStorage.getItem(storageKey);
         if (raw) {
           const parsed = JSON.parse(raw);
           const arr = storageField ? parsed[storageField] : parsed;
-          if (Array.isArray(arr)) return new Set(arr);
+          if (Array.isArray(arr)) return new Set(arr as string[]);
         }
       } catch {
         /* localStorage unavailable */
@@ -61,7 +66,7 @@ export default function useSetToggle(options = {}) {
     }
   }, [selected, storageKey, storageField]);
 
-  const toggle = useCallback((item) => {
+  const toggle = useCallback((item: string) => {
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(item)) next.delete(item);
@@ -70,7 +75,7 @@ export default function useSetToggle(options = {}) {
     });
   }, []);
 
-  const toggleAll = useCallback((items, enable) => {
+  const toggleAll = useCallback((items: string[], enable: boolean) => {
     setSelected((prev) => {
       const next = new Set(prev);
       for (const item of items) {
@@ -82,7 +87,7 @@ export default function useSetToggle(options = {}) {
   }, []);
 
   const has = useCallback(
-    (item) => selected.has(item),
+    (item: string) => selected.has(item),
     [selected],
   );
 

@@ -1,9 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import { forwardRef, useCallback } from "react";
 import styles from "./ChipComponent.module.css";
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 
 /**
  * ChipComponent — M3 Chip (Assist / Filter / Input / Suggestion).

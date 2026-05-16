@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 
 /** Ease-out cubic — fast start, gentle landing. */
-function easeOutCubic(t) {
+function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
 
@@ -10,19 +10,25 @@ function easeOutCubic(t) {
  * current target using requestAnimationFrame with easeOutCubic easing.
  *
  * Returns `[displayValue, isTweening]`.
- *
- * @param {number}  target        — The target numeric value
- * @param {object}  [options]
- * @param {number}  [options.duration=600] — Animation duration in ms
- * @param {boolean} [options.round=false]  — Whether to round intermediate values
- * @param {boolean} [options.enabled=true] — Set false to disable tween (snap immediately)
- * @returns {[number, boolean]}
  */
-export default function useTweenValue(target, options = {}) {
+
+interface UseTweenValueOptions {
+  /** Animation duration in ms */
+  duration?: number;
+  /** Whether to round intermediate values */
+  round?: boolean;
+  /** Set false to disable tween (snap immediately) */
+  enabled?: boolean;
+}
+
+export default function useTweenValue(
+  target: number,
+  options: UseTweenValueOptions = {},
+): [number, boolean] {
   const { duration = 600, round = false, enabled = true } = options;
 
-  const prevRef = useRef(null);
-  const rafRef = useRef(null);
+  const prevRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
   const [displayValue, setDisplayValue] = useState(target);
   const [tweening, setTweening] = useState(false);
 
@@ -41,11 +47,11 @@ export default function useTweenValue(target, options = {}) {
     const start = performance.now();
     setTweening(true);
 
-    function tick(now) {
+    function tick(now: number) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeOutCubic(progress);
-      const value = from + delta * eased;
+      const value = from! + delta * eased;
       setDisplayValue(round ? Math.round(value) : value);
 
       if (progress < 1) {

@@ -1,8 +1,9 @@
+// @ts-nocheck
 "use client";
 
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Calendar, ChevronDown, ChevronLeft, ChevronRight, Clock, X } from "lucide-react";
-import { DATE_PRESETS, fmtDate as fmt, parseDateValue as parseDate, formatDateDisplay, getActiveDatePreset } from "../../utils/datePresets.js";
+import { DATE_PRESETS, fmtDate as fmt, parseDateValue as parseDate, formatDateDisplay, getActiveDatePreset } from "../../utils/datePresets.ts";
 import styles from "./DatePickerComponent.module.css";
 
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];

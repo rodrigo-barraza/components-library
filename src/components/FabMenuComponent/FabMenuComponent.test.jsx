@@ -2,15 +2,15 @@ import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import FabMenuComponent from "./FabMenuComponent.js";
+import FabMenuComponent from "./FabMenuComponent.tsx";
 
 // Mock the components provider
-vi.mock("../ComponentsProvider.js", () => ({
+vi.mock("../ComponentsProvider.tsx", () => ({
   useComponents: () => ({ sound: false }),
 }));
 
 // Mock sound service
-vi.mock("../../services/SoundService.js", () => ({
+vi.mock("../../services/SoundService.tsx", () => ({
   default: {
     playHoverButton: vi.fn(),
     playClickButton: vi.fn(),

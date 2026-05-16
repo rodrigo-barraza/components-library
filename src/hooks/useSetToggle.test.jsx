@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import useSetToggle from "./useSetToggle.js";
+import useSetToggle from "./useSetToggle.tsx";
 
 describe("useSetToggle", () => {
   beforeEach(() => {

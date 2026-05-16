@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import BadgeComponent from "./BadgeComponent.js";
-import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
+import BadgeComponent from "./BadgeComponent.tsx";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.tsx";
 
 describe("BadgeComponent", () => {
   it("renders with default info variant", () => {

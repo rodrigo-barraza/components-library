@@ -1,7 +1,8 @@
+// @ts-nocheck
 "use client";
 
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 import styles from "./CheckboxComponent.module.css";
 
 /**

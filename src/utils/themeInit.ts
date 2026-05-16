@@ -5,9 +5,9 @@
  * This script is designed to be injected into the `<head>` of a Next.js layout
  * via a `<template>` tag with `dangerouslySetInnerHTML`.
  *
- * @param {string}   storageKey                — localStorage key (e.g. "prism:theme")
- * @param {string[]} [validThemes=["light","dark","tropical","oceanic"]] — allowed theme values
- * @returns {string} — raw JavaScript source string
+ * @param storageKey — localStorage key (e.g. "prism:theme")
+ * @param validThemes — allowed theme values
+ * @returns raw JavaScript source string
  *
  * @example
  *   import { generateThemeInitScript } from "@rodrigo-barraza/components-library";
@@ -21,9 +21,9 @@
  *   />
  */
 export function generateThemeInitScript(
-  storageKey,
-  validThemes = ["light", "dark", "tropical", "oceanic", "punk"],
-) {
+  storageKey: string,
+  validThemes: string[] = ["light", "dark", "tropical", "oceanic", "punk"],
+): string {
   const themeList = JSON.stringify(validThemes);
   return `(function(){try{var r=localStorage.getItem(${JSON.stringify(storageKey)});if(r){var t=JSON.parse(r);if(${themeList}.indexOf(t)!==-1){document.documentElement.setAttribute("data-theme",t)}}}catch(e){}})();`;
 }

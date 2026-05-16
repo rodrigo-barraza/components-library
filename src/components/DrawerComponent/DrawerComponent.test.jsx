@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import DrawerComponent from "./DrawerComponent.js";
+import DrawerComponent from "./DrawerComponent.tsx";
 
 // Mock createPortal to render inline for tests
 vi.mock("react-dom", async () => {
@@ -9,7 +9,7 @@ vi.mock("react-dom", async () => {
 });
 
 // ComponentsProvider mock
-vi.mock("../ComponentsProvider.js", () => ({
+vi.mock("../ComponentsProvider.tsx", () => ({
   useComponents: () => ({ sound: false }),
 }));
 

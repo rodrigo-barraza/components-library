@@ -1,8 +1,9 @@
+// @ts-nocheck
 "use client";
 
 import styles from "./ToggleComponent.module.css";
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 
 /**
  * ToggleComponent — iOS-style toggle switch with optional spatial audio.

@@ -1,9 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import { forwardRef, useCallback, useRef, useState } from "react";
 import styles from "./SplitButtonComponent.module.css";
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 import { ChevronDown } from "lucide-react";
 
 /**

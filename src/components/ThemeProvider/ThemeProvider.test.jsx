@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ThemeProvider, useTheme } from "./ThemeProvider.js";
+import { ThemeProvider, useTheme } from "./ThemeProvider.tsx";
 
 /* ── Helpers ──────────────────────────────────────────────── */
 
@@ -54,33 +54,17 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("toggles through dark → light → muted → tropical → oceanic → punk", async () => {
+  it("toggles through all 10 default themes and wraps around", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("light");
-    expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+    const expectedCycle = ["light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "dark"];
 
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("muted");
-    expect(document.documentElement.getAttribute("data-theme")).toBe("muted");
-
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("tropical");
-    expect(document.documentElement.getAttribute("data-theme")).toBe("tropical");
-
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("oceanic");
-    expect(document.documentElement.getAttribute("data-theme")).toBe("oceanic");
-
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("punk");
-    expect(document.documentElement.getAttribute("data-theme")).toBe("punk");
-
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("dark");
-    expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+    for (const expected of expectedCycle) {
+      await user.click(screen.getByTestId("toggle"));
+      expect(screen.getByTestId("theme").textContent).toBe(expected);
+      expect(document.documentElement.getAttribute("data-theme")).toBe(expected);
+    }
   });
 
   it("persists theme to localStorage", async () => {

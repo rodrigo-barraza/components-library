@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SplitButtonComponent from "./SplitButtonComponent.js";
-import { ComponentsProvider } from "../ComponentsProvider.js";
+import SplitButtonComponent from "./SplitButtonComponent.tsx";
+import { ComponentsProvider } from "../ComponentsProvider.tsx";
 import { ChevronDown, Plus, Send } from "lucide-react";
 
 /* ── Helper to wrap with ComponentsProvider ──────────────────────── */

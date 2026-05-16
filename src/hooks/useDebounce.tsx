@@ -8,14 +8,13 @@ import { useEffect, useRef } from "react";
  * Common in search inputs, filter bars, and any high-frequency user input
  * that triggers API calls. Returns a stable debounced function that cleans
  * up on unmount.
- *
- * @param {Function} callback — the function to debounce
- * @param {number} delay — debounce delay in milliseconds
- * @returns {Function} debounced version of callback
  */
-export default function useDebounce(callback, delay) {
+export default function useDebounce<T extends (...args: unknown[]) => void>(
+  callback: T,
+  delay: number,
+): (...args: Parameters<T>) => void {
   const callbackRef = useRef(callback);
-  const timerRef = useRef(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Keep callback ref in sync
   callbackRef.current = callback;
@@ -27,7 +26,7 @@ export default function useDebounce(callback, delay) {
     };
   }, []);
 
-  return (...args) => {
+  return (...args: Parameters<T>) => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       callbackRef.current(...args);

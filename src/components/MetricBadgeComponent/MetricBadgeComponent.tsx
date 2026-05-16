@@ -1,5 +1,6 @@
-import useTweenValue from "../../hooks/useTweenValue.js";
-import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
+// @ts-nocheck — Incremental migration: props not yet typed
+import useTweenValue from "../../hooks/useTweenValue.tsx";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.tsx";
 import styles from "./MetricBadgeComponent.module.css";
 
 /**

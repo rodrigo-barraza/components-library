@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useMemo, type ReactNode } from "react";
 
 /**
  * ThemeProvider — Centralized theme management with SSR-safe persistence.
@@ -28,9 +28,17 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
  *   const { theme, toggleTheme, setTheme } = useTheme();
  */
 
+export interface ThemeContextValue {
+  theme: string;
+  themes: string[];
+  mounted: boolean;
+  toggleTheme: () => void;
+  setTheme: (theme: string | ((prev: string) => string)) => void;
+}
+
 const THEMES_DEFAULT = ["dark", "light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono"];
 
-const ThemeContext = createContext({
+const ThemeContext = createContext<ThemeContextValue>({
   theme: "dark",
   themes: THEMES_DEFAULT,
   mounted: false,
@@ -38,21 +46,25 @@ const ThemeContext = createContext({
   setTheme: () => {},
 });
 
-/**
- * @param {Object} props
- * @param {string}   [props.storageKey="app:theme"]  — localStorage key for persistence
- * @param {string}   [props.defaultTheme="dark"]     — fallback when nothing is stored
- * @param {string[]} [props.themes] — ordered list of valid theme names (defaults to all built-in themes)
- * @param {string}   [props.attribute="data-theme"]  — HTML attribute set on <html>
- * @param {React.ReactNode} props.children
- */
+interface ThemeProviderProps {
+  /** localStorage key for persistence */
+  storageKey?: string;
+  /** fallback when nothing is stored */
+  defaultTheme?: string;
+  /** ordered list of valid theme names (defaults to all built-in themes) */
+  themes?: string[];
+  /** HTML attribute set on <html> */
+  attribute?: string;
+  children: ReactNode;
+}
+
 export function ThemeProvider({
   storageKey = "app:theme",
   defaultTheme = "dark",
   themes = THEMES_DEFAULT,
   attribute = "data-theme",
   children,
-}) {
+}: ThemeProviderProps) {
   // Always start with defaultTheme to match SSR — avoids hydration mismatch
   const [theme, setThemeState] = useState(defaultTheme);
   const [mounted, setMounted] = useState(false);
@@ -62,7 +74,7 @@ export function ThemeProvider({
     try {
       const raw = localStorage.getItem(storageKey);
       if (raw) {
-        const parsed = JSON.parse(raw);
+        const parsed = JSON.parse(raw) as string;
         if (themes.includes(parsed)) {
           setThemeState(parsed);
           document.documentElement.setAttribute(attribute, parsed);
@@ -77,7 +89,7 @@ export function ThemeProvider({
       document.documentElement.setAttribute(attribute, defaultTheme);
     }
     setMounted(true);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sync DOM attribute + localStorage on theme change (skip initial mount)
   useEffect(() => {
@@ -91,7 +103,7 @@ export function ThemeProvider({
   }, [theme, mounted, attribute, storageKey]);
 
   const setTheme = useCallback(
-    (next) => {
+    (next: string | ((prev: string) => string)) => {
       const resolved = typeof next === "function" ? next(theme) : next;
       if (themes.includes(resolved)) {
         setThemeState(resolved);
@@ -122,8 +134,7 @@ export function ThemeProvider({
 
 /**
  * Hook to access theme state and controls.
- * @returns {{ theme: string, themes: string[], mounted: boolean, toggleTheme: () => void, setTheme: (theme: string) => void }}
  */
-export function useTheme() {
+export function useTheme(): ThemeContextValue {
   return useContext(ThemeContext);
 }

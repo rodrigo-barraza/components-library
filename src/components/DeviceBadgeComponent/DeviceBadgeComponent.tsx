@@ -1,6 +1,7 @@
+// @ts-nocheck
 "use client";
 
-import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
+import BadgeComponent from "../BadgeComponent/BadgeComponent.tsx";
 import styles from "./DeviceBadgeComponent.module.css";
 
 /**

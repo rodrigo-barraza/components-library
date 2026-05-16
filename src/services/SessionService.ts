@@ -12,7 +12,7 @@
 const SESSION_KEY = "sessions_session_id";
 const VISITOR_KEY = "sessions_visitor_id";
 
-function generateId() {
+function generateId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
     return crypto.randomUUID();
   }
@@ -26,7 +26,7 @@ function generateId() {
 
 // ─── Session & Visitor ID Management ───────────────────────────
 
-function getVisitorId() {
+function getVisitorId(): string {
   if (typeof window === "undefined") return "";
   let id = localStorage.getItem(VISITOR_KEY);
   if (!id) {
@@ -36,7 +36,7 @@ function getVisitorId() {
   return id;
 }
 
-function getSessionId() {
+function getSessionId(): string {
   if (typeof window === "undefined") return "";
   let id = sessionStorage.getItem(SESSION_KEY);
   if (!id) {
@@ -46,22 +46,30 @@ function getSessionId() {
   return id;
 }
 
-function isReturningSession() {
+function isReturningSession(): boolean {
   if (typeof window === "undefined") return false;
   return sessionStorage.getItem(SESSION_KEY) !== null;
 }
 
 // ─── UTM Parameter Extraction ──────────────────────────────────
 
-function extractUtmParams() {
+interface UtmParams {
+  source?: string;
+  medium?: string;
+  campaign?: string;
+  term?: string;
+  content?: string;
+}
+
+function extractUtmParams(): UtmParams | null {
   if (typeof window === "undefined") return null;
   const params = new URLSearchParams(window.location.search);
-  const utm = {};
-  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+  const utm: UtmParams = {};
+  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
 
   for (const key of keys) {
     const value = params.get(key);
-    if (value) utm[key.replace("utm_", "")] = value;
+    if (value) (utm as Record<string, string>)[key.replace("utm_", "")] = value;
   }
 
   return Object.keys(utm).length > 0 ? utm : null;
@@ -69,7 +77,7 @@ function extractUtmParams() {
 
 // ─── Fire-and-forget fetch ─────────────────────────────────────
 
-function send(apiBase, projectId, path, body) {
+function send(apiBase: string, projectId: string, path: string, body: Record<string, unknown>): void {
   try {
     fetch(`${apiBase}${path}`, {
       method: "POST",
@@ -87,15 +95,31 @@ function send(apiBase, projectId, path, body) {
 
 // ─── Factory ───────────────────────────────────────────────────
 
+export interface SessionServiceOptions {
+  /** Base URL for the sessions API proxy */
+  apiBase?: string;
+}
+
+export interface SessionInitResult {
+  isNew: boolean;
+  sessionId: string;
+  visitorId: string;
+}
+
+export interface SessionServiceInstance {
+  init(): SessionInitResult;
+  heartbeat(duration: number, width: number, height: number): void;
+  pageView(url: string, title: string, referrer?: string): void;
+  event(category: string, action: string, label?: string, value?: string | number): void;
+}
+
 /**
  * Create a SessionService instance for a specific project.
  *
- * @param {string} projectId — Unique project identifier (e.g. "clock-crew-client")
- * @param {object} [options]
- * @param {string} [options.apiBase="/api/sessions"] — Base URL for the sessions API proxy
- * @returns {object} SessionService API
+ * @param projectId — Unique project identifier (e.g. "clock-crew-client")
+ * @param options — optional configuration
  */
-export function createSessionService(projectId, options = {}) {
+export function createSessionService(projectId: string, options: SessionServiceOptions = {}): SessionServiceInstance {
   const { apiBase = "/api/sessions" } = options;
 
   return {
@@ -103,7 +127,7 @@ export function createSessionService(projectId, options = {}) {
      * Initialize session tracking. Call once on app mount.
      * Returns whether this is a new or returning session.
      */
-    init() {
+    init(): SessionInitResult {
       const isNew = !isReturningSession();
       const sessionId = getSessionId();
       const visitorId = getVisitorId();
@@ -113,7 +137,7 @@ export function createSessionService(projectId, options = {}) {
     /**
      * Send a session heartbeat (call on interval, e.g. every 5s).
      */
-    heartbeat(duration, width, height) {
+    heartbeat(duration: number, width: number, height: number): void {
       send(apiBase, projectId, "/sessions", {
         sessionId: getSessionId(),
         visitorId: getVisitorId(),
@@ -128,7 +152,7 @@ export function createSessionService(projectId, options = {}) {
     /**
      * Record a page view.
      */
-    pageView(url, title, referrer) {
+    pageView(url: string, title: string, referrer?: string): void {
       send(apiBase, projectId, "/pageviews", {
         sessionId: getSessionId(),
         visitorId: getVisitorId(),
@@ -141,7 +165,7 @@ export function createSessionService(projectId, options = {}) {
     /**
      * Record a custom interaction event.
      */
-    event(category, action, label, value) {
+    event(category: string, action: string, label?: string, value?: string | number): void {
       send(apiBase, projectId, "/events", {
         sessionId: getSessionId(),
         visitorId: getVisitorId(),

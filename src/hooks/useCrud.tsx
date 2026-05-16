@@ -11,27 +11,33 @@ import { useState, useCallback } from "react";
  * - remove → filter from list by `_id`
  *
  * Pair with useFetch for initial data loading.
- *
- * @template T
- * @param {object} options
- * @param {(data: object) => Promise<T>} options.createFn — service create function
- * @param {(id: string, data: object) => Promise<T>} options.updateFn — service update function
- * @param {(id: string) => Promise<void>} options.removeFn — service delete function
- * @param {string} [options.idField="_id"] — field name for entity ID
- * @returns {{
- *   items: T[],
- *   setItems: Function,
- *   create: (data: object) => Promise<T>,
- *   update: (id: string, data: object) => Promise<T>,
- *   remove: (id: string) => Promise<void>,
- * }}
  */
-export default function useCrud(options = {}) {
+
+export interface UseCrudOptions<T> {
+  /** service create function */
+  createFn: (data: Record<string, unknown>) => Promise<T>;
+  /** service update function */
+  updateFn: (id: string, data: Record<string, unknown>) => Promise<T>;
+  /** service delete function */
+  removeFn: (id: string) => Promise<void>;
+  /** field name for entity ID */
+  idField?: string;
+}
+
+export interface UseCrudResult<T> {
+  items: T[];
+  setItems: React.Dispatch<React.SetStateAction<T[]>>;
+  create: (data: Record<string, unknown>) => Promise<T>;
+  update: (id: string, data: Record<string, unknown>) => Promise<T>;
+  remove: (id: string) => Promise<void>;
+}
+
+export default function useCrud<T extends Record<string, unknown>>(options: UseCrudOptions<T>): UseCrudResult<T> {
   const { createFn, updateFn, removeFn, idField = "_id" } = options;
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<T[]>([]);
 
   const create = useCallback(
-    async (data) => {
+    async (data: Record<string, unknown>): Promise<T> => {
       const item = await createFn(data);
       setItems((prev) => [item, ...prev]);
       return item;
@@ -40,7 +46,7 @@ export default function useCrud(options = {}) {
   );
 
   const update = useCallback(
-    async (id, data) => {
+    async (id: string, data: Record<string, unknown>): Promise<T> => {
       const item = await updateFn(id, data);
       setItems((prev) =>
         prev.map((i) => (i[idField] === id ? item : i)),
@@ -51,7 +57,7 @@ export default function useCrud(options = {}) {
   );
 
   const remove = useCallback(
-    async (id) => {
+    async (id: string): Promise<void> => {
       await removeFn(id);
       setItems((prev) => prev.filter((i) => i[idField] !== id));
     },

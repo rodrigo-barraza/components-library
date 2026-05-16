@@ -7,14 +7,18 @@ import { useState, useEffect, useCallback, useRef } from "react";
  *
  * Replaces the identical date-range load/save useEffect pair that was
  * copy-pasted across multiple admin filter components.
- *
- * @param {string} storageKey — localStorage key for persistence
- * @param {Function} [onChange] — optional external callback on value change
- * @returns {[Object|null, Function, React.MutableRefObject<boolean>]}
- *   [dateRange, setDateRange, initializedRef]
  */
-export default function useDateRange(storageKey, onChange) {
-  const [dateRange, setDateRangeState] = useState(null);
+
+interface DateRangeValue {
+  from?: string;
+  to?: string;
+}
+
+export default function useDateRange(
+  storageKey: string,
+  onChange?: (range: DateRangeValue | null) => void,
+): [DateRangeValue | null, (range: DateRangeValue | null) => void, React.MutableRefObject<boolean>] {
+  const [dateRange, setDateRangeState] = useState<DateRangeValue | null>(null);
   const initializedRef = useRef(false);
 
   // Restore from localStorage on mount
@@ -24,7 +28,7 @@ export default function useDateRange(storageKey, onChange) {
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
-        const parsed = JSON.parse(stored);
+        const parsed = JSON.parse(stored) as DateRangeValue;
         if (parsed.from || parsed.to) {
           // Intentional: hydrate state from localStorage post-mount (SSR-safe)
           setDateRangeState(parsed);
@@ -51,7 +55,7 @@ export default function useDateRange(storageKey, onChange) {
   }, [storageKey, dateRange]);
 
   const setDateRange = useCallback(
-    (range) => {
+    (range: DateRangeValue | null) => {
       setDateRangeState(range);
       onChange?.(range);
     },

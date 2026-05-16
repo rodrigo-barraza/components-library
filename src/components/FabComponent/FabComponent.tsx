@@ -1,9 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import { forwardRef, useCallback, useRef, useState } from "react";
 import styles from "./FabComponent.module.css";
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 
 /**
  * FabComponent — Material Design 3 Floating Action Button

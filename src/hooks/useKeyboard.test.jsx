@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import useKeyboard from "./useKeyboard.js";
+import useKeyboard from "./useKeyboard.tsx";
 
 describe("useKeyboard", () => {
   it("fires handler for matching key", () => {

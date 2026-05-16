@@ -7,15 +7,12 @@ import { useState, useCallback, useEffect, useRef } from "react";
  *
  * Persists a JSON-serializable value under the given key. Hydrates from
  * localStorage on mount (post-SSR) and writes back on every state change.
- *
- * @template T
- * @param {string} key — localStorage key
- * @param {T} initialValue — fallback when nothing is stored
- * @returns {[T, (value: T | ((prev: T) => T)) => void, () => void]}
- *   [value, setValue, removeValue]
  */
-export default function useLocalStorage(key, initialValue) {
-  const [storedValue, setStoredValue] = useState(initialValue);
+export default function useLocalStorage<T>(
+  key: string,
+  initialValue: T,
+): [T, (value: T | ((prev: T) => T)) => void, () => void] {
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
   const initializedRef = useRef(false);
 
   // Hydrate from localStorage on mount (SSR-safe: runs only on client)
@@ -25,7 +22,7 @@ export default function useLocalStorage(key, initialValue) {
     try {
       const item = localStorage.getItem(key);
       if (item !== null) {
-        setStoredValue(JSON.parse(item));
+        setStoredValue(JSON.parse(item) as T);
       }
     } catch {
       /* localStorage unavailable or corrupt — keep initialValue */
@@ -50,9 +47,9 @@ export default function useLocalStorage(key, initialValue) {
     }
   }, [key, storedValue]);
 
-  const setValue = useCallback((value) => {
+  const setValue = useCallback((value: T | ((prev: T) => T)) => {
     setStoredValue((prev) =>
-      typeof value === "function" ? value(prev) : value,
+      typeof value === "function" ? (value as (prev: T) => T)(prev) : value,
     );
   }, []);
 

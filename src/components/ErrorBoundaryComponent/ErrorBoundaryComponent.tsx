@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { Component } from "react";

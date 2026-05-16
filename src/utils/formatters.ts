@@ -23,12 +23,8 @@ export { formatBytes, formatDuration, formatCompact } from "@rodrigo-barraza/uti
 /**
  * Format a percentage with adaptive precision (components-library default).
  * Wraps the utilities-library version with "adaptive" as the default mode.
- *
- * @param {number} value
- * @param {number|"adaptive"} [decimals="adaptive"]
- * @returns {string}
  */
-export function formatPercent(value, decimals = "adaptive") {
+export function formatPercent(value: number, decimals: number | "adaptive" = "adaptive"): string {
   return _formatPercent(value, decimals);
 }
 
@@ -36,13 +32,8 @@ export function formatPercent(value, decimals = "adaptive") {
  * Format a number as currency using Intl.NumberFormat.
  * Signature: (amount, locale?, currencyCode?) — wraps the utilities-library
  * version which uses (amount, currencyCode?) to support the locale parameter.
- *
- * @param {number}  n           — amount
- * @param {string}  [locale="en-US"]
- * @param {string}  [currency="USD"]
- * @returns {string}
  */
-export function formatCurrency(n, locale = "en-US", currency = "USD") {
+export function formatCurrency(n: number, locale = "en-US", currency = "USD"): string {
   if (locale === "en-US") {
     return _formatCurrency(n, currency);
   }

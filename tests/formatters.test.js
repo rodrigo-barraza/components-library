@@ -5,7 +5,7 @@ import {
   formatDuration,
   formatCurrency,
   formatCompact,
-} from "../src/utils/formatters.js";
+} from "../src/utils/formatters.ts";
 
 // ── formatBytes ────────────────────────────────────────────────
 

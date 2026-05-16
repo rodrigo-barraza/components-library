@@ -8,13 +8,20 @@ import { useEffect, useRef } from "react";
  * Registers document-level keydown handlers for keyboard shortcuts.
  * Automatically ignores events when the user is typing in inputs/textareas.
  *
- * @param {Object<string, Function>} keyMap — map of key combos to handlers
- *   Key format: "ctrl+k", "shift+enter", "escape", "ctrl+shift+p"
- * @param {object} [options]
- * @param {boolean} [options.enabled=true] — set false to pause listening
- * @param {boolean} [options.ignoreInputs=true] — ignore when focused on form elements
+ * Key format: "ctrl+k", "shift+enter", "escape", "ctrl+shift+p"
  */
-export default function useKeyboard(keyMap, options = {}) {
+
+interface UseKeyboardOptions {
+  /** set false to pause listening */
+  enabled?: boolean;
+  /** ignore when focused on form elements */
+  ignoreInputs?: boolean;
+}
+
+export default function useKeyboard(
+  keyMap: Record<string, (event: KeyboardEvent) => void>,
+  options: UseKeyboardOptions = {},
+): void {
   const { enabled = true, ignoreInputs = true } = options;
   const keyMapRef = useRef(keyMap);
   keyMapRef.current = keyMap;
@@ -22,22 +29,23 @@ export default function useKeyboard(keyMap, options = {}) {
   useEffect(() => {
     if (!enabled) return;
 
-    const handler = (event) => {
+    const handler = (event: KeyboardEvent) => {
       // Skip when focused on form elements
       if (ignoreInputs) {
-        const tag = event.target?.tagName;
+        const target = event.target as HTMLElement;
+        const tag = target?.tagName;
         if (
           tag === "INPUT" ||
           tag === "TEXTAREA" ||
           tag === "SELECT" ||
-          event.target?.isContentEditable
+          target?.isContentEditable
         ) {
           // Still allow Escape from inputs
           if (event.key !== "Escape") return;
         }
       }
 
-      const parts = [];
+      const parts: string[] = [];
       if (event.ctrlKey || event.metaKey) parts.push("ctrl");
       if (event.shiftKey) parts.push("shift");
       if (event.altKey) parts.push("alt");

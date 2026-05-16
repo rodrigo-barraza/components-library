@@ -1,0 +1,82 @@
+/* ─────────────────────────────────────────────────────────────
+ * ChatComponent — Root container positioning
+ * ───────────────────────────────────────────────────────────── */
+
+.container {
+  position: fixed;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  pointer-events: none;
+
+  /* Default: bottom-right */
+  bottom: 24px;
+  right: 24px;
+
+  /* Theming defaults */
+  --chat-accent: #6366f1;
+  --chat-accent-hover: #4f46e5;
+  --chat-accent-subtle: rgba(99, 102, 241, 0.1);
+  --chat-accent-glow: 0 0 24px rgba(99, 102, 241, 0.25);
+
+  --chat-bg-panel: rgba(15, 15, 23, 0.92);
+  --chat-bg-header: rgba(20, 20, 32, 0.95);
+  --chat-bg-input: rgba(25, 25, 40, 0.9);
+  --chat-bg-message-visitor: var(--chat-accent);
+  --chat-bg-message-agent: rgba(255, 255, 255, 0.06);
+  --chat-bg-message-system: transparent;
+
+  --chat-text-primary: #f0f0f5;
+  --chat-text-secondary: #8e95ae;
+  --chat-text-muted: #5a5f7a;
+  --chat-text-on-accent: #ffffff;
+
+  --chat-border: rgba(255, 255, 255, 0.06);
+  --chat-border-subtle: rgba(255, 255, 255, 0.03);
+
+  --chat-radius: 16px;
+  --chat-radius-sm: 8px;
+  --chat-radius-message: 18px;
+
+  --chat-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --chat-shadow-launcher:
+    0 4px 20px rgba(0, 0, 0, 0.3), var(--chat-accent-glow);
+
+  --chat-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --chat-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --chat-font:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+}
+
+.container > * {
+  pointer-events: auto;
+}
+
+/* ── Position variants ─────────────────────────────────────── */
+
+.bottom-left {
+  right: auto;
+  left: 24px;
+  align-items: flex-start;
+}
+
+/* ── Responsive: full-screen on mobile ─────────────────────── */
+
+@media (max-width: 480px) {
+  .container {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .bottom-left {
+    left: 0;
+    right: 0;
+  }
+}

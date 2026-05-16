@@ -1,9 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import { X } from "lucide-react";
 import styles from "./CloseButtonComponent.module.css";
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 
 /**
  * CloseButtonComponent — An X-icon dismiss button for modals, drawers, and panels.

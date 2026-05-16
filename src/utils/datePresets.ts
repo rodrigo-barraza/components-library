@@ -7,11 +7,22 @@ import { toLocalDateString as fmtDate, daysAgo } from "@rodrigo-barraza/utilitie
 
 export { fmtDate, daysAgo };
 
-function isoAgo(ms) {
+export interface DateRange {
+  from: string;
+  to: string;
+}
+
+export interface DatePreset {
+  label: string;
+  getValue: () => DateRange;
+  relative?: boolean;
+}
+
+function isoAgo(ms: number): string {
   return new Date(Date.now() - ms).toISOString();
 }
 
-export const DATE_PRESETS = [
+export const DATE_PRESETS: DatePreset[] = [
   { label: "Last minute", getValue: () => ({ from: isoAgo(60e3), to: "" }), relative: true },
   { label: "Last 5 minutes", getValue: () => ({ from: isoAgo(5 * 60e3), to: "" }), relative: true },
   { label: "Last 30 minutes", getValue: () => ({ from: isoAgo(30 * 60e3), to: "" }), relative: true },
@@ -53,19 +64,19 @@ export const DATE_PRESETS = [
 ];
 
 /** Date-only presets — excludes sub-day time-based presets. */
-export const DATE_PRESETS_DATE_ONLY = DATE_PRESETS.filter((p) => !p.relative);
+export const DATE_PRESETS_DATE_ONLY: DatePreset[] = DATE_PRESETS.filter((p) => !p.relative);
 
 /**
  * Parse a date string. Handles both YYYY-MM-DD and ISO datetime formats.
  */
-export function parseDateValue(str) {
+export function parseDateValue(str: string | null | undefined): Date | null {
   if (!str) return null;
   if (str.includes("T")) return new Date(str);
   const [y, m, d] = str.split("-").map(Number);
   return new Date(y, m - 1, d);
 }
 
-function isSameDay(a, b) {
+function isSameDay(a: Date | null, b: Date | null): boolean {
   if (!a || !b) return false;
   return (
     a.getFullYear() === b.getFullYear() &&
@@ -77,7 +88,7 @@ function isSameDay(a, b) {
 /**
  * Format a { from, to } range for display in trigger buttons and badges.
  */
-export function formatDateDisplay(from, to) {
+export function formatDateDisplay(from: string | null | undefined, to: string | null | undefined): string | null {
   if (!from && !to) return null;
   const matchingPreset = DATE_PRESETS.find((p) => {
     if (!p.relative) return false;
@@ -88,12 +99,12 @@ export function formatDateDisplay(from, to) {
 
   const hasFromTime = from?.includes("T");
   const hasToTime = to?.includes("T");
-  const dateOpts = { month: "short", day: "numeric" };
-  const timeOpts = { hour: "2-digit", minute: "2-digit", hour12: false };
+  const dateOpts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" };
+  const timeOpts: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
   const fromDate = parseDateValue(from);
   const toDate = parseDateValue(to);
 
-  const fmtWithTime = (date, hasTime) => {
+  const fmtWithTime = (date: Date, hasTime: boolean | undefined): string => {
     const dayStr = date.toLocaleDateString("en-US", dateOpts);
     if (!hasTime) return dayStr;
     const timStr = date.toLocaleTimeString("en-US", timeOpts);
@@ -113,7 +124,7 @@ export function formatDateDisplay(from, to) {
 /**
  * Return the label of the currently active preset, or null if none match.
  */
-export function getActiveDatePreset(from, to) {
+export function getActiveDatePreset(from: string | null | undefined, to: string | null | undefined): string | null {
   for (const p of DATE_PRESETS) {
     if (p.relative) {
       const v = p.getValue();

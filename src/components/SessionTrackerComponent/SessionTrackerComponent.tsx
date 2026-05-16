@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 // ============================================================
@@ -15,7 +16,7 @@
 // ============================================================
 
 import { useEffect, useRef, useMemo } from "react";
-import { createSessionService } from "../../services/SessionService.js";
+import { createSessionService } from "../../services/SessionService.ts";
 
 const HEARTBEAT_INTERVAL_MS = 5000;
 

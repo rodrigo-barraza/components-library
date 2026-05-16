@@ -10,19 +10,32 @@ import { useState, useEffect, useCallback, useRef } from "react";
  * fetch on mount → manage loading/error → expose refresh().
  *
  * For polling, compose with usePolling instead.
- *
- * @param {() => Promise<T>} fetcher — async function that returns data
- * @param {object} [options]
- * @param {boolean} [options.enabled=true] — set false to skip fetch
- * @param {any[]} [options.deps=[]] — additional deps that trigger re-fetch
- * @param {(data: T) => any} [options.transform] — optional transform before storing
- * @returns {{ data: T|null, loading: boolean, error: string|null, refresh: () => Promise<void> }}
  */
-export default function useFetch(fetcher, options = {}) {
+
+export interface UseFetchOptions<T, R = T> {
+  /** set false to skip fetch */
+  enabled?: boolean;
+  /** additional deps that trigger re-fetch */
+  deps?: unknown[];
+  /** optional transform before storing */
+  transform?: (data: T) => R;
+}
+
+export interface UseFetchResult<R> {
+  data: R | null;
+  loading: boolean;
+  error: string | null;
+  refresh: () => Promise<void>;
+}
+
+export default function useFetch<T, R = T>(
+  fetcher: () => Promise<T>,
+  options: UseFetchOptions<T, R> = {},
+): UseFetchResult<R> {
   const { enabled = true, deps = [], transform } = options;
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<R | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const fetcherRef = useRef(fetcher);
   const transformRef = useRef(transform);
 
@@ -37,10 +50,10 @@ export default function useFetch(fetcher, options = {}) {
       const result = await fetcherRef.current();
       const value = transformRef.current
         ? transformRef.current(result)
-        : result;
+        : (result as unknown as R);
       setData(value);
     } catch (error) {
-      setError(error.message);
+      setError((error as Error).message);
     } finally {
       setLoading(false);
     }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import {
@@ -8,8 +9,8 @@ import {
   useState,
 } from "react";
 import styles from "./FabMenuComponent.module.css";
-import { useComponents } from "../ComponentsProvider.js";
-import SoundService from "../../services/SoundService.js";
+import { useComponents } from "../ComponentsProvider.tsx";
+import SoundService from "../../services/SoundService.ts";
 
 /**
  * FabMenuComponent — Material Design 3 FAB Menu (Speed Dial).

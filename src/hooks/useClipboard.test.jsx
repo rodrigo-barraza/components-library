@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import useClipboard from "./useClipboard.js";
+import useClipboard from "./useClipboard.tsx";
 
 describe("useClipboard", () => {
   beforeEach(() => {

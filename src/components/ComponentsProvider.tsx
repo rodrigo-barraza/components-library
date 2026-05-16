@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
 /**
  * ComponentsContext — Global configuration for @rodrigo-barraza/components-library.
@@ -15,16 +15,22 @@ import { createContext, useContext } from "react";
  *     <App />
  *   </ComponentsProvider>
  */
-const ComponentsContext = createContext({
+
+export interface ComponentsContextValue {
+  sound: boolean;
+}
+
+const ComponentsContext = createContext<ComponentsContextValue>({
   sound: false,
 });
 
-/**
- * @param {Object} props
- * @param {boolean} [props.sound=false] — Enable procedural audio feedback
- * @param {React.ReactNode} props.children
- */
-export function ComponentsProvider({ sound = false, children }) {
+interface ComponentsProviderProps {
+  /** Enable procedural audio feedback */
+  sound?: boolean;
+  children: ReactNode;
+}
+
+export function ComponentsProvider({ sound = false, children }: ComponentsProviderProps) {
   return (
     <ComponentsContext.Provider value={{ sound }}>
       {children}
@@ -34,8 +40,7 @@ export function ComponentsProvider({ sound = false, children }) {
 
 /**
  * Hook to access library-wide configuration.
- * @returns {{ sound: boolean }}
  */
-export function useComponents() {
+export function useComponents(): ComponentsContextValue {
   return useContext(ComponentsContext);
 }

@@ -1,18 +1,27 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 /**
  * useClickOutside — triggers a callback when a click occurs outside the
  * referenced element(s). Essential for dropdown menus, popovers, modals,
  * and any dismissible overlay.
  *
- * @param {React.RefObject|React.RefObject[]} refs — ref(s) to the container element(s)
- * @param {Function} handler — callback invoked on outside click
- * @param {object} [options]
- * @param {boolean} [options.enabled=true] — set false to pause detection
+ * @param refs — ref(s) to the container element(s)
+ * @param handler — callback invoked on outside click
+ * @param options
  */
-export default function useClickOutside(refs, handler, options = {}) {
+
+interface UseClickOutsideOptions {
+  /** set false to pause detection */
+  enabled?: boolean;
+}
+
+export default function useClickOutside(
+  refs: RefObject<Element | null> | RefObject<Element | null>[],
+  handler: (event: MouseEvent | TouchEvent) => void,
+  options: UseClickOutsideOptions = {},
+): void {
   const { enabled = true } = options;
   const handlerRef = useRef(handler);
   handlerRef.current = handler;
@@ -20,10 +29,10 @@ export default function useClickOutside(refs, handler, options = {}) {
   useEffect(() => {
     if (!enabled) return;
 
-    const listener = (event) => {
+    const listener = (event: MouseEvent | TouchEvent) => {
       const refArray = Array.isArray(refs) ? refs : [refs];
       const isInside = refArray.some(
-        (ref) => ref.current?.contains(event.target),
+        (ref) => ref.current?.contains(event.target as Node),
       );
       if (!isInside) {
         handlerRef.current(event);
