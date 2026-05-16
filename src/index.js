@@ -20,6 +20,7 @@ export { default as DomainBadgeComponent } from "./components/DomainBadgeCompone
 export { default as DrawerComponent } from "./components/DrawerComponent/DrawerComponent.js";
 export { default as EmptyStateComponent } from "./components/EmptyStateComponent/EmptyStateComponent.js";
 export { default as ErrorBoundaryComponent } from "./components/ErrorBoundaryComponent/ErrorBoundaryComponent.js";
+export { default as ErrorFallbackComponent } from "./components/ErrorFallbackComponent/ErrorFallbackComponent.js";
 export { default as ExtendedFabComponent } from "./components/ExtendedFabComponent/ExtendedFabComponent.js";
 export { default as FabComponent } from "./components/FabComponent/FabComponent.js";
 export { default as FabMenuComponent } from "./components/FabMenuComponent/FabMenuComponent.js";

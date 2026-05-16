@@ -6,6 +6,8 @@ import { DateTime } from "luxon";
 import { TooltipComponent } from "@rodrigo-barraza/components-library";
 import styles from "./DateTimeBadgeComponent.module.css";
 
+const SECONDS_PER_DAY = 86_400;
+
 
 /**
  * Computes the short relative/absolute label and the optimal
@@ -22,7 +24,7 @@ function computeLabel(dt, relative) {
 
   // Relative for recent timestamps (< 24h)
   // Also treat small negative values (clock skew — server slightly ahead) as "just now"
-  if (relative && totalSeconds > -10 && totalSeconds < 86400) {
+  if (relative && totalSeconds > -10 && totalSeconds < SECONDS_PER_DAY) {
     if (totalSeconds < 5) return { label: "just now", intervalMs: 1_000, isJustNow: true };
     if (totalSeconds < 60)
       return {
@@ -39,7 +41,7 @@ function computeLabel(dt, relative) {
 
   // Relative for slightly older (days)
   if (relative && totalSeconds >= 0) {
-    const days = Math.floor(totalSeconds / 86400);
+    const days = Math.floor(totalSeconds / SECONDS_PER_DAY);
     if (days === 1) return { label: "yesterday", intervalMs: 3_600_000, isJustNow: false };
     if (days < 7) return { label: `${days}d ago`, intervalMs: 3_600_000, isJustNow: false };
   }

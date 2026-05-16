@@ -39,8 +39,8 @@ export default function useFetch(fetcher, options = {}) {
         ? transformRef.current(result)
         : result;
       setData(value);
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }

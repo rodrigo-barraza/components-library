@@ -1123,8 +1123,8 @@ export default function DiscordChatComponent({
               }));
             });
           }
-        } catch (err) {
-          console.error("[DiscordChat] Init parse error:", err);
+        } catch (error) {
+          console.error("[DiscordChat] Init parse error:", error);
         }
       });
 
@@ -1137,8 +1137,8 @@ export default function DiscordChatComponent({
             const appended = [...prev, ...newMsgs.reverse()];
             return appended.length > messageCount ? appended.slice(appended.length - messageCount) : appended;
           });
-        } catch (err) {
-          console.error("[DiscordChat] New message parse error:", err);
+        } catch (error) {
+          console.error("[DiscordChat] New message parse error:", error);
         }
       });
 
@@ -1148,8 +1148,8 @@ export default function DiscordChatComponent({
           if (!ids?.length) return;
           const deletedSet = new Set(ids);
           setMessages((prev) => prev.filter((msg) => !deletedSet.has(msg.id)));
-        } catch (err) {
-          console.error("[DiscordChat] Delete event parse error:", err);
+        } catch (error) {
+          console.error("[DiscordChat] Delete event parse error:", error);
         }
       });
 
@@ -1167,8 +1167,8 @@ export default function DiscordChatComponent({
               return updated ? { ...msg, reactions: updated.reactions } : msg;
             }),
           );
-        } catch (err) {
-          console.error("[DiscordChat] Update event parse error:", err);
+        } catch (error) {
+          console.error("[DiscordChat] Update event parse error:", error);
         }
       });
 
@@ -1292,8 +1292,8 @@ export default function DiscordChatComponent({
           return next;
         });
       }
-    } catch (err) {
-      console.error("[DiscordChat] React error:", err);
+    } catch (error) {
+      console.error("[DiscordChat] React error:", error);
       // Revert optimistic update
       setReactedSet((prev) => {
         const next = new Set(prev);

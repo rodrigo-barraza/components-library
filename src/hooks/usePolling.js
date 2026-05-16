@@ -34,8 +34,8 @@ export default function usePolling(fetcher, intervalMs, options = {}) {
         : result;
       setData(value);
       setError(null);
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
