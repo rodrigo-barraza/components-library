@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "postbuild": "copyfiles -u 1 \"src/**/*.css\" dist",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write src",
@@ -43,6 +44,7 @@
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^6.0.1",
+    "copyfiles": "^2.4.1",
     "esbuild": "^0.28.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
