@@ -11,7 +11,7 @@
 export default function PortBadgeComponent({ port, variant, className, ...rest }: {
     [x: string]: any;
     port: any;
-    variant?: string | undefined;
+    variant?: string;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=PortBadgeComponent.d.ts.map

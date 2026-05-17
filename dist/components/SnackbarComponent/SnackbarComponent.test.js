@@ -1,5 +1,4 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-// @ts-nocheck
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, act, fireEvent } from "@testing-library/react";
 import SnackbarComponent, { useSnackbar } from "./SnackbarComponent.js";

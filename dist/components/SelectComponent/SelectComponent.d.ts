@@ -8,12 +8,12 @@
  */
 export default function SelectComponent({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, label, }: {
     value: any;
-    options?: never[] | undefined;
+    options?: any[];
     onChange: any;
-    placeholder?: string | undefined;
-    icon?: null | undefined;
-    disabled?: boolean | undefined;
-    triggerTooltip?: null | undefined;
-    label?: null | undefined;
+    placeholder?: string;
+    icon?: any;
+    disabled?: boolean;
+    triggerTooltip?: any;
+    label?: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SelectComponent.d.ts.map

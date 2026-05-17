@@ -15,10 +15,10 @@
  */
 export default function SparklineComponent({ data, color, maxValue, height, historyMax, className, }: {
     data: any;
-    color?: string | undefined;
-    maxValue?: number | undefined;
-    height?: number | undefined;
-    historyMax?: number | undefined;
+    color?: string;
+    maxValue?: number;
+    height?: number;
+    historyMax?: number;
     className: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SparklineComponent.d.ts.map

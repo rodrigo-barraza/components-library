@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useRef, useEffect } from "react";

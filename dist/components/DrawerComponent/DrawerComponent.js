@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useRef, useCallback, useState } from "react";
@@ -12,7 +11,7 @@ import styles from "./DrawerComponent.module.css";
  * Supports click-outside dismiss, Escape key, optional scrim overlay,
  * structured sections with label/value grids, and arbitrary children.
  *
- * @param {Object}   props
+
  * @param {boolean}  props.open                  — Controls drawer visibility
  * @param {Function} props.onClose               — Called when dismissed
  * @param {string}   [props.title="Detail"]      — Drawer header title

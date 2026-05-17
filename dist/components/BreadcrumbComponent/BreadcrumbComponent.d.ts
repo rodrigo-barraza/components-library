@@ -8,12 +8,12 @@
  * @param {Array<{label: string, href?: string, icon?: React.ComponentType, onClick?: Function}>} items
  *   — Ordered breadcrumb segments
  * @param {"chevron"|"slash"|"dot"} [separator="chevron"] — Divider style
- * @param {string} [className]
+
  */
 export default function BreadcrumbComponent({ items, separator, className, ...rest }: {
     [x: string]: any;
-    items?: never[] | undefined;
-    separator?: string | undefined;
+    items?: any[];
+    separator?: string;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=BreadcrumbComponent.d.ts.map

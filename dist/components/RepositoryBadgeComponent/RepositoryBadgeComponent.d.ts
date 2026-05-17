@@ -13,5 +13,5 @@ export default function RepositoryBadgeComponent({ repo, icons, className, ...re
     repo: any;
     icons: any;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=RepositoryBadgeComponent.d.ts.map

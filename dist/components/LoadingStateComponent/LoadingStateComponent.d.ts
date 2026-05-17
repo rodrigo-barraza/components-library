@@ -5,7 +5,7 @@
  * @param {string} [className] — Additional CSS class
  */
 export default function LoadingStateComponent({ message, className }: {
-    message?: string | undefined;
+    message?: string;
     className: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=LoadingStateComponent.d.ts.map

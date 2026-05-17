@@ -9,7 +9,7 @@
  *
  * Anatomy: [scrim] → [container] → [icon?] → [headline?] → [body] → [actions]
  *
- * @param {Object}   props
+
  * @param {boolean}  props.open                — Controls dialog visibility
  * @param {Function} props.onClose             — Called when dismissed (scrim click / Escape)
  * @param {React.ReactNode}  [props.icon]      — Optional hero icon (centered above headline)
@@ -32,15 +32,15 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
     icon: any;
     headline: any;
     onConfirm: any;
-    confirmLabel?: string | undefined;
-    cancelLabel?: string | undefined;
-    hideCancel?: boolean | undefined;
-    confirmVariant?: string | undefined;
-    confirmDisabled?: boolean | undefined;
-    fullscreen?: boolean | undefined;
-    dismissible?: boolean | undefined;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    hideCancel?: boolean;
+    confirmVariant?: string;
+    confirmDisabled?: boolean;
+    fullscreen?: boolean;
+    dismissible?: boolean;
     className: any;
     id: any;
     children: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DialogComponent.d.ts.map

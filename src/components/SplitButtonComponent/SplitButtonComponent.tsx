@@ -39,7 +39,7 @@ import { ChevronDown } from "lucide-react";
  * @param {string} [props.trailingAriaLabel="More options"] — Accessible label for trailing
  * @param {React.ReactNode} props.children — Label text for the leading button
  */
-const SplitButtonComponent = forwardRef(function SplitButtonComponent(
+const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
   {
     variant = "filled",
     size = "medium",

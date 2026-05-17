@@ -41,22 +41,22 @@ onMobileClose, // function — called when drawer should close (scrim tap, nav c
 mobileBreakpoint, }: {
     brandIcon: any;
     brandLabel: any;
-    items?: never[] | undefined;
+    items?: any[];
     sections: any;
     activeItem: any;
     onNavigate: any;
-    theme?: string | undefined;
+    theme?: string;
     themes: any;
     setTheme: any;
     onToggleTheme: any;
     LinkComponent: any;
-    collapsible?: boolean | undefined;
-    defaultCollapsed?: boolean | undefined;
+    collapsible?: boolean;
+    defaultCollapsed?: boolean;
     storageKey: any;
     onCollapse: any;
     bottomActions: any;
     mobileOpen: any;
     onMobileClose: any;
-    mobileBreakpoint?: number | undefined;
+    mobileBreakpoint?: number;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=NavigationSidebarComponent.d.ts.map

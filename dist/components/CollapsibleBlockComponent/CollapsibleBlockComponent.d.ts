@@ -18,11 +18,11 @@ export default function CollapsibleBlockComponent({ icon, label, badge, defaultC
     icon: any;
     label: any;
     badge: any;
-    defaultCollapsed?: boolean | undefined;
+    defaultCollapsed?: boolean;
     open: any;
     onToggle: any;
     headerActions: any;
-    className?: string | undefined;
+    className?: string;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CollapsibleBlockComponent.d.ts.map

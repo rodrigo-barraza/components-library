@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { forwardRef, useCallback, useRef } from "react";
@@ -20,32 +19,32 @@ import SoundService from "../../services/SoundService.js";
  * `<ComponentsProvider sound>`. Without the provider the FAB
  * renders silently.
  *
- * @param {Object} props
- * @param {"primary"|"secondary"|"tertiary"|"surface"} [props.variant="primary"]
+
+
  *   M3 color mapping. Primary uses the theme accent, secondary uses
  *   secondary-container, tertiary uses tertiary-container, surface
  *   uses surface-container-high.
- * @param {React.ComponentType} [props.icon]
+
  *   Lucide-compatible icon component rendered at 24×24 (M3 spec).
- * @param {boolean} [props.collapsed=false]
+
  *   When true the label collapses and the FAB becomes icon-only (56×56).
  *   Designed for scroll-hide behavior — the consumer drives the state.
- * @param {boolean} [props.lowered=false]
+
  *   Lowers the resting elevation from level 3 to level 1. Use when the
  *   FAB sits on a surface that is itself elevated (e.g. bottom-app-bar).
- * @param {boolean} [props.fixed=false]
+
  *   Fixes the FAB to the bottom-right of the viewport with 16px inset.
- * @param {boolean} [props.disabled=false]
+
  *   Disabled state — reduces opacity, removes interactivity.
- * @param {string} [props.ariaLabel]
+
  *   Explicit accessible label. When omitted the text content of `children`
  *   is used. Always required when `collapsed` is true.
  * @param {React.ReactNode} props.children
  *   The text label for the FAB.
- * @param {string} [props.className]
+
  *   Additional CSS class.
- * @param {Function} [props.onClick]
- * @param {React.Ref} ref
+
+
  */
 const ExtendedFabComponent = forwardRef(function ExtendedFabComponent({ variant = "primary", icon: Icon, collapsed = false, lowered = false, fixed = false, disabled = false, ariaLabel, children, className = "", onClick, onMouseEnter, ...rest }, ref) {
     const { sound } = useComponents();

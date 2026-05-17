@@ -18,8 +18,8 @@
  * `<ComponentsProvider sound>`. Without the provider, the button
  * renders silently.
  *
- * @param {Object} props
- * @param {"filled"|"outlined"|"text"|"elevated"|"tonal"|"primary"|"secondary"|"disabled"|"destructive"|"creative"|"submit"} [props.variant="filled"]
+
+
  * @param {"small"|"medium"|"large"} [props.size="medium"] — M3 size scale
  * @param {React.ComponentType} [props.icon] — Lucide-compatible icon component (leading)
  * @param {number} [props.iconSize] — Override icon size (default: auto by button size)
@@ -30,6 +30,6 @@
  * @param {string} [props.href] — If provided, renders as <a> tag
  * @param {React.ReactNode} props.children — Button label text
  */
-declare const ButtonComponent: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+declare const ButtonComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 export default ButtonComponent;
 //# sourceMappingURL=ButtonComponent.d.ts.map

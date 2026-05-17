@@ -17,12 +17,12 @@
  * @param {string} [id]            — Element ID
  */
 export default function SkeletonComponent({ variant, width, height, lines, animate, className, id, }: {
-    variant?: string | undefined;
+    variant?: string;
     width: any;
     height: any;
-    lines?: number | undefined;
-    animate?: boolean | undefined;
-    className?: string | undefined;
+    lines?: number;
+    animate?: boolean;
+    className?: string;
     id: any;
 }): import("react/jsx-runtime").JSX.Element;
 /**
@@ -30,13 +30,13 @@ export default function SkeletonComponent({ variant, width, height, lines, anima
  *
  * @param {string} [gap="12px"] — Gap between skeleton children
  * @param {"row"|"column"} [direction="column"] — Flex direction
- * @param {string} [className]
- * @param {React.ReactNode} children
+
+
  */
 export declare function SkeletonGroup({ gap, direction, className, children, }: {
-    gap?: string | undefined;
-    direction?: string | undefined;
-    className?: string | undefined;
+    gap?: string;
+    direction?: string;
+    className?: string;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SkeletonComponent.d.ts.map

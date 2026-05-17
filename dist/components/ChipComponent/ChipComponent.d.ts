@@ -15,9 +15,9 @@
  * @param {boolean}  [removable=false]  — Show trailing X button
  * @param {Function} [onRemove]         — Called when X is clicked
  * @param {Function} [onClick]          — Click handler
- * @param {string}   [className]
+
  * @param {React.ReactNode} children    — Chip label
  */
-declare const ChipComponent: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+declare const ChipComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 export default ChipComponent;
 //# sourceMappingURL=ChipComponent.d.ts.map

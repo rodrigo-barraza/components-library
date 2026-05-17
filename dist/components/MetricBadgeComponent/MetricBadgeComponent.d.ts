@@ -26,11 +26,11 @@ export default function MetricBadgeComponent({ value, label, icon, tooltip, form
     tooltip: any;
     formatFn: any;
     color: any;
-    tween?: boolean | undefined;
-    tweenDuration?: number | undefined;
-    round?: boolean | undefined;
-    mini?: boolean | undefined;
-    hideWhenZero?: boolean | undefined;
-    className?: string | undefined;
-}): import("react/jsx-runtime").JSX.Element | null;
+    tween?: boolean;
+    tweenDuration?: number;
+    round?: boolean;
+    mini?: boolean;
+    hideWhenZero?: boolean;
+    className?: string;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=MetricBadgeComponent.d.ts.map

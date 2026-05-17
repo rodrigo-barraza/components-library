@@ -30,19 +30,19 @@ declare function RadioComponent({ value, selectedValue, onChange, label, disable
     value: any;
     selectedValue: any;
     onChange: any;
-    label?: string | undefined;
-    disabled?: boolean | undefined;
-    error?: boolean | undefined;
-    className?: string | undefined;
+    label?: string;
+    disabled?: boolean;
+    error?: boolean;
+    className?: string;
     id: any;
     name: any;
-    labelPlacement?: string | undefined;
+    labelPlacement?: string;
 }): import("react/jsx-runtime").JSX.Element;
 declare namespace RadioComponent {
     var Group: ({ legend, orientation, className, children, }: {
         legend: any;
-        orientation?: string | undefined;
-        className?: string | undefined;
+        orientation?: string;
+        className?: string;
         children: any;
     }) => import("react/jsx-runtime").JSX.Element;
 }

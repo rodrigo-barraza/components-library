@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 // ============================================================
 // SessionTrackerComponent — Invisible analytics telemetry layer

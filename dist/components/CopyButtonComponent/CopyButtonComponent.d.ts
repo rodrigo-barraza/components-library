@@ -9,9 +9,9 @@
  */
 export default function CopyButtonComponent({ text, size, showLabel, className, tooltip, }: {
     text: any;
-    size?: number | undefined;
-    showLabel?: boolean | undefined;
-    className?: string | undefined;
-    tooltip?: string | undefined;
+    size?: number;
+    showLabel?: boolean;
+    className?: string;
+    tooltip?: string;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CopyButtonComponent.d.ts.map

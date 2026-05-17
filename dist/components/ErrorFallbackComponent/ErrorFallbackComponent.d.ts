@@ -21,8 +21,8 @@
 export default function ErrorFallbackComponent({ error, reset, title, logLabel, icon, }: {
     error: any;
     reset: any;
-    title?: string | undefined;
-    logLabel?: string | undefined;
-    icon?: string | undefined;
+    title?: string;
+    logLabel?: string;
+    icon?: string;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ErrorFallbackComponent.d.ts.map

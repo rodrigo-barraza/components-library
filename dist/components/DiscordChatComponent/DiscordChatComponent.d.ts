@@ -1,17 +1,17 @@
 export default function DiscordChatComponent({ messageCount, joinMode, inviteUrl, onJoinHoverChange, channelIds, channelsUrl, streamUrl, membersUrl, tenorOembedUrl, reactUrl, emojisUrl, serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers, }: {
-    messageCount?: number | undefined;
-    joinMode?: boolean | undefined;
-    inviteUrl?: string | undefined;
+    messageCount?: number;
+    joinMode?: boolean;
+    inviteUrl?: string;
     onJoinHoverChange: any;
-    channelIds?: never[] | undefined;
-    channelsUrl?: string | undefined;
-    streamUrl?: string | undefined;
-    membersUrl?: string | undefined;
-    tenorOembedUrl?: string | undefined;
-    reactUrl?: string | undefined;
-    emojisUrl?: string | undefined;
+    channelIds?: any[];
+    channelsUrl?: string;
+    streamUrl?: string;
+    membersUrl?: string;
+    tenorOembedUrl?: string;
+    reactUrl?: string;
+    emojisUrl?: string;
     serverIconUrl: any;
     serverBannerUrl: any;
-    servers?: never[] | undefined;
+    servers?: any[];
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DiscordChatComponent.d.ts.map

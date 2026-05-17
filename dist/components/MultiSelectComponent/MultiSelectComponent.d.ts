@@ -13,14 +13,14 @@
  *  label:       optional inline label rendered before the trigger
  */
 export default function MultiSelectComponent({ value, options, onChange, placeholder, allLabel, icon, disabled, compact, label, }: {
-    value?: never[] | undefined;
-    options?: never[] | undefined;
+    value?: any[];
+    options?: any[];
     onChange: any;
-    placeholder?: string | undefined;
-    allLabel?: string | undefined;
-    icon?: null | undefined;
-    disabled?: boolean | undefined;
-    compact?: boolean | undefined;
-    label?: null | undefined;
+    placeholder?: string;
+    allLabel?: string;
+    icon?: any;
+    disabled?: boolean;
+    compact?: boolean;
+    label?: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=MultiSelectComponent.d.ts.map

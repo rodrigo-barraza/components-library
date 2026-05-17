@@ -25,7 +25,7 @@ import SoundService from "../../services/SoundService.js";
 
  * @param {React.ReactNode} children    — Chip label
  */
-const ChipComponent = forwardRef(function ChipComponent(
+const ChipComponent = forwardRef<any, any>(function ChipComponent(
   {
     variant = "assist",
     selected = false,

@@ -13,27 +13,27 @@
  *   CarouselComponent.ItemMedia  — full-bleed image/video slot
  *   CarouselComponent.ItemLabel  — overlaid label with gradient scrim
  *
- * @param {"multiBrowse"|"hero"|"center"|"fullWidth"} [layout="multiBrowse"]
+
  * @param {boolean}  [showArrows=true]     — show prev/next nav arrows
  * @param {boolean}  [showIndicators=true] — show dot indicators
  * @param {boolean}  [peekEdge=false]      — subtle edge-fade gradient
  * @param {number}   [autoPlay=0]          — auto-advance interval in ms (0=disabled)
  * @param {boolean}  [loop=false]          — loop back to start at end
  * @param {number}   [gap=8]              — gap between items in px
- * @param {string}   [className]
+
  * @param {string}   [ariaLabel]           — accessible label for the carousel region
  * @param {React.ReactNode} children       — CarouselComponent.Item elements
  */
 declare function CarouselComponent({ layout, showArrows, showIndicators, peekEdge, autoPlay, loop, gap, className, ariaLabel, children, }: {
-    layout?: string | undefined;
-    showArrows?: boolean | undefined;
-    showIndicators?: boolean | undefined;
-    peekEdge?: boolean | undefined;
-    autoPlay?: number | undefined;
-    loop?: boolean | undefined;
-    gap?: number | undefined;
+    layout?: string;
+    showArrows?: boolean;
+    showIndicators?: boolean;
+    peekEdge?: boolean;
+    autoPlay?: number;
+    loop?: boolean;
+    gap?: number;
     className: any;
-    ariaLabel?: string | undefined;
+    ariaLabel?: string;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;
 declare namespace CarouselComponent {
@@ -52,9 +52,8 @@ export default CarouselComponent;
  * @param {number|string}  [height]     — fixed height
  * @param {string}         [aspectRatio] — CSS aspect-ratio (e.g. "16/9")
  * @param {"large"|"small"} [size]      — hero layout item sizing
- * @param {Function}       [onClick]
- * @param {string}         [className]
- * @param {React.ReactNode} children
+
+
  */
 declare function CarouselItem({ width, height, aspectRatio, size, onClick, className, children, ...rest }: {
     [x: string]: any;
@@ -71,11 +70,11 @@ declare function CarouselItem({ width, height, aspectRatio, size, onClick, class
  *
  * @param {string}  src   — image source URL
  * @param {string}  [alt] — alt text
- * @param {string}  [className]
+
  */
 declare function CarouselItemMedia({ src, alt, className, children }: {
     src: any;
-    alt?: string | undefined;
+    alt?: string;
     className: any;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;
@@ -87,7 +86,7 @@ declare function CarouselItemMedia({ src, alt, className, children }: {
  *
  * @param {string}  title      — primary label text
  * @param {string}  [subtitle] — supporting text
- * @param {string}  [className]
+
  */
 declare function CarouselItemLabel({ title, subtitle, className, children }: {
     title: any;

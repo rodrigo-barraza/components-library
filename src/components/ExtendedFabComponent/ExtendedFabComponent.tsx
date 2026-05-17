@@ -47,7 +47,7 @@ import SoundService from "../../services/SoundService.js";
 
 
  */
-const ExtendedFabComponent = forwardRef(function ExtendedFabComponent(
+const ExtendedFabComponent = forwardRef<any, any>(function ExtendedFabComponent(
   {
     variant = "primary",
     icon: Icon,

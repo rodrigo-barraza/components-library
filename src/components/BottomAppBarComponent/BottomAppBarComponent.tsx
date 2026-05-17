@@ -194,7 +194,7 @@ export default function BottomAppBarComponent({
 
  * @param {React.ReactNode} children — overrides icon rendering
  */
-const BottomAppBarAction = forwardRef(function BottomAppBarAction(
+const BottomAppBarAction = forwardRef<any, any>(function BottomAppBarAction(
   {
     icon: Icon,
     ariaLabel,

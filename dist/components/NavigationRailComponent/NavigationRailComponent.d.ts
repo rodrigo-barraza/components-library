@@ -24,16 +24,16 @@
  * @param {string}           [ariaLabel]       — Accessible label for the <nav> landmark
  */
 export default function NavigationRailComponent({ items, activeItem, onNavigate, fab, menuIcon, alignment, labelsHidden, bottomSlot, LinkComponent, className, ariaLabel, }: {
-    items?: never[] | undefined;
+    items?: any[];
     activeItem: any;
     onNavigate: any;
     fab: any;
     menuIcon: any;
-    alignment?: string | undefined;
-    labelsHidden?: boolean | undefined;
+    alignment?: string;
+    labelsHidden?: boolean;
     bottomSlot: any;
     LinkComponent: any;
-    className?: string | undefined;
-    ariaLabel?: string | undefined;
+    className?: string;
+    ariaLabel?: string;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=NavigationRailComponent.d.ts.map

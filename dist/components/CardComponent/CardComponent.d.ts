@@ -17,16 +17,16 @@
  * @param {boolean}   [interactive=false]   — enables hover / press state layer
  * @param {boolean}   [draggable=false]     — adds dragged state elevation
  * @param {boolean}   [fullWidth=false]     — stretches to container width
- * @param {string}    [className]
+
  * @param {object}    [style]               — use --card-accent to theme
- * @param {React.ReactNode} children
+
  */
 declare function CardComponent({ variant, interactive, draggable: isDraggable, fullWidth, className, style, children, ...rest }: {
     [x: string]: any;
-    variant?: string | undefined;
-    interactive?: boolean | undefined;
-    draggable?: boolean | undefined;
-    fullWidth?: boolean | undefined;
+    variant?: string;
+    interactive?: boolean;
+    draggable?: boolean;
+    fullWidth?: boolean;
     className: any;
     style: any;
     children: any;
@@ -36,7 +36,7 @@ declare namespace CardComponent {
     var Media: typeof CardMedia;
     var Body: typeof CardBody;
     var Footer: typeof CardFooter;
-    var ActionArea: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+    var ActionArea: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 }
 export default CardComponent;
 declare function CardHeader({ icon: Icon, title, subtitle, children, className }: {
@@ -54,15 +54,15 @@ declare function CardHeader({ icon: Icon, title, subtitle, children, className }
  * @param {number}   [height]     — fixed height in px (default: auto, aspect-ratio used if set)
  * @param {string}   [aspectRatio] — CSS aspect-ratio value, e.g. "16/9"
  * @param {"top"|"bottom"|"full"} [position="top"] — clip-path rounding position
- * @param {string}   [className]
+
  * @param {React.ReactNode} children — custom content (overrides src/alt)
  */
 declare function CardMedia({ src, alt, height, aspectRatio, position, className, children, }: {
     src: any;
-    alt?: string | undefined;
+    alt?: string;
     height: any;
     aspectRatio: any;
-    position?: string | undefined;
+    position?: string;
     className: any;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;

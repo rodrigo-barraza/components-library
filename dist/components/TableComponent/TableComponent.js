@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState, useRef, useCallback, useEffect, Fragment } from "react";
@@ -12,7 +11,7 @@ import styles from "./TableComponent.module.css";
  * TableComponent — a reusable, sortable data table with expandable rows,
  * column visibility controls, drag-to-scroll, and per-column tooltips.
  *
- * @param {Object} props
+
  * @param {string} [props.title] — Section title above the table
  * @param {string} [props.subtitle] — Subtitle/description below the title
  * @param {Array<{key, label, description?, sortable?, align?, render?, sortValue?, className?}>} props.columns

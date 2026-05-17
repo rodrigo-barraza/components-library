@@ -30,15 +30,15 @@
  * @param {string}            [ariaLabel]       — Explicit ARIA label when no visible label
  */
 export default function SwitchComponent({ checked, onChange, label, disabled, showIcons, className, id, name, labelPlacement, ariaLabel, }: {
-    checked?: boolean | undefined;
+    checked?: boolean;
     onChange: any;
-    label?: string | undefined;
-    disabled?: boolean | undefined;
-    showIcons?: boolean | undefined;
-    className?: string | undefined;
+    label?: string;
+    disabled?: boolean;
+    showIcons?: boolean;
+    className?: string;
     id: any;
     name: any;
-    labelPlacement?: string | undefined;
+    labelPlacement?: string;
     ariaLabel: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SwitchComponent.d.ts.map

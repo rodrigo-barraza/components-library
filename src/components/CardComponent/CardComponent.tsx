@@ -146,7 +146,7 @@ function CardFooter({ children, className }) {
 
 
  */
-const CardActionArea = forwardRef(function CardActionArea(
+const CardActionArea = forwardRef<any, any>(function CardActionArea(
   { onClick, href, className, children, ...rest },
   ref,
 ) {

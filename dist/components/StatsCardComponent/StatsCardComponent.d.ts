@@ -13,18 +13,18 @@
  * @param {boolean} [loading=false] — Show skeleton placeholders
  * @param {boolean} [glow=false] — Show bottom glow bar on hover
  * @param {string} [className] — Additional class
- * @param {Function} [onMouseEnter]
- * @param {Function} [onMouseLeave]
+
+
  */
 export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant, color, loading, glow, className, onMouseEnter, onMouseLeave, }: {
     label: any;
     value: any;
     subtitle: any;
     icon: any;
-    variant?: string | undefined;
+    variant?: string;
     color: any;
-    loading?: boolean | undefined;
-    glow?: boolean | undefined;
+    loading?: boolean;
+    glow?: boolean;
     className: any;
     onMouseEnter: any;
     onMouseLeave: any;

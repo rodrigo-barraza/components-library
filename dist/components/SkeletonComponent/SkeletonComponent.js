@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import styles from "./SkeletonComponent.module.css";
@@ -52,8 +51,8 @@ export default function SkeletonComponent({ variant = "text", width, height, lin
  *
  * @param {string} [gap="12px"] — Gap between skeleton children
  * @param {"row"|"column"} [direction="column"] — Flex direction
- * @param {string} [className]
- * @param {React.ReactNode} children
+
+
  */
 export function SkeletonGroup({ gap = "12px", direction = "column", className = "", children, }) {
     return (_jsx("div", { className: `${styles.group} ${className}`, style: { gap, flexDirection: direction }, role: "status", "aria-label": "Loading content", children: children }));

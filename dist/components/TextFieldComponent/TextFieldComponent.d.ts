@@ -43,6 +43,6 @@
  * @param {boolean}  [required]       — Required field
  * @param {string}   [autoComplete]   — Autocomplete attribute
  */
-declare const TextFieldComponent: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+declare const TextFieldComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 export default TextFieldComponent;
 //# sourceMappingURL=TextFieldComponent.d.ts.map

@@ -2,12 +2,12 @@ export default function TableComponent({ title, subtitle, columns, data, getRowK
     title: any;
     subtitle: any;
     columns: any;
-    data?: never[] | undefined;
+    data?: any[];
     getRowKey: any;
     getSubRows: any;
     renderExpandedContent: any;
     onRowClick: any;
-    emptyText?: string | undefined;
+    emptyText?: string;
     sortKey: any;
     sortDir: any;
     onSort: any;
@@ -19,7 +19,7 @@ export default function TableComponent({ title, subtitle, columns, data, getRowK
     onRowMouseLeave: any;
     getRowClassName: any;
     getRowStyle: any;
-    mini?: boolean | undefined;
+    mini?: boolean;
     storageKey: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=TableComponent.d.ts.map

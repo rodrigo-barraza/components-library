@@ -26,17 +26,16 @@
  * @param {boolean}   [sticky=false]     — makes toolbar sticky at top
  * @param {boolean}   [elevated=false]   — adds subtle shadow
  * @param {string}    [ariaLabel]        — accessible label for the toolbar
- * @param {string}    [className]
- * @param {object}    [style]
- * @param {React.ReactNode} children
+
+
  */
 declare function ToolbarComponent({ variant, orientation, divider, sticky, elevated, ariaLabel, className, style, children, ...rest }: {
     [x: string]: any;
-    variant?: string | undefined;
-    orientation?: string | undefined;
-    divider?: boolean | undefined;
-    sticky?: boolean | undefined;
-    elevated?: boolean | undefined;
+    variant?: string;
+    orientation?: string;
+    divider?: boolean;
+    sticky?: boolean;
+    elevated?: boolean;
     ariaLabel: any;
     className: any;
     style: any;
@@ -44,7 +43,7 @@ declare function ToolbarComponent({ variant, orientation, divider, sticky, eleva
 }): import("react/jsx-runtime").JSX.Element;
 declare namespace ToolbarComponent {
     var Group: typeof ToolbarGroup;
-    var Item: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+    var Item: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
     var Separator: typeof ToolbarSeparator;
     var Title: typeof ToolbarTitle;
     var Spacer: typeof ToolbarSpacer;
@@ -57,8 +56,8 @@ export default ToolbarComponent;
  * groups. Use `role="group"` with an aria-label for screen readers.
  *
  * @param {string}    [ariaLabel]  — accessible group label
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 declare function ToolbarGroup({ ariaLabel, className, children }: {
     ariaLabel: any;
@@ -70,7 +69,7 @@ declare function ToolbarGroup({ ariaLabel, className, children }: {
  *
  * M3 spec: 1px outline-variant line, 24px height, 4px horizontal margin.
  *
- * @param {string}  [className]
+
  */
 declare function ToolbarSeparator({ className }: {
     className: any;
@@ -80,8 +79,8 @@ declare function ToolbarSeparator({ className }: {
  *
  * M3 spec: title-medium typography (16px / 500 weight).
  *
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 declare function ToolbarTitle({ className, children }: {
     className: any;

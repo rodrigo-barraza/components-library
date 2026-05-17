@@ -12,10 +12,10 @@
  *  size?     : "default" | "mini"
  */
 export default function ToggleComponent({ checked, onChange, label, disabled, size, }: {
-    checked?: boolean | undefined;
+    checked?: boolean;
     onChange: any;
-    label?: string | undefined;
-    disabled?: boolean | undefined;
-    size?: string | undefined;
+    label?: string;
+    disabled?: boolean;
+    size?: string;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ToggleComponent.d.ts.map

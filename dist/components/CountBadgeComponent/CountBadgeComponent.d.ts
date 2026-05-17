@@ -22,10 +22,10 @@
  */
 export default function CountBadgeComponent({ count, state, disabled, rainbow, tooltip, className, }: {
     count: any;
-    state?: string | undefined;
-    disabled?: boolean | undefined;
-    rainbow?: boolean | undefined;
+    state?: string;
+    disabled?: boolean;
+    rainbow?: boolean;
     tooltip: any;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CountBadgeComponent.d.ts.map

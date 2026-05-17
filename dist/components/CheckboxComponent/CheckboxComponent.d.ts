@@ -22,15 +22,15 @@
  * @param {"start"|"end"}     [labelPlacement]  — Label position relative to checkbox
  */
 export default function CheckboxComponent({ checked, onChange, label, disabled, indeterminate, error, className, id, name, labelPlacement, }: {
-    checked?: boolean | undefined;
+    checked?: boolean;
     onChange: any;
-    label?: string | undefined;
-    disabled?: boolean | undefined;
-    indeterminate?: boolean | undefined;
-    error?: boolean | undefined;
-    className?: string | undefined;
+    label?: string;
+    disabled?: boolean;
+    indeterminate?: boolean;
+    error?: boolean;
+    className?: string;
     id: any;
     name: any;
-    labelPlacement?: string | undefined;
+    labelPlacement?: string;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CheckboxComponent.d.ts.map

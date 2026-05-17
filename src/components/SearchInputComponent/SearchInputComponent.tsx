@@ -31,7 +31,7 @@ import styles from "./SearchInputComponent.module.css";
    @param {Function} [onCollapse]           — called when view collapses
    @param {React.ReactNode} children        — Suggestion/SuggestionGroup
    ══════════════════════════════════════════════════════════════════════ */
-const SearchInputComponent = forwardRef(function SearchInputComponent(
+const SearchInputComponent = forwardRef<any, any>(function SearchInputComponent(
   {
     value = "",
     onChange,

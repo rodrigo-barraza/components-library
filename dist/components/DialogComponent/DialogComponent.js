@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useCallback, useState } from "react";
@@ -15,7 +14,7 @@ import styles from "./DialogComponent.module.css";
  *
  * Anatomy: [scrim] → [container] → [icon?] → [headline?] → [body] → [actions]
  *
- * @param {Object}   props
+
  * @param {boolean}  props.open                — Controls dialog visibility
  * @param {Function} props.onClose             — Called when dismissed (scrim click / Escape)
  * @param {React.ReactNode}  [props.icon]      — Optional hero icon (centered above headline)

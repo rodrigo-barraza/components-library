@@ -39,7 +39,7 @@ export default function PageLayoutComponent({ children, brandIcon, brandLabel, i
     setTheme: any;
     bottomActions: any;
     mobileHeaderActions: any;
-    mobileBreakpoint?: number | undefined;
-    sidebarProps?: {} | undefined;
+    mobileBreakpoint?: number;
+    sidebarProps?: {};
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=PageLayoutComponent.d.ts.map

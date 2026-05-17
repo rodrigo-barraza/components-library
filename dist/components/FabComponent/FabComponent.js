@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { forwardRef, useCallback, useRef, useState } from "react";
@@ -18,19 +17,19 @@ import SoundService from "../../services/SoundService.js";
  *
  * @see https://m3.material.io/components/floating-action-button/overview
  *
- * @param {Object} props
+
  * @param {"small"|"standard"|"large"} [props.size="standard"] — M3 FAB size
  * @param {"primary"|"surface"|"secondary"|"tertiary"} [props.color="primary"] — M3 color role
  * @param {React.ComponentType} [props.icon] — Lucide-compatible icon component
  * @param {number} [props.iconSize] — Override default icon size (auto-computed per size)
  * @param {string} [props.label] — When present, renders an Extended FAB
  * @param {boolean} [props.lowered=false] — Use lowered elevation (level 1 vs level 3)
- * @param {boolean} [props.disabled=false]
+
  * @param {boolean} [props.fixed=false] — Position: fixed for screen-anchored FABs
  * @param {"bottom-end"|"bottom-start"|"bottom-center"} [props.position="bottom-end"] — Fixed position
  * @param {boolean} [props.hidden=false] — Animate off-screen (scroll-hide pattern)
  * @param {string} [props.aria-label] — Required for icon-only FABs (accessibility)
- * @param {string} [props.className]
+
  * @param {React.Ref} ref — Forwarded ref to the button element
  */
 const FabComponent = forwardRef(function FabComponent({ size = "standard", color = "primary", icon: Icon, iconSize, label, lowered = false, disabled = false, fixed = false, position = "bottom-end", hidden = false, className = "", onClick, onMouseEnter, "aria-label": ariaLabel, ...rest }, ref) {

@@ -7,7 +7,7 @@
  * @param {number} [defaultDuration=3500] — default auto-dismiss time in ms
  */
 export declare function useToast(defaultDuration?: number): {
-    toasts: never[];
+    toasts: any[];
     addToast: (message: any, type?: string, duration?: number) => number;
     removeToast: (id: any) => void;
 };
@@ -15,10 +15,10 @@ export declare function useToast(defaultDuration?: number): {
  * ToastComponent — renders a stacked toast container.
  *
  * @param {{ id: number, message: string, type: string }[]} toasts
- * @param {(id: number) => void} onRemove
+
  */
 export default function ToastComponent({ toasts, onRemove }: {
-    toasts?: never[] | undefined;
+    toasts?: any[];
     onRemove: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ToastComponent.d.ts.map

@@ -219,7 +219,7 @@ export default function TopAppBarComponent({
 
  * @param {React.ReactNode} children — overrides icon rendering
  */
-const TopAppBarAction = forwardRef(function TopAppBarAction(
+const TopAppBarAction = forwardRef<any, any>(function TopAppBarAction(
   { icon: Icon, ariaLabel, disabled = false, onClick, className, children, ...rest },
   ref,
 ) {

@@ -18,8 +18,8 @@ export default function ModalComponent({ title, onClose, footer, size, variant, 
     title: any;
     onClose: any;
     footer: any;
-    size?: string | undefined;
-    variant?: string | undefined;
+    size?: string;
+    variant?: string;
     className: any;
     id: any;
     children: any;

@@ -11,5 +11,5 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
     projectId: any;
     pathname: any;
     apiBase: any;
-}): null;
+}): any;
 //# sourceMappingURL=SessionTrackerComponent.d.ts.map

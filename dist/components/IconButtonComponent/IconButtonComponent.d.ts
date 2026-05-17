@@ -15,10 +15,10 @@ export default function IconButtonComponent({ icon, onClick, tooltip, variant, a
     icon: any;
     onClick: any;
     tooltip: any;
-    variant?: string | undefined;
-    active?: boolean | undefined;
-    hoverReveal?: boolean | undefined;
-    disabled?: boolean | undefined;
+    variant?: string;
+    active?: boolean;
+    hoverReveal?: boolean;
+    disabled?: boolean;
     className: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=IconButtonComponent.d.ts.map

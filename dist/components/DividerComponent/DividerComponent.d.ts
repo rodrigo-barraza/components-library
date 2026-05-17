@@ -16,16 +16,16 @@
  * @param {"horizontal"|"vertical"} [orientation="horizontal"] — axis of the divider
  * @param {"sm"|"md"|"lg"}  [spacing]       — optional spacing preset around the divider
  * @param {boolean}          [decorative=false] — if true, renders as `role="none"` (purely visual)
- * @param {string}           [className]
+
  * @param {object}           [style]        — use --divider-color / --divider-thickness to theme
- * @param {React.Ref}        [ref]
+
  */
 declare function DividerComponent({ variant, orientation, spacing, decorative, className, style, ...rest }: {
     [x: string]: any;
-    variant?: string | undefined;
-    orientation?: string | undefined;
+    variant?: string;
+    orientation?: string;
     spacing: any;
-    decorative?: boolean | undefined;
+    decorative?: boolean;
     className: any;
     style: any;
 }): import("react/jsx-runtime").JSX.Element;
@@ -41,14 +41,13 @@ export default DividerComponent;
  * Always decorative — the label itself provides the semantic meaning.
  *
  * @param {string}  label      — the section label text
- * @param {"fullWidth"|"inset"|"middleInset"} [variant="fullWidth"]
- * @param {string}  [className]
- * @param {object}  [style]
+
+
  */
 declare function DividerSubheader({ label, variant, className, style, ...rest }: {
     [x: string]: any;
     label: any;
-    variant?: string | undefined;
+    variant?: string;
     className: any;
     style: any;
 }): import("react/jsx-runtime").JSX.Element;

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useState, useEffect, useCallback, forwardRef, } from "react";
@@ -34,8 +33,8 @@ import styles from "./BottomAppBarComponent.module.css";
  * @param {React.RefObject} [scrollTargetRef] — scrollable element ref (defaults to window)
  * @param {number} [scrollThreshold=8] — min scroll delta to trigger hide/show
  * @param {string} [ariaLabel="Bottom actions"] — accessible label for the toolbar
- * @param {string} [className]
- * @param {object} [style]
+
+
  * @param {React.ReactNode} children — BottomAppBarComponent.Action items
  */
 export default function BottomAppBarComponent({ fab, position = "fixed", hideOnScroll = true, scrollTargetRef, scrollThreshold = 8, ariaLabel = "Bottom actions", className, style, children, ...rest }) {
@@ -138,9 +137,8 @@ export default function BottomAppBarComponent({ fab, position = "fixed", hideOnS
  * @param {React.ComponentType} [icon] — Lucide or similar icon component
  * @param {string} ariaLabel — accessible label (required)
  * @param {boolean} [active=false] — visually active/selected state
- * @param {boolean} [disabled=false]
- * @param {Function} [onClick]
- * @param {string} [className]
+
+
  * @param {React.ReactNode} children — overrides icon rendering
  */
 const BottomAppBarAction = forwardRef(function BottomAppBarAction({ icon: Icon, ariaLabel, active = false, disabled = false, onClick, className, children, ...rest }, ref) {

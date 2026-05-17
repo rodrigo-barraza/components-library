@@ -29,24 +29,24 @@
  * @param {React.RefObject} [scrollTargetRef] — scrollable element ref (defaults to window)
  * @param {number} [scrollThreshold=8] — min scroll delta to trigger hide/show
  * @param {string} [ariaLabel="Bottom actions"] — accessible label for the toolbar
- * @param {string} [className]
- * @param {object} [style]
+
+
  * @param {React.ReactNode} children — BottomAppBarComponent.Action items
  */
 declare function BottomAppBarComponent({ fab, position, hideOnScroll, scrollTargetRef, scrollThreshold, ariaLabel, className, style, children, ...rest }: {
     [x: string]: any;
     fab: any;
-    position?: string | undefined;
-    hideOnScroll?: boolean | undefined;
+    position?: string;
+    hideOnScroll?: boolean;
     scrollTargetRef: any;
-    scrollThreshold?: number | undefined;
-    ariaLabel?: string | undefined;
+    scrollThreshold?: number;
+    ariaLabel?: string;
     className: any;
     style: any;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;
 declare namespace BottomAppBarComponent {
-    var Action: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+    var Action: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 }
 export default BottomAppBarComponent;
 //# sourceMappingURL=BottomAppBarComponent.d.ts.map

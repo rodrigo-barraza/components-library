@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { forwardRef } from "react";
@@ -22,9 +21,9 @@ import styles from "./CardComponent.module.css";
  * @param {boolean}   [interactive=false]   — enables hover / press state layer
  * @param {boolean}   [draggable=false]     — adds dragged state elevation
  * @param {boolean}   [fullWidth=false]     — stretches to container width
- * @param {string}    [className]
+
  * @param {object}    [style]               — use --card-accent to theme
- * @param {React.ReactNode} children
+
  */
 export default function CardComponent({ variant = "outlined", interactive = false, draggable: isDraggable = false, fullWidth = false, className, style, children, ...rest }) {
     const classes = [
@@ -52,7 +51,7 @@ function CardHeader({ icon: Icon, title, subtitle, children, className }) {
  * @param {number}   [height]     — fixed height in px (default: auto, aspect-ratio used if set)
  * @param {string}   [aspectRatio] — CSS aspect-ratio value, e.g. "16/9"
  * @param {"top"|"bottom"|"full"} [position="top"] — clip-path rounding position
- * @param {string}   [className]
+
  * @param {React.ReactNode} children — custom content (overrides src/alt)
  */
 function CardMedia({ src, alt = "", height, aspectRatio, position = "top", className, children, }) {
@@ -78,10 +77,10 @@ function CardFooter({ children, className }) {
  * CardActionArea — wraps card content to make it clickable / tappable.
  * Renders a full-surface interactive layer with ripple and state layer.
  *
- * @param {Function}  onClick
+
  * @param {string}    [href]   — if provided, renders an <a> instead
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 const CardActionArea = forwardRef(function CardActionArea({ onClick, href, className, children, ...rest }, ref) {
     const classes = [styles.actionArea, className].filter(Boolean).join(" ");

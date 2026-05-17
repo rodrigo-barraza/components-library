@@ -176,7 +176,7 @@ function ToolbarGroup({ ariaLabel, className, children }) {
 
  * @param {React.ReactNode} children    — overrides icon + label rendering
  */
-const ToolbarItem = forwardRef(function ToolbarItem(
+const ToolbarItem = forwardRef<any, any>(function ToolbarItem(
   {
     icon: Icon,
     label,

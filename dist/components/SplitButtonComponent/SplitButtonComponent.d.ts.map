@@ -1,1 +1,1 @@
-{"version":3,"file":"SplitButtonComponent.d.ts","sourceRoot":"","sources":["../../../src/components/SplitButtonComponent/SplitButtonComponent.tsx"],"names":[],"mappings":"AASA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GAkCG;AACH,QAAA,MAAM,oBAAoB,mFA2OxB,CAAC;AAEH,eAAe,oBAAoB,CAAC"}
+{"version":3,"file":"SplitButtonComponent.d.ts","sourceRoot":"","sources":["../../../src/components/SplitButtonComponent/SplitButtonComponent.tsx"],"names":[],"mappings":"AAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GAgCG;AACH,QAAA,MAAM,oBAAoB,kGA2OxB,CAAC;AAEH,eAAe,oBAAoB,CAAC"}

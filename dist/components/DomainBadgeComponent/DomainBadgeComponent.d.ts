@@ -13,5 +13,5 @@ export default function DomainBadgeComponent({ domain, icons, className, ...rest
     domain: any;
     icons: any;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DomainBadgeComponent.d.ts.map

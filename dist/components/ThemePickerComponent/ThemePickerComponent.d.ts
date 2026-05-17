@@ -5,7 +5,7 @@
  * popover with all available themes rendered as selectable buttons, each
  * showing a color swatch, icon, and label.
  *
- * @param {Object} props
+
  * @param {string}   props.theme          — Current active theme name
  * @param {string[]} props.themes         — Ordered list of available theme names
  * @param {function} props.onSelectTheme  — Called with the selected theme name
@@ -14,9 +14,9 @@
  */
 export default function ThemePickerComponent({ theme, themes, onSelectTheme, collapsed, className, }: {
     theme: any;
-    themes?: never[] | undefined;
+    themes?: any[];
     onSelectTheme: any;
-    collapsed?: boolean | undefined;
+    collapsed?: boolean;
     className: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ThemePickerComponent.d.ts.map

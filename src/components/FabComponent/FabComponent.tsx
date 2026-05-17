@@ -33,7 +33,7 @@ import SoundService from "../../services/SoundService.js";
 
  * @param {React.Ref} ref — Forwarded ref to the button element
  */
-const FabComponent = forwardRef(function FabComponent(
+const FabComponent = forwardRef<any, any>(function FabComponent(
   {
     size = "standard",
     color = "primary",

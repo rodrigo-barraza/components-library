@@ -43,18 +43,18 @@
  */
 export default function TooltipComponent({ label, position, trigger, enterDelay, exitDelay, disabled, children, className, rich, title, content, action, persistent, delay, }: {
     label: any;
-    position?: string | undefined;
-    trigger?: string | undefined;
-    enterDelay?: number | undefined;
-    exitDelay?: number | undefined;
-    disabled?: boolean | undefined;
+    position?: string;
+    trigger?: string;
+    enterDelay?: number;
+    exitDelay?: number;
+    disabled?: boolean;
     children: any;
-    className?: string | undefined;
-    rich?: boolean | undefined;
+    className?: string;
+    rich?: boolean;
     title: any;
     content: any;
     action: any;
-    persistent?: boolean | undefined;
+    persistent?: boolean;
     delay: any;
 }): any;
 //# sourceMappingURL=TooltipComponent.d.ts.map

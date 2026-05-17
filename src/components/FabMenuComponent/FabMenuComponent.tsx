@@ -52,7 +52,7 @@ import SoundService from "../../services/SoundService.js";
 
 
  */
-const FabMenuComponent = forwardRef(function FabMenuComponent(
+const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
   {
     items = [],
     icon: TriggerIcon,

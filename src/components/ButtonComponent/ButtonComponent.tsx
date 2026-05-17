@@ -37,7 +37,7 @@ import SoundService from "../../services/SoundService.js";
  * @param {string} [props.href] — If provided, renders as <a> tag
  * @param {React.ReactNode} props.children — Button label text
  */
-const ButtonComponent = forwardRef(function ButtonComponent(
+const ButtonComponent = forwardRef<any, any>(function ButtonComponent(
   {
     variant = "primary",
     size = "medium",

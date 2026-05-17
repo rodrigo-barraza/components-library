@@ -11,7 +11,7 @@
 export default function AddressBadgeComponent({ address, link, className, ...rest }: {
     [x: string]: any;
     address: any;
-    link?: boolean | undefined;
+    link?: boolean;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=AddressBadgeComponent.d.ts.map

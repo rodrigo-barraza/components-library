@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import styles from "./StatsCardComponent.module.css";
@@ -17,8 +16,8 @@ import styles from "./StatsCardComponent.module.css";
  * @param {boolean} [loading=false] — Show skeleton placeholders
  * @param {boolean} [glow=false] — Show bottom glow bar on hover
  * @param {string} [className] — Additional class
- * @param {Function} [onMouseEnter]
- * @param {Function} [onMouseLeave]
+
+
  */
 export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant = "accent", color, loading = false, glow = false, className, onMouseEnter, onMouseLeave, }) {
     if (loading) {

@@ -15,10 +15,10 @@
  */
 export default function DateTimeBadgeComponent({ date, mini, showIcon, relative, highlightNew, className, }: {
     date: any;
-    mini?: boolean | undefined;
-    showIcon?: boolean | undefined;
-    relative?: boolean | undefined;
-    highlightNew?: boolean | undefined;
-    className?: string | undefined;
-}): import("react/jsx-runtime").JSX.Element | null;
+    mini?: boolean;
+    showIcon?: boolean;
+    relative?: boolean;
+    highlightNew?: boolean;
+    className?: string;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DateTimeBadgeComponent.d.ts.map

@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-// @ts-nocheck — Incremental migration: props not yet typed
 import useTweenValue from "../../hooks/useTweenValue.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./MetricBadgeComponent.module.css";

@@ -24,18 +24,17 @@
  * @param {Function}  [onClose]         — called when user dismisses modal
  * @param {string}    [headline]        — optional title text at the top
  * @param {string}    [ariaLabel]       — accessible label for <nav>
- * @param {string}    [className]
- * @param {object}    [style]
- * @param {React.ReactNode} children
+
+
  */
 declare function NavigationDrawerComponent({ variant, anchor, open, onClose, headline, ariaLabel, className, style, children, ...rest }: {
     [x: string]: any;
-    variant?: string | undefined;
-    anchor?: string | undefined;
-    open?: boolean | undefined;
+    variant?: string;
+    anchor?: string;
+    open?: boolean;
     onClose: any;
     headline: any;
-    ariaLabel?: string | undefined;
+    ariaLabel?: string;
     className: any;
     style: any;
     children: any;
@@ -57,11 +56,11 @@ export default NavigationDrawerComponent;
  * @param {string}    label              — destination label text
  * @param {string}    [badge]            — trailing badge text (e.g. "24")
  * @param {boolean}   [active=false]     — active/selected state
- * @param {boolean}   [disabled=false]
+
  * @param {string}    [href]             — renders as <a> if provided
- * @param {Function}  [onClick]
+
  * @param {React.ComponentType} [LinkComponent] — custom router Link
- * @param {string}    [className]
+
  * @param {React.ReactNode} children     — overrides icon+label rendering
  */
 declare function DrawerItem({ icon: Icon, label, badge, active, disabled, href, onClick, LinkComponent, className, children, ...rest }: {
@@ -69,8 +68,8 @@ declare function DrawerItem({ icon: Icon, label, badge, active, disabled, href, 
     icon: any;
     label: any;
     badge: any;
-    active?: boolean | undefined;
-    disabled?: boolean | undefined;
+    active?: boolean;
+    disabled?: boolean;
     href: any;
     onClick: any;
     LinkComponent: any;
@@ -82,8 +81,8 @@ declare function DrawerItem({ icon: Icon, label, badge, active, disabled, href, 
  *
  * M3 spec: title-small typography, 56dp total height with padding.
  *
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 declare function DrawerSectionHeader({ className, children }: {
     className: any;
@@ -92,7 +91,7 @@ declare function DrawerSectionHeader({ className, children }: {
 /**
  * DrawerDivider — horizontal visual separator between sections.
  *
- * @param {string} [className]
+
  */
 declare function DrawerDivider({ className }: {
     className: any;
@@ -100,8 +99,8 @@ declare function DrawerDivider({ className }: {
 /**
  * DrawerFooter — bottom-pinned slot for actions or secondary content.
  *
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 declare function DrawerFooter({ className, children }: {
     className: any;

@@ -1,5 +1,4 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-// @ts-nocheck
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import MenuComponent, { MenuItem, MenuDivider, MenuGroupLabel, } from "./MenuComponent.js";

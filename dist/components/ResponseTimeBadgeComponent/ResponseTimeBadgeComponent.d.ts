@@ -16,5 +16,5 @@ export default function ResponseTimeBadgeComponent({ ms, formatter, className, .
     ms: any;
     formatter: any;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ResponseTimeBadgeComponent.d.ts.map

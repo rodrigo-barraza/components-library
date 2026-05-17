@@ -14,5 +14,5 @@ export default function VisibilityBadgeComponent({ visibility, icons, className,
     visibility: any;
     icons: any;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=VisibilityBadgeComponent.d.ts.map

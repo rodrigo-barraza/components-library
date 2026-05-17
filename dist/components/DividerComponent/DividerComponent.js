@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import styles from "./DividerComponent.module.css";
@@ -20,9 +19,9 @@ import styles from "./DividerComponent.module.css";
  * @param {"horizontal"|"vertical"} [orientation="horizontal"] — axis of the divider
  * @param {"sm"|"md"|"lg"}  [spacing]       — optional spacing preset around the divider
  * @param {boolean}          [decorative=false] — if true, renders as `role="none"` (purely visual)
- * @param {string}           [className]
+
  * @param {object}           [style]        — use --divider-color / --divider-thickness to theme
- * @param {React.Ref}        [ref]
+
  */
 export default function DividerComponent({ variant = "fullWidth", orientation = "horizontal", spacing, decorative = false, className, style, ...rest }) {
     const classes = [
@@ -55,9 +54,8 @@ export default function DividerComponent({ variant = "fullWidth", orientation = 
  * Always decorative — the label itself provides the semantic meaning.
  *
  * @param {string}  label      — the section label text
- * @param {"fullWidth"|"inset"|"middleInset"} [variant="fullWidth"]
- * @param {string}  [className]
- * @param {object}  [style]
+
+
  */
 function DividerSubheader({ label, variant = "fullWidth", className, style, ...rest }) {
     const classes = [

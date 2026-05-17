@@ -13,7 +13,7 @@ import styles from "./FormGroupComponent.module.css";
 export default function FormGroupComponent({ label, hint, readOnly, readOnlyContent, children, className, style, }: {
     label: any;
     hint: any;
-    readOnly?: boolean | undefined;
+    readOnly?: boolean;
     readOnlyContent: any;
     children: any;
     className: any;

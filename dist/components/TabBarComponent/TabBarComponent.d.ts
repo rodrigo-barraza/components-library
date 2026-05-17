@@ -36,15 +36,15 @@ import styles from "./TabBarComponent.module.css";
  * @param {string}                    [ariaLabel]  — Accessible label for the tablist
  */
 export default function TabBarComponent({ tabs, activeTab, onChange, variant, layout, scrollable, className, onTabHover, glowingTabs, ariaLabel, }: {
-    tabs?: never[] | undefined;
+    tabs?: any[];
     activeTab: any;
     onChange: any;
-    variant?: string | undefined;
-    layout?: string | undefined;
-    scrollable?: boolean | undefined;
+    variant?: string;
+    layout?: string;
+    scrollable?: boolean;
     className: any;
     onTabHover: any;
-    glowingTabs?: never[] | undefined;
+    glowingTabs?: any[];
     ariaLabel: any;
 }): import("react/jsx-runtime").JSX.Element;
 export { styles as tabBarStyles };

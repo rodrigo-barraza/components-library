@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
@@ -15,7 +14,7 @@ const TIERS = [
 ];
 /**
  * Resolve the appropriate tier for a given response time.
- * @param {number} ms
+
  * @returns {{ label: string, variant: string }}
  */
 function getTier(ms) {

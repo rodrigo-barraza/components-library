@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useCallback, forwardRef } from "react";
@@ -31,9 +30,8 @@ import styles from "./ToolbarComponent.module.css";
  * @param {boolean}   [sticky=false]     — makes toolbar sticky at top
  * @param {boolean}   [elevated=false]   — adds subtle shadow
  * @param {string}    [ariaLabel]        — accessible label for the toolbar
- * @param {string}    [className]
- * @param {object}    [style]
- * @param {React.ReactNode} children
+
+
  */
 export default function ToolbarComponent({ variant = "standard", orientation = "horizontal", divider = false, sticky = false, elevated = false, ariaLabel, className, style, children, ...rest }) {
     const toolbarRef = useRef(null);
@@ -104,8 +102,8 @@ export default function ToolbarComponent({ variant = "standard", orientation = "
  * groups. Use `role="group"` with an aria-label for screen readers.
  *
  * @param {string}    [ariaLabel]  — accessible group label
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 function ToolbarGroup({ ariaLabel, className, children }) {
     return (_jsx("div", { role: "group", "aria-label": ariaLabel, className: `${styles.group}${className ? ` ${className}` : ""}`, children: children }));
@@ -123,9 +121,8 @@ function ToolbarGroup({ ariaLabel, className, children }) {
  * @param {string}    [label]           — visible text label
  * @param {string}    [ariaLabel]       — accessible label (overrides label)
  * @param {boolean}   [active=false]    — active/selected state
- * @param {boolean}   [disabled=false]
- * @param {Function}  [onClick]
- * @param {string}    [className]
+
+
  * @param {React.ReactNode} children    — overrides icon + label rendering
  */
 const ToolbarItem = forwardRef(function ToolbarItem({ icon: Icon, label, ariaLabel, active = false, disabled = false, onClick, className, children, ...rest }, ref) {
@@ -145,7 +142,7 @@ const ToolbarItem = forwardRef(function ToolbarItem({ icon: Icon, label, ariaLab
  *
  * M3 spec: 1px outline-variant line, 24px height, 4px horizontal margin.
  *
- * @param {string}  [className]
+
  */
 function ToolbarSeparator({ className }) {
     return (_jsx("div", { role: "separator", "aria-orientation": "vertical", className: `${styles.separator}${className ? ` ${className}` : ""}` }));
@@ -156,8 +153,8 @@ function ToolbarSeparator({ className }) {
  *
  * M3 spec: title-medium typography (16px / 500 weight).
  *
- * @param {string}    [className]
- * @param {React.ReactNode} children
+
+
  */
 function ToolbarTitle({ className, children }) {
     return (_jsx("span", { className: `${styles.title}${className ? ` ${className}` : ""}`, children: children }));

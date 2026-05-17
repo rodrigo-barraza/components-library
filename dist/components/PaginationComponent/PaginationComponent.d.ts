@@ -4,5 +4,5 @@ export default function PaginationComponent({ page, totalPages, totalItems, onPa
     totalItems: any;
     onPageChange: any;
     limit: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=PaginationComponent.d.ts.map

@@ -14,10 +14,10 @@ export default function SnackbarComponent({ open, message, actionLabel, showClos
     open: any;
     message: any;
     actionLabel: any;
-    showClose?: boolean | undefined;
+    showClose?: boolean;
     onAction: any;
     onDismiss: any;
     className: any;
     id: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SnackbarComponent.d.ts.map

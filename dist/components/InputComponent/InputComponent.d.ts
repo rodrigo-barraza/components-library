@@ -13,6 +13,6 @@
  * @param {string}   [size="md"]   — "sm" | "md" | "lg"
  * @param {string}   [label]       — Optional inline label rendered before the input
  */
-declare const InputComponent: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+declare const InputComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 export default InputComponent;
 //# sourceMappingURL=InputComponent.d.ts.map

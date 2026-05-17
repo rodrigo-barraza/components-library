@@ -8,8 +8,8 @@
  */
 export default function CloseButtonComponent({ onClick, size, variant, className, }: {
     onClick: any;
-    size?: number | undefined;
-    variant?: string | undefined;
+    size?: number;
+    variant?: string;
     className: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CloseButtonComponent.d.ts.map

@@ -1,14 +1,14 @@
 export default function DatePickerComponent({ from, to, onChange, placeholder, storageKey, disabled, defaultOpen, onClose, hideTrigger, presets, showTime, }: {
-    from?: string | undefined;
-    to?: string | undefined;
+    from?: string;
+    to?: string;
     onChange: any;
-    placeholder?: string | undefined;
-    storageKey?: string | undefined;
-    disabled?: boolean | undefined;
-    defaultOpen?: boolean | undefined;
+    placeholder?: string;
+    storageKey?: string;
+    disabled?: boolean;
+    defaultOpen?: boolean;
     onClose: any;
-    hideTrigger?: boolean | undefined;
-    presets?: import("../../utils/datePresets.js").DatePreset[] | undefined;
-    showTime?: boolean | undefined;
+    hideTrigger?: boolean;
+    presets?: import("../../utils/datePresets.js").DatePreset[];
+    showTime?: boolean;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DatePickerComponent.d.ts.map

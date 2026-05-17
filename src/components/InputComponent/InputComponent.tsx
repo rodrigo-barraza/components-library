@@ -18,7 +18,7 @@ import styles from "./InputComponent.module.css";
  * @param {string}   [size="md"]   — "sm" | "md" | "lg"
  * @param {string}   [label]       — Optional inline label rendered before the input
  */
-const InputComponent = forwardRef(function InputComponent(
+const InputComponent = forwardRef<any, any>(function InputComponent(
   {
     type = "text",
     value,

@@ -27,7 +27,7 @@
  *   • Title uses an appropriate heading level (configurable via headingLevel)
  *   • Focus-visible outlines on all interactive elements
  *
- * @param {"center-aligned"|"small"|"medium"|"large"} [variant="small"]
+
  *   M3 sub-type controlling title placement and bar height.
  * @param {string} title — primary title text
  * @param {React.ReactNode} [navigationIcon] — leading icon (e.g. ← or ☰)
@@ -39,29 +39,29 @@
  * @param {boolean} [showScrollIndicator=false] — subtle accent line showing scroll progress
  * @param {1|2|3|4|5|6} [headingLevel=1] — heading element for the title (h1–h6)
  * @param {string} [ariaLabel] — aria-label for the header landmark
- * @param {string} [className]
- * @param {object} [style]
+
+
  * @param {React.ReactNode} children — TopAppBarComponent.Action items
  */
 declare function TopAppBarComponent({ variant, title, navigationIcon, onNavigationClick, navigationAriaLabel, position, scrollTargetRef, scrollThreshold, showScrollIndicator, headingLevel, ariaLabel, className, style, children, ...rest }: {
     [x: string]: any;
-    variant?: string | undefined;
+    variant?: string;
     title: any;
     navigationIcon: any;
     onNavigationClick: any;
-    navigationAriaLabel?: string | undefined;
-    position?: string | undefined;
+    navigationAriaLabel?: string;
+    position?: string;
     scrollTargetRef: any;
-    scrollThreshold?: number | undefined;
-    showScrollIndicator?: boolean | undefined;
-    headingLevel?: number | undefined;
+    scrollThreshold?: number;
+    showScrollIndicator?: boolean;
+    headingLevel?: number;
     ariaLabel: any;
     className: any;
     style: any;
     children: any;
 }): import("react/jsx-runtime").JSX.Element;
 declare namespace TopAppBarComponent {
-    var Action: import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
+    var Action: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
 }
 export default TopAppBarComponent;
 //# sourceMappingURL=TopAppBarComponent.d.ts.map

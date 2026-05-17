@@ -38,17 +38,17 @@
  */
 export default function SliderComponent({ value, min, max, step, onChange, disabled, centered, showValue, discrete, label, formatValue, className, id, }: {
     value: any;
-    min?: number | undefined;
-    max?: number | undefined;
-    step?: number | undefined;
+    min?: number;
+    max?: number;
+    step?: number;
     onChange: any;
-    disabled?: boolean | undefined;
-    centered?: boolean | undefined;
-    showValue?: boolean | undefined;
-    discrete?: boolean | undefined;
+    disabled?: boolean;
+    centered?: boolean;
+    showValue?: boolean;
+    discrete?: boolean;
     label: any;
     formatValue: any;
-    className?: string | undefined;
+    className?: string;
     id: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SliderComponent.d.ts.map

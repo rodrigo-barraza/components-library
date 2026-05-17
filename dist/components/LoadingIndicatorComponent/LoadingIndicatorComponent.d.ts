@@ -24,7 +24,7 @@
  * @param {number|null} [buffer=null]      — 0–100 buffer fill (linear determinate only)
  * @param {"small"|"medium"|"large"} [size="medium"] — Circular size preset
  * @param {"thin"|"default"|"thick"} [trackSize="default"] — Linear track height
- * @param {"primary"|"secondary"|"tertiary"|"error"|"inherit"} [color="primary"]
+
  * @param {boolean} [showPercentage=false] — Show % text inside circular indicator
  * @param {string}  [label]               — Optional descriptive label below indicator
  * @param {string}  [ariaLabel="Loading"]  — Accessible label for screen readers
@@ -32,17 +32,17 @@
  * @param {string}  [id]                  — Element ID
  */
 export default function LoadingIndicatorComponent({ variant, mode, value, buffer, size, trackSize, color, showPercentage, label, ariaLabel, className, id, }: {
-    variant?: string | undefined;
-    mode?: string | undefined;
-    value?: number | undefined;
-    buffer?: null | undefined;
-    size?: string | undefined;
-    trackSize?: string | undefined;
-    color?: string | undefined;
-    showPercentage?: boolean | undefined;
+    variant?: string;
+    mode?: string;
+    value?: number;
+    buffer?: any;
+    size?: string;
+    trackSize?: string;
+    color?: string;
+    showPercentage?: boolean;
     label: any;
-    ariaLabel?: string | undefined;
-    className?: string | undefined;
+    ariaLabel?: string;
+    className?: string;
     id: any;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=LoadingIndicatorComponent.d.ts.map

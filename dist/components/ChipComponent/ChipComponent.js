@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { forwardRef, useCallback } from "react";
@@ -22,7 +21,7 @@ import SoundService from "../../services/SoundService.js";
  * @param {boolean}  [removable=false]  — Show trailing X button
  * @param {Function} [onRemove]         — Called when X is clicked
  * @param {Function} [onClick]          — Click handler
- * @param {string}   [className]
+
  * @param {React.ReactNode} children    — Chip label
  */
 const ChipComponent = forwardRef(function ChipComponent({ variant = "assist", selected = false, disabled = false, elevated = false, icon: Icon, removable = false, onRemove, onClick, className = "", children, ...rest }, ref) {

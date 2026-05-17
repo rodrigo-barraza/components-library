@@ -48,7 +48,7 @@ import styles from "./TextFieldComponent.module.css";
  * @param {boolean}  [required]       — Required field
  * @param {string}   [autoComplete]   — Autocomplete attribute
  */
-const TextFieldComponent = forwardRef(function TextFieldComponent(
+const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
   {
     variant = "outlined",
     label,

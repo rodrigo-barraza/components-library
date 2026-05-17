@@ -1,1 +1,1 @@
-{"version":3,"file":"StatusBadgeComponent.d.ts","sourceRoot":"","sources":["../../../src/components/StatusBadgeComponent/StatusBadgeComponent.tsx"],"names":[],"mappings":"AAOA;;;;;;;;GAQG;AACH,MAAM,CAAC,OAAO,UAAU,oBAAoB,CAAC,EAAE,OAAO,EAAE,SAAS,EAAE,GAAG,IAAI,EAAE;;;;CAAA,2CAkB3E"}
+{"version":3,"file":"StatusBadgeComponent.d.ts","sourceRoot":"","sources":["../../../src/components/StatusBadgeComponent/StatusBadgeComponent.tsx"],"names":[],"mappings":"AAMA;;;;;;;;GAQG;AACH,MAAM,CAAC,OAAO,UAAU,oBAAoB,CAAC,EAAE,OAAO,EAAE,SAAS,EAAE,GAAG,IAAI,EAAE;;;;CAAA,2CAkB3E"}

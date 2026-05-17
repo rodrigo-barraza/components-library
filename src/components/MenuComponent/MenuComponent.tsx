@@ -45,7 +45,7 @@ export function MenuGroupLabel({ children }) {
 //  M3 anatomy: state-layer → [leading-icon] → label → [trailing]
 //  Height: 48px · Padding: 0 12px
 // ──────────────────────────────────────────────────────────────────
-export const MenuItem = forwardRef(function MenuItem(
+export const MenuItem = forwardRef<any, any>(function MenuItem(
   {
     leadingIcon,
     trailingIcon,
@@ -305,7 +305,7 @@ export function SubMenu({
 //  @param {string}   [props.className]
 //  @param {React.ReactNode} props.children — MenuItem, MenuDivider, etc.
 // ══════════════════════════════════════════════════════════════════
-const MenuComponent = forwardRef(function MenuComponent(
+const MenuComponent = forwardRef<any, any>(function MenuComponent(
   {
     trigger,
     open: controlledOpen,

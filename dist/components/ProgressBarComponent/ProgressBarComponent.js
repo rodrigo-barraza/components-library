@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useState } from "react";
@@ -17,7 +16,7 @@ import styles from "./ProgressBarComponent.module.css";
  * @param {boolean}  [showValue=false]     — Display percentage text
  * @param {boolean}  [animated=true]       — Animate the bar fill transition
  * @param {boolean}  [striped=false]       — Add diagonal stripe pattern on the active bar
- * @param {string}   [className]
+
  */
 export default function ProgressBarComponent({ value, variant = "accent", size = "md", label, showValue = false, animated = true, striped = false, className, ...rest }) {
     const isIndeterminate = value === undefined || value === null;

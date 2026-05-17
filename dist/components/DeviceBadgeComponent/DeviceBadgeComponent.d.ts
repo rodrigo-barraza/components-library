@@ -13,5 +13,5 @@ export default function DeviceBadgeComponent({ device, icons, className, ...rest
     device: any;
     icons: any;
     className: any;
-}): import("react/jsx-runtime").JSX.Element | null;
+}): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DeviceBadgeComponent.d.ts.map
