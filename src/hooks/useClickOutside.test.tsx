@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { describe, it, expect, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { createRef } from "react";

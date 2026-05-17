@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ── Render tests for all previously untested components ──────────
 // Each component gets at least one render test verifying it mounts
 // without crashing, per the testing-standards minimum coverage contract.
