@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from "react";
-import ChatService from "../services/ChatService.ts";
-import { CHAT_DEFAULTS, type ChatWidgetConfig } from "../constants/chat.ts";
+import ChatService from "../services/ChatService.js";
+import { CHAT_DEFAULTS, type ChatWidgetConfig } from "../constants/chat.js";
 
 export interface ChatContextValue {
   service: ChatService | null;

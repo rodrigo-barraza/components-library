@@ -12,7 +12,7 @@ import {
   type ChatMessage,
   type ChatWidgetConfig,
   type AgentStreamCallbacks,
-} from "../constants/chat.ts";
+} from "../constants/chat.js";
 import { generateUUID } from "@rodrigo-barraza/utilities-library";
 
 /**

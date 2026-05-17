@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import useClipboard from "./useClipboard.tsx";
+import useClipboard from "./useClipboard.js";
 
 describe("useClipboard", () => {
   beforeEach(() => {

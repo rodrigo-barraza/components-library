@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import DrawerComponent from "./DrawerComponent.tsx";
+import DrawerComponent from "./DrawerComponent.js";
 
 // Mock createPortal to render inline for tests
 vi.mock("react-dom", async () => {

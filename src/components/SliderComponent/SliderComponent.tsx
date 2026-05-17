@@ -2,8 +2,8 @@
 "use client";
 
 import { useRef, useCallback, useState, useMemo } from "react";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 import styles from "./SliderComponent.module.css";
 
 /**

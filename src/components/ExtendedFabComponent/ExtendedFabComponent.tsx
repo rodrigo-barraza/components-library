@@ -3,8 +3,8 @@
 
 import { forwardRef, useCallback, useRef } from "react";
 import styles from "./ExtendedFabComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * ExtendedFabComponent — Material Design 3 Extended Floating Action Button.

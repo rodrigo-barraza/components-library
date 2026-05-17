@@ -3,7 +3,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
-import TooltipComponent from "../TooltipComponent/TooltipComponent.tsx";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./SelectComponent.module.css";
 
 /**

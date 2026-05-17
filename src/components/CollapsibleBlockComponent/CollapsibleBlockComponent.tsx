@@ -4,8 +4,8 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import styles from "./CollapsibleBlockComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * CollapsibleBlockComponent — A disclosure widget with chevron toggle.

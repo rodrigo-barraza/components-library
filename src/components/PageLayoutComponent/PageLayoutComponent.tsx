@@ -2,9 +2,9 @@
 "use client";
 
 import { useState } from "react";
-import useMediaQuery from "../../hooks/useMediaQuery.tsx";
-import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponent.tsx";
-import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.tsx";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
+import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponent.js";
+import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
 import styles from "./PageLayoutComponent.module.css";
 
 /**

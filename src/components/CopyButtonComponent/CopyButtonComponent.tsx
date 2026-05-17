@@ -4,8 +4,8 @@
 import { useState, useCallback } from "react";
 import { Copy, Check } from "lucide-react";
 import styles from "./CopyButtonComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * CopyButtonComponent — Copy-to-clipboard button with a "copied" confirmation state.

@@ -3,8 +3,8 @@
 
 import { X } from "lucide-react";
 import styles from "./CloseButtonComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * CloseButtonComponent — An X-icon dismiss button for modals, drawers, and panels.

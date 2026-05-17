@@ -3,8 +3,8 @@
 
 import { forwardRef, useCallback } from "react";
 import styles from "./ChipComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * ChipComponent — M3 Chip (Assist / Filter / Input / Suggestion).

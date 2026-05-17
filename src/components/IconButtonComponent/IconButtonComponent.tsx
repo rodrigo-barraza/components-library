@@ -2,8 +2,8 @@
 "use client";
 
 import styles from "./IconButtonComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * IconButtonComponent — A small icon-only action button.

@@ -7,7 +7,7 @@ import {
   parseDateValue,
   formatDateDisplay,
   getActiveDatePreset,
-} from "./datePresets.ts";
+} from "./datePresets.js";
 
 describe("datePresets utility", () => {
   describe("fmtDate", () => {

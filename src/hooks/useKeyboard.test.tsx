@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import useKeyboard from "./useKeyboard.tsx";
+import useKeyboard from "./useKeyboard.js";
 
 describe("useKeyboard", () => {
   it("fires handler for matching key", () => {

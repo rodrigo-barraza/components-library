@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect, type ChangeEvent, type KeyboardEvent } from "react";
-import { CHAT_DEFAULTS } from "../../constants/chat.ts";
+import { CHAT_DEFAULTS } from "../../constants/chat.js";
 import styles from "./ChatInputComponent.module.css";
 
 export interface ChatInputComponentProps {

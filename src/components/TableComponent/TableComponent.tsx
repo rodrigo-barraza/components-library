@@ -4,8 +4,8 @@
 import { useState, useRef, useCallback, useEffect, Fragment } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDown, ChevronUp, Columns3, Check } from "lucide-react";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 import tooltipStyles from "../TooltipComponent/TooltipComponent.module.css";
 import styles from "./TableComponent.module.css";
 

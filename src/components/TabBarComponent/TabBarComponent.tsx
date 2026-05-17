@@ -3,10 +3,10 @@
 
 import { useRef, useEffect, useCallback } from "react";
 import styles from "./TabBarComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
-import CountBadgeComponent from "../CountBadgeComponent/CountBadgeComponent.tsx";
-import TooltipComponent from "../TooltipComponent/TooltipComponent.tsx";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
+import CountBadgeComponent from "../CountBadgeComponent/CountBadgeComponent.js";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 
 /**
  * TabBarComponent — M3 Tabs

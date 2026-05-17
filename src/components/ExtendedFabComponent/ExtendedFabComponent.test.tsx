@@ -3,7 +3,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import ExtendedFabComponent from "./ExtendedFabComponent.tsx";
+import ExtendedFabComponent from "./ExtendedFabComponent.js";
 
 // Mock the components provider
 vi.mock("../ComponentsProvider.tsx", () => ({

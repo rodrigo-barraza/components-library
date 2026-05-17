@@ -16,7 +16,7 @@
 // ============================================================
 
 import { useEffect, useRef, useMemo } from "react";
-import { createSessionService } from "../../services/SessionService.ts";
+import { createSessionService } from "../../services/SessionService.js";
 
 const HEARTBEAT_INTERVAL_MS = 5000;
 

@@ -2,7 +2,7 @@
 "use client";
 
 import { type ReactNode, useState } from "react";
-import { MESSAGE_ROLES, type ChatMessage } from "../../constants/chat.ts";
+import { MESSAGE_ROLES, type ChatMessage } from "../../constants/chat.js";
 import styles from "./ChatMessageComponent.module.css";
 
 // ── URL detection ────────────────────────────────────────────

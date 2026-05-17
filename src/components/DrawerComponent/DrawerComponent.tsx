@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import CloseButtonComponent from "../CloseButtonComponent/CloseButtonComponent.tsx";
+import CloseButtonComponent from "../CloseButtonComponent/CloseButtonComponent.js";
 import styles from "./DrawerComponent.module.css";
 
 /**

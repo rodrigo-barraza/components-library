@@ -3,8 +3,8 @@
 
 import { useCallback, useRef, useEffect, useState, isValidElement } from "react";
 import * as Icons from "lucide-react";
-import TooltipComponent from "../TooltipComponent/TooltipComponent.tsx";
-import BadgeComponent from "../BadgeComponent/BadgeComponent.tsx";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
+import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import styles from "./NavigationRailComponent.module.css";
 
 /**

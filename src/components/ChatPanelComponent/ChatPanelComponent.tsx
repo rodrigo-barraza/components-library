@@ -2,9 +2,9 @@
 "use client";
 
 import { useRef, useEffect, useLayoutEffect, useCallback } from "react";
-import ChatMessageComponent from "../ChatMessageComponent/ChatMessageComponent.tsx";
-import ChatInputComponent from "../ChatInputComponent/ChatInputComponent.tsx";
-import type { ChatMessage } from "../../constants/chat.ts";
+import ChatMessageComponent from "../ChatMessageComponent/ChatMessageComponent.js";
+import ChatInputComponent from "../ChatInputComponent/ChatInputComponent.js";
+import type { ChatMessage } from "../../constants/chat.js";
 import styles from "./ChatPanelComponent.module.css";
 
 export interface ChatPanelComponentProps {

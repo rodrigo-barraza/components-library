@@ -3,10 +3,10 @@
 
 import { useState, useCallback, useEffect, useRef, type CSSProperties } from "react";
 import { adjustBrightness } from "@rodrigo-barraza/utilities-library";
-import { useChat } from "../ChatProvider.tsx";
-import ChatLauncherComponent from "../ChatLauncherComponent/ChatLauncherComponent.tsx";
-import ChatPanelComponent from "../ChatPanelComponent/ChatPanelComponent.tsx";
-import { MESSAGE_ROLES, type ChatMessage } from "../../constants/chat.ts";
+import { useChat } from "../ChatProvider.js";
+import ChatLauncherComponent from "../ChatLauncherComponent/ChatLauncherComponent.js";
+import ChatPanelComponent from "../ChatPanelComponent/ChatPanelComponent.js";
+import { MESSAGE_ROLES, type ChatMessage } from "../../constants/chat.js";
 import styles from "./ChatComponent.module.css";
 
 export interface ChatComponentProps {

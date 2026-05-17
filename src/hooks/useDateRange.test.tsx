@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import useDateRange from "./useDateRange.tsx";
+import useDateRange from "./useDateRange.js";
 
 describe("useDateRange", () => {
   beforeEach(() => {

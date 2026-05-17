@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import useFetch from "./useFetch.tsx";
+import useFetch from "./useFetch.js";
 
 describe("useFetch", () => {
   it("fetches data on mount", async () => {

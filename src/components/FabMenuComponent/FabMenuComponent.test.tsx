@@ -3,7 +3,7 @@ import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import FabMenuComponent from "./FabMenuComponent.tsx";
+import FabMenuComponent from "./FabMenuComponent.js";
 
 // Mock the components provider
 vi.mock("../ComponentsProvider.tsx", () => ({

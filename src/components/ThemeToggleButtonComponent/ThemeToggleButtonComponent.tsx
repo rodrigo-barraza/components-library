@@ -1,8 +1,8 @@
 // @ts-nocheck
 "use client";
 
-import { useTheme } from "../ThemeProvider/ThemeProvider.tsx";
-import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.tsx";
+import { useTheme } from "../ThemeProvider/ThemeProvider.js";
+import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
 
 /**
  * Default icon/label mapping for the 4 standard themes.

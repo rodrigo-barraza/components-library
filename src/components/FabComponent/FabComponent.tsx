@@ -3,8 +3,8 @@
 
 import { forwardRef, useCallback, useRef, useState } from "react";
 import styles from "./FabComponent.module.css";
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 
 /**
  * FabComponent — Material Design 3 Floating Action Button

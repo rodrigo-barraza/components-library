@@ -1,8 +1,8 @@
 // @ts-nocheck
 "use client";
 
-import { useComponents } from "../ComponentsProvider.tsx";
-import SoundService from "../../services/SoundService.ts";
+import { useComponents } from "../ComponentsProvider.js";
+import SoundService from "../../services/SoundService.js";
 import styles from "./SwitchComponent.module.css";
 
 /**

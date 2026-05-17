@@ -7,7 +7,7 @@ import MenuComponent, {
   MenuDivider,
   MenuGroupLabel,
   SubMenu,
-} from "./MenuComponent.tsx";
+} from "./MenuComponent.js";
 
 // ── Minimal ComponentsProvider mock ──────────────────────
 vi.mock("../ComponentsProvider.tsx", () => ({

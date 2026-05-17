@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import useMediaQuery from "./useMediaQuery.tsx";
+import useMediaQuery from "./useMediaQuery.js";
 
 describe("useMediaQuery", () => {
   it("returns false initially for non-matching query", () => {
