@@ -85,9 +85,9 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
     useEffect(() => {
         if (!activeItem)
             return;
-        const idx = items.findIndex((it) => (it.id || it.key) === activeItem);
-        if (idx !== -1)
-            setFocusedIndex(idx);
+        const index = items.findIndex((it) => (it.id || it.key) === activeItem);
+        if (index !== -1)
+            setFocusedIndex(index);
     }, [activeItem, items]);
     return (_jsxs("nav", { className: `${styles.rail} ${className}`, "aria-label": ariaLabel, children: [menuIcon && (_jsx("div", { className: styles.menuSlot, children: menuIcon })), fab && _jsx("div", { className: styles.fabSlot, children: fab }), _jsx("div", { ref: destinationsRef, className: `${styles.destinations} ${styles[`align-${alignment}`]}`, role: "tablist", "aria-orientation": "vertical", onKeyDown: handleKeyDown, children: items.map((item, index) => {
                     const id = item.id || item.key;

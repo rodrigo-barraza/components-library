@@ -45,11 +45,11 @@ export default function SelectComponent({ value, options = [], onChange, placeho
         return () => document.removeEventListener("keydown", handleKey);
     }, [open]);
     const renderOption = (opt) => {
-        const btn = (_jsxs("button", { type: "button", className: `${styles.option} ${opt.value === value ? styles.optionSelected : ""} ${opt.disabled ? styles.optionDisabled : ""}`, onClick: () => handleSelect(opt), disabled: opt.disabled, children: [opt.icon && (_jsx("span", { className: styles.optionIcon, children: opt.icon })), _jsx("span", { className: styles.optionLabel, children: opt.label })] }, opt.value));
+        const button = (_jsxs("button", { type: "button", className: `${styles.option} ${opt.value === value ? styles.optionSelected : ""} ${opt.disabled ? styles.optionDisabled : ""}`, onClick: () => handleSelect(opt), disabled: opt.disabled, children: [opt.icon && (_jsx("span", { className: styles.optionIcon, children: opt.icon })), _jsx("span", { className: styles.optionLabel, children: opt.label })] }, opt.value));
         if (opt.tooltip) {
-            return (_jsx(TooltipComponent, { label: opt.tooltip, position: "right", delay: 200, children: btn }, opt.value));
+            return (_jsx(TooltipComponent, { label: opt.tooltip, position: "right", delay: 200, children: button }, opt.value));
         }
-        return btn;
+        return button;
     };
     const triggerButton = (_jsxs("button", { type: "button", className: `${styles.trigger} ${open ? styles.triggerOpen : ""} ${disabled ? styles.triggerDisabled : ""}`, onClick: () => !disabled && setOpen((prev) => !prev), disabled: disabled, children: [_jsxs("span", { className: styles.triggerContent, children: [icon && _jsx("span", { className: styles.triggerIcon, children: icon }), !icon && selected?.icon && _jsx("span", { className: styles.optionIcon, children: selected.icon }), _jsx("span", { className: styles.triggerLabel, children: selected ? selected.label : placeholder })] }), _jsx(ChevronDown, { size: 14, className: `${styles.chevron} ${open ? styles.chevronOpen : ""}` })] }));
     return (_jsxs("div", { className: `${styles.dropdown} ${label ? styles.hasLabel : ""}`, ref: containerRef, children: [label && _jsx("span", { className: styles.label, children: label }), _jsx("div", { className: styles.sizer, "aria-hidden": "true", children: options.map((opt) => (_jsxs("span", { className: styles.sizerItem, children: [icon && _jsx("span", { className: styles.triggerIcon, children: icon }), opt.icon && _jsx("span", { className: styles.optionIcon, children: opt.icon }), _jsx("span", { children: opt.label })] }, opt.value))) }), triggerTooltip && !open ? (_jsx(TooltipComponent, { label: triggerTooltip, position: "bottom", delay: 400, children: triggerButton })) : (triggerButton), open && (_jsx("div", { className: styles.menu, children: options.map(renderOption) }))] }));

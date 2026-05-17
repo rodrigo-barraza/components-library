@@ -20,15 +20,15 @@ import styles from "./TextAreaComponent.module.css";
 export default function TextAreaComponent({ value, onChange, placeholder, minRows = 3, maxRows = 12, autoResize = true, disabled = false, readOnly = false, className, id, ...rest }) {
     const ref = useRef(null);
     const resize = useCallback(() => {
-        const el = ref.current;
-        if (!el || !autoResize)
+        const element = ref.current;
+        if (!element || !autoResize)
             return;
-        el.style.height = "auto";
-        const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 20;
+        element.style.height = "auto";
+        const lineHeight = parseFloat(getComputedStyle(element).lineHeight) || 20;
         const minHeight = lineHeight * minRows + 20;
         const maxHeight = lineHeight * maxRows + 20;
-        const scrollH = el.scrollHeight;
-        el.style.height = `${Math.min(Math.max(scrollH, minHeight), maxHeight)}px`;
+        const scrollH = element.scrollHeight;
+        element.style.height = `${Math.min(Math.max(scrollH, minHeight), maxHeight)}px`;
     }, [autoResize, minRows, maxRows]);
     useEffect(() => {
         resize();

@@ -90,15 +90,15 @@ const TextFieldComponent = forwardRef(function TextFieldComponent({ variant = "o
     }, [updateNotch]);
     // ── Auto-resize for textarea ───────────────────────
     const resizeTextarea = useCallback(() => {
-        const el = typeof inputRef === "object" ? inputRef.current : null;
-        if (!el || !multiline || !autoResize)
+        const element = typeof inputRef === "object" ? inputRef.current : null;
+        if (!element || !multiline || !autoResize)
             return;
-        el.style.height = "auto";
-        const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 24;
+        element.style.height = "auto";
+        const lineHeight = parseFloat(getComputedStyle(element).lineHeight) || 24;
         const minHeight = lineHeight * rows;
         const maxHeight = lineHeight * maxRows;
-        const scrollH = el.scrollHeight;
-        el.style.height = `${Math.min(Math.max(scrollH, minHeight), maxHeight)}px`;
+        const scrollH = element.scrollHeight;
+        element.style.height = `${Math.min(Math.max(scrollH, minHeight), maxHeight)}px`;
     }, [multiline, autoResize, rows, maxRows, inputRef]);
     useEffect(() => {
         resizeTextarea();
@@ -113,9 +113,9 @@ const TextFieldComponent = forwardRef(function TextFieldComponent({ variant = "o
         rest.onBlur?.(e);
     };
     const handleContainerClick = () => {
-        const el = typeof inputRef === "object" ? inputRef.current : null;
-        if (el && !disabled)
-            el.focus();
+        const element = typeof inputRef === "object" ? inputRef.current : null;
+        if (element && !disabled)
+            element.focus();
     };
     // ── Root classes ───────────────────────────────────
     const rootClasses = [

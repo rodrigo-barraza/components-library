@@ -281,10 +281,10 @@ function ImageAttachments({ attachments }) {
     const images = attachments.filter((a) => a.contentType?.startsWith("image/") && (a.url || a.proxyURL));
     if (!images.length)
         return null;
-    return (_jsx("div", { className: styles.attachments, children: images.map((img, i) => {
-            const src = img.proxyURL || img.url;
+    return (_jsx("div", { className: styles.attachments, children: images.map((image, i) => {
+            const src = image.proxyURL || image.url;
             const maxW = 400, maxH = 300;
-            let w = img.width || maxW, h = img.height || maxH;
+            let w = image.width || maxW, h = image.height || maxH;
             if (w > maxW) {
                 h = Math.round(h * (maxW / w));
                 w = maxW;
@@ -293,7 +293,7 @@ function ImageAttachments({ attachments }) {
                 w = Math.round(w * (maxH / h));
                 h = maxH;
             }
-            return (_jsx("a", { href: img.url || src, target: "_blank", rel: "noopener noreferrer", className: styles.attachmentLink, children: _jsx("img", { src: src, alt: img.name || "attachment", width: w, height: h, className: styles.attachmentImage, loading: "lazy" }) }, i));
+            return (_jsx("a", { href: image.url || src, target: "_blank", rel: "noopener noreferrer", className: styles.attachmentLink, children: _jsx("img", { src: src, alt: image.name || "attachment", width: w, height: h, className: styles.attachmentImage, loading: "lazy" }) }, i));
         }) }));
 }
 // ── Rich Embed Card (Discord link unfurl / Open Graph preview) ───
@@ -430,12 +430,12 @@ function loadReactedSet() {
 }
 function persistReactedSet(set) {
     try {
-        let arr = Array.from(set);
+        let array = Array.from(set);
         // FIFO eviction if over limit
-        if (arr.length > REACT_MAX_ENTRIES) {
-            arr = arr.slice(arr.length - REACT_MAX_ENTRIES);
+        if (array.length > REACT_MAX_ENTRIES) {
+            array = array.slice(array.length - REACT_MAX_ENTRIES);
         }
-        localStorage.setItem(REACT_STORAGE_KEY, JSON.stringify(arr));
+        localStorage.setItem(REACT_STORAGE_KEY, JSON.stringify(array));
     }
     catch {
         // localStorage full or unavailable — silent
@@ -500,9 +500,9 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
         setActiveCategory(catId);
         if (filter)
             setFilter(""); // clear search when clicking a category
-        const el = bodyRef.current?.querySelector(`[data-category="${catId}"]`);
-        if (el)
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
+        const element = bodyRef.current?.querySelector(`[data-category="${catId}"]`);
+        if (element)
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
     };
     // When searching, show filtered results from all categories
     const isSearching = filter.length > 0;
@@ -620,10 +620,10 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
     }, []);
     // ── Scroll to bottom ────────────────────────────────────────────
     const scrollToBottom = useCallback((instant = false) => {
-        const el = scrollRef.current;
-        if (!el)
+        const element = scrollRef.current;
+        if (!element)
             return;
-        el.scrollTo({ top: el.scrollHeight, behavior: instant ? "instant" : "smooth" });
+        element.scrollTo({ top: element.scrollHeight, behavior: instant ? "instant" : "smooth" });
     }, []);
     // ── Snap to bottom after React commits DOM (useLayoutEffect) ───
     // Fires synchronously after DOM mutation, guaranteeing scrollHeight
@@ -685,9 +685,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                             if (hasRealNames)
                                 return prev;
                             const channelMap = new Map();
-                            for (const msg of reversed) {
-                                if (msg.channelId && msg.channelName) {
-                                    channelMap.set(msg.channelId, msg.channelName);
+                            for (const message of reversed) {
+                                if (message.channelId && message.channelName) {
+                                    channelMap.set(message.channelId, message.channelName);
                                 }
                             }
                             if (channelMap.size === 0)
@@ -725,7 +725,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     if (!ids?.length)
                         return;
                     const deletedSet = new Set(ids);
-                    setMessages((prev) => prev.filter((msg) => !deletedSet.has(msg.id)));
+                    setMessages((prev) => prev.filter((message) => !deletedSet.has(message.id)));
                 }
                 catch (error) {
                     console.error("[DiscordChat] Delete event parse error:", error);
@@ -740,9 +740,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     if (!updatedMsgs?.length)
                         return;
                     const updateMap = new Map(updatedMsgs.map((m) => [m.id, m]));
-                    setMessages((prev) => prev.map((msg) => {
-                        const updated = updateMap.get(msg.id);
-                        return updated ? { ...msg, reactions: updated.reactions } : msg;
+                    setMessages((prev) => prev.map((message) => {
+                        const updated = updateMap.get(message.id);
+                        return updated ? { ...message, reactions: updated.reactions } : message;
                     }));
                 }
                 catch (error) {
@@ -770,9 +770,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
         let cancelled = false;
         async function fetchMembers() {
             try {
-                const res = await fetch(membersUrl);
-                if (res.ok && !cancelled) {
-                    setMembers(await res.json());
+                const response = await fetch(membersUrl);
+                if (response.ok && !cancelled) {
+                    setMembers(await response.json());
                 }
             }
             catch {
@@ -820,18 +820,18 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
         // Optimistic: update message reactions in-place so the UI reflects the change immediately.
         // Parses the emojiIdentifier ("name:id" for custom, raw string for Unicode) and either
         // increments an existing reaction's count or appends a new reaction entry.
-        setMessages((prev) => prev.map((msg) => {
-            if (msg.id !== messageId)
-                return msg;
-            const reactions = msg.reactions ? [...msg.reactions] : [];
+        setMessages((prev) => prev.map((message) => {
+            if (message.id !== messageId)
+                return message;
+            const reactions = message.reactions ? [...message.reactions] : [];
             const isCustom = /^\w+:\d+$/.test(emojiIdentifier);
-            const idx = reactions.findIndex((r) => {
+            const index = reactions.findIndex((r) => {
                 if (isCustom)
                     return r.emoji.id === emojiIdentifier.split(":")[1];
                 return r.emoji.name === emojiIdentifier && !r.emoji.id;
             });
-            if (idx >= 0) {
-                reactions[idx] = { ...reactions[idx], count: reactions[idx].count + 1 };
+            if (index >= 0) {
+                reactions[index] = { ...reactions[index], count: reactions[index].count + 1 };
             }
             else {
                 // New reaction
@@ -843,10 +843,10 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     reactions.push({ emoji: { id: null, name: emojiIdentifier, animated: false }, count: 1 });
                 }
             }
-            return { ...msg, reactions };
+            return { ...message, reactions };
         }));
         try {
-            const res = await fetch(reactUrl, {
+            const response = await fetch(reactUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -857,9 +857,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
             });
             // 409 = already reacted (bot already had that reaction)
             // That's fine — keep the localStorage entry
-            if (!res.ok && res.status !== 409) {
+            if (!response.ok && response.status !== 409) {
                 // Revert optimistic update on real failure
-                console.warn("[DiscordChat] React failed:", res.status);
+                console.warn("[DiscordChat] React failed:", response.status);
                 setReactedSet((prev) => {
                     const next = new Set(prev);
                     next.delete(reactKey);
@@ -912,12 +912,12 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                 })() })] }), _jsxs("div", { className: styles.chatPanel, children: [_jsxs("div", { className: styles.messagesArea, ref: scrollRef, children: [loading && (_jsxs("div", { className: styles.loading, children: [_jsxs("div", { className: styles.loadingDots, children: [_jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot })] }), _jsx("span", { children: "Loading messages\u2026" })] })), error && (_jsxs("div", { className: styles.error, children: [_jsx("span", { className: styles.errorIcon, children: "\u26A0\uFE0F" }), _jsx("span", { children: "Couldn't load messages" })] })), !loading && !error && (() => {
                                         // Build a lookup map for reply references
                                         const messageMap = new Map(messages.map((m) => [m.id, m]));
-                                        return messages.map((msg, i) => {
+                                        return messages.map((message, i) => {
                                             const prev = i > 0 ? messages[i - 1] : null;
-                                            const grouped = shouldGroup(msg, prev);
-                                            const newDay = isDifferentDay(msg, prev);
-                                            const nameStyle = resolveRoleColorStyle(msg.author);
-                                            return (_jsxs("div", { children: [newDay && (_jsx("div", { className: styles.dateSeparator, children: _jsx("span", { className: styles.dateSeparatorText, children: formatDateSeparator(msg.createdAtISO) }) })), grouped && !newDay ? (_jsxs("div", { className: styles.messageRowGrouped, children: [_jsx("span", { className: styles.timestampInline, children: formatShortTime(msg.createdAtISO) }), _jsx(MessageActions, { messageId: msg.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsx("p", { className: styles.messageText, children: formatContent(msg.content, msg.cleanContent) }), _jsx(TenorEmbeds, { content: msg.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: msg.attachments }), _jsx(EmbedMedia, { embeds: msg.embeds }), _jsx(Reactions, { reactions: msg.reactions, messageId: msg.id, reactedSet: reactedSet, onReact: handleReact })] })] })) : (_jsxs("div", { className: `${styles.messageRow} ${msg.replyTo ? styles.messageRowReply : ""}`, children: [msg.replyTo && (_jsx(ReplyContext, { replyTo: msg.replyTo, messageMap: messageMap })), msg.author.avatarUrl ? (_jsx("img", { className: styles.avatar, src: msg.author.avatarUrl, alt: msg.author.displayName, width: 40, height: 40, loading: "lazy" })) : (_jsx("div", { className: styles.avatarFallback, style: { background: getAvatarColor(msg.author.id) }, children: (msg.author.displayName || "?")[0].toUpperCase() })), _jsx(MessageActions, { messageId: msg.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsxs("div", { className: styles.messageHeader, children: [_jsx("span", { className: styles.authorName, style: nameStyle, children: msg.author.displayName }), msg.author.isBot && (_jsxs("span", { className: styles.botBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "BOT"] })), _jsx(UserBadges, { badges: msg.author.badges }), _jsx(RoleTags, { roleTags: msg.author.roleTags }), _jsx("span", { className: styles.timestamp, children: formatTimestamp(msg.createdAtISO) })] }), _jsx("p", { className: styles.messageText, children: formatContent(msg.content, msg.cleanContent) }), _jsx(TenorEmbeds, { content: msg.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: msg.attachments }), _jsx(EmbedMedia, { embeds: msg.embeds }), _jsx(Reactions, { reactions: msg.reactions, messageId: msg.id, reactedSet: reactedSet, onReact: handleReact })] })] }))] }, msg.id));
+                                            const grouped = shouldGroup(message, prev);
+                                            const newDay = isDifferentDay(message, prev);
+                                            const nameStyle = resolveRoleColorStyle(message.author);
+                                            return (_jsxs("div", { children: [newDay && (_jsx("div", { className: styles.dateSeparator, children: _jsx("span", { className: styles.dateSeparatorText, children: formatDateSeparator(message.createdAtISO) }) })), grouped && !newDay ? (_jsxs("div", { className: styles.messageRowGrouped, children: [_jsx("span", { className: styles.timestampInline, children: formatShortTime(message.createdAtISO) }), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsx("p", { className: styles.messageText, children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] })) : (_jsxs("div", { className: `${styles.messageRow} ${message.replyTo ? styles.messageRowReply : ""}`, children: [message.replyTo && (_jsx(ReplyContext, { replyTo: message.replyTo, messageMap: messageMap })), message.author.avatarUrl ? (_jsx("img", { className: styles.avatar, src: message.author.avatarUrl, alt: message.author.displayName, width: 40, height: 40, loading: "lazy" })) : (_jsx("div", { className: styles.avatarFallback, style: { background: getAvatarColor(message.author.id) }, children: (message.author.displayName || "?")[0].toUpperCase() })), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsxs("div", { className: styles.messageHeader, children: [_jsx("span", { className: styles.authorName, style: nameStyle, children: message.author.displayName }), message.author.isBot && (_jsxs("span", { className: styles.botBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "BOT"] })), _jsx(UserBadges, { badges: message.author.badges }), _jsx(RoleTags, { roleTags: message.author.roleTags }), _jsx("span", { className: styles.timestamp, children: formatTimestamp(message.createdAtISO) })] }), _jsx("p", { className: styles.messageText, children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] }))] }, message.id));
                                         });
                                     })()] }), _jsx("div", { className: styles.inputBar, children: joinMode ? (_jsxs("a", { href: inviteUrl, target: "_blank", rel: "noopener noreferrer", className: styles.joinButton, id: "discord-join-button", onMouseEnter: () => onJoinHoverChange?.(true), onMouseLeave: () => onJoinHoverChange?.(false), children: [_jsx("svg", { className: styles.joinButtonIcon, viewBox: "0 0 24 24", width: "20", height: "20", fill: "currentColor", children: _jsx("path", { d: "M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.36-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.24-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z" }) }), "Join the Discord Server"] })) : (_jsxs("div", { className: styles.inputContainer, children: [_jsxs("span", { className: styles.inputPlaceholder, children: ["Message #", activeChannel.name] }), _jsxs("div", { className: styles.inputIcons, children: [_jsx("span", { children: "\uD83D\uDE00" }), _jsx("span", { children: "\uD83C\uDF81" }), _jsx("span", { children: "\uD83D\uDCCE" })] })] })) })] }), _jsx("aside", { className: styles.memberSidebar, children: members ? (_jsxs("div", { className: styles.memberList, children: [members.roles?.map((role) => (_jsxs("div", { className: styles.memberRoleGroup, children: [_jsxs("div", { className: styles.memberRoleHeader, children: [role.name, " \u2014 ", role.members.length] }), role.members.map((m) => (_jsx(MemberItem, { member: m }, m.id)))] }, role.id))), members.bots?.length > 0 && (_jsxs("div", { className: styles.memberRoleGroup, children: [_jsxs("div", { className: styles.memberRoleHeader, children: ["Bots \u2014 ", members.bots.length] }), members.bots.map((m) => (_jsx(MemberItem, { member: m }, m.id)))] }))] })) : (_jsx("div", { className: styles.loading, children: _jsxs("div", { className: styles.loadingDots, children: [_jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot })] }) })) })] }), pickerMessageId && (_jsx(EmojiPicker, { anchorRef: pickerAnchorRef.current, serverEmojis: serverEmojis, onSelect: handlePickerSelect, onClose: handleClosePicker }))] }));
 }

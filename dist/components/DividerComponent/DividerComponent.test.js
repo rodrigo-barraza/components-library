@@ -11,9 +11,9 @@ describe("DividerComponent", () => {
     });
     it("renders a vertical <div> with aria-orientation", () => {
         render(_jsx(DividerComponent, { orientation: "vertical", "data-testid": "divider" }));
-        const el = screen.getByRole("separator");
-        expect(el.tagName).toBe("DIV");
-        expect(el).toHaveAttribute("aria-orientation", "vertical");
+        const element = screen.getByRole("separator");
+        expect(element.tagName).toBe("DIV");
+        expect(element).toHaveAttribute("aria-orientation", "vertical");
     });
     /* ── Variants ───────────────────────────────────────────────────── */
     it("applies inset variant class", () => {
@@ -29,8 +29,8 @@ describe("DividerComponent", () => {
     /* ── Accessibility ──────────────────────────────────────────────── */
     it("has implicit separator role for horizontal <hr>", () => {
         render(_jsx(DividerComponent, {}));
-        const el = screen.getByRole("separator");
-        expect(el).toBeInTheDocument();
+        const element = screen.getByRole("separator");
+        expect(element).toBeInTheDocument();
     });
     it("applies role='none' when decorative", () => {
         const { container } = render(_jsx(DividerComponent, { decorative: true }));

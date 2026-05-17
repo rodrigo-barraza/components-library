@@ -50,14 +50,14 @@ describe("useLocalStorage", () => {
         });
     });
     it("handles complex objects", async () => {
-        const obj = { name: "test", items: [1, 2, 3] };
+        const object = { name: "test", items: [1, 2, 3] };
         const { result } = renderHook(() => useLocalStorage("obj-key", null));
         act(() => {
-            result.current[1](obj);
+            result.current[1](object);
         });
-        expect(result.current[0]).toEqual(obj);
+        expect(result.current[0]).toEqual(object);
         await vi.waitFor(() => {
-            expect(JSON.parse(localStorage.getItem("obj-key"))).toEqual(obj);
+            expect(JSON.parse(localStorage.getItem("obj-key"))).toEqual(object);
         });
     });
 });

@@ -17,11 +17,11 @@ export default function ChatInputComponent({ onSend, isTyping = false }) {
     const textareaRef = useRef(null);
     const maxLength = CHAT_DEFAULTS.MAX_MESSAGE_LENGTH;
     const autoResize = useCallback(() => {
-        const el = textareaRef.current;
-        if (!el)
+        const element = textareaRef.current;
+        if (!element)
             return;
-        el.style.height = "auto";
-        el.style.height = `${Math.min(el.scrollHeight, 96)}px`;
+        element.style.height = "auto";
+        element.style.height = `${Math.min(element.scrollHeight, 96)}px`;
     }, []);
     useEffect(() => {
         autoResize();

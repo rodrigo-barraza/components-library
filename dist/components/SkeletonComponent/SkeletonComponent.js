@@ -21,7 +21,7 @@ import styles from "./SkeletonComponent.module.css";
  * @param {string} [id]            — Element ID
  */
 export default function SkeletonComponent({ variant = "text", width, height, lines = 1, animate = true, className = "", id, }) {
-    const resolveSize = (val) => val == null ? undefined : typeof val === "number" ? `${val}px` : val;
+    const resolveSize = (value) => value == null ? undefined : typeof value === "number" ? `${value}px` : value;
     const baseClass = [
         styles.skeleton,
         styles[variant],

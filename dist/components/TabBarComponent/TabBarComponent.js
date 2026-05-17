@@ -141,8 +141,8 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
                 ]
                     .filter(Boolean)
                     .join(" ");
-                const button = (_jsxs("button", { ref: (el) => {
-                        tabRefs.current[tab.key] = el;
+                const button = (_jsxs("button", { ref: (element) => {
+                        tabRefs.current[tab.key] = element;
                     }, className: tabClasses, role: "tab", id: `tab-${tab.key}`, "aria-selected": isActive, "aria-disabled": tab.disabled || undefined, "aria-controls": `tabpanel-${tab.key}`, tabIndex: isActive ? 0 : -1, onMouseDown: captureRipple, onClick: (e) => {
                         if (sound)
                             SoundService.playClick({ event: e });

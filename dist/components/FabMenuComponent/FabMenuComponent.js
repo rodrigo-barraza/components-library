@@ -71,10 +71,10 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
     }, []);
     // ── Ripple on trigger ─────────────────────────────────
     const handleRipple = useCallback((e) => {
-        const el = triggerRef.current;
-        if (!el)
+        const element = triggerRef.current;
+        if (!element)
             return;
-        const rect = el.getBoundingClientRect();
+        const rect = element.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
@@ -84,7 +84,7 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
         ripple.style.height = `${size}px`;
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
-        el.appendChild(ripple);
+        element.appendChild(ripple);
         ripple.addEventListener("animationend", () => ripple.remove(), {
             once: true,
         });
@@ -216,8 +216,8 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
                                     isOpen ? styles.menuItemVisible : "",
                                 ]
                                     .filter(Boolean)
-                                    .join(" "), children: [item.label && (_jsx("span", { className: styles.itemLabel, "aria-hidden": "true", children: item.label })), _jsx("button", { ref: (el) => {
-                                            itemRefs.current[index] = el;
+                                    .join(" "), children: [item.label && (_jsx("span", { className: styles.itemLabel, "aria-hidden": "true", children: item.label })), _jsx("button", { ref: (element) => {
+                                            itemRefs.current[index] = element;
                                         }, className: styles.itemFab, role: "menuitem", tabIndex: isOpen ? 0 : -1, "aria-label": item.ariaLabel || item.label, onClick: (e) => handleItemClick(e, item), onMouseEnter: (e) => {
                                             if (sound)
                                                 SoundService.playHoverButton({ event: e });

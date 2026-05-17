@@ -105,9 +105,9 @@ export default function ChatComponent({ className = "" }) {
                     if (!isOpen)
                         setUnreadCount((c) => c + 1);
                 },
-                onError: (err) => {
+                onError: (error) => {
                     setIsTyping(false);
-                    console.error("[Chat] Agent error:", err.message);
+                    console.error("[Chat] Agent error:", error.message);
                     setMessages((prev) => prev.map((m) => m.id === agentMessageId
                         ? {
                             ...m,

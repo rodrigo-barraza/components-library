@@ -45,9 +45,9 @@ export default function CheckboxComponent({ checked = false, onChange, label = "
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("label", { className: rootClasses, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "checkbox", id: id, name: name, className: styles.hiddenInput, checked: checked, disabled: disabled, ref: (el) => {
-                            if (el)
-                                el.indeterminate = indeterminate;
+    return (_jsxs("label", { className: rootClasses, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "checkbox", id: id, name: name, className: styles.hiddenInput, checked: checked, disabled: disabled, ref: (element) => {
+                            if (element)
+                                element.indeterminate = indeterminate;
                         }, onChange: (e) => {
                             if (sound)
                                 SoundService.playClickButton({ event: e });

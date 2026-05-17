@@ -47,10 +47,10 @@ describe("datePresets utility", () => {
         });
         it("returns expected value shape for Today", () => {
             const todayPreset = DATE_PRESETS.find((p) => p.label === "Today");
-            const val = todayPreset.getValue();
-            expect(val).toHaveProperty("from");
-            expect(val).toHaveProperty("to");
-            expect(val.from).toBe(val.to); // "Today" sets from and to the same
+            const value = todayPreset.getValue();
+            expect(value).toHaveProperty("from");
+            expect(value).toHaveProperty("to");
+            expect(value.from).toBe(value.to); // "Today" sets from and to the same
         });
     });
     describe("formatDateDisplay", () => {

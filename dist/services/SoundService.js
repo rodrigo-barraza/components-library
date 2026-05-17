@@ -9,7 +9,7 @@
  * gain values (0–100) routed through a ChannelSplitter → per-channel
  * GainNode → ChannelMerger topology.
  */
-let ctx = null;
+let context = null;
 let hoverBuffer = null;
 let clickBuffer = null;
 let buttonHoverBuffer = null;
@@ -19,13 +19,13 @@ let buttonClickBuffer = null;
  * Must be called from a user-gesture context on first invocation.
  */
 function ensureContext() {
-    if (!ctx) {
-        ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!context) {
+        context = new (window.AudioContext || window.webkitAudioContext)();
     }
-    if (ctx.state === "suspended") {
-        ctx.resume();
+    if (context.state === "suspended") {
+        context.resume();
     }
-    return ctx;
+    return context;
 }
 // ─── Sound generators ──────────────────────────────────────────────
 /**
@@ -198,10 +198,10 @@ function connectStereo(source, left, right) {
  * Element at right edge → { left: 0,   right: 100 }
  */
 function spatialFromEvent(event) {
-    const el = event?.currentTarget;
-    if (!el || !("getBoundingClientRect" in el))
+    const element = event?.currentTarget;
+    if (!element || !("getBoundingClientRect" in element))
         return { left: 50, right: 50 };
-    const rect = el.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const ratio = Math.max(0, Math.min(1, centerX / window.innerWidth));
     return {
@@ -285,9 +285,9 @@ const SoundService = {
      * Tear down the AudioContext (e.g. on unmount / navigation).
      */
     dispose() {
-        if (ctx) {
-            ctx.close().catch(() => { });
-            ctx = null;
+        if (context) {
+            context.close().catch(() => { });
+            context = null;
         }
         hoverBuffer = null;
         clickBuffer = null;

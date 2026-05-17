@@ -156,16 +156,16 @@ export default function TableComponent({ title, columns, data = [], getRowKey, g
     const onPointerDown = useCallback((e) => {
         if (e.target.closest("a, button, input, select, textarea, th"))
             return;
-        const el = scrollRef.current;
-        if (!el)
+        const element = scrollRef.current;
+        if (!element)
             return;
         dragRef.current = {
             active: true,
             pointerId: e.pointerId,
             startX: e.clientX,
             startY: e.clientY,
-            scrollLeft: el.scrollLeft,
-            scrollTop: el.scrollTop,
+            scrollLeft: element.scrollLeft,
+            scrollTop: element.scrollTop,
             moved: false,
         };
     }, []);
@@ -177,19 +177,19 @@ export default function TableComponent({ title, columns, data = [], getRowKey, g
         const dy = e.clientY - d.startY;
         if (!d.moved && Math.abs(dx) + Math.abs(dy) > 5) {
             d.moved = true;
-            const el = scrollRef.current;
-            if (el) {
+            const element = scrollRef.current;
+            if (element) {
                 try {
-                    el.setPointerCapture(d.pointerId);
+                    element.setPointerCapture(d.pointerId);
                 }
                 catch { /* ignore */ }
             }
             scrollRef.current?.classList.add(styles.grabbing);
         }
         if (d.moved) {
-            const el = scrollRef.current;
-            el.scrollLeft = d.scrollLeft - dx;
-            el.scrollTop = d.scrollTop - dy;
+            const element = scrollRef.current;
+            element.scrollLeft = d.scrollLeft - dx;
+            element.scrollTop = d.scrollTop - dy;
         }
     }, []);
     const onPointerUp = useCallback((e) => {
@@ -197,20 +197,20 @@ export default function TableComponent({ title, columns, data = [], getRowKey, g
         const wasDrag = d.moved;
         d.active = false;
         d.moved = false;
-        const el = scrollRef.current;
-        if (el) {
+        const element = scrollRef.current;
+        if (element) {
             try {
-                el.releasePointerCapture(e.pointerId);
+                element.releasePointerCapture(e.pointerId);
             }
             catch { /* ignore */ }
-            el.classList.remove(styles.grabbing);
+            element.classList.remove(styles.grabbing);
         }
         if (wasDrag) {
             const handler = (ev) => {
                 ev.stopPropagation();
                 ev.preventDefault();
             };
-            el?.addEventListener("click", handler, { capture: true, once: true });
+            element?.addEventListener("click", handler, { capture: true, once: true });
         }
     }, []);
     function handleSort(key) {
