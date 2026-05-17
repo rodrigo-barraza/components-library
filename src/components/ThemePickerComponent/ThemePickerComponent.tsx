@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
@@ -82,7 +81,7 @@ const THEME_CATALOG = {
  * popover with all available themes rendered as selectable buttons, each
  * showing a color swatch, icon, and label.
  *
- * @param {Object} props
+
  * @param {string}   props.theme          — Current active theme name
  * @param {string[]} props.themes         — Ordered list of available theme names
  * @param {function} props.onSelectTheme  — Called with the selected theme name

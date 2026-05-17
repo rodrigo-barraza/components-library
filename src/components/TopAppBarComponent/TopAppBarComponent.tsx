@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import {
@@ -38,7 +37,7 @@ import styles from "./TopAppBarComponent.module.css";
  *   • Title uses an appropriate heading level (configurable via headingLevel)
  *   • Focus-visible outlines on all interactive elements
  *
- * @param {"center-aligned"|"small"|"medium"|"large"} [variant="small"]
+
  *   M3 sub-type controlling title placement and bar height.
  * @param {string} title — primary title text
  * @param {React.ReactNode} [navigationIcon] — leading icon (e.g. ← or ☰)
@@ -50,8 +49,8 @@ import styles from "./TopAppBarComponent.module.css";
  * @param {boolean} [showScrollIndicator=false] — subtle accent line showing scroll progress
  * @param {1|2|3|4|5|6} [headingLevel=1] — heading element for the title (h1–h6)
  * @param {string} [ariaLabel] — aria-label for the header landmark
- * @param {string} [className]
- * @param {object} [style]
+
+
  * @param {React.ReactNode} children — TopAppBarComponent.Action items
  */
 export default function TopAppBarComponent({
@@ -216,9 +215,8 @@ export default function TopAppBarComponent({
  *
  * @param {React.ComponentType} [icon] — Lucide or similar icon component
  * @param {string} ariaLabel — accessible label (required)
- * @param {boolean} [disabled=false]
- * @param {Function} [onClick]
- * @param {string} [className]
+
+
  * @param {React.ReactNode} children — overrides icon rendering
  */
 const TopAppBarAction = forwardRef(function TopAppBarAction(

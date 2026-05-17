@@ -1,4 +1,3 @@
-// @ts-nocheck — Incremental migration: props not yet typed
 /* eslint-disable no-unused-vars -- sub-components used in JSX (no react eslint plugin) */
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import styles from "./DiscordChatComponent.module.css";

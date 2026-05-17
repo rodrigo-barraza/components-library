@@ -3,6 +3,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useCallback } from "react";
 import { Copy, Check } from "lucide-react";
+import { FEEDBACK_STANDARD_MS } from "@rodrigo-barraza/utilities-library";
 import styles from "./CopyButtonComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
@@ -25,7 +26,7 @@ export default function CopyButtonComponent({ text, size = 14, showLabel = false
             if (sound)
                 SoundService.playClickButton({ event: e });
             setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+            setTimeout(() => setCopied(false), FEEDBACK_STANDARD_MS);
         }
         catch {
             /* clipboard not available — silent fail */

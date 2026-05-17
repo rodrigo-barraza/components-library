@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import styles from "./SkeletonComponent.module.css";
@@ -86,8 +85,8 @@ export default function SkeletonComponent({
  *
  * @param {string} [gap="12px"] — Gap between skeleton children
  * @param {"row"|"column"} [direction="column"] — Flex direction
- * @param {string} [className]
- * @param {React.ReactNode} children
+
+
  */
 export function SkeletonGroup({
   gap = "12px",

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import {
@@ -41,8 +40,8 @@ import styles from "./BottomAppBarComponent.module.css";
  * @param {React.RefObject} [scrollTargetRef] — scrollable element ref (defaults to window)
  * @param {number} [scrollThreshold=8] — min scroll delta to trigger hide/show
  * @param {string} [ariaLabel="Bottom actions"] — accessible label for the toolbar
- * @param {string} [className]
- * @param {object} [style]
+
+
  * @param {React.ReactNode} children — BottomAppBarComponent.Action items
  */
 export default function BottomAppBarComponent({
@@ -191,9 +190,8 @@ export default function BottomAppBarComponent({
  * @param {React.ComponentType} [icon] — Lucide or similar icon component
  * @param {string} ariaLabel — accessible label (required)
  * @param {boolean} [active=false] — visually active/selected state
- * @param {boolean} [disabled=false]
- * @param {Function} [onClick]
- * @param {string} [className]
+
+
  * @param {React.ReactNode} children — overrides icon rendering
  */
 const BottomAppBarAction = forwardRef(function BottomAppBarAction(

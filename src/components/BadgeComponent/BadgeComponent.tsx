@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
@@ -7,10 +6,8 @@ import styles from "./BadgeComponent.module.css";
 /**
  * BadgeComponent — standardized inline badge/pill.
  *
- * @param {"provider"|"endpoint"|"modality"|"success"|"error"|"info"|"accent"|"warning"} [variant="info"]
- * @param {React.ReactNode} children
- * @param {string} [className]
- * @param {boolean} [mini]
+
+
  * @param {string} [tooltip] — optional tooltip label shown on hover
  */
 export default function BadgeComponent({

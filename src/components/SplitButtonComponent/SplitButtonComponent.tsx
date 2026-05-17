@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { forwardRef, useCallback, useRef, useState } from "react";
@@ -26,16 +25,14 @@ import { ChevronDown } from "lucide-react";
  *   ← leading action button →  ← trailing toggle →
  *   └──── divider (1px) ─────┘
  *
- * @param {Object} props
- * @param {"filled"|"tonal"|"outlined"|"elevated"} [props.variant="filled"]
- * @param {"small"|"medium"|"large"} [props.size="medium"]
+
+
  * @param {React.ComponentType} [props.icon] — Leading icon (Lucide-compatible)
  * @param {number} [props.iconSize] — Override icon size
  * @param {React.ComponentType} [props.trailingIcon] — Trailing button icon (default: ChevronDown)
  * @param {boolean} [props.trailingToggled=false] — Controls trailing icon rotation/toggle state
- * @param {boolean} [props.disabled=false]
- * @param {boolean} [props.loading=false]
- * @param {boolean} [props.fullWidth=false]
+
+
  * @param {Function} [props.onClick] — Leading button click
  * @param {Function} [props.onTrailingClick] — Trailing button click
  * @param {string} [props.aria-label] — Accessible label for the leading button

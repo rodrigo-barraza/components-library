@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -18,7 +17,7 @@ import styles from "./ProgressBarComponent.module.css";
  * @param {boolean}  [showValue=false]     — Display percentage text
  * @param {boolean}  [animated=true]       — Animate the bar fill transition
  * @param {boolean}  [striped=false]       — Add diagonal stripe pattern on the active bar
- * @param {string}   [className]
+
  */
 export default function ProgressBarComponent({
   value,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useState } from "react";
@@ -17,8 +16,8 @@ import styles from "./AvatarComponent.module.css";
  * @param {React.ComponentType} [icon]    — Lucide-compatible icon as fallback (after initials)
  * @param {"xs"|"sm"|"md"|"lg"|"xl"} [size="md"] — Size preset
  * @param {"online"|"offline"|"busy"|"away"} [status] — Status dot indicator
- * @param {string}   [className]
- * @param {object}   [style]
+
+
  */
 export default function AvatarComponent({
   src,
@@ -85,7 +84,7 @@ export default function AvatarComponent({
  *
  * @param {number}   [max=5]       — Max visible avatars before "+N" overflow
  * @param {"xs"|"sm"|"md"|"lg"|"xl"} [size="md"] — Size applied to all children
- * @param {string}   [className]
+
  * @param {React.ReactNode} children — AvatarComponent instances
  */
 function AvatarGroup({ max = 5, size = "md", className, children }) {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useTheme } from "../ThemeProvider/ThemeProvider.js";
@@ -32,11 +31,11 @@ const DEFAULT_LABEL_MAP = {
  *
  * Uses IconButtonComponent internally and gets theme state from ThemeProvider.
  *
- * @param {Object}  props
+
  * @param {Object}  [props.iconMap]   — { [theme]: LucideIcon } overrides
  * @param {Object}  [props.labelMap]  — { [theme]: nextThemeName } for tooltip
  * @param {number}  [props.size=16]   — icon size
- * @param {string}  [props.className]
+
  */
 export default function ThemeToggleButtonComponent({
   iconMap,

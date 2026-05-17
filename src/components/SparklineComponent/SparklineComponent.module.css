@@ -1,0 +1,20 @@
+.sparklineContainer {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.01) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+}
+
+.sparklineCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* GPU compositing for smooth repaints */
+  will-change: contents;
+}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
@@ -19,14 +18,14 @@ import styles from "./CarouselComponent.module.css";
  *   CarouselComponent.ItemMedia  — full-bleed image/video slot
  *   CarouselComponent.ItemLabel  — overlaid label with gradient scrim
  *
- * @param {"multiBrowse"|"hero"|"center"|"fullWidth"} [layout="multiBrowse"]
+
  * @param {boolean}  [showArrows=true]     — show prev/next nav arrows
  * @param {boolean}  [showIndicators=true] — show dot indicators
  * @param {boolean}  [peekEdge=false]      — subtle edge-fade gradient
  * @param {number}   [autoPlay=0]          — auto-advance interval in ms (0=disabled)
  * @param {boolean}  [loop=false]          — loop back to start at end
  * @param {number}   [gap=8]              — gap between items in px
- * @param {string}   [className]
+
  * @param {string}   [ariaLabel]           — accessible label for the carousel region
  * @param {React.ReactNode} children       — CarouselComponent.Item elements
  */
@@ -257,9 +256,8 @@ export default function CarouselComponent({
  * @param {number|string}  [height]     — fixed height
  * @param {string}         [aspectRatio] — CSS aspect-ratio (e.g. "16/9")
  * @param {"large"|"small"} [size]      — hero layout item sizing
- * @param {Function}       [onClick]
- * @param {string}         [className]
- * @param {React.ReactNode} children
+
+
  */
 function CarouselItem({
   width,
@@ -305,7 +303,7 @@ function CarouselItem({
  *
  * @param {string}  src   — image source URL
  * @param {string}  [alt] — alt text
- * @param {string}  [className]
+
  */
 function CarouselItemMedia({ src, alt = "", className, children }) {
   if (children) {
@@ -332,7 +330,7 @@ function CarouselItemMedia({ src, alt = "", className, children }) {
  *
  * @param {string}  title      — primary label text
  * @param {string}  [subtitle] — supporting text
- * @param {string}  [className]
+
  */
 function CarouselItemLabel({ title, subtitle, className, children }) {
   return (

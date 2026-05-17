@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { forwardRef, useCallback, useRef } from "react";
@@ -26,8 +25,8 @@ import SoundService from "../../services/SoundService.js";
  * `<ComponentsProvider sound>`. Without the provider, the button
  * renders silently.
  *
- * @param {Object} props
- * @param {"filled"|"outlined"|"text"|"elevated"|"tonal"|"primary"|"secondary"|"disabled"|"destructive"|"creative"|"submit"} [props.variant="filled"]
+
+
  * @param {"small"|"medium"|"large"} [props.size="medium"] — M3 size scale
  * @param {React.ComponentType} [props.icon] — Lucide-compatible icon component (leading)
  * @param {number} [props.iconSize] — Override icon size (default: auto by button size)

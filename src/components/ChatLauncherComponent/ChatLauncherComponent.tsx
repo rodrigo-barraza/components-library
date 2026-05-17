@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import styles from "./ChatLauncherComponent.module.css";

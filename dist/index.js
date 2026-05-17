@@ -55,6 +55,7 @@ export { default as SelectComponent } from "./components/SelectComponent/SelectC
 export { default as SkeletonComponent, SkeletonGroup } from "./components/SkeletonComponent/SkeletonComponent.js";
 export { default as SliderComponent } from "./components/SliderComponent/SliderComponent.js";
 export { default as SnackbarComponent, useSnackbar } from "./components/SnackbarComponent/SnackbarComponent.js";
+export { default as SparklineComponent } from "./components/SparklineComponent/SparklineComponent.js";
 export { default as SplitButtonComponent } from "./components/SplitButtonComponent/SplitButtonComponent.js";
 export { default as StatsCardComponent } from "./components/StatsCardComponent/StatsCardComponent.js";
 export { default as StatusBadgeComponent } from "./components/StatusBadgeComponent/StatusBadgeComponent.js";

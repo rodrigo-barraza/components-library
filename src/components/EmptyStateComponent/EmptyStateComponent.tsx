@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import styles from "./EmptyStateComponent.module.css";

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useMemo } from "react";
@@ -30,7 +29,7 @@ import styles from "./LoadingIndicatorComponent.module.css";
  * @param {number|null} [buffer=null]      — 0–100 buffer fill (linear determinate only)
  * @param {"small"|"medium"|"large"} [size="medium"] — Circular size preset
  * @param {"thin"|"default"|"thick"} [trackSize="default"] — Linear track height
- * @param {"primary"|"secondary"|"tertiary"|"error"|"inherit"} [color="primary"]
+
  * @param {boolean} [showPercentage=false] — Show % text inside circular indicator
  * @param {string}  [label]               — Optional descriptive label below indicator
  * @param {string}  [ariaLabel="Loading"]  — Accessible label for screen readers

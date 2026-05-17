@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useCallback, useRef, useState } from "react";
@@ -51,7 +50,7 @@ export function useToast(defaultDuration = 3500) {
  * ToastComponent — renders a stacked toast container.
  *
  * @param {{ id: number, message: string, type: string }[]} toasts
- * @param {(id: number) => void} onRemove
+
  */
 export default function ToastComponent({ toasts = [], onRemove }) {
   if (!toasts.length) return null;

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
@@ -13,8 +12,8 @@ import styles from "./TextAreaComponent.module.css";
  * @param {number}   [minRows=3]  — Minimum visible rows
  * @param {number}   [maxRows=12] — Maximum visible rows before scrolling
  * @param {boolean}  [autoResize=true] — Auto-grow to content
- * @param {boolean}  [disabled=false]
- * @param {boolean}  [readOnly=false]
+
+
  * @param {string}   [className] — Additional class
  * @param {string}   [id]       — Element ID for accessibility
  */

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import styles from "./StatsCardComponent.module.css";
@@ -18,8 +17,8 @@ import styles from "./StatsCardComponent.module.css";
  * @param {boolean} [loading=false] — Show skeleton placeholders
  * @param {boolean} [glow=false] — Show bottom glow bar on hover
  * @param {string} [className] — Additional class
- * @param {Function} [onMouseEnter]
- * @param {Function} [onMouseLeave]
+
+
  */
 export default function StatsCardComponent({
   label,

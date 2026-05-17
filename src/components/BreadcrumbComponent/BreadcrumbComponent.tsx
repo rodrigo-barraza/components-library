@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import styles from "./BreadcrumbComponent.module.css";
@@ -13,7 +12,7 @@ import styles from "./BreadcrumbComponent.module.css";
  * @param {Array<{label: string, href?: string, icon?: React.ComponentType, onClick?: Function}>} items
  *   — Ordered breadcrumb segments
  * @param {"chevron"|"slash"|"dot"} [separator="chevron"] — Divider style
- * @param {string} [className]
+
  */
 export default function BreadcrumbComponent({
   items = [],
