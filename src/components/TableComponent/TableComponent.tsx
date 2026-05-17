@@ -15,6 +15,7 @@ import styles from "./TableComponent.module.css";
  *
  * @param {Object} props
  * @param {string} [props.title] — Section title above the table
+ * @param {string} [props.subtitle] — Subtitle/description below the title
  * @param {Array<{key, label, description?, sortable?, align?, render?, sortValue?, className?}>} props.columns
  * @param {Array} props.data — Array of row objects
  * @param {Function} [props.getRowKey] — (row, i) => unique key
@@ -192,6 +193,7 @@ function ColumnFilter({ columns, hiddenColumns, onToggle, storageKey }) {
 
 export default function TableComponent({
   title,
+  subtitle,
   columns,
   data = [],
   getRowKey,
@@ -352,11 +354,18 @@ export default function TableComponent({
     return SoundService.interactive(clickHandler, enterHandler);
   };
 
+  const showHeader = !!(title || subtitle || storageKey);
+
   return (
-    <div className={`${styles.container} ${mini ? styles.mini : ""}`}>
-      {(title || storageKey) && (
+    <div className={`${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles.hasHeader : ""}`}>
+      {showHeader && (
         <div className={styles.tableHeader}>
-          {title && <h2 className={styles.title}>{title}</h2>}
+          {(title || subtitle) && (
+            <div className={styles.tableHeaderContent}>
+              {title && <h2 className={styles.title}>{title}</h2>}
+              {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+            </div>
+          )}
           {storageKey && (
             <ColumnFilter
               columns={columns}

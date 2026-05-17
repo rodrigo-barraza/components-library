@@ -104,12 +104,18 @@
 }
 
 .statusDot {
-  width: 7px;
-  height: 7px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--chat-online, #23a559);
   flex-shrink: 0;
-  box-shadow: 0 0 6px rgba(35, 165, 89, 0.5);
+  box-shadow: 0 0 8px rgba(35, 165, 89, 0.5);
+  animation: statusDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusDotPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
 }
 
 .closeButton {

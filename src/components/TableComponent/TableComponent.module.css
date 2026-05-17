@@ -3,7 +3,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+}
+
+/* Spacing between consecutive table sections */
+.container + .container {
+  margin-top: 20px;
 }
 
 /* ── Table header (title + column filter) ─────────── */
@@ -13,16 +17,33 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 24px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 2px 2px 0 0;
+  background: var(--bg-tertiary);
 }
 
-/* ── Table ─────────────────────────────────────────── */
+.tableHeaderContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* ── Table scroll area ────────────────────────────── */
 
 .tableScroll {
   overflow-x: auto;
   border: 1px solid var(--border-color);
   border-radius: 2px;
   cursor: grab;
+}
+
+/* When header is present, connect border and remove top radius from scroll */
+.hasHeader .tableScroll {
+  border-top: none;
+  border-radius: 0 0 2px 2px;
 }
 
 .tableScroll.grabbing {
@@ -238,10 +259,20 @@
 
 /* Table title */
 .title {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+  line-height: 1.3;
+}
+
+/* Table subtitle */
+.subtitle {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.3;
 }
 
 /* Empty state — rendered as a full-width <td> inside the table */

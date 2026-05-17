@@ -2,6 +2,7 @@
 "use client";
 
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
+import StatusDotComponent from "../StatusDotComponent/StatusDotComponent.js";
 import styles from "./StatusBadgeComponent.module.css";
 
 /**
@@ -23,7 +24,11 @@ export default function StatusBadgeComponent({ healthy, className, ...rest }) {
       className={`${styles.badge} ${className || ""}`}
       {...rest}
     >
-      <span className={`${styles.dot} ${healthy ? styles.dotHealthy : styles.dotUnhealthy}`} />
+      <StatusDotComponent
+        variant={healthy ? "healthy" : "unhealthy"}
+        size="sm"
+        pulse={healthy}
+      />
       {label}
     </BadgeComponent>
   );

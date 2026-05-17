@@ -3,6 +3,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as Icons from "lucide-react";
+import TooltipComponent from "../TooltipComponent/TooltipComponent";
 import styles from "./ThemePickerComponent.module.css";
 
 /**
@@ -97,12 +98,17 @@ export default function ThemePickerComponent({
 }) {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
+  const triggerRef = useRef(null);
+  const popoverRef = useRef(null);
+  const [popoverStyle, setPopoverStyle] = useState({});
 
-  // Close on outside click
+  // Close on outside click (check both wrapper and popover — popover may be fixed-positioned outside wrapper)
   useEffect(() => {
     if (!open) return;
     const handleClick = (e) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+      const inWrapper = wrapperRef.current?.contains(e.target);
+      const inPopover = popoverRef.current?.contains(e.target);
+      if (!inWrapper && !inPopover) {
         setOpen(false);
       }
     };
@@ -120,6 +126,22 @@ export default function ThemePickerComponent({
     return () => document.removeEventListener("keydown", handleKey);
   }, [open]);
 
+  // Compute fixed position when opening in collapsed mode
+  useEffect(() => {
+    if (!open || !collapsed || !triggerRef.current) {
+      setPopoverStyle({});
+      return;
+    }
+    const rect = triggerRef.current.getBoundingClientRect();
+    setPopoverStyle({
+      position: 'fixed',
+      bottom: 'auto',
+      left: `${rect.right + 8}px`,
+      top: `${Math.max(8, rect.bottom - 400)}px`, // anchor near trigger bottom, clamp to viewport
+      right: 'auto',
+    });
+  }, [open, collapsed]);
+
   const handleSelect = useCallback(
     (themeName) => {
       onSelectTheme?.(themeName);
@@ -131,30 +153,45 @@ export default function ThemePickerComponent({
   const currentMeta = THEME_CATALOG[theme] || THEME_CATALOG.dark;
   const CurrentIcon = Icons[currentMeta.icon] || Icons.Palette;
 
+  const triggerButton = (
+    <button
+      ref={triggerRef}
+      className={styles.trigger}
+      onClick={() => setOpen((v) => !v)}
+      title="Change theme"
+      type="button"
+    >
+      <span className={styles.triggerSwatch} style={{ background: currentMeta.color }} />
+      <CurrentIcon size={18} strokeWidth={1.8} className={styles.triggerIcon} />
+      <span className={styles.triggerLabel}>{currentMeta.label}</span>
+      <Icons.ChevronUp
+        size={14}
+        className={`${styles.triggerChevron} ${open ? styles.triggerChevronOpen : ""}`}
+      />
+    </button>
+  );
+
   return (
     <div
       ref={wrapperRef}
       className={`${styles.wrapper} ${collapsed ? styles.collapsed : ""} ${className || ""}`}
     >
-      {/* Trigger button */}
-      <button
-        className={styles.trigger}
-        onClick={() => setOpen((v) => !v)}
-        title="Change theme"
-        type="button"
-      >
-        <span className={styles.triggerSwatch} style={{ background: currentMeta.color }} />
-        <CurrentIcon size={18} strokeWidth={1.8} className={styles.triggerIcon} />
-        <span className={styles.triggerLabel}>{currentMeta.label}</span>
-        <Icons.ChevronUp
-          size={14}
-          className={`${styles.triggerChevron} ${open ? styles.triggerChevronOpen : ""}`}
-        />
-      </button>
+      {/* Trigger — wrap in tooltip when collapsed so user sees the theme label */}
+      {collapsed ? (
+        <TooltipComponent label={currentMeta.label} position="right" delay={200} disabled={open} className={styles.tooltipFill}>
+          {triggerButton}
+        </TooltipComponent>
+      ) : (
+        triggerButton
+      )}
 
-      {/* Dropup popover */}
+      {/* Dropup popover (uses fixed positioning when collapsed to escape overflow:hidden) */}
       {open && (
-        <div className={styles.popover}>
+        <div
+          ref={popoverRef}
+          className={`${styles.popover} ${collapsed ? styles.popoverFlyout : ""}`}
+          style={collapsed ? popoverStyle : undefined}
+        >
           <div className={styles.popoverHeader}>Theme</div>
           <div className={styles.themeList}>
             {themes.map((t) => {

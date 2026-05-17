@@ -104,6 +104,28 @@
   transform-origin: bottom center;
 }
 
+/* ── Flyout variant (collapsed sidebar) ── */
+
+.popoverFlyout {
+  /* position/left/top are set via inline style from JS */
+  min-width: 200px;
+  width: auto;
+  animation: flyoutIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: left bottom;
+  z-index: 10000;
+}
+
+@keyframes flyoutIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
 @keyframes dropupIn {
   from {
     opacity: 0;
@@ -203,4 +225,11 @@
 
 .optionLabel {
   white-space: nowrap;
+}
+
+/* ── Tooltip fill (collapsed trigger tooltip) ── */
+
+.tooltipFill {
+  display: flex;
+  width: 100%;
 }
