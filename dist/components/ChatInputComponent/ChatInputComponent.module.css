@@ -1,0 +1,119 @@
+/* ─────────────────────────────────────────────────────────────
+ * ChatInputComponent — Message input styles
+ * ───────────────────────────────────────────────────────────── */
+
+.inputBar {
+  padding: 10px 14px;
+  border-top: 1px solid var(--chat-border);
+  background: var(--chat-bg-input);
+  flex-shrink: 0;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--chat-border);
+  border-radius: 22px;
+  padding: 6px 6px 6px 16px;
+  transition: border-color var(--chat-transition-fast);
+
+  &:focus-within {
+    border-color: var(--chat-accent);
+    box-shadow: 0 0 0 2px var(--chat-accent-subtle);
+  }
+}
+
+.textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  color: var(--chat-text-primary);
+  font-family: var(--chat-font);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  padding: 4px 0;
+  min-height: 24px;
+  max-height: 96px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+
+  &::placeholder {
+    color: var(--chat-text-muted);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+}
+
+.sendButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    background var(--chat-transition-fast),
+    color var(--chat-transition-fast),
+    transform var(--chat-transition-fast),
+    opacity var(--chat-transition-fast);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--chat-text-muted);
+  opacity: 0.5;
+  -webkit-tap-highlight-color: transparent;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.sendActive {
+  background: var(--chat-accent);
+  color: var(--chat-text-on-accent);
+  opacity: 1;
+
+  &:hover {
+    background: var(--chat-accent-hover);
+    transform: scale(1.06);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
+
+.charCount {
+  display: block;
+  text-align: right;
+  font-size: 0.625rem;
+  color: var(--chat-text-muted);
+  padding: 4px 8px 0;
+}
+
+.charCountOver {
+  color: var(--chat-error, #f87171);
+}
+
+@media (max-width: 480px) {
+  .inputBar {
+    padding: 8px 10px;
+  }
+}

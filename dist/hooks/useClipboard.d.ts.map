@@ -1,0 +1,1 @@
+{"version":3,"file":"useClipboard.d.ts","sourceRoot":"","sources":["../../src/hooks/useClipboard.tsx"],"names":[],"mappings":"AAIA;;;;;GAKG;AAEH,MAAM,WAAW,kBAAkB;IACjC,IAAI,EAAE,CAAC,IAAI,EAAE,MAAM,KAAK,OAAO,CAAC,OAAO,CAAC,CAAC;IACzC,MAAM,EAAE,OAAO,CAAC;CACjB;AAED,MAAM,CAAC,OAAO,UAAU,YAAY,CAAC,OAAO,SAAO,GAAG,kBAAkB,CA4BvE"}

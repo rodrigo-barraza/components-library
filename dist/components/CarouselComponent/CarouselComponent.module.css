@@ -1,0 +1,358 @@
+/* ══════════════════════════════════════════════════════════════════════
+   CarouselComponent — Material Design 3 Carousel
+   M3 carousel types: multi-browse, hero, full-screen
+   Specs: https://m3.material.io/components/carousel/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Carousel root ───────────────────────────────────────────────── */
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Scroll track ────────────────────────────────────────────────── */
+/* M3 spec: horizontal scrollable container with snap-points.
+   Uses scroll-snap-type: x mandatory for discrete item snapping.
+   GPU-accelerated via will-change + transform compositing.        */
+
+.track {
+  display: flex;
+  gap: var(--carousel-gap, 8px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  will-change: scroll-position;
+  padding: 4px;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Item container ──────────────────────────────────────────────── */
+/* M3 spec: rounded-corner containers holding media + optional label.
+   Shape: large (28px) by default; medium (16px) for compact.
+   Items support masking/clipping as they scroll off-screen.       */
+
+.item {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: var(--carousel-item-radius, 28px);
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--bg-secondary);
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+}
+
+/* Interactive state layer — M3 hover/press feedback on items */
+.item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--text-primary);
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  z-index: 2;
+}
+
+.item:hover::after {
+  opacity: 0.06;
+}
+
+.item:active::after {
+  opacity: 0.1;
+}
+
+/* Focus ring for keyboard nav (WCAG) */
+.item:focus-visible {
+  outline: 3px solid var(--accent-color, #6750a4);
+  outline-offset: 2px;
+}
+
+/* ── Layout: hero ────────────────────────────────────────────────── */
+/* M3 hero carousel: one large item + small peek items on edges.
+   Large item takes ~80% of viewport width.                        */
+
+.hero .item {
+  scroll-snap-align: center;
+}
+
+.hero .itemLarge {
+  min-width: min(calc(100% - 64px), 560px);
+}
+
+.hero .itemSmall {
+  min-width: clamp(40px, 15%, 100px);
+  opacity: 0.85;
+}
+
+/* ── Layout: center ──────────────────────────────────────────────── */
+/* Center-aligned variant where active item centers in viewport.   */
+
+.center .track {
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: calc(50% - var(--carousel-item-width, 200px) / 2);
+}
+
+.center .item {
+  scroll-snap-align: center;
+}
+
+/* ── Layout: multiBrowse (default) ───────────────────────────────── */
+/* M3 multi-browse: items are equally sized, scroll in a row.
+   Good for browsing multiple items at once.                       */
+
+.multiBrowse .item {
+  scroll-snap-align: start;
+}
+
+.multiBrowse .track {
+  scroll-padding-inline-start: var(--carousel-gap, 8px);
+}
+
+/* ── Layout: fullWidth ───────────────────────────────────────────── */
+/* Full-width carousel: each item takes 100% width.
+   Used for full-screen hero banners.                              */
+
+.fullWidth .item {
+  min-width: 100%;
+  scroll-snap-align: start;
+}
+
+/* ── Item media ──────────────────────────────────────────────────── */
+/* M3 carousel items contain visual content: images or video.
+   Images use object-fit: cover for full-bleed presentation.       */
+
+.itemMedia {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Item label ──────────────────────────────────────────────────── */
+/* M3 spec: optional label text overlaid at the bottom of the item.
+   Uses a gradient scrim for legibility over images.
+   Typography: label-large (14px/20px, weight 500).                */
+
+.itemLabel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: linear-gradient(
+    to top,
+    rgb(0 0 0 / 0.6) 0%,
+    rgb(0 0 0 / 0.3) 60%,
+    transparent 100%
+  );
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.itemLabelTitle {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.itemLabelSubtitle {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* ── Navigation arrows ───────────────────────────────────────────── */
+/* M3 spec: icon buttons for prev/next navigation.
+   Appear on hover (desktop); always visible on focus.
+   Shape: circular, 48px touch target, with state layer.           */
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg-secondary, #fff);
+  color: var(--text-primary, #1d1b20);
+  cursor: pointer;
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.2),
+    0 2px 6px 2px rgb(0 0 0 / 0.1);
+  opacity: 0;
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    background 150ms ease,
+    transform 150ms ease;
+  will-change: opacity;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.carousel:hover .navButton:not(:disabled),
+.carousel:focus-within .navButton:not(:disabled) {
+  opacity: 1;
+}
+
+.navButton:hover {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, var(--bg-secondary, #fff));
+}
+
+.navButton:active {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, var(--bg-secondary, #fff));
+  transform: translateY(-50%) scale(0.95);
+}
+
+.navButton:focus-visible {
+  outline: 3px solid var(--accent-color, #6750a4);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.navButton:disabled {
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+}
+
+.navPrev {
+  left: 12px;
+}
+
+.navNext {
+  right: 12px;
+}
+
+/* Arrow icon SVG */
+.navIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Dot indicators ──────────────────────────────────────────────── */
+/* M3 spec: small dots indicating current position.
+   Active dot uses primary color, inactive uses on-surface at 38%.
+   Interactive: clicking a dot scrolls to the corresponding item.  */
+
+.indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 0 4px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  background: var(--text-secondary, #49454f);
+  opacity: 0.38;
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    background 200ms cubic-bezier(0.2, 0, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dot:hover {
+  opacity: 0.6;
+  transform: scale(1.25);
+}
+
+.dotActive {
+  background: var(--accent-color, #6750a4);
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+.dotActive:hover {
+  opacity: 1;
+  transform: scale(1.35);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--accent-color, #6750a4);
+  outline-offset: 2px;
+}
+
+/* ── Peek edge fade ─────────────────────────────────────────────── */
+/* Subtle fade at edges to signal more content is scrollable.      */
+
+.carousel.hasPeek::before,
+.carousel.hasPeek::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.carousel.hasPeek::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-primary, #fff), transparent);
+}
+
+.carousel.hasPeek::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-primary, #fff), transparent);
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+/* Accessibility: disable animations for users who prefer reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    scroll-behavior: auto;
+  }
+
+  .item {
+    transition: none;
+  }
+
+  .navButton {
+    transition: opacity 0ms;
+  }
+
+  .dot {
+    transition: none;
+  }
+}

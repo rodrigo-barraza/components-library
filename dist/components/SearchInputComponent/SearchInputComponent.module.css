@@ -1,0 +1,353 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SearchInputComponent — Material Design 3 Search
+   Two anatomies: Search Bar (collapsed) + Search View (expanded)
+   Specs: https://m3.material.io/components/search/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Search container ────────────────────────────────────────────── */
+
+.searchRoot {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Search Bar (collapsed state) ────────────────────────────────── */
+/* M3 spec: 56px height, full-round shape (28px radius), surface-container-high */
+
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 56px;
+  padding: 0 4px 0 16px;
+  background: var(--bg-tertiary, var(--bg-secondary));
+  border: 1px solid transparent;
+  border-radius: 28px;
+  cursor: text;
+  transition:
+    background 200ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 200ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+    border-radius 250ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: border-radius, box-shadow;
+}
+
+.searchBar.compact {
+  height: 48px;
+  padding: 0 4px 0 12px;
+  border-radius: 24px;
+}
+
+/* ── State layer (bar) ───────────────────────────────────────────── */
+
+.searchBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--text-primary);
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.searchBar:hover::before {
+  opacity: 0.06;
+}
+
+/* ── Leading icon ─────────────────────────────────────────────────── */
+/* M3: 24px icon, 48px touch target implied by padding */
+
+.leadingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--text-primary);
+  pointer-events: none;
+}
+
+.compact .leadingIcon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Input field ──────────────────────────────────────────────────── */
+/* M3: body-large (16px/24px/400) */
+
+.searchField {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  outline: none;
+  caret-color: var(--accent-color);
+}
+
+.compact .searchField {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0 6px;
+}
+
+.searchField::placeholder {
+  color: var(--text-secondary);
+}
+
+.searchField::-webkit-search-cancel-button,
+.searchField::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ── Trailing icon button ─────────────────────────────────────────── */
+/* M3 trailing icons: avatar/icon, 48px touch target */
+
+.trailingAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition:
+    background 150ms cubic-bezier(0.2, 0, 0, 1),
+    color 150ms;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.compact .trailingAction {
+  width: 36px;
+  height: 36px;
+}
+
+.trailingAction:hover {
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+.trailingAction:active {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+.trailingAction:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.trailingAction svg {
+  display: block;
+}
+
+/* ── Focus ring on bar ────────────────────────────────────────────── */
+/* M3 search bars rely on caret + expanded-view morphing for focus
+   indication — no outline ring on the collapsed bar container. */
+
+/* ── Expanded state (search view) ────────────────────────────────── */
+/* M3: The bar morphs into a full search view with rounded-top corners
+   and a suggestions panel below */
+
+.searchBar.expanded {
+  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+  border-color: var(--border-color);
+  background: var(--bg-secondary);
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.12),
+    0 2px 6px 2px rgb(0 0 0 / 0.08);
+}
+
+.searchBar.expanded:focus-within {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.12),
+    0 2px 6px 2px rgb(0 0 0 / 0.08);
+  border-color: var(--border-color);
+}
+
+/* ── Suggestions panel (search view body) ────────────────────────── */
+
+.suggestionsPanel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 0;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid transparent;
+  border-top: none;
+  border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    max-height 250ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: max-height, opacity, transform;
+}
+
+.suggestionsPanel.open {
+  max-height: 400px;
+  opacity: 1;
+  transform: translateY(0);
+  border-color: var(--border-color);
+  box-shadow:
+    0 2px 3px 0 rgb(0 0 0 / 0.10),
+    0 6px 10px 4px rgb(0 0 0 / 0.06);
+  overflow-y: auto;
+}
+
+/* ── Divider between bar and suggestions ─────────────────────────── */
+
+.suggestionsDivider {
+  height: 1px;
+  margin: 0 16px;
+  background: var(--border-color);
+  flex-shrink: 0;
+}
+
+/* ── Suggestion group header ─────────────────────────────────────── */
+
+.suggestionGroupHeader {
+  padding: 12px 16px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted, var(--text-secondary));
+  user-select: none;
+}
+
+/* ── Suggestion item ─────────────────────────────────────────────── */
+/* M3 list-item anatomy: 56px height, leading icon, text, trailing icon */
+
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 16px;
+  min-height: 48px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: background 120ms cubic-bezier(0.2, 0, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.suggestionItem:hover {
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+}
+
+.suggestionItem:active {
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+.suggestionItem.highlighted {
+  background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+}
+
+.suggestionItem:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+  border-radius: var(--border-radius-sm);
+}
+
+/* ── Suggestion item parts ───────────────────────────────────────── */
+
+.suggestionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--text-secondary);
+}
+
+.suggestionText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggestionText mark {
+  background: transparent;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.suggestionTrailing {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: var(--text-muted, var(--text-secondary));
+  font-size: 12px;
+  gap: 4px;
+}
+
+/* ── Empty state in suggestions ──────────────────────────────────── */
+
+.suggestionsEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ── Scrim (overlay behind expanded search on mobile) ────────────── */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  background: rgb(0 0 0 / 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.scrim.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Accessibility: reduced motion ───────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .searchBar,
+  .suggestionsPanel,
+  .searchBar::before,
+  .trailingAction,
+  .suggestionItem {
+    transition-duration: 0ms;
+  }
+}

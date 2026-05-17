@@ -1,0 +1,461 @@
+/* ══════════════════════════════════════════════════════════════════════
+   FabMenuComponent — Material Design 3 FAB Menu (Speed Dial)
+   A FAB that reveals 3–6 related actions when activated.
+
+   M3 Spec: https://m3.material.io/components/fab-menu/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Container ──────────────────────────────────────────────────────
+   The root wrapper that positions the FAB and its menu items.
+   Establishes the stacking context and alignment point.
+   ──────────────────────────────────────────────────────────────────── */
+.fabMenu {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  z-index: 6;
+}
+
+/* ── Fixed positioning mode ─────────────────────────────────────── */
+.fixed {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 50;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * SCRIM — M3 semi-transparent overlay that dims background content
+ * when the FAB menu is expanded. Dismissible by tap.
+ * Opacity: 0.32 (M3 scrim token)
+ * ═══════════════════════════════════════════════════════════════════ */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 49;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.scrim[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * TRIGGER FAB — The primary FAB button that opens/closes the menu.
+ * M3 anatomy: container → state-layer → icon
+ * Height: 56px  ·  Corner radius: 16px
+ * Elevation: Level 3 resting → Level 4 hovered
+ * ═══════════════════════════════════════════════════════════════════ */
+.trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  z-index: 51;
+
+  /* Elevation level 3 */
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  transition:
+    background-color 200ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 280ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* ── Trigger icon ───────────────────────────────────────────────── */
+.triggerIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  z-index: 2;
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Rotate icon 45° when menu is open (close affordance) */
+.open .triggerIcon {
+  transform: rotate(45deg);
+}
+
+/* ── Trigger state layer (::before) ─────────────────────────────── */
+.trigger::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Trigger focus ring ─────────────────────────────────────────── */
+.trigger:focus-visible {
+  outline: 3px solid var(--accent-color, #6750A4);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * TRIGGER COLOR VARIANTS
+ * M3 FAB comes in primary, secondary, tertiary, surface
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Primary ────────────────────────────────────────────────────── */
+.triggerPrimary {
+  background-color: var(--accent-color, #6750A4);
+  color: var(--on-accent, #FFFFFF);
+}
+
+.triggerPrimary::before {
+  background-color: var(--on-accent, #FFFFFF);
+}
+
+.triggerPrimary:hover:not(:disabled) {
+  box-shadow:
+    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+}
+
+.triggerPrimary:hover:not(:disabled)::before {
+  opacity: 0.08;
+}
+
+.triggerPrimary:focus-visible::before {
+  opacity: 0.10;
+}
+
+.triggerPrimary:active:not(:disabled)::before {
+  opacity: 0.10;
+}
+
+.triggerPrimary:active:not(:disabled) {
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transform: scale(0.96);
+}
+
+/* ── Secondary ──────────────────────────────────────────────────── */
+.triggerSecondary {
+  background-color: var(--bg-secondary, #E8DEF8);
+  color: var(--text-primary, #1D192B);
+}
+
+.triggerSecondary::before {
+  background-color: var(--text-primary, #1D192B);
+}
+
+.triggerSecondary:hover:not(:disabled) {
+  box-shadow:
+    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+}
+
+.triggerSecondary:hover:not(:disabled)::before {
+  opacity: 0.08;
+}
+
+.triggerSecondary:focus-visible::before {
+  opacity: 0.10;
+}
+
+.triggerSecondary:active:not(:disabled)::before {
+  opacity: 0.10;
+}
+
+.triggerSecondary:active:not(:disabled) {
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transform: scale(0.96);
+}
+
+/* ── Tertiary ───────────────────────────────────────────────────── */
+.triggerTertiary {
+  background-color: var(--accent-subtle, #FFD8E4);
+  color: var(--text-primary, #31111D);
+}
+
+.triggerTertiary::before {
+  background-color: var(--text-primary, #31111D);
+}
+
+.triggerTertiary:hover:not(:disabled) {
+  box-shadow:
+    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+}
+
+.triggerTertiary:hover:not(:disabled)::before {
+  opacity: 0.08;
+}
+
+.triggerTertiary:focus-visible::before {
+  opacity: 0.10;
+}
+
+.triggerTertiary:active:not(:disabled)::before {
+  opacity: 0.10;
+}
+
+.triggerTertiary:active:not(:disabled) {
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transform: scale(0.96);
+}
+
+/* ── Surface ────────────────────────────────────────────────────── */
+.triggerSurface {
+  background-color: var(--bg-primary, #FFFBFE);
+  color: var(--accent-color, #6750A4);
+}
+
+.triggerSurface::before {
+  background-color: var(--accent-color, #6750A4);
+}
+
+.triggerSurface:hover:not(:disabled) {
+  box-shadow:
+    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+}
+
+.triggerSurface:hover:not(:disabled)::before {
+  opacity: 0.08;
+}
+
+.triggerSurface:focus-visible::before {
+  opacity: 0.10;
+}
+
+.triggerSurface:active:not(:disabled)::before {
+  opacity: 0.10;
+}
+
+.triggerSurface:active:not(:disabled) {
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transform: scale(0.96);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * MENU ITEMS LIST — stacks above the trigger FAB
+ * M3 spec: items appear in a vertical stack with 16px gap,
+ * staggered entrance animation from nearest to farthest.
+ * ═══════════════════════════════════════════════════════════════════ */
+.itemsList {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 16px;
+  padding-bottom: 16px;
+  z-index: 51;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * MENU ITEM — each action row: [label] + [small FAB]
+ * M3 anatomy: small-fab (40×40, radius 12) with optional text label
+ * ═══════════════════════════════════════════════════════════════════ */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(8px) scale(0.8);
+  pointer-events: none;
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Staggered entrance delays (nearest item first) */
+.menuItem:nth-child(1) { transition-delay: 0ms; }
+.menuItem:nth-child(2) { transition-delay: 35ms; }
+.menuItem:nth-child(3) { transition-delay: 70ms; }
+.menuItem:nth-child(4) { transition-delay: 105ms; }
+.menuItem:nth-child(5) { transition-delay: 140ms; }
+.menuItem:nth-child(6) { transition-delay: 175ms; }
+
+/* Visible state */
+.menuItemVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ── Item label ─────────────────────────────────────────────────── */
+.itemLabel {
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  color: var(--text-primary, #1C1B1F);
+  background: var(--bg-primary, #FFFBFE);
+
+  /* M3 elevation level 2 for label container */
+  box-shadow:
+    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+  /* Subtle reveal */
+  transition:
+    opacity 150ms cubic-bezier(0.2, 0, 0, 1),
+    transform 150ms cubic-bezier(0.2, 0, 0, 1);
+  user-select: none;
+}
+
+/* ── Small FAB (action icon) ────────────────────────────────────
+   M3: 40×40, 12px corner radius
+   Elevation: Level 3 resting
+   ──────────────────────────────────────────────────────────────── */
+.itemFab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  background-color: var(--bg-primary, #FFFBFE);
+  color: var(--accent-color, #6750A4);
+
+  /* Elevation level 3 */
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  transition:
+    background-color 200ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 280ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+
+  -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* ── Item FAB state layer ───────────────────────────────────────── */
+.itemFab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--accent-color, #6750A4);
+  opacity: 0;
+  transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.itemFab:hover::before {
+  opacity: 0.08;
+}
+
+.itemFab:focus-visible {
+  outline: 3px solid var(--accent-color, #6750A4);
+  outline-offset: 2px;
+}
+
+.itemFab:focus-visible::before {
+  opacity: 0.10;
+}
+
+.itemFab:active::before {
+  opacity: 0.10;
+}
+
+.itemFab:hover {
+  box-shadow:
+    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+}
+
+.itemFab:active {
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transform: scale(0.94);
+}
+
+/* ── Item FAB icon ──────────────────────────────────────────────── */
+.itemIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * TRIGGER RIPPLE
+ * ═══════════════════════════════════════════════════════════════════ */
+@keyframes fab-menu-ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.24;
+  }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0;
+  animation: fab-menu-ripple 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * REDUCED MOTION — respect prefers-reduced-motion
+ * ═══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .trigger::before,
+  .triggerIcon,
+  .menuItem,
+  .itemFab,
+  .itemFab::before,
+  .itemLabel,
+  .scrim {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+
+  .menuItem {
+    transition-delay: 0ms !important;
+  }
+}

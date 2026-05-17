@@ -1,0 +1,127 @@
+/* ─────────────────────────────────────────────────────────────
+ * ChatLauncherComponent — Floating Action Button
+ * ───────────────────────────────────────────────────────────── */
+
+.launcher {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: var(--chat-accent);
+  color: var(--chat-text-on-accent);
+  box-shadow: var(--chat-shadow-launcher);
+  transition:
+    transform var(--chat-transition),
+    background var(--chat-transition-fast),
+    box-shadow var(--chat-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  outline: none;
+
+  /* GPU compositing */
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    transform: scale(1.08);
+    background: var(--chat-accent-hover);
+    box-shadow:
+      0 6px 28px rgba(0, 0, 0, 0.35),
+      0 0 32px color-mix(in srgb, var(--chat-accent) 40%, transparent);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--chat-accent);
+    outline-offset: 3px;
+  }
+}
+
+.launcher.open {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--chat-shadow);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* ── Icons ──────────────────────────────────────────────────── */
+
+.icon {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  transition:
+    transform var(--chat-transition),
+    opacity var(--chat-transition);
+}
+
+.chatIcon {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.closeIcon {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.iconHidden {
+  transform: scale(0.5) rotate(90deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Unread Badge ──────────────────────────────────────────── */
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--chat-error, #ef4444);
+  color: var(--chat-text-on-accent);
+  font-family: var(--chat-font);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+  animation: badgePulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ── Mobile adjustments ────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .launcher {
+    width: 54px;
+    height: 54px;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+}

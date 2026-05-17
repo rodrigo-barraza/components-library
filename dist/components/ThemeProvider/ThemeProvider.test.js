@@ -1,0 +1,127 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+// @ts-nocheck
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { ThemeProvider, useTheme } from "./ThemeProvider.js";
+/* ── Helpers ──────────────────────────────────────────────── */
+function ThemeReader() {
+    const { theme, themes, mounted, toggleTheme, setTheme } = useTheme();
+    return (_jsxs("div", { children: [_jsx("span", { "data-testid": "theme", children: theme }), _jsx("span", { "data-testid": "themes", children: themes.join(",") }), _jsx("span", { "data-testid": "mounted", children: String(mounted) }), _jsx("button", { "data-testid": "toggle", onClick: toggleTheme, children: "Toggle" }), _jsx("button", { "data-testid": "set-light", onClick: () => setTheme("light"), children: "Light" }), _jsx("button", { "data-testid": "set-dark", onClick: () => setTheme("dark"), children: "Dark" }), _jsx("button", { "data-testid": "set-invalid", onClick: () => setTheme("neon"), children: "Invalid" })] }));
+}
+function renderWithTheme(props = {}) {
+    return render(_jsx(ThemeProvider, { ...props, children: _jsx(ThemeReader, {}) }));
+}
+/* ── Tests ────────────────────────────────────────────────── */
+describe("ThemeProvider", () => {
+    beforeEach(() => {
+        localStorage.clear();
+        document.documentElement.removeAttribute("data-theme");
+    });
+    it("defaults to dark theme", () => {
+        renderWithTheme();
+        expect(screen.getByTestId("theme").textContent).toBe("dark");
+    });
+    it("accepts a custom defaultTheme", () => {
+        renderWithTheme({ defaultTheme: "light" });
+        expect(screen.getByTestId("theme").textContent).toBe("light");
+    });
+    it("sets data-theme attribute on <html> after mount", async () => {
+        renderWithTheme({ defaultTheme: "dark" });
+        // After mount effect runs, attribute should be set
+        await vi.waitFor(() => {
+            expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+        });
+    });
+    it("toggles through all 10 default themes and wraps around", async () => {
+        const user = userEvent.setup();
+        renderWithTheme();
+        const expectedCycle = ["light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "dark"];
+        for (const expected of expectedCycle) {
+            await user.click(screen.getByTestId("toggle"));
+            expect(screen.getByTestId("theme").textContent).toBe(expected);
+            expect(document.documentElement.getAttribute("data-theme")).toBe(expected);
+        }
+    });
+    it("persists theme to localStorage", async () => {
+        const user = userEvent.setup();
+        renderWithTheme({ storageKey: "test:theme" });
+        await user.click(screen.getByTestId("toggle"));
+        expect(JSON.parse(localStorage.getItem("test:theme"))).toBe("light");
+    });
+    it("hydrates from localStorage on mount", async () => {
+        localStorage.setItem("test:theme", JSON.stringify("light"));
+        renderWithTheme({ storageKey: "test:theme" });
+        await vi.waitFor(() => {
+            expect(screen.getByTestId("theme").textContent).toBe("light");
+        });
+    });
+    it("ignores invalid stored values", async () => {
+        localStorage.setItem("test:theme", JSON.stringify("neon"));
+        renderWithTheme({ storageKey: "test:theme", defaultTheme: "dark" });
+        await vi.waitFor(() => {
+            expect(screen.getByTestId("theme").textContent).toBe("dark");
+        });
+    });
+    it("setTheme applies a valid theme directly", async () => {
+        const user = userEvent.setup();
+        renderWithTheme();
+        await user.click(screen.getByTestId("set-light"));
+        expect(screen.getByTestId("theme").textContent).toBe("light");
+    });
+    it("setTheme rejects an invalid theme", async () => {
+        const user = userEvent.setup();
+        renderWithTheme();
+        await user.click(screen.getByTestId("set-invalid"));
+        // Should stay on dark since "neon" is not in the default themes list
+        expect(screen.getByTestId("theme").textContent).toBe("dark");
+    });
+    it("setTheme accepts muted, tropical, and oceanic via toggle cycle", async () => {
+        const user = userEvent.setup();
+        renderWithTheme();
+        // Cycle dark → light → muted → tropical → oceanic
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("light");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("muted");
+        expect(document.documentElement.getAttribute("data-theme")).toBe("muted");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("tropical");
+        expect(document.documentElement.getAttribute("data-theme")).toBe("tropical");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("oceanic");
+        expect(document.documentElement.getAttribute("data-theme")).toBe("oceanic");
+    });
+    it("cycles through custom multi-theme list", async () => {
+        const user = userEvent.setup();
+        renderWithTheme({
+            themes: ["dark", "light", "midnight", "tropical"],
+            defaultTheme: "dark",
+        });
+        expect(screen.getByTestId("themes").textContent).toBe("dark,light,midnight,tropical");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("light");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("midnight");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("tropical");
+        await user.click(screen.getByTestId("toggle"));
+        expect(screen.getByTestId("theme").textContent).toBe("dark");
+    });
+    it("supports a custom attribute name", async () => {
+        const user = userEvent.setup();
+        renderWithTheme({ attribute: "data-color-mode" });
+        await vi.waitFor(() => {
+            expect(document.documentElement.getAttribute("data-color-mode")).toBe("dark");
+        });
+        await user.click(screen.getByTestId("toggle"));
+        expect(document.documentElement.getAttribute("data-color-mode")).toBe("light");
+    });
+    it("exposes mounted=true after hydration", async () => {
+        renderWithTheme();
+        await vi.waitFor(() => {
+            expect(screen.getByTestId("mounted").textContent).toBe("true");
+        });
+    });
+});
+//# sourceMappingURL=ThemeProvider.test.js.map

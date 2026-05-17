@@ -1,0 +1,192 @@
+/* ══════════════════════════════════════════════════════════
+   TooltipComponent — M3-inspired
+   Two variants: Plain (label) and Rich.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Wrapper (inline-flex anchor) ── */
+.wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.hoverTrigger {
+  cursor: default;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Shared bubble base (portal, fixed positioning)
+   ══════════════════════════════════════════════════════════ */
+.bubble {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  user-select: none;
+
+  /* entrance animation */
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 150ms cubic-bezier(0, 0, 0.2, 1),
+    transform 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Plain (Label) Tooltip — M3 Spec
+   • Container: inverse-surface, 4px radius
+   • Padding:   4px 8px
+   • Text:      body-small (12px / 16px lh), inverse-on-surface
+   • Max width: 200px
+   • No elevation
+   ══════════════════════════════════════════════════════════ */
+.plain {
+  max-width: 200px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--tooltip-bg, var(--bg-inverse, #313033));
+  color: var(--tooltip-color, var(--text-inverse, #f4eff4));
+  /* No elevation for plain tooltips (M3) */
+  box-shadow: none;
+}
+
+.plainLabel {
+  font-size: 0.75rem;           /* 12px — body-small */
+  line-height: 1rem;            /* 16px */
+  font-weight: 400;
+  letter-spacing: 0.025em;      /* 0.4px */
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Rich Tooltip — M3 Spec
+   • Container: surface-container, 12px radius, elevation 2
+   • Min width: 200px, max width: 320px
+   • Padding:   12px 16px
+   • Subhead:   title-small (14px / 20px lh, 500 weight)
+   • Body:      body-medium (14px / 20px lh, 400 weight)
+   • Action:    label-large text button
+   • Interactive — receives pointer events
+   ══════════════════════════════════════════════════════════ */
+.rich {
+  min-width: 200px;
+  max-width: 320px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--bg-card, #2b2930);
+  color: var(--text-primary, #e6e1e5);
+  border: 1px solid var(--border-color, rgba(255 255 255 / 0.08));
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+  /* Rich tooltips are interactive — can contain links/buttons */
+  pointer-events: auto;
+}
+
+.richContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.richTitle {
+  font-size: 0.875rem;          /* 14px — title-small */
+  line-height: 1.25rem;         /* 20px */
+  font-weight: 500;
+  letter-spacing: 0.006em;      /* 0.1px */
+  color: var(--text-primary, #e6e1e5);
+}
+
+.richBody {
+  font-size: 0.875rem;          /* 14px — body-medium */
+  line-height: 1.25rem;         /* 20px */
+  font-weight: 400;
+  letter-spacing: 0.016em;      /* 0.25px */
+  color: var(--text-secondary, #cac4d0);
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.richAction {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Positional offsets (top / bottom / left / right)
+   Uses CSS translate for centering relative to anchor.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── top: centered above anchor, translate up fully ── */
+.top {
+  translate: -50% -100%;
+}
+
+/* ── bottom: centered below anchor ── */
+.bottom {
+  translate: -50% 0;
+}
+
+/* ── left: centered to the left ── */
+.left {
+  translate: -100% -50%;
+}
+
+/* ── right: centered to the right ── */
+.right {
+  translate: 0 -50%;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Motion: per-position entrance direction
+   Uses transform-origin and subtle directional slide.
+   GPU-composited via will-change.
+   ══════════════════════════════════════════════════════════ */
+.bubble {
+  will-change: opacity, transform;
+}
+
+.top.bubble:not(.visible) {
+  transform: scale(0.85) translateY(4px);
+}
+
+.bottom.bubble:not(.visible) {
+  transform: scale(0.85) translateY(-4px);
+}
+
+.left.bubble:not(.visible) {
+  transform: scale(0.85) translateX(4px);
+}
+
+.right.bubble:not(.visible) {
+  transform: scale(0.85) translateX(-4px);
+}
+
+/* ── Visible state resets directional slide ── */
+.top.visible,
+.bottom.visible,
+.left.visible,
+.right.visible {
+  transform: scale(1) translate(0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Reduced motion preference
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    transition: opacity 0ms;
+    transform: none !important;
+  }
+
+  .visible {
+    transform: none !important;
+  }
+}

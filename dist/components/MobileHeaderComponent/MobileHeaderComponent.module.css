@@ -1,0 +1,82 @@
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 12px;
+  background: var(--bg-secondary, #1e1e1e);
+  border-bottom: 1px solid var(--border-color, #333);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  flex-shrink: 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-sm, 6px);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary, #aaa);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background var(--transition-fast, 0.15s),
+    color var(--transition-fast, 0.15s);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menuButton:hover {
+  background: var(--accent-subtle, rgba(255,255,255,0.05));
+  color: var(--text-primary, #fff);
+}
+
+.menuButton:active {
+  transform: scale(0.92);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.brandIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: var(--border-radius-sm, 4px);
+  flex-shrink: 0;
+}
+
+.brandIconNode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brandLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}

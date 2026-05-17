@@ -1,0 +1,360 @@
+/* ============================================================
+   SnackbarComponent — M3 Snackbar
+   Spec: https://m3.material.io/components/snackbar/specs
+   ============================================================
+
+   M3 Snackbar anatomy:
+
+   Single-line:
+   ┌──────────────────────────────────────────────────────┐
+   │  Supporting text                    [Action] [Close] │
+   └──────────────────────────────────────────────────────┘
+
+   Multi-line (with longer action):
+   ┌──────────────────────────────────────────────────────┐
+   │  Supporting text that wraps                  [Close] │
+   │  to multiple lines                                   │
+   │                                             [Action] │
+   └──────────────────────────────────────────────────────┘
+
+   Elevation:    Level 3
+   Shape:        4dp (extra-small)
+   Container:    inverse-surface
+   Text:         inverse-on-surface
+   Action:       inverse-primary
+   Min width:    288dp (phone = full width − 2 × 8dp)
+   Max width:    560dp
+
+   Duration:     4–10 seconds (default 6s)
+   Position:     bottom center, 8dp from edges
+   Queue:        only one snackbar visible at a time
+*/
+
+/* ── Host / portal container ─────────────────────────── */
+
+.host {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+
+  /* M3: 8dp from bottom edge, extra padding if FAB present */
+  padding: 0 8px 8px;
+}
+
+/* ── Container ───────────────────────────────────────── */
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+
+  /* M3 spec: min 288, max 560 */
+  min-width: 288px;
+  max-width: 560px;
+  width: auto;
+
+  /* M3 spec: inverse-surface container */
+  background: var(--snackbar-container-bg, var(--color-inverse-surface, #2f3033));
+  border-radius: 4px;
+
+  /* M3 Level 3 elevation */
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  /* Enter animation */
+  animation: snackbarEnter 300ms cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
+  will-change: transform, opacity;
+
+  /* Smooth transition for layout changes */
+  transition: min-height 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.container[data-exiting="true"] {
+  animation: snackbarExit 200ms cubic-bezier(0.3, 0, 0.8, 0.15) forwards;
+}
+
+/* ── Single-line layout ──────────────────────────────── */
+/* Default: vertically centered content, 48dp min height */
+
+.container.singleLine {
+  min-height: 48px;
+  padding: 0 8px 0 16px;
+  gap: 0;
+}
+
+/* Without action or close — just text padding */
+.container.singleLine.textOnly {
+  padding: 0 16px;
+}
+
+/* ── Multi-line layout ───────────────────────────────── */
+
+.container.multiLine {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  min-height: 68px;
+  padding: 12px 8px 12px 16px;
+  gap: 0;
+}
+
+.container.multiLine.textOnly {
+  padding: 12px 16px;
+}
+
+/* ── Longer-action layout (action on second row) ─────── */
+
+.container.longerAction {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  min-height: 68px;
+  padding: 0;
+}
+
+/* ── Supporting text ─────────────────────────────────── */
+
+.supportingText {
+  flex: 1 1 0%;
+  min-width: 0;
+
+  /* M3 body-medium: 14/20, 400, +0.25 letter-spacing */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+
+  /* M3 spec: inverse-on-surface */
+  color: var(--snackbar-text-color, var(--color-inverse-on-surface, #f4eff4));
+
+  /* Prevent absurd wrapping on short containers */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Single-line: vertically center the text */
+.singleLine .supportingText {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+}
+
+/* Multi-line: top-aligned with appropriate padding */
+.multiLine .supportingText {
+  padding: 0;
+  margin-right: 8px;
+}
+
+/* Longer-action: text in first row, full-width */
+.longerAction .supportingText {
+  flex: 1 1 100%;
+  padding: 12px 40px 0 16px;
+}
+
+/* ── Action button ───────────────────────────────────── */
+
+.action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  height: 48px;
+  min-width: 48px;
+  padding: 0 12px;
+
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+
+  /* M3 label-large: 14/20, 500 */
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 0.1px;
+
+  /* M3 spec: inverse-primary */
+  color: var(--snackbar-action-color, var(--color-inverse-primary, #d0bcff));
+
+  /* State layer */
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 150ms cubic-bezier(0.2, 0, 0, 1);
+
+  white-space: nowrap;
+}
+
+.action::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+}
+
+/* M3 hover state layer: 8% */
+.action:hover::before {
+  opacity: 0.08;
+}
+
+/* M3 focus state layer: 12% */
+.action:focus-visible {
+  outline: none;
+}
+
+.action:focus-visible::before {
+  opacity: 0.12;
+}
+
+/* M3 pressed state layer: 12% */
+.action:active::before {
+  opacity: 0.12;
+}
+
+/* Longer-action: action on second row, end-aligned */
+.longerAction .action {
+  margin-left: auto;
+  margin-right: 8px;
+  margin-bottom: 2px;
+}
+
+/* ── Close icon button ───────────────────────────────── */
+
+.closeBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* M3 icon button: 48dp touch target, 24dp icon */
+  width: 48px;
+  height: 48px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+
+  /* M3 spec: inverse-on-surface */
+  color: var(--snackbar-close-color, var(--color-inverse-on-surface, #f4eff4));
+
+  /* State layer */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.closeBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+}
+
+.closeBtn:hover::before {
+  opacity: 0.08;
+}
+
+.closeBtn:focus-visible {
+  outline: none;
+}
+
+.closeBtn:focus-visible::before {
+  opacity: 0.12;
+}
+
+.closeBtn:active::before {
+  opacity: 0.12;
+}
+
+.closeBtn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Absolute position close in longer-action layout */
+.longerAction .closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* ── Animations ──────────────────────────────────────── */
+
+@keyframes snackbarEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes snackbarExit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+}
+
+/* ── Responsive — phone (< 600dp) ────────────────────── */
+/* M3: on phone, snackbar fills full width minus margins */
+
+@media (max-width: 600px) {
+  .host {
+    align-items: stretch;
+  }
+
+  .container {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* ── Responsive — expanded (>= 1240dp) ───────────────── */
+/* M3: on expanded/desktop, snackbar aligns to leading edge */
+
+@media (min-width: 1240px) {
+  .host {
+    align-items: flex-start;
+    padding-left: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .container[data-exiting="true"] {
+    animation-duration: 1ms !important;
+  }
+}

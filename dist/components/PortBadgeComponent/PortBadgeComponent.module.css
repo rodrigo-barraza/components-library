@@ -1,0 +1,8 @@
+/* ── PortBadgeComponent ────────────────────────────── */
+
+.badge {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}

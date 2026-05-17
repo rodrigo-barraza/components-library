@@ -1,0 +1,286 @@
+/* ── SliderComponent · M3 Spec ───────────────────────────
+   M3 Active track:    4px height, primary color, 2px radius
+   M3 Inactive track:  4px height, surface-variant color
+   M3 Handle (thumb):  20px diameter, primary fill, shadow
+   M3 State layer:     40px diameter, centered on thumb
+   M3 Value indicator: rounded label above thumb on drag
+   M3 Tick marks:      4×4px circles on track at each step
+   M3 Stop indicators: 4×4px dots at track endpoints
+   ──────────────────────────────────────────────────────── */
+
+/* ── Root ────────────────────────────────────────────── */
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 8px 0;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slider.disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Track wrapper — ensures proper spacing for thumbs ─ */
+
+.trackWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* Extra horizontal padding for thumb overhang (10px = half of 20px thumb) */
+  padding: 0 10px;
+}
+
+/* ── Track — the interactive hit area ────────────────── */
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 44px;               /* M3 48dp minimum touch target via padding */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* ── Inactive track — background rail ────────────────── */
+
+.inactiveTrack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--slider-inactive-track, var(--surface-variant, color-mix(in srgb, var(--text-primary, #49454f) 12%, var(--bg-primary, #e7e0ec))));
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* ── Active track — filled portion ───────────────────── */
+
+.activeTrack {
+  position: absolute;
+  height: 4px;
+  background: var(--slider-active-track, var(--accent-color, #6750a4));
+  border-radius: 2px;
+  pointer-events: none;
+  transition: width 0.05s linear;
+  will-change: width, left;
+  min-width: 0;
+}
+
+/* ── Stop indicators — 4×4 dots at track endpoints ───── */
+
+.stopIndicator {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.stopStart {
+  left: 0;
+  background: var(--slider-stop-active, var(--accent-color, #6750a4));
+}
+
+.stopEnd {
+  right: 0;
+  background: var(--slider-stop-inactive, var(--text-secondary, #49454f));
+}
+
+/* Show stop indicators when there's some fill */
+.track .stopStart,
+.track .stopEnd {
+  opacity: 0.38;
+}
+
+/* ── Tick marks — discrete step indicators ───────────── */
+
+.tickMark {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  z-index: 1;
+}
+
+.tickActive {
+  background: var(--slider-tick-active, color-mix(in srgb, var(--accent-color, #6750a4) 38%, transparent));
+}
+
+.tickInactive {
+  background: var(--slider-tick-inactive, color-mix(in srgb, var(--text-primary, #49454f) 38%, transparent));
+}
+
+/* ── Thumb container — positions thumb + state layer ─── */
+
+.thumbContainer {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: left;
+  outline: none;
+}
+
+/* ── State layer — 40×40 M3 circular hover/press zone ── */
+
+.stateLayer {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s ease;
+  will-change: background;
+  pointer-events: none;
+}
+
+/* Hover state */
+.thumbContainer:hover .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+}
+
+/* Focus-visible state (keyboard) */
+.thumbContainer:focus-visible .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* Active / pressed state */
+.thumbPressed .stateLayer,
+.thumbDragging .stateLayer {
+  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+}
+
+/* ── Thumb handle — the 20px primary circle ──────────── */
+
+.thumb {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--slider-thumb, var(--accent-color, #6750a4));
+  box-shadow:
+    0 1px 3px 1px rgba(0, 0, 0, 0.15),
+    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+  z-index: 1;
+}
+
+/* Hover — slight scale-up */
+.thumbContainer:hover .thumb {
+  box-shadow:
+    0 2px 4px 1px rgba(0, 0, 0, 0.18),
+    0 1px 3px 0 rgba(0, 0, 0, 0.33);
+}
+
+/* Pressed/dragging — thumb grows per M3 spec */
+.thumbPressed .thumb,
+.thumbDragging .thumb {
+  transform: scale(1.1);
+  box-shadow:
+    0 2px 6px 2px rgba(0, 0, 0, 0.15),
+    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+
+/* Focus-visible ring (keyboard) */
+.thumbContainer:focus-visible .thumb {
+  outline: 2px solid var(--slider-focus-ring, var(--accent-color, #6750a4));
+  outline-offset: 2px;
+}
+
+/* ── Value indicator — M3 teardrop label ─────────────── */
+
+.valueIndicator {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 14px;
+  background: var(--slider-indicator-bg, var(--accent-color, #6750a4));
+  color: var(--slider-indicator-color, var(--accent-text, #fff));
+  pointer-events: none;
+  z-index: 10;
+  /* Scale-in entrance animation */
+  animation: indicatorIn 0.15s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+@keyframes indicatorIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+}
+
+/* ── Indicator stem (pseudo-element teardrop tail) ───── */
+
+.valueIndicator::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--slider-indicator-bg, var(--accent-color, #6750a4));
+}
+
+.valueLabel {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Disabled-specific overrides ─────────────────────── */
+
+.disabled .inactiveTrack {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
+}
+
+.disabled .activeTrack {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
+}
+
+.disabled .thumb {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
+  box-shadow: none;
+}
+
+.disabled .tickActive,
+.disabled .tickInactive {
+  background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
+}

@@ -1,0 +1,339 @@
+/* ══════════════════════════════════════════════════════════════════════
+   TopAppBarComponent — Material Design 3 Top App Bar
+   Displays navigation, title, and actions at the top of a screen.
+
+   Four sub-types per M3 spec:
+     • center-aligned  — 64dp, centered title
+     • small           — 64dp, left-aligned title
+     • medium          — 112dp, expanded with two-row title
+     • large           — 152dp, expanded with prominent headline
+
+   Scroll behavior:
+     • Flat at rest (elevation 0), elevated on scroll (elevation 2)
+     • medium/large collapse to 64dp on scroll with title transition
+
+   Specs:  https://m3.material.io/components/app-bars/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Root container ──────────────────────────────────────────────── */
+
+.topAppBar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-shrink: 0;
+  background: var(--bg-surface, var(--bg-secondary));
+  color: var(--text-primary);
+  z-index: 10;
+  transition:
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+    background 200ms cubic-bezier(0.2, 0, 0, 1);
+  animation: topBarSlideIn 250ms cubic-bezier(0, 0, 0, 1) both;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* ── Elevation states ────────────────────────────────────────────── */
+/* M3: flat (elevation 0) at rest, elevation 2 on scroll            */
+
+.elevated {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.08),
+    0 2px 6px 2px rgb(0 0 0 / 0.04);
+}
+
+/* ── Main row (always visible: nav icon + title + actions) ───────── */
+/* M3 spec: 64dp fixed height for the main row across all variants  */
+
+.mainRow {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  min-height: 64px;
+  padding: 0 4px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ── Navigation icon slot ────────────────────────────────────────── */
+/* M3 spec: leading icon 48×48dp touch target, 4dp from left edge   */
+
+.navSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: background 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+.navButton:hover {
+  background: var(--hover-overlay, rgb(0 0 0 / 0.06));
+}
+
+.navButton:active {
+  background: var(--press-overlay, rgb(0 0 0 / 0.1));
+}
+
+/* ── Title area ──────────────────────────────────────────────────── */
+
+.titleArea {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 4px;
+  overflow: hidden;
+}
+
+.title {
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: inherit;
+  transition:
+    font-size 200ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Center-aligned variant ──────────────────────────────────────── */
+/* M3 spec: title-large (22px), centered in the main row            */
+
+.centerAligned .titleArea {
+  text-align: center;
+}
+
+.centerAligned .title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+}
+
+/* ── Small variant ───────────────────────────────────────────────── */
+/* M3 spec: title-large (22px), left-aligned                        */
+
+.small .title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+}
+
+/* ── Medium variant ──────────────────────────────────────────────── */
+/* M3 spec: 112dp total height (expanded), headline-small (24px)    */
+/* On scroll: collapses to 64dp, title transitions to main row      */
+
+.medium .mainRow .title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.medium.collapsed .mainRow .title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Large variant ───────────────────────────────────────────────── */
+/* M3 spec: 152dp total height (expanded), headline-medium (28px)   */
+/* On scroll: collapses to 64dp, title transitions to main row      */
+
+.large .mainRow .title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.large.collapsed .mainRow .title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Expanded title row (medium & large only) ────────────────────── */
+/* Additional row below the main row for the prominent headline     */
+
+.expandedRow {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px 20px 16px;
+  overflow: hidden;
+  transition:
+    height 250ms cubic-bezier(0.2, 0, 0, 1),
+    padding 250ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: height, padding, opacity;
+}
+
+/* Medium expanded row: 48dp (112 - 64 main row) */
+.medium .expandedRow {
+  height: 48px;
+  min-height: 0;
+}
+
+.medium .expandedTitle {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    opacity 150ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Large expanded row: 88dp (152 - 64 main row) */
+.large .expandedRow {
+  height: 88px;
+  min-height: 0;
+  align-items: flex-end;
+  padding-bottom: 28px;
+}
+
+.large .expandedTitle {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  overflow: hidden;
+  /* Large title can wrap to 2 lines per M3 guidelines */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  transition:
+    opacity 150ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Collapsed state (medium & large) ────────────────────────────── */
+
+.collapsed .expandedRow {
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Actions slot ────────────────────────────────────────────────── */
+/* M3 spec: up to 3 trailing icon buttons, 48×48dp touch targets    */
+
+.actionsSlot {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary, var(--text-primary));
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: background 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+.actionButton:hover {
+  background: var(--hover-overlay, rgb(0 0 0 / 0.06));
+}
+
+.actionButton:active {
+  background: var(--press-overlay, rgb(0 0 0 / 0.1));
+}
+
+.actionButton[disabled] {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ── Entrance animation ──────────────────────────────────────────── */
+
+@keyframes topBarSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Scroll progress shadow (thin accent line for polish) ────────── */
+/* A subtle 2px gradient line under the bar when elevated — wabi-sabi */
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent-color);
+  opacity: 0.25;
+  transition: width 300ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+  border-radius: 0 1px 1px 0;
+}

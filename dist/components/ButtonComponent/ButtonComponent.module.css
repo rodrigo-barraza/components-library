@@ -1,0 +1,557 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ButtonComponent — Material Design 3 Common Buttons
+   Five types: filled, outlined, text, elevated, tonal
+   Plus legacy variants: primary, secondary, disabled, destructive,
+                         creative, submit
+   Specs: https://m3.material.io/components/buttons/specs
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Base ────────────────────────────────────────────────────────────
+   M3 common-button foundation.
+   Height: 40px  |  Shape: full (20px radius)
+   Typography: label-large (500, 14px, 20px line-height)
+   ──────────────────────────────────────────────────────────────────── */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 40px;
+  padding: 10px 24px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overflow: hidden;
+  isolation: isolate;
+
+  transition:
+    box-shadow 280ms cubic-bezier(0.2, 0, 0, 1),
+    background 200ms cubic-bezier(0.2, 0, 0, 1),
+    color 200ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 200ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── State layer ─────────────────────────────────────────────────────
+   M3 state layer overlay — sits above container, below content.
+   Opacity values per M3 spec:
+     Hover: 0.08  |  Focus: 0.10  |  Pressed: 0.10  |  Dragged: 0.16
+   ──────────────────────────────────────────────────────────────────── */
+
+.stateLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.btn:hover:not(:disabled) .stateLayer {
+  opacity: 0.08;
+}
+
+.btn:focus-visible:not(:disabled) .stateLayer {
+  opacity: 0.10;
+}
+
+.btn:active:not(:disabled) .stateLayer {
+  opacity: 0.10;
+}
+
+/* ── Ripple ──────────────────────────────────────────────────────────
+   M3 ripple indicator — radial expansion from touch/click point.
+   Uses CSS animation for GPU-composited performance.
+   ──────────────────────────────────────────────────────────────────── */
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  transform: scale(0);
+  opacity: 0.12;
+  animation: rippleExpand 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* ── Focus ring ──────────────────────────────────────────────────────
+   M3 focus indicator — 3px offset outline using accent color.
+   ──────────────────────────────────────────────────────────────────── */
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* ── Disabled state ──────────────────────────────────────────────────
+   M3 spec: container 12% on-surface, label 38% on-surface
+   ──────────────────────────────────────────────────────────────────── */
+
+.btn:disabled {
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* ── Content wrapper ─────────────────────────────────────────────────
+   Ensures text/icons stay above the state layer.
+   ──────────────────────────────────────────────────────────────────── */
+
+.label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   M3 BUTTON VARIANTS
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Filled (highest emphasis) ───────────────────────────────────────
+   Container: primary  |  Label: on-primary
+   Hover: shadow level 1  |  State layer color: on-primary
+   ──────────────────────────────────────────────────────────────────── */
+
+.filled {
+  background: var(--accent-color);
+  color: white;
+}
+
+.filled .stateLayer {
+  background: white;
+}
+
+.filled:hover:not(:disabled) {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.filled:disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+}
+
+/* ── Outlined ────────────────────────────────────────────────────────
+   Container: transparent + outline  |  Label: primary
+   No shadow  |  State layer color: primary
+   ──────────────────────────────────────────────────────────────────── */
+
+.outlined {
+  background: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+}
+
+.outlined .stateLayer {
+  background: var(--accent-color);
+}
+
+.outlined:hover:not(:disabled) {
+  border-color: var(--border-color);
+}
+
+.outlined:focus-visible {
+  border-color: var(--accent-color);
+}
+
+.outlined:disabled {
+  background: transparent;
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* ── Text (lowest emphasis) ──────────────────────────────────────────
+   Container: transparent, no outline  |  Label: primary
+   Reduced horizontal padding: 12px
+   State layer color: primary
+   ──────────────────────────────────────────────────────────────────── */
+
+.text {
+  background: transparent;
+  color: var(--accent-color);
+  padding: 10px 12px;
+}
+
+.text .stateLayer {
+  background: var(--accent-color);
+}
+
+.text:disabled {
+  background: transparent;
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+}
+
+/* ── Elevated ────────────────────────────────────────────────────────
+   Container: surface-container-low + shadow level 1  |  Label: primary
+   Hover: shadow level 2  |  State layer color: primary
+   ──────────────────────────────────────────────────────────────────── */
+
+.elevated {
+  background: var(--bg-secondary);
+  color: var(--accent-color);
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.elevated .stateLayer {
+  background: var(--accent-color);
+}
+
+.elevated:hover:not(:disabled) {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 2px 6px 2px rgb(0 0 0 / 0.10);
+}
+
+.elevated:disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  box-shadow: none;
+}
+
+/* ── Tonal (filled tonal) ────────────────────────────────────────────
+   Container: secondary-container  |  Label: on-secondary-container
+   Hover: shadow level 1  |  State layer color: on-secondary-container
+   ──────────────────────────────────────────────────────────────────── */
+
+.tonal {
+  background: var(--accent-subtle, color-mix(in srgb, var(--accent-color) 12%, var(--bg-secondary)));
+  color: var(--accent-color);
+}
+
+.tonal .stateLayer {
+  background: var(--accent-color);
+}
+
+.tonal:hover:not(:disabled) {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.tonal:disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  box-shadow: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   LEGACY VARIANTS (backward-compatible aliases)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Primary → maps to M3 Filled ────────────────────────────────── */
+
+.primary {
+  background: var(--accent-color);
+  color: white;
+}
+
+.primary .stateLayer {
+  background: white;
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.20),
+    0 1px 3px 1px rgb(0 0 0 / 0.10);
+}
+
+.primary:disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+}
+
+/* ── Secondary → maps to M3 Outlined ────────────────────────────── */
+
+.secondary {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.secondary .stateLayer {
+  background: var(--text-primary);
+}
+
+.secondary:hover:not(:disabled) {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.secondary:disabled {
+  background: transparent;
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* ── Disabled (legacy pass-through) ─────────────────────────────── */
+
+.disabled {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.disabled .stateLayer {
+  background: var(--text-primary);
+}
+
+.disabled:hover:not(:disabled) {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
+}
+
+/* ── Destructive ─────────────────────────────────────────────────── */
+
+.destructive {
+  background: var(--danger-subtle);
+  color: var(--danger);
+  border: 1px solid color-mix(in srgb, var(--danger) 20%, transparent);
+}
+
+.destructive .stateLayer {
+  background: var(--danger);
+}
+
+.destructive:hover:not(:disabled) {
+  background: var(--danger);
+  color: white;
+}
+
+.destructive:disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  border-color: transparent;
+}
+
+/* ── Creative ────────────────────────────────────────────────────── */
+
+.creative {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+}
+
+.creative .stateLayer {
+  background: white;
+}
+
+.creative:hover:not(:disabled) {
+  background: linear-gradient(135deg, #6d28d9, #9333ea);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+}
+
+.creative:disabled {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+  box-shadow: none;
+}
+
+/* ── Submit (icon-only action) ───────────────────────────────────── */
+
+.submit {
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
+  align-self: stretch;
+  height: auto;
+  background: var(--accent-color);
+  color: white;
+  flex-shrink: 0;
+  gap: 0;
+  border-radius: var(--border-radius-sm);
+}
+
+.submit .stateLayer {
+  background: white;
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+  opacity: 1;
+}
+
+.submitGenerating {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  color: white !important;
+  border-color: transparent !important;
+  z-index: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.submitGenerating::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: var(--prism-conic);
+  animation: spin 2s linear infinite;
+  z-index: -1;
+}
+
+.submitGenerating:hover {
+  transform: scale(1.08);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MODIFIERS
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Icon-leading adjustment ─────────────────────────────────────────
+   M3 spec: when icon is present, left padding reduces to 16px.
+   Right padding stays 24px. Gap between icon and label: 8px.
+   ──────────────────────────────────────────────────────────────────── */
+
+.hasIcon {
+  padding-left: 16px;
+}
+
+/* For text variant with icon, slightly less padding */
+.text.hasIcon {
+  padding-left: 12px;
+}
+
+/* ── Icon-only (no label text) ───────────────────────────────────── */
+
+.iconOnly {
+  padding: 10px;
+  min-width: 40px;
+  gap: 0;
+}
+
+/* ── Full width ──────────────────────────────────────────────────── */
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Loading ─────────────────────────────────────────────────────── */
+
+.loading {
+  pointer-events: none;
+}
+
+/* ── Size: small ─────────────────────────────────────────────────── */
+
+.small {
+  min-height: 32px;
+  padding: 6px 16px;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 16px;
+}
+
+.small.hasIcon {
+  padding-left: 12px;
+}
+
+.small.iconOnly {
+  padding: 6px;
+  min-width: 32px;
+}
+
+/* ── Size: large ─────────────────────────────────────────────────── */
+
+.large {
+  min-height: 48px;
+  padding: 14px 32px;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 24px;
+}
+
+.large.hasIcon {
+  padding-left: 24px;
+}
+
+.large.iconOnly {
+  padding: 14px;
+  min-width: 48px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   INNER ELEMENTS
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Spinner ─────────────────────────────────────────────────────── */
+
+.spinner {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
+.small .spinner {
+  width: 12px;
+  height: 12px;
+  border-width: 1.5px;
+}
+
+.large .spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 2.5px;
+}
+
+/* ── Icon ────────────────────────────────────────────────────────── */
+
+.icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────── */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

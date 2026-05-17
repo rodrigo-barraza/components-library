@@ -1,0 +1,384 @@
+/* ── LoadingIndicatorComponent · M3 Spec ─────────────── */
+/* M3 Loading Indicator (Progress Indicator)              */
+/* Circular:  48×48 default, 4dp stroke, rounded caps     */
+/* Linear:    full-width, 4dp track height, rounded shape */
+/* Spec: https://m3.material.io/components/loading-indicator/specs */
+
+/* ════════════════════════════════════════════════════════ */
+/*  1. CIRCULAR INDICATOR                                  */
+/* ════════════════════════════════════════════════════════ */
+
+/* ── Circular wrapper ────────────────────────────────── */
+
+.circular {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* Default size: 48dp × 48dp container */
+  width: var(--loading-indicator-size, 48px);
+  height: var(--loading-indicator-size, 48px);
+}
+
+/* ── SVG canvas ──────────────────────────────────────── */
+
+.circularSvg {
+  width: 100%;
+  height: 100%;
+  /* M3 indeterminate: continuous rotation at 1080°/3s */
+  transform: rotate(-90deg);
+}
+
+/* ── Track circle (background ring) ──────────────────── */
+
+.circularTrack {
+  fill: none;
+  stroke: var(--loading-indicator-track-color,
+    color-mix(in srgb, var(--accent-color, #6750a4) 20%, transparent));
+  /* M3 default track thickness: 4dp */
+  stroke-width: var(--loading-indicator-stroke-width, 4);
+  stroke-linecap: round;
+}
+
+/* ── Active indicator (animated arc) ─────────────────── */
+
+.circularIndicator {
+  fill: none;
+  stroke: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  stroke-width: var(--loading-indicator-stroke-width, 4);
+  stroke-linecap: round;    /* M3: rounded end caps */
+  /* GPU-accelerated transition for determinate mode */
+  transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: stroke-dashoffset;
+}
+
+/* ── Indeterminate animation — circular ──────────────── */
+/* Two-phase: container rotates continuously while the    */
+/* arc stretches and contracts (dash animation).          */
+
+.circularIndeterminate .circularSvg {
+  animation: circular-rotate 1.568s linear infinite;
+}
+
+.circularIndeterminate .circularIndicator {
+  animation: circular-dash 1.568s ease-in-out infinite;
+  /* Starting state — tiny visible arc */
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+}
+
+/* ── Indeterminate — container rotation ──────────────── */
+
+@keyframes circular-rotate {
+  0% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+/* ── Indeterminate — arc stretch/contract ────────────── */
+/* M3 four-point arc animation:                           */
+/*   Start: minimal arc → grows to ~75% → shrinks back   */
+
+@keyframes circular-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* ── Size variants ───────────────────────────────────── */
+
+.sizeSmall {
+  --loading-indicator-size: 24px;
+  --loading-indicator-stroke-width: 3;
+}
+
+.sizeMedium {
+  --loading-indicator-size: 48px;
+  --loading-indicator-stroke-width: 4;
+}
+
+.sizeLarge {
+  --loading-indicator-size: 64px;
+  --loading-indicator-stroke-width: 4.5;
+}
+
+
+/* ════════════════════════════════════════════════════════ */
+/*  2. LINEAR INDICATOR                                    */
+/* ════════════════════════════════════════════════════════ */
+
+/* ── Linear track (background) ───────────────────────── */
+
+.linear {
+  position: relative;
+  width: 100%;
+  /* M3 default track height: 4dp */
+  height: var(--loading-indicator-track-height, 4px);
+  border-radius: var(--loading-indicator-track-height, 4px);
+  background: var(--loading-indicator-track-color,
+    color-mix(in srgb, var(--accent-color, #6750a4) 20%, transparent));
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── Active indicator (fill bar) ─────────────────────── */
+
+.linearIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  /* Determinate transition */
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width, transform;
+}
+
+/* ── Buffer layer (e.g. media loading) ───────────────── */
+/* Sits behind active indicator at reduced opacity         */
+
+.linearBuffer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  opacity: 0.24;
+  z-index: 0;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+}
+
+/* ── Stop indicator — M3 end-stop dot ────────────────── */
+/* Visible in determinate mode to mark the end of fill    */
+
+.linearStop {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--loading-indicator-track-height, 4px);
+  height: var(--loading-indicator-track-height, 4px);
+  border-radius: 50%;
+  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show stop indicator once progress begins */
+.linearStop.visible {
+  opacity: 1;
+}
+
+/* ── Indeterminate animation — linear ────────────────── */
+/* M3 sliding bar animation — two bars that slide and     */
+/* grow/shrink across the track asynchronously.           */
+
+.linearIndeterminate .linearIndicator {
+  width: 100%;
+  animation: none;
+}
+
+/* Primary bar */
+.linearBar1 {
+  animation: linear-indeterminate-bar1 2s linear infinite;
+  transform-origin: left center;
+}
+
+/* Secondary bar — offset timing for continuous feel */
+.linearBar2 {
+  animation: linear-indeterminate-bar2 2s linear infinite;
+  transform-origin: left center;
+}
+
+/* ── Linear indeterminate — bar 1 keyframes ─────────── */
+/* Enters from left, grows, slides across, exits right    */
+
+@keyframes linear-indeterminate-bar1 {
+  0% {
+    transform: translateX(-100%) scaleX(0);
+  }
+  25% {
+    transform: translateX(-50%) scaleX(0.4);
+  }
+  50% {
+    transform: translateX(25%) scaleX(0.7);
+  }
+  75% {
+    transform: translateX(100%) scaleX(0.4);
+  }
+  100% {
+    transform: translateX(200%) scaleX(0);
+  }
+}
+
+/* ── Linear indeterminate — bar 2 keyframes ─────────── */
+/* Staggered timing — shorter, faster traverse            */
+
+@keyframes linear-indeterminate-bar2 {
+  0% {
+    transform: translateX(-200%) scaleX(0);
+  }
+  20% {
+    transform: translateX(-100%) scaleX(0);
+  }
+  45% {
+    transform: translateX(-30%) scaleX(0.5);
+  }
+  65% {
+    transform: translateX(50%) scaleX(0.6);
+  }
+  85% {
+    transform: translateX(150%) scaleX(0.3);
+  }
+  100% {
+    transform: translateX(200%) scaleX(0);
+  }
+}
+
+/* ── Linear size variants ────────────────────────────── */
+
+.trackThin {
+  --loading-indicator-track-height: 2px;
+}
+
+.trackDefault {
+  --loading-indicator-track-height: 4px;
+}
+
+.trackThick {
+  --loading-indicator-track-height: 8px;
+}
+
+
+/* ════════════════════════════════════════════════════════ */
+/*  3. SHARED                                              */
+/* ════════════════════════════════════════════════════════ */
+
+/* ── Color variants ──────────────────────────────────── */
+
+.colorPrimary {
+  --loading-indicator-color: var(--accent-color, #6750a4);
+  --loading-indicator-track-color:
+    color-mix(in srgb, var(--accent-color, #6750a4) 20%, transparent);
+}
+
+.colorSecondary {
+  --loading-indicator-color: var(--text-secondary, #625b71);
+  --loading-indicator-track-color:
+    color-mix(in srgb, var(--text-secondary, #625b71) 20%, transparent);
+}
+
+.colorTertiary {
+  --loading-indicator-color: var(--tertiary-color, #7d5260);
+  --loading-indicator-track-color:
+    color-mix(in srgb, var(--tertiary-color, #7d5260) 20%, transparent);
+}
+
+.colorError {
+  --loading-indicator-color: var(--error-color, #b3261e);
+  --loading-indicator-track-color:
+    color-mix(in srgb, var(--error-color, #b3261e) 20%, transparent);
+}
+
+.colorInherit {
+  --loading-indicator-color: currentColor;
+  --loading-indicator-track-color:
+    color-mix(in srgb, currentColor 20%, transparent);
+}
+
+/* ── Label text (optional) ───────────────────────────── */
+
+.label {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary, #49454f);
+  letter-spacing: 0.025em;
+  text-align: center;
+}
+
+/* ── Percentage text inside circular ─────────────────── */
+
+.percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  letter-spacing: 0.02em;
+  user-select: none;
+  pointer-events: none;
+}
+
+.sizeSmall .percentage {
+  font-size: 8px;
+}
+
+.sizeLarge .percentage {
+  font-size: 14px;
+}
+
+/* ── Wrapper — vertical layout with optional label ───── */
+
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapperLinear {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wrapperLinear .label {
+  text-align: start;
+}
+
+/* ── Fade-in entrance ────────────────────────────────── */
+
+.fadeIn {
+  animation: loading-fade-in 0.3s ease-out;
+}
+
+@keyframes loading-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Reduced motion ──────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .circularSvg,
+  .circularIndicator,
+  .linearIndicator,
+  .linearBar1,
+  .linearBar2 {
+    animation-duration: 6s !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .fadeIn {
+    animation: none;
+  }
+}

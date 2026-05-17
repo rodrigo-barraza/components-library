@@ -1,0 +1,141 @@
+/* ── ProgressBarComponent ───────────────────────────────── */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.value {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Track ──────────────────────────────────────────────── */
+
+.track {
+  width: 100%;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  overflow: hidden;
+  position: relative;
+}
+
+.sm {
+  height: 3px;
+}
+
+.md {
+  height: 6px;
+}
+
+.lg {
+  height: 10px;
+}
+
+/* ── Bar (fill) ─────────────────────────────────────────── */
+
+.bar {
+  height: 100%;
+  border-radius: inherit;
+  position: relative;
+  min-width: 0;
+}
+
+/* ── Animated transition ────────────────────────────────── */
+
+.animated {
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Color variants ─────────────────────────────────────── */
+
+.accent {
+  background: var(--accent-color, var(--info));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-color, var(--info)) 40%, transparent);
+}
+
+.success {
+  background: var(--success);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--success) 40%, transparent);
+}
+
+.warning {
+  background: var(--warning);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--warning) 40%, transparent);
+}
+
+.danger {
+  background: var(--danger);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--danger) 40%, transparent);
+}
+
+.info {
+  background: var(--info);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--info) 40%, transparent);
+}
+
+/* ── Striped overlay ────────────────────────────────────── */
+
+.striped::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.1) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 16px 16px;
+  animation: stripeSlide 0.8s linear infinite;
+}
+
+/* ── Indeterminate ──────────────────────────────────────── */
+
+.indeterminate {
+  width: 40% !important;
+  animation: indeterminateSlide 1.8s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+@keyframes indeterminateSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes stripeSlide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 16px 0;
+  }
+}
