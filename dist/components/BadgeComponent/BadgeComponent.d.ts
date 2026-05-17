@@ -2,15 +2,16 @@
  * BadgeComponent — standardized inline badge/pill.
  *
 
-
  * @param {string} [tooltip] — optional tooltip label shown on hover
  */
-export default function BadgeComponent({ variant, children, className, mini, tooltip, ...rest }: {
-    [x: string]: any;
+interface BadgeProps {
     variant?: string;
-    children: any;
+    children?: any;
     className?: string;
     mini?: boolean;
-    tooltip: any;
-}): import("react/jsx-runtime").JSX.Element;
+    tooltip?: any;
+    [key: string]: any;
+}
+export default function BadgeComponent({ variant, children, className, mini, tooltip, ...rest }: BadgeProps): import("react/jsx-runtime").JSX.Element;
+export {};
 //# sourceMappingURL=BadgeComponent.d.ts.map

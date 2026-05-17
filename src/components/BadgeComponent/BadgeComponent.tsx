@@ -7,9 +7,17 @@ import styles from "./BadgeComponent.module.css";
  * BadgeComponent — standardized inline badge/pill.
  *
 
-
  * @param {string} [tooltip] — optional tooltip label shown on hover
  */
+interface BadgeProps {
+  variant?: string;
+  children?: any;
+  className?: string;
+  mini?: boolean;
+  tooltip?: any;
+  [key: string]: any;
+}
+
 export default function BadgeComponent({
   variant = "info",
   children,
@@ -17,7 +25,7 @@ export default function BadgeComponent({
   mini = false,
   tooltip,
   ...rest
-}) {
+}: BadgeProps) {
   const badge = (
     <span
       className={`${styles.badge} ${styles[variant] || ""} ${mini ? styles.mini : ""} ${className}`}

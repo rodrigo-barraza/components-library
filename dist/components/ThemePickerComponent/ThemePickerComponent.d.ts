@@ -12,11 +12,13 @@
  * @param {boolean}  [props.collapsed]    — Whether the parent sidebar is collapsed (hides labels)
  * @param {string}   [props.className]    — Additional class name for the wrapper
  */
-export default function ThemePickerComponent({ theme, themes, onSelectTheme, collapsed, className, }: {
-    theme: any;
-    themes?: any[];
-    onSelectTheme: any;
+interface ThemePickerProps {
+    theme: string;
+    themes?: string[];
+    onSelectTheme: (theme: string) => void;
     collapsed?: boolean;
-    className: any;
-}): import("react/jsx-runtime").JSX.Element;
+    className?: string;
+}
+export default function ThemePickerComponent({ theme, themes, onSelectTheme, collapsed, className, }: ThemePickerProps): import("react/jsx-runtime").JSX.Element;
+export {};
 //# sourceMappingURL=ThemePickerComponent.d.ts.map

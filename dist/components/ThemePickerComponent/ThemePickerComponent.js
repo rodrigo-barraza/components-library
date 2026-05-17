@@ -2,7 +2,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useRef, useEffect, useCallback } from "react";
 import * as Icons from "lucide-react";
-import TooltipComponent from "../TooltipComponent/TooltipComponent";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./ThemePickerComponent.module.css";
 /**
  * Theme metadata — icon, label, and representative color for each built-in theme.
@@ -72,20 +72,6 @@ const THEME_CATALOG = {
         bg: "#101010",
     },
 };
-/**
- * ThemePickerComponent — Dropup theme selector for sidebar footers.
- *
- * Displays the current theme as a trigger button. Clicking opens a dropup
- * popover with all available themes rendered as selectable buttons, each
- * showing a color swatch, icon, and label.
- *
-
- * @param {string}   props.theme          — Current active theme name
- * @param {string[]} props.themes         — Ordered list of available theme names
- * @param {function} props.onSelectTheme  — Called with the selected theme name
- * @param {boolean}  [props.collapsed]    — Whether the parent sidebar is collapsed (hides labels)
- * @param {string}   [props.className]    — Additional class name for the wrapper
- */
 export default function ThemePickerComponent({ theme, themes = [], onSelectTheme, collapsed = false, className, }) {
     const [open, setOpen] = useState(false);
     const wrapperRef = useRef(null);

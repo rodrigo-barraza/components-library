@@ -1,4 +1,18 @@
-import { Component } from "react";
+import { Component, type ReactNode } from "react";
+interface ErrorBoundaryProps {
+    children: ReactNode;
+    fallback?: ReactNode;
+    title?: string;
+    subtitle?: string;
+    onError?: (error: Error, info: {
+        componentStack: string;
+    }) => void;
+    showDetails?: boolean;
+}
+interface ErrorBoundaryState {
+    hasError: boolean;
+    error: Error | null;
+}
 /**
  * ErrorBoundaryComponent — React Error Boundary that catches render errors
  * and displays a styled fallback UI instead of a white screen.
@@ -13,14 +27,15 @@ import { Component } from "react";
  * @param {(error: Error, info: { componentStack: string }) => void} [onError] — Error callback
  * @param {boolean} [showDetails] — Show error.message in the fallback (default: false)
  */
-export default class ErrorBoundaryComponent extends Component {
-    constructor(props: any);
+export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+    constructor(props: ErrorBoundaryProps);
     static getDerivedStateFromError(error: any): {
         hasError: boolean;
         error: any;
     };
     componentDidCatch(error: any, info: any): void;
     handleRetry: () => void;
-    render(): any;
+    render(): string | number | bigint | boolean | import("react/jsx-runtime").JSX.Element | Iterable<ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<ReactNode>>;
 }
+export {};
 //# sourceMappingURL=ErrorBoundaryComponent.d.ts.map

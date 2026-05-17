@@ -11,8 +11,8 @@
  */
 
 export interface SoundOptions {
-  /** DOM event for spatial stereo positioning */
-  event?: Event;
+  /** DOM or React synthetic event for spatial stereo positioning */
+  event?: any;
   /** Left speaker volume 0-100 (override) */
   left?: number;
   /** Right speaker volume 0-100 (override) */
@@ -256,8 +256,8 @@ function connectStereo(source: AudioBufferSourceNode, left: number, right: numbe
  * Element at center     → { left: 50,  right: 50 }
  * Element at right edge → { left: 0,   right: 100 }
  */
-function spatialFromEvent(event?: Event): StereoVolume {
-  const element = (event as { currentTarget?: Element } | undefined)?.currentTarget;
+function spatialFromEvent(event?: any): StereoVolume {
+  const element = event?.currentTarget as Element | undefined;
   if (!element || !("getBoundingClientRect" in element)) return { left: 50, right: 50 };
 
   const rect = (element as Element).getBoundingClientRect();

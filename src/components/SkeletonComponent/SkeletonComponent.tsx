@@ -97,7 +97,7 @@ export function SkeletonGroup({
   return (
     <div
       className={`${styles.group} ${className}`}
-      style={{ gap, flexDirection: direction }}
+      style={{ gap, flexDirection: direction as React.CSSProperties['flexDirection'] }}
       role="status"
       aria-label="Loading content"
     >

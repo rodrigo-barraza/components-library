@@ -150,7 +150,7 @@ export default function TopAppBarComponent({
 
   // Heading element for the title
   // eslint-disable-next-line no-unused-vars -- used as dynamic JSX tag <Heading>
-  const Heading = `h${headingLevel}`;
+  const Heading = `h${headingLevel}` as any;
 
   return (
     <header

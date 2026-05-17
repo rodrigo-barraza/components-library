@@ -146,9 +146,9 @@ export default function BottomAppBarComponent({
     }
 
     items.forEach((item, i) => {
-      item.setAttribute("tabindex", i === nextIndex ? "0" : "-1");
+      (item as HTMLElement).setAttribute("tabindex", i === nextIndex ? "0" : "-1");
     });
-    items[nextIndex]?.focus();
+    (items[nextIndex] as HTMLElement)?.focus();
   }, []);
 
   const rootClasses = [

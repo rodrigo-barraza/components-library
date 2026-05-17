@@ -201,7 +201,7 @@ export function SubMenu({
     return Children.map(children, (child) => {
       if (isValidElement(child) && child.type === MenuItem) {
         const currentIdx = index++;
-        return cloneElement(child, {
+        return cloneElement(child as any, {
           ref: (element) => {
             itemRefs.current[currentIdx] = element;
           },
@@ -460,7 +460,7 @@ const MenuComponent = forwardRef<any, any>(function MenuComponent(
           // Let the focused item handle its own click
           if (document.activeElement?.getAttribute("role") === "menuitem") {
             e.preventDefault();
-            document.activeElement.click();
+            (document.activeElement as HTMLElement).click();
           }
           break;
 
@@ -499,9 +499,9 @@ const MenuComponent = forwardRef<any, any>(function MenuComponent(
       // MenuItem or SubMenu trigger — assign roving tabindex ref
       if (child.type === MenuItem || child.type === SubMenu) {
         const currentIdx = index++;
-        const originalOnClick = child.props.onClick;
+        const originalOnClick = (child.props as any).onClick;
 
-        return cloneElement(child, {
+        return cloneElement(child as any, {
           ref: (element) => {
             itemRefs.current[currentIdx] = element;
           },
@@ -539,18 +539,18 @@ const MenuComponent = forwardRef<any, any>(function MenuComponent(
 
   // ── Clone trigger to inject ARIA + click ────────────────
   const clonedTrigger = isValidElement(trigger)
-    ? cloneElement(trigger, {
+    ? cloneElement(trigger as any, {
         ref: (element) => {
           triggerElRef.current = element;
           // Forward the trigger's own ref
-          const triggerRef = trigger.ref;
+          const triggerRef = (trigger as any).ref;
           if (typeof triggerRef === "function") triggerRef(element);
           else if (triggerRef) triggerRef.current = element;
         },
         "aria-haspopup": "menu",
         "aria-expanded": isOpen,
         onClick: (e) => {
-          trigger.props.onClick?.(e);
+          (trigger.props as any).onClick?.(e);
           handleTriggerClick(e);
         },
       })
@@ -572,7 +572,7 @@ const MenuComponent = forwardRef<any, any>(function MenuComponent(
         aria-label={ariaLabel}
         data-open={isOpen}
         data-scrollable={maxHeight ? true : undefined}
-        style={maxHeight ? { "--menu-max-height": `${maxHeight}px` } : undefined}
+        style={maxHeight ? { "--menu-max-height": `${maxHeight}px` } as React.CSSProperties : undefined}
       >
         {indexedChildren}
       </div>

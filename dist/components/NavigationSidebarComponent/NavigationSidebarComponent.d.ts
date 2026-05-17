@@ -23,6 +23,28 @@
  * a slide-over drawer with a scrim backdrop. Controlled by `mobileOpen` /
  * `onMobileClose` props.
  */
+interface NavigationSidebarProps {
+    brandIcon?: any;
+    brandLabel?: string;
+    items?: any[];
+    sections?: any;
+    activeItem?: string;
+    onNavigate?: (id: string, item: any) => void;
+    theme?: string;
+    themes?: string[];
+    setTheme?: (theme: string) => void;
+    onToggleTheme?: () => void;
+    LinkComponent?: any;
+    collapsible?: boolean;
+    defaultCollapsed?: boolean;
+    storageKey?: string;
+    onCollapse?: (collapsed: boolean) => void;
+    bottomActions?: any;
+    mobileOpen?: boolean;
+    onMobileClose?: () => void;
+    mobileBreakpoint?: number;
+    [key: string]: any;
+}
 export default function NavigationSidebarComponent({ brandIcon, // string (url) or ReactNode
 brandLabel, // string
 items, // Array<{ id|key, label, href?, icon }> — flat nav (backward-compat)
@@ -38,25 +60,6 @@ onCollapse, // function(collapsed: boolean) — called when collapsed state chan
 bottomActions, // ReactNode for extra footer actions
 mobileOpen, // boolean — controls drawer visibility on mobile
 onMobileClose, // function — called when drawer should close (scrim tap, nav click, Escape)
-mobileBreakpoint, }: {
-    brandIcon: any;
-    brandLabel: any;
-    items?: any[];
-    sections: any;
-    activeItem: any;
-    onNavigate: any;
-    theme?: string;
-    themes: any;
-    setTheme: any;
-    onToggleTheme: any;
-    LinkComponent: any;
-    collapsible?: boolean;
-    defaultCollapsed?: boolean;
-    storageKey: any;
-    onCollapse: any;
-    bottomActions: any;
-    mobileOpen: any;
-    onMobileClose: any;
-    mobileBreakpoint?: number;
-}): import("react/jsx-runtime").JSX.Element;
+mobileBreakpoint, }: NavigationSidebarProps): import("react/jsx-runtime").JSX.Element;
+export {};
 //# sourceMappingURL=NavigationSidebarComponent.d.ts.map

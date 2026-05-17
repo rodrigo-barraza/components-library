@@ -1,7 +1,21 @@
 "use client";
 
-import { Component } from "react";
+import { Component, type ReactNode } from "react";
 import styles from "./ErrorBoundaryComponent.module.css";
+
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+  title?: string;
+  subtitle?: string;
+  onError?: (error: Error, info: { componentStack: string }) => void;
+  showDetails?: boolean;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
 
 /**
  * ErrorBoundaryComponent — React Error Boundary that catches render errors
@@ -17,8 +31,8 @@ import styles from "./ErrorBoundaryComponent.module.css";
  * @param {(error: Error, info: { componentStack: string }) => void} [onError] — Error callback
  * @param {boolean} [showDetails] — Show error.message in the fallback (default: false)
  */
-export default class ErrorBoundaryComponent extends Component {
-  constructor(props) {
+export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
   }

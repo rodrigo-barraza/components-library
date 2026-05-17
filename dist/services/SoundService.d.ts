@@ -10,8 +10,8 @@
  * GainNode → ChannelMerger topology.
  */
 export interface SoundOptions {
-    /** DOM event for spatial stereo positioning */
-    event?: Event;
+    /** DOM or React synthetic event for spatial stereo positioning */
+    event?: any;
     /** Left speaker volume 0-100 (override) */
     left?: number;
     /** Right speaker volume 0-100 (override) */

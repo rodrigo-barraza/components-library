@@ -47,7 +47,7 @@ export default function StatsCardComponent({
   return (
     <div
       className={`${styles.card} ${className || ""}`}
-      style={color ? { "--card-accent": color } : undefined}
+      style={color ? { "--card-accent": color } as React.CSSProperties : undefined}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

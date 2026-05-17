@@ -238,7 +238,7 @@ export default function TableComponent({
     : columns;
 
   const scrollRef = useRef(null);
-  const dragRef = useRef({
+  const dragRef = useRef<{ active: boolean; startX: number; startY: number; scrollLeft: number; scrollTop: number; moved: boolean; pointerId?: number }>({
     active: false,
     startX: 0,
     startY: 0,

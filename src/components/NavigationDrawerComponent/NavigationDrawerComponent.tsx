@@ -91,10 +91,10 @@ export default function NavigationDrawerComponent({
 
         if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
-          last.focus();
+          (last as HTMLElement).focus();
         } else if (!e.shiftKey && document.activeElement === last) {
           e.preventDefault();
-          first.focus();
+          (first as HTMLElement).focus();
         }
       }
     };
@@ -219,7 +219,7 @@ function DrawerItem({
 
   const sharedProps = {
     className: classes,
-    "aria-current": active ? "page" : undefined,
+    "aria-current": active ? ("page" as const) : undefined,
     "aria-disabled": disabled || undefined,
     ...rest,
   };

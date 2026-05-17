@@ -25,6 +25,15 @@ import styles from "./CountBadgeComponent.module.css";
  * @param {string} [tooltip] — Optional tooltip label on hover
  * @param {string} [className] — Additional class
  */
+interface CountBadgeProps {
+  count: number | string | null;
+  state?: string;
+  disabled?: boolean;
+  rainbow?: boolean;
+  tooltip?: string;
+  className?: string;
+}
+
 export default function CountBadgeComponent({
   count,
   state = "default",
@@ -32,7 +41,7 @@ export default function CountBadgeComponent({
   rainbow = false,
   tooltip,
   className,
-}) {
+}: CountBadgeProps) {
   if (count == null) return null;
 
   const isDisabled = disabled || count === 0;

@@ -20,12 +20,14 @@
  * @param {string} [tooltip] — Optional tooltip label on hover
  * @param {string} [className] — Additional class
  */
-export default function CountBadgeComponent({ count, state, disabled, rainbow, tooltip, className, }: {
-    count: any;
+interface CountBadgeProps {
+    count: number | string | null;
     state?: string;
     disabled?: boolean;
     rainbow?: boolean;
-    tooltip: any;
-    className: any;
-}): import("react/jsx-runtime").JSX.Element;
+    tooltip?: string;
+    className?: string;
+}
+export default function CountBadgeComponent({ count, state, disabled, rainbow, tooltip, className, }: CountBadgeProps): import("react/jsx-runtime").JSX.Element;
+export {};
 //# sourceMappingURL=CountBadgeComponent.d.ts.map

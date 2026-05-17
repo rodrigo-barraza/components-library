@@ -99,9 +99,9 @@ export default function ToolbarComponent({
 
       // Roving tabindex: remove current item from tab order, add next
       items.forEach((item, i) => {
-        item.setAttribute("tabindex", i === nextIndex ? "0" : "-1");
+        (item as HTMLElement).setAttribute("tabindex", i === nextIndex ? "0" : "-1");
       });
-      items[nextIndex]?.focus();
+      (items[nextIndex] as HTMLElement)?.focus();
     },
     [orientation],
   );
@@ -123,7 +123,7 @@ export default function ToolbarComponent({
       ref={toolbarRef}
       role="toolbar"
       aria-label={ariaLabel}
-      aria-orientation={orientation}
+      aria-orientation={orientation as "horizontal" | "vertical"}
       className={classes}
       style={style}
       onKeyDown={handleKeyDown}

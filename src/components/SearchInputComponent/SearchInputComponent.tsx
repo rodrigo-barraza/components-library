@@ -380,7 +380,7 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
     if (onClick) {
       onClick(value ?? text);
     } else {
-      onChange?.(value ?? text);
+      (onChange as Function)?.(value ?? text);
     }
     collapse();
   }, [onClick, value, text, onChange, collapse]);
@@ -454,8 +454,8 @@ function SuggestionsEmpty({ message = "No results found" }) {
 
 /* ── Attach sub-components ──────────────────────────────────────── */
 
-SearchInputComponent.Suggestion = Suggestion;
-SearchInputComponent.SuggestionGroup = SuggestionGroup;
-SearchInputComponent.Empty = SuggestionsEmpty;
+(SearchInputComponent as any).Suggestion = Suggestion;
+(SearchInputComponent as any).SuggestionGroup = SuggestionGroup;
+(SearchInputComponent as any).Empty = SuggestionsEmpty;
 
 export default SearchInputComponent;

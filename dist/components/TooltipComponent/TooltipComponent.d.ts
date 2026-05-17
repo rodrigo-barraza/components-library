@@ -41,8 +41,8 @@
  *
  * @param {React.ReactNode} children — The trigger/anchor element(s)
  */
-export default function TooltipComponent({ label, position, trigger, enterDelay, exitDelay, disabled, children, className, rich, title, content, action, persistent, delay, }: {
-    label: any;
+interface TooltipProps {
+    label?: any;
     position?: string;
     trigger?: string;
     enterDelay?: number;
@@ -51,10 +51,12 @@ export default function TooltipComponent({ label, position, trigger, enterDelay,
     children: any;
     className?: string;
     rich?: boolean;
-    title: any;
-    content: any;
-    action: any;
+    title?: any;
+    content?: any;
+    action?: any;
     persistent?: boolean;
-    delay: any;
-}): any;
+    delay?: any;
+}
+export default function TooltipComponent({ label, position, trigger, enterDelay, exitDelay, disabled, children, className, rich, title, content, action, persistent, delay, }: TooltipProps): any;
+export {};
 //# sourceMappingURL=TooltipComponent.d.ts.map

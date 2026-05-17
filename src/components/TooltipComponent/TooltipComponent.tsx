@@ -47,6 +47,23 @@ import styles from "./TooltipComponent.module.css";
  *
  * @param {React.ReactNode} children — The trigger/anchor element(s)
  */
+interface TooltipProps {
+  label?: any;
+  position?: string;
+  trigger?: string;
+  enterDelay?: number;
+  exitDelay?: number;
+  disabled?: boolean;
+  children: any;
+  className?: string;
+  rich?: boolean;
+  title?: any;
+  content?: any;
+  action?: any;
+  persistent?: boolean;
+  delay?: any;
+}
+
 export default function TooltipComponent({
   /* plain */
   label,
@@ -67,7 +84,7 @@ export default function TooltipComponent({
 
   /* compat alias */
   delay,
-}) {
+}: TooltipProps) {
   const resolvedEnterDelay = delay ?? enterDelay;
 
   const [mounted, setMounted] = useState(false);

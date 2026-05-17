@@ -160,7 +160,7 @@ function RoleTags({ roleTags }) {
           className={styles.roleTag}
           style={{
             "--role-color": tag.color || "#99aab5",
-          }}
+          } as React.CSSProperties}
           title={tag.name}
         >
           {tag.iconUrl && (
@@ -290,7 +290,7 @@ function shouldGroup(current, previous) {
   // Replies always break grouping (matches real Discord behavior)
   if (current.replyTo) return false;
   if (current.author.id !== previous.author.id) return false;
-  const diff = new Date(previous.createdAtISO) - new Date(current.createdAtISO);
+  const diff = new Date(previous.createdAtISO).getTime() - new Date(current.createdAtISO).getTime();
   return Math.abs(diff) < 7 * 60 * 1000;
 }
 
@@ -1164,7 +1164,7 @@ export default function DiscordChatComponent({
           setMessages((prev) =>
             prev.map((message) => {
               const updated = updateMap.get(message.id);
-              return updated ? { ...message, reactions: updated.reactions } : message;
+              return updated ? { ...message, reactions: (updated as any).reactions } : message;
             }),
           );
         } catch (error) {

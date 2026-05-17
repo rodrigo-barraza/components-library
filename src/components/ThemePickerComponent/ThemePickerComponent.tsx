@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as Icons from "lucide-react";
-import TooltipComponent from "../TooltipComponent/TooltipComponent";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./ThemePickerComponent.module.css";
 
 /**
@@ -88,13 +88,21 @@ const THEME_CATALOG = {
  * @param {boolean}  [props.collapsed]    — Whether the parent sidebar is collapsed (hides labels)
  * @param {string}   [props.className]    — Additional class name for the wrapper
  */
+interface ThemePickerProps {
+  theme: string;
+  themes?: string[];
+  onSelectTheme: (theme: string) => void;
+  collapsed?: boolean;
+  className?: string;
+}
+
 export default function ThemePickerComponent({
   theme,
   themes = [],
   onSelectTheme,
   collapsed = false,
   className,
-}) {
+}: ThemePickerProps) {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
   const triggerRef = useRef(null);

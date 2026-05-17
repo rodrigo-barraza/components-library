@@ -1,5 +1,5 @@
 export declare function useSnackbar(): {
-    showSnackbar: (message: any, options?: {}) => number;
+    showSnackbar: (message: string, options?: Record<string, any>) => number;
     dismiss: () => void;
     snackbarProps: {
         open: boolean;

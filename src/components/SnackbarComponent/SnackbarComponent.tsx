@@ -61,7 +61,7 @@ export function useSnackbar() {
 
   // Show a new snackbar
   const showSnackbar = useCallback(
-    (message, options = {}) => {
+    (message: string, options: Record<string, any> = {}) => {
       const {
         actionLabel,
         onAction,

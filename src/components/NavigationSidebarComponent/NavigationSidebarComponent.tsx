@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import * as Icons from "lucide-react";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import TooltipComponent from "../TooltipComponent/TooltipComponent";
-import ThemePickerComponent from "../ThemePickerComponent/ThemePickerComponent";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
+import ThemePickerComponent from "../ThemePickerComponent/ThemePickerComponent.js";
 import styles from "./NavigationSidebarComponent.module.css";
 
 /**
@@ -32,6 +32,29 @@ import styles from "./NavigationSidebarComponent.module.css";
  * a slide-over drawer with a scrim backdrop. Controlled by `mobileOpen` /
  * `onMobileClose` props.
  */
+interface NavigationSidebarProps {
+  brandIcon?: any;
+  brandLabel?: string;
+  items?: any[];
+  sections?: any;
+  activeItem?: string;
+  onNavigate?: (id: string, item: any) => void;
+  theme?: string;
+  themes?: string[];
+  setTheme?: (theme: string) => void;
+  onToggleTheme?: () => void;
+  LinkComponent?: any;
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
+  storageKey?: string;
+  onCollapse?: (collapsed: boolean) => void;
+  bottomActions?: any;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
+  mobileBreakpoint?: number;
+  [key: string]: any;
+}
+
 export default function NavigationSidebarComponent({
   brandIcon, // string (url) or ReactNode
   brandLabel, // string
@@ -53,7 +76,7 @@ export default function NavigationSidebarComponent({
   mobileOpen, // boolean — controls drawer visibility on mobile
   onMobileClose, // function — called when drawer should close (scrim tap, nav click, Escape)
   mobileBreakpoint = 768, // number — viewport width below which drawer mode activates
-}) {
+}: NavigationSidebarProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [navReady, setNavReady] = useState(false);
 

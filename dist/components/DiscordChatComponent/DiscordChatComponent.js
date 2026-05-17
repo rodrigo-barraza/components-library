@@ -239,7 +239,7 @@ function shouldGroup(current, previous) {
         return false;
     if (current.author.id !== previous.author.id)
         return false;
-    const diff = new Date(previous.createdAtISO) - new Date(current.createdAtISO);
+    const diff = new Date(previous.createdAtISO).getTime() - new Date(current.createdAtISO).getTime();
     return Math.abs(diff) < 7 * 60 * 1000;
 }
 function isDifferentDay(a, b) {

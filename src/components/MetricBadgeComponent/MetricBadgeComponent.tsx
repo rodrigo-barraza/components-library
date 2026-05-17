@@ -56,7 +56,7 @@ export default function MetricBadgeComponent({
   // Resolve color class or inline style
   const colorClass = color && styles[color] ? styles[color] : "";
   const customColorStyle = color && !styles[color]
-    ? { "--metric-color": color }
+    ? { "--metric-color": color } as React.CSSProperties
     : undefined;
 
   return (

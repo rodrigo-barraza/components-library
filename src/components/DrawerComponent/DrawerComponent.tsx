@@ -119,7 +119,7 @@ export default function DrawerComponent({
         ref={drawerRef}
         id={id}
         className={drawerClasses}
-        style={{ "--drawer-width": widthValue }}
+        style={{ "--drawer-width": widthValue } as React.CSSProperties}
         data-closing={closing || undefined}
         onAnimationEnd={handleAnimationEnd}
       >

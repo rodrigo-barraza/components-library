@@ -67,7 +67,8 @@ export default function CarouselComponent({
     let closestDist = Infinity;
 
     items.forEach((item, i) => {
-      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const el = item as HTMLElement;
+      const itemCenter = el.offsetLeft + el.offsetWidth / 2;
       const dist = Math.abs(trackCenter - itemCenter);
       if (dist < closestDist) {
         closestDist = dist;
@@ -114,7 +115,7 @@ export default function CarouselComponent({
       if (!target) return;
 
       track.scrollTo({
-        left: target.offsetLeft - (layout === "center" ? (track.clientWidth - target.offsetWidth) / 2 : 0),
+        left: (target as HTMLElement).offsetLeft - (layout === "center" ? (track.clientWidth - (target as HTMLElement).offsetWidth) / 2 : 0),
         behavior: "smooth",
       });
     },
@@ -269,7 +270,7 @@ function CarouselItem({
   children,
   ...rest
 }) {
-  const itemStyle = {};
+  const itemStyle: Record<string, any> = {};
   if (width) itemStyle.width = typeof width === "number" ? `${width}px` : width;
   if (height) itemStyle.height = typeof height === "number" ? `${height}px` : height;
   if (aspectRatio) itemStyle.aspectRatio = aspectRatio;

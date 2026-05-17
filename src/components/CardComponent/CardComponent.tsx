@@ -89,7 +89,7 @@ function CardMedia({
   className,
   children,
 }) {
-  const mediaStyle = {};
+  const mediaStyle: Record<string, any> = {};
   if (height) mediaStyle.height = typeof height === "number" ? `${height}px` : height;
   if (aspectRatio) mediaStyle.aspectRatio = aspectRatio;
 

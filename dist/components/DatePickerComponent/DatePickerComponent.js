@@ -21,7 +21,7 @@ function extractTime(str) {
     if (!str || !str.includes("T"))
         return "";
     const d = new Date(str);
-    if (isNaN(d))
+    if (isNaN(d.getTime()))
         return "";
     return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }

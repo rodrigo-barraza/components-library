@@ -13,12 +13,19 @@ import SoundService from "../../services/SoundService.js";
  * @param {"default"|"dark"} [variant="default"] — default for modal headers, dark for overlay viewers
  * @param {string} [className] — Additional class
  */
+interface CloseButtonProps {
+  onClick: (e?: React.MouseEvent) => void;
+  size?: number;
+  variant?: string;
+  className?: string;
+}
+
 export default function CloseButtonComponent({
   onClick,
   size = 18,
   variant = "default",
   className,
-}) {
+}: CloseButtonProps) {
   const { sound } = useComponents();
 
   const classes = [styles.closeBtn, variant === "dark" ? styles.dark : "", className || ""]

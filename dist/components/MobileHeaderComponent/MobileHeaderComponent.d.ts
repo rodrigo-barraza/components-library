@@ -12,11 +12,13 @@
  * @param {React.ReactNode} [children] — Trailing actions (e.g. refresh button)
  * @param {string}   [className]     — Additional class on the root element
  */
-export default function MobileHeaderComponent({ brandLabel, brandIcon, onMenuClick, children, className, }: {
-    brandLabel: any;
-    brandIcon: any;
-    onMenuClick: any;
-    children: any;
-    className: any;
-}): import("react/jsx-runtime").JSX.Element;
+interface MobileHeaderProps {
+    brandLabel?: string;
+    brandIcon?: any;
+    onMenuClick: () => void;
+    children?: React.ReactNode;
+    className?: string;
+}
+export default function MobileHeaderComponent({ brandLabel, brandIcon, onMenuClick, children, className, }: MobileHeaderProps): import("react/jsx-runtime").JSX.Element;
+export {};
 //# sourceMappingURL=MobileHeaderComponent.d.ts.map

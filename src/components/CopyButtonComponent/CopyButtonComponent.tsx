@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { Copy, Check } from "lucide-react";
-import { FEEDBACK_STANDARD_MS } from "@rodrigo-barraza/utilities-library";
+// Inlined from utilities-library/time — node_modules copy is stale until deploy-kit sync
+const FEEDBACK_STANDARD_MS = 2_000;
 import styles from "./CopyButtonComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";

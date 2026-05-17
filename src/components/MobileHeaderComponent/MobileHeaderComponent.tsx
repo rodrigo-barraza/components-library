@@ -17,13 +17,21 @@ import styles from "./MobileHeaderComponent.module.css";
  * @param {React.ReactNode} [children] — Trailing actions (e.g. refresh button)
  * @param {string}   [className]     — Additional class on the root element
  */
+interface MobileHeaderProps {
+  brandLabel?: string;
+  brandIcon?: any;
+  onMenuClick: () => void;
+  children?: React.ReactNode;
+  className?: string;
+}
+
 export default function MobileHeaderComponent({
   brandLabel,
   brandIcon,
   onMenuClick,
   children,
   className,
-}) {
+}: MobileHeaderProps) {
   return (
     <header className={`${styles.mobileHeader} ${className || ""}`}>
       <button

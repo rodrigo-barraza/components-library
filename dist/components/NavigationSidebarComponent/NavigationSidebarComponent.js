@@ -2,35 +2,10 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import * as Icons from "lucide-react";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import TooltipComponent from "../TooltipComponent/TooltipComponent";
-import ThemePickerComponent from "../ThemePickerComponent/ThemePickerComponent";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
+import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
+import ThemePickerComponent from "../ThemePickerComponent/ThemePickerComponent.js";
 import styles from "./NavigationSidebarComponent.module.css";
-/**
- * Generic Navigation Sidebar Component
- *
- * Supports two data shapes for navigation items:
- *
- * 1. **Flat** (`items` prop) — backward-compatible flat array of nav items.
- *    ```
- *    items={[{ id, label, href?, icon }]}
- *    ```
- *
- * 2. **Sectioned** (`sections` prop) — grouped items with optional divider labels,
- *    matching the same pattern used in prism-client's sidebar.
- *    ```
- *    sections={[{ label: "Group", items: [{ id, label, href?, icon }] }]}
- *    ```
- *
- * When both are provided, `sections` takes precedence.
- *
- * Additional features: collapsed state with localStorage persistence, theming,
- * custom link components, and icon strings resolved from lucide-react.
- *
- * **Mobile Responsive:** On viewports ≤ mobileBreakpoint, the sidebar renders as
- * a slide-over drawer with a scrim backdrop. Controlled by `mobileOpen` /
- * `onMobileClose` props.
- */
 export default function NavigationSidebarComponent({ brandIcon, // string (url) or ReactNode
 brandLabel, // string
 items = [], // Array<{ id|key, label, href?, icon }> — flat nav (backward-compat)
