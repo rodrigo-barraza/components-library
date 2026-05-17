@@ -6,8 +6,20 @@ import {
   useEffect,
   useCallback,
   forwardRef,
+  ReactNode,
+  RefObject,
+  HTMLAttributes,
 } from "react";
 import styles from "./BottomAppBarComponent.module.css";
+
+export interface BottomAppBarComponentProps extends HTMLAttributes<HTMLDivElement> {
+  fab?: ReactNode;
+  position?: "fixed" | "relative";
+  hideOnScroll?: boolean;
+  scrollTargetRef?: RefObject<HTMLElement | null>;
+  scrollThreshold?: number;
+  ariaLabel?: string;
+}
 
 /**
  * BottomAppBarComponent — Material Design 3 Bottom App Bar.
@@ -55,8 +67,8 @@ export default function BottomAppBarComponent({
   style,
   children,
   ...rest
-}) {
-  const toolbarRef = useRef(null);
+}: BottomAppBarComponentProps) {
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollTop = useRef(0);
 
@@ -80,7 +92,7 @@ export default function BottomAppBarComponent({
         const scrollTop =
           scrollEl === window
             ? window.scrollY || document.documentElement.scrollTop
-            : scrollEl.scrollTop;
+            : (scrollEl as HTMLElement).scrollTop;
 
         const delta = scrollTop - lastScrollTop.current;
 
