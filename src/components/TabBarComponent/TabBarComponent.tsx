@@ -21,27 +21,7 @@ import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
  *   • "inline"  — Icon + label side-by-side (default, 48px height)
  *   • "stacked" — Icon above label (64px height)
  *
- * @param {Array<{
- *   key: string,
- *   label?: string,
- *   icon?: React.ReactNode,
- *   badge?: number|string,
- *   badgeState?: "default"|"new",
- *   badgeDisabled?: boolean,
- *   badgeRainbow?: boolean,
- *   disabled?: boolean,
- *   tooltip?: string,
- *   tooltipDisabled?: boolean
  * }>} tabs
- * @param {string}                    activeTab    — Currently active tab key
- * @param {Function}                  onChange     — (key: string) => void
- * @param {"primary"|"secondary"}     [variant]    — M3 variant (default: "primary")
- * @param {"inline"|"stacked"}        [layout]     — Icon/label arrangement (default: "inline")
- * @param {boolean}                   [scrollable] — Allow horizontal scrolling for many tabs
- * @param {string}                    [className]  — Additional class on the container
- * @param {Function}                  [onTabHover] — (key: string | null) => void
- * @param {string[]}                  [glowingTabs] — Tab keys that glow
- * @param {string}                    [ariaLabel]  — Accessible label for the tablist
  */
 export default function TabBarComponent({
   tabs = [],

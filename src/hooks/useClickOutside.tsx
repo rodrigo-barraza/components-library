@@ -6,10 +6,6 @@ import { useEffect, useRef, type RefObject } from "react";
  * useClickOutside — triggers a callback when a click occurs outside the
  * referenced element(s). Essential for dropdown menus, popovers, modals,
  * and any dismissible overlay.
- *
- * @param refs — ref(s) to the container element(s)
- * @param handler — callback invoked on outside click
- * @param options
  */
 
 interface UseClickOutsideOptions {

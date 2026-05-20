@@ -15,17 +15,6 @@ import styles from "./CheckboxComponent.module.css";
  *   • Checked:      primary fill + white check icon
  *   • Indeterminate: primary fill + white dash icon
  *   • Error:        error color outline/fill variant
- *
- * @param {boolean}           checked           — Current checked state
- * @param {Function}          onChange           — (checked: boolean) => void
- * @param {string}            [label]           — Optional label text
- * @param {boolean}           [disabled]        — Disabled state
- * @param {boolean}           [indeterminate]   — Tri-state dash icon (overrides checked icon)
- * @param {boolean}           [error]           — Error-state styling
- * @param {string}            [className]       — Additional wrapper class
- * @param {string}            [id]              — Element ID for accessibility
- * @param {string}            [name]            — Form field name
- * @param {"start"|"end"}     [labelPlacement]  — Label position relative to checkbox
  */
 export default function CheckboxComponent({
   checked = false,

@@ -32,27 +32,39 @@ import styles from "./NavigationSidebarComponent.module.css";
  * a slide-over drawer with a scrim backdrop. Controlled by `mobileOpen` /
  * `onMobileClose` props.
  */
+interface NavItem {
+  id?: string;
+  key?: string;
+  label: string;
+  href?: string;
+  icon?: string | React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+}
+
+interface NavSection {
+  label?: string | null;
+  items: NavItem[];
+}
+
 interface NavigationSidebarProps {
-  brandIcon?: any;
+  brandIcon?: React.ReactNode;
   brandLabel?: string;
-  items?: any[];
-  sections?: any;
+  items?: NavItem[];
+  sections?: NavSection[];
   activeItem?: string;
-  onNavigate?: (id: string, item: any) => void;
+  onNavigate?: (id: string, item: NavItem) => void;
   theme?: string;
   themes?: string[];
   setTheme?: (theme: string) => void;
   onToggleTheme?: () => void;
-  LinkComponent?: any;
+  LinkComponent?: React.ElementType;
   collapsible?: boolean;
   defaultCollapsed?: boolean;
   storageKey?: string;
   onCollapse?: (collapsed: boolean) => void;
-  bottomActions?: any;
+  bottomActions?: React.ReactNode;
   mobileOpen?: boolean;
   onMobileClose?: () => void;
   mobileBreakpoint?: number;
-  [key: string]: any;
 }
 
 export default function NavigationSidebarComponent({

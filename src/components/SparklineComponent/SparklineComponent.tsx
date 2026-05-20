@@ -13,15 +13,6 @@ import styles from "./SparklineComponent.module.css";
  *
  * On hover, a vertical crosshair and floating tooltip display the
  * Y-axis value at the nearest data point.
- *
- * @param {number[]} data — Array of numeric samples (newest last)
- * @param {string} [color="#10b981"] — Line/fill color (hex or CSS var())
- * @param {number} [maxValue=100] — Y-axis ceiling (data is clamped to this)
- * @param {number} [height=48] — Canvas CSS height in px
- * @param {number} [historyMax=60] — Total slots in the X axis (controls density)
- * @param {boolean} [showGrid=false] — Show faint grid lines behind the sparkline
- * @param {(value: number) => string} [formatValue] — Custom formatter for tooltip value
- * @param {string} [className] — Extra class for the wrapper div
  */
 export default function SparklineComponent({
   data,

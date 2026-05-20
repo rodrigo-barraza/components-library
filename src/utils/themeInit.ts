@@ -5,9 +5,6 @@
  * This script is designed to be injected into the `<head>` of a Next.js layout
  * via a `<template>` tag with `dangerouslySetInnerHTML`.
  *
- * @param storageKey — localStorage key (e.g. "prism:theme")
- * @param validThemes — allowed theme values
- * @returns raw JavaScript source string
  *
  * @example
  *   import { generateThemeInitScript } from "@rodrigo-barraza/components-library";

@@ -22,19 +22,6 @@ import styles from "./LoadingIndicatorComponent.module.css";
  *   • `aria-busy="true"` can be set on the loading region by the consumer
  *   • `aria-live="polite"` on label for progress updates
  *   • Reduced motion: animation durations extended (not removed) per M3 guidelines
- *
- * @param {"circular"|"linear"} [variant="circular"]  — Indicator shape
- * @param {"indeterminate"|"determinate"} [mode="indeterminate"] — Animation mode
- * @param {number}  [value=0]              — Progress 0–100 (determinate only)
- * @param {number|null} [buffer=null]      — 0–100 buffer fill (linear determinate only)
- * @param {"small"|"medium"|"large"} [size="medium"] — Circular size preset
- * @param {"thin"|"default"|"thick"} [trackSize="default"] — Linear track height
-
- * @param {boolean} [showPercentage=false] — Show % text inside circular indicator
- * @param {string}  [label]               — Optional descriptive label below indicator
- * @param {string}  [ariaLabel="Loading"]  — Accessible label for screen readers
- * @param {string}  [className]           — Additional CSS class
- * @param {string}  [id]                  — Element ID
  */
 export default function LoadingIndicatorComponent({
   variant = "circular",

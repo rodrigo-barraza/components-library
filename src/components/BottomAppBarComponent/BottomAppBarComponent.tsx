@@ -45,16 +45,6 @@ export interface BottomAppBarComponentProps extends HTMLAttributes<HTMLDivElemen
  *   • Roving tabindex across action buttons (ArrowLeft/ArrowRight)
  *   • FAB is outside the roving tabindex group
  *   • All buttons require aria-labels
- *
- * @param {React.ReactNode} [fab] — FAB element rendered in the trailing slot
- * @param {"fixed"|"relative"} [position="fixed"] — CSS positioning
- * @param {boolean} [hideOnScroll=true] — hides bar when scrolling down
- * @param {React.RefObject} [scrollTargetRef] — scrollable element ref (defaults to window)
- * @param {number} [scrollThreshold=8] — min scroll delta to trigger hide/show
- * @param {string} [ariaLabel="Bottom actions"] — accessible label for the toolbar
-
-
- * @param {React.ReactNode} children — BottomAppBarComponent.Action items
  */
 export default function BottomAppBarComponent({
   fab,
@@ -198,14 +188,8 @@ export default function BottomAppBarComponent({
  *
  * M3 spec: 48×48dp touch target with 24dp icon.
  * Up to 4 actions per M3 guidelines.
- *
- * @param {React.ComponentType} [icon] — Lucide or similar icon component
- * @param {string} ariaLabel — accessible label (required)
- * @param {boolean} [active=false] — visually active/selected state
-
-
- * @param {React.ReactNode} children — overrides icon rendering
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- action button with dynamic icon component
 const BottomAppBarAction = forwardRef<any, any>(function BottomAppBarAction(
   {
     icon: Icon,

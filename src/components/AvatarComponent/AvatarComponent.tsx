@@ -9,15 +9,6 @@ import styles from "./AvatarComponent.module.css";
  * Supports five sizes and an optional online/offline/busy/away status dot.
  * Compound sub-component `AvatarComponent.Group` stacks avatars with
  * overlapping borders and a "+N" overflow indicator.
- *
- * @param {string}   [src]                — Image URL
- * @param {string}   [alt=""]             — Alt text for the image
- * @param {string}   [name]               — Full name for initials fallback (picks first + last initial)
- * @param {React.ComponentType} [icon]    — Lucide-compatible icon as fallback (after initials)
- * @param {"xs"|"sm"|"md"|"lg"|"xl"} [size="md"] — Size preset
- * @param {"online"|"offline"|"busy"|"away"} [status] — Status dot indicator
-
-
  */
 export default function AvatarComponent({
   src,
@@ -81,11 +72,6 @@ export default function AvatarComponent({
 
 /**
  * AvatarComponent.Group — stacks avatars with overlapping layout.
- *
- * @param {number}   [max=5]       — Max visible avatars before "+N" overflow
- * @param {"xs"|"sm"|"md"|"lg"|"xl"} [size="md"] — Size applied to all children
-
- * @param {React.ReactNode} children — AvatarComponent instances
  */
 function AvatarGroup({ max = 5, size = "md", className, children }) {
   const items = Array.isArray(children) ? children : children ? [children] : [];

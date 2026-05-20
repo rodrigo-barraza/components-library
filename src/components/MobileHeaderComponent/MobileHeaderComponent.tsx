@@ -10,16 +10,10 @@ import styles from "./MobileHeaderComponent.module.css";
  * and an optional trailing actions slot. Only visible on mobile
  * (controlled via CSS media query at the consumer level or the
  * `visible` prop).
- *
- * @param {string}   [brandLabel]    — App name displayed in the header
- * @param {string|React.ReactNode} [brandIcon] — Brand icon (URL string or ReactNode)
- * @param {Function} onMenuClick     — Handler for hamburger button tap
- * @param {React.ReactNode} [children] — Trailing actions (e.g. refresh button)
- * @param {string}   [className]     — Additional class on the root element
  */
 interface MobileHeaderProps {
   brandLabel?: string;
-  brandIcon?: any;
+  brandIcon?: React.ReactNode;
   onMenuClick: () => void;
   children?: React.ReactNode;
   className?: string;

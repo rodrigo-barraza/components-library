@@ -8,10 +8,6 @@ import styles from "./RepositoryBadgeComponent.module.css";
  *
  * Strips the GitHub base URL and displays the owner/repo slug.
  * Renders as a clickable badge linking to the repository.
- *
- * @param {string} repo — Full GitHub URL (e.g. "https://github.com/user/repo")
- * @param {{ Github: React.ComponentType }} [icons] — Icon components
- * @param {string} [className] — Additional CSS class
  */
 export default function RepositoryBadgeComponent({ repo, icons, className, ...rest }) {
   if (!repo) return null;

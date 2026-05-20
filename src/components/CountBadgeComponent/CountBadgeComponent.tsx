@@ -17,13 +17,6 @@ import styles from "./CountBadgeComponent.module.css";
  * Colors are overridable via CSS custom properties:
  *  - --count-badge-default  (fallback: #6366f1)
  *  - --count-badge-new      (fallback: #22d3ee)
- *
- * @param {number|string} count — The value to display
- * @param {"default"|"new"} [state="default"] — Visual state
- * @param {boolean} [disabled=false] — Force disabled look
- * @param {boolean} [rainbow=false] — Rainbow hue-rotate animation
- * @param {string} [tooltip] — Optional tooltip label on hover
- * @param {string} [className] — Additional class
  */
 interface CountBadgeProps {
   count: number | string | null;

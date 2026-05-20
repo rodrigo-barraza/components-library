@@ -11,20 +11,6 @@ import styles from "./TableComponent.module.css";
 /**
  * TableComponent — a reusable, sortable data table with expandable rows,
  * column visibility controls, drag-to-scroll, and per-column tooltips.
- *
-
- * @param {string} [props.title] — Section title above the table
- * @param {string} [props.subtitle] — Subtitle/description below the title
- * @param {Array<{key, label, description?, sortable?, align?, render?, sortValue?, className?}>} props.columns
- * @param {Array} props.data — Array of row objects
- * @param {Function} [props.getRowKey] — (row, i) => unique key
- * @param {Function} [props.getSubRows] — (row) => array of sub-row objects
- * @param {Function} [props.renderExpandedContent] — (row) => ReactNode
- * @param {Function} [props.onRowClick] — (row) => void
- * @param {string} [props.emptyText] — Text to show when data is empty
- * @param {string} [props.sortKey] — External sort key
- * @param {string} [props.sortDir] — External sort direction ('asc' | 'desc')
- * @param {Function} [props.onSort] — (key, dir) => void
  */
 
 function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {

@@ -1395,7 +1395,7 @@ export default function DiscordChatComponent({
             prev.map((message) => {
               const updated = updateMap.get(message.id);
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              return updated ? { ...message, reactions: (updated as any).reactions } : message;
+              return updated ? { ...message, reactions: (updated as Record<string, unknown>).reactions } : message;
             }),
           );
         } catch (error) {

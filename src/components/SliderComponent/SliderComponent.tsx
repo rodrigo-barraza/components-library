@@ -28,20 +28,6 @@ import styles from "./SliderComponent.module.css";
  *   • Discrete (step > 0):   Snaps to defined increments, shows tick marks
  *   • Centered:              Origin at center, fills left/right from midpoint
  *   • Range:                 Two handles for selecting a value range
- *
- * @param {number|[number,number]} value      — Current value(s). Array for range mode.
- * @param {number}                 [min=0]    — Minimum value
- * @param {number}                 [max=100]  — Maximum value
- * @param {number}                 [step=1]   — Step increment (0 for continuous)
- * @param {Function}               onChange   — (value: number|[number,number]) => void
- * @param {boolean}                [disabled] — Disabled state (0.38 opacity, no interaction)
- * @param {boolean}                [centered] — Center-origin mode (fills from midpoint)
- * @param {boolean}                [showValue] — Show value indicator tooltip on drag
- * @param {boolean}                [discrete] — Force discrete mode with tick marks
- * @param {string}                 [label]    — Accessible label (aria-label)
- * @param {Function}               [formatValue] — Custom value formatter for indicator
- * @param {string}                 [className] — Additional wrapper class
- * @param {string}                 [id]       — Element ID
  */
 export default function SliderComponent({
   value,

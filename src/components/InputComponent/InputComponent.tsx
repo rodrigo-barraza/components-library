@@ -5,20 +5,12 @@ import styles from "./InputComponent.module.css";
 
 /**
  * InputComponent — styled text input with consistent theming.
- *
- * @param {string}   [type="text"] — Input type
- * @param {string}   value         — Current value
- * @param {Function} onChange      — (e) => void
- * @param {string}   [placeholder] — Placeholder text
- * @param {boolean}  [disabled]    — Disabled state
- * @param {boolean}  [readOnly]    — Read-only state
- * @param {string}   [className]   — Additional class
- * @param {string}   [id]          — Element ID for accessibility
- * @param {React.ReactNode} [icon] — Leading icon element
- * @param {string}   [size="md"]   — "sm" | "md" | "lg"
- * @param {string}   [label]       — Optional inline label rendered before the input
  */
-const InputComponent = forwardRef<any, any>(function InputComponent(
+const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & {
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
+  size?: string;
+  label?: React.ReactNode;
+}>(function InputComponent(
   {
     type = "text",
     value,
@@ -49,11 +41,7 @@ const InputComponent = forwardRef<any, any>(function InputComponent(
     <div className={classes}>
       {Icon && (
         <span className={styles.iconSlot}>
-          {typeof Icon === "function" || Icon.$$typeof ? (
-            <Icon size={size === "sm" ? 12 : size === "lg" ? 18 : 14} />
-          ) : (
-            Icon
-          )}
+          <Icon size={size === "sm" ? 12 : size === "lg" ? 18 : 14} />
         </span>
       )}
       <input

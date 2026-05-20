@@ -23,10 +23,6 @@ export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?
 
 /**
  * Create a pre-configured fetch helper bound to a base URL.
- *
- * @param baseUrl — API root (e.g. "/api/ledger", "https://api.example.com")
- * @param options — optional configuration
- * @returns request(method, path, body?) → Promise<any>
  */
 export function createApiClient(baseUrl: string, { defaultHeaders = {}, noCache = false }: ApiClientOptions = {}): ApiRequestFn {
   return async function request<T = unknown>(method: HttpMethod, path: string, body: unknown = null): Promise<T> {

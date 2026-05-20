@@ -20,17 +20,6 @@ import styles from "./RadioComponent.module.css";
  *   Native <input type="radio"> within a shared `name` group enables
  *   arrow-key navigation per WAI-ARIA Radio Group pattern.
  *   Tab moves focus into/out of the group; arrows cycle within.
- *
- * @param {string}            value             — This radio's value
- * @param {string}            selectedValue     — Currently selected value in group
- * @param {Function}          onChange           — (value: string) => void
- * @param {string}            [label]           — Optional label text
- * @param {boolean}           [disabled]        — Disabled state
- * @param {boolean}           [error]           — Error-state styling
- * @param {string}            [className]       — Additional wrapper class
- * @param {string}            [id]              — Element ID for accessibility
- * @param {string}            [name]            — Form radio group name
- * @param {"start"|"end"}     [labelPlacement]  — Label position relative to radio
  */
 export default function RadioComponent({
   value,
@@ -109,11 +98,6 @@ export default function RadioComponent({
  *
  * Renders a `<fieldset>` with WAI-ARIA `role="radiogroup"` for proper
  * screen reader semantics. Supports vertical (default) and horizontal layouts.
- *
- * @param {string}           [legend]      — Accessible group label (visually hidden by default)
- * @param {"vertical"|"horizontal"} [orientation] — Layout direction
- * @param {string}           [className]   — Additional wrapper class
- * @param {React.ReactNode}  children      — RadioComponent children
  */
 RadioComponent.Group = function RadioGroupComponent({
   legend,

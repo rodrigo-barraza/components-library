@@ -13,9 +13,6 @@ import styles from "./StatusBadgeComponent.module.css";
  *
  * The glyphs are rendered in the monochrome "Noto Emoji" typeface
  * via the `--font-emoji` design token.
- *
- * @param {boolean} healthy — Whether the service is healthy
- * @param {string} [className] — Additional CSS class
  */
 export default function StatusBadgeComponent({ healthy, className, ...rest }) {
   const variant = healthy ? "success" : "error";

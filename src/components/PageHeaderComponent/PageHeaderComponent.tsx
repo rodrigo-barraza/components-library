@@ -8,14 +8,6 @@ import styles from "./PageHeaderComponent.module.css";
  *
  * Merges the prism-client (sticky, blur, back arrow) and portal (simple flex)
  * variants. The `sticky` prop controls whether the header sticks to the top.
- *
-
-
- * @param {Function} [onBack] — If provided, renders a back arrow button
- * @param {React.ReactNode} [centerContent] — Absolutely centered content
- * @param {React.ReactNode} [children] — Right-side action slot
- * @param {boolean} [sticky=true] — Whether the header is sticky
- * @param {string} [className] — Additional class
  */
 export default function PageHeaderComponent({
   title,

@@ -5,17 +5,13 @@ import styles from "./BadgeComponent.module.css";
 
 /**
  * BadgeComponent — standardized inline badge/pill.
- *
-
- * @param {string} [tooltip] — optional tooltip label shown on hover
  */
-interface BadgeProps {
+interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: string;
-  children?: any;
+  children?: React.ReactNode;
   className?: string;
   mini?: boolean;
-  tooltip?: any;
-  [key: string]: any;
+  tooltip?: React.ReactNode;
 }
 
 export default function BadgeComponent({

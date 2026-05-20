@@ -10,12 +10,6 @@ import SoundService from "../../services/SoundService.js";
 
 /**
  * CopyButtonComponent — Copy-to-clipboard button with a "copied" confirmation state.
- *
- * @param {string}  text          — The text to copy to clipboard
- * @param {number}  [size=14]     — Icon size
- * @param {boolean} [showLabel]   — Show "Copy" / "Copied" text label
- * @param {string}  [className]   — Additional class name
- * @param {string}  [tooltip]     — Tooltip text (used with title attr)
  */
 export default function CopyButtonComponent({
   text,

@@ -45,7 +45,18 @@ export function MenuGroupLabel({ children }) {
 //  M3 anatomy: state-layer → [leading-icon] → label → [trailing]
 //  Height: 48px · Padding: 0 12px
 // ──────────────────────────────────────────────────────────────────
-export const MenuItem = forwardRef<any, any>(function MenuItem(
+interface MenuItemProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'onMouseEnter'> {
+  leadingIcon?: React.ReactNode;
+  trailingIcon?: React.ReactNode;
+  trailingText?: React.ReactNode;
+  disabled?: boolean;
+  selected?: boolean;
+  onClick?: (e: React.MouseEvent) => void;
+  onMouseEnter?: (e: React.MouseEvent) => void;
+  children?: React.ReactNode;
+}
+
+export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function MenuItem(
   {
     leadingIcon,
     trailingIcon,
@@ -201,7 +212,7 @@ export function SubMenu({
     return Children.map(children, (child) => {
       if (isValidElement(child) && child.type === MenuItem) {
         const currentIdx = index++;
-        return cloneElement(child as any, {
+        return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
           ref: (element) => {
             itemRefs.current[currentIdx] = element;
           },
@@ -305,7 +316,19 @@ export function SubMenu({
 //  @param {string}   [props.className]
 //  @param {React.ReactNode} props.children — MenuItem, MenuDivider, etc.
 // ══════════════════════════════════════════════════════════════════
-const MenuComponent = forwardRef<any, any>(function MenuComponent(
+interface MenuComponentProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  trigger: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  position?: "bottom-start" | "bottom-end" | "top-start" | "top-end";
+  matchWidth?: boolean;
+  closeOnSelect?: boolean;
+  maxHeight?: number;
+  ariaLabel?: string;
+  children?: React.ReactNode;
+}
+
+const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function MenuComponent(
   {
     trigger,
     open: controlledOpen,
@@ -499,9 +522,9 @@ const MenuComponent = forwardRef<any, any>(function MenuComponent(
       // MenuItem or SubMenu trigger — assign roving tabindex ref
       if (child.type === MenuItem || child.type === SubMenu) {
         const currentIdx = index++;
-        const originalOnClick = (child.props as any).onClick;
+        const originalOnClick = (child.props as Record<string, unknown>).onClick as ((e: React.MouseEvent) => void) | undefined;
 
-        return cloneElement(child as any, {
+        return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
           ref: (element) => {
             itemRefs.current[currentIdx] = element;
           },
@@ -539,18 +562,18 @@ const MenuComponent = forwardRef<any, any>(function MenuComponent(
 
   // ── Clone trigger to inject ARIA + click ────────────────
   const clonedTrigger = isValidElement(trigger)
-    ? cloneElement(trigger as any, {
+    ? cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
         ref: (element) => {
           triggerElRef.current = element;
           // Forward the trigger's own ref
-          const triggerRef = (trigger as any).ref;
+          const triggerRef = (trigger as React.ReactElement<Record<string, unknown>> & { ref?: React.Ref<unknown> }).ref;
           if (typeof triggerRef === "function") triggerRef(element);
           else if (triggerRef) triggerRef.current = element;
         },
         "aria-haspopup": "menu",
         "aria-expanded": isOpen,
         onClick: (e) => {
-          (trigger.props as any).onClick?.(e);
+          (trigger.props as Record<string, unknown> & { onClick?: (e: React.MouseEvent) => void }).onClick?.(e);
           handleTriggerClick(e);
         },
       })

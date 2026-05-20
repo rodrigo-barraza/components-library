@@ -40,14 +40,19 @@ import SoundService from "../../services/SoundService.js";
 
  *   Explicit accessible label. When omitted the text content of `children`
  *   is used. Always required when `collapsed` is true.
- * @param {React.ReactNode} props.children
- *   The text label for the FAB.
 
  *   Additional CSS class.
 
 
  */
-const ExtendedFabComponent = forwardRef<any, any>(function ExtendedFabComponent(
+const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: string;
+  icon?: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+  collapsed?: boolean;
+  lowered?: boolean;
+  fixed?: boolean;
+  ariaLabel?: string;
+}>(function ExtendedFabComponent(
   {
     variant = "primary",
     icon: Icon,

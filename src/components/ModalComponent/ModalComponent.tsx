@@ -10,15 +10,6 @@ import styles from "./ModalComponent.module.css";
  * Renders a full-screen overlay with a centered panel. Supports Escape
  * and click-outside dismissal, React Portal mounting, body scroll lock,
  * focus trapping with focus restoration, and four size presets.
- *
- * @param {string|React.ReactNode} title — Header title
- * @param {Function} onClose — Called when X / overlay / Escape dismisses
- * @param {React.ReactNode} [footer] — Sticky footer content (action buttons)
- * @param {"sm"|"md"|"lg"|"xl"} [size="md"] — Panel width preset
- * @param {"default"|"dark"} [variant="default"] — Overlay darkness
- * @param {string} [className] — Additional class on the panel
- * @param {string} [id] — Unique ID for ARIA labelling
- * @param {React.ReactNode} children — Body content
  */
 export default function ModalComponent({
   title,

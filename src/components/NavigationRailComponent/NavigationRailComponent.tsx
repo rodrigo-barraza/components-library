@@ -18,18 +18,6 @@ import styles from "./NavigationRailComponent.module.css";
  * - Optional menu/hamburger icon at the top
  * - Keyboard navigation: ArrowUp/Down cycles, Home/End jumps
  * - Full ARIA: role="navigation", tablist pattern on destinations
- *
- * @param {Object[]}         items             — Array of { id, label, icon, href?, badge?, badgeVariant? }
- * @param {string}           [activeItem]      — ID of currently active destination
- * @param {Function}         [onNavigate]      — (id, item) => void
- * @param {React.ReactNode}  [fab]             — Optional FAB rendered above destinations
- * @param {React.ReactNode}  [menuIcon]        — Optional top menu icon/button
- * @param {"top"|"center"}   [alignment="top"] — Vertical alignment of destination group
- * @param {boolean}          [labelsHidden]    — Hide labels (icon-only mode)
- * @param {React.ReactNode}  [bottomSlot]      — Optional slot below destinations (e.g. settings icon)
- * @param {Function}         [LinkComponent]   — Custom router-aware link (e.g. Next.js Link)
- * @param {string}           [className]       — Additional class for the root element
- * @param {string}           [ariaLabel]       — Accessible label for the <nav> landmark
  */
 export default function NavigationRailComponent({
   items = [],

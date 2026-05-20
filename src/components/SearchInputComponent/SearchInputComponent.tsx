@@ -31,7 +31,23 @@ import styles from "./SearchInputComponent.module.css";
    @param {Function} [onCollapse]           — called when view collapses
    @param {React.ReactNode} children        — Suggestion/SuggestionGroup
    ══════════════════════════════════════════════════════════════════════ */
-const SearchInputComponent = forwardRef<any, any>(function SearchInputComponent(
+interface SearchInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSubmit'> {
+  value?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  autoFocus?: boolean;
+  compact?: boolean;
+  useScrim?: boolean;
+  leadingIcon?: React.ReactNode;
+  trailingIcon?: React.ReactNode;
+  onTrailingClick?: () => void;
+  onSubmit?: (value: string) => void;
+  onExpand?: () => void;
+  onCollapse?: () => void;
+  children?: React.ReactNode;
+}
+
+const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(function SearchInputComponent(
   {
     value = "",
     onChange,
@@ -310,9 +326,7 @@ const SearchInputComponent = forwardRef<any, any>(function SearchInputComponent(
             type="button"
             aria-label="Search options"
           >
-            {typeof trailingIcon === "function" || trailingIcon.$$typeof
-              ? trailingIcon
-              : trailingIcon}
+            {trailingIcon}
           </button>
         )}
       </div>
@@ -353,10 +367,14 @@ const SearchInputComponent = forwardRef<any, any>(function SearchInputComponent(
 
 import { createContext, useContext } from "react";
 
-const SearchSuggestionsContext = createContext({
+const SearchSuggestionsContext = createContext<{
+  highlightIndex: number;
+  collapse: () => void;
+  onChange: ((value: string) => void) | undefined;
+}>({
   highlightIndex: -1,
   collapse: () => {},
-  onChange: () => {},
+  onChange: undefined,
 });
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -454,8 +472,10 @@ function SuggestionsEmpty({ message = "No results found" }) {
 
 /* ── Attach sub-components ──────────────────────────────────────── */
 
-(SearchInputComponent as any).Suggestion = Suggestion;
-(SearchInputComponent as any).SuggestionGroup = SuggestionGroup;
-(SearchInputComponent as any).Empty = SuggestionsEmpty;
+const SearchInputWithSubcomponents = Object.assign(SearchInputComponent, {
+  Suggestion,
+  SuggestionGroup,
+  Empty: SuggestionsEmpty,
+});
 
-export default SearchInputComponent;
+export default SearchInputWithSubcomponents;

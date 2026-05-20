@@ -32,9 +32,6 @@ import SoundService from "../../services/SoundService.js";
  *   • Screen-reader announcements via `aria-label`
  *
 
- * @param {Array<{icon: React.ComponentType, label: string, onClick: Function, ariaLabel?: string}>} props.items
- *   Array of 3–6 menu actions. Each item has an icon component,
- *   a visible label, an onClick handler, and optional ariaLabel.
 
  *   Icon for the trigger FAB. Defaults to a "+" shape if omitted.
 
@@ -52,6 +49,7 @@ import SoundService from "../../services/SoundService.js";
 
 
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compound FAB+menu with dynamic trigger element
 const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
   {
     items = [],

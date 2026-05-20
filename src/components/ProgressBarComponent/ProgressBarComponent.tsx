@@ -9,15 +9,6 @@ import styles from "./ProgressBarComponent.module.css";
  * Two modes:
  *   • **Determinate** — pass `value` (0–100) to show a definite progress bar
  *   • **Indeterminate** — omit `value` to show the M3 infinite sliding animation
- *
- * @param {number}   [value]                — Progress percentage (0–100). Omit for indeterminate.
- * @param {"accent"|"success"|"warning"|"danger"|"info"} [variant="accent"] — Color theme
- * @param {"sm"|"md"|"lg"} [size="md"]     — Track height preset
- * @param {string}   [label]               — Optional text label displayed above the bar
- * @param {boolean}  [showValue=false]     — Display percentage text
- * @param {boolean}  [animated=true]       — Animate the bar fill transition
- * @param {boolean}  [striped=false]       — Add diagonal stripe pattern on the active bar
-
  */
 export default function ProgressBarComponent({
   value,

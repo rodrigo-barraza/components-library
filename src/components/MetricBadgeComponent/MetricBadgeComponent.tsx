@@ -9,19 +9,6 @@ import styles from "./MetricBadgeComponent.module.css";
  * Replaces the pattern of 17+ nearly-identical badge components in prism-client
  * (CostBadge, TokenCountBadge, RequestCountBadge, ThroughputBadge, etc.) with
  * a single parameterized component.
- *
- * @param {number}            value           — The numeric value to display
- * @param {string}            [label]         — Suffix text (e.g. "tokens", "requests")
- * @param {React.ReactNode}   [icon]          — Leading icon element (e.g. <Coins size={10} />)
- * @param {string}            [tooltip]       — Tooltip text (auto-generated from value + label if omitted)
- * @param {Function}          [formatFn]      — Custom value formatter (receives displayValue, returns string)
- * @param {string}            [color]         — Semantic color name: "green", "blue", "amber", "cyan", "red", "purple", or a custom CSS color
- * @param {boolean}           [tween=false]   — Enable count-up tween animation on value change
- * @param {number}            [tweenDuration=600] — Tween animation duration in ms
- * @param {boolean}           [round=true]    — Round intermediate tween values
- * @param {boolean}           [mini=false]    — Render compact size
- * @param {boolean}           [hideWhenZero=true] — Return null when value <= 0
- * @param {string}            [className]     — Additional CSS class
  */
 export default function MetricBadgeComponent({
   value,

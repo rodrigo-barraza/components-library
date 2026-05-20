@@ -17,14 +17,6 @@ import styles from "./CardComponent.module.css";
  *   CardComponent.Body        — main content area with padding
  *   CardComponent.Footer      — bottom bar (e.g. action buttons)
  *   CardComponent.ActionArea  — makes the card (or a region) clickable with ripple
- *
- * @param {"elevated"|"filled"|"outlined"} [variant="outlined"] — M3 card variant
- * @param {boolean}   [interactive=false]   — enables hover / press state layer
- * @param {boolean}   [draggable=false]     — adds dragged state elevation
- * @param {boolean}   [fullWidth=false]     — stretches to container width
-
- * @param {object}    [style]               — use --card-accent to theme
-
  */
 export default function CardComponent({
   variant = "outlined",
@@ -71,14 +63,6 @@ function CardHeader({ icon: Icon, title, subtitle, children, className }) {
 
 /**
  * CardMedia — M3 media slot for full-bleed images, video, or illustrations.
- *
- * @param {string}   [src]        — image source URL
- * @param {string}   [alt]        — alt text for image
- * @param {number}   [height]     — fixed height in px (default: auto, aspect-ratio used if set)
- * @param {string}   [aspectRatio] — CSS aspect-ratio value, e.g. "16/9"
- * @param {"top"|"bottom"|"full"} [position="top"] — clip-path rounding position
-
- * @param {React.ReactNode} children — custom content (overrides src/alt)
  */
 function CardMedia({
   src,
@@ -140,12 +124,8 @@ function CardFooter({ children, className }) {
 /**
  * CardActionArea — wraps card content to make it clickable / tappable.
  * Renders a full-surface interactive layer with ripple and state layer.
- *
-
- * @param {string}    [href]   — if provided, renders an <a> instead
-
-
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- renders as anchor or button, polymorphic ref
 const CardActionArea = forwardRef<any, any>(function CardActionArea(
   { onClick, href, className, children, ...rest },
   ref,
