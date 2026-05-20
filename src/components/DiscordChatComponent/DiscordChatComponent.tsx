@@ -350,6 +350,236 @@ function ImageAttachments({ attachments }) {
   );
 }
 
+// ── Voice Message Player ─────────────────────────────────────────
+function decodeWaveform(base64Str: string): number[] {
+  if (!base64Str) return [];
+  try {
+    const binaryString = window.atob(base64Str);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return Array.from(bytes);
+  } catch (e) {
+    console.error("Failed to decode waveform:", e);
+    return [];
+  }
+}
+
+function getWaveformBars(base64Str?: string, targetCount = 35): number[] {
+  let raw: number[] = [];
+  if (base64Str) {
+    raw = decodeWaveform(base64Str);
+  }
+  
+  if (raw.length === 0) {
+    for (let i = 0; i < targetCount; i++) {
+      const angle = (i / targetCount) * Math.PI * 2;
+      const height = Math.abs(Math.sin(angle) * 0.6 + Math.sin(angle * 3) * 0.3 + 0.1);
+      raw.push(Math.round(height * 255));
+    }
+  }
+
+  const resampled: number[] = [];
+  const step = raw.length / targetCount;
+  for (let i = 0; i < targetCount; i++) {
+    const startIdx = Math.floor(i * step);
+    const endIdx = Math.floor((i + 1) * step);
+    let sum = 0;
+    let count = 0;
+    for (let j = startIdx; j < Math.max(startIdx + 1, endIdx); j++) {
+      if (j < raw.length) {
+        sum += raw[j];
+        count++;
+      }
+    }
+    resampled.push(count > 0 ? sum / count : 0);
+  }
+
+  const maxVal = Math.max(...resampled, 1);
+  return resampled.map((v) => Math.max(15, Math.round((v / maxVal) * 100)));
+}
+
+function VoiceMessagePlayer({ attachment }) {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(attachment.duration || 0);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [muted, setMuted] = useState(false);
+  const [bars] = useState(() => getWaveformBars(attachment.waveform, 38));
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (playing) {
+      audio.pause();
+    } else {
+      audio.play().catch((err) => console.error("Playback error:", err));
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration || attachment.duration || 0);
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setPlaying(false);
+    setCurrentTime(0);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  const cycleSpeed = () => {
+    const nextRate = playbackRate === 1 ? 1.5 : playbackRate === 1.5 ? 2 : 1;
+    setPlaybackRate(nextRate);
+    if (audioRef.current) {
+      audioRef.current.playbackRate = nextRate;
+    }
+  };
+
+  const toggleMute = () => {
+    const nextMuted = !muted;
+    setMuted(nextMuted);
+    if (audioRef.current) {
+      audioRef.current.muted = nextMuted;
+    }
+  };
+
+  const handleWaveformClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const audio = audioRef.current;
+    if (!audio || !duration) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const percentage = Math.min(Math.max(0, clickX / width), 1);
+    
+    audio.currentTime = percentage * duration;
+    setCurrentTime(audio.currentTime);
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+
+    return () => {
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+    };
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    if (isNaN(seconds)) return "0:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const sStr = s < 10 ? `0${s}` : `${s}`;
+    if (h > 0) {
+      const mStr = m < 10 ? `0${m}` : `${m}`;
+      return `${h}:${mStr}:${sStr}`;
+    }
+    return `${m}:${sStr}`;
+  };
+
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const activeBarIndex = Math.floor((progressPercent / 100) * bars.length);
+
+  return (
+    <div className={styles.voicePlayer}>
+      <audio
+        ref={audioRef}
+        src={attachment.url}
+        preload="metadata"
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleAudioEnded}
+      />
+      
+      <button className={styles.voicePlayButton} onClick={togglePlay} type="button">
+        {playing ? (
+          <svg className={styles.voicePauseIcon} viewBox="0 0 24 24">
+            <rect x="5" y="4" width="4" height="16" rx="1" />
+            <rect x="15" y="4" width="4" height="16" rx="1" />
+          </svg>
+        ) : (
+          <svg className={styles.voicePlayIcon} viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        )}
+      </button>
+
+      <div className={styles.voiceWaveform} onClick={handleWaveformClick}>
+        {bars.map((height, idx) => {
+          const isPlayed = idx <= activeBarIndex;
+          return (
+            <div
+              key={idx}
+              className={`${styles.voiceWaveformBar} ${isPlayed ? styles.voiceWaveformBarPlayed : ""}`}
+              style={{ "--bar-height": `${height}%` } as React.CSSProperties}
+            />
+          );
+        })}
+      </div>
+
+      <span className={styles.voiceDuration}>
+        {formatTime(playing ? currentTime : duration)}
+      </span>
+
+      <button className={styles.voiceSpeed} onClick={cycleSpeed} type="button">
+        {playbackRate}X
+      </button>
+
+      <button className={styles.voiceVolume} onClick={toggleMute} type="button">
+        {muted ? (
+          <svg className={styles.voiceVolumeIcon} viewBox="0 0 24 24">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+          </svg>
+        ) : (
+          <svg className={styles.voiceVolumeIcon} viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+          </svg>
+        )}
+      </button>
+    </div>
+  );
+}
+
+function AudioAttachments({ attachments }) {
+  if (!attachments?.length) return null;
+  const audioList = attachments.filter((a) =>
+    (a.contentType?.startsWith("audio/") ||
+     a.name?.endsWith(".ogg") ||
+     a.name?.endsWith(".mp3") ||
+     a.duration ||
+     a.waveform) && (a.url || a.proxyURL)
+  );
+  if (!audioList.length) return null;
+  return (
+    <div className={styles.attachments}>
+      {audioList.map((audio, i) => (
+        <VoiceMessagePlayer key={i} attachment={audio} />
+      ))}
+    </div>
+  );
+}
+
 // ── Rich Embed Card (Discord link unfurl / Open Graph preview) ───
 // Renders Discord-style embed cards with provider, title, description,
 // thumbnail/image, and video. Matches the native Discord embed UI.
@@ -1164,6 +1394,7 @@ export default function DiscordChatComponent({
           setMessages((prev) =>
             prev.map((message) => {
               const updated = updateMap.get(message.id);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               return updated ? { ...message, reactions: (updated as any).reactions } : message;
             }),
           );
@@ -1485,6 +1716,7 @@ export default function DiscordChatComponent({
                           <p className={styles.messageText}>{formatContent(message.content, message.cleanContent)}</p>
                           <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
                           <ImageAttachments attachments={message.attachments} />
+                          <AudioAttachments attachments={message.attachments} />
                           <EmbedMedia embeds={message.embeds} />
                           <Reactions
                             reactions={message.reactions}
@@ -1532,6 +1764,7 @@ export default function DiscordChatComponent({
                           <p className={styles.messageText}>{formatContent(message.content, message.cleanContent)}</p>
                           <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
                           <ImageAttachments attachments={message.attachments} />
+                          <AudioAttachments attachments={message.attachments} />
                           <EmbedMedia embeds={message.embeds} />
                           <Reactions
                             reactions={message.reactions}
