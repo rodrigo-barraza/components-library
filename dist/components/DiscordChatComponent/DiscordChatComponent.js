@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-/* eslint-disable no-unused-vars -- sub-components used in JSX (no react eslint plugin) */
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import styles from "./DiscordChatComponent.module.css";
 // ── Discord role colors (fallback when no role color from API) ───
@@ -151,8 +150,8 @@ function extractTenorUrls(content) {
 // ── Discord Custom Emoji ─────────────────────────────────────────
 const CUSTOM_EMOJI_RE = /<(a?):(\w+):(\d+)>/g;
 function emojiUrl(id, animated) {
-    const ext = animated ? "gif" : "webp";
-    return `https://cdn.discordapp.com/emojis/${id}.${ext}?size=48&quality=lossless`;
+    const imageFormat = animated ? "gif" : "webp";
+    return `https://cdn.discordapp.com/emojis/${id}.${imageFormat}?size=48&quality=lossless`;
 }
 // ── Format Discord message content ───────────────────────────────
 function formatContent(content, cleanContent) {
@@ -302,9 +301,9 @@ function decodeWaveform(base64Str) {
         return [];
     try {
         const binaryString = window.atob(base64Str);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
+        const binaryLength = binaryString.length;
+        const bytes = new Uint8Array(binaryLength);
+        for (let i = 0; i < binaryLength; i++) {
             bytes[i] = binaryString.charCodeAt(i);
         }
         return Array.from(bytes);
@@ -640,8 +639,8 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
     if (serverEmojis?.length) {
         allCategories.push({ id: "server", name: "Server Emojis", icon: "🏠" });
     }
-    for (const cat of EMOJI_CATEGORIES) {
-        allCategories.push(cat);
+    for (const category of EMOJI_CATEGORIES) {
+        allCategories.push(category);
     }
     // Filter server emojis
     const filteredCustom = serverEmojis
@@ -802,8 +801,8 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                         }
                         // Build guild icon/banner CDN URLs from stored hashes
                         if (firstMsg.guildIcon && firstMsg.guildId) {
-                            const ext = firstMsg.guildIcon.startsWith("a_") ? "gif" : "png";
-                            const url = `https://cdn.discordapp.com/icons/${firstMsg.guildId}/${firstMsg.guildIcon}.${ext}?size=128`;
+                            const iconFormat = firstMsg.guildIcon.startsWith("a_") ? "gif" : "png";
+                            const url = `https://cdn.discordapp.com/icons/${firstMsg.guildId}/${firstMsg.guildIcon}.${iconFormat}?size=128`;
                             setServerIcon((prev) => prev || url);
                         }
                         if (firstMsg.guildBanner && firstMsg.guildId) {
@@ -822,9 +821,8 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                 return prev;
                             const channelMap = new Map();
                             for (const message of reversed) {
-                                const msgAny = message;
-                                if (msgAny.channelId && msgAny.channelName) {
-                                    channelMap.set(msgAny.channelId, msgAny.channelName);
+                                if (message.channelId && message.channelName) {
+                                    channelMap.set(message.channelId, message.channelName);
                                 }
                             }
                             if (channelMap.size === 0)
@@ -1040,10 +1038,10 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                     const groups = [];
                                     let lastCategory = null;
                                     for (const ch of channels) {
-                                        const cat = ch.parentName || "Text Channels";
-                                        if (cat !== lastCategory) {
-                                            groups.push({ category: cat, items: [] });
-                                            lastCategory = cat;
+                                        const channelCategory = ch.parentName || "Text Channels";
+                                        if (channelCategory !== lastCategory) {
+                                            groups.push({ category: channelCategory, items: [] });
+                                            lastCategory = channelCategory;
                                         }
                                         groups[groups.length - 1].items.push(ch);
                                     }
@@ -1052,9 +1050,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                         // Build a lookup map for reply references
                                         const messageMap = new Map(messages.map((m) => [m.id, m]));
                                         return messages.map((message, i) => {
-                                            const prev = i > 0 ? messages[i - 1] : null;
-                                            const grouped = shouldGroup(message, prev);
-                                            const newDay = isDifferentDay(message, prev);
+                                            const previousMessage = i > 0 ? messages[i - 1] : null;
+                                            const grouped = shouldGroup(message, previousMessage);
+                                            const newDay = isDifferentDay(message, previousMessage);
                                             const nameStyle = resolveRoleColorStyle(message.author);
                                             return (_jsxs("div", { children: [newDay && (_jsx("div", { className: styles.dateSeparator, children: _jsx("span", { className: styles.dateSeparatorText, children: formatDateSeparator(message.createdAtISO) }) })), grouped && !newDay ? (_jsxs("div", { className: styles.messageRowGrouped, children: [_jsx("span", { className: styles.timestampInline, children: formatShortTime(message.createdAtISO) }), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsx("p", { className: styles.messageText, children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] })) : (_jsxs("div", { className: `${styles.messageRow} ${message.replyTo ? styles.messageRowReply : ""}`, children: [message.replyTo && (_jsx(ReplyContext, { replyTo: message.replyTo, messageMap: messageMap })), message.author.avatarUrl ? (_jsx("img", { className: styles.avatar, src: message.author.avatarUrl, alt: message.author.displayName, width: 40, height: 40, loading: "lazy" })) : (_jsx("div", { className: styles.avatarFallback, style: { background: getAvatarColor(message.author.id) }, children: (message.author.displayName || "?")[0].toUpperCase() })), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsxs("div", { className: styles.messageHeader, children: [_jsx("span", { className: styles.authorName, style: nameStyle, children: message.author.displayName }), message.author.isBot && (_jsxs("span", { className: styles.botBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "BOT"] })), _jsx(UserBadges, { badges: message.author.badges }), _jsx(RoleTags, { roleTags: message.author.roleTags }), _jsx("span", { className: styles.timestamp, children: formatTimestamp(message.createdAtISO) })] }), _jsx("p", { className: styles.messageText, children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] }))] }, message.id));
                                         });

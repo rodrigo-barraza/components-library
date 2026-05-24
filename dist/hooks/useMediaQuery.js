@@ -14,11 +14,11 @@ import { useState, useEffect } from "react";
 export default function useMediaQuery(query) {
     const [matches, setMatches] = useState(false);
     useEffect(() => {
-        const mql = window.matchMedia(query);
-        setMatches(mql.matches);
+        const mediaQueryList = window.matchMedia(query);
+        setMatches(mediaQueryList.matches);
         const handler = (event) => setMatches(event.matches);
-        mql.addEventListener("change", handler);
-        return () => mql.removeEventListener("change", handler);
+        mediaQueryList.addEventListener("change", handler);
+        return () => mediaQueryList.removeEventListener("change", handler);
     }, [query]);
     return matches;
 }

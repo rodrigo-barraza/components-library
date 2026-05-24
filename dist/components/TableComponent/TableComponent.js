@@ -160,9 +160,9 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         const d = dragRef.current;
         if (!d.active)
             return;
-        const dx = e.clientX - d.startX;
-        const dy = e.clientY - d.startY;
-        if (!d.moved && Math.abs(dx) + Math.abs(dy) > 5) {
+        const deltaX = e.clientX - d.startX;
+        const deltaY = e.clientY - d.startY;
+        if (!d.moved && Math.abs(deltaX) + Math.abs(deltaY) > 5) {
             d.moved = true;
             const element = scrollRef.current;
             if (element && d.pointerId !== undefined) {
@@ -176,8 +176,8 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         if (d.moved) {
             const element = scrollRef.current;
             if (element) {
-                element.scrollLeft = d.scrollLeft - dx;
-                element.scrollTop = d.scrollTop - dy;
+                element.scrollLeft = d.scrollLeft - deltaX;
+                element.scrollTop = d.scrollTop - deltaY;
             }
         }
     }, []);
@@ -237,7 +237,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
                     ? va.localeCompare(vb)
                     : vb.localeCompare(va);
             }
-            return sort.dir === "asc" ? va - vb : vb - va;
+            return sort.dir === "asc" ? Number(va) - Number(vb) : Number(vb) - Number(va);
         })
         : data;
     const hasSubRows = !!getSubRows;
@@ -294,7 +294,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
                                                     content = col.render(row, ri);
                                                 }
                                                 else {
-                                                    content = row[col.key] ?? "—";
+                                                    content = (row[col.key] ?? "—");
                                                 }
                                                 return (_jsxs("td", { className: `${tdClass} ${extraClass} ${sortedClass}`, style: cellStyle, children: [isFirst && isExpandable && (_jsx("span", { className: `${styles.expandIcon} ${isExpanded ? styles.expandIconOpen : ""}`, children: _jsx(ChevronDown, { size: 12 }) })), content] }, col.key));
                                             }) }), isExpanded && hasExpandedContent && (_jsx("tr", { className: styles.expandedContentRow, children: _jsx("td", { colSpan: colsToRender.length, className: styles.expandedContentCell, children: renderExpandedContent(row) }) })), isExpanded &&
@@ -311,7 +311,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
                                                         content = col.render(sub, si);
                                                     }
                                                     else {
-                                                        content = sub[col.key] ?? "—";
+                                                        content = (sub[col.key] ?? "—");
                                                     }
                                                     return (_jsx("td", { style: cellStyle, children: content }, col.key));
                                                 }) }, `${key}-sub-${si}`)))] }, key));

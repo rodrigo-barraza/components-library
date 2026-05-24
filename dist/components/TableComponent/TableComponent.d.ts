@@ -3,7 +3,7 @@ import React from "react";
  * TableComponent — a reusable, sortable data table with expandable rows,
  * column visibility controls, drag-to-scroll, and per-column tooltips.
  */
-export interface TableColumn<T, TSub = any> {
+export interface TableColumn<T, TSub = unknown> {
     key: string;
     label: string;
     description?: string;
@@ -12,12 +12,12 @@ export interface TableColumn<T, TSub = any> {
     defaultHidden?: boolean;
     hideable?: boolean;
     sortable?: boolean;
-    sortValue?: (row: T) => any;
+    sortValue?: (row: T) => string | number;
     render?: (row: T, index: number) => React.ReactNode;
     renderSub?: (sub: TSub, index: number) => React.ReactNode;
     className?: string;
 }
-export interface TableComponentProps<T, TSub = any> {
+export interface TableComponentProps<T, TSub = unknown> {
     title?: React.ReactNode;
     subtitle?: React.ReactNode;
     columns: TableColumn<T, TSub>[];
@@ -41,5 +41,5 @@ export interface TableComponentProps<T, TSub = any> {
     mini?: boolean;
     storageKey?: string;
 }
-export default function TableComponent<T, TSub = any>({ title, subtitle, columns, data, getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText, sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini, storageKey, }: TableComponentProps<T, TSub>): import("react/jsx-runtime").JSX.Element;
+export default function TableComponent<T, TSub = unknown>({ title, subtitle, columns, data, getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText, sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini, storageKey, }: TableComponentProps<T, TSub>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=TableComponent.d.ts.map

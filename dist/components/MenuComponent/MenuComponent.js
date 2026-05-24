@@ -205,8 +205,8 @@ const MenuComponent = forwardRef(function MenuComponent({ trigger, open: control
             }
             case "ArrowUp": {
                 e.preventDefault();
-                const prev = currentIdx > 0 ? currentIdx - 1 : focusable.length - 1;
-                focusable[prev]?.focus();
+                const previousFocusIndex = currentIdx > 0 ? currentIdx - 1 : focusable.length - 1;
+                focusable[previousFocusIndex]?.focus();
                 break;
             }
             case "Home":

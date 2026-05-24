@@ -38,7 +38,7 @@ export default function RadioComponent({ value, selectedValue, onChange, label =
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("label", { className: rootClasses, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "radio", id: id, name: name, value: value, className: styles.hiddenInput, checked: checked, disabled: disabled, onChange: () => {
+    return (_jsxs("label", { className: rootClasses, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "radio", id: id, name: name, value: String(value), className: styles.hiddenInput, checked: checked, disabled: disabled, onChange: () => {
                             if (sound)
                                 SoundService.playClickButton({});
                             onChange(value);

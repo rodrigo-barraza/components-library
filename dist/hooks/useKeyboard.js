@@ -30,10 +30,10 @@ export default function useKeyboard(keyMap, options = {}) {
                 parts.push("alt");
             parts.push(event.key.toLowerCase());
             const combo = parts.join("+");
-            const fn = keyMapRef.current[combo];
-            if (fn) {
+            const keyHandler = keyMapRef.current[combo];
+            if (keyHandler) {
                 event.preventDefault();
-                fn(event);
+                keyHandler(event);
             }
         };
         document.addEventListener("keydown", handler);

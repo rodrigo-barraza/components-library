@@ -78,6 +78,8 @@ export interface DiscordMessage {
     guildBanner?: string;
     guildSplash?: string;
     guildId?: string;
+    channelId?: string;
+    channelName?: string;
 }
 export interface DiscordChannel {
     id: string;

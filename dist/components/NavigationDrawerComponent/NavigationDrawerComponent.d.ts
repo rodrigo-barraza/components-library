@@ -36,7 +36,7 @@ declare namespace NavigationDrawerComponent {
     var Footer: typeof DrawerFooter;
 }
 export default NavigationDrawerComponent;
-export interface DrawerItemProps {
+export interface DrawerItemProps extends Record<string, unknown> {
     icon?: ElementType;
     label?: ReactNode;
     badge?: ReactNode;

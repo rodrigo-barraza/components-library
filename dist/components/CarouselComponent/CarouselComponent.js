@@ -40,8 +40,8 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
         let closestIdx = 0;
         let closestDist = Infinity;
         items.forEach((item, i) => {
-            const el = item;
-            const itemCenter = el.offsetLeft + el.offsetWidth / 2;
+            const itemElement = item;
+            const itemCenter = itemElement.offsetLeft + itemElement.offsetWidth / 2;
             const dist = Math.abs(trackCenter - itemCenter);
             if (dist < closestDist) {
                 closestDist = dist;

@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-export interface RadioComponentProps {
-    value: any;
-    selectedValue: any;
-    onChange: (value: any) => void;
+export interface RadioComponentProps<T extends string | number | boolean = string | number | boolean> {
+    value: T;
+    selectedValue: T;
+    onChange: (value: T) => void;
     label?: string | ReactNode;
     disabled?: boolean;
     error?: boolean;
@@ -28,7 +28,7 @@ export interface RadioComponentProps {
  *   arrow-key navigation per WAI-ARIA Radio Group pattern.
  *   Tab moves focus into/out of the group; arrows cycle within.
  */
-declare function RadioComponent({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: RadioComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function RadioComponent<T extends string | number | boolean = string | number | boolean>({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: RadioComponentProps<T>): import("react/jsx-runtime").JSX.Element;
 declare namespace RadioComponent {
     var Group: ({ legend, orientation, className, children, }: RadioGroupComponentProps) => import("react/jsx-runtime").JSX.Element;
 }

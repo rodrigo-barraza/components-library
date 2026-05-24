@@ -27,7 +27,13 @@ import SoundService from "../../services/SoundService.js";
 const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary", size = "medium", icon: Icon, iconSize, loading = false, disabled = false, fullWidth = false, isGenerating = false, href, children, className = "", onClick, onMouseEnter, ...rest }, ref) {
     const { sound } = useComponents();
     const buttonRef = useRef(null);
-    const resolvedRef = (ref || buttonRef);
+    const setRef = useCallback((node) => {
+        buttonRef.current = node;
+        if (typeof ref === "function")
+            ref(node);
+        else if (ref)
+            ref.current = node;
+    }, [ref]);
     const isSubmit = variant === "submit";
     const hasLabel = Boolean(children);
     const isIconOnly = Icon && !hasLabel && !loading;
@@ -80,10 +86,10 @@ const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary
     };
     /* ── Render as <a> if href provided ────────────────────────────── */
     if (href && !disabled && !loading) {
-        return (_jsx("a", { ref: resolvedRef, href: href, className: classes, role: "button", onMouseEnter: handleMouseEnter, onClick: handleClick, ...rest, children: content }));
+        return (_jsx("a", { ref: setRef, href: href, className: classes, role: "button", onMouseEnter: handleMouseEnter, onClick: handleClick, ...rest, children: content }));
     }
     /* ── Render as <button> ────────────────────────────────────────── */
-    return (_jsx("button", { ref: resolvedRef, className: classes, disabled: disabled || loading, type: isSubmit ? "submit" : "button", onMouseEnter: handleMouseEnter, onClick: handleClick, "aria-busy": loading || undefined, ...rest, children: content }));
+    return (_jsx("button", { ref: setRef, className: classes, disabled: disabled || loading, type: isSubmit ? "submit" : "button", onMouseEnter: handleMouseEnter, onClick: handleClick, "aria-busy": loading || undefined, ...rest, children: content }));
 });
 export default ButtonComponent;
 //# sourceMappingURL=ButtonComponent.js.map

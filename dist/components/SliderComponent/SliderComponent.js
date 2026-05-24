@@ -108,8 +108,8 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
     const trackRef = useRef(null);
     const [dragging, setDragging] = useState(false);
     const [pressed, setPressed] = useState(false);
-    const pct = max === min ? 0 : ((value - min) / (max - min)) * 100;
-    const midPct = ((0 - min) / (max - min)) * 100; // Center point for centered mode
+    const percentage = max === min ? 0 : ((value - min) / (max - min)) * 100;
+    const midPercentage = ((0 - min) / (max - min)) * 100; // Center point for centered mode
     const fmt = formatValue || defaultFormat;
     const handlePointerDown = (e) => {
         if (disabled || !trackRef.current)
@@ -141,13 +141,13 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
     /* ── Centered fill calculations ── */
     const centeredFill = centered
         ? {
-            left: `${Math.min(pct, midPct)}%`,
-            width: `${Math.abs(pct - midPct)}%`,
+            left: `${Math.min(percentage, midPercentage)}%`,
+            width: `${Math.abs(percentage - midPercentage)}%`,
         }
         : null;
     return (_jsx("div", { className: styles.trackWrapper, children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
                 .filter(Boolean)
-                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), centered && centeredFill ? (_jsx("div", { className: styles.activeTrack, style: centeredFill })) : (_jsx("div", { className: styles.activeTrack, style: { width: `${pct}%` } })), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
+                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), centered && centeredFill ? (_jsx("div", { className: styles.activeTrack, style: centeredFill })) : (_jsx("div", { className: styles.activeTrack, style: { width: `${percentage}%` } })), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
                     ticks.map((tick) => {
                         const tickPct = ((tick - min) / (max - min)) * 100;
                         const isActive = centered
@@ -160,7 +160,7 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
                         pressed && styles.thumbPressed,
                     ]
                         .filter(Boolean)
-                        .join(" "), style: { left: `${pct}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label, "aria-valuemin": min, "aria-valuemax": max, "aria-valuenow": value, "aria-valuetext": fmt(value), "aria-disabled": disabled, onKeyDown: (e) => !disabled && handleSliderKeyDown(e, value, min, max, step, onChange), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue && (pressed || dragging) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: fmt(value) }) }))] })] }) }));
+                        .join(" "), style: { left: `${percentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label, "aria-valuemin": min, "aria-valuemax": max, "aria-valuenow": value, "aria-valuetext": fmt(value), "aria-disabled": disabled, onKeyDown: (e) => !disabled && handleSliderKeyDown(e, value, min, max, step, onChange), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue && (pressed || dragging) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: fmt(value) }) }))] })] }) }));
 }
 function RangeTrack({ value, min, max, step, onChange, disabled, showValue, ticks, label, formatValue, sound, }) {
     const trackRef = useRef(null);
@@ -168,8 +168,8 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
     const [dragging, setDragging] = useState(false);
     const [pressedThumb, setPressedThumb] = useState(null);
     const [lo, hi] = value;
-    const loPct = max === min ? 0 : ((lo - min) / (max - min)) * 100;
-    const hiPct = max === min ? 100 : ((hi - min) / (max - min)) * 100;
+    const lowPercentage = max === min ? 0 : ((lo - min) / (max - min)) * 100;
+    const highPercentage = max === min ? 100 : ((hi - min) / (max - min)) * 100;
     const fmt = formatValue || defaultFormat;
     const resolveThumb = useCallback((clientX) => {
         if (!trackRef.current)
@@ -237,7 +237,7 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
     };
     return (_jsx("div", { className: styles.trackWrapper, children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
                 .filter(Boolean)
-                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), _jsx("div", { className: styles.activeTrack, style: { left: `${loPct}%`, width: `${hiPct - loPct}%` } }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
+                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), _jsx("div", { className: styles.activeTrack, style: { left: `${lowPercentage}%`, width: `${highPercentage - lowPercentage}%` } }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
                     ticks.map((tick) => {
                         const tickPct = ((tick - min) / (max - min)) * 100;
                         const isActive = tick >= lo && tick <= hi;
@@ -248,7 +248,7 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
                         pressedThumb === "start" && styles.thumbPressed,
                     ]
                         .filter(Boolean)
-                        .join(" "), style: { left: `${loPct}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} minimum` : "Range minimum", "aria-valuemin": min, "aria-valuemax": hi, "aria-valuenow": lo, "aria-valuetext": fmt(lo), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("start"), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue &&
+                        .join(" "), style: { left: `${lowPercentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} minimum` : "Range minimum", "aria-valuemin": min, "aria-valuemax": hi, "aria-valuenow": lo, "aria-valuetext": fmt(lo), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("start"), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue &&
                             (pressedThumb === "start" ||
                                 (dragging && activeThumb.current === "start")) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: fmt(lo) }) }))] }), _jsxs("div", { className: [
                         styles.thumbContainer,
@@ -256,7 +256,7 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
                         pressedThumb === "end" && styles.thumbPressed,
                     ]
                         .filter(Boolean)
-                        .join(" "), style: { left: `${hiPct}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} maximum` : "Range maximum", "aria-valuemin": lo, "aria-valuemax": max, "aria-valuenow": hi, "aria-valuetext": fmt(hi), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("end"), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue &&
+                        .join(" "), style: { left: `${highPercentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} maximum` : "Range maximum", "aria-valuemin": lo, "aria-valuemax": max, "aria-valuenow": hi, "aria-valuetext": fmt(hi), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("end"), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue &&
                             (pressedThumb === "end" ||
                                 (dragging && activeThumb.current === "end")) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: fmt(hi) }) }))] })] }) }));
 }
