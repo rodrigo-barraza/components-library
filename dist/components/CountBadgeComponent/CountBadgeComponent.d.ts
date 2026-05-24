@@ -21,6 +21,6 @@ interface CountBadgeProps {
     tooltip?: string;
     className?: string;
 }
-export default function CountBadgeComponent({ count, state, disabled, rainbow, tooltip, className, }: CountBadgeProps): import("react/jsx-runtime").JSX.Element;
+export default function CountBadgeComponent({ count, state, disabled, rainbow, tooltip, className, }: CountBadgeProps): import("react/jsx-runtime").JSX.Element | null;
 export {};
 //# sourceMappingURL=CountBadgeComponent.d.ts.map

@@ -22,7 +22,33 @@ import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
  *   • "stacked" — Icon above label (64px height)
  *
  * }>} tabs
- */
+  */
+export interface TabBarTab {
+  key: string;
+  label?: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  badge?: number | string;
+  badgeState?: "default" | "success" | "warning" | "error" | "info" | "brand" | string;
+  badgeDisabled?: boolean;
+  badgeRainbow?: boolean;
+  tooltip?: string;
+  tooltipDisabled?: boolean;
+}
+
+export interface TabBarComponentProps {
+  tabs?: TabBarTab[];
+  activeTab: string;
+  onChange: (key: string) => void;
+  variant?: "primary" | "secondary";
+  layout?: "inline" | "stacked";
+  scrollable?: boolean;
+  className?: string;
+  onTabHover?: (key: string | null) => void;
+  glowingTabs?: string[];
+  ariaLabel?: string;
+}
+
 export default function TabBarComponent({
   tabs = [],
   activeTab,
@@ -34,11 +60,11 @@ export default function TabBarComponent({
   onTabHover,
   glowingTabs = [],
   ariaLabel,
-}) {
+}: TabBarComponentProps) {
   const { sound } = useComponents();
-  const tabListRef = useRef(null);
-  const indicatorRef = useRef(null);
-  const tabRefs = useRef({});
+  const tabListRef = useRef<HTMLDivElement | null>(null);
+  const indicatorRef = useRef<HTMLSpanElement | null>(null);
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   // ── Sliding indicator position calculation ───────────────
   const updateIndicator = useCallback(() => {
@@ -74,7 +100,7 @@ export default function TabBarComponent({
   }, [updateIndicator]);
 
   // ── Keyboard navigation (Arrow Left/Right, Home, End) ───
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const enabledTabs = tabs.filter((t) => !t.disabled);
     const currentIdx = enabledTabs.findIndex((t) => t.key === activeTab);
 
@@ -112,7 +138,7 @@ export default function TabBarComponent({
   };
 
   // ── Ripple coordinate capture ───────────────────────────
-  const captureRipple = (e) => {
+  const captureRipple = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -120,7 +146,6 @@ export default function TabBarComponent({
     e.currentTarget.style.setProperty("--ripple-y", `${y}%`);
   };
 
-  // ── Build container classes ─────────────────────────────
   const isStacked = layout === "stacked";
   const isSecondary = variant === "secondary";
 

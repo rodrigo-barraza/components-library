@@ -1,7 +1,8 @@
 export declare function MenuDivider(): import("react/jsx-runtime").JSX.Element;
-export declare function MenuGroupLabel({ children }: {
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+interface MenuGroupLabelProps {
+    children?: React.ReactNode;
+}
+export declare function MenuGroupLabel({ children }: MenuGroupLabelProps): import("react/jsx-runtime").JSX.Element;
 interface MenuItemProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'onMouseEnter'> {
     leadingIcon?: React.ReactNode;
     trailingIcon?: React.ReactNode;
@@ -13,12 +14,13 @@ interface MenuItemProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElemen
     children?: React.ReactNode;
 }
 export declare const MenuItem: import("react").ForwardRefExoticComponent<MenuItemProps & import("react").RefAttributes<HTMLButtonElement>>;
-export declare function SubMenu({ label, leadingIcon, disabled, children, }: {
-    label: any;
-    leadingIcon: any;
+export interface SubMenuProps {
+    label: string;
+    leadingIcon?: React.ReactNode;
     disabled?: boolean;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+    children?: React.ReactNode;
+}
+export declare function SubMenu({ label, leadingIcon, disabled, children, }: SubMenuProps): import("react/jsx-runtime").JSX.Element;
 interface MenuComponentProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
     trigger: React.ReactNode;
     open?: boolean;

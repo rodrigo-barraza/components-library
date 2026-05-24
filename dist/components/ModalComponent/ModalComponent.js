@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
@@ -27,13 +26,15 @@ export default function ModalComponent({ title, onClose, footer, size = "md", va
     // ── Focus management ──────────────────────────────────
     // Move focus into modal on mount, restore on unmount
     useEffect(() => {
-        previousFocusRef.current = document.activeElement;
+        if (document.activeElement instanceof HTMLElement) {
+            previousFocusRef.current = document.activeElement;
+        }
         requestAnimationFrame(() => {
             const panel = panelRef.current;
             if (!panel)
                 return;
             const focusable = panel.querySelector('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
-            if (focusable) {
+            if (focusable instanceof HTMLElement) {
                 focusable.focus();
             }
             else {
@@ -41,7 +42,7 @@ export default function ModalComponent({ title, onClose, footer, size = "md", va
             }
         });
         return () => {
-            if (previousFocusRef.current && typeof previousFocusRef.current.focus === "function") {
+            if (previousFocusRef.current instanceof HTMLElement) {
                 previousFocusRef.current.focus();
             }
         };
@@ -55,7 +56,7 @@ export default function ModalComponent({ title, onClose, footer, size = "md", va
             const panel = panelRef.current;
             if (!panel)
                 return;
-            const focusableEls = panel.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+            const focusableEls = Array.from(panel.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
             if (focusableEls.length === 0)
                 return;
             const first = focusableEls[0];

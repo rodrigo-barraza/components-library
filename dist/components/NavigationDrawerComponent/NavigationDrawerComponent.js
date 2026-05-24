@@ -19,6 +19,7 @@ import styles from "./NavigationDrawerComponent.module.css";
  *   • role="navigation" with aria-label
  *   • Modal: focus trapping, Escape to close, scrim click to close
  *   • Keyboard: Tab/Shift+Tab through items, Enter/Space to activate
+ *   • prefers-reduced-motion respected
  *
  * @see https://m3.material.io/components/navigation-drawer/overview
  */
@@ -37,7 +38,9 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
         if (variant !== "modal" || !open)
             return;
         // Remember focus for restoration
-        previousFocusRef.current = document.activeElement;
+        if (document.activeElement instanceof HTMLElement) {
+            previousFocusRef.current = document.activeElement;
+        }
         // Focus the first focusable element inside drawer
         const timer = setTimeout(() => {
             const focusable = drawerRef.current?.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
@@ -71,7 +74,9 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
             clearTimeout(timer);
             document.removeEventListener("keydown", handleKeyDown);
             // Restore focus on close
-            previousFocusRef.current?.focus?.();
+            if (previousFocusRef.current instanceof HTMLElement) {
+                previousFocusRef.current.focus();
+            }
         };
     }, [variant, open, onClose]);
     // ── Modal: prevent body scroll ──────────────────────────────────
@@ -106,7 +111,6 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
     // ── Standard variant: inline ────────────────────────────────────
     return _jsx("div", { className: styles.wrapper, children: drawerEl });
 }
-/* ── Item ─────────────────────────────────────────────────────────── */
 /**
  * DrawerItem — individual navigation destination.
  *
@@ -140,7 +144,6 @@ function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false
     // Render as button
     return (_jsxs("button", { type: "button", onClick: onClick, disabled: disabled, ...sharedProps, children: [_jsx("span", { className: styles.stateLayer }), content] }));
 }
-/* ── Section Header ──────────────────────────────────────────────── */
 /**
  * DrawerSectionHeader — labelled group heading.
  *
@@ -149,14 +152,12 @@ function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false
 function DrawerSectionHeader({ className, children }) {
     return (_jsx("div", { className: `${styles.sectionHeader}${className ? ` ${className}` : ""}`, role: "heading", "aria-level": 2, children: children }));
 }
-/* ── Divider ─────────────────────────────────────────────────────── */
 /**
  * DrawerDivider — horizontal visual separator between sections.
  */
 function DrawerDivider({ className }) {
     return (_jsx("div", { role: "separator", className: `${styles.divider}${className ? ` ${className}` : ""}` }));
 }
-/* ── Footer ──────────────────────────────────────────────────────── */
 /**
  * DrawerFooter — bottom-pinned slot for actions or secondary content.
  */

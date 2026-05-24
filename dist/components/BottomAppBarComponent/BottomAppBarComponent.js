@@ -80,7 +80,7 @@ export default function BottomAppBarComponent({ fab, position = "fixed", hideOnS
         const items = Array.from(toolbar.querySelectorAll(`[data-bottom-bar-action]:not([disabled]):not([aria-disabled="true"])`));
         if (items.length === 0)
             return;
-        const currentIndex = items.indexOf(document.activeElement);
+        const currentIndex = document.activeElement ? items.indexOf(document.activeElement) : -1;
         let nextIndex;
         switch (e.key) {
             case "ArrowRight":
@@ -117,14 +117,6 @@ export default function BottomAppBarComponent({ fab, position = "fixed", hideOnS
         .join(" ");
     return (_jsxs("div", { ref: toolbarRef, role: "toolbar", "aria-label": ariaLabel, className: rootClasses, style: style, onKeyDown: handleKeyDown, ...rest, children: [children && _jsx("div", { className: styles.actionsSlot, children: children }), fab && _jsx("div", { className: styles.fabSlot, children: fab })] }));
 }
-/* ── Action sub-component ──────────────────────────────────────────── */
-/**
- * BottomAppBarAction — icon button within the bottom app bar.
- *
- * M3 spec: 48×48dp touch target with 24dp icon.
- * Up to 4 actions per M3 guidelines.
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- action button with dynamic icon component
 const BottomAppBarAction = forwardRef(function BottomAppBarAction({ icon: Icon, ariaLabel, active = false, disabled = false, onClick, className, children, ...rest }, ref) {
     const classes = [
         styles.actionButton,

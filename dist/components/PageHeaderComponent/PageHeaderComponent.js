@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { ArrowLeft } from "lucide-react";
 import styles from "./PageHeaderComponent.module.css";

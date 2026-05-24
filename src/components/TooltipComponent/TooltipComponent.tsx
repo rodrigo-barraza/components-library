@@ -78,12 +78,12 @@ export default function TooltipComponent({
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const [resolvedPosition, setResolvedPosition] = useState(position);
 
-  const wrapperRef = useRef(null);
-  const bubbleRef = useRef(null);
-  const enterTimerRef = useRef(null);
-  const exitTimerRef = useRef(null);
-  const showTimerRef = useRef(null);
-  const unmountTimerRef = useRef(null);
+  const wrapperRef = useRef<HTMLSpanElement | null>(null);
+  const bubbleRef = useRef<HTMLSpanElement | null>(null);
+  const enterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const unmountTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const tooltipId = useId();
 
@@ -152,9 +152,9 @@ export default function TooltipComponent({
 
   /* ── show / hide ── */
   const showTooltip = useCallback(() => {
-    clearTimeout(unmountTimerRef.current);
-    clearTimeout(showTimerRef.current);
-    clearTimeout(exitTimerRef.current);
+    if (unmountTimerRef.current) clearTimeout(unmountTimerRef.current);
+    if (showTimerRef.current) clearTimeout(showTimerRef.current);
+    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
     updateCoords();
     setMounted(true);
     showTimerRef.current = setTimeout(() => {
@@ -163,8 +163,8 @@ export default function TooltipComponent({
   }, [updateCoords]);
 
   const hideTooltip = useCallback(() => {
-    clearTimeout(showTimerRef.current);
-    clearTimeout(enterTimerRef.current);
+    if (showTimerRef.current) clearTimeout(showTimerRef.current);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
     setVisible(false);
     unmountTimerRef.current = setTimeout(() => {
       setMounted(false);
@@ -174,7 +174,7 @@ export default function TooltipComponent({
   /* ── click trigger ── */
   const handleClick = useCallback(() => {
     if (trigger !== "click") return;
-    clearTimeout(exitTimerRef.current);
+    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
     showTooltip();
     if (!persistent) {
       exitTimerRef.current = setTimeout(hideTooltip, exitDelay);
@@ -184,8 +184,8 @@ export default function TooltipComponent({
   /* ── hover trigger ── */
   const handleMouseEnter = useCallback(() => {
     if (trigger !== "hover") return;
-    clearTimeout(exitTimerRef.current);
-    clearTimeout(enterTimerRef.current);
+    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
     enterTimerRef.current = setTimeout(() => {
       showTooltip();
     }, rich ? 0 : resolvedEnterDelay);
@@ -193,7 +193,7 @@ export default function TooltipComponent({
 
   const handleMouseLeave = useCallback(() => {
     if (trigger !== "hover") return;
-    clearTimeout(enterTimerRef.current);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
     // Rich tooltips can be interactive — give a small exit grace period
     if (rich) {
       exitTimerRef.current = setTimeout(hideTooltip, 300);
@@ -204,22 +204,22 @@ export default function TooltipComponent({
 
   /* ── focus trigger (keyboard accessibility) ── */
   const handleFocus = useCallback(() => {
-    clearTimeout(exitTimerRef.current);
-    clearTimeout(enterTimerRef.current);
+    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
     enterTimerRef.current = setTimeout(() => {
       showTooltip();
     }, rich ? 0 : resolvedEnterDelay);
   }, [showTooltip, resolvedEnterDelay, rich]);
 
   const handleBlur = useCallback(() => {
-    clearTimeout(enterTimerRef.current);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
     if (!persistent) hideTooltip();
   }, [hideTooltip, persistent]);
 
   /* ── Esc key dismissal (M3 accessibility) ── */
   useEffect(() => {
     if (!visible) return;
-    function handleKeyDown(e) {
+    function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.stopPropagation();
         hideTooltip();
@@ -232,13 +232,13 @@ export default function TooltipComponent({
   /* ── Click-outside dismissal ── */
   useEffect(() => {
     if (!visible || trigger !== "click") return;
-    function handleClickOutside(e) {
+    function handleClickOutside(e: PointerEvent) {
       if (
         wrapperRef.current &&
-        !wrapperRef.current.contains(e.target) &&
-        (!bubbleRef.current || !bubbleRef.current.contains(e.target))
+        !wrapperRef.current.contains(e.target as Node) &&
+        (!bubbleRef.current || !bubbleRef.current.contains(e.target as Node))
       ) {
-        clearTimeout(exitTimerRef.current);
+        if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
         hideTooltip();
       }
     }
@@ -250,7 +250,7 @@ export default function TooltipComponent({
   /* ── Rich tooltip: keep open when pointer enters the bubble ── */
   const handleBubbleMouseEnter = useCallback(() => {
     if (!rich) return;
-    clearTimeout(exitTimerRef.current);
+    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
   }, [rich]);
 
   const handleBubbleMouseLeave = useCallback(() => {
@@ -261,10 +261,10 @@ export default function TooltipComponent({
   /* ── Cleanup ── */
   useEffect(() => {
     return () => {
-      clearTimeout(enterTimerRef.current);
-      clearTimeout(exitTimerRef.current);
-      clearTimeout(showTimerRef.current);
-      clearTimeout(unmountTimerRef.current);
+      if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+      if (showTimerRef.current) clearTimeout(showTimerRef.current);
+      if (unmountTimerRef.current) clearTimeout(unmountTimerRef.current);
     };
   }, []);
 

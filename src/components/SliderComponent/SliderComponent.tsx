@@ -1,9 +1,25 @@
 "use client";
 
-import { useRef, useCallback, useState, useMemo } from "react";
+import React, { useRef, useCallback, useState, useMemo } from "react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./SliderComponent.module.css";
+
+export interface SliderComponentProps<T extends number | number[] = number | number[]> {
+  value: T;
+  min?: number;
+  max?: number;
+  step?: number;
+  onChange: (value: T) => void;
+  disabled?: boolean;
+  centered?: boolean;
+  showValue?: boolean;
+  discrete?: boolean;
+  label?: string;
+  formatValue?: (v: number) => string;
+  className?: string;
+  id?: string;
+}
 
 /**
  * SliderComponent — M3-compliant slider with continuous, discrete, centered,
@@ -29,7 +45,7 @@ import styles from "./SliderComponent.module.css";
  *   • Centered:              Origin at center, fills left/right from midpoint
  *   • Range:                 Two handles for selecting a value range
  */
-export default function SliderComponent({
+export default function SliderComponent<T extends number | number[]>({
   value,
   min = 0,
   max = 100,
@@ -43,7 +59,7 @@ export default function SliderComponent({
   formatValue,
   className = "",
   id,
-}) {
+}: SliderComponentProps<T>) {
   const { sound } = useComponents();
 
   const isRange = Array.isArray(value);
@@ -71,11 +87,11 @@ export default function SliderComponent({
     >
       {isRange ? (
         <RangeTrack
-          value={value}
+          value={value as number[]}
           min={min}
           max={max}
           step={effectiveStep}
-          onChange={onChange}
+          onChange={onChange as (value: number[]) => void}
           disabled={disabled}
           showValue={showValue}
           ticks={ticks}
@@ -85,11 +101,11 @@ export default function SliderComponent({
         />
       ) : (
         <SingleTrack
-          value={value}
+          value={value as number}
           min={min}
           max={max}
           step={effectiveStep}
-          onChange={onChange}
+          onChange={onChange as (value: number) => void}
           disabled={disabled}
           centered={centered}
           showValue={showValue}
@@ -106,7 +122,7 @@ export default function SliderComponent({
 /* ─────────────────────────────────────────────────────────
    Helper: clamp & snap to step
    ───────────────────────────────────────────────────────── */
-function clampAndSnap(clientX, trackEl, min, max, step) {
+function clampAndSnap(clientX: number, trackEl: HTMLDivElement, min: number, max: number, step: number): number {
   const rect = trackEl.getBoundingClientRect();
   const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
   let raw = min + ratio * (max - min);
@@ -121,14 +137,21 @@ function clampAndSnap(clientX, trackEl, min, max, step) {
 /* ─────────────────────────────────────────────────────────
    Helper: format display value
    ───────────────────────────────────────────────────────── */
-function defaultFormat(v) {
+function defaultFormat(v: number): string {
   return Number.isInteger(v) ? v.toString() : v.toFixed(1);
 }
 
 /* ─────────────────────────────────────────────────────────
    Helper: keyboard handling per M3 accessibility spec
    ───────────────────────────────────────────────────────── */
-function handleSliderKeyDown(e, value, min, max, step, onChange) {
+function handleSliderKeyDown(
+  e: React.KeyboardEvent<HTMLDivElement>,
+  value: number,
+  min: number,
+  max: number,
+  step: number,
+  onChange: (val: number) => void
+) {
   const bigStep = Math.max(step, (max - min) * 0.1);
   let next = value;
 
@@ -165,6 +188,21 @@ function handleSliderKeyDown(e, value, min, max, step, onChange) {
 /* ─────────────────────────────────────────────────────────
    SingleTrack — Continuous / Discrete / Centered
    ───────────────────────────────────────────────────────── */
+interface SingleTrackProps {
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number) => void;
+  disabled: boolean;
+  centered: boolean;
+  showValue: boolean;
+  ticks: number[];
+  label?: string;
+  formatValue?: (v: number) => string;
+  sound: boolean;
+}
+
 function SingleTrack({
   value,
   min,
@@ -178,8 +216,8 @@ function SingleTrack({
   label,
   formatValue,
   sound,
-}) {
-  const trackRef = useRef(null);
+}: SingleTrackProps) {
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const [dragging, setDragging] = useState(false);
   const [pressed, setPressed] = useState(false);
 
@@ -187,8 +225,8 @@ function SingleTrack({
   const midPct = ((0 - min) / (max - min)) * 100; // Center point for centered mode
   const fmt = formatValue || defaultFormat;
 
-  const handlePointerDown = (e) => {
-    if (disabled) return;
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (disabled || !trackRef.current) return;
     e.preventDefault();
     trackRef.current.setPointerCapture(e.pointerId);
     setDragging(true);
@@ -198,13 +236,13 @@ function SingleTrack({
     if (sound) SoundService.playClickButton({ event: e });
   };
 
-  const handlePointerMove = (e) => {
-    if (!dragging) return;
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging || !trackRef.current) return;
     if (!trackRef.current.hasPointerCapture(e.pointerId)) return;
     onChange(clampAndSnap(e.clientX, trackRef.current, min, max, step));
   };
 
-  const handlePointerUp = (e) => {
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (trackRef.current?.hasPointerCapture(e.pointerId)) {
       trackRef.current.releasePointerCapture(e.pointerId);
     }
@@ -236,7 +274,7 @@ function SingleTrack({
         <div className={styles.inactiveTrack} />
 
         {/* ── Active fill ── */}
-        {centered ? (
+        {centered && centeredFill ? (
           <div className={styles.activeTrack} style={centeredFill} />
         ) : (
           <div className={styles.activeTrack} style={{ width: `${pct}%` }} />
@@ -305,6 +343,20 @@ function SingleTrack({
 /* ─────────────────────────────────────────────────────────
    RangeTrack — Two-thumb range selection
    ───────────────────────────────────────────────────────── */
+interface RangeTrackProps {
+  value: number[];
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number[]) => void;
+  disabled: boolean;
+  showValue: boolean;
+  ticks: number[];
+  label?: string;
+  formatValue?: (v: number) => string;
+  sound: boolean;
+}
+
 function RangeTrack({
   value,
   min,
@@ -317,11 +369,11 @@ function RangeTrack({
   label,
   formatValue,
   sound,
-}) {
-  const trackRef = useRef(null);
-  const activeThumb = useRef(null); // "start" | "end"
+}: RangeTrackProps) {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const activeThumb = useRef<"start" | "end" | null>(null); // "start" | "end"
   const [dragging, setDragging] = useState(false);
-  const [pressedThumb, setPressedThumb] = useState(null);
+  const [pressedThumb, setPressedThumb] = useState<"start" | "end" | null>(null);
 
   const [lo, hi] = value;
   const loPct = max === min ? 0 : ((lo - min) / (max - min)) * 100;
@@ -329,7 +381,8 @@ function RangeTrack({
   const fmt = formatValue || defaultFormat;
 
   const resolveThumb = useCallback(
-    (clientX) => {
+    (clientX: number) => {
+      if (!trackRef.current) return "start";
       const rect = trackRef.current.getBoundingClientRect();
       const ratio = (clientX - rect.left) / rect.width;
       const clickVal = min + ratio * (max - min);
@@ -341,8 +394,8 @@ function RangeTrack({
     [lo, hi, min, max],
   );
 
-  const handlePointerDown = (e) => {
-    if (disabled) return;
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (disabled || !trackRef.current) return;
     e.preventDefault();
     trackRef.current.setPointerCapture(e.pointerId);
     const thumb = resolveThumb(e.clientX);
@@ -359,8 +412,8 @@ function RangeTrack({
     if (sound) SoundService.playClickButton({ event: e });
   };
 
-  const handlePointerMove = (e) => {
-    if (!dragging) return;
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging || !trackRef.current) return;
     if (!trackRef.current.hasPointerCapture(e.pointerId)) return;
     const next = clampAndSnap(e.clientX, trackRef.current, min, max, step);
     if (activeThumb.current === "start") {
@@ -370,7 +423,7 @@ function RangeTrack({
     }
   };
 
-  const handlePointerUp = (e) => {
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (trackRef.current?.hasPointerCapture(e.pointerId)) {
       trackRef.current.releasePointerCapture(e.pointerId);
     }
@@ -379,7 +432,7 @@ function RangeTrack({
     setTimeout(() => setPressedThumb(null), 100);
   };
 
-  const makeThumbKeyHandler = (which) => (e) => {
+  const makeThumbKeyHandler = (which: "start" | "end") => (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (disabled) return;
     const currentVal = which === "start" ? lo : hi;
     handleSliderKeyDown(e, currentVal, min, max, step, (next) => {

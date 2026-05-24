@@ -17,7 +17,6 @@ import SoundService from "../../services/SoundService.js";
  *
  * @see https://m3.material.io/components/floating-action-button/overview
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- FAB with dynamic icon, label, position props
 const FabComponent = forwardRef(function FabComponent({ size = "standard", color = "primary", icon: Icon, iconSize, label, lowered = false, disabled = false, fixed = false, position = "bottom-end", hidden = false, className = "", onClick, onMouseEnter, "aria-label": ariaLabel, ...rest }, ref) {
     const { sound } = useComponents();
     const buttonRef = useRef(null);

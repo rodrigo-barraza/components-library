@@ -1,10 +1,33 @@
 "use client";
 
-import { forwardRef, useCallback, useRef, useState } from "react";
+import { forwardRef, useCallback, useRef, useState, type MouseEvent, type Dispatch, type SetStateAction } from "react";
 import styles from "./SplitButtonComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import { ChevronDown } from "lucide-react";
+
+interface RippleState {
+  id: number;
+  x: number;
+  y: number;
+  diameter: number;
+}
+
+export interface SplitButtonComponentProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onClick"> {
+  variant?: "filled" | "outlined" | "tonal" | "text";
+  size?: "small" | "medium" | "large";
+  icon?: React.ComponentType<{ size: number }>;
+  iconSize?: number;
+  trailingIcon?: React.ComponentType<{ size: number }>;
+  trailingToggled?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  fullWidth?: boolean;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onTrailingClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  "aria-label"?: string;
+  trailingAriaLabel?: string;
+}
 
 /**
  * SplitButtonComponent — Material Design 3 Split Button
@@ -25,8 +48,7 @@ import { ChevronDown } from "lucide-react";
  *   ← leading action button →  ← trailing toggle →
  *   └──── divider (1px) ─────┘
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- dual-button composite with complex spread props
-const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
+const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProps>(function SplitButtonComponent(
   {
     variant = "filled",
     size = "medium",
@@ -49,18 +71,18 @@ const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
   ref,
 ) {
   const { sound } = useComponents();
-  const groupRef = useRef(null);
-  const leadingRef = useRef(null);
-  const trailingRef = useRef(null);
-  const [leadingRipples, setLeadingRipples] = useState([]);
-  const [trailingRipples, setTrailingRipples] = useState([]);
+  const groupRef = useRef<HTMLDivElement>(null);
+  const leadingRef = useRef<HTMLButtonElement>(null);
+  const trailingRef = useRef<HTMLButtonElement>(null);
+  const [leadingRipples, setLeadingRipples] = useState<RippleState[]>([]);
+  const [trailingRipples, setTrailingRipples] = useState<RippleState[]>([]);
 
   /* ── Merge forwarded ref ────────────────────────────────────────── */
   const setGroupRef = useCallback(
-    (node) => {
+    (node: HTMLDivElement | null) => {
       groupRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     },
     [ref],
   );
@@ -75,7 +97,7 @@ const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
   const ResolvedTrailingIcon = TrailingIcon || ChevronDown;
 
   /* ── Ripple factory ─────────────────────────────────────────────── */
-  const createRipple = useCallback((e, buttonEl, setRipples) => {
+  const createRipple = useCallback((e: MouseEvent<HTMLButtonElement>, buttonEl: HTMLButtonElement | null, setRipples: Dispatch<SetStateAction<RippleState[]>>) => {
     const rect = buttonEl?.getBoundingClientRect();
     if (!rect) return;
 
@@ -92,7 +114,7 @@ const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
 
   /* ── Event handlers: Leading ────────────────────────────────────── */
   const handleLeadingClick = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       if (disabled || loading) return;
       createRipple(e, leadingRef.current, setLeadingRipples);
       if (sound) SoundService.playClickButton({ event: e });
@@ -102,16 +124,16 @@ const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
   );
 
   const handleLeadingMouseEnter = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       if (sound) SoundService.playHoverButton({ event: e });
-      onMouseEnter?.(e);
+      onMouseEnter?.(e as unknown as MouseEvent<HTMLDivElement>);
     },
     [sound, onMouseEnter],
   );
 
   /* ── Event handlers: Trailing ───────────────────────────────────── */
   const handleTrailingClick = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       if (disabled || loading) return;
       createRipple(e, trailingRef.current, setTrailingRipples);
       if (sound) SoundService.playClickButton({ event: e });
@@ -121,14 +143,14 @@ const SplitButtonComponent = forwardRef<any, any>(function SplitButtonComponent(
   );
 
   const handleTrailingMouseEnter = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       if (sound) SoundService.playHoverButton({ event: e });
     },
     [sound],
   );
 
   /* ── Keyboard: Arrow keys move focus between the two buttons ────── */
-  const handleKeyDown = useCallback((e) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     const { key } = e;
     if (key === "ArrowRight" || key === "ArrowDown") {
       e.preventDefault();

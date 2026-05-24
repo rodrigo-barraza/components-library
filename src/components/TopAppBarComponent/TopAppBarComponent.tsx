@@ -42,6 +42,20 @@ import styles from "./TopAppBarComponent.module.css";
 
 
  */
+export interface TopAppBarComponentProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+  variant?: "center-aligned" | "small" | "medium" | "large" | string;
+  title?: string | React.ReactNode;
+  navigationIcon?: React.ReactNode;
+  onNavigationClick?: () => void;
+  navigationAriaLabel?: string;
+  position?: "sticky" | "fixed" | "static" | string;
+  scrollTargetRef?: React.RefObject<HTMLElement | null>;
+  scrollThreshold?: number;
+  showScrollIndicator?: boolean;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6 | number;
+  ariaLabel?: string;
+}
+
 export default function TopAppBarComponent({
   variant = "small",
   title,
@@ -58,8 +72,8 @@ export default function TopAppBarComponent({
   style,
   children,
   ...rest
-}) {
-  const barRef = useRef(null);
+}: TopAppBarComponentProps) {
+  const barRef = useRef<HTMLElement | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -72,11 +86,11 @@ export default function TopAppBarComponent({
    */
   useEffect(() => {
     const scrollEl =
-      scrollTargetRef?.current || (typeof window !== "undefined" ? window : null);
+      (scrollTargetRef?.current as HTMLElement | null) || (typeof window !== "undefined" ? window : null);
 
     if (!scrollEl) return;
 
-    let rafId = null;
+    let rafId: number | null = null;
 
     const handleScroll = () => {
       if (rafId) cancelAnimationFrame(rafId);
@@ -84,7 +98,7 @@ export default function TopAppBarComponent({
         const scrollTop =
           scrollEl === window
             ? window.scrollY || document.documentElement.scrollTop
-            : scrollEl.scrollTop;
+            : (scrollEl as HTMLElement).scrollTop;
 
         setIsScrolled(scrollTop > scrollThreshold);
 
@@ -93,7 +107,7 @@ export default function TopAppBarComponent({
           const maxScroll =
             scrollEl === window
               ? document.documentElement.scrollHeight - window.innerHeight
-              : scrollEl.scrollHeight - scrollEl.clientHeight;
+              : (scrollEl as HTMLElement).scrollHeight - (scrollEl as HTMLElement).clientHeight;
 
           setScrollProgress(maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0);
         }
@@ -111,12 +125,12 @@ export default function TopAppBarComponent({
   }, [scrollTargetRef, scrollThreshold, showScrollIndicator]);
 
   // Variant class mapping
-  const variantClass = {
+  const variantClass = (({
     "center-aligned": styles.centerAligned,
     small: styles.small,
     medium: styles.medium,
     large: styles.large,
-  }[variant] || styles.small;
+  }) as Record<string, string>)[variant] || styles.small;
 
   // Position class
   const positionClass =

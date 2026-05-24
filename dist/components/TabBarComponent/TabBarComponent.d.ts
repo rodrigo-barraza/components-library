@@ -14,18 +14,31 @@ import styles from "./TabBarComponent.module.css";
  *   • "stacked" — Icon above label (64px height)
  *
  * }>} tabs
- */
-export default function TabBarComponent({ tabs, activeTab, onChange, variant, layout, scrollable, className, onTabHover, glowingTabs, ariaLabel, }: {
-    tabs?: any[];
-    activeTab: any;
-    onChange: any;
-    variant?: string;
-    layout?: string;
+  */
+export interface TabBarTab {
+    key: string;
+    label?: string;
+    icon?: React.ReactNode;
+    disabled?: boolean;
+    badge?: number | string;
+    badgeState?: "default" | "success" | "warning" | "error" | "info" | "brand" | string;
+    badgeDisabled?: boolean;
+    badgeRainbow?: boolean;
+    tooltip?: string;
+    tooltipDisabled?: boolean;
+}
+export interface TabBarComponentProps {
+    tabs?: TabBarTab[];
+    activeTab: string;
+    onChange: (key: string) => void;
+    variant?: "primary" | "secondary";
+    layout?: "inline" | "stacked";
     scrollable?: boolean;
-    className: any;
-    onTabHover: any;
-    glowingTabs?: any[];
-    ariaLabel: any;
-}): import("react/jsx-runtime").JSX.Element;
+    className?: string;
+    onTabHover?: (key: string | null) => void;
+    glowingTabs?: string[];
+    ariaLabel?: string;
+}
+export default function TabBarComponent({ tabs, activeTab, onChange, variant, layout, scrollable, className, onTabHover, glowingTabs, ariaLabel, }: TabBarComponentProps): import("react/jsx-runtime").JSX.Element;
 export { styles as tabBarStyles };
 //# sourceMappingURL=TabBarComponent.d.ts.map

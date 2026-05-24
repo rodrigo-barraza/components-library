@@ -1,16 +1,6 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import styles from "./SkeletonComponent.module.css";
-/**
- * SkeletonComponent — Content placeholder loader with shimmer animation.
- *
- * Renders a grey, pulsing rectangle that indicates where content will appear.
- * Follows the "skeleton screen" pattern — the industry-standard approach for
- * perceived performance in data-heavy views.
- *
- * Supports text lines, circular avatars, rectangular cards, and fully custom
- * dimensions via width/height props.
- */
 export default function SkeletonComponent({ variant = "text", width, height, lines = 1, animate = true, className = "", id, }) {
     const resolveSize = (value) => value == null ? undefined : typeof value === "number" ? `${value}px` : value;
     const baseClass = [
@@ -38,9 +28,6 @@ export default function SkeletonComponent({ variant = "text", width, height, lin
             height: resolveSize(height),
         }, role: "status", "aria-label": "Loading", "aria-hidden": "true" }));
 }
-/**
- * SkeletonGroup — Compose multiple skeleton shapes inside a container.
- */
 export function SkeletonGroup({ gap = "12px", direction = "column", className = "", children, }) {
     return (_jsx("div", { className: `${styles.group} ${className}`, style: { gap, flexDirection: direction }, role: "status", "aria-label": "Loading content", children: children }));
 }

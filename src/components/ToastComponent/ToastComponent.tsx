@@ -4,12 +4,18 @@ import { useCallback, useRef, useState } from "react";
 import { X, CheckCircle, AlertTriangle, AlertCircle, Info } from "lucide-react";
 import styles from "./ToastComponent.module.css";
 
-const ICONS = {
+const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   success: CheckCircle,
   warning: AlertTriangle,
   error: AlertCircle,
   info: Info,
 };
+
+export interface ToastEntry {
+  id: number;
+  message: string;
+  type: "success" | "warning" | "error" | "info" | string;
+}
 
 /**
  * useToast — multi-toast queue hook.
@@ -18,11 +24,11 @@ const ICONS = {
  * <ToastComponent /> element you can drop into JSX.
  */
 export function useToast(defaultDuration = 3500) {
-  const [toasts, setToasts] = useState([]);
-  const idRef = useRef(0);
+  const [toasts, setToasts] = useState<ToastEntry[]>([]);
+  const idRef = useRef<number>(0);
 
   const addToast = useCallback(
-    (message, type = "info", duration = defaultDuration) => {
+    (message: string, type: "success" | "warning" | "error" | "info" | string = "info", duration: number = defaultDuration) => {
       const id = ++idRef.current;
       setToasts((prev) => [...prev, { id, message, type }]);
 
@@ -37,17 +43,22 @@ export function useToast(defaultDuration = 3500) {
     [defaultDuration],
   );
 
-  const removeToast = useCallback((id) => {
+  const removeToast = useCallback((id: number) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
   return { toasts, addToast, removeToast };
 }
 
+export interface ToastComponentProps {
+  toasts?: ToastEntry[];
+  onRemove?: (id: number) => void;
+}
+
 /**
  * ToastComponent — renders a stacked toast container.
  */
-export default function ToastComponent({ toasts = [], onRemove }) {
+export default function ToastComponent({ toasts = [], onRemove }: ToastComponentProps) {
   if (!toasts.length) return null;
 
   return (

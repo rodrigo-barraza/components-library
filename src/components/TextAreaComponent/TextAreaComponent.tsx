@@ -6,6 +6,14 @@ import styles from "./TextAreaComponent.module.css";
 /**
  * TextAreaComponent — Reusable auto-resizing textarea with consistent styling.
  */
+export interface TextAreaComponentProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  minRows?: number;
+  maxRows?: number;
+  autoResize?: boolean;
+}
+
 export default function TextAreaComponent({
   value,
   onChange,
@@ -18,8 +26,8 @@ export default function TextAreaComponent({
   className,
   id,
   ...rest
-}) {
-  const ref = useRef(null);
+}: TextAreaComponentProps) {
+  const ref = useRef<HTMLTextAreaElement | null>(null);
 
   const resize = useCallback(() => {
     const element = ref.current;
@@ -42,7 +50,7 @@ export default function TextAreaComponent({
     resize();
   }, [resize]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange?.(e);
   };
 

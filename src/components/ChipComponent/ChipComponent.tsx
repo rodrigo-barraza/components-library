@@ -1,9 +1,19 @@
 "use client";
 
-import { forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, type MouseEvent, type KeyboardEvent } from "react";
 import styles from "./ChipComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+export interface ChipComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "assist" | "filter" | "input" | "suggestion";
+  selected?: boolean;
+  disabled?: boolean;
+  elevated?: boolean;
+  icon?: React.ComponentType<{ size: number }>;
+  removable?: boolean;
+  onRemove?: (e: MouseEvent<HTMLButtonElement>) => void;
+}
 
 /**
  * ChipComponent — M3 Chip (Assist / Filter / Input / Suggestion).
@@ -14,8 +24,7 @@ import SoundService from "../../services/SoundService.js";
  *
  * @see https://m3.material.io/components/chips
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- chip with optional remove button, complex composite
-const ChipComponent = forwardRef<any, any>(function ChipComponent(
+const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function ChipComponent(
   {
     variant = "assist",
     selected = false,
@@ -34,16 +43,16 @@ const ChipComponent = forwardRef<any, any>(function ChipComponent(
   const { sound } = useComponents();
 
   const handleClick = useCallback(
-    (e) => {
+    (e: React.SyntheticEvent<HTMLDivElement>) => {
       if (disabled) return;
       if (sound) SoundService.playClickButton({ event: e });
-      onClick?.(e);
+      onClick?.(e as MouseEvent<HTMLDivElement>);
     },
     [disabled, onClick, sound],
   );
 
   const handleRemove = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       if (disabled) return;
       onRemove?.(e);
@@ -52,7 +61,7 @@ const ChipComponent = forwardRef<any, any>(function ChipComponent(
   );
 
   const handleMouseEnter = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLDivElement>) => {
       if (sound && !disabled) SoundService.playHoverButton({ event: e });
     },
     [sound, disabled],

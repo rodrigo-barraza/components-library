@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
@@ -45,7 +44,7 @@ export default function DrawerComponent({ open, onClose, title = "Detail", ancho
         if (!open || !dismissible)
             return;
         const handleMouseDown = (e) => {
-            if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+            if (drawerRef.current && e.target instanceof Node && !drawerRef.current.contains(e.target)) {
                 handleClose();
             }
         };

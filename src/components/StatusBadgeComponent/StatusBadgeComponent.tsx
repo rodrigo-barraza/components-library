@@ -1,8 +1,11 @@
-"use client";
-
+import { ComponentPropsWithoutRef } from "react";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import StatusDotComponent from "../StatusDotComponent/StatusDotComponent.js";
 import styles from "./StatusBadgeComponent.module.css";
+
+export interface StatusBadgeComponentProps extends ComponentPropsWithoutRef<typeof BadgeComponent> {
+  healthy?: boolean;
+}
 
 /**
  * StatusBadgeComponent — Semantic badge for service health status.
@@ -14,7 +17,11 @@ import styles from "./StatusBadgeComponent.module.css";
  * The glyphs are rendered in the monochrome "Noto Emoji" typeface
  * via the `--font-emoji` design token.
  */
-export default function StatusBadgeComponent({ healthy, className, ...rest }) {
+export default function StatusBadgeComponent({
+  healthy,
+  className,
+  ...rest
+}: StatusBadgeComponentProps) {
   const variant = healthy ? "success" : "error";
 
   return (

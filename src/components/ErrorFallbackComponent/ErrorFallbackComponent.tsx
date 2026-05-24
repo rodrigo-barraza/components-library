@@ -1,7 +1,13 @@
-"use client";
-
 import { useEffect } from "react";
 import styles from "./ErrorFallbackComponent.module.css";
+
+export interface ErrorFallbackComponentProps {
+  error?: Error | null;
+  reset?: () => void;
+  title?: string;
+  logLabel?: string;
+  icon?: string;
+}
 
 /**
  * ErrorFallbackComponent — Shared error recovery UI for Next.js
@@ -20,10 +26,10 @@ import styles from "./ErrorFallbackComponent.module.css";
 export default function ErrorFallbackComponent({
   error,
   reset,
-  title = "This page couldn\u2019t load",
+  title = "This page couldn’t load",
   logLabel = "[Error]",
-  icon = "\u26A0",
-}) {
+  icon = "⚠",
+}: ErrorFallbackComponentProps) {
   useEffect(() => {
     console.error(`${logLabel} Unhandled error:`, error);
   }, [error, logLabel]);

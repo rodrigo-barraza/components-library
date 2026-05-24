@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import styles from "./ResponseTimeBadgeComponent.module.css";
@@ -14,7 +13,6 @@ const TIERS = [
 ];
 /**
  * Resolve the appropriate tier for a given response time.
-
  */
 function getTier(ms) {
     return TIERS.find((t) => ms <= t.max) || TIERS[TIERS.length - 1];

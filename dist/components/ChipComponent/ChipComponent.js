@@ -13,7 +13,6 @@ import SoundService from "../../services/SoundService.js";
  *
  * @see https://m3.material.io/components/chips
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- chip with optional remove button, complex composite
 const ChipComponent = forwardRef(function ChipComponent({ variant = "assist", selected = false, disabled = false, elevated = false, icon: Icon, removable = false, onRemove, onClick, className = "", children, ...rest }, ref) {
     const { sound } = useComponents();
     const handleClick = useCallback((e) => {

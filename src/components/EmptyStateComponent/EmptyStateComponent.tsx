@@ -1,11 +1,24 @@
-"use client";
-
+import { ReactNode } from "react";
 import styles from "./EmptyStateComponent.module.css";
+
+export interface EmptyStateComponentProps {
+  icon?: ReactNode;
+  title?: string | ReactNode;
+  subtitle?: string | ReactNode;
+  children?: ReactNode;
+  className?: string;
+}
 
 /**
  * EmptyStateComponent — A centered "no data" placeholder with icon, title, and subtitle.
  */
-export default function EmptyStateComponent({ icon, title, subtitle, children, className }) {
+export default function EmptyStateComponent({
+  icon,
+  title,
+  subtitle,
+  children,
+  className,
+}: EmptyStateComponentProps) {
   return (
     <div className={`${styles.emptyState}${className ? ` ${className}` : ""}`}>
       {icon && <div className={styles.icon}>{icon}</div>}

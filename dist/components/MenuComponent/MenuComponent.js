@@ -13,10 +13,6 @@ const MenuDepthContext = createContext(0);
 export function MenuDivider() {
     return _jsx("div", { className: styles.divider, role: "separator" });
 }
-// ──────────────────────────────────────────────────────────────────
-//  MenuGroupLabel — Optional header label for a group of items
-//  M3: label-small typography, on-surface-variant color
-// ──────────────────────────────────────────────────────────────────
 export function MenuGroupLabel({ children }) {
     return (_jsx("div", { className: styles.groupLabel, role: "presentation", children: children }));
 }
@@ -43,10 +39,6 @@ export const MenuItem = forwardRef(function MenuItem({ leadingIcon, trailingIcon
         .join(" ");
     return (_jsxs("button", { ref: ref, type: "button", role: "menuitem", className: itemClasses, disabled: disabled, "aria-disabled": disabled || undefined, tabIndex: -1, onClick: handleClick, onMouseEnter: handleMouseEnter, onFocus: onFocus, ...rest, children: [leadingIcon && (_jsx("span", { className: styles.leadingIcon, "aria-hidden": "true", children: leadingIcon })), _jsx("span", { className: styles.label, children: children }), trailingText && (_jsx("span", { className: styles.trailingText, children: trailingText })), trailingIcon && (_jsx("span", { className: styles.trailingIcon, "aria-hidden": "true", children: trailingIcon }))] }));
 });
-// ──────────────────────────────────────────────────────────────────
-//  SubMenu — Cascading nested menu triggered by a parent item
-//  Opens on hover/focus after a short delay (M3 pattern)
-// ──────────────────────────────────────────────────────────────────
 export function SubMenu({ label, leadingIcon, disabled = false, children, }) {
     const depth = useContext(MenuDepthContext);
     const [isOpen, setIsOpen] = useState(false);
@@ -54,15 +46,20 @@ export function SubMenu({ label, leadingIcon, disabled = false, children, }) {
     const containerRef = useRef(null);
     const itemRefs = useRef([]);
     const open = useCallback(() => {
-        clearTimeout(timeoutRef.current);
+        if (timeoutRef.current)
+            clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => setIsOpen(true), 150);
     }, []);
     const close = useCallback(() => {
-        clearTimeout(timeoutRef.current);
+        if (timeoutRef.current)
+            clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => setIsOpen(false), 100);
     }, []);
     // Clean up timeouts
-    useEffect(() => () => clearTimeout(timeoutRef.current), []);
+    useEffect(() => () => {
+        if (timeoutRef.current)
+            clearTimeout(timeoutRef.current);
+    }, []);
     // Keyboard within submenu
     const handleKeyDown = useCallback((e) => {
         if (!isOpen) {
@@ -74,7 +71,7 @@ export function SubMenu({ label, leadingIcon, disabled = false, children, }) {
             }
             return;
         }
-        const focusable = itemRefs.current.filter(Boolean);
+        const focusable = itemRefs.current.filter((item) => item !== null);
         const index = focusable.indexOf(document.activeElement);
         switch (e.key) {
             case "ArrowDown":
@@ -193,7 +190,7 @@ const MenuComponent = forwardRef(function MenuComponent({ trigger, open: control
             }
             return;
         }
-        const focusable = itemRefs.current.filter(Boolean);
+        const focusable = itemRefs.current.filter((item) => item !== null);
         const currentIdx = focusable.indexOf(document.activeElement);
         switch (e.key) {
             case "Escape":
@@ -236,7 +233,8 @@ const MenuComponent = forwardRef(function MenuComponent({ trigger, open: control
             default: {
                 // Type-ahead: match item labels by first character(s)
                 if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
-                    clearTimeout(typeAheadTimer.current);
+                    if (typeAheadTimer.current)
+                        clearTimeout(typeAheadTimer.current);
                     typeAheadBuffer.current += e.key.toLowerCase();
                     typeAheadTimer.current = setTimeout(() => {
                         typeAheadBuffer.current = "";

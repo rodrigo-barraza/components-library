@@ -74,7 +74,7 @@ export default function BottomAppBarComponent({
 
     if (!scrollEl) return;
 
-    let rafId = null;
+    let rafId: number | null = null;
 
     const handleScroll = () => {
       if (rafId) cancelAnimationFrame(rafId);
@@ -108,7 +108,7 @@ export default function BottomAppBarComponent({
    * Roving tabindex keyboard navigation (WAI-ARIA toolbar pattern).
    * ArrowLeft / ArrowRight navigates between action buttons.
    */
-  const handleKeyDown = useCallback((e) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     const toolbar = toolbarRef.current;
     if (!toolbar) return;
 
@@ -123,7 +123,7 @@ export default function BottomAppBarComponent({
 
     if (items.length === 0) return;
 
-    const currentIndex = items.indexOf(document.activeElement);
+    const currentIndex = document.activeElement ? items.indexOf(document.activeElement) : -1;
     let nextIndex;
 
     switch (e.key) {
@@ -189,8 +189,13 @@ export default function BottomAppBarComponent({
  * M3 spec: 48×48dp touch target with 24dp icon.
  * Up to 4 actions per M3 guidelines.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- action button with dynamic icon component
-const BottomAppBarAction = forwardRef<any, any>(function BottomAppBarAction(
+interface BottomAppBarActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: React.ComponentType<{ size: number }>;
+  ariaLabel?: string;
+  active?: boolean;
+}
+
+const BottomAppBarAction = forwardRef<HTMLButtonElement, BottomAppBarActionProps>(function BottomAppBarAction(
   {
     icon: Icon,
     ariaLabel,

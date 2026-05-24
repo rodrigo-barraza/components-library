@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect, Fragment } from "react";
+import React, { useState, useRef, useCallback, useEffect, Fragment } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDown, ChevronUp, Columns3, Check } from "lucide-react";
 import { useComponents } from "../ComponentsProvider.js";
@@ -13,18 +13,41 @@ import styles from "./TableComponent.module.css";
  * column visibility controls, drag-to-scroll, and per-column tooltips.
  */
 
-function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
-  const thRef = useRef(null);
+export interface TableColumn<T, TSub = any> {
+  key: string;
+  label: string;
+  description?: string;
+  align?: "left" | "right" | "center";
+  width?: string | number;
+  defaultHidden?: boolean;
+  hideable?: boolean;
+  sortable?: boolean;
+  sortValue?: (row: T) => any;
+  render?: (row: T, index: number) => React.ReactNode;
+  renderSub?: (sub: TSub, index: number) => React.ReactNode;
+  className?: string;
+}
+
+interface HeaderCellProps<T> {
+  col: TableColumn<T, any>;
+  thClasses: string;
+  isSortable: boolean;
+  handleSort: (key: string) => void;
+  sort: { key: string | null; dir: "asc" | "desc" };
+}
+
+function HeaderCell<T>({ col, thClasses, isSortable, handleSort, sort }: HeaderCellProps<T>) {
+  const thRef = useRef<HTMLTableHeaderCellElement | null>(null);
   const [tipMounted, setTipMounted] = useState(false);
   const [tipVisible, setTipVisible] = useState(false);
   const [tipCoords, setTipCoords] = useState({ top: 0, left: 0 });
-  const enterTimer = useRef(null);
-  const showTimer = useRef(null);
-  const unmountTimer = useRef(null);
+  const enterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const unmountTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const showTip = useCallback(() => {
     if (!thRef.current || !col.description) return;
-    clearTimeout(unmountTimer.current);
+    if (unmountTimer.current) clearTimeout(unmountTimer.current);
     const rect = thRef.current.getBoundingClientRect();
     setTipCoords({ top: rect.bottom + 8, left: rect.left + rect.width / 2 });
     setTipMounted(true);
@@ -32,15 +55,15 @@ function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
   }, [col.description]);
 
   const hideTip = useCallback(() => {
-    clearTimeout(enterTimer.current);
-    clearTimeout(showTimer.current);
+    if (enterTimer.current) clearTimeout(enterTimer.current);
+    if (showTimer.current) clearTimeout(showTimer.current);
     setTipVisible(false);
     unmountTimer.current = setTimeout(() => setTipMounted(false), 200);
   }, []);
 
   const onEnter = useCallback(() => {
     if (!col.description) return;
-    clearTimeout(enterTimer.current);
+    if (enterTimer.current) clearTimeout(enterTimer.current);
     enterTimer.current = setTimeout(showTip, 400);
   }, [col.description, showTip]);
 
@@ -80,20 +103,20 @@ function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
   );
 }
 
-function loadHiddenColumns(storageKey, columns) {
-  if (!storageKey) return new Set();
+function loadHiddenColumns<T>(storageKey: string | undefined, columns: TableColumn<T, any>[]): Set<string> {
+  if (!storageKey) return new Set<string>();
   try {
     const raw = localStorage.getItem(`table-hidden-cols:${storageKey}`);
-    if (raw) return new Set(JSON.parse(raw));
+    if (raw) return new Set<string>(JSON.parse(raw) as string[]);
   } catch { /* ignore */ }
   if (columns) {
     const defaults = columns.filter((c) => c.defaultHidden).map((c) => c.key);
-    if (defaults.length > 0) return new Set(defaults);
+    if (defaults.length > 0) return new Set<string>(defaults);
   }
-  return new Set();
+  return new Set<string>();
 }
 
-function saveHiddenColumns(storageKey, hiddenSet) {
+function saveHiddenColumns(storageKey: string | undefined, hiddenSet: Set<string>): void {
   if (!storageKey) return;
   try {
     localStorage.setItem(
@@ -103,8 +126,15 @@ function saveHiddenColumns(storageKey, hiddenSet) {
   } catch { /* ignore */ }
 }
 
-function ColumnFilter({ columns, hiddenColumns, onToggle, storageKey }) {
-  const btnRef = useRef(null);
+interface ColumnFilterProps<T> {
+  columns: TableColumn<T, any>[];
+  hiddenColumns: Set<string>;
+  onToggle: (key: string) => void;
+  storageKey: string;
+}
+
+function ColumnFilter<T>({ columns, hiddenColumns, onToggle, storageKey }: ColumnFilterProps<T>) {
+  const btnRef = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
 
@@ -118,10 +148,10 @@ function ColumnFilter({ columns, hiddenColumns, onToggle, storageKey }) {
 
   useEffect(() => {
     if (!open) return;
-    const handler = (e) => {
-      if (btnRef.current?.contains(e.target)) return;
+    const handler = (e: MouseEvent) => {
+      if (btnRef.current?.contains(e.target as Node)) return;
       const dropdown = document.querySelector(`[data-column-filter="${storageKey}"]`);
-      if (dropdown?.contains(e.target)) return;
+      if (dropdown?.contains(e.target as Node)) return;
       setOpen(false);
     };
     document.addEventListener("mousedown", handler);
@@ -176,7 +206,32 @@ function ColumnFilter({ columns, hiddenColumns, onToggle, storageKey }) {
   );
 }
 
-export default function TableComponent({
+export interface TableComponentProps<T, TSub = any> {
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  columns: TableColumn<T, TSub>[];
+  data?: T[];
+  getRowKey?: (row: T, index: number) => string | number;
+  getSubRows?: (row: T) => TSub[];
+  renderExpandedContent?: (row: T) => React.ReactNode;
+  onRowClick?: (row: T) => void;
+  emptyText?: string;
+  sortKey?: string | null;
+  sortDir?: "asc" | "desc" | string;
+  onSort?: (key: string, dir: "asc" | "desc") => void;
+  maxHeight?: string | number;
+  activeRowKey?: string | number | null;
+  highlightedRowKey?: string | number | null;
+  highlightedRowRef?: React.RefObject<HTMLTableRowElement | null>;
+  onRowMouseEnter?: (row: T, index: number) => void;
+  onRowMouseLeave?: (row: T, index: number) => void;
+  getRowClassName?: (row: T, index: number) => string;
+  getRowStyle?: (row: T, index: number) => React.CSSProperties;
+  mini?: boolean;
+  storageKey?: string;
+}
+
+export default function TableComponent<T, TSub = any>({
   title,
   subtitle,
   columns,
@@ -199,17 +254,17 @@ export default function TableComponent({
   getRowStyle,
   mini = false,
   storageKey,
-}) {
+}: TableComponentProps<T, TSub>) {
   const { sound } = useComponents();
-  const [internalSort, setInternalSort] = useState({ key: null, dir: "desc" });
+  const [internalSort, setInternalSort] = useState<{ key: string | null; dir: "asc" | "desc" }>({ key: null, dir: "desc" });
   const sort = onSort
-    ? { key: externalSortKey, dir: externalSortDir }
+    ? { key: externalSortKey || null, dir: (externalSortDir || "desc") as "asc" | "desc" }
     : internalSort;
-  const [expanded, setExpanded] = useState(new Set());
+  const [expanded, setExpanded] = useState<Set<string | number>>(new Set());
 
-  const [hiddenColumns, setHiddenColumns] = useState(() => loadHiddenColumns(storageKey, columns));
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(() => loadHiddenColumns(storageKey, columns));
 
-  const toggleColumn = useCallback((key) => {
+  const toggleColumn = useCallback((key: string) => {
     setHiddenColumns((prev) => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
@@ -223,7 +278,7 @@ export default function TableComponent({
     ? columns.filter((c) => !hiddenColumns.has(c.key))
     : columns;
 
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const dragRef = useRef<{ active: boolean; startX: number; startY: number; scrollLeft: number; scrollTop: number; moved: boolean; pointerId?: number }>({
     active: false,
     startX: 0,
@@ -233,8 +288,9 @@ export default function TableComponent({
     moved: false,
   });
 
-  const onPointerDown = useCallback((e) => {
-    if (e.target.closest("a, button, input, select, textarea, th")) return;
+  const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("a, button, input, select, textarea, th")) return;
     const element = scrollRef.current;
     if (!element) return;
     dragRef.current = {
@@ -248,7 +304,7 @@ export default function TableComponent({
     };
   }, []);
 
-  const onPointerMove = useCallback((e) => {
+  const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     const d = dragRef.current;
     if (!d.active) return;
     const dx = e.clientX - d.startX;
@@ -256,19 +312,21 @@ export default function TableComponent({
     if (!d.moved && Math.abs(dx) + Math.abs(dy) > 5) {
       d.moved = true;
       const element = scrollRef.current;
-      if (element) {
+      if (element && d.pointerId !== undefined) {
         try { element.setPointerCapture(d.pointerId); } catch { /* ignore */ }
       }
       scrollRef.current?.classList.add(styles.grabbing);
     }
     if (d.moved) {
       const element = scrollRef.current;
-      element.scrollLeft = d.scrollLeft - dx;
-      element.scrollTop = d.scrollTop - dy;
+      if (element) {
+        element.scrollLeft = d.scrollLeft - dx;
+        element.scrollTop = d.scrollTop - dy;
+      }
     }
   }, []);
 
-  const onPointerUp = useCallback((e) => {
+  const onPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     const d = dragRef.current;
     const wasDrag = d.moved;
     d.active = false;
@@ -278,17 +336,17 @@ export default function TableComponent({
       try { element.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
       element.classList.remove(styles.grabbing);
     }
-    if (wasDrag) {
-      const handler = (ev) => {
+    if (wasDrag && element) {
+      const handler = (ev: MouseEvent) => {
         ev.stopPropagation();
         ev.preventDefault();
       };
-      element?.addEventListener("click", handler, { capture: true, once: true });
+      element.addEventListener("click", handler, { capture: true, once: true });
     }
   }, []);
 
-  function handleSort(key) {
-    let newDir;
+  function handleSort(key: string) {
+    let newDir: "asc" | "desc";
     if (sort.key === key) {
       newDir = sort.dir === "desc" ? "asc" : "desc";
     } else {
@@ -301,7 +359,7 @@ export default function TableComponent({
     }
   }
 
-  function toggleExpand(rowKey) {
+  function toggleExpand(rowKey: string | number) {
     setExpanded((prev) => {
       const next = new Set(prev);
       if (next.has(rowKey)) next.delete(rowKey);
@@ -314,8 +372,8 @@ export default function TableComponent({
   const sorted =
     sort.key && !onSort
       ? [...data].sort((a, b) => {
-          const va = sortCol?.sortValue ? sortCol.sortValue(a) : (a[sort.key] ?? 0);
-          const vb = sortCol?.sortValue ? sortCol.sortValue(b) : (b[sort.key] ?? 0);
+          const va = sortCol?.sortValue ? sortCol.sortValue(a) : ((a as any)[sort.key!] ?? 0);
+          const vb = sortCol?.sortValue ? sortCol.sortValue(b) : ((b as any)[sort.key!] ?? 0);
           if (typeof va === "string" && typeof vb === "string") {
             return sort.dir === "asc"
               ? va.localeCompare(vb)
@@ -329,7 +387,10 @@ export default function TableComponent({
   const hasExpandedContent = !!renderExpandedContent;
 
   /** Build interactive row props with optional sound */
-  const interactiveProps = (clickHandler, enterHandler) => {
+  const interactiveProps = (
+    clickHandler: (e: React.MouseEvent) => void,
+    enterHandler?: (e: React.MouseEvent) => void
+  ) => {
     if (!sound) {
       return {
         onClick: clickHandler,
@@ -425,14 +486,14 @@ export default function TableComponent({
                     <tr
                       ref={
                         isHighlighted && highlightedRowRef
-                          ? highlightedRowRef
+                          ? (highlightedRowRef as React.Ref<HTMLTableRowElement>)
                           : undefined
                       }
                       className={`${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles.expandableRow : ""} ${isActive ? styles.activeRow : ""} ${isHighlighted ? styles.highlightedRow : ""} ${customClass}`}
                       style={customStyle}
                       {...(clickable
                         ? interactiveProps(
-                            isExpandable ? () => toggleExpand(key) : () => onRowClick(row),
+                            isExpandable ? () => toggleExpand(key) : () => onRowClick?.(row),
                             onRowMouseEnter ? () => onRowMouseEnter(row, ri) : undefined
                           )
                         : {}
@@ -458,7 +519,7 @@ export default function TableComponent({
                         if (col.render) {
                           content = col.render(row, ri);
                         } else {
-                          content = row[col.key] ?? "—";
+                          content = (row as any)[col.key] ?? "—";
                         }
 
                         return (
@@ -498,9 +559,9 @@ export default function TableComponent({
                             if (col.renderSub) {
                               content = col.renderSub(sub, si);
                             } else if (col.render) {
-                              content = col.render(sub, si);
+                              content = col.render(sub as unknown as T, si);
                             } else {
-                              content = sub[col.key] ?? "—";
+                              content = (sub as any)[col.key] ?? "—";
                             }
                             return (
                               <td key={col.key} style={cellStyle}>

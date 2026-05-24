@@ -24,7 +24,6 @@ import { ChevronDown } from "lucide-react";
  *   ← leading action button →  ← trailing toggle →
  *   └──── divider (1px) ─────┘
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- dual-button composite with complex spread props
 const SplitButtonComponent = forwardRef(function SplitButtonComponent({ variant = "filled", size = "medium", icon: Icon, iconSize, trailingIcon: TrailingIcon, trailingToggled = false, disabled = false, loading = false, fullWidth = false, children, className = "", onClick, onTrailingClick, onMouseEnter, "aria-label": ariaLabel, trailingAriaLabel = "More options", ...rest }, ref) {
     const { sound } = useComponents();
     const groupRef = useRef(null);

@@ -1,8 +1,17 @@
-"use client";
-
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styles from "./ModalComponent.module.css";
+
+export interface ModalComponentProps {
+  title: string | ReactNode;
+  onClose: () => void;
+  footer?: ReactNode;
+  size?: "sm" | "md" | "lg" | "xl" | string;
+  variant?: "default" | "dark" | string;
+  className?: string;
+  id?: string;
+  children?: ReactNode;
+}
 
 /**
  * ModalComponent — Structured modal dialog with header, body, and footer.
@@ -20,10 +29,10 @@ export default function ModalComponent({
   className,
   id,
   children,
-}) {
-  const overlayRef = useRef(null);
-  const panelRef = useRef(null);
-  const previousFocusRef = useRef(null);
+}: ModalComponentProps) {
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const modalId = id || "modal";
   const titleId = `${modalId}-title`;
@@ -41,7 +50,9 @@ export default function ModalComponent({
   // ── Focus management ──────────────────────────────────
   // Move focus into modal on mount, restore on unmount
   useEffect(() => {
-    previousFocusRef.current = document.activeElement;
+    if (document.activeElement instanceof HTMLElement) {
+      previousFocusRef.current = document.activeElement;
+    }
 
     requestAnimationFrame(() => {
       const panel = panelRef.current;
@@ -50,7 +61,7 @@ export default function ModalComponent({
       const focusable = panel.querySelector(
         'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
       );
-      if (focusable) {
+      if (focusable instanceof HTMLElement) {
         focusable.focus();
       } else {
         panel.focus();
@@ -58,7 +69,7 @@ export default function ModalComponent({
     });
 
     return () => {
-      if (previousFocusRef.current && typeof previousFocusRef.current.focus === "function") {
+      if (previousFocusRef.current instanceof HTMLElement) {
         previousFocusRef.current.focus();
       }
     };
@@ -67,13 +78,15 @@ export default function ModalComponent({
   // ── Focus trapping ────────────────────────────────────
   // Tab cycles within modal boundaries
   useEffect(() => {
-    const handleTab = (e) => {
+    const handleTab = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
       const panel = panelRef.current;
       if (!panel) return;
 
-      const focusableEls = panel.querySelectorAll(
-        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      const focusableEls = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        )
       );
 
       if (focusableEls.length === 0) return;
@@ -100,7 +113,7 @@ export default function ModalComponent({
 
   // Dismiss on Escape
   useEffect(() => {
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
         onClose();
@@ -112,7 +125,7 @@ export default function ModalComponent({
 
   // Dismiss on overlay click (not panel children)
   const handleOverlayClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === overlayRef.current) onClose();
     },
     [onClose],

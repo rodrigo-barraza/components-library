@@ -1,4 +1,3 @@
-"use client";
 import { jsxs as _jsxs } from "react/jsx-runtime";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import styles from "./PortBadgeComponent.module.css";

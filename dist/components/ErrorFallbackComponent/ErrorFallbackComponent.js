@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect } from "react";
 import styles from "./ErrorFallbackComponent.module.css";
@@ -16,7 +15,7 @@ import styles from "./ErrorFallbackComponent.module.css";
  * }
  * ```
  */
-export default function ErrorFallbackComponent({ error, reset, title = "This page couldn\u2019t load", logLabel = "[Error]", icon = "\u26A0", }) {
+export default function ErrorFallbackComponent({ error, reset, title = "This page couldn’t load", logLabel = "[Error]", icon = "⚠", }) {
     useEffect(() => {
         console.error(`${logLabel} Unhandled error:`, error);
     }, [error, logLabel]);

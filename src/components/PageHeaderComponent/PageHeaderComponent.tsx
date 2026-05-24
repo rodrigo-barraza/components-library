@@ -1,7 +1,16 @@
-"use client";
-
+import { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import styles from "./PageHeaderComponent.module.css";
+
+export interface PageHeaderComponentProps {
+  title: string | ReactNode;
+  subtitle?: string | ReactNode;
+  onBack?: () => void;
+  centerContent?: ReactNode;
+  children?: ReactNode;
+  sticky?: boolean;
+  className?: string;
+}
 
 /**
  * PageHeaderComponent — Unified page header with optional back navigation.
@@ -17,7 +26,7 @@ export default function PageHeaderComponent({
   children,
   sticky = true,
   className,
-}) {
+}: PageHeaderComponentProps) {
   return (
     <div
       className={`${styles.pageHeader}${sticky ? ` ${styles.sticky}` : ""}${className ? ` ${className}` : ""}`}

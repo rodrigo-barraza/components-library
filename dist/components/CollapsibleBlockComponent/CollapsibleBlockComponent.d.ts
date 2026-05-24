@@ -1,18 +1,20 @@
+import { ReactNode } from "react";
+export interface CollapsibleBlockComponentProps {
+    icon?: ReactNode;
+    label: string | ReactNode;
+    badge?: ReactNode;
+    defaultCollapsed?: boolean;
+    open?: boolean;
+    onToggle?: (open: boolean) => void;
+    headerActions?: ReactNode;
+    className?: string;
+    children?: ReactNode;
+}
 /**
  * CollapsibleBlockComponent — A disclosure widget with chevron toggle.
  *
  * Wraps any content behind a clickable header with an icon, label,
  * and optional badge. Supports both controlled and uncontrolled modes.
  */
-export default function CollapsibleBlockComponent({ icon, label, badge, defaultCollapsed, open: controlledOpen, onToggle, headerActions, className, children, }: {
-    icon: any;
-    label: any;
-    badge: any;
-    defaultCollapsed?: boolean;
-    open: any;
-    onToggle: any;
-    headerActions: any;
-    className?: string;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+export default function CollapsibleBlockComponent({ icon, label, badge, defaultCollapsed, open: controlledOpen, onToggle, headerActions, className, children, }: CollapsibleBlockComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CollapsibleBlockComponent.d.ts.map

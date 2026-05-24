@@ -69,16 +69,16 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
 ) {
   const [expanded, setExpanded] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(-1);
-  const inputRef = useRef(null);
-  const rootRef = useRef(null);
-  const panelRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   // Merge forwarded ref with internal
   const setInputRef = useCallback(
-    (node) => {
+    (node: HTMLInputElement | null) => {
       inputRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node;
     },
     [ref],
   );
@@ -105,8 +105,8 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
   useEffect(() => {
     if (!expanded) return;
 
-    function handleClickOutside(e) {
-      if (rootRef.current && !rootRef.current.contains(e.target)) {
+    function handleClickOutside(e: Event) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
         collapse();
       }
     }
@@ -124,7 +124,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
   useEffect(() => {
     if (!expanded) return;
 
-    function handleEscape(e) {
+    function handleEscape(e: KeyboardEvent) {
       if (e.key === "Escape") {
         collapse();
         inputRef.current?.blur();
@@ -138,10 +138,10 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
   /* ── Keyboard navigation in suggestions ───────────────────────── */
 
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (!expanded || !panelRef.current) return;
 
-      const items = panelRef.current.querySelectorAll(
+      const items = panelRef.current.querySelectorAll<HTMLElement>(
         "[data-suggestion-item]",
       );
       const count = items.length;
@@ -165,14 +165,14 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
 
   useEffect(() => {
     if (highlightIndex < 0 || !panelRef.current) return;
-    const items = panelRef.current.querySelectorAll("[data-suggestion-item]");
+    const items = panelRef.current.querySelectorAll<HTMLElement>("[data-suggestion-item]");
     items[highlightIndex]?.scrollIntoView({ block: "nearest" });
   }, [highlightIndex]);
 
   /* ── Handle input change ──────────────────────────────────────── */
 
   const handleChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange?.(e.target.value);
       if (!expanded && hasSuggestions) expand();
       setHighlightIndex(-1);
@@ -183,7 +183,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
   /* ── Handle form submit ───────────────────────────────────────── */
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && highlightIndex < 0) {
         e.preventDefault();
         onSubmit?.(value);
@@ -388,17 +388,27 @@ const SearchSuggestionsContext = createContext<{
    @param {number}          [index]    — auto-injected for highlighting
    ══════════════════════════════════════════════════════════════════════ */
 
-function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
+interface SuggestionProps {
+  icon?: React.ReactNode;
+  text: string | React.ReactNode;
+  trailing?: React.ReactNode;
+  onClick?: (value: string) => void;
+  value?: string;
+  index?: number;
+}
+
+function Suggestion({ icon, text, trailing, onClick, value, index = -1 }: SuggestionProps) {
   const { highlightIndex, collapse, onChange } = useContext(
     SearchSuggestionsContext,
   );
   const isHighlighted = index >= 0 && highlightIndex === index;
 
   const handleClick = useCallback(() => {
+    const stringVal = value ?? (typeof text === "string" ? text : "");
     if (onClick) {
-      onClick(value ?? text);
+      onClick(stringVal);
     } else {
-      (onChange as Function)?.(value ?? text);
+      onChange?.(stringVal);
     }
     collapse();
   }, [onClick, value, text, onChange, collapse]);
@@ -433,7 +443,7 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
     >
       <span className={styles.suggestionIcon}>{icon || defaultIcon}</span>
       <span className={styles.suggestionText}>
-        {typeof text === "string" ? text : text}
+        {text}
       </span>
       {trailing && (
         <span className={styles.suggestionTrailing}>{trailing}</span>
@@ -449,7 +459,12 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
    @param {React.ReactNode} children — Suggestion items
    ══════════════════════════════════════════════════════════════════════ */
 
-function SuggestionGroup({ label, children }) {
+interface SuggestionGroupProps {
+  label?: string;
+  children?: React.ReactNode;
+}
+
+function SuggestionGroup({ label, children }: SuggestionGroupProps) {
   return (
     <div role="group" aria-label={label}>
       {label && (
@@ -466,7 +481,11 @@ function SuggestionGroup({ label, children }) {
    @param {string|React.ReactNode} [message] — empty message
    ══════════════════════════════════════════════════════════════════════ */
 
-function SuggestionsEmpty({ message = "No results found" }) {
+interface SuggestionsEmptyProps {
+  message?: string | React.ReactNode;
+}
+
+function SuggestionsEmpty({ message = "No results found" }: SuggestionsEmptyProps) {
   return <div className={styles.suggestionsEmpty}>{message}</div>;
 }
 

@@ -11,7 +11,14 @@ import styles from "./ThemePickerComponent.module.css";
  * The `color` values are the `--accent-color` from each theme's CSS custom properties,
  * used as the swatch indicator so the user can visually identify each theme at a glance.
  */
-const THEME_CATALOG = {
+interface ThemeCatalogEntry {
+  label: string;
+  icon: string;
+  color: string;
+  bg: string;
+}
+
+const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
   dark: {
     label: "Dark",
     icon: "Moon",
@@ -97,17 +104,17 @@ export default function ThemePickerComponent({
   className,
 }: ThemePickerProps) {
   const [open, setOpen] = useState(false);
-  const wrapperRef = useRef(null);
-  const triggerRef = useRef(null);
-  const popoverRef = useRef(null);
-  const [popoverStyle, setPopoverStyle] = useState({});
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
+  const [popoverStyle, setPopoverStyle] = useState<React.CSSProperties>({});
 
   // Close on outside click (check both wrapper and popover — popover may be fixed-positioned outside wrapper)
   useEffect(() => {
     if (!open) return;
-    const handleClick = (e) => {
-      const inWrapper = wrapperRef.current?.contains(e.target);
-      const inPopover = popoverRef.current?.contains(e.target);
+    const handleClick = (e: MouseEvent) => {
+      const inWrapper = wrapperRef.current?.contains(e.target as Node);
+      const inPopover = popoverRef.current?.contains(e.target as Node);
       if (!inWrapper && !inPopover) {
         setOpen(false);
       }
@@ -119,7 +126,7 @@ export default function ThemePickerComponent({
   // Close on Escape
   useEffect(() => {
     if (!open) return;
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", handleKey);
@@ -143,7 +150,7 @@ export default function ThemePickerComponent({
   }, [open, collapsed]);
 
   const handleSelect = useCallback(
-    (themeName) => {
+    (themeName: string) => {
       onSelectTheme?.(themeName);
       setOpen(false);
     },
@@ -151,7 +158,7 @@ export default function ThemePickerComponent({
   );
 
   const currentMeta = THEME_CATALOG[theme] || THEME_CATALOG.dark;
-  const CurrentIcon = Icons[currentMeta.icon] || Icons.Palette;
+  const CurrentIcon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[currentMeta.icon] || Icons.Palette;
 
   const triggerButton = (
     <button
@@ -196,7 +203,7 @@ export default function ThemePickerComponent({
           <div className={styles.themeList}>
             {themes.map((t) => {
               const meta = THEME_CATALOG[t] || { label: t, icon: "Palette", color: "#888", bg: "#222" };
-              const ThemeIcon = Icons[meta.icon] || Icons.Palette;
+              const ThemeIcon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[meta.icon] || Icons.Palette;
               const isActive = t === theme;
 
               return (

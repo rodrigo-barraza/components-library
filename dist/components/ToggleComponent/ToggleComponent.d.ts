@@ -1,3 +1,11 @@
+import { ReactNode } from "react";
+export interface ToggleComponentProps {
+    checked?: boolean;
+    onChange: (checked: boolean) => void;
+    label?: string | ReactNode;
+    disabled?: boolean;
+    size?: "default" | "mini";
+}
 /**
  * ToggleComponent — iOS-style toggle switch with optional spatial audio.
  *
@@ -11,11 +19,5 @@
  *  disabled? : boolean
  *  size?     : "default" | "mini"
  */
-export default function ToggleComponent({ checked, onChange, label, disabled, size, }: {
-    checked?: boolean;
-    onChange: any;
-    label?: string;
-    disabled?: boolean;
-    size?: string;
-}): import("react/jsx-runtime").JSX.Element;
+export default function ToggleComponent({ checked, onChange, label, disabled, size, }: ToggleComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ToggleComponent.d.ts.map

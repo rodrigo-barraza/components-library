@@ -2,28 +2,6 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useCallback, forwardRef } from "react";
 import styles from "./ToolbarComponent.module.css";
-/**
- * ToolbarComponent — M3-inspired toolbar container.
- *
- * Material Design 3 Toolbar is a horizontal bar that groups contextual
- * action icons, navigation, and controls. It surfaces the most relevant
- * actions for the current context.
- *
- * @see https://m3.material.io/components/toolbars/overview
- *
- * Compound sub-components:
- *   ToolbarComponent.Group      — logical grouping of related actions
- *   ToolbarComponent.Item       — individual interactive toolbar item (icon button)
- *   ToolbarComponent.Separator  — visual divider between groups
- *   ToolbarComponent.Title      — text label / title within the toolbar
- *   ToolbarComponent.Spacer     — flex spacer to push items apart
- *
- * Accessibility (WAI-ARIA Toolbar pattern):
- *   • role="toolbar" with aria-label
- *   • Roving tabindex: arrow keys move focus between items
- *   • Home / End jump to first / last item
- *   • Tab moves focus out of the toolbar entirely
- */
 export default function ToolbarComponent({ variant = "standard", orientation = "horizontal", divider = false, sticky = false, elevated = false, ariaLabel, className, style, children, ...rest }) {
     const toolbarRef = useRef(null);
     /**
@@ -85,13 +63,6 @@ export default function ToolbarComponent({ variant = "standard", orientation = "
         .join(" ");
     return (_jsx("div", { ref: toolbarRef, role: "toolbar", "aria-label": ariaLabel, "aria-orientation": orientation, className: classes, style: style, onKeyDown: handleKeyDown, ...rest, children: children }));
 }
-/* ── Group ──────────────────────────────────────────────────────── */
-/**
- * ToolbarGroup — logically groups related toolbar items.
- *
- * M3 toolbars organize actions into leading, center, and trailing
- * groups. Use `role="group"` with an aria-label for screen readers.
- */
 function ToolbarGroup({ ariaLabel, className, children }) {
     return (_jsx("div", { role: "group", "aria-label": ariaLabel, className: `${styles.group}${className ? ` ${className}` : ""}`, children: children }));
 }
@@ -115,21 +86,9 @@ const ToolbarItem = forwardRef(function ToolbarItem({ icon: Icon, label, ariaLab
         .join(" ");
     return (_jsxs("button", { ref: ref, type: "button", role: "button", "data-toolbar-item": "", tabIndex: -1, "aria-label": ariaLabel || label, "aria-pressed": active || undefined, "aria-disabled": disabled || undefined, disabled: disabled, onClick: onClick, className: classes, ...rest, children: [_jsx("span", { className: styles.stateLayer }), children || (_jsxs(_Fragment, { children: [Icon && _jsx(Icon, { size: 20, className: styles.itemIcon }), label && _jsx("span", { className: styles.itemLabel, children: label })] }))] }));
 });
-/* ── Separator ──────────────────────────────────────────────────── */
-/**
- * ToolbarSeparator — visual divider between toolbar groups.
- *
- * M3 spec: 1px outline-variant line, 24px height, 4px horizontal margin.
- */
 function ToolbarSeparator({ className }) {
     return (_jsx("div", { role: "separator", "aria-orientation": "vertical", className: `${styles.separator}${className ? ` ${className}` : ""}` }));
 }
-/* ── Title ──────────────────────────────────────────────────────── */
-/**
- * ToolbarTitle — text label displayed within the toolbar.
- *
- * M3 spec: title-medium typography (16px / 500 weight).
- */
 function ToolbarTitle({ className, children }) {
     return (_jsx("span", { className: `${styles.title}${className ? ` ${className}` : ""}`, children: children }));
 }

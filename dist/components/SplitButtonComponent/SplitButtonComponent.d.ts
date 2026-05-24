@@ -1,3 +1,23 @@
+import { type MouseEvent } from "react";
+export interface SplitButtonComponentProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onClick"> {
+    variant?: "filled" | "outlined" | "tonal" | "text";
+    size?: "small" | "medium" | "large";
+    icon?: React.ComponentType<{
+        size: number;
+    }>;
+    iconSize?: number;
+    trailingIcon?: React.ComponentType<{
+        size: number;
+    }>;
+    trailingToggled?: boolean;
+    disabled?: boolean;
+    loading?: boolean;
+    fullWidth?: boolean;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onTrailingClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    "aria-label"?: string;
+    trailingAriaLabel?: string;
+}
 /**
  * SplitButtonComponent — Material Design 3 Split Button
  *
@@ -17,6 +37,6 @@
  *   ← leading action button →  ← trailing toggle →
  *   └──── divider (1px) ─────┘
  */
-declare const SplitButtonComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
+declare const SplitButtonComponent: import("react").ForwardRefExoticComponent<SplitButtonComponentProps & import("react").RefAttributes<HTMLDivElement>>;
 export default SplitButtonComponent;
 //# sourceMappingURL=SplitButtonComponent.d.ts.map

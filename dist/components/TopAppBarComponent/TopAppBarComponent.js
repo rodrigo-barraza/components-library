@@ -2,40 +2,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useState, useEffect, forwardRef, } from "react";
 import styles from "./TopAppBarComponent.module.css";
-/**
- * TopAppBarComponent — Material Design 3 Top App Bar.
- *
- * Displays navigation, title, and actions at the top of a screen.
- * Supports all four M3 sub-types and scroll-aware behavior.
- *
- * @see https://m3.material.io/components/app-bars/overview
- * @see https://m3.material.io/components/app-bars/specs
- *
- * Compound sub-components:
- *   TopAppBarComponent.Action  — trailing icon button (up to 3 per M3 spec)
- *
- * M3 Sub-types:
- *   • "center-aligned" — 64dp, centered title, 1 trailing action max
- *   • "small"          — 64dp, left-aligned title, up to 3 trailing actions
- *   • "medium"         — 112dp expanded → 64dp collapsed, headline-small title
- *   • "large"          — 152dp expanded → 64dp collapsed, headline-medium title
- *
- * Scroll behavior:
- *   • flat (elevation 0) when content is at the top
- *   • elevated (elevation 2) when content is scrolled
- *   • medium/large: expanded title collapses into the main row on scroll
- *
- * Accessibility:
- *   • Rendered as `<header>` landmark for screen readers
- *   • Navigation icon and actions have aria-labels
- *   • Title uses an appropriate heading level (configurable via headingLevel)
- *   • Focus-visible outlines on all interactive elements
- *
-
- *   M3 sub-type controlling title placement and bar height.
-
-
- */
 export default function TopAppBarComponent({ variant = "small", title, navigationIcon, onNavigationClick, navigationAriaLabel = "Navigate back", position = "sticky", scrollTargetRef, scrollThreshold = 4, showScrollIndicator = false, headingLevel = 1, ariaLabel, className, style, children, ...rest }) {
     const barRef = useRef(null);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -78,12 +44,12 @@ export default function TopAppBarComponent({ variant = "small", title, navigatio
         };
     }, [scrollTargetRef, scrollThreshold, showScrollIndicator]);
     // Variant class mapping
-    const variantClass = {
+    const variantClass = ({
         "center-aligned": styles.centerAligned,
         small: styles.small,
         medium: styles.medium,
         large: styles.large,
-    }[variant] || styles.small;
+    })[variant] || styles.small;
     // Position class
     const positionClass = position === "fixed"
         ? styles.fixed

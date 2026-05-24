@@ -70,10 +70,10 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
   ref,
 ) {
   const { sound } = useComponents();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLButtonElement | null>(null);
 
   // ── Ripple effect (M3 pressed state) ──────────────────
-  const handleRipple = useCallback((e) => {
+  const handleRipple = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const element = containerRef.current;
     if (!element) return;
 
@@ -109,10 +109,10 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
 
   // ── Merge refs ────────────────────────────────────────
   const setRef = useCallback(
-    (node) => {
+    (node: HTMLButtonElement | null) => {
       containerRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref) (ref as any).current = node;
     },
     [ref],
   );

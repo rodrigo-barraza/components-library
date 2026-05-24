@@ -1,6 +1,12 @@
-"use client";
-
+import { ReactNode, ComponentPropsWithoutRef } from "react";
 import styles from "./FormGroupComponent.module.css";
+
+export interface FormGroupComponentProps extends ComponentPropsWithoutRef<"div"> {
+  label?: string | ReactNode;
+  hint?: string | ReactNode;
+  readOnly?: boolean;
+  readOnlyContent?: string | ReactNode;
+}
 
 /**
  * FormGroupComponent — A labeled form field wrapper.
@@ -13,7 +19,7 @@ export default function FormGroupComponent({
   children,
   className,
   style,
-}) {
+}: FormGroupComponentProps) {
   return (
     <div className={`${styles.formGroup}${className ? ` ${className}` : ""}`} style={style}>
       {label && <label>{label}</label>}

@@ -27,7 +27,7 @@ import SoundService from "../../services/SoundService.js";
 const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary", size = "medium", icon: Icon, iconSize, loading = false, disabled = false, fullWidth = false, isGenerating = false, href, children, className = "", onClick, onMouseEnter, ...rest }, ref) {
     const { sound } = useComponents();
     const buttonRef = useRef(null);
-    const resolvedRef = ref || buttonRef;
+    const resolvedRef = (ref || buttonRef);
     const isSubmit = variant === "submit";
     const hasLabel = Boolean(children);
     const isIconOnly = Icon && !hasLabel && !loading;

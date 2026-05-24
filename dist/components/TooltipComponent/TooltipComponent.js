@@ -88,9 +88,12 @@ delay, }) {
     }, [position, rich]);
     /* ── show / hide ── */
     const showTooltip = useCallback(() => {
-        clearTimeout(unmountTimerRef.current);
-        clearTimeout(showTimerRef.current);
-        clearTimeout(exitTimerRef.current);
+        if (unmountTimerRef.current)
+            clearTimeout(unmountTimerRef.current);
+        if (showTimerRef.current)
+            clearTimeout(showTimerRef.current);
+        if (exitTimerRef.current)
+            clearTimeout(exitTimerRef.current);
         updateCoords();
         setMounted(true);
         showTimerRef.current = setTimeout(() => {
@@ -98,8 +101,10 @@ delay, }) {
         }, 10);
     }, [updateCoords]);
     const hideTooltip = useCallback(() => {
-        clearTimeout(showTimerRef.current);
-        clearTimeout(enterTimerRef.current);
+        if (showTimerRef.current)
+            clearTimeout(showTimerRef.current);
+        if (enterTimerRef.current)
+            clearTimeout(enterTimerRef.current);
         setVisible(false);
         unmountTimerRef.current = setTimeout(() => {
             setMounted(false);
@@ -109,7 +114,8 @@ delay, }) {
     const handleClick = useCallback(() => {
         if (trigger !== "click")
             return;
-        clearTimeout(exitTimerRef.current);
+        if (exitTimerRef.current)
+            clearTimeout(exitTimerRef.current);
         showTooltip();
         if (!persistent) {
             exitTimerRef.current = setTimeout(hideTooltip, exitDelay);
@@ -119,8 +125,10 @@ delay, }) {
     const handleMouseEnter = useCallback(() => {
         if (trigger !== "hover")
             return;
-        clearTimeout(exitTimerRef.current);
-        clearTimeout(enterTimerRef.current);
+        if (exitTimerRef.current)
+            clearTimeout(exitTimerRef.current);
+        if (enterTimerRef.current)
+            clearTimeout(enterTimerRef.current);
         enterTimerRef.current = setTimeout(() => {
             showTooltip();
         }, rich ? 0 : resolvedEnterDelay);
@@ -128,7 +136,8 @@ delay, }) {
     const handleMouseLeave = useCallback(() => {
         if (trigger !== "hover")
             return;
-        clearTimeout(enterTimerRef.current);
+        if (enterTimerRef.current)
+            clearTimeout(enterTimerRef.current);
         // Rich tooltips can be interactive — give a small exit grace period
         if (rich) {
             exitTimerRef.current = setTimeout(hideTooltip, 300);
@@ -139,14 +148,17 @@ delay, }) {
     }, [trigger, hideTooltip, rich]);
     /* ── focus trigger (keyboard accessibility) ── */
     const handleFocus = useCallback(() => {
-        clearTimeout(exitTimerRef.current);
-        clearTimeout(enterTimerRef.current);
+        if (exitTimerRef.current)
+            clearTimeout(exitTimerRef.current);
+        if (enterTimerRef.current)
+            clearTimeout(enterTimerRef.current);
         enterTimerRef.current = setTimeout(() => {
             showTooltip();
         }, rich ? 0 : resolvedEnterDelay);
     }, [showTooltip, resolvedEnterDelay, rich]);
     const handleBlur = useCallback(() => {
-        clearTimeout(enterTimerRef.current);
+        if (enterTimerRef.current)
+            clearTimeout(enterTimerRef.current);
         if (!persistent)
             hideTooltip();
     }, [hideTooltip, persistent]);
@@ -171,7 +183,8 @@ delay, }) {
             if (wrapperRef.current &&
                 !wrapperRef.current.contains(e.target) &&
                 (!bubbleRef.current || !bubbleRef.current.contains(e.target))) {
-                clearTimeout(exitTimerRef.current);
+                if (exitTimerRef.current)
+                    clearTimeout(exitTimerRef.current);
                 hideTooltip();
             }
         }
@@ -182,7 +195,8 @@ delay, }) {
     const handleBubbleMouseEnter = useCallback(() => {
         if (!rich)
             return;
-        clearTimeout(exitTimerRef.current);
+        if (exitTimerRef.current)
+            clearTimeout(exitTimerRef.current);
     }, [rich]);
     const handleBubbleMouseLeave = useCallback(() => {
         if (!rich || persistent)
@@ -192,10 +206,14 @@ delay, }) {
     /* ── Cleanup ── */
     useEffect(() => {
         return () => {
-            clearTimeout(enterTimerRef.current);
-            clearTimeout(exitTimerRef.current);
-            clearTimeout(showTimerRef.current);
-            clearTimeout(unmountTimerRef.current);
+            if (enterTimerRef.current)
+                clearTimeout(enterTimerRef.current);
+            if (exitTimerRef.current)
+                clearTimeout(exitTimerRef.current);
+            if (showTimerRef.current)
+                clearTimeout(showTimerRef.current);
+            if (unmountTimerRef.current)
+                clearTimeout(unmountTimerRef.current);
         };
     }, []);
     /* ── Guard: no label / disabled ── */

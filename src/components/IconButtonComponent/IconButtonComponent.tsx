@@ -1,8 +1,16 @@
-"use client";
-
+import { ReactNode, ComponentPropsWithoutRef, MouseEvent } from "react";
 import styles from "./IconButtonComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+export interface IconButtonComponentProps extends ComponentPropsWithoutRef<"button"> {
+  icon: ReactNode;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  tooltip?: string;
+  variant?: "default" | "destructive";
+  active?: boolean;
+  hoverReveal?: boolean;
+}
 
 /**
  * IconButtonComponent — A small icon-only action button.
@@ -17,7 +25,7 @@ export default function IconButtonComponent({
   disabled = false,
   className,
   ...rest
-}) {
+}: IconButtonComponentProps) {
   const { sound } = useComponents();
 
   const classes = [

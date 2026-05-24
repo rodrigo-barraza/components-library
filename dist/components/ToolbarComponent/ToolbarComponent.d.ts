@@ -20,18 +20,15 @@
  *   • Home / End jump to first / last item
  *   • Tab moves focus out of the toolbar entirely
  */
-declare function ToolbarComponent({ variant, orientation, divider, sticky, elevated, ariaLabel, className, style, children, ...rest }: {
-    [x: string]: any;
-    variant?: string;
-    orientation?: string;
+export interface ToolbarComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+    variant?: "standard" | "dense" | "flat" | string;
+    orientation?: "horizontal" | "vertical" | string;
     divider?: boolean;
     sticky?: boolean;
     elevated?: boolean;
-    ariaLabel: any;
-    className: any;
-    style: any;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+    ariaLabel?: string;
+}
+declare function ToolbarComponent({ variant, orientation, divider, sticky, elevated, ariaLabel, className, style, children, ...rest }: ToolbarComponentProps): import("react/jsx-runtime").JSX.Element;
 declare namespace ToolbarComponent {
     var Group: typeof ToolbarGroup;
     var Item: import("react").ForwardRefExoticComponent<import("react").ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -55,28 +52,31 @@ export default ToolbarComponent;
  * M3 toolbars organize actions into leading, center, and trailing
  * groups. Use `role="group"` with an aria-label for screen readers.
  */
-declare function ToolbarGroup({ ariaLabel, className, children }: {
-    ariaLabel: any;
-    className: any;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+interface ToolbarGroupProps {
+    ariaLabel?: string;
+    className?: string;
+    children?: React.ReactNode;
+}
+declare function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupProps): import("react/jsx-runtime").JSX.Element;
 /**
  * ToolbarSeparator — visual divider between toolbar groups.
  *
  * M3 spec: 1px outline-variant line, 24px height, 4px horizontal margin.
  */
-declare function ToolbarSeparator({ className }: {
-    className: any;
-}): import("react/jsx-runtime").JSX.Element;
+interface ToolbarSeparatorProps {
+    className?: string;
+}
+declare function ToolbarSeparator({ className }: ToolbarSeparatorProps): import("react/jsx-runtime").JSX.Element;
 /**
  * ToolbarTitle — text label displayed within the toolbar.
  *
  * M3 spec: title-medium typography (16px / 500 weight).
  */
-declare function ToolbarTitle({ className, children }: {
-    className: any;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+interface ToolbarTitleProps {
+    className?: string;
+    children?: React.ReactNode;
+}
+declare function ToolbarTitle({ className, children }: ToolbarTitleProps): import("react/jsx-runtime").JSX.Element;
 /**
  * ToolbarSpacer — flex spacer to distribute space between groups.
  *

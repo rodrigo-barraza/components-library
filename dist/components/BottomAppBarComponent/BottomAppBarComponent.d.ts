@@ -34,7 +34,20 @@ export interface BottomAppBarComponentProps extends HTMLAttributes<HTMLDivElemen
  */
 declare function BottomAppBarComponent({ fab, position, hideOnScroll, scrollTargetRef, scrollThreshold, ariaLabel, className, style, children, ...rest }: BottomAppBarComponentProps): import("react/jsx-runtime").JSX.Element;
 declare namespace BottomAppBarComponent {
-    var Action: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
+    var Action: import("react").ForwardRefExoticComponent<BottomAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
 }
 export default BottomAppBarComponent;
+/**
+ * BottomAppBarAction — icon button within the bottom app bar.
+ *
+ * M3 spec: 48×48dp touch target with 24dp icon.
+ * Up to 4 actions per M3 guidelines.
+ */
+interface BottomAppBarActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    icon?: React.ComponentType<{
+        size: number;
+    }>;
+    ariaLabel?: string;
+    active?: boolean;
+}
 //# sourceMappingURL=BottomAppBarComponent.d.ts.map

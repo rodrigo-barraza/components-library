@@ -1,7 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ReactNode, HTMLAttributes } from "react";
 import styles from "./NavigationDrawerComponent.module.css";
+
+export interface NavigationDrawerComponentProps extends HTMLAttributes<HTMLElement> {
+  variant?: "standard" | "modal";
+  anchor?: "start" | "end";
+  open?: boolean;
+  onClose?: () => void;
+  headline?: ReactNode;
+  ariaLabel?: string;
+}
 
 /**
  * NavigationDrawerComponent — M3-inspired navigation drawer.
@@ -20,6 +29,7 @@ import styles from "./NavigationDrawerComponent.module.css";
  *   • role="navigation" with aria-label
  *   • Modal: focus trapping, Escape to close, scrim click to close
  *   • Keyboard: Tab/Shift+Tab through items, Enter/Space to activate
+ *   • prefers-reduced-motion respected
  *
  * @see https://m3.material.io/components/navigation-drawer/overview
  */
@@ -34,9 +44,9 @@ export default function NavigationDrawerComponent({
   style,
   children,
   ...rest
-}) {
-  const drawerRef = useRef(null);
-  const previousFocusRef = useRef(null);
+}: NavigationDrawerComponentProps) {
+  const drawerRef = useRef<HTMLElement | null>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const [ready, setReady] = useState(false);
 
   // Suppress transitions on first render to avoid FOUC
@@ -51,17 +61,19 @@ export default function NavigationDrawerComponent({
     if (variant !== "modal" || !open) return;
 
     // Remember focus for restoration
-    previousFocusRef.current = document.activeElement;
+    if (document.activeElement instanceof HTMLElement) {
+      previousFocusRef.current = document.activeElement;
+    }
 
     // Focus the first focusable element inside drawer
     const timer = setTimeout(() => {
-      const focusable = drawerRef.current?.querySelectorAll(
+      const focusable = drawerRef.current?.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
       );
       focusable?.[0]?.focus();
     }, 50);
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
         onClose?.();
@@ -71,7 +83,7 @@ export default function NavigationDrawerComponent({
       // Focus trap
       if (e.key === "Tab" && drawerRef.current) {
         const focusable = Array.from(
-          drawerRef.current.querySelectorAll(
+          drawerRef.current.querySelectorAll<HTMLElement>(
             'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
           ),
         );
@@ -96,7 +108,9 @@ export default function NavigationDrawerComponent({
       clearTimeout(timer);
       document.removeEventListener("keydown", handleKeyDown);
       // Restore focus on close
-      previousFocusRef.current?.focus?.();
+      if (previousFocusRef.current instanceof HTMLElement) {
+        previousFocusRef.current.focus();
+      }
     };
   }, [variant, open, onClose]);
 
@@ -161,6 +175,21 @@ export default function NavigationDrawerComponent({
 
 /* ── Item ─────────────────────────────────────────────────────────── */
 
+export interface DrawerItemProps {
+  icon?: ElementType;
+  label?: ReactNode;
+  badge?: ReactNode;
+  active?: boolean;
+  disabled?: boolean;
+  href?: string;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
+  LinkComponent?: ElementType;
+  className?: string;
+  children?: ReactNode;
+}
+
+import { ElementType, MouseEvent } from "react";
+
 /**
  * DrawerItem — individual navigation destination.
  *
@@ -179,7 +208,7 @@ function DrawerItem({
   className,
   children,
   ...rest
-}) {
+}: DrawerItemProps) {
   const classes = [
     styles.item,
     active && styles.active,
@@ -202,7 +231,7 @@ function DrawerItem({
     "aria-current": active ? ("page" as const) : undefined,
     "aria-disabled": disabled || undefined,
     ...rest,
-  };
+  } as any;
 
   // Render with custom Link component
   if (LinkComponent && href) {
@@ -217,7 +246,7 @@ function DrawerItem({
   // Render as native anchor
   if (href) {
     return (
-      <a href={href} onClick={onClick} {...sharedProps}>
+      <a href={href} onClick={onClick as any} {...sharedProps}>
         <span className={styles.stateLayer} />
         {content}
       </a>
@@ -228,7 +257,7 @@ function DrawerItem({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={onClick as any}
       disabled={disabled}
       {...sharedProps}
     >
@@ -240,12 +269,17 @@ function DrawerItem({
 
 /* ── Section Header ──────────────────────────────────────────────── */
 
+export interface DrawerSectionHeaderProps {
+  className?: string;
+  children?: ReactNode;
+}
+
 /**
  * DrawerSectionHeader — labelled group heading.
  *
  * M3 spec: title-small typography, 56dp total height with padding.
  */
-function DrawerSectionHeader({ className, children }) {
+function DrawerSectionHeader({ className, children }: DrawerSectionHeaderProps) {
   return (
     <div
       className={`${styles.sectionHeader}${className ? ` ${className}` : ""}`}
@@ -259,10 +293,14 @@ function DrawerSectionHeader({ className, children }) {
 
 /* ── Divider ─────────────────────────────────────────────────────── */
 
+export interface DrawerDividerProps {
+  className?: string;
+}
+
 /**
  * DrawerDivider — horizontal visual separator between sections.
  */
-function DrawerDivider({ className }) {
+function DrawerDivider({ className }: DrawerDividerProps) {
   return (
     <div
       role="separator"
@@ -273,10 +311,15 @@ function DrawerDivider({ className }) {
 
 /* ── Footer ──────────────────────────────────────────────────────── */
 
+export interface DrawerFooterProps {
+  className?: string;
+  children?: ReactNode;
+}
+
 /**
  * DrawerFooter — bottom-pinned slot for actions or secondary content.
  */
-function DrawerFooter({ className, children }) {
+function DrawerFooter({ className, children }: DrawerFooterProps) {
   return (
     <div className={`${styles.footer}${className ? ` ${className}` : ""}`}>
       {children}

@@ -1,6 +1,22 @@
+import { ReactNode } from "react";
 import useTweenValue from "../../hooks/useTweenValue.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./MetricBadgeComponent.module.css";
+
+export interface MetricBadgeComponentProps {
+  value: number;
+  label?: string;
+  icon?: ReactNode;
+  tooltip?: string;
+  formatFn?: (val: number) => string | number;
+  color?: string;
+  tween?: boolean;
+  tweenDuration?: number;
+  round?: boolean;
+  mini?: boolean;
+  hideWhenZero?: boolean;
+  className?: string;
+}
 
 /**
  * MetricBadgeComponent — Generic inline metric pill with optional icon,
@@ -23,7 +39,7 @@ export default function MetricBadgeComponent({
   mini = false,
   hideWhenZero = true,
   className = "",
-}) {
+}: MetricBadgeComponentProps) {
   const [displayValue, tweening] = useTweenValue(value, {
     duration: tweenDuration,
     round,

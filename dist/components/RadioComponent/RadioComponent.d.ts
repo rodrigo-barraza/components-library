@@ -1,3 +1,16 @@
+import { ReactNode } from "react";
+export interface RadioComponentProps {
+    value: any;
+    selectedValue: any;
+    onChange: (value: any) => void;
+    label?: string | ReactNode;
+    disabled?: boolean;
+    error?: boolean;
+    className?: string;
+    id?: string;
+    name?: string;
+    labelPlacement?: "start" | "end";
+}
 /**
  * RadioComponent — M3-inspired radio button with circular state layer,
  * animated inner dot, and support for selected / unselected / error / disabled states.
@@ -15,25 +28,15 @@
  *   arrow-key navigation per WAI-ARIA Radio Group pattern.
  *   Tab moves focus into/out of the group; arrows cycle within.
  */
-declare function RadioComponent({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: {
-    value: any;
-    selectedValue: any;
-    onChange: any;
-    label?: string;
-    disabled?: boolean;
-    error?: boolean;
-    className?: string;
-    id: any;
-    name: any;
-    labelPlacement?: string;
-}): import("react/jsx-runtime").JSX.Element;
+declare function RadioComponent({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: RadioComponentProps): import("react/jsx-runtime").JSX.Element;
 declare namespace RadioComponent {
-    var Group: ({ legend, orientation, className, children, }: {
-        legend: any;
-        orientation?: string;
-        className?: string;
-        children: any;
-    }) => import("react/jsx-runtime").JSX.Element;
+    var Group: ({ legend, orientation, className, children, }: RadioGroupComponentProps) => import("react/jsx-runtime").JSX.Element;
 }
 export default RadioComponent;
+export interface RadioGroupComponentProps {
+    legend: string;
+    orientation?: "vertical" | "horizontal";
+    className?: string;
+    children?: ReactNode;
+}
 //# sourceMappingURL=RadioComponent.d.ts.map

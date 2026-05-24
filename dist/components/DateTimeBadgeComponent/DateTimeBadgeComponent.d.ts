@@ -1,3 +1,10 @@
+export interface DateTimeBadgeComponentProps {
+    date?: string | Date | number | null;
+    showIcon?: boolean;
+    relative?: boolean;
+    highlightNew?: boolean;
+    className?: string;
+}
 /**
  * DateTimeBadgeComponent — a compact datetime pill badge with
  * adaptive live-refresh (adaptive tick rate).
@@ -12,11 +19,5 @@
  *   highlightNew — pulse glow when "just now", fade out on transition
  *   className  — additional class
  */
-export default function DateTimeBadgeComponent({ date, showIcon, relative, highlightNew, className, }: {
-    date: any;
-    showIcon?: boolean;
-    relative?: boolean;
-    highlightNew?: boolean;
-    className?: string;
-}): import("react/jsx-runtime").JSX.Element;
+export default function DateTimeBadgeComponent({ date, showIcon, relative, highlightNew, className, }: DateTimeBadgeComponentProps): import("react/jsx-runtime").JSX.Element | null;
 //# sourceMappingURL=DateTimeBadgeComponent.d.ts.map

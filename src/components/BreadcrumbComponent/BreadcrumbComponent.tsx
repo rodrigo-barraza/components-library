@@ -1,6 +1,17 @@
-"use client";
-
+import { ElementType, ComponentPropsWithoutRef, MouseEvent } from "react";
 import styles from "./BreadcrumbComponent.module.css";
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  icon?: ElementType;
+  onClick?: (e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
+}
+
+export interface BreadcrumbComponentProps extends ComponentPropsWithoutRef<"nav"> {
+  items?: BreadcrumbItem[];
+  separator?: "chevron" | "slash" | "dot";
+}
 
 /**
  * BreadcrumbComponent — Navigation breadcrumb trail.
@@ -14,7 +25,7 @@ export default function BreadcrumbComponent({
   separator = "chevron",
   className,
   ...rest
-}) {
+}: BreadcrumbComponentProps) {
   if (items.length === 0) return null;
 
   const separatorElement = {

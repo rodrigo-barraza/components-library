@@ -32,23 +32,20 @@
 
 
  */
-declare function TopAppBarComponent({ variant, title, navigationIcon, onNavigationClick, navigationAriaLabel, position, scrollTargetRef, scrollThreshold, showScrollIndicator, headingLevel, ariaLabel, className, style, children, ...rest }: {
-    [x: string]: any;
-    variant?: string;
-    title: any;
-    navigationIcon: any;
-    onNavigationClick: any;
+export interface TopAppBarComponentProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+    variant?: "center-aligned" | "small" | "medium" | "large" | string;
+    title?: string | React.ReactNode;
+    navigationIcon?: React.ReactNode;
+    onNavigationClick?: () => void;
     navigationAriaLabel?: string;
-    position?: string;
-    scrollTargetRef: any;
+    position?: "sticky" | "fixed" | "static" | string;
+    scrollTargetRef?: React.RefObject<HTMLElement | null>;
     scrollThreshold?: number;
     showScrollIndicator?: boolean;
-    headingLevel?: number;
-    ariaLabel: any;
-    className: any;
-    style: any;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+    headingLevel?: 1 | 2 | 3 | 4 | 5 | 6 | number;
+    ariaLabel?: string;
+}
+declare function TopAppBarComponent({ variant, title, navigationIcon, onNavigationClick, navigationAriaLabel, position, scrollTargetRef, scrollThreshold, showScrollIndicator, headingLevel, ariaLabel, className, style, children, ...rest }: TopAppBarComponentProps): import("react/jsx-runtime").JSX.Element;
 declare namespace TopAppBarComponent {
     var Action: import("react").ForwardRefExoticComponent<TopAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
 }

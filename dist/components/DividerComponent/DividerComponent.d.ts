@@ -1,3 +1,10 @@
+import { HTMLAttributes, ReactNode } from "react";
+export interface DividerComponentProps extends HTMLAttributes<HTMLElement> {
+    variant?: "fullWidth" | "inset" | "middleInset";
+    orientation?: "horizontal" | "vertical";
+    spacing?: "none" | "small" | "medium" | "large" | string;
+    decorative?: boolean;
+}
 /**
  * DividerComponent — Material Design 3 divider.
  *
@@ -12,19 +19,15 @@
  * @see https://m3.material.io/components/divider/overview
  * @see https://m3.material.io/components/divider/specs
  */
-declare function DividerComponent({ variant, orientation, spacing, decorative, className, style, ...rest }: {
-    [x: string]: any;
-    variant?: string;
-    orientation?: string;
-    spacing: any;
-    decorative?: boolean;
-    className: any;
-    style: any;
-}): import("react/jsx-runtime").JSX.Element;
+declare function DividerComponent({ variant, orientation, spacing, decorative, className, style, ...rest }: DividerComponentProps): import("react/jsx-runtime").JSX.Element;
 declare namespace DividerComponent {
     var Subheader: typeof DividerSubheader;
 }
 export default DividerComponent;
+export interface DividerSubheaderProps extends HTMLAttributes<HTMLDivElement> {
+    label: ReactNode;
+    variant?: "fullWidth" | "inset" | "middleInset";
+}
 /**
  * DividerComponent.Subheader — a labeled section divider.
  *
@@ -32,11 +35,5 @@ export default DividerComponent;
  * Common in lists, settings panels, and form sections.
  * Always decorative — the label itself provides the semantic meaning.
  */
-declare function DividerSubheader({ label, variant, className, style, ...rest }: {
-    [x: string]: any;
-    label: any;
-    variant?: string;
-    className: any;
-    style: any;
-}): import("react/jsx-runtime").JSX.Element;
+declare function DividerSubheader({ label, variant, className, style, ...rest }: DividerSubheaderProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=DividerComponent.d.ts.map

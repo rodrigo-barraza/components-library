@@ -15,11 +15,6 @@
 import { useEffect, useRef, useMemo } from "react";
 import { createSessionService } from "../../services/SessionService.js";
 const HEARTBEAT_INTERVAL_MS = 5000;
-/**
- * SessionTrackerComponent — Invisible analytics telemetry layer.
- *
- * Renders nothing. Tracks session heartbeats, page views, and link clicks.
- */
 export default function SessionTrackerComponent({ projectId, pathname, apiBase }) {
     const initialized = useRef(false);
     const service = useMemo(() => createSessionService(projectId, apiBase ? { apiBase } : undefined), [projectId, apiBase]);
@@ -30,9 +25,9 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
         initialized.current = true;
         const { isNew } = service.init();
         // Record session type
-        service.event("session", isNew ? "new-visit" : "returning-visit", document.referrer || null, window.location.href);
+        service.event("session", isNew ? "new-visit" : "returning-visit", document.referrer || undefined, window.location.href);
         // Record initial page view
-        service.pageView(window.location.href, document.title, document.referrer || null);
+        service.pageView(window.location.href, document.title, document.referrer || undefined);
         // Session heartbeat
         const heartbeat = setInterval(() => {
             service.heartbeat(HEARTBEAT_INTERVAL_MS, screen.width, screen.height);
@@ -58,7 +53,7 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
             return;
         if (pathname === undefined)
             return;
-        service.pageView(window.location.href, document.title, null);
+        service.pageView(window.location.href, document.title, undefined);
     }, [pathname, service]);
     return null;
 }

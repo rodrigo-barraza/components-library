@@ -1,8 +1,20 @@
-"use client";
-
+import { ReactNode } from "react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./CheckboxComponent.module.css";
+
+export interface CheckboxComponentProps {
+  checked?: boolean;
+  onChange: (checked: boolean) => void;
+  label?: string | ReactNode;
+  disabled?: boolean;
+  indeterminate?: boolean;
+  error?: boolean;
+  className?: string;
+  id?: string;
+  name?: string;
+  labelPlacement?: "start" | "end";
+}
 
 /**
  * CheckboxComponent — M3-inspired checkbox with state layer, animations,
@@ -27,7 +39,7 @@ export default function CheckboxComponent({
   id,
   name,
   labelPlacement = "end",
-}) {
+}: CheckboxComponentProps) {
   const { sound } = useComponents();
 
   const rootClasses = [

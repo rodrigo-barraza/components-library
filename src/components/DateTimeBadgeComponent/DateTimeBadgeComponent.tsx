@@ -9,13 +9,19 @@ import styles from "./DateTimeBadgeComponent.module.css";
 const SECONDS_PER_DAY = 86_400;
 
 
+interface ComputeLabelResult {
+  label: string;
+  intervalMs: number;
+  isJustNow: boolean;
+}
+
 /**
  * Computes the short relative/absolute label and the optimal
  * refresh interval (adaptive tick rate) for the next update.
  *
  * Returns { label: string, intervalMs: number }
  */
-function computeLabel(dt, relative) {
+function computeLabel(dt: DateTime | null, relative: boolean): ComputeLabelResult {
   if (!dt || !dt.isValid) return { label: "", intervalMs: 0, isJustNow: false };
 
   const now = DateTime.now();
@@ -53,6 +59,14 @@ function computeLabel(dt, relative) {
   return { label: dt.toFormat("MMM d, yyyy"), intervalMs: 0, isJustNow: false };
 }
 
+export interface DateTimeBadgeComponentProps {
+  date?: string | Date | number | null;
+  showIcon?: boolean;
+  relative?: boolean;
+  highlightNew?: boolean;
+  className?: string;
+}
+
 /**
  * DateTimeBadgeComponent — a compact datetime pill badge with
  * adaptive live-refresh (adaptive tick rate).
@@ -73,7 +87,7 @@ export default function DateTimeBadgeComponent({
   relative = true,
   highlightNew = false,
   className = "",
-}) {
+}: DateTimeBadgeComponentProps) {
   const dt = useMemo(() => {
     if (!date) return null;
     if (date instanceof Date) return DateTime.fromJSDate(date);
@@ -119,7 +133,7 @@ export default function DateTimeBadgeComponent({
   useEffect(() => {
     if (!dt || !dt.isValid || !intervalMs) return;
 
-    let timerId;
+    let timerId: ReturnType<typeof setTimeout> | undefined;
 
     const schedule = () => {
       const { intervalMs: nextMs } = computeLabel(dt, relative);

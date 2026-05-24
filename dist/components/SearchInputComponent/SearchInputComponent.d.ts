@@ -13,21 +13,24 @@ interface SearchInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
     onCollapse?: () => void;
     children?: React.ReactNode;
 }
-declare function Suggestion({ icon, text, trailing, onClick, value, index }: {
-    icon: any;
-    text: any;
-    trailing: any;
-    onClick: any;
-    value: any;
+interface SuggestionProps {
+    icon?: React.ReactNode;
+    text: string | React.ReactNode;
+    trailing?: React.ReactNode;
+    onClick?: (value: string) => void;
+    value?: string;
     index?: number;
-}): import("react/jsx-runtime").JSX.Element;
-declare function SuggestionGroup({ label, children }: {
-    label: any;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
-declare function SuggestionsEmpty({ message }: {
-    message?: string;
-}): import("react/jsx-runtime").JSX.Element;
+}
+declare function Suggestion({ icon, text, trailing, onClick, value, index }: SuggestionProps): import("react/jsx-runtime").JSX.Element;
+interface SuggestionGroupProps {
+    label?: string;
+    children?: React.ReactNode;
+}
+declare function SuggestionGroup({ label, children }: SuggestionGroupProps): import("react/jsx-runtime").JSX.Element;
+interface SuggestionsEmptyProps {
+    message?: string | React.ReactNode;
+}
+declare function SuggestionsEmpty({ message }: SuggestionsEmptyProps): import("react/jsx-runtime").JSX.Element;
 declare const SearchInputWithSubcomponents: import("react").ForwardRefExoticComponent<SearchInputProps & import("react").RefAttributes<HTMLInputElement>> & {
     Suggestion: typeof Suggestion;
     SuggestionGroup: typeof SuggestionGroup;

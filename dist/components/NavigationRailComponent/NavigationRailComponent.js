@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useCallback, useRef, useEffect, useState, isValidElement } from "react";
 import * as Icons from "lucide-react";
@@ -82,7 +81,9 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
                     const isActive = activeItem === id;
                     const handleClick = () => {
                         setFocusedIndex(index);
-                        onNavigate?.(id, item);
+                        if (id) {
+                            onNavigate?.(id, item);
+                        }
                     };
                     const destinationContent = (_jsxs("div", { className: styles.destinationInner, children: [_jsxs("span", { className: `${styles.indicatorPill} ${isActive ? styles.indicatorActive : ""}`, "aria-hidden": "true", children: [_jsx("span", { className: styles.stateLayer }), resolvedIcon?.element ? (_jsx("span", { className: styles.icon, children: resolvedIcon.element })) : resolvedIcon?.Component ? (_jsx(resolvedIcon.Component, { size: 24, strokeWidth: isActive ? 2 : 1.6, className: styles.icon })) : null, item.badge != null && (_jsx("span", { className: styles.badgeOverlay, children: typeof item.badge === "number" || typeof item.badge === "string" ? (_jsx(BadgeComponent, { variant: item.badgeVariant || "error", mini: true, children: item.badge })) : (_jsx("span", { className: styles.badgeDot })) }))] }), !labelsHidden && (_jsx("span", { className: `${styles.label} ${isActive ? styles.labelActive : ""}`, children: item.label }))] }));
                     // Common props for the interactive element
@@ -110,7 +111,7 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
                     else {
                         element = (_jsx("button", { type: "button", ...elProps, children: destinationContent }));
                     }
-                    return (_jsx(TooltipComponent, { label: item.label, position: "right", delay: 400, disabled: !labelsHidden, className: styles.destinationWrapper, children: element }, id));
+                    return (_jsx(TooltipComponent, { label: item.label, position: "right", delay: 400, disabled: !labelsHidden, className: styles.destinationWrapper, children: element }, id || index));
                 }) }), bottomSlot && (_jsx("div", { className: styles.bottomSlot, children: bottomSlot }))] }));
 }
 //# sourceMappingURL=NavigationRailComponent.js.map

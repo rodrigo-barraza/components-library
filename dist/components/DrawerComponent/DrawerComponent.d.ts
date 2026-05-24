@@ -1,3 +1,27 @@
+import { ReactNode } from "react";
+export interface DrawerItem {
+    label: ReactNode;
+    value: ReactNode;
+    mono?: boolean;
+}
+export interface DrawerSection {
+    title: string;
+    items: DrawerItem[];
+}
+export interface DrawerComponentProps {
+    open: boolean;
+    onClose: () => void;
+    title?: ReactNode;
+    anchor?: "left" | "right";
+    width?: number | string;
+    scrim?: boolean;
+    dismissible?: boolean;
+    headerActions?: ReactNode;
+    sections?: DrawerSection[];
+    children?: ReactNode;
+    className?: string;
+    id?: string;
+}
 /**
  * DrawerComponent — M3 Side Sheet / slide-in drawer panel.
  *
@@ -5,18 +29,5 @@
  * Supports click-outside dismiss, Escape key, optional scrim overlay,
  * structured sections with label/value grids, and arbitrary children.
  */
-export default function DrawerComponent({ open, onClose, title, anchor, width, scrim, dismissible, headerActions, sections, children, className, id, }: {
-    open: any;
-    onClose: any;
-    title?: string;
-    anchor?: string;
-    width?: number;
-    scrim?: boolean;
-    dismissible?: boolean;
-    headerActions: any;
-    sections?: any[];
-    children: any;
-    className: any;
-    id: any;
-}): import("react/jsx-runtime").JSX.Element;
+export default function DrawerComponent({ open, onClose, title, anchor, width, scrim, dismissible, headerActions, sections, children, className, id, }: DrawerComponentProps): import("react/jsx-runtime").JSX.Element | null;
 //# sourceMappingURL=DrawerComponent.d.ts.map

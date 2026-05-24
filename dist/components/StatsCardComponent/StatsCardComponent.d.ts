@@ -4,17 +4,21 @@
  * Merged from prism-client (loading skeleton, variant colors) and
  * portal-client (CSS accent color, glow bar, animation delay).
  */
-export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant, color, loading, glow, className, onMouseEnter, onMouseLeave, }: {
-    label: any;
-    value: any;
-    subtitle: any;
-    icon: any;
-    variant?: string;
-    color: any;
+export interface StatsCardComponentProps {
+    label: React.ReactNode;
+    value: React.ReactNode;
+    subtitle?: React.ReactNode;
+    icon?: React.ComponentType<{
+        size?: number;
+        className?: string;
+    }>;
+    variant?: "accent" | "success" | "warning" | "error" | "info" | string;
+    color?: string;
     loading?: boolean;
     glow?: boolean;
-    className: any;
-    onMouseEnter: any;
-    onMouseLeave: any;
-}): import("react/jsx-runtime").JSX.Element;
+    className?: string;
+    onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant, color, loading, glow, className, onMouseEnter, onMouseLeave, }: StatsCardComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=StatsCardComponent.d.ts.map

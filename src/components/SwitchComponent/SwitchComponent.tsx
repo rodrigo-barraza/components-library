@@ -1,8 +1,20 @@
-"use client";
-
+import { ReactNode } from "react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./SwitchComponent.module.css";
+
+export interface SwitchComponentProps {
+  checked?: boolean;
+  onChange: (checked: boolean) => void;
+  label?: string;
+  disabled?: boolean;
+  showIcons?: boolean;
+  className?: string;
+  id?: string;
+  name?: string;
+  labelPlacement?: "start" | "end";
+  ariaLabel?: string;
+}
 
 /**
  * SwitchComponent — M3-inspired switch (toggle) with animated handle, state
@@ -17,9 +29,9 @@ import styles from "./SwitchComponent.module.css";
  *
  * Accessibility (per M3 Switch/Accessibility):
  *   • Native <input type="checkbox"> provides role="switch" semantics
- *   • `role="switch"` explicit on the input for screen readers
- *   • `aria-checked` reflects current state
- *   • `aria-label` or `aria-labelledby` supported via label text or props
+ *   • role="switch" explicit on the input for screen readers
+ *   • aria-checked reflects current state
+ *   • aria-label or aria-labelledby supported via label text or props
  *   • Focus-visible outline on the track
  *   • Keyboard: Space/Enter toggles (native behaviour)
  *   • prefers-reduced-motion respected
@@ -35,7 +47,7 @@ export default function SwitchComponent({
   name,
   labelPlacement = "end",
   ariaLabel,
-}) {
+}: SwitchComponentProps) {
   const { sound } = useComponents();
 
   const rootClasses = [

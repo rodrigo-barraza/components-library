@@ -1,10 +1,20 @@
-"use client";
-
-import { useState } from "react";
+import { useState, ReactNode, MouseEvent } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import styles from "./CollapsibleBlockComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+export interface CollapsibleBlockComponentProps {
+  icon?: ReactNode;
+  label: string | ReactNode;
+  badge?: ReactNode;
+  defaultCollapsed?: boolean;
+  open?: boolean;
+  onToggle?: (open: boolean) => void;
+  headerActions?: ReactNode;
+  className?: string;
+  children?: ReactNode;
+}
 
 /**
  * CollapsibleBlockComponent — A disclosure widget with chevron toggle.
@@ -22,7 +32,7 @@ export default function CollapsibleBlockComponent({
   headerActions,
   className = "",
   children,
-}) {
+}: CollapsibleBlockComponentProps) {
   const { sound } = useComponents();
   const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
 
@@ -30,7 +40,7 @@ export default function CollapsibleBlockComponent({
   const isControlled = controlledOpen !== undefined;
   const isOpen = isControlled ? controlledOpen : !internalCollapsed;
 
-  const handleToggle = (e) => {
+  const handleToggle = (e: MouseEvent<HTMLButtonElement>) => {
     if (sound) SoundService.playClick({ event: e });
     if (isControlled) {
       onToggle?.(!controlledOpen);
@@ -49,7 +59,7 @@ export default function CollapsibleBlockComponent({
         <span className={styles.label}>{label}</span>
         {badge && <span className={styles.badge}>{badge}</span>}
         {headerActions && (
-          <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
+          <div className={styles.actions} onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
             {headerActions}
           </div>
         )}

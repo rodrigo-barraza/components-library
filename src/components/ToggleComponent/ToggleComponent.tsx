@@ -1,8 +1,15 @@
-"use client";
-
+import { ReactNode } from "react";
 import styles from "./ToggleComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+export interface ToggleComponentProps {
+  checked?: boolean;
+  onChange: (checked: boolean) => void;
+  label?: string | ReactNode;
+  disabled?: boolean;
+  size?: "default" | "mini";
+}
 
 /**
  * ToggleComponent — iOS-style toggle switch with optional spatial audio.
@@ -23,7 +30,7 @@ export default function ToggleComponent({
   label = "",
   disabled = false,
   size = "default",
-}) {
+}: ToggleComponentProps) {
   const { sound } = useComponents();
   const isMini = size === "mini";
 

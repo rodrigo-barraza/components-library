@@ -4,12 +4,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import * as Icons from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./ThemePickerComponent.module.css";
-/**
- * Theme metadata — icon, label, and representative color for each built-in theme.
- *
- * The `color` values are the `--accent-color` from each theme's CSS custom properties,
- * used as the swatch indicator so the user can visually identify each theme at a glance.
- */
 const THEME_CATALOG = {
     dark: {
         label: "Dark",

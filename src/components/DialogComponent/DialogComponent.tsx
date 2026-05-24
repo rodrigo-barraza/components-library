@@ -1,8 +1,24 @@
-"use client";
-
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback, useState, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styles from "./DialogComponent.module.css";
+
+export interface DialogComponentProps {
+  open: boolean;
+  onClose: () => void;
+  icon?: ReactNode;
+  headline?: string | ReactNode;
+  onConfirm?: () => void;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  hideCancel?: boolean;
+  confirmVariant?: "default" | "destructive" | string;
+  confirmDisabled?: boolean;
+  fullscreen?: boolean;
+  dismissible?: boolean;
+  className?: string;
+  id?: string;
+  children?: ReactNode;
+}
 
 /**
  * DialogComponent — M3 AlertDialog
@@ -31,9 +47,9 @@ export default function DialogComponent({
   className,
   id,
   children,
-}) {
-  const containerRef = useRef(null);
-  const previousFocusRef = useRef(null);
+}: DialogComponentProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const previousFocusRef = useRef<Element | null>(null);
   const [closing, setClosing] = useState(false);
 
   // ── Unique ARIA IDs ──────────────────────────────────
@@ -49,7 +65,7 @@ export default function DialogComponent({
 
   // After exit animation completes, fire the real onClose
   const handleAnimationEnd = useCallback(
-    (e) => {
+    (e: React.AnimationEvent<HTMLDivElement>) => {
       if (closing && e.target === containerRef.current) {
         setClosing(false);
         onClose?.();
@@ -62,7 +78,7 @@ export default function DialogComponent({
   useEffect(() => {
     if (!open) return;
 
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && dismissible) {
         e.stopPropagation();
         handleClose();
@@ -89,7 +105,7 @@ export default function DialogComponent({
         const focusable = container.querySelector(
           'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );
-        if (focusable) {
+        if (focusable instanceof HTMLElement) {
           focusable.focus();
         } else {
           container.focus();
@@ -99,7 +115,7 @@ export default function DialogComponent({
 
     return () => {
       // Restore focus when dialog unmounts
-      if (previousFocusRef.current && typeof previousFocusRef.current.focus === "function") {
+      if (previousFocusRef.current instanceof HTMLElement) {
         previousFocusRef.current.focus();
       }
     };
@@ -110,13 +126,15 @@ export default function DialogComponent({
   useEffect(() => {
     if (!open) return;
 
-    const handleTab = (e) => {
+    const handleTab = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
       const container = containerRef.current;
       if (!container) return;
 
-      const focusableEls = container.querySelectorAll(
-        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      const focusableEls = Array.from(
+        container.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        )
       );
 
       if (focusableEls.length === 0) return;
@@ -155,7 +173,7 @@ export default function DialogComponent({
 
   // ── Scrim click ──────────────────────────────────────
   const handleScrimClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === e.currentTarget && dismissible) {
         handleClose();
       }

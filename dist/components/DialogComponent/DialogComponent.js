@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
@@ -61,7 +60,7 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
                     return;
                 // Focus the first focusable element (typically a button)
                 const focusable = container.querySelector('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
-                if (focusable) {
+                if (focusable instanceof HTMLElement) {
                     focusable.focus();
                 }
                 else {
@@ -71,7 +70,7 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
         }
         return () => {
             // Restore focus when dialog unmounts
-            if (previousFocusRef.current && typeof previousFocusRef.current.focus === "function") {
+            if (previousFocusRef.current instanceof HTMLElement) {
                 previousFocusRef.current.focus();
             }
         };
@@ -87,7 +86,7 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
             const container = containerRef.current;
             if (!container)
                 return;
-            const focusableEls = container.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+            const focusableEls = Array.from(container.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
             if (focusableEls.length === 0)
                 return;
             const first = focusableEls[0];

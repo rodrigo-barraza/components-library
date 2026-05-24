@@ -1,3 +1,16 @@
+import { ReactNode } from "react";
+export interface CheckboxComponentProps {
+    checked?: boolean;
+    onChange: (checked: boolean) => void;
+    label?: string | ReactNode;
+    disabled?: boolean;
+    indeterminate?: boolean;
+    error?: boolean;
+    className?: string;
+    id?: string;
+    name?: string;
+    labelPlacement?: "start" | "end";
+}
 /**
  * CheckboxComponent — M3-inspired checkbox with state layer, animations,
  * and support for checked / unchecked / indeterminate / error / disabled states.
@@ -10,16 +23,5 @@
  *   • Indeterminate: primary fill + white dash icon
  *   • Error:        error color outline/fill variant
  */
-export default function CheckboxComponent({ checked, onChange, label, disabled, indeterminate, error, className, id, name, labelPlacement, }: {
-    checked?: boolean;
-    onChange: any;
-    label?: string;
-    disabled?: boolean;
-    indeterminate?: boolean;
-    error?: boolean;
-    className?: string;
-    id: any;
-    name: any;
-    labelPlacement?: string;
-}): import("react/jsx-runtime").JSX.Element;
+export default function CheckboxComponent({ checked, onChange, label, disabled, indeterminate, error, className, id, name, labelPlacement, }: CheckboxComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CheckboxComponent.d.ts.map

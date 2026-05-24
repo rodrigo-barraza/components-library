@@ -6,22 +6,6 @@ import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import CountBadgeComponent from "../CountBadgeComponent/CountBadgeComponent.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
-/**
- * TabBarComponent — M3 Tabs
- *
- * Material Design 3 compliant tab bar with sliding active indicator,
- * state layers, and full ARIA tablist/tab keyboard navigation.
- *
- * Variants:
- *   • "primary"   — Full-width active indicator, on-surface active text
- *   • "secondary" — Shorter indicator, secondary coloring
- *
- * Layouts:
- *   • "inline"  — Icon + label side-by-side (default, 48px height)
- *   • "stacked" — Icon above label (64px height)
- *
- * }>} tabs
- */
 export default function TabBarComponent({ tabs = [], activeTab, onChange, variant = "primary", layout = "inline", scrollable = false, className, onTabHover, glowingTabs = [], ariaLabel, }) {
     const { sound } = useComponents();
     const tabListRef = useRef(null);
@@ -97,7 +81,6 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
         e.currentTarget.style.setProperty("--ripple-x", `${x}%`);
         e.currentTarget.style.setProperty("--ripple-y", `${y}%`);
     };
-    // ── Build container classes ─────────────────────────────
     const isStacked = layout === "stacked";
     const isSecondary = variant === "secondary";
     const containerClasses = [

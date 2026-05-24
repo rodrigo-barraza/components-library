@@ -35,8 +35,8 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
   fullWidth?: boolean;
   isGenerating?: boolean;
   href?: string;
-  onClick?: (e: React.MouseEvent) => void;
-  onMouseEnter?: (e: React.MouseEvent) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onMouseEnter?: (e: React.MouseEvent<HTMLElement>) => void;
 }>(function ButtonComponent(
   {
     variant = "primary",
@@ -57,8 +57,8 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
   ref,
 ) {
   const { sound } = useComponents();
-  const buttonRef = useRef(null);
-  const resolvedRef = ref || buttonRef;
+  const buttonRef = useRef<HTMLElement>(null);
+  const resolvedRef = (ref || buttonRef) as any;
   const isSubmit = variant === "submit";
   const hasLabel = Boolean(children);
   const isIconOnly = Icon && !hasLabel && !loading;
@@ -68,7 +68,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
     iconSize ?? (size === "small" ? 14 : size === "large" ? 20 : 18);
 
   /* ── Ripple ────────────────────────────────────────────────────── */
-  const createRipple = useCallback((e) => {
+  const createRipple = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const diameter = Math.max(rect.width, rect.height);
@@ -127,12 +127,12 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
   );
 
   /* ── Shared event handlers ─────────────────────────────────────── */
-  const handleMouseEnter = (e) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
     if (sound) SoundService.playHoverButton({ event: e });
     onMouseEnter?.(e);
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     createRipple(e);
     if (sound) SoundService.playClickButton({ event: e });
     onClick?.(e);
@@ -148,7 +148,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
         role="button"
         onMouseEnter={handleMouseEnter}
         onClick={handleClick}
-        {...rest}
+        {...(rest as any)}
       >
         {content}
       </a>
@@ -165,7 +165,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
       aria-busy={loading || undefined}
-      {...rest}
+      {...(rest as any)}
     >
       {content}
     </button>

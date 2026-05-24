@@ -1,3 +1,31 @@
+import { ReactNode, ElementType } from "react";
+export type NavigationRailIcon = string | React.ComponentType<{
+    size?: number;
+    strokeWidth?: number;
+    className?: string;
+}> | React.ReactElement;
+export interface NavigationRailItem {
+    id?: string;
+    key?: string;
+    label?: string;
+    icon?: NavigationRailIcon;
+    badge?: string | number | ReactNode;
+    badgeVariant?: "success" | "info" | "warning" | "error" | string;
+    href?: string;
+}
+export interface NavigationRailComponentProps {
+    items?: NavigationRailItem[];
+    activeItem?: string;
+    onNavigate?: (id: string, item: NavigationRailItem) => void;
+    fab?: ReactNode;
+    menuIcon?: ReactNode;
+    alignment?: "top" | "center" | "bottom" | string;
+    labelsHidden?: boolean;
+    bottomSlot?: ReactNode;
+    LinkComponent?: ElementType;
+    className?: string;
+    ariaLabel?: string;
+}
 /**
  * NavigationRailComponent — M3 Navigation Rail
  *
@@ -11,17 +39,5 @@
  * - Keyboard navigation: ArrowUp/Down cycles, Home/End jumps
  * - Full ARIA: role="navigation", tablist pattern on destinations
  */
-export default function NavigationRailComponent({ items, activeItem, onNavigate, fab, menuIcon, alignment, labelsHidden, bottomSlot, LinkComponent, className, ariaLabel, }: {
-    items?: any[];
-    activeItem: any;
-    onNavigate: any;
-    fab: any;
-    menuIcon: any;
-    alignment?: string;
-    labelsHidden?: boolean;
-    bottomSlot: any;
-    LinkComponent: any;
-    className?: string;
-    ariaLabel?: string;
-}): import("react/jsx-runtime").JSX.Element;
+export default function NavigationRailComponent({ items, activeItem, onNavigate, fab, menuIcon, alignment, labelsHidden, bottomSlot, LinkComponent, className, ariaLabel, }: NavigationRailComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=NavigationRailComponent.d.ts.map

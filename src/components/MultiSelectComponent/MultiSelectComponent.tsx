@@ -18,6 +18,25 @@ import styles from "./MultiSelectComponent.module.css";
  *  compact:     if true, shows count badge instead of chips (e.g. "3 selected")
  *  label:       optional inline label rendered before the trigger
  */
+export interface MultiSelectOption {
+  value: string;
+  label: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+}
+
+export interface MultiSelectComponentProps {
+  value?: string[];
+  options?: MultiSelectOption[];
+  onChange: (values: string[]) => void;
+  placeholder?: string;
+  allLabel?: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  compact?: boolean;
+  label?: string | null;
+}
+
 export default function MultiSelectComponent({
   value = [],
   options = [],
@@ -28,16 +47,16 @@ export default function MultiSelectComponent({
   disabled = false,
   compact = false,
   label = null,
-}) {
+}: MultiSelectComponentProps) {
   const [open, setOpen] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const selectedSet = useMemo(() => new Set(value), [value]);
   const allSelected = value.length === 0 || value.length === options.length;
 
   // ── Toggle a single option ──────────────────────────────
   const handleToggle = useCallback(
-    (optValue) => {
+    (optValue: string) => {
       if (selectedSet.has(optValue)) {
         const next = value.filter((v) => v !== optValue);
         onChange(next);
@@ -50,7 +69,7 @@ export default function MultiSelectComponent({
 
   // ── Remove a chip (stops propagation so trigger doesn't toggle)
   const handleRemove = useCallback(
-    (e, optValue) => {
+    (e: React.MouseEvent<HTMLButtonElement>, optValue: string) => {
       e.stopPropagation();
       onChange(value.filter((v) => v !== optValue));
     },
@@ -60,8 +79,8 @@ export default function MultiSelectComponent({
   // ── Click-outside close ─────────────────────────────────
   useEffect(() => {
     if (!open) return;
-    const onClick = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+    const onClick = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -72,7 +91,7 @@ export default function MultiSelectComponent({
   // ── Escape close ────────────────────────────────────────
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);

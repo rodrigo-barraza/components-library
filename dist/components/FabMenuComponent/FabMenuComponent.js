@@ -42,7 +42,6 @@ import SoundService from "../../services/SoundService.js";
 
 
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compound FAB+menu with dynamic trigger element
 const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon: TriggerIcon, closeIcon: CloseIcon, variant = "primary", fixed = false, showScrim = true, disabled = false, ariaLabel = "Actions menu", className = "", ...rest }, ref) {
     const { sound } = useComponents();
     const [isOpen, setIsOpen] = useState(false);
@@ -104,7 +103,7 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
     const handleKeyDown = useCallback((e) => {
         if (!isOpen)
             return;
-        const focusableItems = itemRefs.current.filter(Boolean);
+        const focusableItems = itemRefs.current.filter((el) => el !== null);
         const currentIndex = focusableItems.indexOf(document.activeElement);
         switch (e.key) {
             case "Escape":

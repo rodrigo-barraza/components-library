@@ -1,7 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ElementType, ComponentPropsWithoutRef, ReactNode } from "react";
 import styles from "./AvatarComponent.module.css";
+
+export interface AvatarComponentProps extends ComponentPropsWithoutRef<"div"> {
+  src?: string;
+  alt?: string;
+  name?: string;
+  icon?: ElementType;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  status?: "online" | "offline" | "busy" | "away";
+}
 
 /**
  * AvatarComponent — M3-inspired avatar with image, initials, or icon fallback.
@@ -20,14 +29,14 @@ export default function AvatarComponent({
   className,
   style,
   ...rest
-}) {
+}: AvatarComponentProps) {
   const [imgError, setImgError] = useState(false);
 
   const initials = name
     ? name
         .split(" ")
         .filter(Boolean)
-        .map((w) => w[0])
+        .map((w: string) => w[0])
         .slice(0, 2)
         .join("")
         .toUpperCase()
@@ -70,10 +79,17 @@ export default function AvatarComponent({
 
 /* ── AvatarGroup ─────────────────────────────────────────── */
 
+export interface AvatarGroupProps {
+  max?: number;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  className?: string;
+  children?: ReactNode;
+}
+
 /**
  * AvatarComponent.Group — stacks avatars with overlapping layout.
  */
-function AvatarGroup({ max = 5, size = "md", className, children }) {
+function AvatarGroup({ max = 5, size = "md", className, children }: AvatarGroupProps) {
   const items = Array.isArray(children) ? children : children ? [children] : [];
   const visible = items.slice(0, max);
   const overflow = items.length - max;
@@ -95,3 +111,4 @@ function AvatarGroup({ max = 5, size = "md", className, children }) {
 }
 
 AvatarComponent.Group = AvatarGroup;
+

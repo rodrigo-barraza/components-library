@@ -12,15 +12,22 @@
  *  compact:     if true, shows count badge instead of chips (e.g. "3 selected")
  *  label:       optional inline label rendered before the trigger
  */
-export default function MultiSelectComponent({ value, options, onChange, placeholder, allLabel, icon, disabled, compact, label, }: {
-    value?: any[];
-    options?: any[];
-    onChange: any;
+export interface MultiSelectOption {
+    value: string;
+    label: string;
+    icon?: React.ReactNode;
+    disabled?: boolean;
+}
+export interface MultiSelectComponentProps {
+    value?: string[];
+    options?: MultiSelectOption[];
+    onChange: (values: string[]) => void;
     placeholder?: string;
     allLabel?: string;
-    icon?: any;
+    icon?: React.ReactNode;
     disabled?: boolean;
     compact?: boolean;
-    label?: any;
-}): import("react/jsx-runtime").JSX.Element;
+    label?: string | null;
+}
+export default function MultiSelectComponent({ value, options, onChange, placeholder, allLabel, icon, disabled, compact, label, }: MultiSelectComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=MultiSelectComponent.d.ts.map

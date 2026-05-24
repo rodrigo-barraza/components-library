@@ -32,7 +32,11 @@ export function MenuDivider() {
 //  MenuGroupLabel — Optional header label for a group of items
 //  M3: label-small typography, on-surface-variant color
 // ──────────────────────────────────────────────────────────────────
-export function MenuGroupLabel({ children }) {
+interface MenuGroupLabelProps {
+  children?: React.ReactNode;
+}
+
+export function MenuGroupLabel({ children }: MenuGroupLabelProps) {
   return (
     <div className={styles.groupLabel} role="presentation">
       {children}
@@ -75,7 +79,7 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
   const { sound } = useComponents();
 
   const handleClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled) return;
       if (sound) SoundService.playClickButton({ event: e });
       onClick?.(e);
@@ -84,7 +88,7 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
   );
 
   const handleMouseEnter = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (sound) SoundService.playHoverButton({ event: e });
       onMouseEnter?.(e);
     },
@@ -138,34 +142,43 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
 //  SubMenu — Cascading nested menu triggered by a parent item
 //  Opens on hover/focus after a short delay (M3 pattern)
 // ──────────────────────────────────────────────────────────────────
+export interface SubMenuProps {
+  label: string;
+  leadingIcon?: React.ReactNode;
+  disabled?: boolean;
+  children?: React.ReactNode;
+}
+
 export function SubMenu({
   label,
   leadingIcon,
   disabled = false,
   children,
-}) {
+}: SubMenuProps) {
   const depth = useContext(MenuDepthContext);
   const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef(null);
-  const containerRef = useRef(null);
-  const itemRefs = useRef([]);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const open = useCallback(() => {
-    clearTimeout(timeoutRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => setIsOpen(true), 150);
   }, []);
 
   const close = useCallback(() => {
-    clearTimeout(timeoutRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => setIsOpen(false), 100);
   }, []);
 
   // Clean up timeouts
-  useEffect(() => () => clearTimeout(timeoutRef.current), []);
+  useEffect(() => () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  }, []);
 
   // Keyboard within submenu
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (!isOpen) {
         if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -176,8 +189,8 @@ export function SubMenu({
         return;
       }
 
-      const focusable = itemRefs.current.filter(Boolean);
-      const index = focusable.indexOf(document.activeElement);
+      const focusable = itemRefs.current.filter((item): item is HTMLButtonElement => item !== null);
+      const index = focusable.indexOf(document.activeElement as HTMLButtonElement);
 
       switch (e.key) {
         case "ArrowDown":
@@ -196,7 +209,7 @@ export function SubMenu({
           e.stopPropagation();
           setIsOpen(false);
           containerRef.current
-            ?.querySelector(`[role="menuitem"]`)
+            ?.querySelector<HTMLButtonElement>(`[role="menuitem"]`)
             ?.focus();
           break;
         default:
@@ -213,7 +226,7 @@ export function SubMenu({
       if (isValidElement(child) && child.type === MenuItem) {
         const currentIdx = index++;
         return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
-          ref: (element) => {
+          ref: (element: HTMLButtonElement | null) => {
             itemRefs.current[currentIdx] = element;
           },
           tabIndex: isOpen ? 0 : -1,
@@ -348,26 +361,26 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = isControlled ? controlledOpen : internalOpen;
 
-  const anchorRef = useRef(null);
-  const surfaceRef = useRef(null);
-  const triggerElRef = useRef(null);
-  const itemRefs = useRef([]);
+  const anchorRef = useRef<HTMLDivElement | null>(null);
+  const surfaceRef = useRef<HTMLDivElement | null>(null);
+  const triggerElRef = useRef<HTMLElement | null>(null);
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const typeAheadBuffer = useRef("");
-  const typeAheadTimer = useRef(null);
+  const typeAheadTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Merge ref ───────────────────────────────────────────
   const setAnchorRef = useCallback(
-    (node) => {
+    (node: HTMLDivElement | null) => {
       anchorRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     },
     [ref],
   );
 
   // ── Open / close helpers ────────────────────────────────
   const setOpen = useCallback(
-    (next) => {
+    (next: boolean | ((prev: boolean) => boolean)) => {
       const value = typeof next === "function" ? next(isOpen) : next;
       if (!isControlled) setInternalOpen(value);
       onOpenChange?.(value);
@@ -383,7 +396,7 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
 
   // ── Trigger click ───────────────────────────────────────
   const handleTriggerClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent) => {
       e.stopPropagation();
       toggle();
     },
@@ -394,10 +407,10 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleOutside = (e) => {
+    const handleOutside = (e: MouseEvent) => {
       if (
         anchorRef.current &&
-        !anchorRef.current.contains(e.target)
+        !anchorRef.current.contains(e.target as Node)
       ) {
         close();
       }
@@ -428,7 +441,7 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
 
   // ── Keyboard navigation (M3 a11y spec) ──────────────────
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
       // Open on ArrowDown/Up/Enter/Space when menu is closed
       if (!isOpen) {
         if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) {
@@ -438,8 +451,8 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
         return;
       }
 
-      const focusable = itemRefs.current.filter(Boolean);
-      const currentIdx = focusable.indexOf(document.activeElement);
+      const focusable = itemRefs.current.filter((item): item is HTMLButtonElement => item !== null);
+      const currentIdx = focusable.indexOf(document.activeElement as HTMLButtonElement);
 
       switch (e.key) {
         case "Escape":
@@ -490,7 +503,7 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
         default: {
           // Type-ahead: match item labels by first character(s)
           if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
-            clearTimeout(typeAheadTimer.current);
+            if (typeAheadTimer.current) clearTimeout(typeAheadTimer.current);
             typeAheadBuffer.current += e.key.toLowerCase();
 
             typeAheadTimer.current = setTimeout(() => {
@@ -525,11 +538,11 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
         const originalOnClick = (child.props as Record<string, unknown>).onClick as ((e: React.MouseEvent) => void) | undefined;
 
         return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
-          ref: (element) => {
+          ref: (element: HTMLButtonElement | null) => {
             itemRefs.current[currentIdx] = element;
           },
           tabIndex: isOpen ? 0 : -1,
-          onClick: (e) => {
+          onClick: (e: React.MouseEvent) => {
             originalOnClick?.(e);
             if (closeOnSelect && child.type === MenuItem) {
               close();
@@ -563,16 +576,16 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
   // ── Clone trigger to inject ARIA + click ────────────────
   const clonedTrigger = isValidElement(trigger)
     ? cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
-        ref: (element) => {
+        ref: (element: HTMLElement | null) => {
           triggerElRef.current = element;
           // Forward the trigger's own ref
           const triggerRef = (trigger as React.ReactElement<Record<string, unknown>> & { ref?: React.Ref<unknown> }).ref;
           if (typeof triggerRef === "function") triggerRef(element);
-          else if (triggerRef) triggerRef.current = element;
+          else if (triggerRef) (triggerRef as React.MutableRefObject<HTMLElement | null>).current = element;
         },
         "aria-haspopup": "menu",
         "aria-expanded": isOpen,
-        onClick: (e) => {
+        onClick: (e: React.MouseEvent) => {
           (trigger.props as Record<string, unknown> & { onClick?: (e: React.MouseEvent) => void }).onClick?.(e);
           handleTriggerClick(e);
         },

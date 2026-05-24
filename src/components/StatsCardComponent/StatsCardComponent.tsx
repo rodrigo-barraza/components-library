@@ -8,6 +8,20 @@ import styles from "./StatsCardComponent.module.css";
  * Merged from prism-client (loading skeleton, variant colors) and
  * portal-client (CSS accent color, glow bar, animation delay).
  */
+export interface StatsCardComponentProps {
+  label: React.ReactNode;
+  value: React.ReactNode;
+  subtitle?: React.ReactNode;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
+  variant?: "accent" | "success" | "warning" | "error" | "info" | string;
+  color?: string;
+  loading?: boolean;
+  glow?: boolean;
+  className?: string;
+  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
 export default function StatsCardComponent({
   label,
   value,
@@ -20,7 +34,7 @@ export default function StatsCardComponent({
   className,
   onMouseEnter,
   onMouseLeave,
-}) {
+}: StatsCardComponentProps) {
   if (loading) {
     return (
       <div className={`${styles.card} ${className || ""}`}>

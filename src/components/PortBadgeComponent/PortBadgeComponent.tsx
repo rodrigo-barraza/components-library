@@ -1,7 +1,10 @@
-"use client";
-
+import { ComponentPropsWithoutRef } from "react";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import styles from "./PortBadgeComponent.module.css";
+
+export interface PortBadgeComponentProps extends ComponentPropsWithoutRef<typeof BadgeComponent> {
+  port?: string | number;
+}
 
 /**
  * PortBadgeComponent — Semantic badge for a service port number.
@@ -9,7 +12,12 @@ import styles from "./PortBadgeComponent.module.css";
  * Displays the port prefixed with a colon in monospace font, color-coded
  * by variant (defaults to "accent").
  */
-export default function PortBadgeComponent({ port, variant = "accent", className, ...rest }) {
+export default function PortBadgeComponent({
+  port,
+  variant = "accent",
+  className,
+  ...rest
+}: PortBadgeComponentProps) {
   if (!port) return null;
 
   return (

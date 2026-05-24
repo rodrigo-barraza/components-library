@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Calendar, ChevronDown, ChevronLeft, ChevronRight, Clock, X } from "lucide-react";
 import { DATE_PRESETS, fmtDate as fmt, parseDateValue as parseDate, formatDateDisplay, getActiveDatePreset } from "../../utils/datePresets.js";
 import styles from "./DatePickerComponent.module.css";
 
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
-function isSameDay(a, b) {
+function isSameDay(a: Date | null | undefined, b: Date | null | undefined): boolean {
   if (!a || !b) return false;
   return (
     a.getFullYear() === b.getFullYear() &&
@@ -16,19 +16,19 @@ function isSameDay(a, b) {
   );
 }
 
-function isInRange(date, from, to) {
+function isInRange(date: Date | null | undefined, from: Date | null | undefined, to: Date | null | undefined): boolean {
   if (!from || !to || !date) return false;
   return date >= from && date <= to;
 }
 
-function extractTime(str) {
+function extractTime(str: string | null | undefined): string {
   if (!str || !str.includes("T")) return "";
   const d = new Date(str);
   if (isNaN(d.getTime())) return "";
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
-function composeDatetime(dateStr, time) {
+function composeDatetime(dateStr: string | null | undefined, time: string | null | undefined): string {
   if (!dateStr) return "";
   const dayPart = dateStr.slice(0, 10);
   if (!time) return dayPart;
@@ -38,7 +38,17 @@ function composeDatetime(dateStr, time) {
   return d.toISOString();
 }
 
-function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover }) {
+interface MonthGridProps {
+  year: number;
+  month: number;
+  from: string | null | undefined;
+  to: string | null | undefined;
+  hoverDate: Date | null;
+  onDayClick: (date: Date) => void;
+  onDayHover: (date: Date) => void;
+}
+
+function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover }: MonthGridProps) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const today = new Date();
@@ -105,6 +115,25 @@ function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover })
   );
 }
 
+export interface DatePreset {
+  label: string;
+  getValue: () => { from: string; to: string };
+}
+
+export interface DatePickerComponentProps {
+  from?: string;
+  to?: string;
+  onChange: (value: { from: string; to: string }) => void;
+  placeholder?: string;
+  storageKey?: string;
+  disabled?: boolean;
+  defaultOpen?: boolean;
+  onClose?: () => void;
+  hideTrigger?: boolean;
+  presets?: DatePreset[];
+  showTime?: boolean;
+}
+
 export default function DatePickerComponent({
   from = "",
   to = "",
@@ -117,18 +146,19 @@ export default function DatePickerComponent({
   hideTrigger = false,
   presets = DATE_PRESETS,
   showTime = true,
-}) {
+}: DatePickerComponentProps) {
   const [open, setOpen] = useState(defaultOpen);
   const [viewDate, setViewDate] = useState(() => {
-    const d = from ? parseDate(from) : new Date();
+    const parsed = from ? parseDate(from) : new Date();
+    const d = parsed || new Date();
     return { year: d.getFullYear(), month: d.getMonth() };
   });
-  const [selecting, setSelecting] = useState(null);
-  const [hoverDate, setHoverDate] = useState(null);
+  const [selecting, setSelecting] = useState<string | null>(null);
+  const [hoverDate, setHoverDate] = useState<Date | null>(null);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
-  const containerRef = useRef(null);
-  const triggerRef = useRef(null);
-  const dropdownElRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | HTMLDivElement | null>(null);
+  const dropdownElRef = useRef<HTMLDivElement | null>(null);
   const initializedRef = useRef(false);
 
   const [timeEdits, setTimeEdits] = useState({ fromTime: extractTime(from), toTime: extractTime(to), key: `${from}|${to}` });
@@ -136,8 +166,8 @@ export default function DatePickerComponent({
     setTimeEdits({ fromTime: extractTime(from), toTime: extractTime(to), key: `${from}|${to}` });
   }
   const { fromTime, toTime } = timeEdits;
-  const setFromTime = (v) => setTimeEdits((s) => ({ ...s, fromTime: v }));
-  const setToTime = (v) => setTimeEdits((s) => ({ ...s, toTime: v }));
+  const setFromTime = (v: string) => setTimeEdits((s) => ({ ...s, fromTime: v }));
+  const setToTime = (v: string) => setTimeEdits((s) => ({ ...s, toTime: v }));
 
   const updateDropdownPos = useCallback(() => {
     if (!triggerRef.current) return;
@@ -187,7 +217,7 @@ export default function DatePickerComponent({
         if (parsed.from || parsed.to) onChange(parsed);
       }
     } catch { /* ignore */ }
-  }, [storageKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [storageKey, onChange]);
 
   useEffect(() => {
     if (!storageKey || !initializedRef.current) return;
@@ -199,8 +229,8 @@ export default function DatePickerComponent({
 
   useEffect(() => {
     if (!open) return;
-    function handleClick(e) {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+    function handleClick(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false);
         setSelecting(null);
         onClose?.();
@@ -212,7 +242,7 @@ export default function DatePickerComponent({
 
   useEffect(() => {
     if (!open) return;
-    function handleKey(e) {
+    function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") { setOpen(false); setSelecting(null); onClose?.(); }
     }
     document.addEventListener("keydown", handleKey);
@@ -238,11 +268,11 @@ export default function DatePickerComponent({
     return m > 11 ? { year: viewDate.year + 1, month: 0 } : { year: viewDate.year, month: m };
   }, [viewDate]);
 
-  const monthLabel = (y, m) =>
+  const monthLabel = (y: number, m: number) =>
     new Date(y, m).toLocaleDateString("en-US", { month: "long", year: "numeric" });
 
   const handleDayClick = useCallback(
-    (date) => {
+    (date: Date) => {
       const dateStr = fmt(date);
       if (!selecting) {
         setSelecting(dateStr);
@@ -263,9 +293,9 @@ export default function DatePickerComponent({
   );
 
   const handlePreset = useCallback(
-    (preset) => {
-      const value = preset.getValue();
-      onChange(value);
+    (preset: DatePreset) => {
+      const val = preset.getValue();
+      onChange(val);
       setSelecting(null);
       setHoverDate(null);
       setOpen(false);
@@ -303,7 +333,7 @@ export default function DatePickerComponent({
     <div className={styles.container} ref={containerRef}>
       {!hideTrigger && (
         <button
-          ref={triggerRef}
+          ref={triggerRef as React.RefObject<HTMLButtonElement>}
           type="button"
           className={`${styles.trigger} ${open ? styles.triggerOpen : ""} ${disabled ? styles.triggerDisabled : ""}`}
           onClick={() => !disabled && setOpen((v) => !v)}
@@ -329,7 +359,7 @@ export default function DatePickerComponent({
           )}
         </button>
       )}
-      {hideTrigger && <div ref={triggerRef} />}
+      {hideTrigger && <div ref={triggerRef as React.RefObject<HTMLDivElement>} />}
 
       {open && (
         <div

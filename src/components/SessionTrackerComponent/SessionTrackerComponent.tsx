@@ -24,7 +24,13 @@ const HEARTBEAT_INTERVAL_MS = 5000;
  *
  * Renders nothing. Tracks session heartbeats, page views, and link clicks.
  */
-export default function SessionTrackerComponent({ projectId, pathname, apiBase }) {
+export interface SessionTrackerProps {
+  projectId: string;
+  pathname?: string;
+  apiBase?: string;
+}
+
+export default function SessionTrackerComponent({ projectId, pathname, apiBase }: SessionTrackerProps) {
   const initialized = useRef(false);
   const service = useMemo(
     () => createSessionService(projectId, apiBase ? { apiBase } : undefined),
@@ -42,7 +48,7 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
     service.event(
       "session",
       isNew ? "new-visit" : "returning-visit",
-      document.referrer || null,
+      document.referrer || undefined,
       window.location.href,
     );
 
@@ -50,7 +56,7 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
     service.pageView(
       window.location.href,
       document.title,
-      document.referrer || null,
+      document.referrer || undefined,
     );
 
     // Session heartbeat
@@ -63,8 +69,8 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
     }, HEARTBEAT_INTERVAL_MS);
 
     // Track external link clicks
-    function handleClick(event) {
-      const anchor = event.target.closest("a");
+    function handleClick(event: MouseEvent) {
+      const anchor = (event.target as HTMLElement).closest("a");
       if (!anchor?.href) return;
 
       const isInternal =
@@ -94,7 +100,7 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase }
     service.pageView(
       window.location.href,
       document.title,
-      null,
+      undefined,
     );
   }, [pathname, service]);
 

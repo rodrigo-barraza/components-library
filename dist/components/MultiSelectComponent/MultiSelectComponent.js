@@ -3,20 +3,6 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { ChevronDown, X } from "lucide-react";
 import styles from "./MultiSelectComponent.module.css";
-/**
- * MultiSelectComponent — custom dropdown supporting multiple selected values,
- * rendered as removable chips. Visually mirrors SelectComponent.
- *
- *  value:       string[]  — currently selected option values
- *  options:     [{ value, label, icon?, disabled? }]
- *  onChange:    (values: string[]) => void
- *  placeholder: label shown when nothing is selected
- *  allLabel:    label shown when every option is selected (default: "All")
- *  icon:        optional leading icon for the trigger
- *  disabled:    disables the entire select
- *  compact:     if true, shows count badge instead of chips (e.g. "3 selected")
- *  label:       optional inline label rendered before the trigger
- */
 export default function MultiSelectComponent({ value = [], options = [], onChange, placeholder = "Select…", allLabel = "All", icon = null, disabled = false, compact = false, label = null, }) {
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);

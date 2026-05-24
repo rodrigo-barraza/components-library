@@ -1,10 +1,34 @@
-"use client";
-
-import { useCallback, useRef, useEffect, useState, isValidElement } from "react";
+import { useCallback, useRef, useEffect, useState, isValidElement, ReactNode, ElementType, KeyboardEvent } from "react";
 import * as Icons from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import styles from "./NavigationRailComponent.module.css";
+
+export type NavigationRailIcon = string | React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }> | React.ReactElement;
+
+export interface NavigationRailItem {
+  id?: string;
+  key?: string;
+  label?: string;
+  icon?: NavigationRailIcon;
+  badge?: string | number | ReactNode;
+  badgeVariant?: "success" | "info" | "warning" | "error" | string;
+  href?: string;
+}
+
+export interface NavigationRailComponentProps {
+  items?: NavigationRailItem[];
+  activeItem?: string;
+  onNavigate?: (id: string, item: NavigationRailItem) => void;
+  fab?: ReactNode;
+  menuIcon?: ReactNode;
+  alignment?: "top" | "center" | "bottom" | string;
+  labelsHidden?: boolean;
+  bottomSlot?: ReactNode;
+  LinkComponent?: ElementType;
+  className?: string;
+  ariaLabel?: string;
+}
 
 /**
  * NavigationRailComponent — M3 Navigation Rail
@@ -31,18 +55,18 @@ export default function NavigationRailComponent({
   LinkComponent,
   className = "",
   ariaLabel = "Main navigation",
-}) {
-  const destinationsRef = useRef(null);
+}: NavigationRailComponentProps) {
+  const destinationsRef = useRef<HTMLDivElement | null>(null);
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
   // Resolve a Lucide icon from string name, React component, or rendered JSX element
-  const resolveIcon = useCallback((icon) => {
+  const resolveIcon = useCallback((icon: NavigationRailIcon | undefined) => {
     if (!icon) return null;
     // Already a rendered React element — pass through directly
     if (isValidElement(icon)) return { element: icon };
     // String lookup in lucide-react
     if (typeof icon === "string") {
-      const Comp = Icons[icon] || null;
+      const Comp = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[icon] || null;
       return Comp ? { Component: Comp } : null;
     }
     // Component reference (function or class)
@@ -51,9 +75,9 @@ export default function NavigationRailComponent({
 
   // Keyboard navigation within the destination group
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent<HTMLDivElement>) => {
       if (!destinationsRef.current) return;
-      const buttons = destinationsRef.current.querySelectorAll(
+      const buttons = destinationsRef.current.querySelectorAll<HTMLElement>(
         `[data-rail-destination]`
       );
       if (!buttons.length) return;
@@ -125,7 +149,9 @@ export default function NavigationRailComponent({
 
           const handleClick = () => {
             setFocusedIndex(index);
-            onNavigate?.(id, item);
+            if (id) {
+              onNavigate?.(id, item);
+            }
           };
 
           const destinationContent = (
@@ -214,7 +240,7 @@ export default function NavigationRailComponent({
 
           return (
             <TooltipComponent
-              key={id}
+              key={id || index}
               label={item.label}
               position="right"
               delay={400}

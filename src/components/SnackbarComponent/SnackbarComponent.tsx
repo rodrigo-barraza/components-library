@@ -17,7 +17,7 @@ const EXIT_ANIMATION_MS = 200;
 /**
  * Clamp duration to M3's 4–10 second range.
  */
-function clampDuration(ms) {
+function clampDuration(ms: number): number {
   if (ms <= 0) return 0; // 0 = indefinite
   return Math.max(MIN_DURATION, Math.min(MAX_DURATION, ms));
 }
@@ -34,11 +34,27 @@ function clampDuration(ms) {
      showSnackbar(message, options?) — imperative trigger
      snackbarProps                   — spread onto <SnackbarComponent />
 */
+interface SnackbarOptions {
+  actionLabel?: string;
+  onAction?: () => void;
+  showClose?: boolean;
+  duration?: number;
+}
+
+interface SnackbarEntry {
+  id: number;
+  message: string;
+  actionLabel?: string;
+  onAction?: () => void;
+  showClose: boolean;
+  duration: number;
+}
+
 export function useSnackbar() {
-  const [current, setCurrent] = useState(null);
-  const queueRef = useRef([]);
-  const timerRef = useRef(null);
-  const idRef = useRef(0);
+  const [current, setCurrent] = useState<SnackbarEntry | null>(null);
+  const queueRef = useRef<SnackbarEntry[]>([]);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const idRef = useRef<number>(0);
 
   // Process next item in queue
   const processQueue = useCallback(() => {
@@ -47,12 +63,14 @@ export function useSnackbar() {
       return;
     }
     const next = queueRef.current.shift();
-    setCurrent(next);
+    setCurrent(next || null);
   }, []);
 
   // Dismiss current snackbar
   const dismiss = useCallback(() => {
-    clearTimeout(timerRef.current);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
     setCurrent(null);
 
     // Small delay to allow exit animation before next
@@ -61,7 +79,7 @@ export function useSnackbar() {
 
   // Show a new snackbar
   const showSnackbar = useCallback(
-    (message: string, options: Record<string, any> = {}) => {
+    (message: string, options: SnackbarOptions = {}) => {
       const {
         actionLabel,
         onAction,
@@ -97,13 +115,15 @@ export function useSnackbar() {
     if (!current || current.duration === 0) return;
 
     timerRef.current = setTimeout(dismiss, current.duration);
-    return () => clearTimeout(timerRef.current);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [current, dismiss]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      clearTimeout(timerRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
       queueRef.current = [];
     };
   }, []);
@@ -158,6 +178,17 @@ export function useSnackbar() {
    @param {string}   [props.className]  — Additional container class
    @param {string}   [props.id]         — Unique ID for ARIA
 */
+export interface SnackbarComponentProps {
+  open: boolean;
+  message: string;
+  actionLabel?: string;
+  showClose?: boolean;
+  onAction?: () => void;
+  onDismiss?: () => void;
+  className?: string;
+  id?: string;
+}
+
 export default function SnackbarComponent({
   open,
   message,
@@ -167,8 +198,8 @@ export default function SnackbarComponent({
   onDismiss,
   className,
   id,
-}) {
-  const containerRef = useRef(null);
+}: SnackbarComponentProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [exiting, setExiting] = useState(false);
   const [layout, setLayout] = useState("singleLine");
 
@@ -207,7 +238,7 @@ export default function SnackbarComponent({
   }, []);
 
   const handleAnimationEnd = useCallback(
-    (e) => {
+    (e: React.AnimationEvent<HTMLDivElement>) => {
       if (exiting && e.target === containerRef.current) {
         setExiting(false);
         onDismiss?.();

@@ -1,7 +1,20 @@
-"use client";
-
-import { useMemo } from "react";
+import { useMemo, ReactNode } from "react";
 import styles from "./LoadingIndicatorComponent.module.css";
+
+export interface LoadingIndicatorComponentProps {
+  variant?: "circular" | "linear";
+  mode?: "indeterminate" | "determinate";
+  value?: number;
+  buffer?: number | null;
+  size?: "small" | "medium" | "large" | string;
+  trackSize?: "thin" | "thick" | "default" | string;
+  color?: "primary" | "secondary" | "tertiary" | "error" | "inherit" | string;
+  showPercentage?: boolean;
+  label?: ReactNode;
+  ariaLabel?: string;
+  className?: string;
+  id?: string;
+}
 
 /**
  * LoadingIndicatorComponent — M3-compliant progress indicator with circular
@@ -15,12 +28,12 @@ import styles from "./LoadingIndicatorComponent.module.css";
  *   • Variants: indeterminate (unknown duration), determinate (known %)
  *
  * Accessibility (per M3 Loading Indicator / Accessibility):
- *   • `role="progressbar"` on the indicator element
- *   • `aria-valuemin="0"` and `aria-valuemax="100"` always present
- *   • `aria-valuenow` set to current value for determinate, omitted for indeterminate
- *   • `aria-label` provided via `ariaLabel` prop — required for screen readers
- *   • `aria-busy="true"` can be set on the loading region by the consumer
- *   • `aria-live="polite"` on label for progress updates
+ *   • role="progressbar" on the indicator element
+ *   • aria-valuemin="0" and aria-valuemax="100" always present
+ *   • aria-valuenow set to current value for determinate, omitted for indeterminate
+ *   • aria-label provided via ariaLabel prop — required for screen readers
+ *   • aria-busy="true" can be set on the loading region by the consumer
+ *   • aria-live="polite" on label for progress updates
  *   • Reduced motion: animation durations extended (not removed) per M3 guidelines
  */
 export default function LoadingIndicatorComponent({
@@ -36,7 +49,7 @@ export default function LoadingIndicatorComponent({
   ariaLabel = "Loading",
   className = "",
   id,
-}) {
+}: LoadingIndicatorComponentProps) {
   const isIndeterminate = mode === "indeterminate";
   const clampedValue = Math.max(0, Math.min(100, value));
 
@@ -81,6 +94,23 @@ export default function LoadingIndicatorComponent({
  * Uses a 44-unit viewBox (48 - 2×2 padding) with the circle at r=20, c=22.
  * Circumference = 2πr = ~125.66
  */
+interface CircularIndicatorProps {
+  isIndeterminate: boolean;
+  value: number;
+  size: string;
+  color: string;
+  showPercentage?: boolean;
+  label?: ReactNode;
+  ariaLabel: string;
+  className?: string;
+  id?: string;
+}
+
+/**
+ * CircularIndicator — SVG-based circular progress.
+ * Uses a 44-unit viewBox (48 - 2×2 padding) with the circle at r=20, c=22.
+ * Circumference = 2πr = ~125.66
+ */
 function CircularIndicator({
   isIndeterminate,
   value,
@@ -91,7 +121,7 @@ function CircularIndicator({
   ariaLabel,
   className,
   id,
-}) {
+}: CircularIndicatorProps) {
   /* ── SVG geometry ── */
   const RADIUS = 20;
   const CIRCUMFERENCE = 2 * Math.PI * RADIUS; // ~125.66
@@ -182,6 +212,18 @@ function CircularIndicator({
 /*  LINEAR INDICATOR                                          */
 /* ═══════════════════════════════════════════════════════════ */
 
+interface LinearIndicatorProps {
+  isIndeterminate: boolean;
+  value: number;
+  buffer?: number | null;
+  trackSize: string;
+  color: string;
+  label?: ReactNode;
+  ariaLabel: string;
+  className?: string;
+  id?: string;
+}
+
 /**
  * LinearIndicator — Horizontal progress bar.
  * Indeterminate uses two sliding bars for continuous motion.
@@ -197,7 +239,7 @@ function LinearIndicator({
   ariaLabel,
   className,
   id,
-}) {
+}: LinearIndicatorProps) {
   /* ── CSS class assembly ── */
   const trackSizeClass =
     trackSize === "thin"  ? styles.trackThin :
@@ -277,12 +319,12 @@ function LinearIndicator({
 /* ═══════════════════════════════════════════════════════════ */
 
 /** Clamp a number between 0 and 100 */
-function clamp(n) {
+function clamp(n: number): number {
   return Math.max(0, Math.min(100, n));
 }
 
 /** Map color prop to CSS module class */
-function getColorClass(color) {
+function getColorClass(color: string): string {
   switch (color) {
     case "secondary":  return styles.colorSecondary;
     case "tertiary":   return styles.colorTertiary;

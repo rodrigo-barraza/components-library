@@ -1,3 +1,15 @@
+import { type MouseEvent } from "react";
+export interface ChipComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+    variant?: "assist" | "filter" | "input" | "suggestion";
+    selected?: boolean;
+    disabled?: boolean;
+    elevated?: boolean;
+    icon?: React.ComponentType<{
+        size: number;
+    }>;
+    removable?: boolean;
+    onRemove?: (e: MouseEvent<HTMLButtonElement>) => void;
+}
 /**
  * ChipComponent — M3 Chip (Assist / Filter / Input / Suggestion).
  *
@@ -7,6 +19,6 @@
  *
  * @see https://m3.material.io/components/chips
  */
-declare const ChipComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
+declare const ChipComponent: import("react").ForwardRefExoticComponent<ChipComponentProps & import("react").RefAttributes<HTMLDivElement>>;
 export default ChipComponent;
 //# sourceMappingURL=ChipComponent.d.ts.map

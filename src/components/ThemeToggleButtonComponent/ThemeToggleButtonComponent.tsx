@@ -1,23 +1,28 @@
-"use client";
-
 import { useTheme } from "../ThemeProvider/ThemeProvider.js";
 import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
+
+export interface ThemeToggleButtonComponentProps {
+  iconMap?: Record<string, any>;
+  labelMap?: Record<string, string>;
+  size?: number;
+  className?: string;
+}
 
 /**
  * Default icon/label mapping for the 4 standard themes.
  * Uses Lucide icon names (string) so we don't force a hard dependency —
  * consumers can also pass custom `iconMap` / `labelMap` overrides.
  */
-const DEFAULT_ICON_MAP = {
+const DEFAULT_ICON_MAP: Record<string, any> = {
   dark: "Sun",
   light: "CloudFog",
   muted: "Palmtree",
   tropical: "Waves",
-  oceanic: "Skull",
+  oceanic: "Waves",
   punk: "Moon",
 };
 
-const DEFAULT_LABEL_MAP = {
+const DEFAULT_LABEL_MAP: Record<string, string> = {
   dark: "light",
   light: "muted",
   muted: "tropical",
@@ -37,7 +42,7 @@ export default function ThemeToggleButtonComponent({
   size = 16,
   className,
   ...rest
-}) {
+}: ThemeToggleButtonComponentProps) {
   const { theme, themes, toggleTheme } = useTheme();
 
   const icons = iconMap || DEFAULT_ICON_MAP;

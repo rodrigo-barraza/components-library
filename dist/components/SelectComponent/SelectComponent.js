@@ -4,14 +4,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./SelectComponent.module.css";
-/**
- * SelectComponent — custom dropdown that supports rendering arbitrary content
- * (icons, logos, etc.) in each option.
- *
- *  options:        [{ value, label, icon?, disabled?, tooltip? }]
- *  triggerTooltip  — optional tooltip shown on the trigger button hover
- *  label           — optional inline label rendered before the trigger
- */
 export default function SelectComponent({ value, options = [], onChange, placeholder = "Select...", icon = null, disabled = false, triggerTooltip = null, label = null, }) {
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);

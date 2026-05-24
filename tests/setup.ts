@@ -7,6 +7,33 @@ afterEach(() => {
   cleanup();
 });
 
+// Mock localStorage
+class LocalStorageMock {
+  private store: Record<string, string> = {};
+
+  clear() {
+    this.store = {};
+  }
+
+  getItem(key: string) {
+    return this.store[key] || null;
+  }
+
+  setItem(key: string, value: string) {
+    this.store[key] = String(value);
+  }
+
+  removeItem(key: string) {
+    delete this.store[key];
+  }
+}
+
+const localStorageMock = new LocalStorageMock();
+Object.defineProperty(global, "localStorage", { value: localStorageMock });
+if (typeof window !== "undefined") {
+  Object.defineProperty(window, "localStorage", { value: localStorageMock });
+}
+
 // Mock ResizeObserver which is frequently used by layout/components but missing in JSDOM
 global.ResizeObserver = class ResizeObserver {
   observe() {}
@@ -28,3 +55,4 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => false,
   }),
 });
+

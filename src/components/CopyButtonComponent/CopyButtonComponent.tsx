@@ -1,12 +1,18 @@
-"use client";
-
-import { useState, useCallback } from "react";
+import { useState, useCallback, MouseEvent } from "react";
 import { Copy, Check } from "lucide-react";
 // Inlined from utilities-library/time — node_modules copy is stale until deploy-kit sync
 const FEEDBACK_STANDARD_MS = 2_000;
 import styles from "./CopyButtonComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+export interface CopyButtonComponentProps {
+  text: string;
+  size?: number;
+  showLabel?: boolean;
+  className?: string;
+  tooltip?: string;
+}
 
 /**
  * CopyButtonComponent — Copy-to-clipboard button with a "copied" confirmation state.
@@ -17,12 +23,12 @@ export default function CopyButtonComponent({
   showLabel = false,
   className = "",
   tooltip = "Copy",
-}) {
+}: CopyButtonComponentProps) {
   const { sound } = useComponents();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(
-    async (e) => {
+    async (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       try {
         await navigator.clipboard.writeText(text);

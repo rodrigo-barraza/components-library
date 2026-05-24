@@ -104,9 +104,6 @@ function handleSliderKeyDown(e, value, min, max, step, onChange) {
     const decimals = (step.toString().split(".")[1] || "").length;
     onChange(parseFloat(next.toFixed(decimals)));
 }
-/* ─────────────────────────────────────────────────────────
-   SingleTrack — Continuous / Discrete / Centered
-   ───────────────────────────────────────────────────────── */
 function SingleTrack({ value, min, max, step, onChange, disabled, centered, showValue, ticks, label, formatValue, sound, }) {
     const trackRef = useRef(null);
     const [dragging, setDragging] = useState(false);
@@ -115,7 +112,7 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
     const midPct = ((0 - min) / (max - min)) * 100; // Center point for centered mode
     const fmt = formatValue || defaultFormat;
     const handlePointerDown = (e) => {
-        if (disabled)
+        if (disabled || !trackRef.current)
             return;
         e.preventDefault();
         trackRef.current.setPointerCapture(e.pointerId);
@@ -127,7 +124,7 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
             SoundService.playClickButton({ event: e });
     };
     const handlePointerMove = (e) => {
-        if (!dragging)
+        if (!dragging || !trackRef.current)
             return;
         if (!trackRef.current.hasPointerCapture(e.pointerId))
             return;
@@ -150,7 +147,7 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
         : null;
     return (_jsx("div", { className: styles.trackWrapper, children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
                 .filter(Boolean)
-                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), centered ? (_jsx("div", { className: styles.activeTrack, style: centeredFill })) : (_jsx("div", { className: styles.activeTrack, style: { width: `${pct}%` } })), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
+                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), centered && centeredFill ? (_jsx("div", { className: styles.activeTrack, style: centeredFill })) : (_jsx("div", { className: styles.activeTrack, style: { width: `${pct}%` } })), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
                     ticks.map((tick) => {
                         const tickPct = ((tick - min) / (max - min)) * 100;
                         const isActive = centered
@@ -165,9 +162,6 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
                         .filter(Boolean)
                         .join(" "), style: { left: `${pct}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label, "aria-valuemin": min, "aria-valuemax": max, "aria-valuenow": value, "aria-valuetext": fmt(value), "aria-disabled": disabled, onKeyDown: (e) => !disabled && handleSliderKeyDown(e, value, min, max, step, onChange), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue && (pressed || dragging) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: fmt(value) }) }))] })] }) }));
 }
-/* ─────────────────────────────────────────────────────────
-   RangeTrack — Two-thumb range selection
-   ───────────────────────────────────────────────────────── */
 function RangeTrack({ value, min, max, step, onChange, disabled, showValue, ticks, label, formatValue, sound, }) {
     const trackRef = useRef(null);
     const activeThumb = useRef(null); // "start" | "end"
@@ -178,6 +172,8 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
     const hiPct = max === min ? 100 : ((hi - min) / (max - min)) * 100;
     const fmt = formatValue || defaultFormat;
     const resolveThumb = useCallback((clientX) => {
+        if (!trackRef.current)
+            return "start";
         const rect = trackRef.current.getBoundingClientRect();
         const ratio = (clientX - rect.left) / rect.width;
         const clickVal = min + ratio * (max - min);
@@ -187,7 +183,7 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
             : "end";
     }, [lo, hi, min, max]);
     const handlePointerDown = (e) => {
-        if (disabled)
+        if (disabled || !trackRef.current)
             return;
         e.preventDefault();
         trackRef.current.setPointerCapture(e.pointerId);
@@ -206,7 +202,7 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
             SoundService.playClickButton({ event: e });
     };
     const handlePointerMove = (e) => {
-        if (!dragging)
+        if (!dragging || !trackRef.current)
             return;
         if (!trackRef.current.hasPointerCapture(e.pointerId))
             return;

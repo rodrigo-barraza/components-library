@@ -12,6 +12,16 @@ import styles from "./SkeletonComponent.module.css";
  * Supports text lines, circular avatars, rectangular cards, and fully custom
  * dimensions via width/height props.
  */
+export interface SkeletonComponentProps {
+  variant?: "text" | "avatar" | "image" | "card" | "button" | string;
+  width?: number | string;
+  height?: number | string;
+  lines?: number;
+  animate?: boolean;
+  className?: string;
+  id?: string;
+}
+
 export default function SkeletonComponent({
   variant = "text",
   width,
@@ -20,8 +30,8 @@ export default function SkeletonComponent({
   animate = true,
   className = "",
   id,
-}) {
-  const resolveSize = (value) =>
+}: SkeletonComponentProps) {
+  const resolveSize = (value: number | string | undefined) =>
     value == null ? undefined : typeof value === "number" ? `${value}px` : value;
 
   const baseClass = [
@@ -75,12 +85,19 @@ export default function SkeletonComponent({
 /**
  * SkeletonGroup — Compose multiple skeleton shapes inside a container.
  */
+export interface SkeletonGroupProps {
+  gap?: number | string;
+  direction?: "row" | "row-reverse" | "column" | "column-reverse";
+  className?: string;
+  children?: React.ReactNode;
+}
+
 export function SkeletonGroup({
   gap = "12px",
   direction = "column",
   className = "",
   children,
-}) {
+}: SkeletonGroupProps) {
   return (
     <div
       className={`${styles.group} ${className}`}

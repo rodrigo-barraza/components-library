@@ -1,3 +1,18 @@
+export interface SliderComponentProps<T extends number | number[] = number | number[]> {
+    value: T;
+    min?: number;
+    max?: number;
+    step?: number;
+    onChange: (value: T) => void;
+    disabled?: boolean;
+    centered?: boolean;
+    showValue?: boolean;
+    discrete?: boolean;
+    label?: string;
+    formatValue?: (v: number) => string;
+    className?: string;
+    id?: string;
+}
 /**
  * SliderComponent — M3-compliant slider with continuous, discrete, centered,
  * and range selection configurations.
@@ -22,19 +37,5 @@
  *   • Centered:              Origin at center, fills left/right from midpoint
  *   • Range:                 Two handles for selecting a value range
  */
-export default function SliderComponent({ value, min, max, step, onChange, disabled, centered, showValue, discrete, label, formatValue, className, id, }: {
-    value: any;
-    min?: number;
-    max?: number;
-    step?: number;
-    onChange: any;
-    disabled?: boolean;
-    centered?: boolean;
-    showValue?: boolean;
-    discrete?: boolean;
-    label: any;
-    formatValue: any;
-    className?: string;
-    id: any;
-}): import("react/jsx-runtime").JSX.Element;
+export default function SliderComponent<T extends number | number[]>({ value, min, max, step, onChange, disabled, centered, showValue, discrete, label, formatValue, className, id, }: SliderComponentProps<T>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SliderComponent.d.ts.map

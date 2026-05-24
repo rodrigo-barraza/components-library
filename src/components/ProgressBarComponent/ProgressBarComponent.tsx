@@ -1,7 +1,16 @@
-"use client";
-
+import { ReactNode, ComponentPropsWithoutRef } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./ProgressBarComponent.module.css";
+
+export interface ProgressBarComponentProps extends ComponentPropsWithoutRef<"div"> {
+  value?: number | null;
+  variant?: "accent" | "primary" | "secondary" | "tertiary" | string;
+  size?: "xs" | "sm" | "md" | "lg" | string;
+  label?: string;
+  showValue?: boolean;
+  animated?: boolean;
+  striped?: boolean;
+}
 
 /**
  * ProgressBarComponent — M3 Linear Progress Indicator.
@@ -20,10 +29,10 @@ export default function ProgressBarComponent({
   striped = false,
   className,
   ...rest
-}) {
+}: ProgressBarComponentProps) {
   const isIndeterminate = value === undefined || value === null;
-  const clampedValue = isIndeterminate ? 0 : Math.max(0, Math.min(100, value));
-  const trackRef = useRef(null);
+  const clampedValue = isIndeterminate ? 0 : Math.max(0, Math.min(100, value as number));
+  const trackRef = useRef<HTMLDivElement>(null);
 
   // Animate from 0 on mount for determinate
   const [displayValue, setDisplayValue] = useState(0);

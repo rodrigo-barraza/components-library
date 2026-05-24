@@ -61,7 +61,6 @@ function CardFooter({ children, className }) {
  * CardActionArea — wraps card content to make it clickable / tappable.
  * Renders a full-surface interactive layer with ripple and state layer.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- renders as anchor or button, polymorphic ref
 const CardActionArea = forwardRef(function CardActionArea({ onClick, href, className, children, ...rest }, ref) {
     const classes = [styles.actionArea, className].filter(Boolean).join(" ");
     if (href) {

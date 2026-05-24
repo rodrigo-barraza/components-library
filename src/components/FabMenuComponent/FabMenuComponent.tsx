@@ -6,10 +6,30 @@ import {
   useEffect,
   useRef,
   useState,
+  type MouseEvent,
+  type KeyboardEvent,
 } from "react";
 import styles from "./FabMenuComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+interface FabMenuItemConfig {
+  icon?: React.ComponentType<{ size: number }>;
+  label?: string;
+  ariaLabel?: string;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+
+export interface FabMenuComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+  items?: FabMenuItemConfig[];
+  icon?: React.ComponentType<{ size: number }>;
+  closeIcon?: React.ComponentType<{ size: number }>;
+  variant?: "primary" | "secondary" | "tertiary" | "surface";
+  fixed?: boolean;
+  showScrim?: boolean;
+  disabled?: boolean;
+  ariaLabel?: string;
+}
 
 /**
  * FabMenuComponent — Material Design 3 FAB Menu (Speed Dial).
@@ -49,8 +69,7 @@ import SoundService from "../../services/SoundService.js";
 
 
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compound FAB+menu with dynamic trigger element
-const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
+const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(function FabMenuComponent(
   {
     items = [],
     icon: TriggerIcon,
@@ -67,16 +86,16 @@ const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
 ) {
   const { sound } = useComponents();
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef(null);
-  const triggerRef = useRef(null);
-  const itemRefs = useRef([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // ── Merge refs ────────────────────────────────────────
   const setContainerRef = useCallback(
-    (node) => {
+    (node: HTMLDivElement | null) => {
       containerRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     },
     [ref],
   );
@@ -93,7 +112,7 @@ const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
   }, []);
 
   // ── Ripple on trigger ─────────────────────────────────
-  const handleRipple = useCallback((e) => {
+  const handleRipple = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const element = triggerRef.current;
     if (!element) return;
 
@@ -117,7 +136,7 @@ const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
 
   // ── Handle trigger click ──────────────────────────────
   const handleTriggerClick = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       if (sound) SoundService.playClickButton({ event: e });
       handleRipple(e);
       toggle();
@@ -127,7 +146,7 @@ const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
 
   // ── Handle item click ─────────────────────────────────
   const handleItemClick = useCallback(
-    (e, item) => {
+    (e: MouseEvent<HTMLButtonElement>, item: FabMenuItemConfig) => {
       if (sound) SoundService.playClickButton({ event: e });
       item.onClick?.(e);
       close();
@@ -137,11 +156,11 @@ const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
 
   // ── Keyboard navigation (M3 a11y spec) ────────────────
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent<HTMLDivElement>) => {
       if (!isOpen) return;
 
-      const focusableItems = itemRefs.current.filter(Boolean);
-      const currentIndex = focusableItems.indexOf(document.activeElement);
+      const focusableItems = itemRefs.current.filter((el): el is HTMLButtonElement => el !== null);
+      const currentIndex = focusableItems.indexOf(document.activeElement as HTMLButtonElement);
 
       switch (e.key) {
         case "Escape":
@@ -206,8 +225,8 @@ const FabMenuComponent = forwardRef<any, any>(function FabMenuComponent(
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleOutsideClick = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+    const handleOutsideClick = (e: globalThis.MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         close();
       }
     };

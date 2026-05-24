@@ -1,7 +1,36 @@
 "use client";
 
-import { forwardRef, useState, useRef, useCallback, useEffect, useId } from "react";
+import { forwardRef, useState, useRef, useCallback, useEffect, useId, type ChangeEvent, type FocusEvent, type ReactNode, type Ref } from "react";
 import styles from "./TextFieldComponent.module.css";
+
+type TextFieldElement = HTMLInputElement | HTMLTextAreaElement;
+
+export interface TextFieldComponentProps extends Omit<React.HTMLAttributes<TextFieldElement>, "onChange" | "prefix"> {
+  variant?: "filled" | "outlined";
+  label?: string;
+  value?: string | number;
+  onChange?: (e: ChangeEvent<TextFieldElement>) => void;
+  type?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
+  error?: boolean;
+  supportingText?: string;
+  errorText?: string;
+  maxLength?: number;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
+  leadingIcon?: ReactNode;
+  trailingIcon?: ReactNode;
+  onTrailingIconClick?: (e: React.MouseEvent | React.KeyboardEvent) => void;
+  multiline?: boolean;
+  rows?: number;
+  maxRows?: number;
+  autoResize?: boolean;
+  name?: string;
+  required?: boolean;
+  autoComplete?: string;
+}
 
 /**
  * TextFieldComponent — M3-compliant text field with floating label.
@@ -21,8 +50,7 @@ import styles from "./TextFieldComponent.module.css";
  *   • Active indicator:     1px → 3px on focus (filled)
  *   • Outline stroke:       1px → 2px on focus (outlined)
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- renders as input or textarea, ref is polymorphic
-const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
+const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>(function TextFieldComponent(
   {
     variant = "outlined",
     label,
@@ -55,15 +83,15 @@ const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
   ref,
 ) {
   const [focused, setFocused] = useState(false);
-  const internalRef = useRef(null);
-  const notchRef = useRef(null);
-  const labelRef = useRef(null);
+  const internalRef = useRef<TextFieldElement>(null);
+  const notchRef = useRef<HTMLSpanElement>(null);
+  const labelRef = useRef<HTMLLabelElement>(null);
   const generatedId = useId();
   const fieldId = id || generatedId;
   const supportingId = `${fieldId}-supporting`;
 
   // Merge forwarded ref with internal ref
-  const inputRef = ref || internalRef;
+  const inputRef: Ref<TextFieldElement> = ref || internalRef;
 
   const populated = value != null && String(value).length > 0;
   const hasLabel = Boolean(label);
@@ -115,14 +143,14 @@ const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
   }, [value, resizeTextarea]);
 
   // ── Event handlers ─────────────────────────────────
-  const handleFocus = (e) => {
+  const handleFocus = (e: FocusEvent<TextFieldElement>) => {
     setFocused(true);
-    rest.onFocus?.(e);
+    (rest as TextFieldComponentProps).onFocus?.(e);
   };
 
-  const handleBlur = (e) => {
+  const handleBlur = (e: FocusEvent<TextFieldElement>) => {
     setFocused(false);
-    rest.onBlur?.(e);
+    (rest as TextFieldComponentProps).onBlur?.(e);
   };
 
   const handleContainerClick = () => {
@@ -147,7 +175,6 @@ const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
 
   // ── Shared input/textarea props ────────────────────
   const fieldProps = {
-    ref: inputRef,
     id: fieldId,
     name,
     value: value ?? "",
@@ -203,6 +230,7 @@ const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
 
             {multiline ? (
               <textarea
+                ref={inputRef as React.Ref<HTMLTextAreaElement>}
                 className={styles.textarea}
                 rows={rows}
                 {...fieldProps}
@@ -210,6 +238,7 @@ const TextFieldComponent = forwardRef<any, any>(function TextFieldComponent(
               />
             ) : (
               <input
+                ref={inputRef as React.Ref<HTMLInputElement>}
                 type={type}
                 className={styles.input}
                 {...fieldProps}

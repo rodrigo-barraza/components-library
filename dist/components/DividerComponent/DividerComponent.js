@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import styles from "./DividerComponent.module.css";
 /**
@@ -21,7 +20,7 @@ export default function DividerComponent({ variant = "fullWidth", orientation = 
         styles[orientation],
         variant === "inset" && styles.inset,
         variant === "middleInset" && styles.middleInset,
-        spacing && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
+        spacing && spacing.length > 0 && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
         className,
     ]
         .filter(Boolean)
@@ -37,7 +36,6 @@ export default function DividerComponent({ variant = "fullWidth", orientation = 
     }
     return (_jsx("hr", { className: classes, style: style, role: decorative ? "none" : undefined, "aria-orientation": decorative ? undefined : undefined, ...rest }));
 }
-/* ── Subheader Divider ───────────────────────────────────────────── */
 /**
  * DividerComponent.Subheader — a labeled section divider.
  *

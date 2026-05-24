@@ -25,6 +25,15 @@ import styles from "./ToolbarComponent.module.css";
  *   • Home / End jump to first / last item
  *   • Tab moves focus out of the toolbar entirely
  */
+export interface ToolbarComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "standard" | "dense" | "flat" | string;
+  orientation?: "horizontal" | "vertical" | string;
+  divider?: boolean;
+  sticky?: boolean;
+  elevated?: boolean;
+  ariaLabel?: string;
+}
+
 export default function ToolbarComponent({
   variant = "standard",
   orientation = "horizontal",
@@ -36,15 +45,15 @@ export default function ToolbarComponent({
   style,
   children,
   ...rest
-}) {
-  const toolbarRef = useRef(null);
+}: ToolbarComponentProps) {
+  const toolbarRef = useRef<HTMLDivElement | null>(null);
 
   /**
    * Roving tabindex keyboard navigation per WAI-ARIA toolbar pattern.
    * Arrow keys navigate between focusable items; Home/End jump to ends.
    */
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
       const toolbar = toolbarRef.current;
       if (!toolbar) return;
 
@@ -57,14 +66,14 @@ export default function ToolbarComponent({
 
       // Collect all focusable items within the toolbar
       const items = Array.from(
-        toolbar.querySelectorAll(
+        toolbar.querySelectorAll<HTMLElement>(
           `[data-toolbar-item]:not([disabled]):not([aria-disabled="true"])`,
         ),
       );
 
       if (items.length === 0) return;
 
-      const currentIndex = items.indexOf(document.activeElement);
+      const currentIndex = items.indexOf(document.activeElement as HTMLElement);
       let nextIndex;
 
       switch (e.key) {
@@ -133,7 +142,13 @@ export default function ToolbarComponent({
  * M3 toolbars organize actions into leading, center, and trailing
  * groups. Use `role="group"` with an aria-label for screen readers.
  */
-function ToolbarGroup({ ariaLabel, className, children }) {
+interface ToolbarGroupProps {
+  ariaLabel?: string;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupProps) {
   return (
     <div
       role="group"
@@ -216,7 +231,11 @@ const ToolbarItem = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTM
  *
  * M3 spec: 1px outline-variant line, 24px height, 4px horizontal margin.
  */
-function ToolbarSeparator({ className }) {
+interface ToolbarSeparatorProps {
+  className?: string;
+}
+
+function ToolbarSeparator({ className }: ToolbarSeparatorProps) {
   return (
     <div
       role="separator"
@@ -233,7 +252,12 @@ function ToolbarSeparator({ className }) {
  *
  * M3 spec: title-medium typography (16px / 500 weight).
  */
-function ToolbarTitle({ className, children }) {
+interface ToolbarTitleProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+function ToolbarTitle({ className, children }: ToolbarTitleProps) {
   return (
     <span className={`${styles.title}${className ? ` ${className}` : ""}`}>
       {children}

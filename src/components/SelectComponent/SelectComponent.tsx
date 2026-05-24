@@ -13,6 +13,25 @@ import styles from "./SelectComponent.module.css";
  *  triggerTooltip  — optional tooltip shown on the trigger button hover
  *  label           — optional inline label rendered before the trigger
  */
+export interface SelectOption {
+  value: string;
+  label: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  tooltip?: string;
+}
+
+export interface SelectComponentProps {
+  value: string;
+  options?: SelectOption[];
+  onChange: (value: string) => void;
+  placeholder?: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  triggerTooltip?: string | null;
+  label?: string | null;
+}
+
 export default function SelectComponent({
   value,
   options = [],
@@ -22,14 +41,14 @@ export default function SelectComponent({
   disabled = false,
   triggerTooltip = null,
   label = null,
-}) {
+}: SelectComponentProps) {
   const [open, setOpen] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const selected = options.find((o) => o.value === value);
 
   const handleSelect = useCallback(
-    (opt) => {
+    (opt: SelectOption) => {
       if (opt.disabled) return;
       onChange(opt.value);
       setOpen(false);
@@ -39,8 +58,8 @@ export default function SelectComponent({
 
   useEffect(() => {
     if (!open) return;
-    const handleClick = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+    const handleClick = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -50,14 +69,14 @@ export default function SelectComponent({
 
   useEffect(() => {
     if (!open) return;
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [open]);
 
-  const renderOption = (opt) => {
+  const renderOption = (opt: SelectOption) => {
     const button = (
       <button
         key={opt.value}

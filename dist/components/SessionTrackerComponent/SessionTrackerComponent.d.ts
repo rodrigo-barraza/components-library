@@ -3,9 +3,10 @@
  *
  * Renders nothing. Tracks session heartbeats, page views, and link clicks.
  */
-export default function SessionTrackerComponent({ projectId, pathname, apiBase }: {
-    projectId: any;
-    pathname: any;
-    apiBase: any;
-}): any;
+export interface SessionTrackerProps {
+    projectId: string;
+    pathname?: string;
+    apiBase?: string;
+}
+export default function SessionTrackerComponent({ projectId, pathname, apiBase }: SessionTrackerProps): null;
 //# sourceMappingURL=SessionTrackerComponent.d.ts.map

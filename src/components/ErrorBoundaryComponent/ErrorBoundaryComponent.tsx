@@ -30,11 +30,11 @@ export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error) {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: { componentStack: string }) {
     console.error("[ErrorBoundary] Caught render error:", error.message);
     this.props.onError?.(error, info);
   }

@@ -1,9 +1,29 @@
 "use client";
 
-import { forwardRef, useCallback, useRef, useState } from "react";
+import { forwardRef, useCallback, useRef, useState, type MouseEvent } from "react";
 import styles from "./FabComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
+
+interface FabRippleState {
+  id: number;
+  x: number;
+  y: number;
+  diameter: number;
+}
+
+export interface FabComponentProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {
+  size?: "small" | "standard" | "large";
+  color?: "primary" | "secondary" | "tertiary" | "surface";
+  icon?: React.ComponentType<{ size: number }>;
+  iconSize?: number;
+  label?: string;
+  lowered?: boolean;
+  fixed?: boolean;
+  position?: "bottom-start" | "bottom-center" | "bottom-end";
+  hidden?: boolean;
+  "aria-label"?: string;
+}
 
 /**
  * FabComponent — Material Design 3 Floating Action Button
@@ -18,8 +38,7 @@ import SoundService from "../../services/SoundService.js";
  *
  * @see https://m3.material.io/components/floating-action-button/overview
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- FAB with dynamic icon, label, position props
-const FabComponent = forwardRef<any, any>(function FabComponent(
+const FabComponent = forwardRef<HTMLButtonElement, FabComponentProps>(function FabComponent(
   {
     size = "standard",
     color = "primary",
@@ -40,15 +59,15 @@ const FabComponent = forwardRef<any, any>(function FabComponent(
   ref,
 ) {
   const { sound } = useComponents();
-  const buttonRef = useRef(null);
-  const [ripples, setRipples] = useState([]);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [ripples, setRipples] = useState<FabRippleState[]>([]);
 
   /* Merge forwarded ref with internal ref */
   const setRefs = useCallback(
-    (node) => {
+    (node: HTMLButtonElement | null) => {
       buttonRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
     },
     [ref],
   );
@@ -60,7 +79,7 @@ const FabComponent = forwardRef<any, any>(function FabComponent(
   const isExtended = !!label;
 
   /* ── Ripple effect ──────────────────────────────────────────────── */
-  const addRipple = useCallback((e) => {
+  const addRipple = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const rect = buttonRef.current?.getBoundingClientRect();
     if (!rect) return;
 

@@ -242,6 +242,7 @@ function shouldGroup(current, previous) {
     const diff = new Date(previous.createdAtISO).getTime() - new Date(current.createdAtISO).getTime();
     return Math.abs(diff) < 7 * 60 * 1000;
 }
+// Check if day changed
 function isDifferentDay(a, b) {
     if (!a || !b)
         return true;
@@ -260,7 +261,7 @@ function TenorEmbed({ url, tenorOembedUrl }) {
             .catch(() => { if (!cancelled)
             setError(true); });
         return () => { cancelled = true; };
-    }, [url]);
+    }, [url, tenorOembedUrl]);
     if (error)
         return null;
     if (!gifUrl)
@@ -268,7 +269,7 @@ function TenorEmbed({ url, tenorOembedUrl }) {
     return (_jsx("a", { href: url, target: "_blank", rel: "noopener noreferrer", className: styles.attachmentLink, children: _jsx("img", { src: gifUrl, alt: "Tenor GIF", className: styles.tenorGif, loading: "lazy" }) }));
 }
 function TenorEmbeds({ content, tenorOembedUrl }) {
-    const urls = extractTenorUrls(content);
+    const urls = extractTenorUrls(content || "");
     if (!urls.length)
         return null;
     return _jsx("div", { className: styles.attachments, children: urls.map((url, i) => _jsx(TenorEmbed, { url: url, tenorOembedUrl: tenorOembedUrl }, i)) });
@@ -477,6 +478,8 @@ function EmbedMedia({ embeds }) {
                 if (!imgSrc)
                     return null;
                 const imgMeta = embed.image || embed.thumbnail;
+                if (!imgMeta)
+                    return null;
                 const maxW = 400, maxH = 300;
                 let w = imgMeta.width || maxW, h = imgMeta.height || maxH;
                 if (w > maxW) {
@@ -494,7 +497,7 @@ function EmbedMedia({ embeds }) {
                 return _jsx(EmbedVideo, { embed: embed }, i);
             }
             // ── Rich embed card ───────────────────────────────────
-            return (_jsxs("div", { className: styles.embedCard, style: accentColor ? { borderLeftColor: accentColor } : undefined, children: [_jsxs("div", { className: hasThumbnailOnly ? styles.embedCardBodyInline : styles.embedCardBody, children: [_jsxs("div", { className: styles.embedCardText, children: [embed.provider?.name && (_jsx("span", { className: styles.embedProvider, children: embed.provider.name })), embed.title && (embed.url ? (_jsx("a", { href: embed.url, target: "_blank", rel: "noopener noreferrer", className: styles.embedTitle, children: embed.title })) : (_jsx("span", { className: styles.embedTitlePlain, children: embed.title }))), embed.description && (_jsx("p", { className: styles.embedDescription, children: embed.description }))] }), hasThumbnailOnly && embed.thumbnail?.url && (_jsx("a", { href: embed.url || embed.thumbnail.url, target: "_blank", rel: "noopener noreferrer", className: styles.embedThumbLink, children: _jsx("img", { src: embed.thumbnail.proxyURL || embed.thumbnail.url, alt: embed.title || "thumbnail", className: styles.embedThumb, loading: "lazy" }) }))] }), hasLargeImage && (() => {
+            return (_jsxs("div", { className: styles.embedCard, style: accentColor ? { borderLeftColor: accentColor } : undefined, children: [_jsxs("div", { className: hasThumbnailOnly ? styles.embedCardBodyInline : styles.embedCardBody, children: [_jsxs("div", { className: styles.embedCardText, children: [embed.provider?.name && (_jsx("span", { className: styles.embedProvider, children: embed.provider.name })), embed.title && (embed.url ? (_jsx("a", { href: embed.url, target: "_blank", rel: "noopener noreferrer", className: styles.embedTitle, children: embed.title })) : (_jsx("span", { className: styles.embedTitlePlain, children: embed.title }))), embed.description && (_jsx("p", { className: styles.embedDescription, children: embed.description }))] }), hasThumbnailOnly && embed.thumbnail?.url && (_jsx("a", { href: embed.url || embed.thumbnail.url, target: "_blank", rel: "noopener noreferrer", className: styles.embedThumbLink, children: _jsx("img", { src: embed.thumbnail.proxyURL || embed.thumbnail.url, alt: embed.title || "thumbnail", className: styles.embedThumb, loading: "lazy" }) }))] }), hasLargeImage && embed.image && (() => {
                         const imgSrc = embed.image.proxyURL || embed.image.url;
                         const maxW = 400, maxH = 300;
                         let w = embed.image.width || maxW, h = embed.image.height || maxH;
@@ -513,13 +516,13 @@ function EmbedMedia({ embeds }) {
 // ── Embed Video Sub-Component ────────────────────────────────────
 function EmbedVideo({ embed }) {
     const poster = embed.thumbnail?.url || embed.thumbnail?.proxyURL || null;
-    const videoUrl = embed.video.url || embed.video.proxyURL;
+    const videoUrl = embed.video?.url || embed.video?.proxyURL;
     const isDirectVideo = videoUrl && /\.(mp4|webm|mov)(\?|$)/i.test(videoUrl);
     if (isDirectVideo) {
-        return (_jsx("div", { className: styles.embedVideoWrap, children: _jsx("video", { src: videoUrl, poster: poster, className: styles.embedVideo, controls: true, preload: "metadata", loop: true, muted: true, autoPlay: true, playsInline: true }) }));
+        return (_jsx("div", { className: styles.embedVideoWrap, children: _jsx("video", { src: videoUrl, poster: poster || undefined, className: styles.embedVideo, controls: true, preload: "metadata", loop: true, muted: true, autoPlay: true, playsInline: true }) }));
     }
     if (poster) {
-        return (_jsxs("a", { href: embed.url || videoUrl, target: "_blank", rel: "noopener noreferrer", className: styles.embedVideoThumbLink, children: [_jsx("img", { src: poster, alt: embed.title || "Video", className: styles.embedVideoThumb, loading: "lazy" }), _jsx("span", { className: styles.embedPlayButton, children: "\u25B6" })] }));
+        return (_jsxs("a", { href: embed.url || videoUrl || undefined, target: "_blank", rel: "noopener noreferrer", className: styles.embedVideoThumbLink, children: [_jsx("img", { src: poster, alt: embed.title || "Video", className: styles.embedVideoThumb, loading: "lazy" }), _jsx("span", { className: styles.embedPlayButton, children: "\u25B6" })] }));
     }
     return null;
 }
@@ -536,7 +539,7 @@ function ReplyContext({ replyTo, messageMap }) {
     const nameStyle = resolveRoleColorStyle(ref.author);
     const snippet = ref.content || ref.cleanContent || "";
     const truncated = snippet.length > 80 ? snippet.slice(0, 77) + "…" : snippet;
-    const hasAttachment = ref.attachments?.length > 0 || ref.embeds?.length > 0;
+    const hasAttachment = (ref.attachments && ref.attachments.length > 0) || (ref.embeds && ref.embeds.length > 0);
     return (_jsxs(_Fragment, { children: [_jsx("div", { className: styles.replySpine }), _jsxs("div", { className: styles.replyBar, children: [ref.author.avatarUrl ? (_jsx("img", { src: ref.author.avatarUrl, alt: "", className: styles.replyAvatar, loading: "lazy" })) : (_jsx("div", { className: styles.replyAvatarFallback, style: { background: getAvatarColor(ref.author.id) }, children: (ref.author.displayName || "?")[0].toUpperCase() })), ref.author.isBot && (_jsxs("span", { className: styles.replyBotBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "APP"] })), _jsxs("span", { className: styles.replyAuthor, style: nameStyle, children: ["@", ref.author.displayName] }), _jsx("span", { className: styles.replyContent, children: truncated || (hasAttachment ? _jsxs(_Fragment, { children: ["Click to see attachment ", _jsx("span", { "aria-hidden": "true", children: "\uD83D\uDDBC\uFE0F" })] }) : "…") })] })] }));
 }
 // ── Comprehensive Unicode Emojis for the picker (categorized) ────
@@ -598,10 +601,6 @@ function buildReactKey(messageId, emoji) {
     // For custom emojis the identifier is "name:id", for Unicode it's the char
     return `${messageId}:${emoji}`;
 }
-// ── Emoji Picker ─────────────────────────────────────────────────
-// A floating popover showing Unicode + server custom emojis with
-// search filtering, category tabs, and server emoji integration.
-// Opens above the trigger element like Discord's native picker.
 function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
     const pickerRef = useRef(null);
     const searchRef = useRef(null);
@@ -614,7 +613,7 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
     }, []);
     // Position the picker above the anchor (Discord-style)
     useEffect(() => {
-        const anchor = anchorRef?.current;
+        const anchor = anchorRef;
         const picker = pickerRef.current;
         if (!anchor || !picker)
             return;
@@ -659,29 +658,17 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }) {
     };
     // When searching, show filtered results from all categories
     const isSearching = filter.length > 0;
-    return (_jsxs(_Fragment, { children: [_jsx("div", { className: styles.emojiPickerOverlay, onClick: onClose }), _jsxs("div", { className: styles.emojiPicker, ref: pickerRef, children: [_jsx("input", { ref: searchRef, className: styles.emojiPickerSearch, type: "text", placeholder: "Search emojis\u2026", value: filter, onChange: (e) => setFilter(e.target.value) }), _jsxs("div", { className: styles.emojiPickerMain, children: [_jsx("div", { className: styles.emojiCategorySidebar, children: allCategories.map((cat) => (_jsx("button", { className: `${styles.emojiCategoryTab} ${activeCategory === cat.id ? styles.emojiCategoryTabActive : ""}`, type: "button", onClick: () => scrollToCategory(cat.id), title: cat.name, children: cat.id === "server" && serverEmojis?.[0] ? (_jsx("img", { src: emojiUrl(serverEmojis[0].id, serverEmojis[0].animated), alt: "", className: styles.emojiCategoryTabImg, draggable: false })) : (_jsx("span", { children: cat.icon })) }, cat.id))) }), _jsx("div", { className: styles.emojiPickerBody, ref: bodyRef, children: isSearching ? (
+    return (_jsxs(_Fragment, { children: [_jsx("div", { className: styles.emojiPickerOverlay, onClick: onClose }), _jsxs("div", { className: styles.emojiPicker, ref: pickerRef, children: [_jsx("input", { ref: searchRef, className: styles.emojiPickerSearch, type: "text", placeholder: "Search emojis\u2026", value: filter, onChange: (e) => setFilter(e.target.value) }), _jsxs("div", { className: styles.emojiPickerMain, children: [_jsx("div", { className: styles.emojiCategorySidebar, children: allCategories.map((cat) => (_jsx("button", { className: `${styles.emojiCategoryTab} ${activeCategory === cat.id ? styles.emojiCategoryTabActive : ""}`, type: "button", onClick: () => scrollToCategory(cat.id), title: cat.name, children: cat.id === "server" && serverEmojis && serverEmojis[0] ? (_jsx("img", { src: emojiUrl(serverEmojis[0].id, serverEmojis[0].animated), alt: "", className: styles.emojiCategoryTabImg, draggable: false })) : (_jsx("span", { children: cat.icon })) }, cat.id))) }), _jsx("div", { className: styles.emojiPickerBody, ref: bodyRef, children: isSearching ? (
                                 /* ── Search results view ────────────────────────── */
                                 _jsxs(_Fragment, { children: [filteredCustom.length > 0 && (_jsxs(_Fragment, { children: [_jsx("div", { className: styles.emojiPickerSection, children: "Server Emojis" }), _jsx("div", { className: styles.emojiPickerGrid, children: filteredCustom.map((emoji) => (_jsx("button", { className: styles.emojiPickerItem, type: "button", onClick: () => onSelect(`${emoji.name}:${emoji.id}`), title: `:${emoji.name}:`, children: _jsx("img", { src: emojiUrl(emoji.id, emoji.animated), alt: `:${emoji.name}:`, className: styles.emojiPickerCustomImg, draggable: false, loading: "lazy" }) }, emoji.id))) })] })), EMOJI_CATEGORIES.map((cat) => (_jsxs("div", { children: [_jsx("div", { className: styles.emojiPickerSection, children: cat.name }), _jsx("div", { className: styles.emojiPickerGrid, children: cat.emojis.map((emoji) => (_jsx("button", { className: styles.emojiPickerItem, type: "button", onClick: () => onSelect(emoji), title: emoji, children: emoji }, emoji))) })] }, cat.id))), filteredCustom.length === 0 && (_jsx("div", { className: styles.emojiPickerEmpty, children: "No matching emojis found" }))] })) : (
                                 /* ── Category browsing view ─────────────────────── */
-                                _jsxs(_Fragment, { children: [serverEmojis?.length > 0 && (_jsxs("div", { "data-category": "server", children: [_jsx("div", { className: styles.emojiPickerSection, children: "Server Emojis" }), _jsx("div", { className: styles.emojiPickerGrid, children: serverEmojis.map((emoji) => (_jsx("button", { className: styles.emojiPickerItem, type: "button", onClick: () => onSelect(`${emoji.name}:${emoji.id}`), title: `:${emoji.name}:`, children: _jsx("img", { src: emojiUrl(emoji.id, emoji.animated), alt: `:${emoji.name}:`, className: styles.emojiPickerCustomImg, draggable: false, loading: "lazy" }) }, emoji.id))) })] })), EMOJI_CATEGORIES.map((cat) => (_jsxs("div", { "data-category": cat.id, children: [_jsx("div", { className: styles.emojiPickerSection, children: cat.name }), _jsx("div", { className: styles.emojiPickerGrid, children: cat.emojis.map((emoji) => (_jsx("button", { className: styles.emojiPickerItem, type: "button", onClick: () => onSelect(emoji), title: emoji, children: emoji }, emoji))) })] }, cat.id)))] })) })] })] })] }));
+                                _jsxs(_Fragment, { children: [serverEmojis && serverEmojis.length > 0 && (_jsxs("div", { "data-category": "server", children: [_jsx("div", { className: styles.emojiPickerSection, children: "Server Emojis" }), _jsx("div", { className: styles.emojiPickerGrid, children: serverEmojis.map((emoji) => (_jsx("button", { className: styles.emojiPickerItem, type: "button", onClick: () => onSelect(`${emoji.name}:${emoji.id}`), title: `:${emoji.name}:`, children: _jsx("img", { src: emojiUrl(emoji.id, emoji.animated), alt: `:${emoji.name}:`, className: styles.emojiPickerCustomImg, draggable: false, loading: "lazy" }) }, emoji.id))) })] })), EMOJI_CATEGORIES.map((cat) => (_jsxs("div", { "data-category": cat.id, children: [_jsx("div", { className: styles.emojiPickerSection, children: cat.name }), _jsx("div", { className: styles.emojiPickerGrid, children: cat.emojis.map((emoji) => (_jsx("button", { className: styles.emojiPickerItem, type: "button", onClick: () => onSelect(emoji), title: emoji, children: emoji }, emoji))) })] }, cat.id)))] })) })] })] })] }));
 }
-// ── Message Actions (hover bar) ──────────────────────────────────
-// Floating action buttons that appear top-right on message hover.
 function MessageActions({ messageId, onOpenPicker, pickerMessageId }) {
     const btnRef = useRef(null);
     const isPickerOpen = pickerMessageId === messageId;
     return (_jsx("div", { className: `${styles.messageActions} ${isPickerOpen ? styles.messageActionsVisible : ""}`, children: _jsx("button", { ref: btnRef, className: styles.actionBtn, type: "button", onClick: () => onOpenPicker(messageId, btnRef), title: "Add Reaction", children: "\uD83D\uDE00" }) }));
 }
-// ── Emoji Reactions ──────────────────────────────────────────
-// Renders emoji reaction pills below message content, matching
-// Discord's native reaction capsules with count badges.
-// Clicking a pill triggers a reaction via the bot. Already-reacted
-// pills show a blurple highlight and are non-repeatable.
-// `r.me` indicates the bot (Lupos) already has this reaction —
-// since all website reactions go through Lupos, treat `me` the
-// same as a localStorage hit.
-// The "+" add-reaction button lives in the hover MessageActions bar,
-// not inline here — matching Discord's native UX.
 function Reactions({ reactions, messageId, reactedSet, onReact }) {
     // Show nothing if no existing reactions
     if (!reactions?.length)
@@ -705,9 +692,8 @@ function Reactions({ reactions, messageId, reactedSet, onReact }) {
 // ── Status Indicator ─────────────────────────────────────────────
 function StatusDot({ status }) {
     const colors = { online: "#23a559", idle: "#f0b232", dnd: "#f23f43" };
-    return (_jsx("span", { className: styles.statusDot, style: { background: colors[status] || "#80848e" }, title: status }));
+    return (_jsx("span", { className: styles.statusDot, style: { background: colors[status || "offline"] || "#80848e" }, title: status }));
 }
-// ── Channel Sidebar Item ─────────────────────────────────────────
 function ChannelItem({ channel, isActive, onClick }) {
     return (_jsxs("button", { className: `${styles.channelItem} ${isActive ? styles.channelItemActive : ""}`, onClick: () => onClick(channel), title: channel.topic || channel.name, children: [_jsx("span", { className: styles.channelHash, children: "#" }), _jsx("span", { className: styles.channelItemName, children: channel.name })] }));
 }
@@ -715,11 +701,8 @@ function ChannelItem({ channel, isActive, onClick }) {
 function MemberItem({ member }) {
     return (_jsxs("div", { className: styles.memberItem, children: [_jsxs("div", { className: styles.memberAvatarWrap, children: [member.avatarUrl ? (_jsx("img", { src: member.avatarUrl, alt: "", className: styles.memberAvatar, loading: "lazy" })) : (_jsx("div", { className: styles.memberAvatarFallback, style: { background: getAvatarColor(member.id) }, children: (member.displayName || "?")[0].toUpperCase() })), _jsx(StatusDot, { status: member.status })] }), _jsxs("div", { className: styles.memberInfo, children: [_jsxs("div", { className: styles.memberNameRow, children: [_jsx("span", { className: styles.memberName, style: member.roleColors?.secondary
                                     ? resolveRoleColorStyle(member)
-                                    : { color: member.roleColor || "#dbdee1" }, children: member.displayName }), member.isBot && (_jsxs("span", { className: styles.memberBotBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "APP"] })), _jsx(UserBadges, { badges: member.badges })] }), member.roleTags?.length > 0 && (_jsx(RoleTags, { roleTags: member.roleTags })), member.activity && (_jsx("span", { className: styles.memberActivity, children: member.activity }))] })] }));
+                                    : { color: member.roleColor || "#dbdee1" }, children: member.displayName }), member.isBot && (_jsxs("span", { className: styles.memberBotBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "APP"] })), _jsx(UserBadges, { badges: member.badges })] }), member.roleTags && member.roleTags.length > 0 && (_jsx(RoleTags, { roleTags: member.roleTags })), member.activity && (_jsx("span", { className: styles.memberActivity, children: member.activity }))] })] }));
 }
-// ═════════════════════════════════════════════════════════════════
-//  DiscordChat Component
-// ═════════════════════════════════════════════════════════════════
 export default function DiscordChatComponent({ messageCount = 500, joinMode = false, inviteUrl = "https://discord.gg/sBX7BxP", onJoinHoverChange, channelIds = [], channelsUrl = "/api/discord/channels", streamUrl = "/api/discord/stream", membersUrl = "/api/discord/members", tenorOembedUrl = "/api/tenor/oembed", reactUrl = "/api/discord/react", emojisUrl = "/api/discord/emojis", serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers = [], }) {
     const CHANNEL_IDS = channelIds;
     const [channels, setChannels] = useState([]);
@@ -770,7 +753,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                 setChannels(CHANNEL_IDS.map((id) => ({ id, name: id })));
         });
         return () => { cancelled = true; };
-    }, []);
+    }, [channelsUrl]);
     // ── Scroll to bottom ────────────────────────────────────────────
     const scrollToBottom = useCallback((instant = false) => {
         const element = scrollRef.current;
@@ -839,8 +822,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                 return prev;
                             const channelMap = new Map();
                             for (const message of reversed) {
-                                if (message.channelId && message.channelName) {
-                                    channelMap.set(message.channelId, message.channelName);
+                                const msgAny = message;
+                                if (msgAny.channelId && msgAny.channelName) {
+                                    channelMap.set(msgAny.channelId, msgAny.channelName);
                                 }
                             }
                             if (channelMap.size === 0)
@@ -854,7 +838,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     }
                 }
                 catch (error) {
-                    console.error("[DiscordChat] Init parse error:", error);
+                    console.error("[DiscordChat] Init event parse error:", error);
+                    setError(error instanceof Error ? error : new Error(String(error)));
+                    setLoading(false);
                 }
             });
             es.addEventListener("new", (e) => {
@@ -892,10 +878,9 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     const { messages: updatedMsgs } = JSON.parse(e.data);
                     if (!updatedMsgs?.length)
                         return;
-                    const updateMap = new Map(updatedMsgs.map((m) => [m.id, m]));
+                    const updateMap = new Map((updatedMsgs || []).map((m) => [m.id, m]));
                     setMessages((prev) => prev.map((message) => {
                         const updated = updateMap.get(message.id);
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         return updated ? { ...message, reactions: updated.reactions } : message;
                     }));
                 }
@@ -904,7 +889,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                 }
             });
             es.addEventListener("error", () => {
-                if (es.readyState === EventSource.CLOSED) {
+                if (es && es.readyState === EventSource.CLOSED) {
                     console.warn("[DiscordChat] SSE closed, retrying in 3s…");
                     es.close();
                     retryTimeout = setTimeout(connect, 3_000);
@@ -994,7 +979,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     reactions.push({ emoji: { id, name, animated: false }, count: 1 });
                 }
                 else {
-                    reactions.push({ emoji: { id: null, name: emojiIdentifier, animated: false }, count: 1 });
+                    reactions.push({ emoji: { id: undefined, name: emojiIdentifier, animated: false }, count: 1 });
                 }
             }
             return { ...message, reactions };
@@ -1034,8 +1019,8 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
         }
     }, [reactedSet, reactUrl, activeChannelId]);
     // ── Picker open/close handlers ──────────────────────────────────
-    const handleOpenPicker = useCallback((messageId, anchorRef) => {
-        pickerAnchorRef.current = anchorRef;
+    const handleOpenPicker = useCallback((messageId, btnRef) => {
+        pickerAnchorRef.current = btnRef.current;
         setPickerMessageId((prev) => (prev === messageId ? null : messageId));
     }, []);
     const handleClosePicker = useCallback(() => {
@@ -1063,7 +1048,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                         groups[groups.length - 1].items.push(ch);
                                     }
                                     return groups.map((group) => (_jsxs("div", { children: [_jsx("div", { className: styles.channelCategory, children: _jsx("span", { className: styles.categoryName, children: group.category }) }), group.items.map((ch) => (_jsx(ChannelItem, { channel: ch, isActive: activeChannelId === ch.id, onClick: handleChannelClick }, ch.id)))] }, group.category)));
-                                })() })] }), _jsxs("div", { className: styles.chatPanel, children: [_jsxs("div", { className: styles.messagesArea, ref: scrollRef, children: [loading && (_jsxs("div", { className: styles.loading, children: [_jsxs("div", { className: styles.loadingDots, children: [_jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot })] }), _jsx("span", { children: "Loading messages\u2026" })] })), error && (_jsxs("div", { className: styles.error, children: [_jsx("span", { className: styles.errorIcon, children: "\u26A0\uFE0F" }), _jsx("span", { children: "Couldn't load messages" })] })), !loading && !error && (() => {
+                                })() })] }), _jsxs("div", { className: styles.chatPanel, children: [_jsxs("div", { className: styles.messagesArea, ref: scrollRef, children: [loading && (_jsxs("div", { className: styles.loading, children: [_jsxs("div", { className: styles.loadingDots, children: [_jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot })] }), _jsx("span", { children: "Loading messages\u2026" })] })), !!error && (_jsxs("div", { className: styles.error, children: [_jsx("span", { className: styles.errorIcon, children: "\u26A0\uFE0F" }), _jsx("span", { children: "Couldn't load messages" })] })), !loading && !error && (() => {
                                         // Build a lookup map for reply references
                                         const messageMap = new Map(messages.map((m) => [m.id, m]));
                                         return messages.map((message, i) => {
@@ -1073,6 +1058,6 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                             const nameStyle = resolveRoleColorStyle(message.author);
                                             return (_jsxs("div", { children: [newDay && (_jsx("div", { className: styles.dateSeparator, children: _jsx("span", { className: styles.dateSeparatorText, children: formatDateSeparator(message.createdAtISO) }) })), grouped && !newDay ? (_jsxs("div", { className: styles.messageRowGrouped, children: [_jsx("span", { className: styles.timestampInline, children: formatShortTime(message.createdAtISO) }), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsx("p", { className: styles.messageText, children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] })) : (_jsxs("div", { className: `${styles.messageRow} ${message.replyTo ? styles.messageRowReply : ""}`, children: [message.replyTo && (_jsx(ReplyContext, { replyTo: message.replyTo, messageMap: messageMap })), message.author.avatarUrl ? (_jsx("img", { className: styles.avatar, src: message.author.avatarUrl, alt: message.author.displayName, width: 40, height: 40, loading: "lazy" })) : (_jsx("div", { className: styles.avatarFallback, style: { background: getAvatarColor(message.author.id) }, children: (message.author.displayName || "?")[0].toUpperCase() })), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles.messageContent, children: [_jsxs("div", { className: styles.messageHeader, children: [_jsx("span", { className: styles.authorName, style: nameStyle, children: message.author.displayName }), message.author.isBot && (_jsxs("span", { className: styles.botBadge, children: [_jsx("svg", { className: styles.botBadgeIcon, viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "BOT"] })), _jsx(UserBadges, { badges: message.author.badges }), _jsx(RoleTags, { roleTags: message.author.roleTags }), _jsx("span", { className: styles.timestamp, children: formatTimestamp(message.createdAtISO) })] }), _jsx("p", { className: styles.messageText, children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] }))] }, message.id));
                                         });
-                                    })()] }), _jsx("div", { className: styles.inputBar, children: joinMode ? (_jsxs("a", { href: inviteUrl, target: "_blank", rel: "noopener noreferrer", className: styles.joinButton, id: "discord-join-button", onMouseEnter: () => onJoinHoverChange?.(true), onMouseLeave: () => onJoinHoverChange?.(false), children: [_jsx("svg", { className: styles.joinButtonIcon, viewBox: "0 0 24 24", width: "20", height: "20", fill: "currentColor", children: _jsx("path", { d: "M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.36-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.24-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z" }) }), "Join the Discord Server"] })) : (_jsxs("div", { className: styles.inputContainer, children: [_jsxs("span", { className: styles.inputPlaceholder, children: ["Message #", activeChannel.name] }), _jsxs("div", { className: styles.inputIcons, children: [_jsx("span", { children: "\uD83D\uDE00" }), _jsx("span", { children: "\uD83C\uDF81" }), _jsx("span", { children: "\uD83D\uDCCE" })] })] })) })] }), _jsx("aside", { className: styles.memberSidebar, children: members ? (_jsxs("div", { className: styles.memberList, children: [members.roles?.map((role) => (_jsxs("div", { className: styles.memberRoleGroup, children: [_jsxs("div", { className: styles.memberRoleHeader, children: [role.name, " \u2014 ", role.members.length] }), role.members.map((m) => (_jsx(MemberItem, { member: m }, m.id)))] }, role.id))), members.bots?.length > 0 && (_jsxs("div", { className: styles.memberRoleGroup, children: [_jsxs("div", { className: styles.memberRoleHeader, children: ["Bots \u2014 ", members.bots.length] }), members.bots.map((m) => (_jsx(MemberItem, { member: m }, m.id)))] }))] })) : (_jsx("div", { className: styles.loading, children: _jsxs("div", { className: styles.loadingDots, children: [_jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot })] }) })) })] }), pickerMessageId && (_jsx(EmojiPicker, { anchorRef: pickerAnchorRef.current, serverEmojis: serverEmojis, onSelect: handlePickerSelect, onClose: handleClosePicker }))] }));
+                                    })()] }), _jsx("div", { className: styles.inputBar, children: joinMode ? (_jsxs("a", { href: inviteUrl, target: "_blank", rel: "noopener noreferrer", className: styles.joinButton, id: "discord-join-button", onMouseEnter: () => onJoinHoverChange?.(true), onMouseLeave: () => onJoinHoverChange?.(false), children: [_jsx("svg", { className: styles.joinButtonIcon, viewBox: "0 0 24 24", width: "20", height: "20", fill: "currentColor", children: _jsx("path", { d: "M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.36-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.24-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z" }) }), "Join the Discord Server"] })) : (_jsxs("div", { className: styles.inputContainer, children: [_jsxs("span", { className: styles.inputPlaceholder, children: ["Message #", activeChannel.name] }), _jsxs("div", { className: styles.inputIcons, children: [_jsx("span", { children: "\uD83D\uDE00" }), _jsx("span", { children: "\uD83C\uDF81" }), _jsx("span", { children: "\uD83D\uDCCE" })] })] })) })] }), _jsx("aside", { className: styles.memberSidebar, children: members ? (_jsxs("div", { className: styles.memberList, children: [members.roles?.map((role) => (_jsxs("div", { className: styles.memberRoleGroup, children: [_jsxs("div", { className: styles.memberRoleHeader, children: [role.name, " \u2014 ", role.members.length] }), role.members.map((m) => (_jsx(MemberItem, { member: m }, m.id)))] }, role.id))), members.bots && members.bots.length > 0 && (_jsxs("div", { className: styles.memberRoleGroup, children: [_jsxs("div", { className: styles.memberRoleHeader, children: ["Bots \u2014 ", members.bots.length] }), members.bots.map((m) => (_jsx(MemberItem, { member: m }, m.id)))] }))] })) : (_jsx("div", { className: styles.loading, children: _jsxs("div", { className: styles.loadingDots, children: [_jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot }), _jsx("span", { className: styles.loadingDot })] }) })) })] }), pickerMessageId && (_jsx(EmojiPicker, { anchorRef: pickerAnchorRef.current, serverEmojis: serverEmojis, onSelect: handlePickerSelect, onClose: handleClosePicker }))] }));
 }
 //# sourceMappingURL=DiscordChatComponent.js.map

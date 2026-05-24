@@ -77,7 +77,8 @@ function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover })
 export default function DatePickerComponent({ from = "", to = "", onChange, placeholder = "All time", storageKey = "", disabled = false, defaultOpen = false, onClose, hideTrigger = false, presets = DATE_PRESETS, showTime = true, }) {
     const [open, setOpen] = useState(defaultOpen);
     const [viewDate, setViewDate] = useState(() => {
-        const d = from ? parseDate(from) : new Date();
+        const parsed = from ? parseDate(from) : new Date();
+        const d = parsed || new Date();
         return { year: d.getFullYear(), month: d.getMonth() };
     });
     const [selecting, setSelecting] = useState(null);
@@ -146,7 +147,7 @@ export default function DatePickerComponent({ from = "", to = "", onChange, plac
             }
         }
         catch { /* ignore */ }
-    }, [storageKey]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [storageKey, onChange]);
     useEffect(() => {
         if (!storageKey || !initializedRef.current)
             return;
@@ -223,8 +224,8 @@ export default function DatePickerComponent({ from = "", to = "", onChange, plac
         }
     }, [selecting, onChange, onClose, fromTime, toTime]);
     const handlePreset = useCallback((preset) => {
-        const value = preset.getValue();
-        onChange(value);
+        const val = preset.getValue();
+        onChange(val);
         setSelecting(null);
         setHoverDate(null);
         setOpen(false);

@@ -141,7 +141,7 @@ export default function NavigationSidebarComponent({
   useEffect(() => {
     if (!isMobile || !mobileOpen || !onMobileClose) return;
 
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
         onMobileClose();
@@ -165,7 +165,7 @@ export default function NavigationSidebarComponent({
   const hasThemePicker = Boolean(themes?.length && setTheme);
 
   // Legacy: THEME_META for backward-compatible single-button toggle
-  const THEME_META = {
+  const THEME_META: Record<string, { nextLabel: string; NextIcon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>; title: string }> = {
     dark:     { nextLabel: "Light",    NextIcon: Icons.Sun,      title: "Switch to light mode" },
     light:    { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
     tropical: { nextLabel: "Oceanic",  NextIcon: Icons.Waves,    title: "Switch to oceanic mode" },
@@ -175,9 +175,11 @@ export default function NavigationSidebarComponent({
   const themeMeta = THEME_META[theme] || THEME_META.dark;
 
   // ── Render a single nav item ──────────────────────────────────
-  const renderNavItem = (item) => {
+  const renderNavItem = (item: NavItem) => {
     const id = item.id || item.key;
-    const IconComponent = typeof item.icon === "string" ? Icons[item.icon] : item.icon;
+    const IconComponent = typeof item.icon === "string"
+      ? (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[item.icon]
+      : item.icon;
 
     // Active: matches provided activeItem ID or matches href path start
     const isActive = activeItem === id || (item.href && activeItem && activeItem.startsWith(item.href));
@@ -193,7 +195,7 @@ export default function NavigationSidebarComponent({
     const linkProps = {
       className: `${styles.navItem} ${isActive ? styles.active : ""}`,
       onClick: () => {
-        if (onNavigate) {
+        if (onNavigate && id) {
           onNavigate(id, item);
         }
         // Auto-close mobile drawer on navigation
@@ -213,7 +215,7 @@ export default function NavigationSidebarComponent({
     } else if (item.href) {
       LinkElement = (
         <a href={item.href} {...linkProps} onClick={(e) => {
-          if (onNavigate) {
+          if (onNavigate && id) {
             e.preventDefault();
             onNavigate(id, item);
           }
@@ -236,11 +238,11 @@ export default function NavigationSidebarComponent({
     const showTooltip = collapsible && !isMobile;
 
     return showTooltip ? (
-      <TooltipComponent key={id} label={item.label} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
+      <TooltipComponent key={id || item.label} label={item.label} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
         {LinkElement}
       </TooltipComponent>
     ) : (
-      <React.Fragment key={id}>
+      <React.Fragment key={id || item.label}>
         {LinkElement}
       </React.Fragment>
     );
@@ -312,7 +314,7 @@ export default function NavigationSidebarComponent({
         {/* Bottom Actions */}
         <div className={styles.bottomActions}>
           {bottomActions}
-          {hasThemePicker ? (
+          {themes?.length && setTheme ? (
             <ThemePickerComponent
               theme={theme}
               themes={themes}

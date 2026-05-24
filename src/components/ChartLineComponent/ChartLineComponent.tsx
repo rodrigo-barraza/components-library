@@ -1,7 +1,18 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import styles from "./ChartLineComponent.module.css";
+
+export interface ChartLineComponentProps {
+  data: number[];
+  color?: string;
+  maxValue?: number;
+  height?: number;
+  historyMax?: number;
+  showGrid?: boolean;
+  formatValue?: (v: number) => string;
+  className?: string;
+}
 
 /**
  * ChartLineComponent — GPU-composited Canvas sparkline area chart.
@@ -23,12 +34,12 @@ export default function ChartLineComponent({
   showGrid = false,
   formatValue,
   className,
-}) {
-  const canvasRef = useRef(null);
-  const containerRef = useRef(null);
+}: ChartLineComponentProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Hover state — null when mouse is outside
-  const [hover, setHover] = useState(null);
+  const [hover, setHover] = useState<{ x: number; value: number; containerWidth: number } | null>(null);
 
   // Cache resolved color components for crosshair drawing
   const colorRef = useRef({ r: 16, g: 185, b: 129, resolved: "#10b981" });
@@ -41,7 +52,7 @@ export default function ChartLineComponent({
           .trim() || "#10b981"
       : color;
 
-    const parseColor = (c) => {
+    const parseColor = (c: string): [number, number, number] => {
       if (c.startsWith("#")) {
         const hex = c.slice(1);
         return [
@@ -59,7 +70,7 @@ export default function ChartLineComponent({
 
   // ── Mouse handlers ──
   const handleMouseMove = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       const container = containerRef.current;
       if (!container || data.length < 2) return;
 

@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useTheme } from "../ThemeProvider/ThemeProvider.js";
 import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
@@ -12,7 +11,7 @@ const DEFAULT_ICON_MAP = {
     light: "CloudFog",
     muted: "Palmtree",
     tropical: "Waves",
-    oceanic: "Skull",
+    oceanic: "Waves",
     punk: "Moon",
 };
 const DEFAULT_LABEL_MAP = {

@@ -1,8 +1,20 @@
-"use client";
-
+import { ReactNode } from "react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./RadioComponent.module.css";
+
+export interface RadioComponentProps {
+  value: any;
+  selectedValue: any;
+  onChange: (value: any) => void;
+  label?: string | ReactNode;
+  disabled?: boolean;
+  error?: boolean;
+  className?: string;
+  id?: string;
+  name?: string;
+  labelPlacement?: "start" | "end";
+}
 
 /**
  * RadioComponent — M3-inspired radio button with circular state layer,
@@ -32,7 +44,7 @@ export default function RadioComponent({
   id,
   name,
   labelPlacement = "end",
-}) {
+}: RadioComponentProps) {
   const { sound } = useComponents();
   const checked = value === selectedValue;
 
@@ -93,6 +105,13 @@ export default function RadioComponent({
   );
 }
 
+export interface RadioGroupComponentProps {
+  legend: string;
+  orientation?: "vertical" | "horizontal";
+  className?: string;
+  children?: ReactNode;
+}
+
 /**
  * RadioGroupComponent — Layout container for a group of RadioComponents.
  *
@@ -104,7 +123,7 @@ RadioComponent.Group = function RadioGroupComponent({
   orientation = "vertical",
   className = "",
   children,
-}) {
+}: RadioGroupComponentProps) {
   const groupClasses = [
     styles.group,
     orientation === "horizontal" && styles.horizontal,

@@ -150,46 +150,26 @@ const SearchSuggestionsContext = createContext({
     collapse: () => { },
     onChange: undefined,
 });
-/* ══════════════════════════════════════════════════════════════════════
-   Suggestion — individual suggestion row
-
-   @param {React.ReactNode} [icon]     — leading icon (e.g. History, Search)
-   @param {string}          text       — suggestion text (supports <mark>)
-   @param {React.ReactNode} [trailing] — trailing meta (time, arrow, etc.)
-   @param {Function}        [onClick]  — override click handler
-   @param {string}          [value]    — value to set on click (default: text)
-   @param {number}          [index]    — auto-injected for highlighting
-   ══════════════════════════════════════════════════════════════════════ */
 function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
     const { highlightIndex, collapse, onChange } = useContext(SearchSuggestionsContext);
     const isHighlighted = index >= 0 && highlightIndex === index;
     const handleClick = useCallback(() => {
+        const stringVal = value ?? (typeof text === "string" ? text : "");
         if (onClick) {
-            onClick(value ?? text);
+            onClick(stringVal);
         }
         else {
-            onChange?.(value ?? text);
+            onChange?.(stringVal);
         }
         collapse();
     }, [onClick, value, text, onChange, collapse]);
     /* Default leading icon: clock for history-style suggestions */
     const defaultIcon = (_jsxs("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [_jsx("circle", { cx: "11", cy: "11", r: "8" }), _jsx("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })] }));
-    return (_jsxs("button", { className: `${styles.suggestionItem}${isHighlighted ? ` ${styles.highlighted}` : ""}`, onClick: handleClick, type: "button", role: "option", "aria-selected": isHighlighted, id: index >= 0 ? `search-suggestion-${index}` : undefined, "data-suggestion-item": true, children: [_jsx("span", { className: styles.suggestionIcon, children: icon || defaultIcon }), _jsx("span", { className: styles.suggestionText, children: typeof text === "string" ? text : text }), trailing && (_jsx("span", { className: styles.suggestionTrailing, children: trailing }))] }));
+    return (_jsxs("button", { className: `${styles.suggestionItem}${isHighlighted ? ` ${styles.highlighted}` : ""}`, onClick: handleClick, type: "button", role: "option", "aria-selected": isHighlighted, id: index >= 0 ? `search-suggestion-${index}` : undefined, "data-suggestion-item": true, children: [_jsx("span", { className: styles.suggestionIcon, children: icon || defaultIcon }), _jsx("span", { className: styles.suggestionText, children: text }), trailing && (_jsx("span", { className: styles.suggestionTrailing, children: trailing }))] }));
 }
-/* ══════════════════════════════════════════════════════════════════════
-   SuggestionGroup — labeled group of suggestions
-
-   @param {string} label     — group header text
-   @param {React.ReactNode} children — Suggestion items
-   ══════════════════════════════════════════════════════════════════════ */
 function SuggestionGroup({ label, children }) {
     return (_jsxs("div", { role: "group", "aria-label": label, children: [label && (_jsx("div", { className: styles.suggestionGroupHeader, children: label })), children] }));
 }
-/* ══════════════════════════════════════════════════════════════════════
-   SuggestionsEmpty — empty state placeholder
-
-   @param {string|React.ReactNode} [message] — empty message
-   ══════════════════════════════════════════════════════════════════════ */
 function SuggestionsEmpty({ message = "No results found" }) {
     return _jsx("div", { className: styles.suggestionsEmpty, children: message });
 }

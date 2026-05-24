@@ -1,7 +1,13 @@
-"use client";
-
+import { ElementType, ComponentPropsWithoutRef } from "react";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import styles from "./RepositoryBadgeComponent.module.css";
+
+export interface RepositoryBadgeComponentProps extends ComponentPropsWithoutRef<typeof BadgeComponent> {
+  repo?: string;
+  icons?: {
+    Github?: ElementType;
+  };
+}
 
 /**
  * RepositoryBadgeComponent — Semantic badge for a GitHub repository link.
@@ -9,7 +15,12 @@ import styles from "./RepositoryBadgeComponent.module.css";
  * Strips the GitHub base URL and displays the owner/repo slug.
  * Renders as a clickable badge linking to the repository.
  */
-export default function RepositoryBadgeComponent({ repo, icons, className, ...rest }) {
+export default function RepositoryBadgeComponent({
+  repo,
+  icons,
+  className,
+  ...rest
+}: RepositoryBadgeComponentProps) {
   if (!repo) return null;
 
   const { Github } = icons || {};

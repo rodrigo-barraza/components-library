@@ -1,3 +1,21 @@
+import { ReactNode } from "react";
+export interface DialogComponentProps {
+    open: boolean;
+    onClose: () => void;
+    icon?: ReactNode;
+    headline?: string | ReactNode;
+    onConfirm?: () => void;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    hideCancel?: boolean;
+    confirmVariant?: "default" | "destructive" | string;
+    confirmDisabled?: boolean;
+    fullscreen?: boolean;
+    dismissible?: boolean;
+    className?: string;
+    id?: string;
+    children?: ReactNode;
+}
 /**
  * DialogComponent — M3 AlertDialog
  *
@@ -9,21 +27,5 @@
  *
  * Anatomy: [scrim] → [container] → [icon?] → [headline?] → [body] → [actions]
  */
-export default function DialogComponent({ open, onClose, icon, headline, onConfirm, confirmLabel, cancelLabel, hideCancel, confirmVariant, confirmDisabled, fullscreen, dismissible, className, id, children, }: {
-    open: any;
-    onClose: any;
-    icon: any;
-    headline: any;
-    onConfirm: any;
-    confirmLabel?: string;
-    cancelLabel?: string;
-    hideCancel?: boolean;
-    confirmVariant?: string;
-    confirmDisabled?: boolean;
-    fullscreen?: boolean;
-    dismissible?: boolean;
-    className: any;
-    id: any;
-    children: any;
-}): import("react/jsx-runtime").JSX.Element;
+export default function DialogComponent({ open, onClose, icon, headline, onConfirm, confirmLabel, cancelLabel, hideCancel, confirmVariant, confirmDisabled, fullscreen, dismissible, className, id, children, }: DialogComponentProps): import("react/jsx-runtime").JSX.Element | null;
 //# sourceMappingURL=DialogComponent.d.ts.map

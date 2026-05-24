@@ -96,7 +96,10 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
         autoPlayRef.current = setInterval(() => {
             scrollToIndex(activeIndex + 1);
         }, autoPlay);
-        return () => clearInterval(autoPlayRef.current);
+        return () => {
+            if (autoPlayRef.current)
+                clearInterval(autoPlayRef.current);
+        };
     }, [autoPlay, activeIndex, scrollToIndex]);
     // Pause auto-play on hover
     const handleMouseEnter = useCallback(() => {
@@ -140,7 +143,6 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
         .join(" ");
     return (_jsxs("div", { className: rootClasses, role: "region", "aria-label": ariaLabel, "aria-roledescription": "carousel", onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onKeyDown: handleKeyDown, children: [_jsx("div", { ref: trackRef, className: styles.track, role: "list", style: { gap: `${gap}px` }, children: children }), showArrows && itemCount > 1 && (_jsxs(_Fragment, { children: [_jsx("button", { className: `${styles.navButton} ${styles.navPrev}`, onClick: scrollPrev, disabled: !loop && !canScrollPrev, "aria-label": "Previous slide", tabIndex: -1, children: _jsx("svg", { className: styles.navIcon, viewBox: "0 0 24 24", children: _jsx("path", { d: "M15 18L9 12L15 6" }) }) }), _jsx("button", { className: `${styles.navButton} ${styles.navNext}`, onClick: scrollNext, disabled: !loop && !canScrollNext, "aria-label": "Next slide", tabIndex: -1, children: _jsx("svg", { className: styles.navIcon, viewBox: "0 0 24 24", children: _jsx("path", { d: "M9 18L15 12L9 6" }) }) })] })), showIndicators && itemCount > 1 && (_jsx("div", { className: styles.indicators, role: "tablist", "aria-label": "Carousel navigation", children: Array.from({ length: itemCount }, (_, i) => (_jsx("button", { className: `${styles.dot} ${i === activeIndex ? styles.dotActive : ""}`, role: "tab", "aria-selected": i === activeIndex, "aria-label": `Go to slide ${i + 1}`, onClick: () => scrollToIndex(i), tabIndex: i === activeIndex ? 0 : -1 }, i))) }))] }));
 }
-/* ── Item ────────────────────────────────────────────────────────── */
 /**
  * CarouselComponent.Item — individual carousel item container.
  *
@@ -165,7 +167,6 @@ function CarouselItem({ width, height, aspectRatio, size, onClick, className, ch
         .join(" ");
     return (_jsx("div", { className: classes, style: Object.keys(itemStyle).length ? itemStyle : undefined, role: "listitem", tabIndex: 0, onClick: onClick, ...rest, children: children }));
 }
-/* ── Item Media ─────────────────────────────────────────────────── */
 /**
  * CarouselComponent.ItemMedia — full-bleed image/video slot.
  */
@@ -175,7 +176,6 @@ function CarouselItemMedia({ src, alt = "", className, children }) {
     }
     return (_jsx("img", { className: `${styles.itemMedia}${className ? ` ${className}` : ""}`, src: src, alt: alt, loading: "lazy", draggable: false }));
 }
-/* ── Item Label ─────────────────────────────────────────────────── */
 /**
  * CarouselComponent.ItemLabel — overlaid label with gradient scrim.
  *

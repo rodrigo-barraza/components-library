@@ -25,7 +25,6 @@ export default function AvatarComponent({ src, alt = "", name, icon: Icon, size 
     const classes = [styles.avatar, styles[size], className].filter(Boolean).join(" ");
     return (_jsxs("div", { className: classes, style: style, ...rest, children: [showImage ? (_jsx("img", { src: src, alt: alt || name || "", className: styles.image, draggable: false, onError: () => setImgError(true) })) : initials ? (_jsx("span", { className: styles.initials, children: initials })) : Icon ? (_jsx(Icon, { size: iconSize, className: styles.icon })) : (_jsx("span", { className: styles.initials, children: "?" })), status && (_jsx("span", { className: `${styles.status} ${styles[`status-${status}`]}`, "aria-label": status }))] }));
 }
-/* ── AvatarGroup ─────────────────────────────────────────── */
 /**
  * AvatarComponent.Group — stacks avatars with overlapping layout.
  */

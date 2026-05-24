@@ -1,9 +1,33 @@
-"use client";
-
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback, useState, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import CloseButtonComponent from "../CloseButtonComponent/CloseButtonComponent.js";
 import styles from "./DrawerComponent.module.css";
+
+export interface DrawerItem {
+  label: ReactNode;
+  value: ReactNode;
+  mono?: boolean;
+}
+
+export interface DrawerSection {
+  title: string;
+  items: DrawerItem[];
+}
+
+export interface DrawerComponentProps {
+  open: boolean;
+  onClose: () => void;
+  title?: ReactNode;
+  anchor?: "left" | "right";
+  width?: number | string;
+  scrim?: boolean;
+  dismissible?: boolean;
+  headerActions?: ReactNode;
+  sections?: DrawerSection[];
+  children?: ReactNode;
+  className?: string;
+  id?: string;
+}
 
 /**
  * DrawerComponent — M3 Side Sheet / slide-in drawer panel.
@@ -25,8 +49,8 @@ export default function DrawerComponent({
   children,
   className,
   id,
-}) {
-  const drawerRef = useRef(null);
+}: DrawerComponentProps) {
+  const drawerRef = useRef<HTMLDivElement | null>(null);
   const [closing, setClosing] = useState(false);
 
   // ── Graceful close with exit animation ───────────────
@@ -37,7 +61,7 @@ export default function DrawerComponent({
 
   // After exit animation completes, fire the real onClose
   const handleAnimationEnd = useCallback(
-    (e) => {
+    (e: React.AnimationEvent<HTMLDivElement>) => {
       if (closing && e.target === drawerRef.current) {
         setClosing(false);
         onClose?.();
@@ -50,7 +74,7 @@ export default function DrawerComponent({
   useEffect(() => {
     if (!open || !dismissible) return;
 
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
         handleClose();
@@ -65,8 +89,8 @@ export default function DrawerComponent({
   useEffect(() => {
     if (!open || !dismissible) return;
 
-    const handleMouseDown = (e) => {
-      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+    const handleMouseDown = (e: MouseEvent) => {
+      if (drawerRef.current && e.target instanceof Node && !drawerRef.current.contains(e.target)) {
         handleClose();
       }
     };

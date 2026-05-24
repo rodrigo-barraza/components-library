@@ -10,6 +10,6 @@ interface AddressBadgeProps {
     className?: string;
     [key: string]: unknown;
 }
-export default function AddressBadgeComponent({ address, link, className, ...rest }: AddressBadgeProps): import("react/jsx-runtime").JSX.Element;
+export default function AddressBadgeComponent({ address, link, className, ...rest }: AddressBadgeProps): import("react/jsx-runtime").JSX.Element | null;
 export {};
 //# sourceMappingURL=AddressBadgeComponent.d.ts.map

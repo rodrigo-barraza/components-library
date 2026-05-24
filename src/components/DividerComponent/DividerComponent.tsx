@@ -1,6 +1,12 @@
-"use client";
-
+import { HTMLAttributes, ReactNode } from "react";
 import styles from "./DividerComponent.module.css";
+
+export interface DividerComponentProps extends HTMLAttributes<HTMLElement> {
+  variant?: "fullWidth" | "inset" | "middleInset";
+  orientation?: "horizontal" | "vertical";
+  spacing?: "none" | "small" | "medium" | "large" | string;
+  decorative?: boolean;
+}
 
 /**
  * DividerComponent — Material Design 3 divider.
@@ -24,13 +30,13 @@ export default function DividerComponent({
   className,
   style,
   ...rest
-}) {
+}: DividerComponentProps) {
   const classes = [
     styles.divider,
     styles[orientation],
     variant === "inset" && styles.inset,
     variant === "middleInset" && styles.middleInset,
-    spacing && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
+    spacing && spacing.length > 0 && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
     className,
   ]
     .filter(Boolean)
@@ -68,6 +74,11 @@ export default function DividerComponent({
 
 /* ── Subheader Divider ───────────────────────────────────────────── */
 
+export interface DividerSubheaderProps extends HTMLAttributes<HTMLDivElement> {
+  label: ReactNode;
+  variant?: "fullWidth" | "inset" | "middleInset";
+}
+
 /**
  * DividerComponent.Subheader — a labeled section divider.
  *
@@ -81,7 +92,7 @@ function DividerSubheader({
   className,
   style,
   ...rest
-}) {
+}: DividerSubheaderProps) {
   const classes = [
     styles.divider,
     styles.subheader,

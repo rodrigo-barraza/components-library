@@ -105,14 +105,16 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
     // ── Render a single nav item ──────────────────────────────────
     const renderNavItem = (item) => {
         const id = item.id || item.key;
-        const IconComponent = typeof item.icon === "string" ? Icons[item.icon] : item.icon;
+        const IconComponent = typeof item.icon === "string"
+            ? Icons[item.icon]
+            : item.icon;
         // Active: matches provided activeItem ID or matches href path start
         const isActive = activeItem === id || (item.href && activeItem && activeItem.startsWith(item.href));
         const content = (_jsxs(_Fragment, { children: [IconComponent && _jsx(IconComponent, { size: 18, strokeWidth: 1.8, className: styles.navIcon }), _jsx("span", { className: styles.navLabel, children: item.label }), isActive && _jsx("div", { className: styles.activeIndicator })] }));
         const linkProps = {
             className: `${styles.navItem} ${isActive ? styles.active : ""}`,
             onClick: () => {
-                if (onNavigate) {
+                if (onNavigate && id) {
                     onNavigate(id, item);
                 }
                 // Auto-close mobile drawer on navigation
@@ -127,7 +129,7 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
         }
         else if (item.href) {
             LinkElement = (_jsx("a", { href: item.href, ...linkProps, onClick: (e) => {
-                    if (onNavigate) {
+                    if (onNavigate && id) {
                         e.preventDefault();
                         onNavigate(id, item);
                     }
@@ -141,7 +143,7 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
         }
         // On mobile, always show labels (no collapsed tooltips)
         const showTooltip = collapsible && !isMobile;
-        return showTooltip ? (_jsx(TooltipComponent, { label: item.label, position: "right", delay: 200, disabled: !collapsed, className: styles.tooltipFill, children: LinkElement }, id)) : (_jsx(React.Fragment, { children: LinkElement }, id));
+        return showTooltip ? (_jsx(TooltipComponent, { label: item.label, position: "right", delay: 200, disabled: !collapsed, className: styles.tooltipFill, children: LinkElement }, id || item.label)) : (_jsx(React.Fragment, { children: LinkElement }, id || item.label));
     };
     // ── Determine wrapper classes ─────────────────────────────────────
     const wrapperClasses = [
@@ -155,6 +157,6 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
         .join(" ");
     return (_jsxs("div", { className: wrapperClasses, children: [isMobile && mobileOpen && (_jsx("div", { className: styles.mobileScrim, onClick: onMobileClose, "aria-hidden": "true" })), _jsxs("aside", { className: styles.sidebar, children: [(brandIcon || brandLabel) && (_jsxs("div", { className: styles.brand, children: [typeof brandIcon === "string" ? (
                             // eslint-disable-next-line @next/next/no-img-element
-                            _jsx("img", { src: brandIcon, alt: brandLabel || "Brand", className: styles.brandIconImg })) : brandIcon ? (_jsx("div", { className: styles.brandIconNode, children: brandIcon })) : null, brandLabel && _jsx("span", { className: styles.brandLabel, children: brandLabel }), isMobile ? (_jsx("button", { className: styles.mobileCloseBtn, onClick: onMobileClose, title: "Close menu", "aria-label": "Close navigation menu", children: _jsx(Icons.X, { size: 20 }) })) : collapsible ? (_jsx("button", { className: styles.collapseBtn, onClick: toggleCollapse, title: "Toggle Sidebar", children: _jsx(Icons.ChevronsLeft, { size: 16 }) })) : null] })), _jsx("nav", { className: styles.navList, children: resolvedSections.map((section, sectionIdx) => (_jsxs(React.Fragment, { children: [section.label && (_jsx("div", { className: styles.navDivider, children: _jsx("span", { children: section.label }) })), section.items.map(renderNavItem)] }, section.label || sectionIdx))) }), _jsxs("div", { className: styles.bottomActions, children: [bottomActions, hasThemePicker ? (_jsx(ThemePickerComponent, { theme: theme, themes: themes, onSelectTheme: setTheme, collapsed: isMobile ? false : collapsed })) : onToggleTheme ? (_jsx(TooltipComponent, { label: themeMeta.nextLabel + " Mode", position: "right", delay: 200, disabled: isMobile || !collapsed, className: styles.tooltipFill, children: _jsxs("button", { className: styles.themeToggle, onClick: onToggleTheme, title: themeMeta.title, children: [_jsx(themeMeta.NextIcon, { size: 18, strokeWidth: 1.8, className: styles.navIcon }), _jsx("span", { className: styles.themeLabel, children: themeMeta.nextLabel })] }) })) : null] })] })] }));
+                            _jsx("img", { src: brandIcon, alt: brandLabel || "Brand", className: styles.brandIconImg })) : brandIcon ? (_jsx("div", { className: styles.brandIconNode, children: brandIcon })) : null, brandLabel && _jsx("span", { className: styles.brandLabel, children: brandLabel }), isMobile ? (_jsx("button", { className: styles.mobileCloseBtn, onClick: onMobileClose, title: "Close menu", "aria-label": "Close navigation menu", children: _jsx(Icons.X, { size: 20 }) })) : collapsible ? (_jsx("button", { className: styles.collapseBtn, onClick: toggleCollapse, title: "Toggle Sidebar", children: _jsx(Icons.ChevronsLeft, { size: 16 }) })) : null] })), _jsx("nav", { className: styles.navList, children: resolvedSections.map((section, sectionIdx) => (_jsxs(React.Fragment, { children: [section.label && (_jsx("div", { className: styles.navDivider, children: _jsx("span", { children: section.label }) })), section.items.map(renderNavItem)] }, section.label || sectionIdx))) }), _jsxs("div", { className: styles.bottomActions, children: [bottomActions, themes?.length && setTheme ? (_jsx(ThemePickerComponent, { theme: theme, themes: themes, onSelectTheme: setTheme, collapsed: isMobile ? false : collapsed })) : onToggleTheme ? (_jsx(TooltipComponent, { label: themeMeta.nextLabel + " Mode", position: "right", delay: 200, disabled: isMobile || !collapsed, className: styles.tooltipFill, children: _jsxs("button", { className: styles.themeToggle, onClick: onToggleTheme, title: themeMeta.title, children: [_jsx(themeMeta.NextIcon, { size: 18, strokeWidth: 1.8, className: styles.navIcon }), _jsx("span", { className: styles.themeLabel, children: themeMeta.nextLabel })] }) })) : null] })] })] }));
 }
 //# sourceMappingURL=NavigationSidebarComponent.js.map

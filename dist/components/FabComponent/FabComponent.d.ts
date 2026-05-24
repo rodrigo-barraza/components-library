@@ -1,3 +1,17 @@
+export interface FabComponentProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {
+    size?: "small" | "standard" | "large";
+    color?: "primary" | "secondary" | "tertiary" | "surface";
+    icon?: React.ComponentType<{
+        size: number;
+    }>;
+    iconSize?: number;
+    label?: string;
+    lowered?: boolean;
+    fixed?: boolean;
+    position?: "bottom-start" | "bottom-center" | "bottom-end";
+    hidden?: boolean;
+    "aria-label"?: string;
+}
 /**
  * FabComponent — Material Design 3 Floating Action Button
  *
@@ -11,6 +25,6 @@
  *
  * @see https://m3.material.io/components/floating-action-button/overview
  */
-declare const FabComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
+declare const FabComponent: import("react").ForwardRefExoticComponent<FabComponentProps & import("react").RefAttributes<HTMLButtonElement>>;
 export default FabComponent;
 //# sourceMappingURL=FabComponent.d.ts.map

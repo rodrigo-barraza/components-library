@@ -20,18 +20,6 @@ function clampDuration(ms) {
         return 0; // 0 = indefinite
     return Math.max(MIN_DURATION, Math.min(MAX_DURATION, ms));
 }
-/* ══════════════════════════════════════════════════════════
-   useSnackbar — M3-compliant queue hook
-   ══════════════════════════════════════════════════════════
-
-   M3 guideline: only one snackbar is visible at a time.
-   New snackbars dismiss the current one before appearing.
-   This implements the queue pattern described in the spec.
-
-   Returns:
-     showSnackbar(message, options?) — imperative trigger
-     snackbarProps                   — spread onto <SnackbarComponent />
-*/
 export function useSnackbar() {
     const [current, setCurrent] = useState(null);
     const queueRef = useRef([]);
@@ -44,11 +32,13 @@ export function useSnackbar() {
             return;
         }
         const next = queueRef.current.shift();
-        setCurrent(next);
+        setCurrent(next || null);
     }, []);
     // Dismiss current snackbar
     const dismiss = useCallback(() => {
-        clearTimeout(timerRef.current);
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
         setCurrent(null);
         // Small delay to allow exit animation before next
         setTimeout(processQueue, EXIT_ANIMATION_MS + 50);
@@ -80,12 +70,16 @@ export function useSnackbar() {
         if (!current || current.duration === 0)
             return;
         timerRef.current = setTimeout(dismiss, current.duration);
-        return () => clearTimeout(timerRef.current);
+        return () => {
+            if (timerRef.current)
+                clearTimeout(timerRef.current);
+        };
     }, [current, dismiss]);
     // Cleanup on unmount
     useEffect(() => {
         return () => {
-            clearTimeout(timerRef.current);
+            if (timerRef.current)
+                clearTimeout(timerRef.current);
             queueRef.current = [];
         };
     }, []);
@@ -103,39 +97,6 @@ export function useSnackbar() {
     };
     return { showSnackbar, dismiss, snackbarProps };
 }
-/* ══════════════════════════════════════════════════════════
-   SnackbarComponent — M3 Snackbar
-   ══════════════════════════════════════════════════════════
-
-   A transient, non-modal surface that communicates brief,
-   informational messages at the bottom of the screen.
-
-   @see https://m3.material.io/components/snackbar
-
-   Anatomy:
-     [container] → [supporting text] → [action?] → [close?]
-
-   Layout variants (auto-detected):
-     • single-line  — text + action/close on one row (48dp)
-     • multi-line   — text wraps, action/close inline (68dp)
-     • longer-action — action goes below on its own row
-
-   Accessibility:
-     • role="status" — polite notification
-     • aria-live="polite" — announced after current speech
-     • aria-atomic="true" — full content announced
-     • Action button is fully keyboard-accessible
-
-   @param {Object}   props
-   @param {boolean}  props.open         — Controls visibility
-   @param {string}   props.message      — Supporting text content
-   @param {string}   [props.actionLabel] — Optional action button label
-   @param {boolean}  [props.showClose=false] — Show close icon button
-   @param {Function} [props.onAction]   — Action button handler
-   @param {Function} [props.onDismiss]  — Dismiss handler (close button / swipe)
-   @param {string}   [props.className]  — Additional container class
-   @param {string}   [props.id]         — Unique ID for ARIA
-*/
 export default function SnackbarComponent({ open, message, actionLabel, showClose = false, onAction, onDismiss, className, id, }) {
     const containerRef = useRef(null);
     const [exiting, setExiting] = useState(false);

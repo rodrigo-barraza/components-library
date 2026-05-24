@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useMemo } from "react";
 import styles from "./LoadingIndicatorComponent.module.css";
@@ -14,12 +13,12 @@ import styles from "./LoadingIndicatorComponent.module.css";
  *   • Variants: indeterminate (unknown duration), determinate (known %)
  *
  * Accessibility (per M3 Loading Indicator / Accessibility):
- *   • `role="progressbar"` on the indicator element
- *   • `aria-valuemin="0"` and `aria-valuemax="100"` always present
- *   • `aria-valuenow` set to current value for determinate, omitted for indeterminate
- *   • `aria-label` provided via `ariaLabel` prop — required for screen readers
- *   • `aria-busy="true"` can be set on the loading region by the consumer
- *   • `aria-live="polite"` on label for progress updates
+ *   • role="progressbar" on the indicator element
+ *   • aria-valuemin="0" and aria-valuemax="100" always present
+ *   • aria-valuenow set to current value for determinate, omitted for indeterminate
+ *   • aria-label provided via ariaLabel prop — required for screen readers
+ *   • aria-busy="true" can be set on the loading region by the consumer
+ *   • aria-live="polite" on label for progress updates
  *   • Reduced motion: animation durations extended (not removed) per M3 guidelines
  */
 export default function LoadingIndicatorComponent({ variant = "circular", mode = "indeterminate", value = 0, buffer = null, size = "medium", trackSize = "default", color = "primary", showPercentage = false, label, ariaLabel = "Loading", className = "", id, }) {
@@ -30,9 +29,6 @@ export default function LoadingIndicatorComponent({ variant = "circular", mode =
     }
     return (_jsx(LinearIndicator, { isIndeterminate: isIndeterminate, value: clampedValue, buffer: buffer, trackSize: trackSize, color: color, label: label, ariaLabel: ariaLabel, className: className, id: id }));
 }
-/* ═══════════════════════════════════════════════════════════ */
-/*  CIRCULAR INDICATOR                                        */
-/* ═══════════════════════════════════════════════════════════ */
 /**
  * CircularIndicator — SVG-based circular progress.
  * Uses a 44-unit viewBox (48 - 2×2 padding) with the circle at r=20, c=22.
@@ -75,9 +71,6 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
     };
     return (_jsxs("div", { className: rootClasses, id: id, children: [_jsxs("div", { className: circularClasses, ...ariaProps, children: [_jsxs("svg", { className: styles.circularSvg, viewBox: "0 0 44 44", xmlns: "http://www.w3.org/2000/svg", children: [_jsx("circle", { className: styles.circularTrack, cx: CENTER, cy: CENTER, r: RADIUS }), _jsx("circle", { className: styles.circularIndicator, cx: CENTER, cy: CENTER, r: RADIUS, strokeDasharray: isIndeterminate ? undefined : CIRCUMFERENCE, strokeDashoffset: dashOffset })] }), !isIndeterminate && showPercentage && (_jsxs("span", { className: styles.percentage, "aria-hidden": "true", children: [Math.round(value), "%"] }))] }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: label }))] }));
 }
-/* ═══════════════════════════════════════════════════════════ */
-/*  LINEAR INDICATOR                                          */
-/* ═══════════════════════════════════════════════════════════ */
 /**
  * LinearIndicator — Horizontal progress bar.
  * Indeterminate uses two sliding bars for continuous motion.

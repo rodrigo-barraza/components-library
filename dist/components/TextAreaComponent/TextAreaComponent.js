@@ -2,9 +2,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useRef, useEffect, useCallback } from "react";
 import styles from "./TextAreaComponent.module.css";
-/**
- * TextAreaComponent — Reusable auto-resizing textarea with consistent styling.
- */
 export default function TextAreaComponent({ value, onChange, placeholder, minRows = 3, maxRows = 12, autoResize = true, disabled = false, readOnly = false, className, id, ...rest }) {
     const ref = useRef(null);
     const resize = useCallback(() => {

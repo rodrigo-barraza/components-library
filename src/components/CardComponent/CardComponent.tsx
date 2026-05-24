@@ -1,7 +1,47 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode, type CSSProperties, type MouseEvent } from "react";
 import styles from "./CardComponent.module.css";
+
+interface CardComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "elevated" | "filled" | "outlined";
+  interactive?: boolean;
+  draggable?: boolean;
+  fullWidth?: boolean;
+}
+
+interface CardHeaderProps {
+  icon?: React.ComponentType<{ size: number; className?: string }>;
+  title?: string;
+  subtitle?: string;
+  children?: ReactNode;
+  className?: string;
+}
+
+interface CardMediaProps {
+  src?: string;
+  alt?: string;
+  height?: number | string;
+  aspectRatio?: string;
+  position?: "top" | "bottom";
+  className?: string;
+  children?: ReactNode;
+}
+
+interface CardBodyProps {
+  children?: ReactNode;
+  className?: string;
+}
+
+interface CardFooterProps {
+  children?: ReactNode;
+  className?: string;
+}
+
+interface CardActionAreaProps extends React.HTMLAttributes<HTMLElement> {
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  href?: string;
+}
 
 /**
  * CardComponent — M3-inspired compound card with elevated / filled / outlined variants.
@@ -27,7 +67,7 @@ export default function CardComponent({
   style,
   children,
   ...rest
-}) {
+}: CardComponentProps) {
   const classes = [
     styles.card,
     styles[variant],
@@ -48,7 +88,7 @@ export default function CardComponent({
 
 /* ── Header ──────────────────────────────────────────────────────── */
 
-function CardHeader({ icon: Icon, title, subtitle, children, className }) {
+function CardHeader({ icon: Icon, title, subtitle, children, className }: CardHeaderProps) {
   return (
     <div className={`${styles.header}${className ? ` ${className}` : ""}`}>
       {Icon && <Icon size={16} className={styles.icon} />}
@@ -72,8 +112,8 @@ function CardMedia({
   position = "top",
   className,
   children,
-}) {
-  const mediaStyle: Record<string, any> = {};
+}: CardMediaProps) {
+  const mediaStyle: CSSProperties = {};
   if (height) mediaStyle.height = typeof height === "number" ? `${height}px` : height;
   if (aspectRatio) mediaStyle.aspectRatio = aspectRatio;
 
@@ -101,7 +141,7 @@ function CardMedia({
 
 /* ── Body ────────────────────────────────────────────────────────── */
 
-function CardBody({ children, className }) {
+function CardBody({ children, className }: CardBodyProps) {
   return (
     <div className={`${styles.body}${className ? ` ${className}` : ""}`}>
       {children}
@@ -111,7 +151,7 @@ function CardBody({ children, className }) {
 
 /* ── Footer ──────────────────────────────────────────────────────── */
 
-function CardFooter({ children, className }) {
+function CardFooter({ children, className }: CardFooterProps) {
   return (
     <div className={`${styles.footer}${className ? ` ${className}` : ""}`}>
       {children}
@@ -125,8 +165,7 @@ function CardFooter({ children, className }) {
  * CardActionArea — wraps card content to make it clickable / tappable.
  * Renders a full-surface interactive layer with ripple and state layer.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- renders as anchor or button, polymorphic ref
-const CardActionArea = forwardRef<any, any>(function CardActionArea(
+const CardActionArea = forwardRef<HTMLAnchorElement | HTMLButtonElement, CardActionAreaProps>(function CardActionArea(
   { onClick, href, className, children, ...rest },
   ref,
 ) {
@@ -134,7 +173,7 @@ const CardActionArea = forwardRef<any, any>(function CardActionArea(
 
   if (href) {
     return (
-      <a ref={ref} href={href} className={classes} {...rest}>
+      <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} className={classes} {...rest}>
         <span className={styles.stateLayer} />
         {children}
       </a>
@@ -142,7 +181,7 @@ const CardActionArea = forwardRef<any, any>(function CardActionArea(
   }
 
   return (
-    <button ref={ref} type="button" onClick={onClick} className={classes} {...rest}>
+    <button ref={ref as React.Ref<HTMLButtonElement>} type="button" onClick={onClick} className={classes} {...rest}>
       <span className={styles.stateLayer} />
       {children}
     </button>

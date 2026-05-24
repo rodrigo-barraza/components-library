@@ -1,10 +1,29 @@
-"use client";
-
+import { ReactNode, ComponentPropsWithoutRef, ElementType } from "react";
 import { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery.js";
 import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponent.js";
 import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
 import styles from "./PageLayoutComponent.module.css";
+
+export interface PageLayoutComponentProps {
+  children?: ReactNode;
+  brandIcon?: ReactNode;
+  brandLabel?: string;
+  items?: any[];
+  sections?: any[];
+  activeItem?: string;
+  storageKey?: string;
+  LinkComponent?: ElementType;
+  mainStyle?: React.CSSProperties;
+  mainClassName?: string;
+  theme?: string;
+  themes?: any[];
+  setTheme?: (theme: string) => void;
+  bottomActions?: ReactNode;
+  mobileHeaderActions?: ReactNode;
+  mobileBreakpoint?: number;
+  sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
+}
 
 /**
  * PageLayoutComponent — Unified page wrapper composing NavigationSidebar +
@@ -31,7 +50,7 @@ export default function PageLayoutComponent({
   mobileHeaderActions,
   mobileBreakpoint = 768,
   sidebarProps = {},
-}) {
+}: PageLayoutComponentProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
 

@@ -1,12 +1,6 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import styles from "./StatsCardComponent.module.css";
-/**
- * StatsCardComponent — Metric display card with icon, value, and optional loading skeleton.
- *
- * Merged from prism-client (loading skeleton, variant colors) and
- * portal-client (CSS accent color, glow bar, animation delay).
- */
 export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant = "accent", color, loading = false, glow = false, className, onMouseEnter, onMouseLeave, }) {
     if (loading) {
         return (_jsxs("div", { className: `${styles.card} ${className || ""}`, children: [_jsx("div", { className: styles.header, children: _jsx("div", { className: `${styles.skeleton} ${styles.skeletonLabel}` }) }), _jsx("div", { className: `${styles.skeleton} ${styles.skeletonValue}` })] }));

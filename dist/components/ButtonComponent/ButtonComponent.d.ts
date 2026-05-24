@@ -32,8 +32,8 @@ declare const ButtonComponent: import("react").ForwardRefExoticComponent<Omit<im
     fullWidth?: boolean;
     isGenerating?: boolean;
     href?: string;
-    onClick?: (e: React.MouseEvent) => void;
-    onMouseEnter?: (e: React.MouseEvent) => void;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+    onMouseEnter?: (e: React.MouseEvent<HTMLElement>) => void;
 } & import("react").RefAttributes<HTMLElement>>;
 export default ButtonComponent;
 //# sourceMappingURL=ButtonComponent.d.ts.map

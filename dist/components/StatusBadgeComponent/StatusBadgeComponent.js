@@ -1,4 +1,3 @@
-"use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import StatusDotComponent from "../StatusDotComponent/StatusDotComponent.js";

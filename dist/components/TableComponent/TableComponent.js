@@ -7,10 +7,6 @@ import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import tooltipStyles from "../TooltipComponent/TooltipComponent.module.css";
 import styles from "./TableComponent.module.css";
-/**
- * TableComponent — a reusable, sortable data table with expandable rows,
- * column visibility controls, drag-to-scroll, and per-column tooltips.
- */
 function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
     const thRef = useRef(null);
     const [tipMounted, setTipMounted] = useState(false);
@@ -22,22 +18,26 @@ function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
     const showTip = useCallback(() => {
         if (!thRef.current || !col.description)
             return;
-        clearTimeout(unmountTimer.current);
+        if (unmountTimer.current)
+            clearTimeout(unmountTimer.current);
         const rect = thRef.current.getBoundingClientRect();
         setTipCoords({ top: rect.bottom + 8, left: rect.left + rect.width / 2 });
         setTipMounted(true);
         showTimer.current = setTimeout(() => setTipVisible(true), 10);
     }, [col.description]);
     const hideTip = useCallback(() => {
-        clearTimeout(enterTimer.current);
-        clearTimeout(showTimer.current);
+        if (enterTimer.current)
+            clearTimeout(enterTimer.current);
+        if (showTimer.current)
+            clearTimeout(showTimer.current);
         setTipVisible(false);
         unmountTimer.current = setTimeout(() => setTipMounted(false), 200);
     }, []);
     const onEnter = useCallback(() => {
         if (!col.description)
             return;
-        clearTimeout(enterTimer.current);
+        if (enterTimer.current)
+            clearTimeout(enterTimer.current);
         enterTimer.current = setTimeout(showTip, 400);
     }, [col.description, showTip]);
     const onLeave = useCallback(() => {
@@ -112,7 +112,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
     const { sound } = useComponents();
     const [internalSort, setInternalSort] = useState({ key: null, dir: "desc" });
     const sort = onSort
-        ? { key: externalSortKey, dir: externalSortDir }
+        ? { key: externalSortKey || null, dir: (externalSortDir || "desc") }
         : internalSort;
     const [expanded, setExpanded] = useState(new Set());
     const [hiddenColumns, setHiddenColumns] = useState(() => loadHiddenColumns(storageKey, columns));
@@ -140,7 +140,8 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         moved: false,
     });
     const onPointerDown = useCallback((e) => {
-        if (e.target.closest("a, button, input, select, textarea, th"))
+        const target = e.target;
+        if (target.closest("a, button, input, select, textarea, th"))
             return;
         const element = scrollRef.current;
         if (!element)
@@ -164,7 +165,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         if (!d.moved && Math.abs(dx) + Math.abs(dy) > 5) {
             d.moved = true;
             const element = scrollRef.current;
-            if (element) {
+            if (element && d.pointerId !== undefined) {
                 try {
                     element.setPointerCapture(d.pointerId);
                 }
@@ -174,8 +175,10 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         }
         if (d.moved) {
             const element = scrollRef.current;
-            element.scrollLeft = d.scrollLeft - dx;
-            element.scrollTop = d.scrollTop - dy;
+            if (element) {
+                element.scrollLeft = d.scrollLeft - dx;
+                element.scrollTop = d.scrollTop - dy;
+            }
         }
     }, []);
     const onPointerUp = useCallback((e) => {
@@ -191,12 +194,12 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
             catch { /* ignore */ }
             element.classList.remove(styles.grabbing);
         }
-        if (wasDrag) {
+        if (wasDrag && element) {
             const handler = (ev) => {
                 ev.stopPropagation();
                 ev.preventDefault();
             };
-            element?.addEventListener("click", handler, { capture: true, once: true });
+            element.addEventListener("click", handler, { capture: true, once: true });
         }
     }, []);
     function handleSort(key) {
@@ -275,7 +278,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
                                 return (_jsxs(Fragment, { children: [_jsx("tr", { ref: isHighlighted && highlightedRowRef
                                                 ? highlightedRowRef
                                                 : undefined, className: `${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles.expandableRow : ""} ${isActive ? styles.activeRow : ""} ${isHighlighted ? styles.highlightedRow : ""} ${customClass}`, style: customStyle, ...(clickable
-                                                ? interactiveProps(isExpandable ? () => toggleExpand(key) : () => onRowClick(row), onRowMouseEnter ? () => onRowMouseEnter(row, ri) : undefined)
+                                                ? interactiveProps(isExpandable ? () => toggleExpand(key) : () => onRowClick?.(row), onRowMouseEnter ? () => onRowMouseEnter(row, ri) : undefined)
                                                 : {}), ...(!clickable && onRowMouseEnter ? { onMouseEnter: () => onRowMouseEnter(row, ri) } : {}), onMouseLeave: onRowMouseLeave ? () => onRowMouseLeave(row, ri) : undefined, children: colsToRender.map((col, ci) => {
                                                 const isFirst = ci === 0;
                                                 const isSorted = sort.key === col.key;

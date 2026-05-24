@@ -1,7 +1,20 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import styles from "./CarouselComponent.module.css";
+
+export interface CarouselComponentProps {
+  layout?: "multiBrowse" | "hero" | "center" | "fullWidth" | string;
+  showArrows?: boolean;
+  showIndicators?: boolean;
+  peekEdge?: boolean;
+  autoPlay?: number;
+  loop?: boolean;
+  gap?: number;
+  className?: string;
+  ariaLabel?: string;
+  children?: React.ReactNode;
+}
 
 /**
  * CarouselComponent — M3-inspired carousel with scroll-snap, nav arrows,
@@ -29,12 +42,12 @@ export default function CarouselComponent({
   className,
   ariaLabel = "Carousel",
   children,
-}) {
-  const trackRef = useRef(null);
+}: CarouselComponentProps) {
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
-  const autoPlayRef = useRef(null);
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const itemCount = Array.isArray(children) ? children.length : children ? 1 : 0;
 
@@ -86,7 +99,7 @@ export default function CarouselComponent({
 
   // ── Navigation ────────────────────────────────────────────────
   const scrollToIndex = useCallback(
-    (index) => {
+    (index: number) => {
       const track = trackRef.current;
       if (!track) return;
 
@@ -122,7 +135,9 @@ export default function CarouselComponent({
       scrollToIndex(activeIndex + 1);
     }, autoPlay);
 
-    return () => clearInterval(autoPlayRef.current);
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
   }, [autoPlay, activeIndex, scrollToIndex]);
 
   // Pause auto-play on hover
@@ -139,7 +154,7 @@ export default function CarouselComponent({
 
   // ── Keyboard navigation ───────────────────────────────────────
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === "ArrowLeft") {
         e.preventDefault();
         scrollPrev();
@@ -236,6 +251,13 @@ export default function CarouselComponent({
 }
 
 /* ── Item ────────────────────────────────────────────────────────── */
+export interface CarouselItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  width?: number | string;
+  height?: number | string;
+  aspectRatio?: string | number;
+  size?: "large" | "small" | string;
+}
+
 /**
  * CarouselComponent.Item — individual carousel item container.
  *
@@ -251,8 +273,8 @@ function CarouselItem({
   className,
   children,
   ...rest
-}) {
-  const itemStyle: Record<string, any> = {};
+}: CarouselItemProps) {
+  const itemStyle: React.CSSProperties = {};
   if (width) itemStyle.width = typeof width === "number" ? `${width}px` : width;
   if (height) itemStyle.height = typeof height === "number" ? `${height}px` : height;
   if (aspectRatio) itemStyle.aspectRatio = aspectRatio;
@@ -281,10 +303,17 @@ function CarouselItem({
 }
 
 /* ── Item Media ─────────────────────────────────────────────────── */
+export interface CarouselItemMediaProps {
+  src?: string;
+  alt?: string;
+  className?: string;
+  children?: React.ReactNode;
+}
+
 /**
  * CarouselComponent.ItemMedia — full-bleed image/video slot.
  */
-function CarouselItemMedia({ src, alt = "", className, children }) {
+function CarouselItemMedia({ src, alt = "", className, children }: CarouselItemMediaProps) {
   if (children) {
     return <div className={`${styles.itemMedia} ${className || ""}`}>{children}</div>;
   }
@@ -301,13 +330,20 @@ function CarouselItemMedia({ src, alt = "", className, children }) {
 }
 
 /* ── Item Label ─────────────────────────────────────────────────── */
+export interface CarouselItemLabelProps {
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  className?: string;
+  children?: React.ReactNode;
+}
+
 /**
  * CarouselComponent.ItemLabel — overlaid label with gradient scrim.
  *
  * M3 spec: optional label text with supporting text, positioned
  * at the bottom of the carousel item over a gradient scrim.
  */
-function CarouselItemLabel({ title, subtitle, className, children }) {
+function CarouselItemLabel({ title, subtitle, className, children }: CarouselItemLabelProps) {
   return (
     <div className={`${styles.itemLabel}${className ? ` ${className}` : ""}`}>
       {title && <span className={styles.itemLabelTitle}>{title}</span>}

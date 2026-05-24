@@ -2,13 +2,21 @@
 
 import styles from "./PaginationComponent.module.css";
 
+export interface PaginationComponentProps {
+  page: number;
+  totalPages: number;
+  totalItems: number;
+  onPageChange: (page: number) => void;
+  limit?: number;
+}
+
 export default function PaginationComponent({
   page,
   totalPages,
   totalItems,
   onPageChange,
   limit,
-}) {
+}: PaginationComponentProps) {
   if (totalPages <= 1) return null;
 
   const renderInfo = () => {

@@ -1,3 +1,26 @@
+import { type MouseEvent } from "react";
+interface FabMenuItemConfig {
+    icon?: React.ComponentType<{
+        size: number;
+    }>;
+    label?: string;
+    ariaLabel?: string;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+export interface FabMenuComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+    items?: FabMenuItemConfig[];
+    icon?: React.ComponentType<{
+        size: number;
+    }>;
+    closeIcon?: React.ComponentType<{
+        size: number;
+    }>;
+    variant?: "primary" | "secondary" | "tertiary" | "surface";
+    fixed?: boolean;
+    showScrim?: boolean;
+    disabled?: boolean;
+    ariaLabel?: string;
+}
 /**
  * FabMenuComponent — Material Design 3 FAB Menu (Speed Dial).
  *
@@ -36,6 +59,6 @@
 
 
  */
-declare const FabMenuComponent: import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<any>>;
+declare const FabMenuComponent: import("react").ForwardRefExoticComponent<FabMenuComponentProps & import("react").RefAttributes<HTMLDivElement>>;
 export default FabMenuComponent;
 //# sourceMappingURL=FabMenuComponent.d.ts.map
