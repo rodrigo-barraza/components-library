@@ -87,11 +87,11 @@ export default function ChartLineComponent({
       const nearestIndex = Math.round(floatIndex);
       const clampedIndex = Math.max(0, Math.min(data.length - 1, nearestIndex));
 
-      const val = data[clampedIndex];
+      const dataPointValue = data[clampedIndex];
       const pointX =
         padding.left + (clampedIndex / (historyMax - 1)) * chartW;
 
-      setHover({ x: pointX, value: val, containerWidth: w });
+      setHover({ x: pointX, value: dataPointValue, containerWidth: w });
     },
     [data, historyMax],
   );
@@ -116,38 +116,38 @@ export default function ChartLineComponent({
     canvas.style.width = `${w}px`;
     canvas.style.height = `${h}px`;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.scale(dpr, dpr);
-    ctx.clearRect(0, 0, w, h);
+    const canvasContext = canvas.getContext("2d");
+    if (!canvasContext) return;
+    canvasContext.scale(dpr, dpr);
+    canvasContext.clearRect(0, 0, w, h);
 
     // ── Optional grid background ──
     if (showGrid) {
-      ctx.save();
-      ctx.strokeStyle = "rgba(128, 128, 128, 0.15)";
-      ctx.lineWidth = 0.5;
+      canvasContext.save();
+      canvasContext.strokeStyle = "rgba(128, 128, 128, 0.15)";
+      canvasContext.lineWidth = 0.5;
 
       // Horizontal grid lines (3 evenly spaced)
       const hLines = 3;
       for (let i = 1; i <= hLines; i++) {
         const y = (h / (hLines + 1)) * i;
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(w, y);
-        ctx.stroke();
+        canvasContext.beginPath();
+        canvasContext.moveTo(0, y);
+        canvasContext.lineTo(w, y);
+        canvasContext.stroke();
       }
 
       // Vertical grid lines — every ~15 sample slots
       const vStep = Math.max(15, Math.round(historyMax / 5));
       for (let i = vStep; i < historyMax; i += vStep) {
         const x = (i / (historyMax - 1)) * w;
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, h);
-        ctx.stroke();
+        canvasContext.beginPath();
+        canvasContext.moveTo(x, 0);
+        canvasContext.lineTo(x, h);
+        canvasContext.stroke();
       }
 
-      ctx.restore();
+      canvasContext.restore();
     }
 
     if (data.length < 2) return;
@@ -160,17 +160,17 @@ export default function ChartLineComponent({
     const clampedMax = Math.max(maxValue, 1);
 
     // Map data points to coordinates — always draw across full width
-    const points = data.map((val, i) => ({
+    const points = data.map((dataValue, i) => ({
       x: padding.left + (i / (historyMax - 1)) * chartW,
       y:
         padding.top +
         chartH -
-        (Math.min(val, clampedMax) / clampedMax) * chartH,
+        (Math.min(dataValue, clampedMax) / clampedMax) * chartH,
     }));
 
     // Build smooth path using monotone cubic interpolation (Catmull-Rom)
     const buildPath = () => {
-      ctx.moveTo(points[0].x, points[0].y);
+      canvasContext.moveTo(points[0].x, points[0].y);
       for (let i = 0; i < points.length - 1; i++) {
         const p0 = points[Math.max(0, i - 1)];
         const p1 = points[i];
@@ -181,51 +181,51 @@ export default function ChartLineComponent({
         const cp1y = p1.y + (p2.y - p0.y) * tension;
         const cp2x = p2.x - (p3.x - p1.x) * tension;
         const cp2y = p2.y - (p3.y - p1.y) * tension;
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+        canvasContext.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
       }
     };
 
     // ── Gradient fill ──
-    ctx.beginPath();
+    canvasContext.beginPath();
     buildPath();
-    ctx.lineTo(points[points.length - 1].x, h);
-    ctx.lineTo(points[0].x, h);
-    ctx.closePath();
+    canvasContext.lineTo(points[points.length - 1].x, h);
+    canvasContext.lineTo(points[0].x, h);
+    canvasContext.closePath();
 
-    const gradient = ctx.createLinearGradient(0, padding.top, 0, h);
+    const gradient = canvasContext.createLinearGradient(0, padding.top, 0, h);
     gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.25)`);
     gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, 0.08)`);
     gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.01)`);
-    ctx.fillStyle = gradient;
-    ctx.fill();
+    canvasContext.fillStyle = gradient;
+    canvasContext.fill();
 
     // ── Line stroke with glow ──
-    ctx.beginPath();
+    canvasContext.beginPath();
     buildPath();
-    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.9)`;
-    ctx.lineWidth = 1.5;
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-    ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.4)`;
-    ctx.shadowBlur = 4;
-    ctx.stroke();
-    ctx.shadowBlur = 0;
+    canvasContext.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.9)`;
+    canvasContext.lineWidth = 1.5;
+    canvasContext.lineJoin = "round";
+    canvasContext.lineCap = "round";
+    canvasContext.shadowColor = `rgba(${r}, ${g}, ${b}, 0.4)`;
+    canvasContext.shadowBlur = 4;
+    canvasContext.stroke();
+    canvasContext.shadowBlur = 0;
 
     // ── Hover crosshair + dot ──
     if (hover) {
       const hx = hover.x;
 
       // Vertical crosshair line
-      ctx.save();
-      ctx.beginPath();
-      ctx.setLineDash([3, 3]);
-      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
-      ctx.lineWidth = 1;
-      ctx.moveTo(hx, 0);
-      ctx.lineTo(hx, h);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.restore();
+      canvasContext.save();
+      canvasContext.beginPath();
+      canvasContext.setLineDash([3, 3]);
+      canvasContext.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
+      canvasContext.lineWidth = 1;
+      canvasContext.moveTo(hx, 0);
+      canvasContext.lineTo(hx, h);
+      canvasContext.stroke();
+      canvasContext.setLineDash([]);
+      canvasContext.restore();
 
       // Find the Y coordinate for this hover point
       const hoverIndex = Math.round(
@@ -238,32 +238,32 @@ export default function ChartLineComponent({
         (Math.min(data[ci], clampedMax) / clampedMax) * chartH;
 
       // Hover dot
-      ctx.beginPath();
-      ctx.arc(hx, hoverY, 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`;
-      ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      canvasContext.beginPath();
+      canvasContext.arc(hx, hoverY, 3.5, 0, Math.PI * 2);
+      canvasContext.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`;
+      canvasContext.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
+      canvasContext.shadowBlur = 8;
+      canvasContext.fill();
+      canvasContext.shadowBlur = 0;
 
       // White ring around hover dot
-      ctx.beginPath();
-      ctx.arc(hx, hoverY, 3.5, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
+      canvasContext.beginPath();
+      canvasContext.arc(hx, hoverY, 3.5, 0, Math.PI * 2);
+      canvasContext.strokeStyle = "rgba(255, 255, 255, 0.9)";
+      canvasContext.lineWidth = 1.2;
+      canvasContext.stroke();
     }
 
     // ── Current value dot (only when not hovering) ──
     if (!hover && points.length > 0) {
       const last = points[points.length - 1];
-      ctx.beginPath();
-      ctx.arc(last.x, last.y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`;
-      ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
-      ctx.shadowBlur = 6;
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      canvasContext.beginPath();
+      canvasContext.arc(last.x, last.y, 2.5, 0, Math.PI * 2);
+      canvasContext.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`;
+      canvasContext.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
+      canvasContext.shadowBlur = 6;
+      canvasContext.fill();
+      canvasContext.shadowBlur = 0;
     }
   }, [data, color, maxValue, height, historyMax, showGrid, hover]);
 

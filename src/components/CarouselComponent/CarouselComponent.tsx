@@ -69,8 +69,8 @@ export default function CarouselComponent({
     let closestDist = Infinity;
 
     items.forEach((item, i) => {
-      const el = item as HTMLElement;
-      const itemCenter = el.offsetLeft + el.offsetWidth / 2;
+      const itemElement = item as HTMLElement;
+      const itemCenter = itemElement.offsetLeft + itemElement.offsetWidth / 2;
       const dist = Math.abs(trackCenter - itemCenter);
       if (dist < closestDist) {
         closestDist = dist;

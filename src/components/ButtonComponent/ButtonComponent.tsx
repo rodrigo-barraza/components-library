@@ -58,7 +58,14 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
 ) {
   const { sound } = useComponents();
   const buttonRef = useRef<HTMLElement>(null);
-  const resolvedRef = (ref || buttonRef) as any;
+  const setRef = useCallback(
+    (node: HTMLElement | null) => {
+      buttonRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+    },
+    [ref],
+  );
   const isSubmit = variant === "submit";
   const hasLabel = Boolean(children);
   const isIconOnly = Icon && !hasLabel && !loading;
@@ -142,13 +149,13 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
   if (href && !disabled && !loading) {
     return (
       <a
-        ref={resolvedRef}
+        ref={setRef}
         href={href}
         className={classes}
         role="button"
         onMouseEnter={handleMouseEnter}
         onClick={handleClick}
-        {...(rest as any)}
+        {...(rest as React.HTMLAttributes<HTMLAnchorElement>)}
       >
         {content}
       </a>
@@ -158,14 +165,14 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
   /* ── Render as <button> ────────────────────────────────────────── */
   return (
     <button
-      ref={resolvedRef}
+      ref={setRef}
       className={classes}
       disabled={disabled || loading}
       type={isSubmit ? "submit" : "button"}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
       aria-busy={loading || undefined}
-      {...(rest as any)}
+      {...(rest as React.HTMLAttributes<HTMLButtonElement>)}
     >
       {content}
     </button>

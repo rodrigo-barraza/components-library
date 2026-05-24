@@ -175,7 +175,7 @@ export default function NavigationDrawerComponent({
 
 /* ── Item ─────────────────────────────────────────────────────────── */
 
-export interface DrawerItemProps {
+export interface DrawerItemProps extends Record<string, unknown> {
   icon?: ElementType;
   label?: ReactNode;
   badge?: ReactNode;
@@ -226,12 +226,12 @@ function DrawerItem({
     </>
   );
 
-  const sharedProps = {
+  const sharedProps: Record<string, unknown> = {
     className: classes,
     "aria-current": active ? ("page" as const) : undefined,
     "aria-disabled": disabled || undefined,
     ...rest,
-  } as any;
+  };
 
   // Render with custom Link component
   if (LinkComponent && href) {
@@ -246,7 +246,7 @@ function DrawerItem({
   // Render as native anchor
   if (href) {
     return (
-      <a href={href} onClick={onClick as any} {...sharedProps}>
+      <a href={href} onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>} {...sharedProps}>
         <span className={styles.stateLayer} />
         {content}
       </a>
@@ -257,7 +257,7 @@ function DrawerItem({
   return (
     <button
       type="button"
-      onClick={onClick as any}
+      onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
       disabled={disabled}
       {...sharedProps}
     >

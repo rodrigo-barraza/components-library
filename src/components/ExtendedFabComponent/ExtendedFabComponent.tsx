@@ -112,7 +112,7 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
     (node: HTMLButtonElement | null) => {
       containerRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) (ref as any).current = node;
+      else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
     },
     [ref],
   );

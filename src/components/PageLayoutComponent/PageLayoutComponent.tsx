@@ -5,19 +5,34 @@ import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponen
 import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
 import styles from "./PageLayoutComponent.module.css";
 
+/** Mirrors NavigationSidebarComponent's internal NavItem shape */
+interface PageNavItem {
+  id?: string;
+  key?: string;
+  label: string;
+  href?: string;
+  icon?: string | React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+}
+
+/** Mirrors NavigationSidebarComponent's internal NavSection shape */
+interface PageNavSection {
+  label?: string | null;
+  items: PageNavItem[];
+}
+
 export interface PageLayoutComponentProps {
   children?: ReactNode;
   brandIcon?: ReactNode;
   brandLabel?: string;
-  items?: any[];
-  sections?: any[];
+  items?: PageNavItem[];
+  sections?: PageNavSection[];
   activeItem?: string;
   storageKey?: string;
   LinkComponent?: ElementType;
   mainStyle?: React.CSSProperties;
   mainClassName?: string;
   theme?: string;
-  themes?: any[];
+  themes?: string[];
   setTheme?: (theme: string) => void;
   bottomActions?: ReactNode;
   mobileHeaderActions?: ReactNode;

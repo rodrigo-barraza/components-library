@@ -13,7 +13,7 @@ import styles from "./TableComponent.module.css";
  * column visibility controls, drag-to-scroll, and per-column tooltips.
  */
 
-export interface TableColumn<T, TSub = any> {
+export interface TableColumn<T, TSub = unknown> {
   key: string;
   label: string;
   description?: string;
@@ -22,21 +22,21 @@ export interface TableColumn<T, TSub = any> {
   defaultHidden?: boolean;
   hideable?: boolean;
   sortable?: boolean;
-  sortValue?: (row: T) => any;
+  sortValue?: (row: T) => string | number;
   render?: (row: T, index: number) => React.ReactNode;
   renderSub?: (sub: TSub, index: number) => React.ReactNode;
   className?: string;
 }
 
-interface HeaderCellProps<T> {
-  col: TableColumn<T, any>;
+interface HeaderCellProps<T, TSub = unknown> {
+  col: TableColumn<T, TSub>;
   thClasses: string;
   isSortable: boolean;
   handleSort: (key: string) => void;
   sort: { key: string | null; dir: "asc" | "desc" };
 }
 
-function HeaderCell<T>({ col, thClasses, isSortable, handleSort, sort }: HeaderCellProps<T>) {
+function HeaderCell<T, TSub>({ col, thClasses, isSortable, handleSort, sort }: HeaderCellProps<T, TSub>) {
   const thRef = useRef<HTMLTableHeaderCellElement | null>(null);
   const [tipMounted, setTipMounted] = useState(false);
   const [tipVisible, setTipVisible] = useState(false);
@@ -103,7 +103,7 @@ function HeaderCell<T>({ col, thClasses, isSortable, handleSort, sort }: HeaderC
   );
 }
 
-function loadHiddenColumns<T>(storageKey: string | undefined, columns: TableColumn<T, any>[]): Set<string> {
+function loadHiddenColumns<T, TSub>(storageKey: string | undefined, columns: TableColumn<T, TSub>[]): Set<string> {
   if (!storageKey) return new Set<string>();
   try {
     const raw = localStorage.getItem(`table-hidden-cols:${storageKey}`);
@@ -126,14 +126,14 @@ function saveHiddenColumns(storageKey: string | undefined, hiddenSet: Set<string
   } catch { /* ignore */ }
 }
 
-interface ColumnFilterProps<T> {
-  columns: TableColumn<T, any>[];
+interface ColumnFilterProps<T, TSub = unknown> {
+  columns: TableColumn<T, TSub>[];
   hiddenColumns: Set<string>;
   onToggle: (key: string) => void;
   storageKey: string;
 }
 
-function ColumnFilter<T>({ columns, hiddenColumns, onToggle, storageKey }: ColumnFilterProps<T>) {
+function ColumnFilter<T, TSub>({ columns, hiddenColumns, onToggle, storageKey }: ColumnFilterProps<T, TSub>) {
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
@@ -206,7 +206,7 @@ function ColumnFilter<T>({ columns, hiddenColumns, onToggle, storageKey }: Colum
   );
 }
 
-export interface TableComponentProps<T, TSub = any> {
+export interface TableComponentProps<T, TSub = unknown> {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   columns: TableColumn<T, TSub>[];
@@ -231,7 +231,7 @@ export interface TableComponentProps<T, TSub = any> {
   storageKey?: string;
 }
 
-export default function TableComponent<T, TSub = any>({
+export default function TableComponent<T, TSub = unknown>({
   title,
   subtitle,
   columns,
@@ -307,9 +307,9 @@ export default function TableComponent<T, TSub = any>({
   const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     const d = dragRef.current;
     if (!d.active) return;
-    const dx = e.clientX - d.startX;
-    const dy = e.clientY - d.startY;
-    if (!d.moved && Math.abs(dx) + Math.abs(dy) > 5) {
+    const deltaX = e.clientX - d.startX;
+    const deltaY = e.clientY - d.startY;
+    if (!d.moved && Math.abs(deltaX) + Math.abs(deltaY) > 5) {
       d.moved = true;
       const element = scrollRef.current;
       if (element && d.pointerId !== undefined) {
@@ -320,8 +320,8 @@ export default function TableComponent<T, TSub = any>({
     if (d.moved) {
       const element = scrollRef.current;
       if (element) {
-        element.scrollLeft = d.scrollLeft - dx;
-        element.scrollTop = d.scrollTop - dy;
+        element.scrollLeft = d.scrollLeft - deltaX;
+        element.scrollTop = d.scrollTop - deltaY;
       }
     }
   }, []);
@@ -372,14 +372,14 @@ export default function TableComponent<T, TSub = any>({
   const sorted =
     sort.key && !onSort
       ? [...data].sort((a, b) => {
-          const va = sortCol?.sortValue ? sortCol.sortValue(a) : ((a as any)[sort.key!] ?? 0);
-          const vb = sortCol?.sortValue ? sortCol.sortValue(b) : ((b as any)[sort.key!] ?? 0);
+          const va = sortCol?.sortValue ? sortCol.sortValue(a) : ((a as Record<string, unknown>)[sort.key!] ?? 0);
+          const vb = sortCol?.sortValue ? sortCol.sortValue(b) : ((b as Record<string, unknown>)[sort.key!] ?? 0);
           if (typeof va === "string" && typeof vb === "string") {
             return sort.dir === "asc"
               ? va.localeCompare(vb)
               : vb.localeCompare(va);
           }
-          return sort.dir === "asc" ? va - vb : vb - va;
+          return sort.dir === "asc" ? Number(va) - Number(vb) : Number(vb) - Number(va);
         })
       : data;
 
@@ -519,7 +519,7 @@ export default function TableComponent<T, TSub = any>({
                         if (col.render) {
                           content = col.render(row, ri);
                         } else {
-                          content = (row as any)[col.key] ?? "—";
+                          content = ((row as Record<string, unknown>)[col.key] ?? "—") as React.ReactNode;
                         }
 
                         return (
@@ -561,7 +561,7 @@ export default function TableComponent<T, TSub = any>({
                             } else if (col.render) {
                               content = col.render(sub as unknown as T, si);
                             } else {
-                              content = (sub as any)[col.key] ?? "—";
+                              content = ((sub as Record<string, unknown>)[col.key] ?? "—") as React.ReactNode;
                             }
                             return (
                               <td key={col.key} style={cellStyle}>

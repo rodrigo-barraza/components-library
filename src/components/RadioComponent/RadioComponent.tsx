@@ -3,10 +3,10 @@ import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./RadioComponent.module.css";
 
-export interface RadioComponentProps {
-  value: any;
-  selectedValue: any;
-  onChange: (value: any) => void;
+export interface RadioComponentProps<T extends string | number | boolean = string | number | boolean> {
+  value: T;
+  selectedValue: T;
+  onChange: (value: T) => void;
   label?: string | ReactNode;
   disabled?: boolean;
   error?: boolean;
@@ -33,7 +33,7 @@ export interface RadioComponentProps {
  *   arrow-key navigation per WAI-ARIA Radio Group pattern.
  *   Tab moves focus into/out of the group; arrows cycle within.
  */
-export default function RadioComponent({
+export default function RadioComponent<T extends string | number | boolean = string | number | boolean>({
   value,
   selectedValue,
   onChange,
@@ -44,7 +44,7 @@ export default function RadioComponent({
   id,
   name,
   labelPlacement = "end",
-}: RadioComponentProps) {
+}: RadioComponentProps<T>) {
   const { sound } = useComponents();
   const checked = value === selectedValue;
 
@@ -76,7 +76,7 @@ export default function RadioComponent({
           type="radio"
           id={id}
           name={name}
-          value={value}
+          value={String(value)}
           className={styles.hiddenInput}
           checked={checked}
           disabled={disabled}

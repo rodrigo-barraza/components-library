@@ -221,8 +221,8 @@ function SingleTrack({
   const [dragging, setDragging] = useState(false);
   const [pressed, setPressed] = useState(false);
 
-  const pct = max === min ? 0 : ((value - min) / (max - min)) * 100;
-  const midPct = ((0 - min) / (max - min)) * 100; // Center point for centered mode
+  const percentage = max === min ? 0 : ((value - min) / (max - min)) * 100;
+  const midPercentage = ((0 - min) / (max - min)) * 100; // Center point for centered mode
   const fmt = formatValue || defaultFormat;
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -254,8 +254,8 @@ function SingleTrack({
   /* ── Centered fill calculations ── */
   const centeredFill = centered
     ? {
-        left: `${Math.min(pct, midPct)}%`,
-        width: `${Math.abs(pct - midPct)}%`,
+        left: `${Math.min(percentage, midPercentage)}%`,
+        width: `${Math.abs(percentage - midPercentage)}%`,
       }
     : null;
 
@@ -277,7 +277,7 @@ function SingleTrack({
         {centered && centeredFill ? (
           <div className={styles.activeTrack} style={centeredFill} />
         ) : (
-          <div className={styles.activeTrack} style={{ width: `${pct}%` }} />
+          <div className={styles.activeTrack} style={{ width: `${percentage}%` }} />
         )}
 
         {/* ── Stop indicators (M3 endpoints) ── */}
@@ -309,7 +309,7 @@ function SingleTrack({
           ]
             .filter(Boolean)
             .join(" ")}
-          style={{ left: `${pct}%` }}
+          style={{ left: `${percentage}%` }}
           role="slider"
           tabIndex={disabled ? -1 : 0}
           aria-label={label}
@@ -376,8 +376,8 @@ function RangeTrack({
   const [pressedThumb, setPressedThumb] = useState<"start" | "end" | null>(null);
 
   const [lo, hi] = value;
-  const loPct = max === min ? 0 : ((lo - min) / (max - min)) * 100;
-  const hiPct = max === min ? 100 : ((hi - min) / (max - min)) * 100;
+  const lowPercentage = max === min ? 0 : ((lo - min) / (max - min)) * 100;
+  const highPercentage = max === min ? 100 : ((hi - min) / (max - min)) * 100;
   const fmt = formatValue || defaultFormat;
 
   const resolveThumb = useCallback(
@@ -461,7 +461,7 @@ function RangeTrack({
         {/* ── Active range fill ── */}
         <div
           className={styles.activeTrack}
-          style={{ left: `${loPct}%`, width: `${hiPct - loPct}%` }}
+          style={{ left: `${lowPercentage}%`, width: `${highPercentage - lowPercentage}%` }}
         />
 
         {/* ── Stop indicators ── */}
@@ -491,7 +491,7 @@ function RangeTrack({
           ]
             .filter(Boolean)
             .join(" ")}
-          style={{ left: `${loPct}%` }}
+          style={{ left: `${lowPercentage}%` }}
           role="slider"
           tabIndex={disabled ? -1 : 0}
           aria-label={label ? `${label} minimum` : "Range minimum"}
@@ -522,7 +522,7 @@ function RangeTrack({
           ]
             .filter(Boolean)
             .join(" ")}
-          style={{ left: `${hiPct}%` }}
+          style={{ left: `${highPercentage}%` }}
           role="slider"
           tabIndex={disabled ? -1 : 0}
           aria-label={label ? `${label} maximum` : "Range maximum"}

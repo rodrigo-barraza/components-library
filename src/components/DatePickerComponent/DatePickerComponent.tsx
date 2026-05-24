@@ -294,8 +294,8 @@ export default function DatePickerComponent({
 
   const handlePreset = useCallback(
     (preset: DatePreset) => {
-      const val = preset.getValue();
-      onChange(val);
+      const presetDateRange = preset.getValue();
+      onChange(presetDateRange);
       setSelecting(null);
       setHoverDate(null);
       setOpen(false);

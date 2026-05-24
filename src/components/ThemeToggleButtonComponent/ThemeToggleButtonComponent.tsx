@@ -1,8 +1,11 @@
 import { useTheme } from "../ThemeProvider/ThemeProvider.js";
 import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
 
+/** Icon map values: render function, React element, or Lucide icon name string */
+type ThemeIcon = ((props: { size?: number }) => React.ReactNode) | React.ReactNode | string;
+
 export interface ThemeToggleButtonComponentProps {
-  iconMap?: Record<string, any>;
+  iconMap?: Record<string, ThemeIcon>;
   labelMap?: Record<string, string>;
   size?: number;
   className?: string;
@@ -13,7 +16,7 @@ export interface ThemeToggleButtonComponentProps {
  * Uses Lucide icon names (string) so we don't force a hard dependency —
  * consumers can also pass custom `iconMap` / `labelMap` overrides.
  */
-const DEFAULT_ICON_MAP: Record<string, any> = {
+const DEFAULT_ICON_MAP: Record<string, ThemeIcon> = {
   dark: "Sun",
   light: "CloudFog",
   muted: "Palmtree",

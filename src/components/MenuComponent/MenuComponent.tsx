@@ -469,9 +469,9 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
 
         case "ArrowUp": {
           e.preventDefault();
-          const prev =
+          const previousFocusIndex =
             currentIdx > 0 ? currentIdx - 1 : focusable.length - 1;
-          focusable[prev]?.focus();
+          focusable[previousFocusIndex]?.focus();
           break;
         }
 

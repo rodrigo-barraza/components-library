@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars -- sub-components used in JSX (no react eslint plugin) */
+
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import styles from "./DiscordChatComponent.module.css";
 
@@ -89,6 +89,8 @@ export interface DiscordMessage {
   guildBanner?: string;
   guildSplash?: string;
   guildId?: string;
+  channelId?: string;
+  channelName?: string;
 }
 
 export interface DiscordChannel {
@@ -321,8 +323,8 @@ function extractTenorUrls(content: string) {
 const CUSTOM_EMOJI_RE = /<(a?):(\w+):(\d+)>/g;
 
 function emojiUrl(id: string, animated?: boolean) {
-  const ext = animated ? "gif" : "webp";
-  return `https://cdn.discordapp.com/emojis/${id}.${ext}?size=48&quality=lossless`;
+  const imageFormat = animated ? "gif" : "webp";
+  return `https://cdn.discordapp.com/emojis/${id}.${imageFormat}?size=48&quality=lossless`;
 }
 
 // ── Format Discord message content ───────────────────────────────
@@ -485,9 +487,9 @@ function decodeWaveform(base64Str: string): number[] {
   if (!base64Str) return [];
   try {
     const binaryString = window.atob(base64Str);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
+    const binaryLength = binaryString.length;
+    const bytes = new Uint8Array(binaryLength);
+    for (let i = 0; i < binaryLength; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
     return Array.from(bytes);
@@ -1021,8 +1023,8 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
   if (serverEmojis?.length) {
     allCategories.push({ id: "server", name: "Server Emojis", icon: "🏠" });
   }
-  for (const cat of EMOJI_CATEGORIES) {
-    allCategories.push(cat);
+  for (const category of EMOJI_CATEGORIES) {
+    allCategories.push(category);
   }
 
   // Filter server emojis
@@ -1495,8 +1497,8 @@ export default function DiscordChatComponent({
             }
             // Build guild icon/banner CDN URLs from stored hashes
             if (firstMsg.guildIcon && firstMsg.guildId) {
-              const ext = firstMsg.guildIcon.startsWith("a_") ? "gif" : "png";
-              const url = `https://cdn.discordapp.com/icons/${firstMsg.guildId}/${firstMsg.guildIcon}.${ext}?size=128`;
+              const iconFormat = firstMsg.guildIcon.startsWith("a_") ? "gif" : "png";
+              const url = `https://cdn.discordapp.com/icons/${firstMsg.guildId}/${firstMsg.guildIcon}.${iconFormat}?size=128`;
               setServerIcon((prev) => prev || url);
             }
             if (firstMsg.guildBanner && firstMsg.guildId) {
@@ -1513,11 +1515,10 @@ export default function DiscordChatComponent({
               if (hasRealNames) return prev;
 
               const channelMap = new Map<string, string>();
-              for (const message of reversed) {
-                const msgAny = message as any;
-                if (msgAny.channelId && msgAny.channelName) {
-                  channelMap.set(msgAny.channelId, msgAny.channelName);
-                }
+                for (const message of reversed) {
+                  if (message.channelId && message.channelName) {
+                    channelMap.set(message.channelId, message.channelName);
+                  }
               }
               if (channelMap.size === 0) return prev;
 
@@ -1820,10 +1821,10 @@ export default function DiscordChatComponent({
               const groups: { category: string; items: DiscordChannel[] }[] = [];
               let lastCategory: string | null = null;
               for (const ch of channels) {
-                const cat = ch.parentName || "Text Channels";
-                if (cat !== lastCategory) {
-                  groups.push({ category: cat, items: [] });
-                  lastCategory = cat;
+                const channelCategory = ch.parentName || "Text Channels";
+                if (channelCategory !== lastCategory) {
+                  groups.push({ category: channelCategory, items: [] });
+                  lastCategory = channelCategory;
                 }
                 groups[groups.length - 1].items.push(ch);
               }
@@ -1869,9 +1870,9 @@ export default function DiscordChatComponent({
               // Build a lookup map for reply references
               const messageMap = new Map(messages.map((m) => [m.id, m]));
               return messages.map((message, i) => {
-                const prev = i > 0 ? messages[i - 1] : null;
-                const grouped = shouldGroup(message, prev);
-                const newDay = isDifferentDay(message, prev);
+                const previousMessage = i > 0 ? messages[i - 1] : null;
+                const grouped = shouldGroup(message, previousMessage);
+                const newDay = isDifferentDay(message, previousMessage);
                 const nameStyle = resolveRoleColorStyle(message.author);
                 return (
                   <div key={message.id}>

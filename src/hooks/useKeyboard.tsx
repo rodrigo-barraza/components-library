@@ -52,10 +52,10 @@ export default function useKeyboard(
       parts.push(event.key.toLowerCase());
 
       const combo = parts.join("+");
-      const fn = keyMapRef.current[combo];
-      if (fn) {
+      const keyHandler = keyMapRef.current[combo];
+      if (keyHandler) {
         event.preventDefault();
-        fn(event);
+        keyHandler(event);
       }
     };
 
