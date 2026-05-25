@@ -106,6 +106,8 @@ interface ThemePickerProps {
   onSelectTheme: (theme: string) => void;
   collapsed?: boolean;
   className?: string;
+  /** Dynamic metadata for custom user themes (overlays onto THEME_CATALOG) */
+  customThemeMeta?: Record<string, { label: string; icon: string; color: string; secondary: string; bg: string }>;
 }
 
 export default function ThemePickerComponent({
@@ -114,6 +116,7 @@ export default function ThemePickerComponent({
   onSelectTheme,
   collapsed = false,
   className,
+  customThemeMeta = {},
 }: ThemePickerProps) {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -169,7 +172,8 @@ export default function ThemePickerComponent({
     [onSelectTheme],
   );
 
-  const currentMeta = THEME_CATALOG[theme] || THEME_CATALOG.dark;
+  const DEFAULT_META = { label: "Theme", icon: "Palette", color: "#888", secondary: "#aaa", bg: "#222" };
+  const currentMeta = THEME_CATALOG[theme] || customThemeMeta[theme] || DEFAULT_META;
   const CurrentIcon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[currentMeta.icon] || Icons.Palette;
 
   const triggerButton = (
@@ -217,7 +221,7 @@ export default function ThemePickerComponent({
           <div className={styles.popoverHeader}>Theme</div>
           <div className={styles.themeList}>
             {themes.map((themeName) => {
-              const meta = THEME_CATALOG[themeName] || { label: themeName, icon: "Palette", color: "#888", secondary: "#aaa", bg: "#222" };
+              const meta = THEME_CATALOG[themeName] || customThemeMeta[themeName] || DEFAULT_META;
               const ThemeIcon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[meta.icon] || Icons.Palette;
               const isActive = themeName === theme;
 
