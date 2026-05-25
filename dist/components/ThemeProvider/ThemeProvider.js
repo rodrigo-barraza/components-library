@@ -8,18 +8,26 @@ const ThemeContext = createContext({
     mounted: false,
     toggleTheme: () => { },
     setTheme: () => { },
+    addThemes: () => { },
 });
-export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "dark", themes = THEMES_DEFAULT, attribute = "data-theme", children, }) {
+/** Custom themes use a `custom-` prefix — accept them without strict list membership */
+const isCustomTheme = (name) => name.startsWith("custom-");
+export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "dark", themes: initialThemes = THEMES_DEFAULT, attribute = "data-theme", children, }) {
     // Always start with defaultTheme to match SSR — avoids hydration mismatch
     const [theme, setThemeState] = useState(defaultTheme);
     const [mounted, setMounted] = useState(false);
+    const [extraThemes, setExtraThemes] = useState([]);
+    // Merged theme list: built-in + dynamically registered custom themes
+    const themes = useMemo(() => [...initialThemes, ...extraThemes.filter((t) => !initialThemes.includes(t))], [initialThemes, extraThemes]);
+    /** Check if a theme name is valid (in the list OR a custom theme) */
+    const isValidTheme = useCallback((name) => themes.includes(name) || isCustomTheme(name), [themes]);
     // Hydrate from localStorage after first client render
     useEffect(() => {
         try {
             const raw = localStorage.getItem(storageKey);
             if (raw) {
                 const parsed = JSON.parse(raw);
-                if (themes.includes(parsed)) {
+                if (isValidTheme(parsed)) {
                     setThemeState(parsed);
                     document.documentElement.setAttribute(attribute, parsed);
                 }
@@ -51,18 +59,25 @@ export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "dark",
     }, [theme, mounted, attribute, storageKey]);
     const setTheme = useCallback((next) => {
         const resolved = typeof next === "function" ? next(theme) : next;
-        if (themes.includes(resolved)) {
+        if (isValidTheme(resolved)) {
             setThemeState(resolved);
         }
-    }, [theme, themes]);
-    // Cycle to the next theme in the ordered list
+    }, [theme, isValidTheme]);
+    // Cycle to the next theme in the ordered list (built-in only for simplicity)
     const toggleTheme = useCallback(() => {
         setThemeState((prev) => {
             const index = themes.indexOf(prev);
             return themes[(index + 1) % themes.length];
         });
     }, [themes]);
-    const value = useMemo(() => ({ theme, themes, mounted, toggleTheme, setTheme }), [theme, themes, mounted, toggleTheme, setTheme]);
+    // Dynamically register additional theme names
+    const addThemes = useCallback((names) => {
+        setExtraThemes((prev) => {
+            const next = new Set([...prev, ...names]);
+            return Array.from(next);
+        });
+    }, []);
+    const value = useMemo(() => ({ theme, themes, mounted, toggleTheme, setTheme, addThemes }), [theme, themes, mounted, toggleTheme, setTheme, addThemes]);
     return (_jsx(ThemeContext.Provider, { value: value, children: children }));
 }
 /**

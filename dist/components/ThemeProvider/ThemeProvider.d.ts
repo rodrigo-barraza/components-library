@@ -30,6 +30,8 @@ export interface ThemeContextValue {
     mounted: boolean;
     toggleTheme: () => void;
     setTheme: (theme: string | ((prev: string) => string)) => void;
+    /** Dynamically register additional theme names (e.g. custom user themes) */
+    addThemes: (names: string[]) => void;
 }
 interface ThemeProviderProps {
     /** localStorage key for persistence */
@@ -42,7 +44,7 @@ interface ThemeProviderProps {
     attribute?: string;
     children: ReactNode;
 }
-export declare function ThemeProvider({ storageKey, defaultTheme, themes, attribute, children, }: ThemeProviderProps): import("react/jsx-runtime").JSX.Element;
+export declare function ThemeProvider({ storageKey, defaultTheme, themes: initialThemes, attribute, children, }: ThemeProviderProps): import("react/jsx-runtime").JSX.Element;
 /**
  * Hook to access theme state and controls.
  */
