@@ -207,7 +207,7 @@
 
 .secondary {
   background-color: var(
-    --accent-primary-subtle,
+    --calculated-accent-primary-subtle,
     color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface))
   );
   color: var(--accent-primary);

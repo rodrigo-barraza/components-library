@@ -18,7 +18,7 @@
   /* Default — uses theme tokens */
   color: var(--text-secondary);
   background: var(--bg-elevated);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--calculated-border-color);
 }
 
 .badge:hover {

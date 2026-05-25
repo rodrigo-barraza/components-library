@@ -13,8 +13,8 @@
 .inputField {
   height: var(--input-height);
   padding: 0 10px;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg);
+  border: 1px solid var(--calculated-border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
   transition: border-color 0.2s;
@@ -24,8 +24,8 @@
 .formGroup textarea {
   height: auto;
   padding: 10px;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg);
+  border: 1px solid var(--calculated-border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
   transition: border-color 0.2s;
@@ -63,7 +63,7 @@
   height: var(--input-height);
   padding: 0 10px;
   background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   word-break: break-all;
 }

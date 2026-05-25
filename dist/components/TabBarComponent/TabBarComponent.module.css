@@ -18,7 +18,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16px, 1fr));
   gap: 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--calculated-border-color);
   flex-shrink: 0;
   padding: 0;
   overflow: visible;
@@ -48,10 +48,24 @@
 .tooltipWrapper {
   flex: 1;
   height: 100%;
+  background: var(--bg-base);
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--bg-elevated);
+  }
 
   &>button {
     width: 100%;
     height: 100%;
+  }
+}
+
+.tooltipWrapperActive {
+  background: var(--bg-surface);
+
+  &:hover {
+    background: var(--bg-surface);
   }
 }
 

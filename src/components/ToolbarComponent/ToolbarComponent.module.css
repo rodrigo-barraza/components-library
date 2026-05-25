@@ -62,11 +62,11 @@
 /* ── Divider ─────────────────────────────────────────────────────── */
 
 .divider.horizontal {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--calculated-border-color);
 }
 
 .divider.vertical {
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--calculated-border-color);
 }
 
 /* ── Sticky ──────────────────────────────────────────────────────── */
@@ -199,7 +199,7 @@
 
 .separator {
   flex-shrink: 0;
-  background: var(--border-color);
+  background: var(--calculated-border-color);
 }
 
 .horizontal .separator {

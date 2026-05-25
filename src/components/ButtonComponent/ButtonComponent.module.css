@@ -165,7 +165,7 @@
 .outlined {
   background: transparent;
   color: var(--accent-primary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--calculated-border-color);
 }
 
 .outlined .stateLayer {
@@ -173,7 +173,7 @@
 }
 
 .outlined:hover:not(:disabled) {
-  border-color: var(--border-color);
+  border-color: var(--calculated-border-color);
 }
 
 .outlined:focus-visible {
@@ -242,7 +242,7 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .tonal {
-  background: var(--accent-primary-subtle, color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface)));
+  background: var(--calculated-accent-primary-subtle, color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface)));
   color: var(--accent-primary);
 }
 
@@ -278,7 +278,7 @@
 }
 
 .primary:hover:not(:disabled) {
-  background: var(--accent-primary-hover);
+  background: var(--calculated-accent-primary-hover);
   box-shadow:
     0 1px 2px 0 rgb(0 0 0 / 0.20),
     0 1px 3px 1px rgb(0 0 0 / 0.10);
@@ -294,7 +294,7 @@
 .secondary {
   background: var(--bg-surface);
   color: var(--text-secondary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--calculated-border-color);
 }
 
 .secondary .stateLayer {
@@ -324,14 +324,14 @@
 }
 
 .disabled:hover:not(:disabled) {
-  background: var(--accent-primary-subtle);
+  background: var(--calculated-accent-primary-subtle);
   color: var(--text-primary);
 }
 
 /* ── Destructive ─────────────────────────────────────────────────── */
 
 .destructive {
-  background: var(--color-danger-subtle);
+  background: var(--calculated-color-danger-subtle);
   color: var(--color-danger);
   border: 1px solid color-mix(in srgb, var(--color-danger) 20%, transparent);
 }
@@ -394,14 +394,14 @@
 }
 
 .submit:hover:not(:disabled) {
-  background: var(--accent-primary-hover);
+  background: var(--calculated-accent-primary-hover);
   transform: translateY(-1px);
 }
 
 .submit:disabled {
   background: var(--bg-base);
   color: var(--text-secondary);
-  border-color: var(--border-color);
+  border-color: var(--calculated-border-color);
   opacity: 1;
 }
 

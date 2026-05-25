@@ -13,7 +13,7 @@
   transition: all 0.15s;
 
   &:hover {
-    background: var(--accent-primary-glow);
+    background: var(--calculated-accent-primary-glow);
     color: var(--accent-primary);
   }
 }

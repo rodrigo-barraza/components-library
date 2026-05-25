@@ -226,7 +226,7 @@ export default function TabBarComponent({
               label={tab.tooltip}
               position="bottom"
               delay={400}
-              className={styles.tooltipWrapper}
+              className={`${styles.tooltipWrapper}${isActive ? ` ${styles.tooltipWrapperActive}` : ""}`}
               disabled={tab.tooltipDisabled}
             >
               {button}

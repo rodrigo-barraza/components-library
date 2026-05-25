@@ -5,7 +5,7 @@
 /* ── Base shape ─────────────────────────────────────── */
 
 .skeleton {
-  background: var(--border-color, rgba(255, 255, 255, 0.06));
+  background: var(--calculated-border-color, rgba(255, 255, 255, 0.06));
   border-radius: var(--border-radius-sm, 2px);
   position: relative;
   overflow: hidden;
@@ -16,11 +16,11 @@
 .animate {
   background: linear-gradient(
     90deg,
-    var(--border-color, rgba(255, 255, 255, 0.06)) 0%,
+    var(--calculated-border-color, rgba(255, 255, 255, 0.06)) 0%,
     rgba(255, 255, 255, 0.08) 40%,
     rgba(255, 255, 255, 0.12) 50%,
     rgba(255, 255, 255, 0.08) 60%,
-    var(--border-color, rgba(255, 255, 255, 0.06)) 100%
+    var(--calculated-border-color, rgba(255, 255, 255, 0.06)) 100%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
@@ -76,7 +76,7 @@
 @media (prefers-reduced-motion: reduce) {
   .animate {
     animation: pulse-skeleton 2.5s ease-in-out infinite;
-    background: var(--border-color, rgba(255, 255, 255, 0.06));
+    background: var(--calculated-border-color, rgba(255, 255, 255, 0.06));
   }
 
   @keyframes pulse-skeleton {

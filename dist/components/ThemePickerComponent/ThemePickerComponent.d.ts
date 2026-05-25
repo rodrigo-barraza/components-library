@@ -1,28 +1,4 @@
-/**
- * Theme metadata — icon, label, and representative colors for each built-in theme.
- *
- * `color` is the primary `--accent-color` and `secondary` is `--accent-secondary`
- * from each theme's CSS custom properties. Both are rendered as a dual-swatch so
- * the user can visually identify each theme's full palette at a glance.
- */
-interface ThemeCatalogEntry {
-    label: string;
-    icon: string;
-    background: string;
-    surface: string;
-    elevated: string;
-    primary: string;
-    secondary: string;
-    tertiary: string;
-    textPrimary: string;
-    textSecondary: string;
-    textMuted: string;
-    borderColor: string;
-    success: string;
-    danger: string;
-    warning: string;
-    info: string;
-}
+import { type ThemeCatalogEntry } from "../ThemeProvider/ThemeProvider.js";
 /**
  * ThemePickerComponent — Dropup theme selector for sidebar footers.
  *

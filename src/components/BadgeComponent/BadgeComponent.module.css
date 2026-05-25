@@ -22,7 +22,7 @@
 
 .provider {
   color: var(--color-info);
-  background: var(--color-info-subtle);
+  background: var(--calculated-color-info-subtle);
   border-color: color-mix(in srgb, var(--color-info) 20%, transparent);
 }
 .provider:hover {
@@ -31,7 +31,7 @@
 
 .endpoint {
   color: var(--accent-primary);
-  background: var(--accent-primary-subtle);
+  background: var(--calculated-accent-primary-subtle);
   border-color: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 .endpoint:hover {
@@ -40,7 +40,7 @@
 
 .modality {
   color: var(--accent-primary);
-  background: var(--accent-primary-subtle);
+  background: var(--calculated-accent-primary-subtle);
   border-color: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 .modality:hover {
@@ -49,7 +49,7 @@
 
 .success {
   color: var(--color-success);
-  background: var(--color-success-subtle);
+  background: var(--calculated-color-success-subtle);
   border-color: color-mix(in srgb, var(--color-success) 20%, transparent);
 }
 .success:hover {
@@ -58,7 +58,7 @@
 
 .error {
   color: var(--color-danger);
-  background: var(--color-danger-subtle);
+  background: var(--calculated-color-danger-subtle);
   border-color: color-mix(in srgb, var(--color-danger) 20%, transparent);
 }
 .error:hover {
@@ -67,7 +67,7 @@
 
 .info {
   color: var(--color-info);
-  background: var(--color-info-subtle);
+  background: var(--calculated-color-info-subtle);
   border-color: color-mix(in srgb, var(--color-info) 20%, transparent);
 }
 .info:hover {
@@ -76,7 +76,7 @@
 
 .accent {
   color: var(--accent-primary);
-  background: var(--accent-primary-subtle);
+  background: var(--calculated-accent-primary-subtle);
   border-color: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 .accent:hover {
@@ -85,7 +85,7 @@
 
 .warning {
   color: var(--color-warning);
-  background: var(--color-warning-subtle);
+  background: var(--calculated-color-warning-subtle);
   border-color: color-mix(in srgb, var(--color-warning) 20%, transparent);
 }
 .warning:hover {

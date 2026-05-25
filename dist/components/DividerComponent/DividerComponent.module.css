@@ -6,10 +6,10 @@
 
 /* ── Base ─────────────────────────────────────────────────────────── */
 /* M3 spec: 1px thick line using outline-variant color.
-   Mapped to --border-color from our theme tokens.                    */
+   Mapped to --calculated-border-color from our theme tokens.                    */
 
 .divider {
-  --_divider-color: var(--divider-color, var(--border-color));
+  --_divider-color: var(--divider-color, var(--calculated-border-color));
   --_divider-thickness: var(--divider-thickness, 1px);
   --_divider-inset-start: 0px;
   --_divider-inset-end: 0px;

@@ -11,6 +11,7 @@ export { default as ChatMessageComponent } from "./components/ChatMessageCompone
 export { default as ChatPanelComponent } from "./components/ChatPanelComponent/ChatPanelComponent.js";
 export { default as CheckboxComponent } from "./components/CheckboxComponent/CheckboxComponent.js";
 export { default as CloseButtonComponent } from "./components/CloseButtonComponent/CloseButtonComponent.js";
+export { default as CustomThemeBootComponent } from "./components/CustomThemeBootComponent/CustomThemeBootComponent.js";
 export { default as CollapsibleBlockComponent } from "./components/CollapsibleBlockComponent/CollapsibleBlockComponent.js";
 export { default as CopyButtonComponent } from "./components/CopyButtonComponent/CopyButtonComponent.js";
 export { default as CountBadgeComponent } from "./components/CountBadgeComponent/CountBadgeComponent.js";
@@ -78,8 +79,10 @@ export { default as VisibilityBadgeComponent } from "./components/VisibilityBadg
 export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.js";
 export { ChatProvider, useChat } from "./components/ChatProvider.js";
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
-export { ThemeProvider, useTheme } from "./components/ThemeProvider/ThemeProvider.js";
+export { ThemeProvider, useTheme, THEME_CATALOG, } from "./components/ThemeProvider/ThemeProvider.js";
+export type { ThemeCatalogEntry } from "./components/ThemeProvider/ThemeProvider.js";
 export { default as ChatService } from "./services/ChatService.js";
+export { default as CustomThemeService } from "./services/CustomThemeService.js";
 export { default as SoundService } from "./services/SoundService.js";
 export { createApiClient } from "./services/ApiClient.js";
 export { createSessionService } from "./services/SessionService.js";
@@ -100,6 +103,8 @@ export { default as useMediaQuery } from "./hooks/useMediaQuery.js";
 export { default as usePolling } from "./hooks/usePolling.js";
 export { default as useSetToggle } from "./hooks/useSetToggle.js";
 export { default as useTweenValue } from "./hooks/useTweenValue.js";
+export type { CustomThemeBootComponentProps } from "./components/CustomThemeBootComponent/CustomThemeBootComponent.js";
+export type { CustomThemeTokens, CustomTheme } from "./services/CustomThemeService.js";
 export type { ChatComponentProps } from "./components/ChatComponent/ChatComponent.js";
 export type { ChatInputComponentProps } from "./components/ChatInputComponent/ChatInputComponent.js";
 export type { ChatLauncherComponentProps } from "./components/ChatLauncherComponent/ChatLauncherComponent.js";

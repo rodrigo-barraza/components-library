@@ -15,7 +15,7 @@
   padding: 0;
 
   &:hover {
-    background: var(--accent-primary-subtle);
+    background: var(--calculated-accent-primary-subtle);
     color: var(--text-primary);
   }
 }
@@ -29,7 +29,7 @@
 /* Active state */
 .active {
   color: var(--accent-primary);
-  background: var(--accent-primary-subtle);
+  background: var(--calculated-accent-primary-subtle);
 }
 
 /* Hover-reveal: hidden until parent is hovered */

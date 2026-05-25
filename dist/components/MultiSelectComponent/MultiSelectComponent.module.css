@@ -32,8 +32,8 @@
   width: 100%;
   min-height: var(--input-height, 36px);
   padding: 4px 10px 4px 10px;
-  background: var(--select-bg, var(--bg-surface));
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg, var(--bg-surface));
+  border: 1px solid var(--calculated-border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
   font-size: 13px;
@@ -50,7 +50,7 @@
 
 .triggerOpen {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px var(--accent-primary-glow);
+  box-shadow: 0 0 0 2px var(--calculated-accent-primary-glow);
 }
 
 .triggerDisabled {
@@ -96,7 +96,7 @@
   font-size: 11px;
   font-weight: 500;
   color: var(--accent-primary);
-  background: var(--accent-primary-subtle, rgba(99, 102, 241, 0.1));
+  background: var(--calculated-accent-primary-subtle, rgba(99, 102, 241, 0.1));
   border-radius: var(--border-radius-sm, 4px);
   white-space: nowrap;
   line-height: 1.4;
@@ -159,8 +159,8 @@
   left: 0;
   min-width: 100%;
   width: max-content;
-  background: var(--select-option-bg, var(--bg-surface));
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-option-bg, var(--bg-surface));
+  border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   z-index: 9999;
@@ -192,7 +192,7 @@
   background: none;
   border: none;
   border-radius: 2px;
-  color: var(--select-option-text, var(--text-primary));
+  color: var(--calculated-select-option-text, var(--text-primary));
   font-size: 13px;
   cursor: pointer;
   transition: background 0.15s;
@@ -200,7 +200,7 @@
 }
 
 .option:hover {
-  background: var(--accent-primary-glow, rgba(99, 102, 241, 0.08));
+  background: var(--calculated-accent-primary-glow, rgba(99, 102, 241, 0.08));
 }
 
 .optionSelected {
@@ -225,7 +225,7 @@
   justify-content: center;
   width: 16px;
   height: 16px;
-  border: 1.5px solid var(--border-color);
+  border: 1.5px solid var(--calculated-border-color);
   border-radius: 3px;
   flex-shrink: 0;
   transition:

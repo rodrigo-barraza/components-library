@@ -50,8 +50,8 @@
   width: 100%;
   height: var(--input-height);
   padding: 0 12px;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg);
+  border: 1px solid var(--calculated-border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
   font-size: 14px;
@@ -67,7 +67,7 @@
 
 .triggerOpen {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px var(--accent-primary-glow);
+  box-shadow: 0 0 0 2px var(--calculated-accent-primary-glow);
 }
 
 .triggerDisabled {
@@ -112,8 +112,8 @@
   top: calc(100% + 4px);
   left: 0;
   width: 100%;
-  background: var(--select-option-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-option-bg);
+  border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   z-index: 9999;
@@ -133,7 +133,7 @@
   background: none;
   border: none;
   border-radius: 2px;
-  color: var(--select-option-text);
+  color: var(--calculated-select-option-text);
   font-size: 14px;
   cursor: pointer;
   transition: background 0.15s;
@@ -141,11 +141,11 @@
 }
 
 .option:hover {
-  background: var(--accent-primary-glow);
+  background: var(--calculated-accent-primary-glow);
 }
 
 .optionSelected {
-  background: var(--accent-primary-glow);
+  background: var(--calculated-accent-primary-glow);
   color: var(--accent-primary);
   font-weight: 500;
 }

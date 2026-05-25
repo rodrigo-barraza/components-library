@@ -39,12 +39,12 @@
 /* ── Filled variant ──────────────────────────────── */
 
 .filled .fieldContainer {
-  background: var(--surface-container-highest, var(--select-bg));
+  background: var(--surface-container-highest, var(--calculated-select-bg));
   border-radius: var(--border-radius-sm, 4px) var(--border-radius-sm, 4px) 0 0;
 }
 
 .filled .fieldContainer:hover {
-  background: color-mix(in srgb, var(--text-primary, #1c1b1f) 8%, var(--surface-container-highest, var(--select-bg)));
+  background: color-mix(in srgb, var(--text-primary, #1c1b1f) 8%, var(--surface-container-highest, var(--calculated-select-bg)));
 }
 
 /* Active indicator — the bottom line for filled variant */
@@ -54,7 +54,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: var(--border-color, #79747e);
+  background: var(--calculated-border-color, #79747e);
   transition:
     height 0.2s cubic-bezier(0.2, 0, 0, 1),
     background-color 0.2s ease;
@@ -83,7 +83,7 @@
 .outlineBorder {
   position: absolute;
   inset: 0;
-  border: 1px solid var(--border-color, #79747e);
+  border: 1px solid var(--calculated-border-color, #79747e);
   border-radius: inherit;
   pointer-events: none;
   transition:

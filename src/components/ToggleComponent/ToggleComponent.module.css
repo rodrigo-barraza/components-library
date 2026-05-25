@@ -19,8 +19,8 @@
   position: relative;
   width: 42px;
   height: 24px;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg);
+  border: 1px solid var(--calculated-border-color);
   border-radius: 2px;
   transition:
     background 0.12s,

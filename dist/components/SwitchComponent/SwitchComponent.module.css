@@ -47,7 +47,7 @@
   height: 32px;
   border-radius: 16px;        /* fully rounded */
   background: var(--switch-track-bg, var(--surface-variant, #e7e0ec));
-  border: 2px solid var(--switch-track-outline, var(--border-color, #79747e));
+  border: 2px solid var(--switch-track-outline, var(--calculated-border-color, #79747e));
   transition:
     background 0.2s cubic-bezier(0.2, 0, 0, 1),
     border-color 0.2s cubic-bezier(0.2, 0, 0, 1);
@@ -142,7 +142,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--switch-handle-bg, var(--border-color, #79747e));
+  background: var(--switch-handle-bg, var(--calculated-border-color, #79747e));
   transition:
     width 0.2s cubic-bezier(0.2, 0, 0, 1),
     height 0.2s cubic-bezier(0.2, 0, 0, 1),

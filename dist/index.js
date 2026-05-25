@@ -12,6 +12,7 @@ export { default as ChatMessageComponent } from "./components/ChatMessageCompone
 export { default as ChatPanelComponent } from "./components/ChatPanelComponent/ChatPanelComponent.js";
 export { default as CheckboxComponent } from "./components/CheckboxComponent/CheckboxComponent.js";
 export { default as CloseButtonComponent } from "./components/CloseButtonComponent/CloseButtonComponent.js";
+export { default as CustomThemeBootComponent } from "./components/CustomThemeBootComponent/CustomThemeBootComponent.js";
 export { default as CollapsibleBlockComponent } from "./components/CollapsibleBlockComponent/CollapsibleBlockComponent.js";
 export { default as CopyButtonComponent } from "./components/CopyButtonComponent/CopyButtonComponent.js";
 export { default as CountBadgeComponent } from "./components/CountBadgeComponent/CountBadgeComponent.js";
@@ -80,9 +81,10 @@ export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleB
 // ── Providers ───────────────────────────────────────────
 export { ChatProvider, useChat } from "./components/ChatProvider.js";
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
-export { ThemeProvider, useTheme } from "./components/ThemeProvider/ThemeProvider.js";
+export { ThemeProvider, useTheme, THEME_CATALOG, } from "./components/ThemeProvider/ThemeProvider.js";
 // ── Services ────────────────────────────────────────────
 export { default as ChatService } from "./services/ChatService.js";
+export { default as CustomThemeService } from "./services/CustomThemeService.js";
 export { default as SoundService } from "./services/SoundService.js";
 export { createApiClient } from "./services/ApiClient.js";
 export { createSessionService } from "./services/SessionService.js";

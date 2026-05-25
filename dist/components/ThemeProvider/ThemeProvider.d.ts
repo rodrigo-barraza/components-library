@@ -24,6 +24,25 @@ import { type ReactNode } from "react";
  *   // In any component:
  *   const { theme, toggleTheme, setTheme } = useTheme();
  */
+export interface ThemeCatalogEntry {
+    label: string;
+    icon: string;
+    background: string;
+    surface: string;
+    elevated: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    textPrimary: string;
+    textSecondary: string;
+    textMuted: string;
+    borderColor: string;
+    success: string;
+    danger: string;
+    warning: string;
+    info: string;
+}
+export declare const THEME_CATALOG: Record<string, ThemeCatalogEntry>;
 export interface ThemeContextValue {
     theme: string;
     themes: string[];

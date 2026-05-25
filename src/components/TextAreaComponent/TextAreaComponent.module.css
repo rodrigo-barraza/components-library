@@ -5,8 +5,8 @@
 .textarea {
   width: 100%;
   padding: 10px 12px;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg);
+  border: 1px solid var(--calculated-border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
   font-size: 13px;

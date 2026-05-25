@@ -4,8 +4,8 @@
   display: flex;
   align-items: center;
   width: 100%;
-  background: var(--select-bg);
-  border: 1px solid var(--border-color);
+  background: var(--calculated-select-bg);
+  border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   transition:
     border-color 0.2s,

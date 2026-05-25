@@ -49,7 +49,7 @@
   font-family: inherit;
   color: var(--text-primary);
   background: var(--bg-surface, rgba(255, 255, 255, 0.06));
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--calculated-border-color, rgba(255, 255, 255, 0.08));
   border-radius: 6px;
   cursor: pointer;
   transition:

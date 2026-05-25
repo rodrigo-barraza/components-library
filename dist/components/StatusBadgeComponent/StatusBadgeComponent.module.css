@@ -10,7 +10,7 @@
 /* ── Noto Emoji icon glyph ────────────────────────── */
 
 .icon {
-  font-family: var(--font-emoji, "Noto Emoji", sans-serif);
+  font-family: var(--font-emoji-mono, "Noto Emoji", sans-serif);
   font-size: 0.75rem;
   line-height: 1;
   flex-shrink: 0;

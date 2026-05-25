@@ -227,7 +227,7 @@
 
 .tonal {
   background: var(
-    --accent-primary-subtle,
+    --calculated-accent-primary-subtle,
     color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface))
   );
   color: var(--accent-primary);
@@ -266,7 +266,7 @@
 .outlined {
   background: transparent;
   color: var(--accent-primary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--calculated-border-color);
 }
 
 .outlined .stateLayer {
@@ -274,11 +274,11 @@
 }
 
 .outlined .divider {
-  background: var(--border-color);
+  background: var(--calculated-border-color);
 }
 
 .outlined:hover {
-  border-color: var(--border-color);
+  border-color: var(--calculated-border-color);
 }
 
 .outlined .leading:focus-visible,

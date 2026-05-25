@@ -46,7 +46,7 @@
 /* Persistent in-flow drawer with end-side border                   */
 
 .standard {
-  border-right: 1px solid var(--border-color, #333);
+  border-right: 1px solid var(--calculated-border-color, #333);
   position: relative;
   z-index: 1;
 }
@@ -95,7 +95,7 @@
 
 [dir="rtl"] .standard {
   border-right: none;
-  border-left: 1px solid var(--border-color, #333);
+  border-left: 1px solid var(--calculated-border-color, #333);
 }
 
 /* ── end anchor variant ──────────────────────────────────────────── */
@@ -170,7 +170,7 @@
 .divider {
   height: 1px;
   margin: 4px 16px;
-  background: var(--border-color, #333);
+  background: var(--calculated-border-color, #333);
   flex-shrink: 0;
 }
 
@@ -233,7 +233,7 @@
 /* M3 spec: secondary-container background, on-secondary-container text */
 
 .item.active {
-  background: var(--accent-primary-subtle, rgba(99, 102, 241, 0.12));
+  background: var(--calculated-accent-primary-subtle, rgba(99, 102, 241, 0.12));
   color: var(--accent-primary, #818cf8);
   font-weight: 600;
 }
@@ -306,7 +306,7 @@
 
 .footer {
   padding: 12px;
-  border-top: 1px solid var(--border-color, #333);
+  border-top: 1px solid var(--calculated-border-color, #333);
   flex-shrink: 0;
 }
 

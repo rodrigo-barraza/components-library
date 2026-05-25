@@ -117,7 +117,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
                         onTabHover?.(tab.key);
                     }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(CountBadgeComponent, { count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles.tabBadge }))] }, tab.key));
                 if (tab.tooltip) {
-                    return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: styles.tooltipWrapper, disabled: tab.tooltipDisabled, children: button }, tab.key));
+                    return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles.tooltipWrapper}${isActive ? ` ${styles.tooltipWrapperActive}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
                 }
                 return button;
             }), _jsx("span", { ref: indicatorRef, className: `${styles.indicator}${isSecondary ? ` ${styles.indicatorSecondary}` : ""}`, "aria-hidden": "true", style: { opacity: 0 } })] }));

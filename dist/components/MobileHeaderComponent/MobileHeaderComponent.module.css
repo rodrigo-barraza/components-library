@@ -5,7 +5,7 @@
   height: 56px;
   padding: 0 12px;
   background: var(--bg-surface, #1e1e1e);
-  border-bottom: 1px solid var(--border-color, #333);
+  border-bottom: 1px solid var(--calculated-border-color, #333);
   position: sticky;
   top: 0;
   z-index: 999;
@@ -33,7 +33,7 @@
 }
 
 .menuButton:hover {
-  background: var(--accent-primary-subtle, rgba(255,255,255,0.05));
+  background: var(--calculated-accent-primary-subtle, rgba(255,255,255,0.05));
   color: var(--text-primary, #fff);
 }
 

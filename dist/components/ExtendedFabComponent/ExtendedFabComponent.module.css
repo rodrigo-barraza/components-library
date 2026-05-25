@@ -201,7 +201,7 @@
 
 /* ── Tertiary ────────────────────────────────────────────── */
 .tertiary {
-  background-color: var(--accent-primary-subtle, #FFD8E4);
+  background-color: var(--calculated-accent-primary-subtle, #FFD8E4);
   color: var(--text-primary, #31111D);
 }
 
