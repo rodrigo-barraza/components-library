@@ -19,7 +19,7 @@ export declare const DATE_PRESETS_DATE_ONLY: DatePreset[];
 /**
  * Parse a date string. Handles both YYYY-MM-DD and ISO datetime formats.
  */
-export declare function parseDateValue(str: string | null | undefined): Date | null;
+export declare function parseDateValue(dateString: string | null | undefined): Date | null;
 /**
  * Format a { from, to } range for display in trigger buttons and badges.
  */

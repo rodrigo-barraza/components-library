@@ -17,10 +17,10 @@ function isInRange(date, from, to) {
         return false;
     return date >= from && date <= to;
 }
-function extractTime(str) {
-    if (!str || !str.includes("T"))
+function extractTime(dateTimeString) {
+    if (!dateTimeString || !dateTimeString.includes("T"))
         return "";
-    const parsedDate = new Date(str);
+    const parsedDate = new Date(dateTimeString);
     if (isNaN(parsedDate.getTime()))
         return "";
     return `${String(parsedDate.getHours()).padStart(2, "0")}:${String(parsedDate.getMinutes()).padStart(2, "0")}`;

@@ -52,12 +52,12 @@ export const DATE_PRESETS_DATE_ONLY = DATE_PRESETS.filter((preset) => !preset.re
 /**
  * Parse a date string. Handles both YYYY-MM-DD and ISO datetime formats.
  */
-export function parseDateValue(str) {
-    if (!str)
+export function parseDateValue(dateString) {
+    if (!dateString)
         return null;
-    if (str.includes("T"))
-        return new Date(str);
-    const [year, month, day] = str.split("-").map(Number);
+    if (dateString.includes("T"))
+        return new Date(dateString);
+    const [year, month, day] = dateString.split("-").map(Number);
     return new Date(year, month - 1, day);
 }
 function isSameDay(dateA, dateB) {
