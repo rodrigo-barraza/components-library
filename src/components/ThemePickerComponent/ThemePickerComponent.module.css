@@ -28,7 +28,7 @@
 }
 
 .trigger:hover {
-  background: var(--accent-subtle, rgba(255, 255, 255, 0.05));
+  background: var(--accent-primary-subtle, rgba(255, 255, 255, 0.05));
   color: var(--text-primary, #fff);
 }
 
@@ -109,7 +109,7 @@
   left: 0;
   right: 0;
   min-width: 180px;
-  background: var(--bg-secondary, #1e1e1e);
+  background: var(--bg-surface, #1e1e1e);
   border: 1px solid var(--border-color, #333);
   border-radius: var(--border-radius-sm, 6px);
   box-shadow:
@@ -192,7 +192,7 @@
 }
 
 .themeOption:hover {
-  background: var(--accent-subtle, rgba(255, 255, 255, 0.05));
+  background: var(--accent-primary-subtle, rgba(255, 255, 255, 0.05));
   color: var(--text-primary, #fff);
 }
 

@@ -34,8 +34,8 @@
 }
 
 .track.active {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
   filter: hue-rotate(0deg);
   animation: rainbowHue 4s linear infinite;
   will-change: filter;

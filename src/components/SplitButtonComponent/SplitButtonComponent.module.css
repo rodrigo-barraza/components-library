@@ -172,13 +172,13 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 .leading:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
   z-index: 3;
 }
 
 .trailing:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
   z-index: 3;
 }
@@ -191,7 +191,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 .filled {
-  background: var(--accent-color);
+  background: var(--accent-primary);
   color: white;
 }
 
@@ -227,18 +227,18 @@
 
 .tonal {
   background: var(
-    --accent-subtle,
-    color-mix(in srgb, var(--accent-color) 12%, var(--bg-secondary))
+    --accent-primary-subtle,
+    color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface))
   );
-  color: var(--accent-color);
+  color: var(--accent-primary);
 }
 
 .tonal .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .tonal .divider {
-  background: color-mix(in srgb, var(--accent-color) 20%, transparent);
+  background: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 
 .tonal:hover {
@@ -265,12 +265,12 @@
 
 .outlined {
   background: transparent;
-  color: var(--accent-color);
+  color: var(--accent-primary);
   border: 1px solid var(--border-color);
 }
 
 .outlined .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .outlined .divider {
@@ -283,7 +283,7 @@
 
 .outlined .leading:focus-visible,
 .outlined .trailing:focus-visible {
-  outline-color: var(--accent-color);
+  outline-color: var(--accent-primary);
 }
 
 .outlined.disabled {
@@ -312,15 +312,15 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 .elevated {
-  background: var(--bg-secondary);
-  color: var(--accent-color);
+  background: var(--bg-surface);
+  color: var(--accent-primary);
   box-shadow:
     0 1px 2px 0 rgb(0 0 0 / 0.20),
     0 1px 3px 1px rgb(0 0 0 / 0.10);
 }
 
 .elevated .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .elevated .divider {

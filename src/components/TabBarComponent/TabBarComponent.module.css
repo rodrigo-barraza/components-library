@@ -31,7 +31,7 @@
   top: 0;
   left: 0;
   height: 3px;
-  background: var(--accent-color);
+  background: var(--accent-primary);
   border-radius: 3px 3px 0 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -184,7 +184,7 @@
 /* ── Active tab ───────────────────────────────────────── */
 
 .tabActive {
-  color: var(--accent-color);
+  color: var(--accent-primary);
 
   &>.tabEmojiIcon {
     font-family: var(--font-emoji), "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
@@ -219,7 +219,7 @@
 /* ── Glow — cross-component hover linking ─────────────── */
 
 .tabGlow {
-  color: var(--accent-color);
+  color: var(--accent-primary);
   animation: tabGlowPulse 1.4s ease-in-out infinite;
 }
 
@@ -227,11 +227,11 @@
 
   0%,
   100% {
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-color) 20%, transparent);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-primary) 20%, transparent);
   }
 
   50% {
-    box-shadow: 0 2px 16px color-mix(in srgb, var(--accent-color) 40%, transparent);
+    box-shadow: 0 2px 16px color-mix(in srgb, var(--accent-primary) 40%, transparent);
   }
 }
 

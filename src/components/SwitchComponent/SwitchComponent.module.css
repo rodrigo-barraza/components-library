@@ -58,8 +58,8 @@
 /* ── Track — Selected state ──────────────────────────── */
 
 .track.selected {
-  background: var(--accent-color, #6750a4);
-  border-color: var(--accent-color, #6750a4);
+  background: var(--accent-primary, #6750a4);
+  border-color: var(--accent-primary, #6750a4);
 }
 
 /* ── Track — Hover ───────────────────────────────────── */
@@ -69,7 +69,7 @@
 }
 
 .switch:hover .track.selected {
-  background: var(--accent-color-hover, var(--accent-color, #6750a4));
+  background: var(--accent-color-hover, var(--accent-primary, #6750a4));
   filter: brightness(1.08);
 }
 
@@ -113,7 +113,7 @@
 
 /* Hover — selected */
 .switch:hover .track.selected .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible — keyboard nav */
@@ -122,7 +122,7 @@
 }
 
 .hiddenInput:focus-visible ~ .track.selected .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* Active / pressed — unselected */
@@ -132,7 +132,7 @@
 
 /* Active / pressed — selected */
 .switch:active .track.selected .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* ── Handle — the draggable thumb ────────────────────── */
@@ -176,7 +176,7 @@
 .icon {
   width: 16px;
   height: 16px;
-  color: var(--accent-color, #6750a4);
+  color: var(--accent-primary, #6750a4);
   opacity: 0;
   transform: scale(0);
   transition:
@@ -235,7 +235,7 @@
 /* ── Focus ring — visible keyboard outline on track ──── */
 
 .hiddenInput:focus-visible ~ .track {
-  outline: 2px solid var(--accent-color, #6750a4);
+  outline: 2px solid var(--accent-primary, #6750a4);
   outline-offset: 2px;
 }
 

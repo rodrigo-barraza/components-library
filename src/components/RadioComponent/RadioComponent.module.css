@@ -67,7 +67,7 @@
 
 /* Hover — selected */
 .radio:hover .selected ~ .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible (keyboard navigation) — unselected */
@@ -78,7 +78,7 @@
 /* Focus-visible (keyboard navigation) — selected */
 .hiddenInput:focus-visible ~ .selected ~ .stateLayer,
 .selected ~ .hiddenInput:focus-visible ~ .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* Active / pressed — unselected */
@@ -88,7 +88,7 @@
 
 /* Active / pressed — selected */
 .radio:active .selected ~ .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* ── Error state layer overrides ─────────────────────── */
@@ -121,7 +121,7 @@
 
 /* Selected — primary-colored ring */
 .circle.selected {
-  border-color: var(--accent-color, #6750a4);
+  border-color: var(--accent-primary, #6750a4);
 }
 
 /* Error — unselected */
@@ -140,7 +140,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent-color, #6750a4);
+  background: var(--accent-primary, #6750a4);
   animation: dotIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
 }

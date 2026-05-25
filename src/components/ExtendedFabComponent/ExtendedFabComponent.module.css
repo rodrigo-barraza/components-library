@@ -70,7 +70,7 @@
 
 /* ── Focus ring (visible keyboard focus only) ────────────── */
 .extendedFab:focus-visible {
-  outline: 3px solid var(--accent-color, #6750A4);
+  outline: 3px solid var(--accent-primary, #6750A4);
   outline-offset: 2px;
 }
 
@@ -128,7 +128,7 @@
 
 /* ── Primary (default) ───────────────────────────────────── */
 .primary {
-  background-color: var(--accent-color, #6750A4);
+  background-color: var(--accent-primary, #6750A4);
   color: var(--on-accent, #FFFFFF);
 }
 
@@ -166,7 +166,7 @@
 
 /* ── Secondary ───────────────────────────────────────────── */
 .secondary {
-  background-color: var(--bg-secondary, #E8DEF8);
+  background-color: var(--bg-surface, #E8DEF8);
   color: var(--text-primary, #1D192B);
 }
 
@@ -201,7 +201,7 @@
 
 /* ── Tertiary ────────────────────────────────────────────── */
 .tertiary {
-  background-color: var(--accent-subtle, #FFD8E4);
+  background-color: var(--accent-primary-subtle, #FFD8E4);
   color: var(--text-primary, #31111D);
 }
 
@@ -236,12 +236,12 @@
 
 /* ── Surface ─────────────────────────────────────────────── */
 .surface {
-  background-color: var(--bg-primary, #FFFBFE);
-  color: var(--accent-color, #6750A4);
+  background-color: var(--bg-base, #FFFBFE);
+  color: var(--accent-primary, #6750A4);
 }
 
 .surface::before {
-  background-color: var(--accent-color, #6750A4);
+  background-color: var(--accent-primary, #6750A4);
 }
 
 .surface:hover:not(:disabled) {

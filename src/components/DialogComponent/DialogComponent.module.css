@@ -61,7 +61,7 @@
   max-height: calc(100vh - 96px);
 
   /* M3 spec: surface-container-high, 28dp corner radius */
-  background: var(--dialog-container-bg, var(--bg-secondary, #2a2a2e));
+  background: var(--dialog-container-bg, var(--bg-surface, #2a2a2e));
   border: 1px solid var(--dialog-border, var(--border-color, rgba(255, 255, 255, 0.06)));
   border-radius: 28px;
 
@@ -86,7 +86,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px 24px 0;
-  color: var(--dialog-icon-color, var(--accent-color, #8b5cf6));
+  color: var(--dialog-icon-color, var(--accent-primary, #8b5cf6));
 }
 
 .icon svg {
@@ -176,7 +176,7 @@
   line-height: 1.43;
   letter-spacing: 0.1px;
 
-  color: var(--dialog-action-color, var(--accent-color, #8b5cf6));
+  color: var(--dialog-action-color, var(--accent-primary, #8b5cf6));
   transition:
     background-color 200ms cubic-bezier(0.2, 0, 0, 1),
     box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
@@ -218,12 +218,12 @@
 
 /* Primary (confirm) action — filled tonal per spec for emphasis */
 .actionBtnPrimary {
-  background: var(--dialog-primary-bg, var(--accent-color, #8b5cf6));
-  color: var(--dialog-primary-text, var(--bg-primary, #0f0f0f));
+  background: var(--dialog-primary-bg, var(--accent-primary, #8b5cf6));
+  color: var(--dialog-primary-text, var(--bg-base, #0f0f0f));
 }
 
 .actionBtnPrimary::before {
-  background: var(--dialog-primary-text, var(--bg-primary, #0f0f0f));
+  background: var(--dialog-primary-text, var(--bg-base, #0f0f0f));
 }
 
 /* Destructive action variant */

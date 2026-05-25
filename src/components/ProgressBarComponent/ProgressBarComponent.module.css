@@ -33,7 +33,7 @@
 .track {
   width: 100%;
   border-radius: var(--radius-full);
-  background: var(--bg-tertiary);
+  background: var(--bg-elevated);
   overflow: hidden;
   position: relative;
 }
@@ -68,28 +68,28 @@
 /* ── Color variants ─────────────────────────────────────── */
 
 .accent {
-  background: var(--accent-color, var(--info));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-color, var(--info)) 40%, transparent);
+  background: var(--accent-primary, var(--color-info));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-primary, var(--color-info)) 40%, transparent);
 }
 
 .success {
-  background: var(--success);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--success) 40%, transparent);
+  background: var(--color-success);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-success) 40%, transparent);
 }
 
 .warning {
-  background: var(--warning);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--warning) 40%, transparent);
+  background: var(--color-warning);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-warning) 40%, transparent);
 }
 
 .danger {
-  background: var(--danger);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--danger) 40%, transparent);
+  background: var(--color-danger);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-danger) 40%, transparent);
 }
 
 .info {
-  background: var(--info);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--info) 40%, transparent);
+  background: var(--color-info);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-info) 40%, transparent);
 }
 
 /* ── Striped overlay ────────────────────────────────────── */

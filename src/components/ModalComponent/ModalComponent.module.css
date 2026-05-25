@@ -26,7 +26,7 @@
 /* ── Panel ──────────────────────────────────────────── */
 
 .panel {
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
   max-height: 90vh;
@@ -78,8 +78,8 @@
   flex-shrink: 0;
 
   &:hover {
-    background: var(--accent-glow);
-    color: var(--accent-color);
+    background: var(--accent-primary-glow);
+    color: var(--accent-primary);
   }
 }
 

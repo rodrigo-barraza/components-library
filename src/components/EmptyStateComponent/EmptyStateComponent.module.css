@@ -18,7 +18,7 @@
   margin: 0;
   padding: 0;
   border-radius: var(--border-radius-sm);
-  color: var(--accent-color);
+  color: var(--accent-primary);
   margin-bottom: 20px;
   animation: pulseScale 3s ease-in-out infinite;
 }

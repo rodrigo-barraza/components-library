@@ -27,8 +27,8 @@
 }
 
 .triggerOpen {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px var(--accent-glow);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-primary-glow);
 }
 
 .triggerDisabled {
@@ -79,7 +79,7 @@
 
   &:hover {
     color: var(--text-primary);
-    background: var(--bg-secondary);
+    background: var(--bg-surface);
   }
 }
 
@@ -89,7 +89,7 @@
   position: fixed;
   z-index: 1000;
   display: flex;
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-lg, 0 12px 40px rgba(0, 0, 0, 0.25));
@@ -123,13 +123,13 @@
 
   &:hover {
     color: var(--text-primary);
-    background: var(--accent-subtle);
+    background: var(--accent-primary-subtle);
   }
 }
 
 .presetBtnActive {
-  color: var(--accent-color);
-  background: var(--accent-subtle);
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
   font-weight: 600;
 }
 
@@ -175,7 +175,7 @@
 
   &:hover {
     color: var(--text-primary);
-    background: var(--bg-secondary);
+    background: var(--bg-surface);
   }
 }
 
@@ -242,7 +242,7 @@
 
   &:hover:not(:disabled) {
     color: var(--text-primary);
-    background: var(--accent-subtle);
+    background: var(--accent-primary-subtle);
   }
 
   &:disabled {
@@ -253,18 +253,18 @@
 
 .dayToday {
   font-weight: 700;
-  color: var(--accent-color);
+  color: var(--accent-primary);
 }
 
 .dayStart {
-  background: var(--accent-color) !important;
+  background: var(--accent-primary) !important;
   color: white !important;
   border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
   font-weight: 600;
 }
 
 .dayEnd {
-  background: var(--accent-color) !important;
+  background: var(--accent-primary) !important;
   color: white !important;
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
   font-weight: 600;
@@ -276,7 +276,7 @@
 }
 
 .dayInRange {
-  background: var(--accent-subtle);
+  background: var(--accent-primary-subtle);
   color: var(--text-primary);
 }
 
@@ -335,15 +335,15 @@
   font-size: 12px;
   font-family: inherit;
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background: var(--bg-base);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px var(--accent-glow);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px var(--accent-primary-glow);
   }
 
   /* Style the native time picker to match dark theme */
@@ -362,7 +362,7 @@
   font-size: 11px;
   font-weight: 600;
   color: white;
-  background: var(--accent-color);
+  background: var(--accent-primary);
   border: none;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
@@ -371,7 +371,7 @@
   transition: background 0.2s, transform 0.1s;
 
   &:hover {
-    background: var(--accent-hover);
+    background: var(--accent-primary-hover);
     transform: translateY(-1px);
   }
 

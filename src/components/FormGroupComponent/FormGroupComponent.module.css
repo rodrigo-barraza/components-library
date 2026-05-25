@@ -35,12 +35,12 @@
 .formGroup select:focus,
 .formGroup textarea:focus,
 .inputField:focus {
-  border-color: var(--accent-color);
+  border-color: var(--accent-primary);
   outline: none;
 }
 
 .formGroup input[type="range"] {
-  accent-color: var(--accent-color);
+  accent-color: var(--accent-primary);
   width: 100%;
 }
 
@@ -62,7 +62,7 @@
   color: var(--text-primary);
   height: var(--input-height);
   padding: 0 10px;
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
   word-break: break-all;

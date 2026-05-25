@@ -13,5 +13,5 @@
 }
 
 .link:hover .badge {
-  border-color: color-mix(in srgb, var(--info) 45%, transparent);
+  border-color: color-mix(in srgb, var(--color-info) 45%, transparent);
 }

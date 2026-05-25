@@ -32,7 +32,7 @@
   width: 100%;
   min-height: var(--input-height, 36px);
   padding: 4px 10px 4px 10px;
-  background: var(--select-bg, var(--bg-secondary));
+  background: var(--select-bg, var(--bg-surface));
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
@@ -49,8 +49,8 @@
 }
 
 .triggerOpen {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px var(--accent-glow);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-primary-glow);
 }
 
 .triggerDisabled {
@@ -95,8 +95,8 @@
   padding: 2px 7px;
   font-size: 11px;
   font-weight: 500;
-  color: var(--accent-color);
-  background: var(--accent-subtle, rgba(99, 102, 241, 0.1));
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle, rgba(99, 102, 241, 0.1));
   border-radius: var(--border-radius-sm, 4px);
   white-space: nowrap;
   line-height: 1.4;
@@ -112,7 +112,7 @@
   padding: 0;
   background: none;
   border: none;
-  color: var(--accent-color);
+  color: var(--accent-primary);
   opacity: 0.6;
   cursor: pointer;
   border-radius: 50%;
@@ -200,11 +200,11 @@
 }
 
 .option:hover {
-  background: var(--accent-glow, rgba(99, 102, 241, 0.08));
+  background: var(--accent-primary-glow, rgba(99, 102, 241, 0.08));
 }
 
 .optionSelected {
-  color: var(--accent-color);
+  color: var(--accent-primary);
   font-weight: 500;
 }
 
@@ -234,8 +234,8 @@
 }
 
 .optionCheckSelected {
-  background: var(--accent-color, #6366f1);
-  border-color: var(--accent-color, #6366f1);
+  background: var(--accent-primary, #6366f1);
+  border-color: var(--accent-primary, #6366f1);
 }
 
 .optionCheckIcon {

@@ -10,7 +10,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: var(--bg-surface, var(--bg-secondary));
+  background: var(--bg-surface, var(--bg-surface));
   color: var(--text-primary);
   flex-shrink: 0;
   transition:
@@ -133,7 +133,7 @@
 }
 
 .item:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
 
@@ -165,12 +165,12 @@
 /* ── Item states ─────────────────────────────────────────────────── */
 
 .itemActive {
-  color: var(--accent-color);
-  background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+  color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
 }
 
 .itemActive .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .itemDisabled {

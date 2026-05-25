@@ -38,7 +38,7 @@
   max-width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   border-left: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);
   z-index: 200;

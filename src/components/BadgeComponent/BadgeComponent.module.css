@@ -21,75 +21,75 @@
 /* ── Variants ─────────────────────────────────────── */
 
 .provider {
-  color: var(--info);
-  background: var(--info-subtle);
-  border-color: color-mix(in srgb, var(--info) 20%, transparent);
+  color: var(--color-info);
+  background: var(--color-info-subtle);
+  border-color: color-mix(in srgb, var(--color-info) 20%, transparent);
 }
 .provider:hover {
-  border-color: color-mix(in srgb, var(--info) 45%, transparent);
+  border-color: color-mix(in srgb, var(--color-info) 45%, transparent);
 }
 
 .endpoint {
-  color: var(--accent-color);
-  background: var(--accent-subtle);
-  border-color: color-mix(in srgb, var(--accent-color) 20%, transparent);
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
+  border-color: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 .endpoint:hover {
-  border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
 }
 
 .modality {
-  color: var(--accent-color);
-  background: var(--accent-subtle);
-  border-color: color-mix(in srgb, var(--accent-color) 20%, transparent);
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
+  border-color: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 .modality:hover {
-  border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
 }
 
 .success {
-  color: var(--success);
-  background: var(--success-subtle);
-  border-color: color-mix(in srgb, var(--success) 20%, transparent);
+  color: var(--color-success);
+  background: var(--color-success-subtle);
+  border-color: color-mix(in srgb, var(--color-success) 20%, transparent);
 }
 .success:hover {
-  border-color: color-mix(in srgb, var(--success) 45%, transparent);
+  border-color: color-mix(in srgb, var(--color-success) 45%, transparent);
 }
 
 .error {
-  color: var(--danger);
-  background: var(--danger-subtle);
-  border-color: color-mix(in srgb, var(--danger) 20%, transparent);
+  color: var(--color-danger);
+  background: var(--color-danger-subtle);
+  border-color: color-mix(in srgb, var(--color-danger) 20%, transparent);
 }
 .error:hover {
-  border-color: color-mix(in srgb, var(--danger) 45%, transparent);
+  border-color: color-mix(in srgb, var(--color-danger) 45%, transparent);
 }
 
 .info {
-  color: var(--info);
-  background: var(--info-subtle);
-  border-color: color-mix(in srgb, var(--info) 20%, transparent);
+  color: var(--color-info);
+  background: var(--color-info-subtle);
+  border-color: color-mix(in srgb, var(--color-info) 20%, transparent);
 }
 .info:hover {
-  border-color: color-mix(in srgb, var(--info) 45%, transparent);
+  border-color: color-mix(in srgb, var(--color-info) 45%, transparent);
 }
 
 .accent {
-  color: var(--accent-color);
-  background: var(--accent-subtle);
-  border-color: color-mix(in srgb, var(--accent-color) 20%, transparent);
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
+  border-color: color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 .accent:hover {
-  border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
 }
 
 .warning {
-  color: var(--warning);
-  background: var(--warning-subtle);
-  border-color: color-mix(in srgb, var(--warning) 20%, transparent);
+  color: var(--color-warning);
+  background: var(--color-warning-subtle);
+  border-color: color-mix(in srgb, var(--color-warning) 20%, transparent);
 }
 .warning:hover {
-  border-color: color-mix(in srgb, var(--warning) 45%, transparent);
+  border-color: color-mix(in srgb, var(--color-warning) 45%, transparent);
 }
 
 /* ── Mini ─────────────────────────────────────────── */

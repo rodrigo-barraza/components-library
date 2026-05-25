@@ -29,7 +29,7 @@
    Hover → level 2, Pressed/Focus → level 1, Dragged → level 4    */
 
 .elevated {
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   border: 1px solid transparent;
   box-shadow:
     0 1px 2px 0 rgb(0 0 0 / 0.12),
@@ -62,7 +62,7 @@
    Hover → shadow level 1, Pressed/Focus → level 0               */
 
 .filled {
-  background: var(--bg-tertiary, var(--bg-primary));
+  background: var(--bg-elevated, var(--bg-base));
   border: 1px solid transparent;
   box-shadow: none;
 }
@@ -91,7 +91,7 @@
    Hover → shadow level 1, Pressed/Focus → level 0               */
 
 .outlined {
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   box-shadow: none;
 }
@@ -125,13 +125,13 @@
   border-bottom: 1px solid var(--border-color);
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--card-accent, var(--accent-color)) 4%, var(--bg-secondary)),
-    var(--bg-secondary)
+    color-mix(in srgb, var(--card-accent, var(--accent-primary)) 4%, var(--bg-surface)),
+    var(--bg-surface)
   );
 }
 
 .icon {
-  color: var(--card-accent, var(--accent-color));
+  color: var(--card-accent, var(--accent-primary));
   flex-shrink: 0;
   opacity: 0.8;
 }
@@ -217,7 +217,7 @@
 }
 
 .actionArea:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 

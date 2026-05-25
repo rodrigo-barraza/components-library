@@ -109,7 +109,7 @@
 
 /* ── Trigger focus ring ─────────────────────────────────────────── */
 .trigger:focus-visible {
-  outline: 3px solid var(--accent-color, #6750A4);
+  outline: 3px solid var(--accent-primary, #6750A4);
   outline-offset: 2px;
 }
 
@@ -120,7 +120,7 @@
 
 /* ── Primary ────────────────────────────────────────────────────── */
 .triggerPrimary {
-  background-color: var(--accent-color, #6750A4);
+  background-color: var(--accent-primary, #6750A4);
   color: var(--on-accent, #FFFFFF);
 }
 
@@ -155,7 +155,7 @@
 
 /* ── Secondary ──────────────────────────────────────────────────── */
 .triggerSecondary {
-  background-color: var(--bg-secondary, #E8DEF8);
+  background-color: var(--bg-surface, #E8DEF8);
   color: var(--text-primary, #1D192B);
 }
 
@@ -190,7 +190,7 @@
 
 /* ── Tertiary ───────────────────────────────────────────────────── */
 .triggerTertiary {
-  background-color: var(--accent-subtle, #FFD8E4);
+  background-color: var(--accent-primary-subtle, #FFD8E4);
   color: var(--text-primary, #31111D);
 }
 
@@ -225,12 +225,12 @@
 
 /* ── Surface ────────────────────────────────────────────────────── */
 .triggerSurface {
-  background-color: var(--bg-primary, #FFFBFE);
-  color: var(--accent-color, #6750A4);
+  background-color: var(--bg-base, #FFFBFE);
+  color: var(--accent-primary, #6750A4);
 }
 
 .triggerSurface::before {
-  background-color: var(--accent-color, #6750A4);
+  background-color: var(--accent-primary, #6750A4);
 }
 
 .triggerSurface:hover:not(:disabled) {
@@ -314,7 +314,7 @@
   letter-spacing: 0.1px;
   white-space: nowrap;
   color: var(--text-primary, #1C1B1F);
-  background: var(--bg-primary, #FFFBFE);
+  background: var(--bg-base, #FFFBFE);
 
   /* M3 elevation level 2 for label container */
   box-shadow:
@@ -344,8 +344,8 @@
   cursor: pointer;
   flex-shrink: 0;
 
-  background-color: var(--bg-primary, #FFFBFE);
-  color: var(--accent-color, #6750A4);
+  background-color: var(--bg-base, #FFFBFE);
+  color: var(--accent-primary, #6750A4);
 
   /* Elevation level 3 */
   box-shadow:
@@ -368,7 +368,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background-color: var(--accent-color, #6750A4);
+  background-color: var(--accent-primary, #6750A4);
   opacity: 0;
   transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1);
   pointer-events: none;
@@ -380,7 +380,7 @@
 }
 
 .itemFab:focus-visible {
-  outline: 3px solid var(--accent-color, #6750A4);
+  outline: 3px solid var(--accent-primary, #6750A4);
   outline-offset: 2px;
 }
 

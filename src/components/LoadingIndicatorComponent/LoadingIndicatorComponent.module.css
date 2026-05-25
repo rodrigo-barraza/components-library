@@ -35,7 +35,7 @@
 .circularTrack {
   fill: none;
   stroke: var(--loading-indicator-track-color,
-    color-mix(in srgb, var(--accent-color, #6750a4) 20%, transparent));
+    color-mix(in srgb, var(--accent-primary, #6750a4) 20%, transparent));
   /* M3 default track thickness: 4dp */
   stroke-width: var(--loading-indicator-stroke-width, 4);
   stroke-linecap: round;
@@ -45,7 +45,7 @@
 
 .circularIndicator {
   fill: none;
-  stroke: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  stroke: var(--loading-indicator-color, var(--accent-primary, #6750a4));
   stroke-width: var(--loading-indicator-stroke-width, 4);
   stroke-linecap: round;    /* M3: rounded end caps */
   /* GPU-accelerated transition for determinate mode */
@@ -129,7 +129,7 @@
   height: var(--loading-indicator-track-height, 4px);
   border-radius: var(--loading-indicator-track-height, 4px);
   background: var(--loading-indicator-track-color,
-    color-mix(in srgb, var(--accent-color, #6750a4) 20%, transparent));
+    color-mix(in srgb, var(--accent-primary, #6750a4) 20%, transparent));
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -142,7 +142,7 @@
   left: 0;
   height: 100%;
   border-radius: inherit;
-  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  background: var(--loading-indicator-color, var(--accent-primary, #6750a4));
   /* Determinate transition */
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: width, transform;
@@ -157,7 +157,7 @@
   left: 0;
   height: 100%;
   border-radius: inherit;
-  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  background: var(--loading-indicator-color, var(--accent-primary, #6750a4));
   opacity: 0.24;
   z-index: 0;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -174,7 +174,7 @@
   width: var(--loading-indicator-track-height, 4px);
   height: var(--loading-indicator-track-height, 4px);
   border-radius: 50%;
-  background: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  background: var(--loading-indicator-color, var(--accent-primary, #6750a4));
   transform: translateY(-50%);
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -273,9 +273,9 @@
 /* ── Color variants ──────────────────────────────────── */
 
 .colorPrimary {
-  --loading-indicator-color: var(--accent-color, #6750a4);
+  --loading-indicator-color: var(--accent-primary, #6750a4);
   --loading-indicator-track-color:
-    color-mix(in srgb, var(--accent-color, #6750a4) 20%, transparent);
+    color-mix(in srgb, var(--accent-primary, #6750a4) 20%, transparent);
 }
 
 .colorSecondary {
@@ -323,7 +323,7 @@
   font-size: 11px;
   font-weight: 500;
   line-height: 1;
-  color: var(--loading-indicator-color, var(--accent-color, #6750a4));
+  color: var(--loading-indicator-color, var(--accent-primary, #6750a4));
   letter-spacing: 0.02em;
   user-select: none;
   pointer-events: none;

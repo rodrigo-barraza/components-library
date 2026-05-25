@@ -102,7 +102,7 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .btn:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
@@ -138,7 +138,7 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .filled {
-  background: var(--accent-color);
+  background: var(--accent-primary);
   color: white;
 }
 
@@ -164,12 +164,12 @@
 
 .outlined {
   background: transparent;
-  color: var(--accent-color);
+  color: var(--accent-primary);
   border: 1px solid var(--border-color);
 }
 
 .outlined .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .outlined:hover:not(:disabled) {
@@ -177,7 +177,7 @@
 }
 
 .outlined:focus-visible {
-  border-color: var(--accent-color);
+  border-color: var(--accent-primary);
 }
 
 .outlined:disabled {
@@ -194,12 +194,12 @@
 
 .text {
   background: transparent;
-  color: var(--accent-color);
+  color: var(--accent-primary);
   padding: 10px 12px;
 }
 
 .text .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .text:disabled {
@@ -213,15 +213,15 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .elevated {
-  background: var(--bg-secondary);
-  color: var(--accent-color);
+  background: var(--bg-surface);
+  color: var(--accent-primary);
   box-shadow:
     0 1px 2px 0 rgb(0 0 0 / 0.20),
     0 1px 3px 1px rgb(0 0 0 / 0.10);
 }
 
 .elevated .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .elevated:hover:not(:disabled) {
@@ -242,12 +242,12 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .tonal {
-  background: var(--accent-subtle, color-mix(in srgb, var(--accent-color) 12%, var(--bg-secondary)));
-  color: var(--accent-color);
+  background: var(--accent-primary-subtle, color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface)));
+  color: var(--accent-primary);
 }
 
 .tonal .stateLayer {
-  background: var(--accent-color);
+  background: var(--accent-primary);
 }
 
 .tonal:hover:not(:disabled) {
@@ -269,7 +269,7 @@
 /* ── Primary → maps to M3 Filled ────────────────────────────────── */
 
 .primary {
-  background: var(--accent-color);
+  background: var(--accent-primary);
   color: white;
 }
 
@@ -278,7 +278,7 @@
 }
 
 .primary:hover:not(:disabled) {
-  background: var(--accent-hover);
+  background: var(--accent-primary-hover);
   box-shadow:
     0 1px 2px 0 rgb(0 0 0 / 0.20),
     0 1px 3px 1px rgb(0 0 0 / 0.10);
@@ -292,7 +292,7 @@
 /* ── Secondary → maps to M3 Outlined ────────────────────────────── */
 
 .secondary {
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
   color: var(--text-secondary);
   border: 1px solid var(--border-color);
 }
@@ -302,8 +302,8 @@
 }
 
 .secondary:hover:not(:disabled) {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .secondary:disabled {
@@ -324,24 +324,24 @@
 }
 
 .disabled:hover:not(:disabled) {
-  background: var(--accent-subtle);
+  background: var(--accent-primary-subtle);
   color: var(--text-primary);
 }
 
 /* ── Destructive ─────────────────────────────────────────────────── */
 
 .destructive {
-  background: var(--danger-subtle);
-  color: var(--danger);
-  border: 1px solid color-mix(in srgb, var(--danger) 20%, transparent);
+  background: var(--color-danger-subtle);
+  color: var(--color-danger);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 20%, transparent);
 }
 
 .destructive .stateLayer {
-  background: var(--danger);
+  background: var(--color-danger);
 }
 
 .destructive:hover:not(:disabled) {
-  background: var(--danger);
+  background: var(--color-danger);
   color: white;
 }
 
@@ -382,7 +382,7 @@
   padding: 0;
   align-self: stretch;
   height: auto;
-  background: var(--accent-color);
+  background: var(--accent-primary);
   color: white;
   flex-shrink: 0;
   gap: 0;
@@ -394,12 +394,12 @@
 }
 
 .submit:hover:not(:disabled) {
-  background: var(--accent-hover);
+  background: var(--accent-primary-hover);
   transform: translateY(-1px);
 }
 
 .submit:disabled {
-  background: var(--bg-primary);
+  background: var(--bg-base);
   color: var(--text-secondary);
   border-color: var(--border-color);
   opacity: 1;

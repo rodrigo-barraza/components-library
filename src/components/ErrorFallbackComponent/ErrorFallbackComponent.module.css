@@ -59,8 +59,8 @@
 }
 
 .retryButton:hover {
-  border-color: var(--accent-color);
-  background: color-mix(in srgb, var(--accent-color) 8%, transparent);
+  border-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
 }
 
 .retryButton:active {

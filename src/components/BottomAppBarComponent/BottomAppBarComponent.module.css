@@ -24,7 +24,7 @@
   justify-content: space-between;
   height: 80px;
   padding: 0 16px 0 8px;
-  background: var(--bg-surface, var(--bg-secondary));
+  background: var(--bg-surface, var(--bg-surface));
   color: var(--text-primary);
   z-index: 10;
   box-shadow:
@@ -85,7 +85,7 @@
 }
 
 .actionButton:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
 
@@ -104,7 +104,7 @@
 }
 
 .actionActive {
-  color: var(--accent-color);
+  color: var(--accent-primary);
 }
 
 /* ── State layer (action button hover/focus/press) ───────────────── */

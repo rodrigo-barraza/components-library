@@ -22,15 +22,15 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
-  background: var(--bg-card);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .pageBtn:hover:not(:disabled) {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .pageBtn:disabled {

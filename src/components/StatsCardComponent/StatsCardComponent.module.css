@@ -1,5 +1,5 @@
 .card {
-  background: var(--bg-card);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md, var(--border-radius-sm));
   padding: 6px 12px;
@@ -12,7 +12,7 @@
 }
 
 .card:hover {
-  border-color: var(--card-accent, var(--accent-subtle));
+  border-color: var(--card-accent, var(--accent-primary-subtle));
   box-shadow: var(--shadow-glow, none);
 }
 
@@ -23,7 +23,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--card-accent, var(--accent-color)), transparent);
+  background: linear-gradient(90deg, var(--card-accent, var(--accent-primary)), transparent);
   opacity: 0;
   transition: opacity var(--transition-fast);
 }
@@ -53,34 +53,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--card-accent, var(--accent-color));
-  background: color-mix(in srgb, var(--card-accent, var(--accent-color)) 10%, transparent);
+  color: var(--card-accent, var(--accent-primary));
+  background: color-mix(in srgb, var(--card-accent, var(--accent-primary)) 10%, transparent);
   flex-shrink: 0;
 }
 
 .icon.accent {
-  color: var(--accent-color);
-  background: var(--accent-subtle);
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
 }
 
 .icon.success {
-  color: var(--success);
-  background: var(--success-subtle);
+  color: var(--color-success);
+  background: var(--color-success-subtle);
 }
 
 .icon.danger {
-  color: var(--danger);
-  background: var(--danger-subtle);
+  color: var(--color-danger);
+  background: var(--color-danger-subtle);
 }
 
 .icon.warning {
-  color: var(--warning);
-  background: var(--warning-subtle);
+  color: var(--color-warning);
+  background: var(--color-warning-subtle);
 }
 
 .icon.info {
-  color: var(--info);
-  background: var(--info-subtle);
+  color: var(--color-info);
+  background: var(--color-info-subtle);
 }
 
 .value {
@@ -107,7 +107,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--card-accent, var(--accent-color));
+  background: var(--card-accent, var(--accent-primary));
   opacity: 0;
   transition: opacity var(--transition-normal, 0.2s);
 }
@@ -121,7 +121,7 @@
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: var(--bg-tertiary);
+  background: var(--bg-elevated);
   border-radius: 2px;
 }
 

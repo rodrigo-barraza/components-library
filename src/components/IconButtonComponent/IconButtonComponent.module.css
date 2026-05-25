@@ -15,21 +15,21 @@
   padding: 0;
 
   &:hover {
-    background: var(--accent-subtle);
+    background: var(--accent-primary-subtle);
     color: var(--text-primary);
   }
 }
 
 /* Destructive variant hover */
 .destructive:hover {
-  color: var(--danger);
+  color: var(--color-danger);
   background: rgba(244, 63, 94, 0.1);
 }
 
 /* Active state */
 .active {
-  color: var(--accent-color);
-  background: var(--accent-subtle);
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
 }
 
 /* Hover-reveal: hidden until parent is hovered */

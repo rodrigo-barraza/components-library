@@ -68,7 +68,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--accent-color, var(--info));
+    outline: 2px solid var(--accent-primary, var(--color-info));
     outline-offset: 1px;
   }
 }

@@ -55,7 +55,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: var(--slider-inactive-track, var(--surface-variant, color-mix(in srgb, var(--text-primary, #49454f) 12%, var(--bg-primary, #e7e0ec))));
+  background: var(--slider-inactive-track, var(--surface-variant, color-mix(in srgb, var(--text-primary, #49454f) 12%, var(--bg-base, #e7e0ec))));
   border-radius: 2px;
   pointer-events: none;
 }
@@ -65,7 +65,7 @@
 .activeTrack {
   position: absolute;
   height: 4px;
-  background: var(--slider-active-track, var(--accent-color, #6750a4));
+  background: var(--slider-active-track, var(--accent-primary, #6750a4));
   border-radius: 2px;
   pointer-events: none;
   transition: width 0.05s linear;
@@ -89,7 +89,7 @@
 
 .stopStart {
   left: 0;
-  background: var(--slider-stop-active, var(--accent-color, #6750a4));
+  background: var(--slider-stop-active, var(--accent-primary, #6750a4));
 }
 
 .stopEnd {
@@ -118,7 +118,7 @@
 }
 
 .tickActive {
-  background: var(--slider-tick-active, color-mix(in srgb, var(--accent-color, #6750a4) 38%, transparent));
+  background: var(--slider-tick-active, color-mix(in srgb, var(--accent-primary, #6750a4) 38%, transparent));
 }
 
 .tickInactive {
@@ -154,18 +154,18 @@
 
 /* Hover state */
 .thumbContainer:hover .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 8%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible state (keyboard) */
 .thumbContainer:focus-visible .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* Active / pressed state */
 .thumbPressed .stateLayer,
 .thumbDragging .stateLayer {
-  background: color-mix(in srgb, var(--accent-color, #6750a4) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* ── Thumb handle — the 20px primary circle ──────────── */
@@ -175,7 +175,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--slider-thumb, var(--accent-color, #6750a4));
+  background: var(--slider-thumb, var(--accent-primary, #6750a4));
   box-shadow:
     0 1px 3px 1px rgba(0, 0, 0, 0.15),
     0 1px 2px 0 rgba(0, 0, 0, 0.30);
@@ -204,7 +204,7 @@
 
 /* Focus-visible ring (keyboard) */
 .thumbContainer:focus-visible .thumb {
-  outline: 2px solid var(--slider-focus-ring, var(--accent-color, #6750a4));
+  outline: 2px solid var(--slider-focus-ring, var(--accent-primary, #6750a4));
   outline-offset: 2px;
 }
 
@@ -222,7 +222,7 @@
   height: 28px;
   padding: 0 8px;
   border-radius: 14px;
-  background: var(--slider-indicator-bg, var(--accent-color, #6750a4));
+  background: var(--slider-indicator-bg, var(--accent-primary, #6750a4));
   color: var(--slider-indicator-color, var(--accent-text, #fff));
   pointer-events: none;
   z-index: 10;
@@ -253,7 +253,7 @@
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid var(--slider-indicator-bg, var(--accent-color, #6750a4));
+  border-top: 5px solid var(--slider-indicator-bg, var(--accent-primary, #6750a4));
 }
 
 .valueLabel {

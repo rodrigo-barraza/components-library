@@ -125,7 +125,7 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .fab:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
@@ -185,7 +185,7 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .primary {
-  background-color: var(--accent-color);
+  background-color: var(--accent-primary);
   color: white;
 }
 
@@ -196,8 +196,8 @@
    ──────────────────────────────────────────────────────────────────── */
 
 .surface {
-  background-color: var(--bg-secondary);
-  color: var(--accent-color);
+  background-color: var(--bg-surface);
+  color: var(--accent-primary);
 }
 
 /* ── Secondary ──────────────────────────────────────────────────────
@@ -207,10 +207,10 @@
 
 .secondary {
   background-color: var(
-    --accent-subtle,
-    color-mix(in srgb, var(--accent-color) 12%, var(--bg-secondary))
+    --accent-primary-subtle,
+    color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface))
   );
-  color: var(--accent-color);
+  color: var(--accent-primary);
 }
 
 /* ── Tertiary ───────────────────────────────────────────────────────
@@ -221,9 +221,9 @@
 .tertiary {
   background-color: var(
     --tertiary-container,
-    color-mix(in srgb, var(--accent-color) 20%, var(--bg-primary))
+    color-mix(in srgb, var(--accent-primary) 20%, var(--bg-base))
   );
-  color: var(--tertiary-on-container, var(--accent-color));
+  color: var(--tertiary-on-container, var(--accent-primary));
 }
 
 /* ══════════════════════════════════════════════════════════════════════
