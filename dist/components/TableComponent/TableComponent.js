@@ -2,7 +2,7 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState, useRef, useCallback, useEffect, Fragment } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, ChevronUp, Columns3, Check } from "lucide-react";
+import { ChevronDown, ChevronUp, Columns3, Check, ListChecks } from "lucide-react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import tooltipStyles from "../TooltipComponent/TooltipComponent.module.css";
@@ -76,7 +76,7 @@ function saveHiddenColumns(storageKey, hiddenSet) {
     }
     catch { /* ignore */ }
 }
-function ColumnFilter({ columns, hiddenColumns, onToggle, storageKey }) {
+function ColumnFilter({ columns, hiddenColumns, onToggle, onToggleAll, storageKey }) {
     const btnRef = useRef(null);
     const [open, setOpen] = useState(false);
     const [coords, setCoords] = useState({ top: 0, left: 0 });
@@ -102,11 +102,13 @@ function ColumnFilter({ columns, hiddenColumns, onToggle, storageKey }) {
         return () => document.removeEventListener("mousedown", handler);
     }, [open, storageKey]);
     const hiddenCount = hiddenColumns.size;
+    const hideableColumns = columns.filter((col) => col.hideable !== false);
+    const isAllVisible = hideableColumns.every((col) => !hiddenColumns.has(col.key));
     return (_jsxs(_Fragment, { children: [_jsxs("button", { ref: btnRef, className: `${styles.columnFilterBtn} ${hiddenCount > 0 ? styles.columnFilterBtnActive : ""}`, onClick: toggle, title: "Show/hide columns", children: [_jsx(Columns3, { size: 12 }), _jsx("span", { children: "Columns" }), hiddenCount > 0 && (_jsxs("span", { className: styles.columnFilterCount, children: [columns.length - hiddenCount, "/", columns.length] }))] }), open &&
-                createPortal(_jsxs("div", { className: styles.columnFilterDropdown, "data-column-filter": storageKey, style: { top: coords.top, left: coords.left }, children: [_jsx("div", { className: styles.columnFilterHeader, children: "Toggle Columns" }), _jsx("div", { className: styles.columnFilterList, children: columns.filter((col) => col.hideable !== false).map((col) => {
-                                const visible = !hiddenColumns.has(col.key);
-                                return (_jsxs("button", { className: `${styles.columnFilterItem} ${visible ? styles.columnFilterItemVisible : ""}`, onClick: () => onToggle(col.key), children: [_jsx("span", { className: styles.columnFilterCheck, children: visible && _jsx(Check, { size: 10 }) }), _jsx("span", { className: styles.columnFilterLabel, children: col.label })] }, col.key));
-                            }) })] }), document.body)] }));
+                createPortal(_jsxs("div", { className: styles.columnFilterDropdown, "data-column-filter": storageKey, style: { top: coords.top, left: coords.left }, children: [_jsx("div", { className: styles.columnFilterHeader, children: "Toggle Columns" }), _jsxs("div", { className: styles.columnFilterList, children: [_jsxs("button", { className: `${styles.columnFilterItem} ${styles.columnFilterToggleAll} ${isAllVisible ? styles.columnFilterItemVisible : ""}`, onClick: () => onToggleAll(!isAllVisible), children: [_jsx("span", { className: styles.columnFilterCheck, children: isAllVisible && _jsx(Check, { size: 10 }) }), _jsx(ListChecks, { size: 11, className: styles.columnFilterToggleAllIcon }), _jsx("span", { className: styles.columnFilterLabel, children: isAllVisible ? "Deselect All" : "Select All" })] }), _jsx("div", { className: styles.columnFilterDivider }), hideableColumns.map((col) => {
+                                    const visible = !hiddenColumns.has(col.key);
+                                    return (_jsxs("button", { className: `${styles.columnFilterItem} ${visible ? styles.columnFilterItemVisible : ""}`, onClick: () => onToggle(col.key), children: [_jsx("span", { className: styles.columnFilterCheck, children: visible && _jsx(Check, { size: 10 }) }), _jsx("span", { className: styles.columnFilterLabel, children: col.label })] }, col.key));
+                                })] })] }), document.body)] }));
 }
 export default function TableComponent({ title, subtitle, columns, data = [], getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText = "No data", sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini = false, storageKey, }) {
     const { sound } = useComponents();
@@ -127,6 +129,14 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
             return next;
         });
     }, [storageKey]);
+    const toggleAllColumns = useCallback((showAll) => {
+        setHiddenColumns(() => {
+            const hideableKeys = columns.filter((c) => c.hideable !== false).map((c) => c.key);
+            const next = showAll ? new Set() : new Set(hideableKeys);
+            saveHiddenColumns(storageKey, next);
+            return next;
+        });
+    }, [storageKey, columns]);
     const visibleColumns = storageKey
         ? columns.filter((c) => !hiddenColumns.has(c.key))
         : columns;
@@ -253,7 +263,7 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         return SoundService.interactive(clickHandler, enterHandler);
     };
     const showHeader = !!(title || subtitle || storageKey);
-    return (_jsxs("div", { className: `${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles.hasHeader : ""}`, children: [showHeader && (_jsxs("div", { className: styles.tableHeader, children: [(title || subtitle) && (_jsxs("div", { className: styles.tableHeaderContent, children: [title && _jsx("h2", { className: styles.title, children: title }), subtitle && _jsx("p", { className: styles.subtitle, children: subtitle })] })), storageKey && (_jsx(ColumnFilter, { columns: columns, hiddenColumns: hiddenColumns, onToggle: toggleColumn, storageKey: storageKey }))] })), _jsx("div", { ref: scrollRef, className: styles.tableScroll, style: maxHeight ? { maxHeight, overflowY: "auto" } : undefined, "data-table-scroll": true, onPointerDown: onPointerDown, onPointerMove: onPointerMove, onPointerUp: onPointerUp, onPointerCancel: onPointerUp, children: _jsxs("table", { className: styles.table, children: [_jsx("thead", { children: _jsx("tr", { children: visibleColumns.map((col) => {
+    return (_jsxs("div", { className: `${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles.hasHeader : ""}`, children: [showHeader && (_jsxs("div", { className: styles.tableHeader, children: [(title || subtitle) && (_jsxs("div", { className: styles.tableHeaderContent, children: [title && _jsx("h2", { className: styles.title, children: title }), subtitle && _jsx("p", { className: styles.subtitle, children: subtitle })] })), storageKey && (_jsx(ColumnFilter, { columns: columns, hiddenColumns: hiddenColumns, onToggle: toggleColumn, onToggleAll: toggleAllColumns, storageKey: storageKey }))] })), _jsx("div", { ref: scrollRef, className: styles.tableScroll, style: maxHeight ? { maxHeight, overflowY: "auto" } : undefined, "data-table-scroll": true, onPointerDown: onPointerDown, onPointerMove: onPointerMove, onPointerUp: onPointerUp, onPointerCancel: onPointerUp, children: _jsxs("table", { className: styles.table, children: [_jsx("thead", { children: _jsx("tr", { children: visibleColumns.map((col) => {
                                     const isSortable = col.sortable !== false;
                                     const isActive = sort.key === col.key;
                                     const thClasses = [

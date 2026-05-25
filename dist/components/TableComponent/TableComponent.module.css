@@ -323,7 +323,7 @@
   gap: 5px;
   padding: 4px 10px;
   border: 1px solid var(--calculated-border-color);
-  border-radius: 4px;
+  border-radius: 2px;
   background: var(--bg-surface);
   color: var(--text-tertiary);
   font-size: 10px;
@@ -361,12 +361,26 @@
   overflow-y: auto;
   background: var(--bg-surface);
   border: 1px solid var(--calculated-border-color);
-  border-radius: 6px;
+  border-radius: 2px;
   box-shadow:
     0 8px 30px rgba(0, 0, 0, 0.25),
     0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 4px;
   animation: columnFilterIn 0.12s ease-out;
+}
+
+/* Scrollbar */
+.columnFilterDropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.columnFilterDropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.columnFilterDropdown::-webkit-scrollbar-thumb {
+  background: var(--calculated-border-color);
+  border-radius: 2px;
 }
 
 @keyframes columnFilterIn {
@@ -403,7 +417,7 @@
   width: 100%;
   padding: 5px 8px;
   border: none;
-  border-radius: 3px;
+  border-radius: 2px;
   background: transparent;
   color: var(--text-muted);
   font-size: 10px;
@@ -427,13 +441,40 @@
   opacity: 1;
 }
 
+/* Select All / Deselect All toggle */
+.columnFilterToggleAll {
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.columnFilterToggleAll.columnFilterItemVisible {
+  opacity: 1;
+}
+
+.columnFilterToggleAllIcon {
+  flex-shrink: 0;
+  color: var(--accent-primary);
+  opacity: 0.7;
+}
+
+.columnFilterDivider {
+  height: 1px;
+  background: var(--calculated-border-color);
+  margin: 2px 4px;
+}
+
 .columnFilterCheck {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 14px;
   height: 14px;
-  border-radius: 3px;
+  border-radius: 2px;
   border: 1px solid var(--calculated-border-color);
   color: transparent;
   flex-shrink: 0;
