@@ -124,12 +124,30 @@
     height: 20px;
   }
 
+  /* ── Emoji icon (Noto colored → greyscale default) ── */
+  & > .tabEmojiIcon {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    filter: grayscale(1);
+    opacity: 0.7;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+    will-change: filter, opacity;
+    font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
   /* ── Hover state ─────────── */
   &:hover {
     color: var(--text-secondary);
 
     &::before {
       opacity: 0.06;
+    }
+
+    & > .tabEmojiIcon {
+      filter: grayscale(0.5);
+      opacity: 0.85;
     }
   }
 
@@ -169,6 +187,11 @@
 
 .tabActive {
   color: var(--accent-color);
+
+  & > .tabEmojiIcon {
+    filter: grayscale(0);
+    opacity: 1;
+  }
 }
 
 /* ── Badge (positioned top-center) ────────────────────── */
