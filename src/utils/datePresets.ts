@@ -69,10 +69,10 @@ export const DATE_PRESETS_DATE_ONLY: DatePreset[] = DATE_PRESETS.filter((preset)
 /**
  * Parse a date string. Handles both YYYY-MM-DD and ISO datetime formats.
  */
-export function parseDateValue(str: string | null | undefined): Date | null {
-  if (!str) return null;
-  if (str.includes("T")) return new Date(str);
-  const [year, month, day] = str.split("-").map(Number);
+export function parseDateValue(dateString: string | null | undefined): Date | null {
+  if (!dateString) return null;
+  if (dateString.includes("T")) return new Date(dateString);
+  const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
 }
 

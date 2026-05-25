@@ -658,11 +658,11 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
       </button>
 
       <div className={styles.voiceWaveform} onClick={handleWaveformClick}>
-        {bars.map((height, idx) => {
-          const isPlayed = idx <= activeBarIndex;
+        {bars.map((height, barIndex) => {
+          const isPlayed = barIndex <= activeBarIndex;
           return (
             <div
-              key={idx}
+              key={barIndex}
               className={`${styles.voiceWaveformBar} ${isPlayed ? styles.voiceWaveformBarPlayed : ""}`}
               style={{ "--bar-height": `${height}%` } as React.CSSProperties}
             />

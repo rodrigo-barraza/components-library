@@ -21,9 +21,9 @@ function isInRange(date: Date | null | undefined, from: Date | null | undefined,
   return date >= from && date <= to;
 }
 
-function extractTime(str: string | null | undefined): string {
-  if (!str || !str.includes("T")) return "";
-  const parsedDate = new Date(str);
+function extractTime(dateTimeString: string | null | undefined): string {
+  if (!dateTimeString || !dateTimeString.includes("T")) return "";
+  const parsedDate = new Date(dateTimeString);
   if (isNaN(parsedDate.getTime())) return "";
   return `${String(parsedDate.getHours()).padStart(2, "0")}:${String(parsedDate.getMinutes()).padStart(2, "0")}`;
 }
