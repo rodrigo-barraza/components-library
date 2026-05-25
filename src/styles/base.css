@@ -16,6 +16,7 @@
 
    Each client then only needs to declare its own:
      - --accent-color, --accent-hover, --accent-glow, --accent-subtle
+     - --accent-secondary, --accent-secondary-hover, --accent-secondary-glow, --accent-secondary-subtle
      - --shadow-glow (accent-tinted)
      - Any project-specific tokens
    ═══════════════════════════════════════════════════════════════ */

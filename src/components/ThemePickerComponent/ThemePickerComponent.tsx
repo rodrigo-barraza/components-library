@@ -6,15 +6,17 @@ import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./ThemePickerComponent.module.css";
 
 /**
- * Theme metadata — icon, label, and representative color for each built-in theme.
+ * Theme metadata — icon, label, and representative colors for each built-in theme.
  *
- * The `color` values are the `--accent-color` from each theme's CSS custom properties,
- * used as the swatch indicator so the user can visually identify each theme at a glance.
+ * `color` is the primary `--accent-color` and `secondary` is `--accent-secondary`
+ * from each theme's CSS custom properties. Both are rendered as a dual-swatch so
+ * the user can visually identify each theme's full palette at a glance.
  */
 interface ThemeCatalogEntry {
   label: string;
   icon: string;
   color: string;
+  secondary: string;
   bg: string;
 }
 
@@ -23,60 +25,70 @@ const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
     label: "Dark",
     icon: "Moon",
     color: "#6366f1",     // indigo accent
+    secondary: "#a78bfa", // violet secondary
     bg: "#0a0a0f",
   },
   light: {
     label: "Light",
     icon: "Sun",
     color: "#4f46e5",     // deeper indigo
+    secondary: "#e11d48", // rose secondary
     bg: "#f5f5f7",
   },
   tropical: {
     label: "Tropical",
     icon: "Palmtree",
     color: "#ff6b6b",     // coral accent
+    secondary: "#00ceaa", // teal secondary
     bg: "#1a120e",
   },
   oceanic: {
     label: "Oceanic",
     icon: "Waves",
     color: "#00b4d8",     // cerulean accent
+    secondary: "#48e0a0", // aquamarine secondary
     bg: "#060d18",
   },
   punk: {
     label: "Punk",
     icon: "Skull",
     color: "#ff2d9b",     // hot fuchsia accent
+    secondary: "#f0b429", // amber gold secondary
     bg: "#0e0a10",
   },
   muted: {
     label: "Muted",
     icon: "CloudFog",
     color: "#7c8290",     // cool slate accent
+    secondary: "#9f7aea", // warm mauve secondary
     bg: "#dddee3",
   },
   ember: {
     label: "Ember",
     icon: "Flame",
     color: "#f59e0b",     // amber accent
+    secondary: "#e06c4e", // copper secondary
     bg: "#120c08",
   },
   arctic: {
     label: "Arctic",
     icon: "Snowflake",
     color: "#94cce0",     // ice-cyan accent
+    secondary: "#a78bfa", // aurora lavender secondary
     bg: "#0a0e14",
   },
   forest: {
     label: "Forest",
     icon: "TreePine",
     color: "#4ade80",     // moss-green accent
+    secondary: "#fbbf24", // amber secondary
     bg: "#080e08",
   },
   mono: {
     label: "Mono",
     icon: "Contrast",
     color: "#a0a0a0",     // neutral grey
+    secondary: "#d4d4d4", // light grey secondary
     bg: "#101010",
   },
 };
@@ -86,7 +98,7 @@ const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
  *
  * Displays the current theme as a trigger button. Clicking opens a dropup
  * popover with all available themes rendered as selectable buttons, each
- * showing a color swatch, icon, and label.
+ * showing a dual-color swatch (primary + secondary), icon, and label.
  */
 interface ThemePickerProps {
   theme: string;
@@ -168,7 +180,10 @@ export default function ThemePickerComponent({
       title="Change theme"
       type="button"
     >
-      <span className={styles.triggerSwatch} style={{ background: currentMeta.color }} />
+      <span className={styles.triggerSwatchDual}>
+        <span className={styles.triggerSwatchHalf} style={{ background: currentMeta.color }} />
+        <span className={styles.triggerSwatchHalf} style={{ background: currentMeta.secondary }} />
+      </span>
       <CurrentIcon size={18} strokeWidth={1.8} className={styles.triggerIcon} />
       <span className={styles.triggerLabel}>{currentMeta.label}</span>
       <Icons.ChevronUp
@@ -202,7 +217,7 @@ export default function ThemePickerComponent({
           <div className={styles.popoverHeader}>Theme</div>
           <div className={styles.themeList}>
             {themes.map((themeName) => {
-              const meta = THEME_CATALOG[themeName] || { label: themeName, icon: "Palette", color: "#888", bg: "#222" };
+              const meta = THEME_CATALOG[themeName] || { label: themeName, icon: "Palette", color: "#888", secondary: "#aaa", bg: "#222" };
               const ThemeIcon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[meta.icon] || Icons.Palette;
               const isActive = themeName === theme;
 
@@ -215,12 +230,13 @@ export default function ThemePickerComponent({
                   title={`Switch to ${meta.label} theme`}
                 >
                   <span
-                    className={styles.swatch}
+                    className={styles.swatchDual}
                     style={{
-                      background: meta.color,
                       boxShadow: isActive ? `0 0 8px ${meta.color}88` : "none",
                     }}
                   >
+                    <span className={styles.swatchHalf} style={{ background: meta.color }} />
+                    <span className={styles.swatchHalf} style={{ background: meta.secondary }} />
                     {isActive && <Icons.Check size={10} strokeWidth={3} className={styles.swatchCheck} />}
                   </span>
                   <ThemeIcon size={16} strokeWidth={1.8} className={styles.optionIcon} />
