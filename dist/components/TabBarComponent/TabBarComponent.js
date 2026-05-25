@@ -85,9 +85,9 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
     const isStacked = layout === "stacked";
     const isSecondary = variant === "secondary";
     const containerClasses = [
-        styles.tabBar,
-        isSecondary && styles.tabBarSecondary,
-        scrollable && styles.tabBarScrollable,
+        styles['tab-bar'],
+        isSecondary && styles['tab-bar-secondary'],
+        scrollable && styles['tab-bar-scrollable'],
         className,
     ]
         .filter(Boolean)
@@ -97,10 +97,10 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
                 const hasIcon = !!tab.icon;
                 const tabClasses = [
                     styles.tab,
-                    isActive && styles.tabActive,
-                    tab.disabled && styles.tabDisabled,
-                    glowingTabs.includes(tab.key) && styles.tabGlow,
-                    hasIcon && isStacked && styles.tabStacked,
+                    isActive && styles['tab-active'],
+                    tab.disabled && styles['tab-disabled'],
+                    glowingTabs.includes(tab.key) && styles['tab-glow'],
+                    hasIcon && isStacked && styles['tab-stacked'],
                 ]
                     .filter(Boolean)
                     .join(" ");
@@ -115,12 +115,12 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
                         if (sound)
                             SoundService.playHover({ event });
                         onTabHover?.(tab.key);
-                    }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(CountBadgeComponent, { count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles.tabBadge }))] }, tab.key));
+                    }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(CountBadgeComponent, { count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles['tab-badge'] }))] }, tab.key));
                 if (tab.tooltip) {
-                    return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles.tooltipWrapper}${isActive ? ` ${styles.tooltipWrapperActive}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
+                    return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles['tooltip-wrapper']}${isActive ? ` ${styles['tooltip-wrapper-active']}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
                 }
                 return button;
-            }), _jsx("span", { ref: indicatorRef, className: `${styles.indicator}${isSecondary ? ` ${styles.indicatorSecondary}` : ""}`, "aria-hidden": "true", style: { opacity: 0 } })] }));
+            }), _jsx("span", { ref: indicatorRef, className: `${styles.indicator}${isSecondary ? ` ${styles['indicator-secondary']}` : ""}`, "aria-hidden": "true", style: { opacity: 0 } })] }));
 }
 export { styles as tabBarStyles };
 //# sourceMappingURL=TabBarComponent.js.map

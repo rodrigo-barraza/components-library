@@ -151,9 +151,9 @@ export default function TabBarComponent({
   const isSecondary = variant === "secondary";
 
   const containerClasses = [
-    styles.tabBar,
-    isSecondary && styles.tabBarSecondary,
-    scrollable && styles.tabBarScrollable,
+    styles['tab-bar'],
+    isSecondary && styles['tab-bar-secondary'],
+    scrollable && styles['tab-bar-scrollable'],
     className,
   ]
     .filter(Boolean)
@@ -173,10 +173,10 @@ export default function TabBarComponent({
 
         const tabClasses = [
           styles.tab,
-          isActive && styles.tabActive,
-          tab.disabled && styles.tabDisabled,
-          glowingTabs.includes(tab.key) && styles.tabGlow,
-          hasIcon && isStacked && styles.tabStacked,
+          isActive && styles['tab-active'],
+          tab.disabled && styles['tab-disabled'],
+          glowingTabs.includes(tab.key) && styles['tab-glow'],
+          hasIcon && isStacked && styles['tab-stacked'],
         ]
           .filter(Boolean)
           .join(" ");
@@ -213,7 +213,7 @@ export default function TabBarComponent({
                 state={tab.badgeState || "default"}
                 disabled={tab.badgeDisabled}
                 rainbow={tab.badgeRainbow}
-                className={styles.tabBadge}
+                className={styles['tab-badge']}
               />
             )}
           </button>
@@ -226,7 +226,7 @@ export default function TabBarComponent({
               label={tab.tooltip}
               position="bottom"
               delay={400}
-              className={`${styles.tooltipWrapper}${isActive ? ` ${styles.tooltipWrapperActive}` : ""}`}
+              className={`${styles['tooltip-wrapper']}${isActive ? ` ${styles['tooltip-wrapper-active']}` : ""}`}
               disabled={tab.tooltipDisabled}
             >
               {button}
@@ -240,7 +240,7 @@ export default function TabBarComponent({
       {/* M3 sliding active indicator — GPU accelerated */}
       <span
         ref={indicatorRef}
-        className={`${styles.indicator}${isSecondary ? ` ${styles.indicatorSecondary}` : ""}`}
+        className={`${styles.indicator}${isSecondary ? ` ${styles['indicator-secondary']}` : ""}`}
         aria-hidden="true"
         style={{ opacity: 0 }}
       />
