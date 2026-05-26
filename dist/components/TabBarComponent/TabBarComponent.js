@@ -4,7 +4,7 @@ import { useRef, useEffect, useCallback } from "react";
 import styles from "./TabBarComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
-import CountBadgeComponent from "../CountBadgeComponent/CountBadgeComponent.js";
+import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 export default function TabBarComponent({ tabs = [], activeTab, onChange, variant = "primary", layout = "inline", scrollable = false, className, onTabHover, glowingTabs = [], ariaLabel, }) {
     const { sound } = useComponents();
@@ -115,7 +115,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
                         if (sound)
                             SoundService.playHover({ event });
                         onTabHover?.(tab.key);
-                    }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(CountBadgeComponent, { count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles['tab-badge'] }))] }, tab.key));
+                    }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(BadgeComponent, { type: "count", count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles['tab-badge'] }))] }, tab.key));
                 if (tab.tooltip) {
                     return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles['tooltip-wrapper']}${isActive ? ` ${styles['tooltip-wrapper-active']}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
                 }

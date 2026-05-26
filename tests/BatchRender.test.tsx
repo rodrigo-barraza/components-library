@@ -60,17 +60,7 @@ import ToggleComponent from "@/components/ToggleComponent/ToggleComponent.tsx";
 import TooltipComponent from "@/components/TooltipComponent/TooltipComponent.tsx";
 import ToolbarComponent from "@/components/ToolbarComponent/ToolbarComponent.tsx";
 
-// ── Badge variants ─────────────────────────────────────────────
-import AddressBadgeComponent from "@/components/AddressBadgeComponent/AddressBadgeComponent.tsx";
-import CountBadgeComponent from "@/components/CountBadgeComponent/CountBadgeComponent.tsx";
-// DateTimeBadgeComponent excluded — requires luxon (not in devDependencies)
-import DeviceBadgeComponent from "@/components/DeviceBadgeComponent/DeviceBadgeComponent.tsx";
-import DomainBadgeComponent from "@/components/DomainBadgeComponent/DomainBadgeComponent.tsx";
-import PortBadgeComponent from "@/components/PortBadgeComponent/PortBadgeComponent.tsx";
-import RepositoryBadgeComponent from "@/components/RepositoryBadgeComponent/RepositoryBadgeComponent.tsx";
-import ResponseTimeBadgeComponent from "@/components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.tsx";
-import StatusBadgeComponent from "@/components/StatusBadgeComponent/StatusBadgeComponent.tsx";
-import VisibilityBadgeComponent from "@/components/VisibilityBadgeComponent/VisibilityBadgeComponent.tsx";
+import BadgeComponent from "@/components/BadgeComponent/BadgeComponent.tsx";
 
 // ── Layout & Navigation ────────────────────────────────────────
 import BreadcrumbComponent from "@/components/BreadcrumbComponent/BreadcrumbComponent.tsx";
@@ -275,14 +265,14 @@ describe("ThemeToggleButtonComponent", () => {
 
 describe("AddressBadgeComponent", () => {
   it("renders address text", () => {
-    render(<AddressBadgeComponent address="123 Main St" />);
+    render(<BadgeComponent type="address" address="123 Main St" />);
     expect(screen.getByText(/123 Main St/)).toBeInTheDocument();
   });
 });
 
 describe("CountBadgeComponent", () => {
   it("renders count value", () => {
-    render(<CountBadgeComponent count={42} />);
+    render(<BadgeComponent type="count" count={42} />);
     expect(screen.getByText("42")).toBeInTheDocument();
   });
 });
@@ -291,42 +281,42 @@ describe("CountBadgeComponent", () => {
 
 describe("DeviceBadgeComponent", () => {
   it("renders device name", () => {
-    render(<DeviceBadgeComponent device="Desktop" />);
+    render(<BadgeComponent type="device" device="Desktop" />);
     expect(screen.getByText(/Desktop/i)).toBeInTheDocument();
   });
 });
 
 describe("DomainBadgeComponent", () => {
   it("renders domain text", () => {
-    render(<DomainBadgeComponent domain="example.com" />);
+    render(<BadgeComponent type="domain" domain="example.com" />);
     expect(screen.getByText(/example\.com/)).toBeInTheDocument();
   });
 });
 
 describe("PortBadgeComponent", () => {
   it("renders port number", () => {
-    render(<PortBadgeComponent port={5590} />);
+    render(<BadgeComponent type="port" port={5590} />);
     expect(screen.getByText(/5590/)).toBeInTheDocument();
   });
 });
 
 describe("RepositoryBadgeComponent", () => {
   it("renders repo name", () => {
-    render(<RepositoryBadgeComponent repo="prism-service" />);
+    render(<BadgeComponent type="repository" repo="prism-service" />);
     expect(screen.getByText(/prism-service/)).toBeInTheDocument();
   });
 });
 
 describe("ResponseTimeBadgeComponent", () => {
   it("renders time value", () => {
-    render(<ResponseTimeBadgeComponent ms={120} />);
+    render(<BadgeComponent type="responseTime" ms={120} />);
     expect(screen.getByText(/120/)).toBeInTheDocument();
   });
 });
 
 describe("StatusBadgeComponent", () => {
   it("renders healthy state", () => {
-    render(<StatusBadgeComponent healthy />);
+    render(<BadgeComponent type="status" healthy />);
     expect(screen.getByText("✓")).toBeInTheDocument();
   });
 });
@@ -335,7 +325,7 @@ describe("VisibilityBadgeComponent", () => {
   it("renders external visibility", () => {
     const MockGlobe = () => <svg data-testid="globe" />;
     const MockLock = () => <svg data-testid="lock" />;
-    render(<VisibilityBadgeComponent visibility="external" icons={{ Globe: MockGlobe, Lock: MockLock }} />);
+    render(<BadgeComponent type="visibility" visibility="external" icons={{ Globe: MockGlobe, Lock: MockLock }} />);
     expect(screen.getByText("External")).toBeInTheDocument();
   });
 });

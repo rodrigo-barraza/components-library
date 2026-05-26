@@ -1,5 +1,4 @@
 // ── Components ──────────────────────────────────────────
-export { default as AddressBadgeComponent } from "./components/AddressBadgeComponent/AddressBadgeComponent.js";
 export { default as BadgeComponent } from "./components/BadgeComponent/BadgeComponent.js";
 export { default as BottomAppBarComponent } from "./components/BottomAppBarComponent/BottomAppBarComponent.js";
 export { default as ButtonComponent } from "./components/ButtonComponent/ButtonComponent.js";
@@ -15,14 +14,10 @@ export { default as CloseButtonComponent } from "./components/CloseButtonCompone
 export { default as CustomThemeBootComponent } from "./components/CustomThemeBootComponent/CustomThemeBootComponent.js";
 export { default as CollapsibleBlockComponent } from "./components/CollapsibleBlockComponent/CollapsibleBlockComponent.js";
 export { default as CopyButtonComponent } from "./components/CopyButtonComponent/CopyButtonComponent.js";
-export { default as CountBadgeComponent } from "./components/CountBadgeComponent/CountBadgeComponent.js";
 export { default as DatePickerComponent } from "./components/DatePickerComponent/DatePickerComponent.js";
-export { default as DateTimeBadgeComponent } from "./components/DateTimeBadgeComponent/DateTimeBadgeComponent.js";
-export { default as DeviceBadgeComponent } from "./components/DeviceBadgeComponent/DeviceBadgeComponent.js";
 export { default as DialogComponent } from "./components/DialogComponent/DialogComponent.js";
 export { default as DiscordChatComponent } from "./components/DiscordChatComponent/DiscordChatComponent.js";
 export { default as DividerComponent } from "./components/DividerComponent/DividerComponent.js";
-export { default as DomainBadgeComponent } from "./components/DomainBadgeComponent/DomainBadgeComponent.js";
 export { default as DrawerComponent } from "./components/DrawerComponent/DrawerComponent.js";
 export { default as EmptyStateComponent } from "./components/EmptyStateComponent/EmptyStateComponent.js";
 export { default as ErrorBoundaryComponent } from "./components/ErrorBoundaryComponent/ErrorBoundaryComponent.js";
@@ -36,7 +31,6 @@ export { default as InputComponent } from "./components/InputComponent/InputComp
 export { default as LoadingIndicatorComponent } from "./components/LoadingIndicatorComponent/LoadingIndicatorComponent.js";
 export { default as LoadingStateComponent } from "./components/LoadingStateComponent/LoadingStateComponent.js";
 export { default as MenuComponent, MenuItem, MenuDivider, MenuGroupLabel, SubMenu, } from "./components/MenuComponent/MenuComponent.js";
-export { default as MetricBadgeComponent } from "./components/MetricBadgeComponent/MetricBadgeComponent.js";
 export { default as MobileHeaderComponent } from "./components/MobileHeaderComponent/MobileHeaderComponent.js";
 export { default as ModalComponent } from "./components/ModalComponent/ModalComponent.js";
 export { default as MultiSelectComponent } from "./components/MultiSelectComponent/MultiSelectComponent.js";
@@ -46,11 +40,8 @@ export { default as NavigationSidebarComponent } from "./components/NavigationSi
 export { default as PageHeaderComponent } from "./components/PageHeaderComponent/PageHeaderComponent.js";
 export { default as PageLayoutComponent } from "./components/PageLayoutComponent/PageLayoutComponent.js";
 export { default as PaginationComponent } from "./components/PaginationComponent/PaginationComponent.js";
-export { default as PortBadgeComponent } from "./components/PortBadgeComponent/PortBadgeComponent.js";
 export { default as ProgressBarComponent } from "./components/ProgressBarComponent/ProgressBarComponent.js";
 export { default as RadioComponent } from "./components/RadioComponent/RadioComponent.js";
-export { default as RepositoryBadgeComponent } from "./components/RepositoryBadgeComponent/RepositoryBadgeComponent.js";
-export { default as ResponseTimeBadgeComponent } from "./components/ResponseTimeBadgeComponent/ResponseTimeBadgeComponent.js";
 export { default as SearchInputComponent } from "./components/SearchInputComponent/SearchInputComponent.js";
 export { default as SessionTrackerComponent } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
 export { default as SelectComponent } from "./components/SelectComponent/SelectComponent.js";
@@ -62,7 +53,6 @@ export { default as ChartLineComponent } from "./components/ChartLineComponent/C
 export { default as SparklineComponent } from "./components/ChartLineComponent/ChartLineComponent.js";
 export { default as SplitButtonComponent } from "./components/SplitButtonComponent/SplitButtonComponent.js";
 export { default as StatsCardComponent } from "./components/StatsCardComponent/StatsCardComponent.js";
-export { default as StatusBadgeComponent } from "./components/StatusBadgeComponent/StatusBadgeComponent.js";
 export { default as StatusDotComponent } from "./components/StatusDotComponent/StatusDotComponent.js";
 export { default as SwitchComponent } from "./components/SwitchComponent/SwitchComponent.js";
 export { default as TabBarComponent, tabBarStyles, } from "./components/TabBarComponent/TabBarComponent.js";
@@ -74,9 +64,8 @@ export { default as ToastComponent, useToast } from "./components/ToastComponent
 export { default as ToggleComponent } from "./components/ToggleComponent/ToggleComponent.js";
 export { default as ToolCardComponent } from "./components/ToolCardComponent/ToolCardComponent.js";
 export { default as ToolbarComponent } from "./components/ToolbarComponent/ToolbarComponent.js";
-export { default as TooltipComponent } from "./components/TooltipComponent/TooltipComponent.js";
 export { default as TopAppBarComponent } from "./components/TopAppBarComponent/TopAppBarComponent.js";
-export { default as VisibilityBadgeComponent } from "./components/VisibilityBadgeComponent/VisibilityBadgeComponent.js";
+export { default as TooltipComponent } from "./components/TooltipComponent/TooltipComponent.js";
 export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.js";
 // ── Providers ───────────────────────────────────────────
 export { ChatProvider, useChat } from "./components/ChatProvider.js";

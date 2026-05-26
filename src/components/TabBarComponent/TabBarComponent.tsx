@@ -4,7 +4,7 @@ import { useRef, useEffect, useCallback } from "react";
 import styles from "./TabBarComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
-import CountBadgeComponent from "../CountBadgeComponent/CountBadgeComponent.js";
+import BadgeComponent from "../BadgeComponent/BadgeComponent.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 
 /**
@@ -208,7 +208,8 @@ export default function TabBarComponent({
             {tab.icon}
             {tab.label && <span>{tab.label}</span>}
             {tab.badge != null && (
-              <CountBadgeComponent
+              <BadgeComponent
+                type="count"
                 count={tab.badge}
                 state={tab.badgeState || "default"}
                 disabled={tab.badgeDisabled}
