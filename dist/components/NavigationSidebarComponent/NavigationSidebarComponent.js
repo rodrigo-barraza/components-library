@@ -1,6 +1,6 @@
 "use client";
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import * as Icons from "lucide-react";
 import useMediaQuery from "../../hooks/useMediaQuery.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
@@ -26,6 +26,7 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
  }) {
     const [collapsed, setCollapsed] = useState(defaultCollapsed);
     const [navReady, setNavReady] = useState(false);
+    const sidebarReference = useRef(null);
     // ── Mobile detection ──────────────────────────────────────────────
     const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
     // Normalize to sections format — single unnamed section when using flat items
@@ -91,6 +92,50 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
             document.body.style.overflow = "";
         };
     }, [isMobile, mobileOpen]);
+    // ── Programmatic contrast color for sidebar content ────────────
+    useEffect(() => {
+        const sidebarElement = sidebarReference.current;
+        if (!sidebarElement)
+            return;
+        const computeAndApplyContrastColor = () => {
+            const computedStyle = getComputedStyle(sidebarElement);
+            const backgroundColorValue = computedStyle.backgroundColor;
+            const rgbMatch = backgroundColorValue.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+            if (!rgbMatch)
+                return;
+            const redChannel = parseInt(rgbMatch[1], 10);
+            const greenChannel = parseInt(rgbMatch[2], 10);
+            const blueChannel = parseInt(rgbMatch[3], 10);
+            const toLinearComponent = (channelValue) => {
+                const normalizedValue = channelValue / 255;
+                return normalizedValue <= 0.03928
+                    ? normalizedValue / 12.92
+                    : Math.pow((normalizedValue + 0.055) / 1.055, 2.4);
+            };
+            const relativeLuminance = 0.2126 * toLinearComponent(redChannel) +
+                0.7152 * toLinearComponent(greenChannel) +
+                0.0722 * toLinearComponent(blueChannel);
+            const isLightBackground = relativeLuminance > 0.179;
+            sidebarElement.style.setProperty("--sidebar-contrast-color", isLightBackground ? "rgba(0, 0, 0, 0.87)" : "rgba(255, 255, 255, 0.92)");
+            sidebarElement.style.setProperty("--sidebar-contrast-color-muted", isLightBackground ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.55)");
+        };
+        computeAndApplyContrastColor();
+        const mutationObserver = new MutationObserver(computeAndApplyContrastColor);
+        mutationObserver.observe(sidebarElement, {
+            attributes: true,
+            attributeFilter: ["style", "class"],
+        });
+        // Also observe the document element for theme class changes
+        const documentObserver = new MutationObserver(computeAndApplyContrastColor);
+        documentObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class", "data-theme"],
+        });
+        return () => {
+            mutationObserver.disconnect();
+            documentObserver.disconnect();
+        };
+    }, []);
     // Resolve whether we use the new ThemePicker or fallback to legacy toggle
     const hasThemePicker = Boolean(themes?.length && setTheme);
     // Legacy: THEME_META for backward-compatible single-button toggle
@@ -155,7 +200,7 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { className: wrapperClasses, children: [isMobile && mobileOpen && (_jsx("div", { className: styles.mobileScrim, onClick: onMobileClose, "aria-hidden": "true" })), _jsxs("aside", { className: styles.sidebar, children: [(brandIcon || brandLabel) && (_jsxs("div", { className: styles.brand, children: [typeof brandIcon === "string" ? (
+    return (_jsxs("div", { className: wrapperClasses, children: [isMobile && mobileOpen && (_jsx("div", { className: styles.mobileScrim, onClick: onMobileClose, "aria-hidden": "true" })), _jsxs("aside", { ref: sidebarReference, className: styles.sidebar, children: [(brandIcon || brandLabel) && (_jsxs("div", { className: styles.brand, children: [typeof brandIcon === "string" ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             _jsx("img", { src: brandIcon, alt: brandLabel || "Brand", className: styles.brandIconImg })) : brandIcon ? (_jsx("div", { className: styles.brandIconNode, children: brandIcon })) : null, brandLabel && _jsx("span", { className: styles.brandLabel, children: brandLabel }), isMobile ? (_jsx("button", { className: styles.mobileCloseButton, onClick: onMobileClose, title: "Close menu", "aria-label": "Close navigation menu", children: _jsx(Icons.X, { size: 20 }) })) : collapsible ? (_jsx("button", { className: styles.collapseButton, onClick: toggleCollapse, title: "Toggle Sidebar", children: _jsx(Icons.ChevronsLeft, { size: 16 }) })) : null] })), _jsx("nav", { className: styles.navigationList, children: resolvedSections.map((section, sectionIdx) => (_jsxs(React.Fragment, { children: [section.label && (_jsx("div", { className: styles.navigationDivider, children: _jsx("span", { children: section.label }) })), section.items.map(renderNavItem)] }, section.label || sectionIdx))) }), _jsxs("div", { className: styles.bottomActions, children: [bottomActions, themes?.length && setTheme ? (_jsx(ThemePickerComponent, { theme: theme, themes: themes, onSelectTheme: setTheme, collapsed: isMobile ? false : collapsed })) : onToggleTheme ? (_jsx(TooltipComponent, { label: themeMeta.nextLabel + " Mode", position: "right", delay: 200, disabled: isMobile || !collapsed, className: styles.tooltipFill, children: _jsxs("button", { className: styles.themeToggle, onClick: onToggleTheme, title: themeMeta.title, children: [_jsx(themeMeta.NextIcon, { size: 18, strokeWidth: 1.8, className: styles.navigationIcon }), _jsx("span", { className: styles.themeLabel, children: themeMeta.nextLabel })] }) })) : null] })] })] }));
 }
