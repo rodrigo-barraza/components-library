@@ -18,7 +18,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16px, 1fr));
   gap: 0;
-  border-block-end: 1px solid var(--calculated-border-color);
   flex-shrink: 0;
   padding: 0;
   overflow: visible;
@@ -32,6 +31,7 @@
   flex: 1;
   height: 100%;
   background: var(--background-base);
+  border-block-end: 1px solid var(--calculated-border-color);
   transition: background-color 0.2s;
 
   &:hover {
@@ -42,15 +42,33 @@
     width: 100%;
     height: 100%;
   }
+
+  & .tab>svg,
+  & .tab>.tab-emoji-icon {
+    margin-block-start: auto;
+    margin-block-end: 4px;
+  }
 }
 
 .tooltip-wrapper-active {
   background: var(--background-surface);
+  border-block-end: none;
 
   &:hover {
     background: var(--background-surface);
   }
 }
+
+/* Active tab bordered on the left when preceded by a non-active tab */
+.tooltip-wrapper:not(.tooltip-wrapper-active) + .tooltip-wrapper-active {
+  border-inline-start: 1px solid var(--calculated-border-color);
+}
+
+/* Active tab bordered on the right when followed by a non-active tab */
+.tooltip-wrapper-active:has(+ .tooltip-wrapper:not(.tooltip-wrapper-active)) {
+  border-inline-end: 1px solid var(--calculated-border-color);
+}
+
 
 /* ── Individual tab button ────────────────────────────── */
 

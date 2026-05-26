@@ -1,6 +1,6 @@
 /* ── BreadcrumbComponent ────────────────────────────────── */
 
-.nav {
+.navigationBar {
   display: flex;
   align-items: center;
 }

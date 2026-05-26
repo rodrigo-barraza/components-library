@@ -1,6 +1,8 @@
 import { ReactNode, ComponentPropsWithoutRef, ElementType } from "react";
 import { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery.js";
+import LayoutHeaderComponent from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
+import type { LayoutHeaderComponentProps } from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
 import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponent.js";
 import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
 import styles from "./PageLayoutComponent.module.css";
@@ -38,6 +40,7 @@ export interface PageLayoutComponentProps {
   mobileHeaderActions?: ReactNode;
   mobileBreakpoint?: number;
   sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
+  headerProps?: Partial<LayoutHeaderComponentProps>;
 }
 
 /**
@@ -65,6 +68,7 @@ export default function PageLayoutComponent({
   mobileHeaderActions,
   mobileBreakpoint = 768,
   sidebarProps = {},
+  headerProps,
 }: PageLayoutComponentProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
@@ -100,6 +104,7 @@ export default function PageLayoutComponent({
             {mobileHeaderActions}
           </MobileHeaderComponent>
         )}
+        <LayoutHeaderComponent {...headerProps} />
 
         <main
           className={`page-content ${mainClassName || ""}`}

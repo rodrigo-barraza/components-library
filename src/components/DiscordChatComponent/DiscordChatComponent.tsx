@@ -466,14 +466,14 @@ function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }
   return (
     <div className={styles.attachments}>
       {images.map((image: DiscordAttachment, i: number) => {
-        const src = image.proxyURL || image.url;
+        const imageSource = image.proxyURL || image.url;
         const maxW = 400, maxH = 300;
         let imageWidth = image.width || maxW, imageHeight = image.height || maxH;
         if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
         if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
         return (
-          <a key={i} href={image.url || src} target="_blank" rel="noopener noreferrer" className={styles.attachmentLink}>
-            <img src={src} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
+          <a key={i} href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles.attachmentLink}>
+            <img src={imageSource} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
               className={styles.attachmentImage} loading="lazy" />
           </a>
         );

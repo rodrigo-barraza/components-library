@@ -217,23 +217,23 @@ class ChatService {
             if (!this.conversationId) {
                 await this.createConversation();
             }
-            const res = await this._postAgentStream(content, controller.signal);
+            const streamResponse = await this._postAgentStream(content, controller.signal);
             // ── Auto-retry on stale conversation ──────────────────────
-            if (res.status === 404) {
+            if (streamResponse.status === 404) {
                 this.clearSession();
                 await this.createConversation();
-                const retryRes = await this._postAgentStream(content, controller.signal);
-                if (!retryRes.ok) {
-                    const body = await retryRes.text().catch(() => "");
-                    throw new Error(`Agent stream failed: ${retryRes.status} — ${body}`);
+                const retryResponse = await this._postAgentStream(content, controller.signal);
+                if (!retryResponse.ok) {
+                    const body = await retryResponse.text().catch(() => "");
+                    throw new Error(`Agent stream failed: ${retryResponse.status} — ${body}`);
                 }
-                return this._consumeAgentStream(retryRes, { onToken, onComplete, onThinking });
+                return this._consumeAgentStream(retryResponse, { onToken, onComplete, onThinking });
             }
-            if (!res.ok) {
-                const body = await res.text().catch(() => "");
-                throw new Error(`Agent stream failed: ${res.status} — ${body}`);
+            if (!streamResponse.ok) {
+                const body = await streamResponse.text().catch(() => "");
+                throw new Error(`Agent stream failed: ${streamResponse.status} — ${body}`);
             }
-            return this._consumeAgentStream(res, { onToken, onComplete, onThinking });
+            return this._consumeAgentStream(streamResponse, { onToken, onComplete, onThinking });
         };
         run().catch((error) => {
             if (error instanceof Error && error.name === "AbortError")
@@ -263,8 +263,8 @@ class ChatService {
     /**
      * Consume an SSE response stream from the agent endpoint.
      */
-    async _consumeAgentStream(res, { onToken, onComplete, onThinking }) {
-        const reader = res.body.getReader();
+    async _consumeAgentStream(response, { onToken, onComplete, onThinking }) {
+        const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
         let fullResponse = "";

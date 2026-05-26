@@ -45,14 +45,14 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
         const computedStyle = getComputedStyle(headerElement);
         const backgroundColorValue = computedStyle.backgroundColor;
 
-        const rgbMatch = backgroundColorValue.match(
+        const redGreenBlueMatch = backgroundColorValue.match(
           /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/
         );
-        if (!rgbMatch) return;
+        if (!redGreenBlueMatch) return;
 
-        const redChannel = parseInt(rgbMatch[1], 10);
-        const greenChannel = parseInt(rgbMatch[2], 10);
-        const blueChannel = parseInt(rgbMatch[3], 10);
+        const redChannel = parseInt(redGreenBlueMatch[1], 10);
+        const greenChannel = parseInt(redGreenBlueMatch[2], 10);
+        const blueChannel = parseInt(redGreenBlueMatch[3], 10);
 
         const toLinearComponent = (channelValue: number): number => {
           const normalizedValue = channelValue / 255;

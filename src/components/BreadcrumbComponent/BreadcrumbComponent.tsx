@@ -41,7 +41,7 @@ export default function BreadcrumbComponent({
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`${styles.nav} ${className || ""}`}
+      className={`${styles.navigationBar} ${className || ""}`}
       {...rest}
     >
       <ol className={styles.list}>

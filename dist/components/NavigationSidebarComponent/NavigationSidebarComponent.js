@@ -100,12 +100,12 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
         const computeAndApplyContrastColor = () => {
             const computedStyle = getComputedStyle(sidebarElement);
             const backgroundColorValue = computedStyle.backgroundColor;
-            const rgbMatch = backgroundColorValue.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
-            if (!rgbMatch)
+            const redGreenBlueMatch = backgroundColorValue.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+            if (!redGreenBlueMatch)
                 return;
-            const redChannel = parseInt(rgbMatch[1], 10);
-            const greenChannel = parseInt(rgbMatch[2], 10);
-            const blueChannel = parseInt(rgbMatch[3], 10);
+            const redChannel = parseInt(redGreenBlueMatch[1], 10);
+            const greenChannel = parseInt(redGreenBlueMatch[2], 10);
+            const blueChannel = parseInt(redGreenBlueMatch[3], 10);
             const toLinearComponent = (channelValue) => {
                 const normalizedValue = channelValue / 255;
                 return normalizedValue <= 0.03928

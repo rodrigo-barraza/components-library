@@ -101,6 +101,10 @@ function deriveFullCSS(tokens) {
     const borderRgb = hexToRgb(borderColor);
     // Derive text inverse (opposite of primary bg)
     const textInverse = lightMode ? background : textPrimary;
+    const baseContrastColor = lightMode ? "rgba(0, 0, 0, 0.87)" : "rgba(255, 255, 255, 0.92)";
+    const surfaceContrastColor = isLight(surface) ? "rgba(0, 0, 0, 0.87)" : "rgba(255, 255, 255, 0.92)";
+    const elevatedContrastColor = isLight(elevated) ? "rgba(0, 0, 0, 0.87)" : "rgba(255, 255, 255, 0.92)";
+    const primaryContrastColor = isLight(primary) ? "rgba(0, 0, 0, 0.87)" : "rgba(255, 255, 255, 0.92)";
     // Opacity scales depend on light/dark
     const borderOpacity = lightMode ? 0.1 : 0.06;
     const subtleMultiplier = lightMode ? 0.5 : 0.5;
@@ -116,6 +120,7 @@ function deriveFullCSS(tokens) {
         `--calculated-accent-primary-hover: ${darken(primary, 12)};`,
         `--calculated-accent-primary-glow: ${hexToRgba(primary, glowAlpha)};`,
         `--calculated-accent-primary-subtle: ${hexToRgba(primary, subtleAlpha)};`,
+        `--calculated-accent-primary-contrast: ${primaryContrastColor};`,
         `--calculated-shadow-glow: 0 0 20px ${hexToRgba(primary, shadowAlpha)};`,
         ``,
         `/* Accent — Secondary (direct) */`,
@@ -132,6 +137,9 @@ function deriveFullCSS(tokens) {
         `--background-base: ${background};`,
         `--background-surface: ${surface};`,
         `--background-elevated: ${elevated};`,
+        `--calculated-background-base-contrast: ${baseContrastColor};`,
+        `--calculated-background-surface-contrast: ${surfaceContrastColor};`,
+        `--calculated-background-elevated-contrast: ${elevatedContrastColor};`,
         ``,
         `/* Borders (calculated) */`,
         `--calculated-border-color: rgba(${borderRgb.join(", ")}, ${borderOpacity});`,

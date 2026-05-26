@@ -76,6 +76,12 @@
   --sidebar-width: 320px;
   --sidebar-collapsed: 72px;
 
+  /* Mapped Dynamic Contrast Tokens */
+  --background-base-contrast: var(--calculated-background-base-contrast, rgba(255, 255, 255, 0.92));
+  --background-surface-contrast: var(--calculated-background-surface-contrast, rgba(255, 255, 255, 0.92));
+  --background-elevated-contrast: var(--calculated-background-elevated-contrast, rgba(255, 255, 255, 0.92));
+  --accent-primary-contrast: var(--calculated-accent-primary-contrast, rgba(255, 255, 255, 0.92));
+
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -98,6 +104,11 @@
   --background-base: #0a0a0f;
   --background-surface: #13141c;
   --background-elevated: #1a1b26;
+
+  --calculated-background-base-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
 
   /* Borders */
   --calculated-border-color: rgba(255, 255, 255, 0.06);
@@ -136,9 +147,14 @@
 /* ── Theme: Light ───────────────────────────────────────────── */
 
 [data-theme="light"] {
-  --background-base: #e5e5e5;
+  --background-base: #f5f5f7;
   --background-surface: #ffffff;
   --background-elevated: #edeef2;
+
+  --calculated-background-base-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-surface-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-elevated-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
 
   --calculated-border-color: rgba(0, 0, 0, 0.1);
   --calculated-border-subtle: rgba(0, 0, 0, 0.04);
@@ -179,6 +195,11 @@
   --background-surface: #e8e9ed;
   --background-elevated: #d2d4da;
 
+  --calculated-background-base-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-surface-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-elevated-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+
   --calculated-border-color: rgba(0, 0, 0, 0.1);
   --calculated-border-subtle: rgba(0, 0, 0, 0.06);
   --calculated-border-medium: rgba(0, 0, 0, 0.12);
@@ -215,6 +236,11 @@
   --background-surface: #241a14;
   --background-elevated: #2e221a;
 
+  --calculated-background-base-contrast: rgba(250, 235, 215, 0.92);
+  --calculated-background-surface-contrast: rgba(250, 235, 215, 0.92);
+  --calculated-background-elevated-contrast: rgba(250, 235, 215, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
+
   --calculated-border-color: rgba(0, 206, 170, 0.12);
   --calculated-border-subtle: rgba(0, 206, 170, 0.06);
   --calculated-border-medium: rgba(0, 206, 170, 0.16);
@@ -250,6 +276,11 @@
   --background-base: #060d18;
   --background-surface: #0b1628;
   --background-elevated: #111f38;
+
+  --calculated-background-base-contrast: rgba(208, 232, 242, 0.92);
+  --calculated-background-surface-contrast: rgba(208, 232, 242, 0.92);
+  --calculated-background-elevated-contrast: rgba(208, 232, 242, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(0, 180, 216, 0.12);
   --calculated-border-subtle: rgba(0, 180, 216, 0.06);
@@ -290,6 +321,11 @@
   --background-surface: #171119;
   --background-elevated: #211828;
 
+  --calculated-background-base-contrast: rgba(240, 230, 244, 0.92);
+  --calculated-background-surface-contrast: rgba(240, 230, 244, 0.92);
+  --calculated-background-elevated-contrast: rgba(240, 230, 244, 0.92);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+
   --calculated-border-color: rgba(255, 45, 155, 0.14);
   --calculated-border-subtle: rgba(255, 45, 155, 0.06);
   --calculated-border-medium: rgba(255, 45, 155, 0.18);
@@ -327,6 +363,11 @@
   --background-base: #120c08;
   --background-surface: #1c1410;
   --background-elevated: #261c16;
+
+  --calculated-background-base-contrast: rgba(245, 235, 224, 0.92);
+  --calculated-background-surface-contrast: rgba(245, 235, 224, 0.92);
+  --calculated-background-elevated-contrast: rgba(245, 235, 224, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(245, 158, 11, 0.12);
   --calculated-border-subtle: rgba(245, 158, 11, 0.06);
@@ -366,6 +407,11 @@
   --background-surface: #111820;
   --background-elevated: #18212c;
 
+  --calculated-background-base-contrast: rgba(220, 232, 240, 0.92);
+  --calculated-background-surface-contrast: rgba(220, 232, 240, 0.92);
+  --calculated-background-elevated-contrast: rgba(220, 232, 240, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
+
   --calculated-border-color: rgba(148, 204, 224, 0.1);
   --calculated-border-subtle: rgba(148, 204, 224, 0.05);
   --calculated-border-medium: rgba(148, 204, 224, 0.14);
@@ -403,6 +449,11 @@
   --background-base: #080e08;
   --background-surface: #101a10;
   --background-elevated: #182418;
+
+  --calculated-background-base-contrast: rgba(226, 240, 226, 0.92);
+  --calculated-background-surface-contrast: rgba(226, 240, 226, 0.92);
+  --calculated-background-elevated-contrast: rgba(226, 240, 226, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(74, 222, 128, 0.1);
   --calculated-border-subtle: rgba(74, 222, 128, 0.05);
@@ -443,6 +494,11 @@
   --background-base: #101010;
   --background-surface: #1a1a1a;
   --background-elevated: #242424;
+
+  --calculated-background-base-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(255, 255, 255, 0.08);
   --calculated-border-subtle: rgba(255, 255, 255, 0.04);
@@ -499,16 +555,13 @@ body {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgba(128, 128, 128, 0.15);
   border-radius: 2px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(128, 128, 128, 0.3);
 }
@@ -522,12 +575,10 @@ button {
   font-family: inherit;
   cursor: pointer;
 }
-
 button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
-
 input,
 select,
 textarea {
@@ -543,12 +594,10 @@ textarea {
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
-
 textarea {
   height: auto;
   padding: 10px 12px;
 }
-
 input:focus,
 select:focus,
 textarea:focus {
@@ -556,7 +605,6 @@ textarea:focus {
   border-color: var(--accent-primary, var(--color-info));
   box-shadow: 0 0 0 2px var(--calculated-accent-primary-glow, rgba(59, 130, 246, 0.2));
 }
-
 select option {
   background: var(--calculated-select-option-bg);
   color: var(--calculated-select-option-text);
@@ -593,7 +641,6 @@ select option {
     opacity: 0;
     transform: translateY(8px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -604,7 +651,6 @@ select option {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -614,19 +660,16 @@ select option {
   from {
     opacity: 1;
   }
-
   to {
     opacity: 0;
   }
 }
 
 @keyframes fadeInOut {
-
   0%,
   100% {
     opacity: 0;
   }
-
   50% {
     opacity: 1;
   }
@@ -637,7 +680,6 @@ select option {
     opacity: 0;
     transform: translateX(-12px);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -648,7 +690,6 @@ select option {
   from {
     transform: translateX(100%);
   }
-
   to {
     transform: translateX(0);
   }
@@ -658,7 +699,6 @@ select option {
   from {
     transform: translateX(-100%);
   }
-
   to {
     transform: translateX(0);
   }
@@ -669,7 +709,6 @@ select option {
     opacity: 0;
     transform: translateY(12px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -681,7 +720,6 @@ select option {
     opacity: 0;
     transform: translateY(100%);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -693,7 +731,6 @@ select option {
     opacity: 0;
     transform: translateY(-4px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -704,32 +741,27 @@ select option {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 1;
   }
-
   50% {
     opacity: 0.5;
   }
 }
 
 @keyframes pulse-glow {
-
   0%,
   100% {
     opacity: 0.6;
     transform: scale(1);
   }
-
   50% {
     opacity: 1;
     transform: scale(1.05);
@@ -737,12 +769,10 @@ select option {
 }
 
 @keyframes statusPulse {
-
   0%,
   100% {
     opacity: 1;
   }
-
   50% {
     opacity: 0.4;
   }
@@ -752,7 +782,6 @@ select option {
   0% {
     transform: translateX(-100%);
   }
-
   100% {
     transform: translateX(100%);
   }
@@ -765,13 +794,11 @@ select option {
 }
 
 @keyframes pulseScale {
-
   0%,
   100% {
     transform: scale(1);
     opacity: 0.9;
   }
-
   50% {
     transform: scale(1.04);
     opacity: 1;
@@ -783,7 +810,6 @@ select option {
     opacity: 0;
     transform: translateX(16px);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -795,7 +821,6 @@ select option {
     opacity: 0;
     transform: scale(0.9) translateY(8px);
   }
-
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -807,7 +832,6 @@ select option {
     opacity: 0;
     transform: translateY(-8px) scale(0.98);
   }
-
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -819,17 +843,14 @@ select option {
     transform: translateY(0);
     opacity: 1;
   }
-
   50% {
     transform: translateY(-100%);
     opacity: 0;
   }
-
   51% {
     transform: translateY(100%);
     opacity: 0;
   }
-
   100% {
     transform: translateY(0);
     opacity: 1;

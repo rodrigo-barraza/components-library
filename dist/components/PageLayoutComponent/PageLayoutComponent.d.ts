@@ -1,4 +1,5 @@
 import { ReactNode, ComponentPropsWithoutRef, ElementType } from "react";
+import type { LayoutHeaderComponentProps } from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
 import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
 /** Mirrors NavigationSidebarComponent's internal NavItem shape */
 interface PageNavItem {
@@ -35,6 +36,7 @@ export interface PageLayoutComponentProps {
     mobileHeaderActions?: ReactNode;
     mobileBreakpoint?: number;
     sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
+    headerProps?: Partial<LayoutHeaderComponentProps>;
 }
 /**
  * PageLayoutComponent — Unified page wrapper composing NavigationSidebar +
@@ -43,6 +45,6 @@ export interface PageLayoutComponentProps {
  * Encapsulates the repeated pattern of sidebar + mobile drawer management
  * that was duplicated across iron-client and portal-client.
  */
-export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileHeaderActions, mobileBreakpoint, sidebarProps, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileHeaderActions, mobileBreakpoint, sidebarProps, headerProps, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=PageLayoutComponent.d.ts.map

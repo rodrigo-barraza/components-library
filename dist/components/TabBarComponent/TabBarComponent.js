@@ -9,9 +9,7 @@ import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 export default function TabBarComponent({ tabs = [], activeTab, onChange, variant = "primary", layout = "inline", scrollable = false, className, onTabHover, glowingTabs = [], ariaLabel, }) {
     const { sound } = useComponents();
     const tabListRef = useRef(null);
-
     const tabRefs = useRef({});
-
     // ── Keyboard navigation (Arrow Left/Right, Home, End) ───
     const handleKeyDown = (event) => {
         const enabledTabs = tabs.filter((tab) => !tab.disabled);
@@ -65,34 +63,34 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
         .filter(Boolean)
         .join(" ");
     return (_jsx("div", { ref: tabListRef, className: containerClasses, role: "tablist", "aria-label": ariaLabel, onKeyDown: handleKeyDown, children: tabs.map((tab) => {
-                const isActive = activeTab === tab.key;
-                const hasIcon = !!tab.icon;
-                const tabClasses = [
-                    styles.tab,
-                    isActive && styles['tab-active'],
-                    tab.disabled && styles['tab-disabled'],
-                    glowingTabs.includes(tab.key) && styles['tab-glow'],
-                    hasIcon && isStacked && styles['tab-stacked'],
-                ]
-                    .filter(Boolean)
-                    .join(" ");
-                const button = (_jsxs("button", { ref: (element) => {
-                        tabRefs.current[tab.key] = element;
-                    }, className: tabClasses, role: "tab", id: `tab-${tab.key}`, "aria-selected": isActive, "aria-disabled": tab.disabled || undefined, "aria-controls": `tabpanel-${tab.key}`, tabIndex: isActive ? 0 : -1, onMouseDown: captureRipple, onClick: (event) => {
-                        if (sound)
-                            SoundService.playClick({ event });
-                        if (!tab.disabled)
-                            onChange(tab.key);
-                    }, onMouseEnter: (event) => {
-                        if (sound)
-                            SoundService.playHover({ event });
-                        onTabHover?.(tab.key);
-                    }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(BadgeComponent, { type: "count", count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles['tab-badge'] }))] }, tab.key));
-                if (tab.tooltip) {
-                    return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles['tooltip-wrapper']}${isActive ? ` ${styles['tooltip-wrapper-active']}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
-                }
-                return button;
-            }) }));
+            const isActive = activeTab === tab.key;
+            const hasIcon = !!tab.icon;
+            const tabClasses = [
+                styles.tab,
+                isActive && styles['tab-active'],
+                tab.disabled && styles['tab-disabled'],
+                glowingTabs.includes(tab.key) && styles['tab-glow'],
+                hasIcon && isStacked && styles['tab-stacked'],
+            ]
+                .filter(Boolean)
+                .join(" ");
+            const button = (_jsxs("button", { ref: (element) => {
+                    tabRefs.current[tab.key] = element;
+                }, className: tabClasses, role: "tab", id: `tab-${tab.key}`, "aria-selected": isActive, "aria-disabled": tab.disabled || undefined, "aria-controls": `tabpanel-${tab.key}`, tabIndex: isActive ? 0 : -1, onMouseDown: captureRipple, onClick: (event) => {
+                    if (sound)
+                        SoundService.playClick({ event });
+                    if (!tab.disabled)
+                        onChange(tab.key);
+                }, onMouseEnter: (event) => {
+                    if (sound)
+                        SoundService.playHover({ event });
+                    onTabHover?.(tab.key);
+                }, onMouseLeave: () => onTabHover?.(null), children: [tab.icon, tab.label && _jsx("span", { children: tab.label }), tab.badge != null && (_jsx(BadgeComponent, { type: "count", count: tab.badge, state: tab.badgeState || "default", disabled: tab.badgeDisabled, rainbow: tab.badgeRainbow, className: styles['tab-badge'] }))] }, tab.key));
+            if (tab.tooltip) {
+                return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles['tooltip-wrapper']}${isActive ? ` ${styles['tooltip-wrapper-active']}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
+            }
+            return button;
+        }) }));
 }
 export { styles as tabBarStyles };
 //# sourceMappingURL=TabBarComponent.js.map

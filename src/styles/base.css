@@ -76,6 +76,12 @@
   --sidebar-width: 320px;
   --sidebar-collapsed: 72px;
 
+  /* Mapped Dynamic Contrast Tokens */
+  --background-base-contrast: var(--calculated-background-base-contrast, rgba(255, 255, 255, 0.92));
+  --background-surface-contrast: var(--calculated-background-surface-contrast, rgba(255, 255, 255, 0.92));
+  --background-elevated-contrast: var(--calculated-background-elevated-contrast, rgba(255, 255, 255, 0.92));
+  --accent-primary-contrast: var(--calculated-accent-primary-contrast, rgba(255, 255, 255, 0.92));
+
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -98,6 +104,11 @@
   --background-base: #0a0a0f;
   --background-surface: #13141c;
   --background-elevated: #1a1b26;
+
+  --calculated-background-base-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
 
   /* Borders */
   --calculated-border-color: rgba(255, 255, 255, 0.06);
@@ -140,6 +151,11 @@
   --background-surface: #ffffff;
   --background-elevated: #edeef2;
 
+  --calculated-background-base-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-surface-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-elevated-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+
   --calculated-border-color: rgba(0, 0, 0, 0.1);
   --calculated-border-subtle: rgba(0, 0, 0, 0.04);
   --calculated-border-medium: rgba(0, 0, 0, 0.1);
@@ -179,6 +195,11 @@
   --background-surface: #e8e9ed;
   --background-elevated: #d2d4da;
 
+  --calculated-background-base-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-surface-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-background-elevated-contrast: rgba(0, 0, 0, 0.87);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+
   --calculated-border-color: rgba(0, 0, 0, 0.1);
   --calculated-border-subtle: rgba(0, 0, 0, 0.06);
   --calculated-border-medium: rgba(0, 0, 0, 0.12);
@@ -215,6 +236,11 @@
   --background-surface: #241a14;
   --background-elevated: #2e221a;
 
+  --calculated-background-base-contrast: rgba(250, 235, 215, 0.92);
+  --calculated-background-surface-contrast: rgba(250, 235, 215, 0.92);
+  --calculated-background-elevated-contrast: rgba(250, 235, 215, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
+
   --calculated-border-color: rgba(0, 206, 170, 0.12);
   --calculated-border-subtle: rgba(0, 206, 170, 0.06);
   --calculated-border-medium: rgba(0, 206, 170, 0.16);
@@ -250,6 +276,11 @@
   --background-base: #060d18;
   --background-surface: #0b1628;
   --background-elevated: #111f38;
+
+  --calculated-background-base-contrast: rgba(208, 232, 242, 0.92);
+  --calculated-background-surface-contrast: rgba(208, 232, 242, 0.92);
+  --calculated-background-elevated-contrast: rgba(208, 232, 242, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(0, 180, 216, 0.12);
   --calculated-border-subtle: rgba(0, 180, 216, 0.06);
@@ -290,6 +321,11 @@
   --background-surface: #171119;
   --background-elevated: #211828;
 
+  --calculated-background-base-contrast: rgba(240, 230, 244, 0.92);
+  --calculated-background-surface-contrast: rgba(240, 230, 244, 0.92);
+  --calculated-background-elevated-contrast: rgba(240, 230, 244, 0.92);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+
   --calculated-border-color: rgba(255, 45, 155, 0.14);
   --calculated-border-subtle: rgba(255, 45, 155, 0.06);
   --calculated-border-medium: rgba(255, 45, 155, 0.18);
@@ -327,6 +363,11 @@
   --background-base: #120c08;
   --background-surface: #1c1410;
   --background-elevated: #261c16;
+
+  --calculated-background-base-contrast: rgba(245, 235, 224, 0.92);
+  --calculated-background-surface-contrast: rgba(245, 235, 224, 0.92);
+  --calculated-background-elevated-contrast: rgba(245, 235, 224, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(245, 158, 11, 0.12);
   --calculated-border-subtle: rgba(245, 158, 11, 0.06);
@@ -366,6 +407,11 @@
   --background-surface: #111820;
   --background-elevated: #18212c;
 
+  --calculated-background-base-contrast: rgba(220, 232, 240, 0.92);
+  --calculated-background-surface-contrast: rgba(220, 232, 240, 0.92);
+  --calculated-background-elevated-contrast: rgba(220, 232, 240, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
+
   --calculated-border-color: rgba(148, 204, 224, 0.1);
   --calculated-border-subtle: rgba(148, 204, 224, 0.05);
   --calculated-border-medium: rgba(148, 204, 224, 0.14);
@@ -403,6 +449,11 @@
   --background-base: #080e08;
   --background-surface: #101a10;
   --background-elevated: #182418;
+
+  --calculated-background-base-contrast: rgba(226, 240, 226, 0.92);
+  --calculated-background-surface-contrast: rgba(226, 240, 226, 0.92);
+  --calculated-background-elevated-contrast: rgba(226, 240, 226, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(74, 222, 128, 0.1);
   --calculated-border-subtle: rgba(74, 222, 128, 0.05);
@@ -443,6 +494,11 @@
   --background-base: #101010;
   --background-surface: #1a1a1a;
   --background-elevated: #242424;
+
+  --calculated-background-base-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(255, 255, 255, 0.08);
   --calculated-border-subtle: rgba(255, 255, 255, 0.04);

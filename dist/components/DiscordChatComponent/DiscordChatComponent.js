@@ -281,7 +281,7 @@ function ImageAttachments({ attachments }) {
     if (!images.length)
         return null;
     return (_jsx("div", { className: styles.attachments, children: images.map((image, i) => {
-            const src = image.proxyURL || image.url;
+            const imageSource = image.proxyURL || image.url;
             const maxW = 400, maxH = 300;
             let imageWidth = image.width || maxW, imageHeight = image.height || maxH;
             if (imageWidth > maxW) {
@@ -292,7 +292,7 @@ function ImageAttachments({ attachments }) {
                 imageWidth = Math.round(imageWidth * (maxH / imageHeight));
                 imageHeight = maxH;
             }
-            return (_jsx("a", { href: image.url || src, target: "_blank", rel: "noopener noreferrer", className: styles.attachmentLink, children: _jsx("img", { src: src, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles.attachmentImage, loading: "lazy" }) }, i));
+            return (_jsx("a", { href: image.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles.attachmentLink, children: _jsx("img", { src: imageSource, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles.attachmentImage, loading: "lazy" }) }, i));
         }) }));
 }
 // ── Voice Message Player ─────────────────────────────────────────
