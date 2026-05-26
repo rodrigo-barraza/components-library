@@ -80,8 +80,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding-inline: 12px;
+  gap: 4px;
+  padding-inline: 6px;
   min-height: 40px;
   min-width: 40px;
   font-size: 14px;
