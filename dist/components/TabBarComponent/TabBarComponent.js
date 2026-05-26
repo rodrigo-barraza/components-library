@@ -1,6 +1,6 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { useRef, useEffect, useCallback } from "react";
+import { useRef } from "react";
 import styles from "./TabBarComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
@@ -9,37 +9,9 @@ import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 export default function TabBarComponent({ tabs = [], activeTab, onChange, variant = "primary", layout = "inline", scrollable = false, className, onTabHover, glowingTabs = [], ariaLabel, }) {
     const { sound } = useComponents();
     const tabListRef = useRef(null);
-    const indicatorRef = useRef(null);
+
     const tabRefs = useRef({});
-    // ── Sliding indicator position calculation ───────────────
-    const updateIndicator = useCallback(() => {
-        const list = tabListRef.current;
-        const indicator = indicatorRef.current;
-        const activeEl = tabRefs.current[activeTab];
-        if (!list || !indicator || !activeEl) {
-            if (indicator)
-                indicator.style.opacity = "0";
-            return;
-        }
-        const listRect = list.getBoundingClientRect();
-        const tabRect = activeEl.getBoundingClientRect();
-        const left = tabRect.left - listRect.left + list.scrollLeft;
-        const top = tabRect.top - listRect.top + list.scrollTop + tabRect.height - 3;
-        const width = tabRect.width;
-        indicator.style.opacity = "1";
-        indicator.style.width = `${width}px`;
-        indicator.style.transform = `translate(${left}px, ${top}px)`;
-    }, [activeTab]);
-    useEffect(() => {
-        updateIndicator();
-    }, [activeTab, tabs, updateIndicator]);
-    // Recalculate on resize
-    useEffect(() => {
-        const observer = new ResizeObserver(updateIndicator);
-        if (tabListRef.current)
-            observer.observe(tabListRef.current);
-        return () => observer.disconnect();
-    }, [updateIndicator]);
+
     // ── Keyboard navigation (Arrow Left/Right, Home, End) ───
     const handleKeyDown = (event) => {
         const enabledTabs = tabs.filter((tab) => !tab.disabled);
@@ -92,7 +64,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { ref: tabListRef, className: containerClasses, role: "tablist", "aria-label": ariaLabel, onKeyDown: handleKeyDown, children: [tabs.map((tab) => {
+    return (_jsx("div", { ref: tabListRef, className: containerClasses, role: "tablist", "aria-label": ariaLabel, onKeyDown: handleKeyDown, children: tabs.map((tab) => {
                 const isActive = activeTab === tab.key;
                 const hasIcon = !!tab.icon;
                 const tabClasses = [
@@ -120,7 +92,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
                     return (_jsx(TooltipComponent, { label: tab.tooltip, position: "bottom", delay: 400, className: `${styles['tooltip-wrapper']}${isActive ? ` ${styles['tooltip-wrapper-active']}` : ""}`, disabled: tab.tooltipDisabled, children: button }, tab.key));
                 }
                 return button;
-            }), _jsx("span", { ref: indicatorRef, className: `${styles.indicator}${isSecondary ? ` ${styles['indicator-secondary']}` : ""}`, "aria-hidden": "true", style: { opacity: 0 } })] }));
+            }) }));
 }
 export { styles as tabBarStyles };
 //# sourceMappingURL=TabBarComponent.js.map

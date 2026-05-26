@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef } from "react";
 import styles from "./TabBarComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
@@ -63,42 +63,10 @@ export default function TabBarComponent({
 }: TabBarComponentProps) {
   const { sound } = useComponents();
   const tabListRef = useRef<HTMLDivElement | null>(null);
-  const indicatorRef = useRef<HTMLSpanElement | null>(null);
+
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  // ── Sliding indicator position calculation ───────────────
-  const updateIndicator = useCallback(() => {
-    const list = tabListRef.current;
-    const indicator = indicatorRef.current;
-    const activeEl = tabRefs.current[activeTab];
 
-    if (!list || !indicator || !activeEl) {
-      if (indicator) indicator.style.opacity = "0";
-      return;
-    }
-
-    const listRect = list.getBoundingClientRect();
-    const tabRect = activeEl.getBoundingClientRect();
-
-    const left = tabRect.left - listRect.left + list.scrollLeft;
-    const top = tabRect.top - listRect.top + list.scrollTop + tabRect.height - 3;
-    const width = tabRect.width;
-
-    indicator.style.opacity = "1";
-    indicator.style.width = `${width}px`;
-    indicator.style.transform = `translate(${left}px, ${top}px)`;
-  }, [activeTab]);
-
-  useEffect(() => {
-    updateIndicator();
-  }, [activeTab, tabs, updateIndicator]);
-
-  // Recalculate on resize
-  useEffect(() => {
-    const observer = new ResizeObserver(updateIndicator);
-    if (tabListRef.current) observer.observe(tabListRef.current);
-    return () => observer.disconnect();
-  }, [updateIndicator]);
 
   // ── Keyboard navigation (Arrow Left/Right, Home, End) ───
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -238,13 +206,7 @@ export default function TabBarComponent({
         return button;
       })}
 
-      {/* M3 sliding active indicator — GPU accelerated */}
-      <span
-        ref={indicatorRef}
-        className={`${styles.indicator}${isSecondary ? ` ${styles['indicator-secondary']}` : ""}`}
-        aria-hidden="true"
-        style={{ opacity: 0 }}
-      />
+
     </div>
   );
 }

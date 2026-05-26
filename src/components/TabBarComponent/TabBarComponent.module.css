@@ -7,7 +7,7 @@
    • Secondary — shorter indicator, centered, on-surface text
 
    Container:  48px (label-only) / 64px (icon + label, stacked)
-   Indicator:  3px height, primary color, GPU-animated slide
+
    Typography: Title Small (14px / 500)
    ═══════════════════════════════════════════════════════ */
 
@@ -24,26 +24,7 @@
   overflow: visible;
 }
 
-/* ── Sliding indicator track ──────────────────────────── */
 
-.indicator {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  height: 3px;
-  background: var(--accent-primary);
-  border-start-start-radius: 3px;
-  border-start-end-radius: 3px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, width;
-  z-index: 2;
-}
-
-.indicator-secondary {
-  border-start-start-radius: 3px;
-  border-start-end-radius: 3px;
-}
 
 /* ── Tooltip wrapper (must fill flex slot) ────────────── */
 
