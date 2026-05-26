@@ -79,7 +79,7 @@
 
   &:hover {
     color: var(--text-primary);
-    background: var(--bg-surface);
+    background: var(--background-surface);
   }
 }
 
@@ -89,7 +89,7 @@
   position: fixed;
   z-index: 1000;
   display: flex;
-  background: var(--bg-surface);
+  background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-md);
   box-shadow: var(--calculated-shadow-lg, 0 12px 40px rgba(0, 0, 0, 0.25));
@@ -108,7 +108,7 @@
   min-width: 120px;
 }
 
-.presetBtn {
+.presetButton {
   padding: 6px 12px;
   font-size: 12px;
   font-weight: 500;
@@ -160,7 +160,7 @@
   white-space: nowrap;
 }
 
-.monthNavBtn {
+.monthNavButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,7 +175,7 @@
 
   &:hover {
     color: var(--text-primary);
-    background: var(--bg-surface);
+    background: var(--background-surface);
   }
 }
 
@@ -224,7 +224,7 @@
 
 /* Day button */
 
-.dayBtn {
+.dayButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -335,7 +335,7 @@
   font-size: 12px;
   font-family: inherit;
   color: var(--text-primary);
-  background: var(--bg-base);
+  background: var(--background-base);
   border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   outline: none;
@@ -357,7 +357,7 @@
   padding: 0 2px;
 }
 
-.timeApplyBtn {
+.timeApplyButton {
   padding: 5px 14px;
   font-size: 11px;
   font-weight: 600;

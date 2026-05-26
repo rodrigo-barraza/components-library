@@ -198,7 +198,7 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
     const triggerClasses = [
         styles.trigger,
         variantMap[variant] || variantMap.primary,
-        isOpen ? styles.open : "",
+        isOpen ? styles.isOpenState : "",
     ]
         .filter(Boolean)
         .join(" ");

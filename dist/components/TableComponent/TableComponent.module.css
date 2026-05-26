@@ -21,7 +21,7 @@
   border: 1px solid var(--calculated-border-color);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 2px 2px 0 0;
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
 }
 
 .tableHeaderContent {
@@ -71,7 +71,7 @@
   letter-spacing: 0.5px;
   white-space: nowrap;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
   position: sticky;
   top: 0;
   z-index: 2;
@@ -216,7 +216,7 @@
 /* Full-width expanded content panel (accordion table) */
 .expandedContentRow > td {
   padding: 0;
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
   border-bottom: 1px solid var(--calculated-border-color);
 }
 
@@ -239,14 +239,14 @@
 
 /* Sub-rows */
 .subRow td {
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
   font-size: 9px;
   padding: 8px 14px;
 }
 
 .subRow td:first-child {
   padding-left: 38px;
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
 }
 
 .subRow:hover td {
@@ -317,14 +317,14 @@
 
 /* ── Column filter ────────────────────────────────── */
 
-.columnFilterBtn {
+.columnFilterButton {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding: 4px 10px;
   border: 1px solid var(--calculated-border-color);
   border-radius: 2px;
-  background: var(--bg-surface);
+  background: var(--background-surface);
   color: var(--text-tertiary);
   font-size: 10px;
   font-weight: 500;
@@ -336,7 +336,7 @@
   &:hover {
     color: var(--text-primary);
     border-color: var(--text-muted);
-    background: var(--bg-elevated);
+    background: var(--background-elevated);
   }
 }
 
@@ -359,7 +359,7 @@
   min-width: 180px;
   max-height: 360px;
   overflow-y: auto;
-  background: var(--bg-surface);
+  background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   border-radius: 2px;
   box-shadow:

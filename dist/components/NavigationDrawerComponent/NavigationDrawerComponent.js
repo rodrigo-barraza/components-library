@@ -96,8 +96,8 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
         styles.drawer,
         styles[variant],
         isEnd && styles.anchorEnd,
-        isModal && open && styles.open,
-        !isModal && !open && styles.closed,
+        isModal && open && styles.isOpenState,
+        !isModal && !open && styles.isClosedState,
         !ready && styles.noTransition,
         className,
     ]
@@ -106,7 +106,7 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
     const drawerEl = (_jsxs("nav", { ref: drawerRef, role: "navigation", "aria-label": ariaLabel, "aria-hidden": !open, className: drawerClasses, style: style, ...rest, children: [headline && _jsx("div", { className: styles.headline, children: headline }), _jsx("div", { className: styles.content, children: children })] }));
     // ── Modal variant: wrap with scrim ──────────────────────────────
     if (isModal) {
-        return (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.scrim}${open ? ` ${styles.open}` : ""}`, onClick: onClose, "aria-hidden": "true" }), drawerEl] }));
+        return (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.scrim}${open ? ` ${styles.isOpenState}` : ""}`, onClick: onClose, "aria-hidden": "true" }), drawerEl] }));
     }
     // ── Standard variant: inline ────────────────────────────────────
     return _jsx("div", { className: styles.wrapper, children: drawerEl });
@@ -120,8 +120,8 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
 function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false, href, onClick, LinkComponent, className, children, ...rest }) {
     const classes = [
         styles.item,
-        active && styles.active,
-        disabled && styles.disabled,
+        active && styles.isActiveState,
+        disabled && styles.isDisabledState,
         className,
     ]
         .filter(Boolean)

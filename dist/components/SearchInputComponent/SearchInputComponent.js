@@ -111,7 +111,7 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
     const barClasses = [
         styles.searchBar,
         compact && styles.compact,
-        expanded && styles.expanded,
+        expanded && styles.isExpandedState,
     ]
         .filter(Boolean)
         .join(" ");
@@ -139,7 +139,7 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
                         }, type: "button", "aria-label": "Clear search", children: clearIcon })), trailingIcon && (_jsx("button", { className: styles.trailingAction, onClick: (e) => {
                             e.stopPropagation();
                             onTrailingClick?.();
-                        }, type: "button", "aria-label": "Search options", children: trailingIcon }))] }), hasSuggestions && (_jsxs("div", { ref: panelRef, id: "search-suggestions", className: `${styles.suggestionsPanel}${expanded ? ` ${styles.open}` : ""}`, role: "listbox", "aria-label": "Search suggestions", children: [_jsx("div", { className: styles.suggestionsDivider }), _jsx(SearchSuggestionsContext.Provider, { value: { highlightIndex, collapse, onChange }, children: children })] })), useScrim && (_jsx("div", { className: `${styles.scrim}${expanded ? ` ${styles.visible}` : ""}`, onClick: collapse, "aria-hidden": "true" }))] }));
+                        }, type: "button", "aria-label": "Search options", children: trailingIcon }))] }), hasSuggestions && (_jsxs("div", { ref: panelRef, id: "search-suggestions", className: `${styles.suggestionsPanel}${expanded ? ` ${styles.isOpenState}` : ""}`, role: "listbox", "aria-label": "Search suggestions", children: [_jsx("div", { className: styles.suggestionsDivider }), _jsx(SearchSuggestionsContext.Provider, { value: { highlightIndex, collapse, onChange }, children: children })] })), useScrim && (_jsx("div", { className: `${styles.scrim}${expanded ? ` ${styles.isVisibleState}` : ""}`, onClick: collapse, "aria-hidden": "true" }))] }));
 });
 /* ══════════════════════════════════════════════════════════════════════
    Context for passing state to suggestion items

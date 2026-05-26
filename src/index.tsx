@@ -31,6 +31,10 @@ export {
 } from "./components/FormGroupComponent/FormGroupComponent.js";
 export { default as IconButtonComponent } from "./components/IconButtonComponent/IconButtonComponent.js";
 export { default as InputComponent } from "./components/InputComponent/InputComponent.js";
+export {
+  default as LayoutHeaderComponent,
+  layoutHeaderStyles,
+} from "./components/LayoutHeaderComponent/LayoutHeaderComponent.js";
 export { default as LoadingIndicatorComponent } from "./components/LoadingIndicatorComponent/LoadingIndicatorComponent.js";
 export { default as LoadingStateComponent } from "./components/LoadingStateComponent/LoadingStateComponent.js";
 export {
@@ -149,6 +153,7 @@ export type { ChatMessageComponentProps } from "./components/ChatMessageComponen
 export type { ChatPanelComponentProps } from "./components/ChatPanelComponent/ChatPanelComponent.js";
 export type { ChatContextValue, ChatProviderProps } from "./components/ChatProvider.js";
 export type { ComponentsContextValue } from "./components/ComponentsProvider.js";
+export type { LayoutHeaderComponentProps, LayoutHeaderToggleButtonProps } from "./components/LayoutHeaderComponent/LayoutHeaderComponent.js";
 export type { ThemeContextValue } from "./components/ThemeProvider/ThemeProvider.js";
 export type { ChatServiceOptions } from "./services/ChatService.js";
 export type { SoundOptions } from "./services/SoundService.js";

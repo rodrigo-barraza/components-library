@@ -224,7 +224,7 @@ delay, }) {
         styles.bubble,
         rich ? styles.rich : styles.plain,
         styles[resolvedPosition],
-        visible && styles.visible,
+        visible && styles.isVisibleState,
     ]
         .filter(Boolean)
         .join(" ");

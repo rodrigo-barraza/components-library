@@ -26,7 +26,7 @@ export default function SwitchComponent({ checked = false, onChange, label = "",
     const { sound } = useComponents();
     const rootClasses = [
         styles.switch,
-        disabled && styles.disabled,
+        disabled && styles.isDisabledState,
         labelPlacement === "start" && styles.labelStart,
         showIcons && styles.withIcons,
         className,
@@ -35,7 +35,7 @@ export default function SwitchComponent({ checked = false, onChange, label = "",
         .join(" ");
     const trackClasses = [
         styles.track,
-        checked && styles.selected,
+        checked && styles.isSelectedState,
     ]
         .filter(Boolean)
         .join(" ");

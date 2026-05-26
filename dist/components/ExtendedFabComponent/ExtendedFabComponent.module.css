@@ -109,14 +109,14 @@
  * Per M3: Extended FABs can collapse to a standard FAB when
  * the user scrolls down, keeping only the icon.
  * ═══════════════════════════════════════════════════════════ */
-.collapsed {
+.isCollapsedState {
   min-width: 56px;
   width: 56px;
   padding: 0 16px;
   gap: 0;
 }
 
-.collapsed .label {
+.isCollapsedState .label {
   max-width: 0;
   opacity: 0;
   overflow: hidden;
@@ -166,7 +166,7 @@
 
 /* ── Secondary ───────────────────────────────────────────── */
 .secondary {
-  background-color: var(--bg-surface, #E8DEF8);
+  background-color: var(--background-surface, #E8DEF8);
   color: var(--text-primary, #1D192B);
 }
 
@@ -236,7 +236,7 @@
 
 /* ── Surface ─────────────────────────────────────────────── */
 .surface {
-  background-color: var(--bg-base, #FFFBFE);
+  background-color: var(--background-base, #FFFBFE);
   color: var(--accent-primary, #6750A4);
 }
 

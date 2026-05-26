@@ -61,7 +61,7 @@
   max-height: calc(100vh - 96px);
 
   /* M3 spec: surface-container-high, 28dp corner radius */
-  background: var(--dialog-container-bg, var(--bg-surface, #2a2a2e));
+  background: var(--dialog-container-bg, var(--background-surface, #2a2a2e));
   border: 1px solid var(--dialog-border, var(--calculated-border-color, rgba(255, 255, 255, 0.06)));
   border-radius: 28px;
 
@@ -156,7 +156,7 @@
 }
 
 /* M3 Dialog action buttons — text buttons per spec */
-.actionBtn {
+.actionButton {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -186,7 +186,7 @@
   isolation: isolate;
 }
 
-.actionBtn::before {
+.actionButton::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -198,32 +198,32 @@
 }
 
 /* M3 hover state layer: 8% */
-.actionBtn:hover::before {
+.actionButton:hover::before {
   opacity: 0.08;
 }
 
 /* M3 focus state layer: 12% */
-.actionBtn:focus-visible {
+.actionButton:focus-visible {
   outline: none;
 }
 
-.actionBtn:focus-visible::before {
+.actionButton:focus-visible::before {
   opacity: 0.12;
 }
 
 /* M3 pressed state layer: 12% */
-.actionBtn:active::before {
+.actionButton:active::before {
   opacity: 0.12;
 }
 
 /* Primary (confirm) action — filled tonal per spec for emphasis */
 .actionBtnPrimary {
   background: var(--dialog-primary-bg, var(--accent-primary, #8b5cf6));
-  color: var(--dialog-primary-text, var(--bg-base, #0f0f0f));
+  color: var(--dialog-primary-text, var(--background-base, #0f0f0f));
 }
 
 .actionBtnPrimary::before {
-  background: var(--dialog-primary-text, var(--bg-base, #0f0f0f));
+  background: var(--dialog-primary-text, var(--background-base, #0f0f0f));
 }
 
 /* Destructive action variant */
@@ -232,12 +232,12 @@
 }
 
 /* Disabled state */
-.actionBtn:disabled {
+.actionButton:disabled {
   opacity: 0.38;
   cursor: not-allowed;
 }
 
-.actionBtn:disabled::before {
+.actionButton:disabled::before {
   opacity: 0;
 }
 

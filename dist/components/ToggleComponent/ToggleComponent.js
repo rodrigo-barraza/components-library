@@ -18,7 +18,7 @@ import SoundService from "../../services/SoundService.js";
 export default function ToggleComponent({ checked = false, onChange, label = "", disabled = false, size = "default", }) {
     const { sound } = useComponents();
     const isMini = size === "mini";
-    return (_jsxs("label", { className: `${styles.toggle} ${disabled ? styles.disabled : ""} ${isMini ? styles.mini : ""}`, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsx("input", { type: "checkbox", className: styles.hiddenInput, checked: checked, disabled: disabled, onChange: (e) => { if (sound)
-                    SoundService.playClickButton({ event: e }); onChange(e.target.checked); } }), _jsx("span", { className: `${styles.track} ${checked ? styles.active : ""}`, role: "switch", "aria-checked": checked, children: _jsx("span", { className: styles.knob }) }), label && _jsx("span", { className: styles.label, children: label })] }));
+    return (_jsxs("label", { className: `${styles.toggle} ${disabled ? styles.isDisabledState : ""} ${isMini ? styles.mini : ""}`, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsx("input", { type: "checkbox", className: styles.hiddenInput, checked: checked, disabled: disabled, onChange: (e) => { if (sound)
+                    SoundService.playClickButton({ event: e }); onChange(e.target.checked); } }), _jsx("span", { className: `${styles.track} ${checked ? styles.isActiveState : ""}`, role: "switch", "aria-checked": checked, children: _jsx("span", { className: styles.knob }) }), label && _jsx("span", { className: styles.label, children: label })] }));
 }
 //# sourceMappingURL=ToggleComponent.js.map

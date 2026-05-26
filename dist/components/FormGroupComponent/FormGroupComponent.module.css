@@ -62,7 +62,7 @@
   color: var(--text-primary);
   height: var(--input-height);
   padding: 0 10px;
-  background: var(--bg-surface);
+  background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   word-break: break-all;

@@ -71,7 +71,7 @@ const ExtendedFabComponent = forwardRef(function ExtendedFabComponent({ variant 
     const classes = [
         styles.extendedFab,
         styles[variant],
-        collapsed ? styles.collapsed : "",
+        collapsed ? styles.isCollapsedState : "",
         lowered ? styles.lowered : "",
         fixed ? styles.fixed : "",
         className,

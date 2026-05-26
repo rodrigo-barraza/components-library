@@ -70,7 +70,7 @@ const FabComponent = forwardRef(function FabComponent({ size = "standard", color
         fixed ? styles.fixed : "",
         fixed ? positionClass : "",
         /* Scroll-hide */
-        hidden ? styles.hidden : "",
+        hidden ? styles.isHiddenState : "",
         /* Consumer className */
         className,
     ]

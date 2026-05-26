@@ -4,7 +4,7 @@
   gap: 8px;
   height: 56px;
   padding: 0 12px;
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--background-surface, #1e1e1e);
   border-bottom: 1px solid var(--calculated-border-color, #333);
   position: sticky;
   top: 0;

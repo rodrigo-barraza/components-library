@@ -26,7 +26,7 @@
 /* ── Panel ──────────────────────────────────────────── */
 
 .panel {
-  background: var(--bg-surface);
+  background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-sm);
   max-height: 90vh;
@@ -63,7 +63,7 @@
 
 /* ── Close Button ───────────────────────────────────── */
 
-.closeBtn {
+.closeButton {
   width: 32px;
   height: 32px;
   display: flex;

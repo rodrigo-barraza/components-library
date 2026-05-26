@@ -181,7 +181,7 @@
 }
 
 /* Show stop indicator once progress begins */
-.linearStop.visible {
+.linearStop.isVisibleState {
   opacity: 1;
 }
 

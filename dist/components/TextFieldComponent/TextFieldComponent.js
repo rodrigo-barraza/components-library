@@ -97,7 +97,7 @@ const TextFieldComponent = forwardRef(function TextFieldComponent({ variant = "o
         populated && styles.populated,
         hasLabel && styles.hasLabel,
         error && styles.error,
-        disabled && styles.disabled,
+        disabled && styles.isDisabledState,
         leadingIcon && styles.hasLeadingIcon,
         className,
     ]

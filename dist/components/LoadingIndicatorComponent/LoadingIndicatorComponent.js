@@ -105,7 +105,7 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
                 /* Indeterminate: two sliding bars */
                 _jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.linearIndicator} ${styles.linearBar1}` }), _jsx("div", { className: `${styles.linearIndicator} ${styles.linearBar2}` })] })) : (
                 /* Determinate: single bar + optional buffer + stop indicator */
-                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles.linearBuffer, style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles.linearIndicator, style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles.linearStop}${value > 0 ? ` ${styles.visible}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
+                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles.linearBuffer, style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles.linearIndicator, style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles.linearStop}${value > 0 ? ` ${styles.isVisibleState}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
 }
 /* ═══════════════════════════════════════════════════════════ */
 /*  UTILITIES                                                 */

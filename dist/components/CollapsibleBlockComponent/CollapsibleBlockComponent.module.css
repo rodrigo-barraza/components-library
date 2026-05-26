@@ -22,7 +22,7 @@
     color 0.15s ease;
 
   &:hover {
-    background: var(--bg-elevated);
+    background: var(--background-elevated);
     color: var(--text-primary);
   }
 }
@@ -49,7 +49,7 @@
   color: var(--text-muted);
   padding: 1px 6px;
   border-radius: 8px;
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
 }
 
 .actions {

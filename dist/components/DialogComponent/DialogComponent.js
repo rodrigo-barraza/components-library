@@ -143,7 +143,7 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
         .filter(Boolean)
         .join(" ");
     const confirmBtnClass = [
-        styles.actionBtn,
+        styles.actionButton,
         confirmVariant === "destructive"
             ? styles.actionBtnDestructive
             : styles.actionBtnPrimary,
@@ -155,7 +155,7 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
                         icon ? styles.headlineCentered : "",
                     ]
                         .filter(Boolean)
-                        .join(" "), children: headline })), _jsx("div", { id: bodyId, className: styles.body, children: children }), _jsxs("div", { className: styles.actions, children: [!hideCancel && (_jsx("button", { type: "button", className: styles.actionBtn, onClick: handleClose, children: cancelLabel })), _jsx("button", { type: "button", className: confirmBtnClass, onClick: handleConfirm, disabled: confirmDisabled, autoFocus: true, children: confirmLabel })] })] }) }));
+                        .join(" "), children: headline })), _jsx("div", { id: bodyId, className: styles.body, children: children }), _jsxs("div", { className: styles.actions, children: [!hideCancel && (_jsx("button", { type: "button", className: styles.actionButton, onClick: handleClose, children: cancelLabel })), _jsx("button", { type: "button", className: confirmBtnClass, onClick: handleConfirm, disabled: confirmDisabled, autoFocus: true, children: confirmLabel })] })] }) }));
     if (typeof document !== "undefined") {
         return createPortal(content, document.body);
     }

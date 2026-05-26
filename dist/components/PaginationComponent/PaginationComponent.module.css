@@ -16,24 +16,24 @@
   gap: 6px;
 }
 
-.pageBtn {
+.pageButton {
   padding: 6px 12px;
   border-radius: var(--border-radius-sm);
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
-  background: var(--bg-surface);
+  background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
-.pageBtn:hover:not(:disabled) {
+.pageButton:hover:not(:disabled) {
   border-color: var(--accent-primary);
   color: var(--accent-primary);
 }
 
-.pageBtn:disabled {
+.pageButton:disabled {
   opacity: 0.3;
   cursor: default;
 }

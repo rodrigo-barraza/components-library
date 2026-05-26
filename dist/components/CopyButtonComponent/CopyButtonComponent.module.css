@@ -15,7 +15,7 @@
 
   &:hover {
     color: var(--text-primary);
-    background: var(--bg-elevated);
+    background: var(--background-elevated);
   }
 }
 

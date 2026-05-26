@@ -58,11 +58,11 @@ const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary
     }, []);
     /* ── Class composition ─────────────────────────────────────────── */
     const classes = [
-        styles.btn,
+        styles.buttonElement,
         styles[variant],
         size !== "medium" && styles[size],
         fullWidth && styles.fullWidth,
-        loading && styles.loading,
+        loading && styles.isLoadingState,
         Icon && hasLabel && styles.hasIcon,
         isIconOnly && styles.iconOnly,
         isSubmit && isGenerating && styles.submitGenerating,

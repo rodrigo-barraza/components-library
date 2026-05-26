@@ -18,7 +18,7 @@
   flex-direction: row-reverse;
 }
 
-.checkbox.disabled {
+.checkbox.isDisabledState {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -64,7 +64,7 @@
 }
 
 /* Hover — checked/indeterminate (selected) */
-.checkbox:hover .selected ~ .stateLayer {
+.checkbox:hover .isSelectedState ~ .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
@@ -79,7 +79,7 @@
 }
 
 /* Active / pressed — selected */
-.checkbox:active .selected ~ .stateLayer {
+.checkbox:active .isSelectedState ~ .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -113,7 +113,7 @@
 }
 
 /* Checked / indeterminate — filled state */
-.box.selected {
+.box.isSelectedState {
   background: var(--accent-primary, #6750a4);
   border-color: var(--accent-primary, #6750a4);
 }
@@ -124,7 +124,7 @@
 }
 
 /* Error + checked */
-.box.errorBox.selected {
+.box.errorBox.isSelectedState {
   background: var(--color-error, #b3261e);
   border-color: var(--color-error, #b3261e);
 }

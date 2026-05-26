@@ -21,7 +21,7 @@
   flex-direction: row-reverse;
 }
 
-.switch.disabled {
+.switch.isDisabledState {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -57,7 +57,7 @@
 
 /* ── Track — Selected state ──────────────────────────── */
 
-.track.selected {
+.track.isSelectedState {
   background: var(--accent-primary, #6750a4);
   border-color: var(--accent-primary, #6750a4);
 }
@@ -68,7 +68,7 @@
   border-color: var(--text-primary, #1d1b20);
 }
 
-.switch:hover .track.selected {
+.switch:hover .track.isSelectedState {
   background: var(--accent-color-hover, var(--accent-primary, #6750a4));
   filter: brightness(1.08);
 }
@@ -90,7 +90,7 @@
 }
 
 /* Selected position: handle slides to right */
-.track.selected .handleContainer {
+.track.isSelectedState .handleContainer {
   left: 16px;
 }
 
@@ -112,7 +112,7 @@
 }
 
 /* Hover — selected */
-.switch:hover .track.selected .stateLayer {
+.switch:hover .track.isSelectedState .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
@@ -121,7 +121,7 @@
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
-.hiddenInput:focus-visible ~ .track.selected .stateLayer {
+.hiddenInput:focus-visible ~ .track.isSelectedState .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -131,7 +131,7 @@
 }
 
 /* Active / pressed — selected */
-.switch:active .track.selected .stateLayer {
+.switch:active .track.isSelectedState .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -154,7 +154,7 @@
 }
 
 /* Handle — selected state: grows to 24px, changes color */
-.track.selected .handle {
+.track.isSelectedState .handle {
   width: 24px;
   height: 24px;
   background: var(--switch-handle-selected-bg, var(--text-on-accent, #fff));
@@ -186,7 +186,7 @@
 }
 
 /* Icon visible only on selected handle */
-.track.selected .icon {
+.track.isSelectedState .icon {
   opacity: 1;
   transform: scale(1);
 }
@@ -211,7 +211,7 @@
 }
 
 /* Hide unselected icon when selected */
-.track.selected .iconUnselected {
+.track.isSelectedState .iconUnselected {
   opacity: 0;
   transform: scale(0);
 }

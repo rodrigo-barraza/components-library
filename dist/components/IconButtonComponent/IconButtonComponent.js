@@ -10,7 +10,7 @@ export default function IconButtonComponent({ icon, onClick, tooltip, variant = 
     const classes = [
         styles.iconButton,
         variant === "destructive" ? styles.destructive : "",
-        active ? styles.active : "",
+        active ? styles.isActiveState : "",
         hoverReveal ? styles.hoverReveal : "",
         className || "",
     ]

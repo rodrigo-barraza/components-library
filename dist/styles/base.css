@@ -15,7 +15,7 @@
      8. Utility classes (.frosted-panel, .fade-in, .slide-in)
 
    Naming convention:
-     - Direct tokens: --accent-primary, --bg-base, --text-primary, etc.
+     - Direct tokens: --accent-primary, --background-base, --text-primary, etc.
      - Calculated tokens: --calculated-accent-primary-hover, --calculated-border-color, etc.
        (auto-derived from direct tokens — hover, glow, subtle, border scales, shadows)
 
@@ -95,9 +95,9 @@
 :root,
 [data-theme="dark"] {
   /* Surfaces */
-  --bg-base: #0a0a0f;
-  --bg-surface: #13141c;
-  --bg-elevated: #1a1b26;
+  --background-base: #0a0a0f;
+  --background-surface: #13141c;
+  --background-elevated: #1a1b26;
 
   /* Borders */
   --calculated-border-color: rgba(255, 255, 255, 0.06);
@@ -136,9 +136,9 @@
 /* ── Theme: Light ───────────────────────────────────────────── */
 
 [data-theme="light"] {
-  --bg-base: #f5f5f7;
-  --bg-surface: #ffffff;
-  --bg-elevated: #edeef2;
+  --background-base: #f5f5f7;
+  --background-surface: #ffffff;
+  --background-elevated: #edeef2;
 
   --calculated-border-color: rgba(0, 0, 0, 0.1);
   --calculated-border-subtle: rgba(0, 0, 0, 0.04);
@@ -175,9 +175,9 @@
    for extended sessions without going full dark. */
 
 [data-theme="muted"] {
-  --bg-base: #dddee3;
-  --bg-surface: #e8e9ed;
-  --bg-elevated: #d2d4da;
+  --background-base: #dddee3;
+  --background-surface: #e8e9ed;
+  --background-elevated: #d2d4da;
 
   --calculated-border-color: rgba(0, 0, 0, 0.1);
   --calculated-border-subtle: rgba(0, 0, 0, 0.06);
@@ -211,9 +211,9 @@
 /* ── Theme: Tropical ────────────────────────────────────────── */
 
 [data-theme="tropical"] {
-  --bg-base: #1a120e;
-  --bg-surface: #241a14;
-  --bg-elevated: #2e221a;
+  --background-base: #1a120e;
+  --background-surface: #241a14;
+  --background-elevated: #2e221a;
 
   --calculated-border-color: rgba(0, 206, 170, 0.12);
   --calculated-border-subtle: rgba(0, 206, 170, 0.06);
@@ -247,9 +247,9 @@
 /* ── Theme: Oceanic ─────────────────────────────────────────── */
 
 [data-theme="oceanic"] {
-  --bg-base: #060d18;
-  --bg-surface: #0b1628;
-  --bg-elevated: #111f38;
+  --background-base: #060d18;
+  --background-surface: #0b1628;
+  --background-elevated: #111f38;
 
   --calculated-border-color: rgba(0, 180, 216, 0.12);
   --calculated-border-subtle: rgba(0, 180, 216, 0.06);
@@ -286,9 +286,9 @@
    with neon glow and leather grain. */
 
 [data-theme="punk"] {
-  --bg-base: #0e0a10;
-  --bg-surface: #171119;
-  --bg-elevated: #211828;
+  --background-base: #0e0a10;
+  --background-surface: #171119;
+  --background-elevated: #211828;
 
   --calculated-border-color: rgba(255, 45, 155, 0.14);
   --calculated-border-subtle: rgba(255, 45, 155, 0.06);
@@ -324,9 +324,9 @@
    with smouldering edges and burnished copper highlights. */
 
 [data-theme="ember"] {
-  --bg-base: #120c08;
-  --bg-surface: #1c1410;
-  --bg-elevated: #261c16;
+  --background-base: #120c08;
+  --background-surface: #1c1410;
+  --background-elevated: #261c16;
 
   --calculated-border-color: rgba(245, 158, 11, 0.12);
   --calculated-border-subtle: rgba(245, 158, 11, 0.06);
@@ -362,9 +362,9 @@
    highlights, minimal contrast for focus-heavy work. */
 
 [data-theme="arctic"] {
-  --bg-base: #0a0e14;
-  --bg-surface: #111820;
-  --bg-elevated: #18212c;
+  --background-base: #0a0e14;
+  --background-surface: #111820;
+  --background-elevated: #18212c;
 
   --calculated-border-color: rgba(148, 204, 224, 0.1);
   --calculated-border-subtle: rgba(148, 204, 224, 0.05);
@@ -400,9 +400,9 @@
    dappled-light highlights, soft canopy shadows. */
 
 [data-theme="forest"] {
-  --bg-base: #080e08;
-  --bg-surface: #101a10;
-  --bg-elevated: #182418;
+  --background-base: #080e08;
+  --background-surface: #101a10;
+  --background-elevated: #182418;
 
   --calculated-border-color: rgba(74, 222, 128, 0.1);
   --calculated-border-subtle: rgba(74, 222, 128, 0.05);
@@ -440,9 +440,9 @@
    neutral dark to maintain legibility once desaturated. */
 
 [data-theme="mono"] {
-  --bg-base: #101010;
-  --bg-surface: #1a1a1a;
-  --bg-elevated: #242424;
+  --background-base: #101010;
+  --background-surface: #1a1a1a;
+  --background-elevated: #242424;
 
   --calculated-border-color: rgba(255, 255, 255, 0.08);
   --calculated-border-subtle: rgba(255, 255, 255, 0.04);
@@ -484,7 +484,7 @@ html[data-theme="mono"] {
 /* ── Body Defaults ──────────────────────────────────────────── */
 
 body {
-  background-color: var(--bg-base);
+  background-color: var(--background-base);
   color: var(--text-primary);
   min-height: 100dvh;
   width: 100vw;
@@ -527,7 +527,7 @@ input,
 select,
 textarea {
   font-family: inherit;
-  background: var(--bg-surface);
+  background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   color: var(--text-primary);
   border-radius: var(--border-radius-sm);
@@ -557,7 +557,7 @@ select option {
 /* ── Utility Classes ────────────────────────────────────────── */
 
 .frosted-panel {
-  background: var(--bg-surface);
+  background: var(--background-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--calculated-border-color);

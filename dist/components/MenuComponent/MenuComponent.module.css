@@ -30,7 +30,7 @@
   overflow-y: auto;
 
   /* Surface container color */
-  background-color: var(--bg-surface, #ECE6F0);
+  background-color: var(--background-surface, #ECE6F0);
   color: var(--text-primary, #1D1B20);
 
   /* M3 elevation level 2 */
@@ -307,7 +307,7 @@
   overflow: hidden;
   overflow-y: auto;
 
-  background-color: var(--bg-surface, #ECE6F0);
+  background-color: var(--background-surface, #ECE6F0);
   color: var(--text-primary, #1D1B20);
 
   box-shadow:

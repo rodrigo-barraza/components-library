@@ -46,7 +46,7 @@ export default function SliderComponent({ value, min = 0, max = 100, step = 1, o
         }
         return marks;
     }, [showTicks, min, max, effectiveStep]);
-    return (_jsx("div", { className: [styles.slider, disabled && styles.disabled, className]
+    return (_jsx("div", { className: [styles.slider, disabled && styles.isDisabledState, className]
             .filter(Boolean)
             .join(" "), id: id, children: isRange ? (_jsx(RangeTrack, { value: value, min: min, max: max, step: effectiveStep, onChange: onChange, disabled: disabled, showValue: showValue, ticks: ticks, label: label, formatValue: formatValue, sound: sound })) : (_jsx(SingleTrack, { value: value, min: min, max: max, step: effectiveStep, onChange: onChange, disabled: disabled, centered: centered, showValue: showValue, ticks: ticks, label: label, formatValue: formatValue, sound: sound })) }));
 }

@@ -44,7 +44,7 @@
   }
 }
 
-.launcher.open {
+.launcher.isOpenState {
   background: rgba(255, 255, 255, 0.08);
   box-shadow: var(--chat-shadow);
 

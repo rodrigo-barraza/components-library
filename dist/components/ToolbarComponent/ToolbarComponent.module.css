@@ -10,7 +10,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: var(--bg-surface, var(--bg-surface));
+  background: var(--background-surface, var(--background-surface));
   color: var(--text-primary);
   flex-shrink: 0;
   transition:

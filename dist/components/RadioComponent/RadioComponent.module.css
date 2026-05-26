@@ -20,7 +20,7 @@
   flex-direction: row-reverse;
 }
 
-.radio.disabled {
+.radio.isDisabledState {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -66,7 +66,7 @@
 }
 
 /* Hover — selected */
-.radio:hover .selected ~ .stateLayer {
+.radio:hover .isSelectedState ~ .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
@@ -76,8 +76,8 @@
 }
 
 /* Focus-visible (keyboard navigation) — selected */
-.hiddenInput:focus-visible ~ .selected ~ .stateLayer,
-.selected ~ .hiddenInput:focus-visible ~ .stateLayer {
+.hiddenInput:focus-visible ~ .isSelectedState ~ .stateLayer,
+.isSelectedState ~ .hiddenInput:focus-visible ~ .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -87,7 +87,7 @@
 }
 
 /* Active / pressed — selected */
-.radio:active .selected ~ .stateLayer {
+.radio:active .isSelectedState ~ .stateLayer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -120,7 +120,7 @@
 }
 
 /* Selected — primary-colored ring */
-.circle.selected {
+.circle.isSelectedState {
   border-color: var(--accent-primary, #6750a4);
 }
 
@@ -130,7 +130,7 @@
 }
 
 /* Error — selected */
-.circle.errorCircle.selected {
+.circle.errorCircle.isSelectedState {
   border-color: var(--color-error, #b3261e);
 }
 

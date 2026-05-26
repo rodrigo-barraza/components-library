@@ -21,12 +21,12 @@
   --chat-accent-subtle: rgba(99, 102, 241, 0.1);
   --chat-accent-glow: 0 0 24px rgba(99, 102, 241, 0.25);
 
-  --chat-bg-panel: rgba(15, 15, 23, 0.92);
-  --chat-bg-header: rgba(20, 20, 32, 0.95);
-  --chat-bg-input: rgba(25, 25, 40, 0.9);
-  --chat-bg-message-visitor: var(--chat-accent);
-  --chat-bg-message-agent: rgba(255, 255, 255, 0.06);
-  --chat-bg-message-system: transparent;
+  --chat-background-panel: rgba(15, 15, 23, 0.92);
+  --chat-background-header: rgba(20, 20, 32, 0.95);
+  --chat-background-input: rgba(25, 25, 40, 0.9);
+  --chat-background-message-visitor: var(--chat-accent);
+  --chat-background-message-agent: rgba(255, 255, 255, 0.06);
+  --chat-background-message-system: transparent;
 
   --chat-text-primary: #f0f0f5;
   --chat-text-secondary: #8e95ae;

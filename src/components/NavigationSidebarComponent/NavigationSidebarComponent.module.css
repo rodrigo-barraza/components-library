@@ -4,7 +4,7 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--background-surface, #1e1e1e);
+  background: var(--accent-primary, #6366f1);
   border-right: 1px solid var(--calculated-border-color, #333);
   gap: 8px;
   animation: slideIn var(--transition-normal, 0.3s) ease-out;

@@ -9,7 +9,7 @@ const InputComponent = forwardRef(function InputComponent({ type = "text", value
     const classes = [
         styles.wrapper,
         styles[size],
-        disabled ? styles.disabled : "",
+        disabled ? styles.isDisabledState : "",
         Icon ? styles.hasIcon : "",
         className,
     ]

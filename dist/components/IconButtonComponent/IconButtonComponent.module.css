@@ -27,7 +27,7 @@
 }
 
 /* Active state */
-.active {
+.isActiveState {
   color: var(--accent-primary);
   background: var(--calculated-accent-primary-subtle);
 }

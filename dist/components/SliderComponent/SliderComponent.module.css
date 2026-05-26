@@ -20,7 +20,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.slider.disabled {
+.slider.isDisabledState {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -55,7 +55,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: var(--slider-inactive-track, var(--surface-variant, color-mix(in srgb, var(--text-primary, #49454f) 12%, var(--bg-base, #e7e0ec))));
+  background: var(--slider-inactive-track, var(--surface-variant, color-mix(in srgb, var(--text-primary, #49454f) 12%, var(--background-base, #e7e0ec))));
   border-radius: 2px;
   pointer-events: none;
 }
@@ -267,20 +267,20 @@
 
 /* ── Disabled-specific overrides ─────────────────────── */
 
-.disabled .inactiveTrack {
+.isDisabledState .inactiveTrack {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
-.disabled .activeTrack {
+.isDisabledState .activeTrack {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
 }
 
-.disabled .thumb {
+.isDisabledState .thumb {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
   box-shadow: none;
 }
 
-.disabled .tickActive,
-.disabled .tickInactive {
+.isDisabledState .tickActive,
+.isDisabledState .tickInactive {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
 }

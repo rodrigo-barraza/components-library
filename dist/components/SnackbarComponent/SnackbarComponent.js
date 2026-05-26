@@ -158,7 +158,7 @@ export default function SnackbarComponent({ open, message, actionLabel, showClos
     ]
         .filter(Boolean)
         .join(" ");
-    const content = (_jsx("div", { className: styles.host, id: `${snackbarId}-host`, children: _jsxs("div", { ref: containerRef, className: containerClass, role: "status", "aria-live": "polite", "aria-atomic": "true", "data-exiting": exiting || undefined, onAnimationEnd: handleAnimationEnd, children: [_jsx("span", { className: styles.supportingText, id: `${snackbarId}-message`, children: message }), hasAction && (_jsx("button", { type: "button", className: styles.action, onClick: onAction, id: `${snackbarId}-action`, children: actionLabel })), hasClose && (_jsx("button", { type: "button", className: styles.closeBtn, onClick: handleDismiss, "aria-label": "Dismiss", id: `${snackbarId}-close`, children: _jsx(X, {}) }))] }) }));
+    const content = (_jsx("div", { className: styles.host, id: `${snackbarId}-host`, children: _jsxs("div", { ref: containerRef, className: containerClass, role: "status", "aria-live": "polite", "aria-atomic": "true", "data-exiting": exiting || undefined, onAnimationEnd: handleAnimationEnd, children: [_jsx("span", { className: styles.supportingText, id: `${snackbarId}-message`, children: message }), hasAction && (_jsx("button", { type: "button", className: styles.action, onClick: onAction, id: `${snackbarId}-action`, children: actionLabel })), hasClose && (_jsx("button", { type: "button", className: styles.closeButton, onClick: handleDismiss, "aria-label": "Dismiss", id: `${snackbarId}-close`, children: _jsx(X, {}) }))] }) }));
     if (typeof document !== "undefined") {
         return createPortal(content, document.body);
     }

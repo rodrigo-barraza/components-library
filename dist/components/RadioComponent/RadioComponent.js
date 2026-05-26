@@ -24,7 +24,7 @@ export default function RadioComponent({ value, selectedValue, onChange, label =
     const checked = value === selectedValue;
     const rootClasses = [
         styles.radio,
-        disabled && styles.disabled,
+        disabled && styles.isDisabledState,
         error && styles.error,
         labelPlacement === "start" && styles.labelStart,
         className,
@@ -33,7 +33,7 @@ export default function RadioComponent({ value, selectedValue, onChange, label =
         .join(" ");
     const circleClasses = [
         styles.circle,
-        checked && styles.selected,
+        checked && styles.isSelectedState,
         error && styles.errorCircle,
     ]
         .filter(Boolean)

@@ -105,7 +105,7 @@
   position: absolute;
   top: -1px;
   height: 2px;
-  background: var(--card-bg, var(--bg-base, #fff));
+  background: var(--card-background, var(--background-base, #fff));
   pointer-events: none;
   transition:
     width 0.15s cubic-bezier(0.2, 0, 0, 1),
@@ -393,31 +393,31 @@
 
 /* ── Disabled state ──────────────────────────────── */
 
-.disabled {
+.isDisabledState {
   pointer-events: none;
 }
 
-.disabled .fieldContainer {
+.isDisabledState .fieldContainer {
   opacity: 0.38;
 }
 
-.disabled .supportingText {
+.isDisabledState .supportingText {
   opacity: 0.38;
 }
 
-.disabled.filled .fieldContainer {
+.isDisabledState.filled .fieldContainer {
   background: color-mix(in srgb, var(--text-primary, #1c1b1f) 4%, transparent);
 }
 
-.disabled .activeIndicator {
+.isDisabledState .activeIndicator {
   background: color-mix(in srgb, var(--text-primary, #1c1b1f) 38%, transparent);
 }
 
-.disabled .outlineBorder {
+.isDisabledState .outlineBorder {
   border-color: color-mix(in srgb, var(--text-primary, #1c1b1f) 12%, transparent);
 }
 
-.disabled .label {
+.isDisabledState .label {
   color: color-mix(in srgb, var(--text-primary, #1c1b1f) 38%, transparent);
 }
 
