@@ -77,9 +77,10 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   gap: 4px;
+  padding-block-end: 3px;
   padding-inline: 6px;
   min-height: 40px;
   min-width: 24px;
