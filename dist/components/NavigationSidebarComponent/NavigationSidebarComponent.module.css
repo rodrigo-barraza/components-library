@@ -255,7 +255,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--text-muted, #888);
+  color: var(--sidebar-contrast-color-muted, #888);
   white-space: nowrap;
 }
 
@@ -263,7 +263,7 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: var(--calculated-border-color, #333);
+  background: var(--sidebar-contrast-color-muted, #555);
 }
 
 .tooltipFill {
