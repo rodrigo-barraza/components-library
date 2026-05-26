@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import * as Icons from "lucide-react";
 import useMediaQuery from "../../hooks/useMediaQuery.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
@@ -91,6 +91,7 @@ export default function NavigationSidebarComponent({
 }: NavigationSidebarProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [navReady, setNavReady] = useState(false);
+  const sidebarReference = useRef<HTMLElement>(null);
 
   // ── Mobile detection ──────────────────────────────────────────────
   const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
@@ -160,6 +161,69 @@ export default function NavigationSidebarComponent({
       document.body.style.overflow = "";
     };
   }, [isMobile, mobileOpen]);
+
+  // ── Programmatic contrast color for sidebar content ────────────
+  useEffect(() => {
+    const sidebarElement = sidebarReference.current;
+    if (!sidebarElement) return;
+
+    const computeAndApplyContrastColor = () => {
+      const computedStyle = getComputedStyle(sidebarElement);
+      const backgroundColorValue = computedStyle.backgroundColor;
+
+      const rgbMatch = backgroundColorValue.match(
+        /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/
+      );
+      if (!rgbMatch) return;
+
+      const redChannel = parseInt(rgbMatch[1], 10);
+      const greenChannel = parseInt(rgbMatch[2], 10);
+      const blueChannel = parseInt(rgbMatch[3], 10);
+
+      const toLinearComponent = (channelValue: number): number => {
+        const normalizedValue = channelValue / 255;
+        return normalizedValue <= 0.03928
+          ? normalizedValue / 12.92
+          : Math.pow((normalizedValue + 0.055) / 1.055, 2.4);
+      };
+
+      const relativeLuminance =
+        0.2126 * toLinearComponent(redChannel) +
+        0.7152 * toLinearComponent(greenChannel) +
+        0.0722 * toLinearComponent(blueChannel);
+
+      const isLightBackground = relativeLuminance > 0.179;
+
+      sidebarElement.style.setProperty(
+        "--sidebar-contrast-color",
+        isLightBackground ? "rgba(0, 0, 0, 0.87)" : "rgba(255, 255, 255, 0.92)"
+      );
+      sidebarElement.style.setProperty(
+        "--sidebar-contrast-color-muted",
+        isLightBackground ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.55)"
+      );
+    };
+
+    computeAndApplyContrastColor();
+
+    const mutationObserver = new MutationObserver(computeAndApplyContrastColor);
+    mutationObserver.observe(sidebarElement, {
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
+
+    // Also observe the document element for theme class changes
+    const documentObserver = new MutationObserver(computeAndApplyContrastColor);
+    documentObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"],
+    });
+
+    return () => {
+      mutationObserver.disconnect();
+      documentObserver.disconnect();
+    };
+  }, []);
 
   // Resolve whether we use the new ThemePicker or fallback to legacy toggle
   const hasThemePicker = Boolean(themes?.length && setTheme);
@@ -270,7 +334,7 @@ export default function NavigationSidebarComponent({
         />
       )}
 
-      <aside className={styles.sidebar}>
+      <aside ref={sidebarReference} className={styles.sidebar}>
         
         {/* Brand */}
         {(brandIcon || brandLabel) && (
