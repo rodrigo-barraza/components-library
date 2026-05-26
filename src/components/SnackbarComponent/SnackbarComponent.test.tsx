@@ -88,8 +88,8 @@ describe("SnackbarComponent", () => {
         onDismiss={() => {}}
       />,
     );
-    const closeBtn = screen.getByLabelText("Dismiss");
-    expect(closeBtn).toBeInTheDocument();
+    const closeButton = screen.getByLabelText("Dismiss");
+    expect(closeButton).toBeInTheDocument();
   });
 
   // ── Interactions ───────────────────────────────────────

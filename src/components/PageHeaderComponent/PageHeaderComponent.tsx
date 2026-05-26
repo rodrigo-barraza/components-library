@@ -33,7 +33,7 @@ export default function PageHeaderComponent({
     >
       <div className={styles.headerLeft}>
         {onBack && (
-          <button className={styles.backBtn} onClick={onBack} title="Go back">
+          <button className={styles.backButton} onClick={onBack} title="Go back">
             <ArrowLeft size={16} />
           </button>
         )}

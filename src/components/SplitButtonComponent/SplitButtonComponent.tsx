@@ -168,8 +168,8 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
     styles[variant],
     size !== "medium" && styles[size],
     fullWidth && styles.fullWidth,
-    disabled && styles.disabled,
-    loading && styles.loading,
+    disabled && styles.isDisabledState,
+    loading && styles.isLoadingState,
     className,
   ]
     .filter(Boolean)

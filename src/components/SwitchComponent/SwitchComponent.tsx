@@ -52,7 +52,7 @@ export default function SwitchComponent({
 
   const rootClasses = [
     styles.switch,
-    disabled && styles.disabled,
+    disabled && styles.isDisabledState,
     labelPlacement === "start" && styles.labelStart,
     showIcons && styles.withIcons,
     className,
@@ -62,7 +62,7 @@ export default function SwitchComponent({
 
   const trackClasses = [
     styles.track,
-    checked && styles.selected,
+    checked && styles.isSelectedState,
   ]
     .filter(Boolean)
     .join(" ");

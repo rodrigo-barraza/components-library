@@ -200,7 +200,7 @@ export default function NavigationRailComponent({
           // Common props for the interactive element
           const elProps = {
             "data-rail-destination": "",
-            className: `${styles.destination} ${isActive ? styles.active : ""}`,
+            className: `${styles.destination} ${isActive ? styles.isActiveState : ""}`,
             role: "tab",
             "aria-selected": isActive,
             tabIndex: focusedIndex === index ? 0 : -1,

@@ -972,7 +972,7 @@
   pointer-events: auto;
 }
 
-.actionBtn {
+.actionButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -988,7 +988,7 @@
   transition: background-color 100ms ease, color 100ms ease;
 }
 
-.actionBtn:hover {
+.actionButton:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #dbdee1;
 }
@@ -1680,7 +1680,7 @@
 
 /* ── Loading / Error States ────────────────────────────────────── */
 
-.loading {
+.isLoadingState {
   display: flex;
   flex-direction: column;
   align-items: center;

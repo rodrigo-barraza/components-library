@@ -121,7 +121,7 @@ export default function ThemePickerComponent({
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.wrapper} ${collapsed ? styles.collapsed : ""} ${className || ""}`}
+      className={`${styles.wrapper} ${collapsed ? styles.isCollapsedState : ""} ${className || ""}`}
     >
       {/* Trigger — wrap in tooltip when collapsed so user sees the theme label */}
       {collapsed ? (
@@ -149,7 +149,7 @@ export default function ThemePickerComponent({
               return (
                 <button
                   key={themeName}
-                  className={`${styles.themeOption} ${isActive ? styles.active : ""}`}
+                  className={`${styles.themeOption} ${isActive ? styles.isActiveState : ""}`}
                   onClick={() => handleSelect(themeName)}
                   type="button"
                   title={`Switch to ${meta.label} theme`}

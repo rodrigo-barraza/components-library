@@ -302,7 +302,7 @@ export default function SnackbarComponent({
         {hasClose && (
           <button
             type="button"
-            className={styles.closeBtn}
+            className={styles.closeButton}
             onClick={handleDismiss}
             aria-label="Dismiss"
             id={`${snackbarId}-close`}

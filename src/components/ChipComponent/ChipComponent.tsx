@@ -70,8 +70,8 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
   const classes = [
     styles.chip,
     styles[variant],
-    selected && styles.selected,
-    disabled && styles.disabled,
+    selected && styles.isSelectedState,
+    disabled && styles.isDisabledState,
     elevated && styles.elevated,
     onClick && styles.clickable,
     className,
@@ -123,7 +123,7 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
       {removable && (
         <button
           type="button"
-          className={styles.removeBtn}
+          className={styles.removeButton}
           onClick={handleRemove}
           aria-label="Remove"
           tabIndex={-1}

@@ -44,7 +44,7 @@ export default function CheckboxComponent({
 
   const rootClasses = [
     styles.checkbox,
-    disabled && styles.disabled,
+    disabled && styles.isDisabledState,
     error && styles.error,
     labelPlacement === "start" && styles.labelStart,
     className,
@@ -54,7 +54,7 @@ export default function CheckboxComponent({
 
   const boxClasses = [
     styles.box,
-    (checked || indeterminate) && styles.selected,
+    (checked || indeterminate) && styles.isSelectedState,
     error && styles.errorBox,
   ]
     .filter(Boolean)

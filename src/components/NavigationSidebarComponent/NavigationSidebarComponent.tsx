@@ -186,14 +186,14 @@ export default function NavigationSidebarComponent({
 
     const content = (
       <>
-        {IconComponent && <IconComponent size={18} strokeWidth={1.8} className={styles.navIcon} />}
-        <span className={styles.navLabel}>{item.label}</span>
+        {IconComponent && <IconComponent size={18} strokeWidth={1.8} className={styles.navigationIcon} />}
+        <span className={styles.navigationLabel}>{item.label}</span>
         {isActive && <div className={styles.activeIndicator} />}
       </>
     );
 
     const linkProps = {
-      className: `${styles.navItem} ${isActive ? styles.active : ""}`,
+      className: `${styles.navigationItem} ${isActive ? styles.isActiveState : ""}`,
       onClick: () => {
         if (onNavigate && id) {
           onNavigate(id, item);
@@ -251,7 +251,7 @@ export default function NavigationSidebarComponent({
   // ── Determine wrapper classes ─────────────────────────────────────
   const wrapperClasses = [
     styles.wrapper,
-    collapsed && !isMobile ? styles.collapsed : "",
+    collapsed && !isMobile ? styles.isCollapsedState : "",
     !navReady ? styles.noTransition : "",
     isMobile ? styles.mobileWrapper : "",
     isMobile && mobileOpen ? styles.mobileOpen : "",
@@ -285,11 +285,11 @@ export default function NavigationSidebarComponent({
 
             {/* Desktop: collapse toggle | Mobile: close button */}
             {isMobile ? (
-              <button className={styles.mobileCloseBtn} onClick={onMobileClose} title="Close menu" aria-label="Close navigation menu">
+              <button className={styles.mobileCloseButton} onClick={onMobileClose} title="Close menu" aria-label="Close navigation menu">
                 <Icons.X size={20} />
               </button>
             ) : collapsible ? (
-              <button className={styles.collapseBtn} onClick={toggleCollapse} title="Toggle Sidebar">
+              <button className={styles.collapseButton} onClick={toggleCollapse} title="Toggle Sidebar">
                 <Icons.ChevronsLeft size={16} />
               </button>
             ) : null}
@@ -297,12 +297,12 @@ export default function NavigationSidebarComponent({
         )}
 
         {/* Nav List */}
-        <nav className={styles.navList}>
+        <nav className={styles.navigationList}>
           {resolvedSections.map((section, sectionIdx) => (
             <React.Fragment key={section.label || sectionIdx}>
               {/* Section divider — only rendered when label is truthy */}
               {section.label && (
-                <div className={styles.navDivider}>
+                <div className={styles.navigationDivider}>
                   <span>{section.label}</span>
                 </div>
               )}
@@ -328,7 +328,7 @@ export default function NavigationSidebarComponent({
                 onClick={onToggleTheme}
                 title={themeMeta.title}
               >
-                <themeMeta.NextIcon size={18} strokeWidth={1.8} className={styles.navIcon} />
+                <themeMeta.NextIcon size={18} strokeWidth={1.8} className={styles.navigationIcon} />
                 <span className={styles.themeLabel}>{themeMeta.nextLabel}</span>
               </button>
             </TooltipComponent>

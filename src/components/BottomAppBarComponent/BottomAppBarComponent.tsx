@@ -156,7 +156,7 @@ export default function BottomAppBarComponent({
   const rootClasses = [
     styles.bottomAppBar,
     position === "relative" && styles.relative,
-    isHidden && styles.hidden,
+    isHidden && styles.isHiddenState,
     className,
   ]
     .filter(Boolean)

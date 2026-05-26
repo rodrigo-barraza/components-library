@@ -145,7 +145,7 @@ export default function TopAppBarComponent({
     variantClass,
     positionClass,
     isScrolled && styles.elevated,
-    isScrolled && isExpandable && styles.collapsed,
+    isScrolled && isExpandable && styles.isCollapsedState,
     className,
   ]
     .filter(Boolean)
@@ -167,10 +167,10 @@ export default function TopAppBarComponent({
       <div className={styles.mainRow}>
         {/* Leading navigation icon */}
         {navigationIcon && (
-          <div className={styles.navSlot}>
+          <div className={styles.navigationSlot}>
             <button
               type="button"
-              className={styles.navButton}
+              className={styles.navigationButton}
               aria-label={navigationAriaLabel}
               onClick={onNavigationClick}
             >

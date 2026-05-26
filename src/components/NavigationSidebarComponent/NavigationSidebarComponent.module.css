@@ -4,7 +4,7 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--background-surface, #1e1e1e);
   border-right: 1px solid var(--calculated-border-color, #333);
   gap: 8px;
   animation: slideIn var(--transition-normal, 0.3s) ease-out;
@@ -24,55 +24,55 @@
   transition-duration: 0s !important;
 }
 
-.wrapper.collapsed .sidebar {
+.wrapper.isCollapsedState .sidebar {
   min-width: 64px;
   width: 64px;
 }
 
-.wrapper.collapsed .brandLabel,
-.wrapper.collapsed .navLabel,
-.wrapper.collapsed .themeLabel {
+.wrapper.isCollapsedState .brandLabel,
+.wrapper.isCollapsedState .navigationLabel,
+.wrapper.isCollapsedState .themeLabel {
   display: none;
 }
 
-.wrapper.collapsed .navDivider {
+.wrapper.isCollapsedState .navigationDivider {
   padding: 0;
   margin: 0;
 }
 
-.wrapper.collapsed .navDivider > span {
+.wrapper.isCollapsedState .navigationDivider > span {
   display: none;
 }
 
-.wrapper.collapsed .navDivider::after {
+.wrapper.isCollapsedState .navigationDivider::after {
   margin: 4px 10px;
 }
 
-.wrapper.collapsed .brand {
+.wrapper.isCollapsedState .brand {
   justify-content: center;
   padding-left: 8px;
   padding-right: 8px;
 }
 
-.wrapper.collapsed .collapseBtn {
+.wrapper.isCollapsedState .collapseButton {
   opacity: 1;
 }
 
-.wrapper.collapsed .collapseBtn svg {
+.wrapper.isCollapsedState .collapseButton svg {
   transform: scaleX(-1);
 }
 
-.wrapper.collapsed .navItem {
+.wrapper.isCollapsedState .navigationItem {
   justify-content: center;
   padding: 10px 8px;
 }
 
-.wrapper.collapsed .themeToggle {
+.wrapper.isCollapsedState .themeToggle {
   justify-content: center;
   padding: 10px 8px;
 }
 
-.wrapper.collapsed .bottomActions span {
+.wrapper.isCollapsedState .bottomActions span {
   display: none;
 }
 
@@ -110,7 +110,7 @@
   flex: 1;
 }
 
-.collapseBtn {
+.collapseButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,18 +125,18 @@
   transition: opacity 0.2s, background 0.2s;
 }
 
-.brand:hover .collapseBtn {
+.brand:hover .collapseButton {
   opacity: 1;
 }
 
-.collapseBtn:hover {
+.collapseButton:hover {
   background: var(--calculated-accent-primary-subtle, rgba(255,255,255,0.1));
   color: var(--text-primary, #fff);
 }
 
 /* ── Nav List ── */
 
-.navList {
+.navigationList {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -146,7 +146,7 @@
   padding: 0 12px;
 }
 
-.navItem {
+.navigationItem {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -167,18 +167,18 @@
   text-align: left;
 }
 
-.navItem:hover {
+.navigationItem:hover {
   background: var(--calculated-accent-primary-subtle, rgba(255,255,255,0.05));
   color: var(--text-primary, #fff);
 }
 
-.navItem.active {
+.navigationItem.isActiveState {
   background: var(--calculated-accent-primary-subtle, rgba(255,255,255,0.05));
   color: var(--accent-primary, #6366f1);
   font-weight: 500;
 }
 
-.navIcon {
+.navigationIcon {
   flex-shrink: 0;
 }
 
@@ -199,7 +199,7 @@
   to { opacity: 1; }
 }
 
-.navLabel {
+.navigationLabel {
   white-space: nowrap;
   flex: 1;
   overflow: hidden;
@@ -242,7 +242,7 @@
 
 /* ── Section Divider ── */
 
-.navDivider {
+.navigationDivider {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -250,7 +250,7 @@
   margin-top: 4px;
 }
 
-.navDivider > span {
+.navigationDivider > span {
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
@@ -259,7 +259,7 @@
   white-space: nowrap;
 }
 
-.navDivider::after {
+.navigationDivider::after {
   content: "";
   flex: 1;
   height: 1px;
@@ -273,7 +273,7 @@
 
 /* ── Mobile Close Button ── */
 
-.mobileCloseBtn {
+.mobileCloseButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -291,7 +291,7 @@
   flex-shrink: 0;
 }
 
-.mobileCloseBtn:hover {
+.mobileCloseButton:hover {
   background: var(--calculated-accent-primary-subtle, rgba(255,255,255,0.1));
   color: var(--text-primary, #fff);
 }
@@ -348,48 +348,48 @@
   }
 
   /* On mobile, never show collapsed state — always expanded labels */
-  .mobileWrapper.collapsed .brandLabel,
-  .mobileWrapper.collapsed .navLabel,
-  .mobileWrapper.collapsed .themeLabel {
+  .mobileWrapper.isCollapsedState .brandLabel,
+  .mobileWrapper.isCollapsedState .navigationLabel,
+  .mobileWrapper.isCollapsedState .themeLabel {
     display: block;
   }
 
-  .mobileWrapper.collapsed .sidebar {
+  .mobileWrapper.isCollapsedState .sidebar {
     min-width: 280px;
     width: 280px;
   }
 
-  .mobileWrapper.collapsed .navItem {
+  .mobileWrapper.isCollapsedState .navigationItem {
     justify-content: flex-start;
     padding: 10px 12px;
   }
 
-  .mobileWrapper.collapsed .brand {
+  .mobileWrapper.isCollapsedState .brand {
     justify-content: flex-start;
     padding-left: 12px;
     padding-right: 12px;
   }
 
-  .mobileWrapper.collapsed .navDivider {
+  .mobileWrapper.isCollapsedState .navigationDivider {
     padding: 10px 12px 4px;
     margin-top: 4px;
   }
 
-  .mobileWrapper.collapsed .navDivider > span {
+  .mobileWrapper.isCollapsedState .navigationDivider > span {
     display: block;
   }
 
-  .mobileWrapper.collapsed .themeToggle {
+  .mobileWrapper.isCollapsedState .themeToggle {
     justify-content: flex-start;
     padding: 10px 12px;
   }
 
-  .mobileWrapper.collapsed .bottomActions span {
+  .mobileWrapper.isCollapsedState .bottomActions span {
     display: inline;
   }
 
   /* Larger touch targets for mobile */
-  .mobileWrapper .navItem {
+  .mobileWrapper .navigationItem {
     padding: 12px 14px;
     min-height: 44px;
     font-size: 15px;

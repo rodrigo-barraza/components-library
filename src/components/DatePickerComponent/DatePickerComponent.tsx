@@ -79,7 +79,7 @@ function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover }:
     const isFuture = date > today;
 
     const cls = [
-      styles.dayBtn,
+      styles.dayButton,
       isToday && styles.dayToday,
       isStart && styles.dayStart,
       isEnd && styles.dayEnd,
@@ -374,7 +374,7 @@ export default function DatePickerComponent({
                 <button
                   key={preset.label}
                   type="button"
-                  className={`${styles.presetBtn} ${isActive ? styles.presetBtnActive : ""}`}
+                  className={`${styles.presetButton} ${isActive ? styles.presetBtnActive : ""}`}
                   onClick={() => handlePreset(preset)}
                 >
                   {preset.label}
@@ -385,12 +385,12 @@ export default function DatePickerComponent({
 
           <div className={styles.calendars}>
             <div className={styles.monthNav}>
-              <button type="button" className={styles.monthNavBtn} onClick={prevMonth}>
+              <button type="button" className={styles.monthNavButton} onClick={prevMonth}>
                 <ChevronLeft size={14} />
               </button>
               <span className={styles.monthLabel}>{monthLabel(viewDate.year, viewDate.month)}</span>
               <span className={styles.monthLabel}>{monthLabel(secondMonth.year, secondMonth.month)}</span>
-              <button type="button" className={styles.monthNavBtn} onClick={nextMonth}>
+              <button type="button" className={styles.monthNavButton} onClick={nextMonth}>
                 <ChevronRight size={14} />
               </button>
             </div>
@@ -427,7 +427,7 @@ export default function DatePickerComponent({
                   <span className={styles.timeLabel}>To</span>
                   <input type="time" className={styles.timeInput} value={toTime} onChange={(event) => setToTime(event.target.value)} />
                 </div>
-                <button type="button" className={styles.timeApplyBtn} onClick={handleApplyTime}>Apply</button>
+                <button type="button" className={styles.timeApplyButton} onClick={handleApplyTime}>Apply</button>
               </div>
             )}
           </div>

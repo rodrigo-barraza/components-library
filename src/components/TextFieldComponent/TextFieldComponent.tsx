@@ -166,7 +166,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
     populated && styles.populated,
     hasLabel && styles.hasLabel,
     error && styles.error,
-    disabled && styles.disabled,
+    disabled && styles.isDisabledState,
     leadingIcon && styles.hasLeadingIcon,
     className,
   ]

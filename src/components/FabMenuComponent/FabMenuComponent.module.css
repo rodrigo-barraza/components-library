@@ -91,7 +91,7 @@
 }
 
 /* Rotate icon 45° when menu is open (close affordance) */
-.open .triggerIcon {
+.isOpenState .triggerIcon {
   transform: rotate(45deg);
 }
 
@@ -155,7 +155,7 @@
 
 /* ── Secondary ──────────────────────────────────────────────────── */
 .triggerSecondary {
-  background-color: var(--bg-surface, #E8DEF8);
+  background-color: var(--background-surface, #E8DEF8);
   color: var(--text-primary, #1D192B);
 }
 
@@ -225,7 +225,7 @@
 
 /* ── Surface ────────────────────────────────────────────────────── */
 .triggerSurface {
-  background-color: var(--bg-base, #FFFBFE);
+  background-color: var(--background-base, #FFFBFE);
   color: var(--accent-primary, #6750A4);
 }
 
@@ -314,7 +314,7 @@
   letter-spacing: 0.1px;
   white-space: nowrap;
   color: var(--text-primary, #1C1B1F);
-  background: var(--bg-base, #FFFBFE);
+  background: var(--background-base, #FFFBFE);
 
   /* M3 elevation level 2 for label container */
   box-shadow:
@@ -344,7 +344,7 @@
   cursor: pointer;
   flex-shrink: 0;
 
-  background-color: var(--bg-base, #FFFBFE);
+  background-color: var(--background-base, #FFFBFE);
   color: var(--accent-primary, #6750A4);
 
   /* Elevation level 3 */

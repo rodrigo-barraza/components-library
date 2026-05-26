@@ -204,7 +204,7 @@ export default function DialogComponent({
     .join(" ");
 
   const confirmBtnClass = [
-    styles.actionBtn,
+    styles.actionButton,
     confirmVariant === "destructive"
       ? styles.actionBtnDestructive
       : styles.actionBtnPrimary,
@@ -261,7 +261,7 @@ export default function DialogComponent({
           {!hideCancel && (
             <button
               type="button"
-              className={styles.actionBtn}
+              className={styles.actionButton}
               onClick={handleClose}
             >
               {cancelLabel}

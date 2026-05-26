@@ -119,7 +119,7 @@ const FabComponent = forwardRef<HTMLButtonElement, FabComponentProps>(function F
     fixed ? styles.fixed : "",
     fixed ? positionClass : "",
     /* Scroll-hide */
-    hidden ? styles.hidden : "",
+    hidden ? styles.isHiddenState : "",
     /* Consumer className */
     className,
   ]

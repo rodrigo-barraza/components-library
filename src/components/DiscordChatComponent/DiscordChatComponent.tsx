@@ -1204,7 +1204,7 @@ function MessageActions({ messageId, onOpenPicker, pickerMessageId }: MessageAct
     <div className={`${styles.messageActions} ${isPickerOpen ? styles.messageActionsVisible : ""}`}>
       <button
         ref={btnRef}
-        className={styles.actionBtn}
+        className={styles.actionButton}
         type="button"
         onClick={() => onOpenPicker(messageId, btnRef)}
         title="Add Reaction"
@@ -1851,7 +1851,7 @@ export default function DiscordChatComponent({
         <div className={styles.chatPanel}>
           <div className={styles.messagesArea} ref={scrollRef}>
             {loading && (
-              <div className={styles.loading}>
+              <div className={styles.isLoadingState}>
                 <div className={styles.loadingDots}>
                   <span className={styles.loadingDot} />
                   <span className={styles.loadingDot} />
@@ -2007,7 +2007,7 @@ export default function DiscordChatComponent({
               )}
             </div>
           ) : (
-            <div className={styles.loading}>
+            <div className={styles.isLoadingState}>
               <div className={styles.loadingDots}>
                 <span className={styles.loadingDot} />
                 <span className={styles.loadingDot} />

@@ -31,7 +31,7 @@ export default function IconButtonComponent({
   const classes = [
     styles.iconButton,
     variant === "destructive" ? styles.destructive : "",
-    active ? styles.active : "",
+    active ? styles.isActiveState : "",
     hoverReveal ? styles.hoverReveal : "",
     className || "",
   ]

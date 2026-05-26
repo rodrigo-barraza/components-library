@@ -18,7 +18,7 @@
     visibility 0s 300ms;
 }
 
-.scrim.open {
+.scrim.isOpenState {
   opacity: 1;
   visibility: visible;
   transition:
@@ -35,7 +35,7 @@
   width: 360px;
   max-width: calc(100vw - 56px);
   height: 100dvh;
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--background-surface, #1e1e1e);
   color: var(--text-primary, #e0e0e0);
   overflow: hidden;
   flex-shrink: 0;
@@ -51,7 +51,7 @@
   z-index: 1;
 }
 
-.standard.closed {
+.standard.isClosedState {
   width: 0;
   min-width: 0;
   border-right: none;
@@ -76,7 +76,7 @@
   will-change: transform;
 }
 
-.modal.open {
+.modal.isOpenState {
   transform: translateX(0);
 }
 
@@ -89,7 +89,7 @@
   transform: translateX(100%);
 }
 
-[dir="rtl"] .modal.open {
+[dir="rtl"] .modal.isOpenState {
   transform: translateX(0);
 }
 
@@ -107,7 +107,7 @@
   transform: translateX(100%);
 }
 
-.anchorEnd.open {
+.anchorEnd.isOpenState {
   transform: translateX(0);
 }
 
@@ -232,25 +232,25 @@
 /* ── Active state ────────────────────────────────────────────────── */
 /* M3 spec: secondary-container background, on-secondary-container text */
 
-.item.active {
+.item.isActiveState {
   background: var(--calculated-accent-primary-subtle, rgba(99, 102, 241, 0.12));
   color: var(--accent-primary, #818cf8);
   font-weight: 600;
 }
 
-.item.active .stateLayer {
+.item.isActiveState .stateLayer {
   background: var(--accent-primary, #818cf8);
 }
 
-.item.active:hover .stateLayer {
+.item.isActiveState:hover .stateLayer {
   opacity: 0.08;
 }
 
-.item.active:active .stateLayer {
+.item.isActiveState:active .stateLayer {
   opacity: 0.12;
 }
 
-.item.active .itemIcon {
+.item.isActiveState .itemIcon {
   color: var(--accent-primary, #818cf8);
 }
 
@@ -263,7 +263,7 @@
 
 /* ── Disabled ────────────────────────────────────────────────────── */
 
-.item.disabled {
+.item.isDisabledState {
   color: var(--text-muted, #666);
   opacity: 0.38;
   pointer-events: none;
@@ -298,7 +298,7 @@
   flex-shrink: 0;
 }
 
-.item.active .itemBadge {
+.item.isActiveState .itemBadge {
   color: var(--accent-primary, #818cf8);
 }
 

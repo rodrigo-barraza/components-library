@@ -295,7 +295,7 @@ function LinearIndicator({
             />
             {/* M3 stop indicator — small dot at the leading edge */}
             <div
-              className={`${styles.linearStop}${value > 0 ? ` ${styles.visible}` : ""}`}
+              className={`${styles.linearStop}${value > 0 ? ` ${styles.isVisibleState}` : ""}`}
               style={{ left: `${clamp(value)}%` }}
               aria-hidden="true"
             />

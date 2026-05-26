@@ -50,11 +50,11 @@
 .tooltip-wrapper {
   flex: 1;
   height: 100%;
-  background: var(--bg-base);
+  background: var(--background-base);
   transition: background-color 0.2s;
 
   &:hover {
-    background: var(--bg-elevated);
+    background: var(--background-elevated);
   }
 
   &>button {
@@ -64,10 +64,10 @@
 }
 
 .tooltip-wrapper-active {
-  background: var(--bg-surface);
+  background: var(--background-surface);
 
   &:hover {
-    background: var(--bg-surface);
+    background: var(--background-surface);
   }
 }
 

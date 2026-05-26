@@ -167,7 +167,7 @@ function ColumnFilter<T, TSub>({ columns, hiddenColumns, onToggle, onToggleAll, 
     <>
       <button
         ref={btnRef}
-        className={`${styles.columnFilterBtn} ${hiddenCount > 0 ? styles.columnFilterBtnActive : ""}`}
+        className={`${styles.columnFilterButton} ${hiddenCount > 0 ? styles.columnFilterBtnActive : ""}`}
         onClick={toggle}
         title="Show/hide columns"
       >

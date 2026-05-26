@@ -33,20 +33,20 @@
 .track {
   width: 100%;
   border-radius: var(--radius-full);
-  background: var(--bg-elevated);
+  background: var(--background-elevated);
   overflow: hidden;
   position: relative;
 }
 
-.sm {
+.sizeSmall {
   height: 3px;
 }
 
-.md {
+.sizeMedium {
   height: 6px;
 }
 
-.lg {
+.sizeLarge {
   height: 10px;
 }
 

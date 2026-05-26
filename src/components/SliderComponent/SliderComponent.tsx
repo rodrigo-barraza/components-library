@@ -80,7 +80,7 @@ export default function SliderComponent<T extends number | number[]>({
 
   return (
     <div
-      className={[styles.slider, disabled && styles.disabled, className]
+      className={[styles.slider, disabled && styles.isDisabledState, className]
         .filter(Boolean)
         .join(" ")}
       id={id}

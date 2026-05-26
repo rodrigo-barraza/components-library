@@ -99,7 +99,7 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
   const classes = [
     styles.extendedFab,
     styles[variant],
-    collapsed ? styles.collapsed : "",
+    collapsed ? styles.isCollapsedState : "",
     lowered ? styles.lowered : "",
     fixed ? styles.fixed : "",
     className,

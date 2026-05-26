@@ -50,7 +50,7 @@ export default function RadioComponent<T extends string | number | boolean = str
 
   const rootClasses = [
     styles.radio,
-    disabled && styles.disabled,
+    disabled && styles.isDisabledState,
     error && styles.error,
     labelPlacement === "start" && styles.labelStart,
     className,
@@ -60,7 +60,7 @@ export default function RadioComponent<T extends string | number | boolean = str
 
   const circleClasses = [
     styles.circle,
-    checked && styles.selected,
+    checked && styles.isSelectedState,
     error && styles.errorCircle,
   ]
     .filter(Boolean)

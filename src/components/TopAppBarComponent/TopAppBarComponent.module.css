@@ -23,7 +23,7 @@
   flex-direction: column;
   width: 100%;
   flex-shrink: 0;
-  background: var(--bg-surface, var(--bg-surface));
+  background: var(--background-surface, var(--background-surface));
   color: var(--text-primary);
   z-index: 10;
   transition:
@@ -69,14 +69,14 @@
 /* ── Navigation icon slot ────────────────────────────────────────── */
 /* M3 spec: leading icon 48×48dp touch target, 4dp from left edge   */
 
-.navSlot {
+.navigationSlot {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.navButton {
+.navigationButton {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -94,16 +94,16 @@
   transition: background 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.navButton:focus-visible {
+.navigationButton:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
 
-.navButton:hover {
+.navigationButton:hover {
   background: var(--hover-overlay, rgb(0 0 0 / 0.06));
 }
 
-.navButton:active {
+.navigationButton:active {
   background: var(--press-overlay, rgb(0 0 0 / 0.1));
 }
 
@@ -168,7 +168,7 @@
     transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.medium.collapsed .mainRow .title {
+.medium.isCollapsedState .mainRow .title {
   opacity: 1;
   transform: translateY(0);
 }
@@ -188,7 +188,7 @@
     transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.large.collapsed .mainRow .title {
+.large.isCollapsedState .mainRow .title {
   opacity: 1;
   transform: translateY(0);
 }
@@ -255,7 +255,7 @@
 
 /* ── Collapsed state (medium & large) ────────────────────────────── */
 
-.collapsed .expandedRow {
+.isCollapsedState .expandedRow {
   height: 0;
   padding-top: 0;
   padding-bottom: 0;

@@ -30,7 +30,7 @@
     transform 150ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.visible {
+.isVisibleState {
   opacity: 1;
   transform: scale(1);
 }
@@ -175,10 +175,10 @@
 }
 
 /* ── Visible state resets directional slide ── */
-.top.visible,
-.bottom.visible,
-.left.visible,
-.right.visible {
+.top.isVisibleState,
+.bottom.isVisibleState,
+.left.isVisibleState,
+.right.isVisibleState {
   transform: scale(1) translate(0);
 }
 
@@ -191,7 +191,7 @@
     transform: none !important;
   }
 
-  .visible {
+  .isVisibleState {
     transform: none !important;
   }
 }

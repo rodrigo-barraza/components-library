@@ -205,7 +205,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
   const barClasses = [
     styles.searchBar,
     compact && styles.compact,
-    expanded && styles.expanded,
+    expanded && styles.isExpandedState,
   ]
     .filter(Boolean)
     .join(" ");
@@ -336,7 +336,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
         <div
           ref={panelRef}
           id="search-suggestions"
-          className={`${styles.suggestionsPanel}${expanded ? ` ${styles.open}` : ""}`}
+          className={`${styles.suggestionsPanel}${expanded ? ` ${styles.isOpenState}` : ""}`}
           role="listbox"
           aria-label="Search suggestions"
         >
@@ -352,7 +352,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
       {/* Scrim overlay */}
       {useScrim && (
         <div
-          className={`${styles.scrim}${expanded ? ` ${styles.visible}` : ""}`}
+          className={`${styles.scrim}${expanded ? ` ${styles.isVisibleState}` : ""}`}
           onClick={collapse}
           aria-hidden="true"
         />

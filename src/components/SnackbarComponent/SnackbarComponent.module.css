@@ -232,7 +232,7 @@
 
 /* ── Close icon button ───────────────────────────────── */
 
-.closeBtn {
+.closeButton {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -257,7 +257,7 @@
   isolation: isolate;
 }
 
-.closeBtn::before {
+.closeButton::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -268,30 +268,30 @@
   pointer-events: none;
 }
 
-.closeBtn:hover::before {
+.closeButton:hover::before {
   opacity: 0.08;
 }
 
-.closeBtn:focus-visible {
+.closeButton:focus-visible {
   outline: none;
 }
 
-.closeBtn:focus-visible::before {
+.closeButton:focus-visible::before {
   opacity: 0.12;
 }
 
-.closeBtn:active::before {
+.closeButton:active::before {
   opacity: 0.12;
 }
 
-.closeBtn svg {
+.closeButton svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
 }
 
 /* Absolute position close in longer-action layout */
-.longerAction .closeBtn {
+.longerAction .closeButton {
   position: absolute;
   top: 0;
   right: 0;

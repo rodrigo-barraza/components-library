@@ -206,24 +206,24 @@ export default function CarouselComponent({
       {showArrows && itemCount > 1 && (
         <>
           <button
-            className={`${styles.navButton} ${styles.navPrev}`}
+            className={`${styles.navigationButton} ${styles.navigationPrevious}`}
             onClick={scrollPrev}
             disabled={!loop && !canScrollPrev}
             aria-label="Previous slide"
             tabIndex={-1}
           >
-            <svg className={styles.navIcon} viewBox="0 0 24 24">
+            <svg className={styles.navigationIcon} viewBox="0 0 24 24">
               <path d="M15 18L9 12L15 6" />
             </svg>
           </button>
           <button
-            className={`${styles.navButton} ${styles.navNext}`}
+            className={`${styles.navigationButton} ${styles.navigationNext}`}
             onClick={scrollNext}
             disabled={!loop && !canScrollNext}
             aria-label="Next slide"
             tabIndex={-1}
           >
-            <svg className={styles.navIcon} viewBox="0 0 24 24">
+            <svg className={styles.navigationIcon} viewBox="0 0 24 24">
               <path d="M9 18L15 12L9 6" />
             </svg>
           </button>

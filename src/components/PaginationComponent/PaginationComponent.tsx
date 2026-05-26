@@ -33,14 +33,14 @@ export default function PaginationComponent({
       <span className={styles.pageInfo}>{renderInfo()}</span>
       <div className={styles.pageButtons}>
         <button
-          className={styles.pageBtn}
+          className={styles.pageButton}
           onClick={() => onPageChange(Math.max(1, page - 1))}
           disabled={page <= 1}
         >
           Previous
         </button>
         <button
-          className={styles.pageBtn}
+          className={styles.pageButton}
           onClick={() => onPageChange(Math.min(totalPages, page + 1))}
           disabled={page >= totalPages}
         >

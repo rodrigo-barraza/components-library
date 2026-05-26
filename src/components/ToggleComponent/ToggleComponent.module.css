@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-.toggle.disabled {
+.toggle.isDisabledState {
   opacity: 0.4;
   cursor: not-allowed;
 }
@@ -33,7 +33,7 @@
   border-color: rgba(99, 102, 241, 0.3);
 }
 
-.track.active {
+.track.isActiveState {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   filter: hue-rotate(0deg);
@@ -62,7 +62,7 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
-.track.active .knob {
+.track.isActiveState .knob {
   transform: translateX(18px);
   background: #fff;
 }
@@ -102,7 +102,7 @@
   height: 10px;
 }
 
-.mini .track.active .knob {
+.mini .track.isActiveState .knob {
   transform: translateX(14px);
 }
 

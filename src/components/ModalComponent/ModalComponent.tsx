@@ -163,7 +163,7 @@ export default function ModalComponent({
         <div className={styles.header}>
           <span className={styles.title} id={titleId}>{title}</span>
           <button
-            className={styles.closeBtn}
+            className={styles.closeButton}
             onClick={onClose}
             title="Close"
             aria-label="Close modal"

@@ -86,17 +86,17 @@
 
 /* ── Collapsed State ── */
 
-.collapsed .triggerLabel,
-.collapsed .triggerChevron {
+.isCollapsedState .triggerLabel,
+.isCollapsedState .triggerChevron {
   display: none;
 }
 
-.collapsed .trigger {
+.isCollapsedState .trigger {
   justify-content: center;
   padding: 10px 0;
 }
 
-.collapsed .triggerSwatchDual {
+.isCollapsedState .triggerSwatchDual {
   width: 18px;
   height: 18px;
 }
@@ -109,7 +109,7 @@
   left: 0;
   right: 0;
   min-width: 180px;
-  background: var(--bg-surface, #1e1e1e);
+  background: var(--background-surface, #1e1e1e);
   border: 1px solid var(--calculated-border-color, #333);
   border-radius: var(--border-radius-sm, 6px);
   box-shadow:
@@ -196,7 +196,7 @@
   color: var(--text-primary, #fff);
 }
 
-.themeOption.active {
+.themeOption.isActiveState {
   color: var(--text-primary, #fff);
   font-weight: 500;
 }
@@ -236,7 +236,7 @@
   transform: scale(1.15);
 }
 
-.themeOption.active .swatchDual {
+.themeOption.isActiveState .swatchDual {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -252,7 +252,7 @@
 }
 
 .themeOption:hover .optionIcon,
-.themeOption.active .optionIcon {
+.themeOption.isActiveState .optionIcon {
   opacity: 1;
 }
 

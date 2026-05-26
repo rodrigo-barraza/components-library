@@ -132,8 +132,8 @@ export default function NavigationDrawerComponent({
     styles.drawer,
     styles[variant],
     isEnd && styles.anchorEnd,
-    isModal && open && styles.open,
-    !isModal && !open && styles.closed,
+    isModal && open && styles.isOpenState,
+    !isModal && !open && styles.isClosedState,
     !ready && styles.noTransition,
     className,
   ]
@@ -160,7 +160,7 @@ export default function NavigationDrawerComponent({
     return (
       <>
         <div
-          className={`${styles.scrim}${open ? ` ${styles.open}` : ""}`}
+          className={`${styles.scrim}${open ? ` ${styles.isOpenState}` : ""}`}
           onClick={onClose}
           aria-hidden="true"
         />
@@ -211,8 +211,8 @@ function DrawerItem({
 }: DrawerItemProps) {
   const classes = [
     styles.item,
-    active && styles.active,
-    disabled && styles.disabled,
+    active && styles.isActiveState,
+    disabled && styles.isDisabledState,
     className,
   ]
     .filter(Boolean)

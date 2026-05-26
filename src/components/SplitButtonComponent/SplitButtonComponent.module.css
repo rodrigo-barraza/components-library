@@ -209,13 +209,13 @@
     0 1px 3px 1px rgb(0 0 0 / 0.10);
 }
 
-.filled.disabled {
+.filled.isDisabledState {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
   color: color-mix(in srgb, var(--text-primary) 38%, transparent);
   box-shadow: none;
 }
 
-.filled.disabled .divider {
+.filled.isDisabledState .divider {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
@@ -228,7 +228,7 @@
 .tonal {
   background: var(
     --calculated-accent-primary-subtle,
-    color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface))
+    color-mix(in srgb, var(--accent-primary) 12%, var(--background-surface))
   );
   color: var(--accent-primary);
 }
@@ -247,13 +247,13 @@
     0 1px 3px 1px rgb(0 0 0 / 0.10);
 }
 
-.tonal.disabled {
+.tonal.isDisabledState {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
   color: color-mix(in srgb, var(--text-primary) 38%, transparent);
   box-shadow: none;
 }
 
-.tonal.disabled .divider {
+.tonal.isDisabledState .divider {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
@@ -286,13 +286,13 @@
   outline-color: var(--accent-primary);
 }
 
-.outlined.disabled {
+.outlined.isDisabledState {
   background: transparent;
   color: color-mix(in srgb, var(--text-primary) 38%, transparent);
   border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
-.outlined.disabled .divider {
+.outlined.isDisabledState .divider {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
@@ -312,7 +312,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 .elevated {
-  background: var(--bg-surface);
+  background: var(--background-surface);
   color: var(--accent-primary);
   box-shadow:
     0 1px 2px 0 rgb(0 0 0 / 0.20),
@@ -333,13 +333,13 @@
     0 2px 6px 2px rgb(0 0 0 / 0.10);
 }
 
-.elevated.disabled {
+.elevated.isDisabledState {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
   color: color-mix(in srgb, var(--text-primary) 38%, transparent);
   box-shadow: none;
 }
 
-.elevated.disabled .divider {
+.elevated.isDisabledState .divider {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
@@ -349,12 +349,12 @@
    Applies to the whole group — pointer-events disabled.
    ══════════════════════════════════════════════════════════════════════ */
 
-.disabled {
+.isDisabledState {
   pointer-events: none;
 }
 
-.disabled .leading,
-.disabled .trailing {
+.isDisabledState .leading,
+.isDisabledState .trailing {
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -437,7 +437,7 @@
 }
 
 /* Loading — no pointer events on whole group */
-.loading {
+.isLoadingState {
   pointer-events: none;
 }
 

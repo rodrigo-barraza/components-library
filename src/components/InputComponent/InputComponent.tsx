@@ -30,7 +30,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
   const classes = [
     styles.wrapper,
     styles[size],
-    disabled ? styles.disabled : "",
+    disabled ? styles.isDisabledState : "",
     Icon ? styles.hasIcon : "",
     className,
   ]

@@ -272,7 +272,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
   const triggerClasses = [
     styles.trigger,
     variantMap[variant] || variantMap.primary,
-    isOpen ? styles.open : "",
+    isOpen ? styles.isOpenState : "",
   ]
     .filter(Boolean)
     .join(" ");
