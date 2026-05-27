@@ -9,10 +9,12 @@ export interface PageHeaderComponentProps {
     className?: string;
 }
 /**
- * PageHeaderComponent — Unified page header with optional back navigation.
+ * PageHeaderComponent — When used inside a PageLayoutComponent, pushes
+ * page identity (title, subtitle, back) up to LayoutHeaderComponent
+ * via context, and renders only the action children inline.
  *
- * Merges the prism-client (sticky, blur, back arrow) and portal (simple flex)
- * variants. The `sticky` prop controls whether the header sticks to the top.
+ * When used standalone (no context provider), falls back to rendering
+ * the classic pageHeader bar with title/subtitle/back inline.
  */
-export default function PageHeaderComponent({ title, subtitle, onBack, centerContent, children, sticky, className, }: PageHeaderComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function PageHeaderComponent({ title, subtitle, onBack, centerContent, children, sticky, className, }: PageHeaderComponentProps): import("react/jsx-runtime").JSX.Element | null;
 //# sourceMappingURL=PageHeaderComponent.d.ts.map

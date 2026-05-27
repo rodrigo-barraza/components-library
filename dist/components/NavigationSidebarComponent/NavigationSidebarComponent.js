@@ -118,6 +118,8 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
             const isLightBackground = relativeLuminance > 0.179;
             sidebarElement.style.setProperty("--sidebar-contrast-color", isLightBackground ? "rgba(0, 0, 0, 0.95)" : "rgba(255, 255, 255, 0.98)");
             sidebarElement.style.setProperty("--sidebar-contrast-color-muted", isLightBackground ? "rgba(0, 0, 0, 0.68)" : "rgba(255, 255, 255, 0.78)");
+            sidebarElement.style.setProperty("--sidebar-contrast-border", isLightBackground ? "rgba(0, 0, 0, 0.15)" : "rgba(255, 255, 255, 0.15)");
+            sidebarElement.style.setProperty("--sidebar-contrast-hover-background", isLightBackground ? "rgba(0, 0, 0, 0.08)" : "rgba(255, 255, 255, 0.08)");
         };
         computeAndApplyContrastColor();
         const mutationObserver = new MutationObserver(computeAndApplyContrastColor);

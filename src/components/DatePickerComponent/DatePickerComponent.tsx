@@ -177,13 +177,13 @@ export default function DatePickerComponent({
 
     if (dropdownElRef.current) {
       const dropRect = dropdownElRef.current.getBoundingClientRect();
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      if (left + dropRect.width > vw - 8) left = Math.max(8, vw - dropRect.width - 8);
-      if (top + dropRect.height > vh - 8) {
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      if (left + dropRect.width > viewportWidth - 8) left = Math.max(8, viewportWidth - dropRect.width - 8);
+      if (top + dropRect.height > viewportHeight - 8) {
         const above = rect.top - dropRect.height - 6;
         if (above >= 8) top = above;
-        else top = Math.max(8, vh - dropRect.height - 8);
+        else top = Math.max(8, viewportHeight - dropRect.height - 8);
       }
     }
 

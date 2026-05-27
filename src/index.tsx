@@ -51,6 +51,8 @@ export { default as NavigationDrawerComponent } from "./components/NavigationDra
 export { default as NavigationRailComponent } from "./components/NavigationRailComponent/NavigationRailComponent.js";
 export { default as NavigationSidebarComponent } from "./components/NavigationSidebarComponent/NavigationSidebarComponent.js";
 export { default as PageHeaderComponent } from "./components/PageHeaderComponent/PageHeaderComponent.js";
+export { PageHeaderProvider, usePageHeaderContext } from "./components/PageHeaderContext.js";
+export type { PageHeaderIdentity, SetPageHeaderIdentity } from "./components/PageHeaderContext.js";
 export { default as PageLayoutComponent } from "./components/PageLayoutComponent/PageLayoutComponent.js";
 export { default as PaginationComponent } from "./components/PaginationComponent/PaginationComponent.js";
 export { default as ProgressBarComponent } from "./components/ProgressBarComponent/ProgressBarComponent.js";

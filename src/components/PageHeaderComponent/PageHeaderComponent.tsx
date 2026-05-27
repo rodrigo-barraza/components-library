@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { usePageHeaderContext } from "../PageHeaderContext.js";
 import { ArrowLeft } from "lucide-react";
 import styles from "./PageHeaderComponent.module.css";
 
@@ -13,10 +14,12 @@ export interface PageHeaderComponentProps {
 }
 
 /**
- * PageHeaderComponent — Unified page header with optional back navigation.
+ * PageHeaderComponent — When used inside a PageLayoutComponent, pushes
+ * page identity (title, subtitle, back) up to LayoutHeaderComponent
+ * via context, and renders only the action children inline.
  *
- * Merges the prism-client (sticky, blur, back arrow) and portal (simple flex)
- * variants. The `sticky` prop controls whether the header sticks to the top.
+ * When used standalone (no context provider), falls back to rendering
+ * the classic pageHeader bar with title/subtitle/back inline.
  */
 export default function PageHeaderComponent({
   title,
@@ -27,13 +30,42 @@ export default function PageHeaderComponent({
   sticky = true,
   className,
 }: PageHeaderComponentProps) {
+  const setIdentity = usePageHeaderContext();
+
+  useEffect(() => {
+    if (setIdentity) {
+      setIdentity({ title, subtitle, onBack });
+    }
+
+    return () => {
+      if (setIdentity) {
+        setIdentity({});
+      }
+    };
+  }, [title, subtitle, onBack, setIdentity]);
+
+  // Context-driven mode: identity is pushed to LayoutHeaderComponent,
+  // only render the action children inline.
+  if (setIdentity) {
+    const hasContent = children || centerContent;
+    if (!hasContent) return null;
+
+    return (
+      <div className={styles.headerActions}>
+        {centerContent && <div className={styles.headerCenter}>{centerContent}</div>}
+        {children}
+      </div>
+    );
+  }
+
+  // Standalone fallback: render the full pageHeader bar.
   return (
-    <div
-      className={`${styles.pageHeader}${sticky ? ` ${styles.sticky}` : ""}${className ? ` ${className}` : ""}`}
+    <header
+      className={`${styles.pageHeader} ${sticky ? styles.sticky : ""} ${className || ""}`}
     >
       <div className={styles.headerLeft}>
         {onBack && (
-          <button className={styles.backButton} onClick={onBack} title="Go back">
+          <button className={styles.backButton} onClick={onBack}>
             <ArrowLeft size={16} />
           </button>
         )}
@@ -42,8 +74,12 @@ export default function PageHeaderComponent({
           {subtitle && <p className={styles.pageSubtitle}>{subtitle}</p>}
         </div>
       </div>
-      {centerContent && <div className={styles.headerCenter}>{centerContent}</div>}
+
+      {centerContent && (
+        <div className={styles.headerCenter}>{centerContent}</div>
+      )}
+
       {children && <div className={styles.headerActions}>{children}</div>}
-    </div>
+    </header>
   );
 }

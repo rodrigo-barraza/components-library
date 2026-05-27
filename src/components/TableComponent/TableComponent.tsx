@@ -395,14 +395,14 @@ export default function TableComponent<T, TSub = unknown>({
   const sorted =
     sort.key && !onSort
       ? [...data].sort((a, b) => {
-          const va = sortCol?.sortValue ? sortCol.sortValue(a) : ((a as Record<string, unknown>)[sort.key!] ?? 0);
-          const vb = sortCol?.sortValue ? sortCol.sortValue(b) : ((b as Record<string, unknown>)[sort.key!] ?? 0);
-          if (typeof va === "string" && typeof vb === "string") {
+          const sortValueA = sortCol?.sortValue ? sortCol.sortValue(a) : ((a as Record<string, unknown>)[sort.key!] ?? 0);
+          const sortValueB = sortCol?.sortValue ? sortCol.sortValue(b) : ((b as Record<string, unknown>)[sort.key!] ?? 0);
+          if (typeof sortValueA === "string" && typeof sortValueB === "string") {
             return sort.dir === "asc"
-              ? va.localeCompare(vb)
-              : vb.localeCompare(va);
+              ? sortValueA.localeCompare(sortValueB)
+              : sortValueB.localeCompare(sortValueA);
           }
-          return sort.dir === "asc" ? Number(va) - Number(vb) : Number(vb) - Number(va);
+          return sort.dir === "asc" ? Number(sortValueA) - Number(sortValueB) : Number(sortValueB) - Number(sortValueA);
         })
       : data;
 

@@ -1471,13 +1471,13 @@ export default function DiscordChatComponent({
 
   // ── SSE stream for messages ─────────────────────────────────────
   useEffect(() => {
-    let es: EventSource | undefined;
+    let eventSource: EventSource | undefined;
     let retryTimeout: ReturnType<typeof setTimeout> | undefined;
 
     function connect() {
-      es = new EventSource(`${streamUrl}?limit=${messageCount}&channelId=${activeChannelId}`);
+      eventSource = new EventSource(`${streamUrl}?limit=${messageCount}&channelId=${activeChannelId}`);
 
-      es.addEventListener("init", (event: MessageEvent) => {
+      eventSource.addEventListener("init", (event: MessageEvent) => {
         try {
           const { messages: msgs } = JSON.parse(event.data);
           const reversed = (msgs || []).reverse() as DiscordMessage[];
@@ -1536,7 +1536,7 @@ export default function DiscordChatComponent({
         }
       });
 
-      es.addEventListener("new", (event) => {
+      eventSource.addEventListener("new", (event) => {
         try {
           const { messages: newMsgs } = JSON.parse(event.data);
           if (!newMsgs?.length) return;
@@ -1550,7 +1550,7 @@ export default function DiscordChatComponent({
         }
       });
 
-      es.addEventListener("delete", (event) => {
+      eventSource.addEventListener("delete", (event) => {
         try {
           const { ids } = JSON.parse(event.data);
           if (!ids?.length) return;
@@ -1564,7 +1564,7 @@ export default function DiscordChatComponent({
       // Reaction (and other field) changes on existing messages.
       // The server detects when a message's reactions fingerprint
       // changes and sends the full updated message object.
-      es.addEventListener("update", (event) => {
+      eventSource.addEventListener("update", (event) => {
         try {
           const { messages: updatedMsgs } = JSON.parse(event.data) as { messages?: DiscordMessage[] };
           if (!updatedMsgs?.length) return;
@@ -1580,10 +1580,10 @@ export default function DiscordChatComponent({
         }
       });
 
-      es.addEventListener("error", () => {
-        if (es && es.readyState === EventSource.CLOSED) {
+      eventSource.addEventListener("error", () => {
+        if (eventSource && eventSource.readyState === EventSource.CLOSED) {
           console.warn("[DiscordChat] SSE closed, retrying in 3s…");
-          es.close();
+          eventSource.close();
           retryTimeout = setTimeout(connect, 3_000);
         }
       });
@@ -1591,7 +1591,7 @@ export default function DiscordChatComponent({
 
     connect();
     return () => {
-      if (es) es.close();
+      if (eventSource) eventSource.close();
       if (retryTimeout) clearTimeout(retryTimeout);
     };
   }, [messageCount, scrollToBottom, activeChannelId]);

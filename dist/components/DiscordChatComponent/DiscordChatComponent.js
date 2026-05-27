@@ -778,11 +778,11 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
     }, [messages, scrollToBottom]);
     // ── SSE stream for messages ─────────────────────────────────────
     useEffect(() => {
-        let es;
+        let eventSource;
         let retryTimeout;
         function connect() {
-            es = new EventSource(`${streamUrl}?limit=${messageCount}&channelId=${activeChannelId}`);
-            es.addEventListener("init", (event) => {
+            eventSource = new EventSource(`${streamUrl}?limit=${messageCount}&channelId=${activeChannelId}`);
+            eventSource.addEventListener("init", (event) => {
                 try {
                     const { messages: msgs } = JSON.parse(event.data);
                     const reversed = (msgs || []).reverse();
@@ -841,7 +841,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     setLoading(false);
                 }
             });
-            es.addEventListener("new", (event) => {
+            eventSource.addEventListener("new", (event) => {
                 try {
                     const { messages: newMsgs } = JSON.parse(event.data);
                     if (!newMsgs?.length)
@@ -856,7 +856,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     console.error("[DiscordChat] New message parse error:", error);
                 }
             });
-            es.addEventListener("delete", (event) => {
+            eventSource.addEventListener("delete", (event) => {
                 try {
                     const { ids } = JSON.parse(event.data);
                     if (!ids?.length)
@@ -871,7 +871,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
             // Reaction (and other field) changes on existing messages.
             // The server detects when a message's reactions fingerprint
             // changes and sends the full updated message object.
-            es.addEventListener("update", (event) => {
+            eventSource.addEventListener("update", (event) => {
                 try {
                     const { messages: updatedMsgs } = JSON.parse(event.data);
                     if (!updatedMsgs?.length)
@@ -886,18 +886,18 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     console.error("[DiscordChat] Update event parse error:", error);
                 }
             });
-            es.addEventListener("error", () => {
-                if (es && es.readyState === EventSource.CLOSED) {
+            eventSource.addEventListener("error", () => {
+                if (eventSource && eventSource.readyState === EventSource.CLOSED) {
                     console.warn("[DiscordChat] SSE closed, retrying in 3s…");
-                    es.close();
+                    eventSource.close();
                     retryTimeout = setTimeout(connect, 3_000);
                 }
             });
         }
         connect();
         return () => {
-            if (es)
-                es.close();
+            if (eventSource)
+                eventSource.close();
             if (retryTimeout)
                 clearTimeout(retryTimeout);
         };

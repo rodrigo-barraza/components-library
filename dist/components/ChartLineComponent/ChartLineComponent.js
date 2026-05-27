@@ -163,27 +163,27 @@ export default function ChartLineComponent({ data, color = "#10b981", maxValue =
         canvasContext.shadowBlur = 0;
         // ── Hover crosshair + dot ──
         if (hover) {
-            const hx = hover.x;
+            const hoverX = hover.x;
             // Vertical crosshair line
             canvasContext.save();
             canvasContext.beginPath();
             canvasContext.setLineDash([3, 3]);
             canvasContext.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
             canvasContext.lineWidth = 1;
-            canvasContext.moveTo(hx, 0);
-            canvasContext.lineTo(hx, canvasHeight);
+            canvasContext.moveTo(hoverX, 0);
+            canvasContext.lineTo(hoverX, canvasHeight);
             canvasContext.stroke();
             canvasContext.setLineDash([]);
             canvasContext.restore();
             // Find the Y coordinate for this hover point
-            const hoverIndex = Math.round(((hx - padding.left) / chartW) * (historyMax - 1));
-            const ci = Math.max(0, Math.min(data.length - 1, hoverIndex));
+            const hoverIndex = Math.round(((hoverX - padding.left) / chartW) * (historyMax - 1));
+            const clampedDataIndex = Math.max(0, Math.min(data.length - 1, hoverIndex));
             const hoverY = padding.top +
                 chartH -
-                (Math.min(data[ci], clampedMax) / clampedMax) * chartH;
+                (Math.min(data[clampedDataIndex], clampedMax) / clampedMax) * chartH;
             // Hover dot
             canvasContext.beginPath();
-            canvasContext.arc(hx, hoverY, 3.5, 0, Math.PI * 2);
+            canvasContext.arc(hoverX, hoverY, 3.5, 0, Math.PI * 2);
             canvasContext.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`;
             canvasContext.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
             canvasContext.shadowBlur = 8;
@@ -191,7 +191,7 @@ export default function ChartLineComponent({ data, color = "#10b981", maxValue =
             canvasContext.shadowBlur = 0;
             // White ring around hover dot
             canvasContext.beginPath();
-            canvasContext.arc(hx, hoverY, 3.5, 0, Math.PI * 2);
+            canvasContext.arc(hoverX, hoverY, 3.5, 0, Math.PI * 2);
             canvasContext.strokeStyle = "rgba(255, 255, 255, 0.9)";
             canvasContext.lineWidth = 1.2;
             canvasContext.stroke();

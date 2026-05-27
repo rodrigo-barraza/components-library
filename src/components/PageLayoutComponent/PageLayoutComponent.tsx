@@ -1,10 +1,12 @@
 import { ReactNode, ComponentPropsWithoutRef, ElementType } from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery.js";
 import LayoutHeaderComponent from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
 import type { LayoutHeaderComponentProps } from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
 import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponent.js";
 import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
+import { PageHeaderProvider } from "../PageHeaderContext.js";
+import type { PageHeaderIdentity } from "../PageHeaderContext.js";
 import styles from "./PageLayoutComponent.module.css";
 
 /** Mirrors NavigationSidebarComponent's internal NavItem shape */
@@ -41,6 +43,9 @@ export interface PageLayoutComponentProps {
   mobileBreakpoint?: number;
   sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
   headerProps?: Partial<LayoutHeaderComponentProps>;
+  title?: string | ReactNode;
+  subtitle?: string | ReactNode;
+  onBack?: () => void;
 }
 
 /**
@@ -69,9 +74,17 @@ export default function PageLayoutComponent({
   mobileBreakpoint = 768,
   sidebarProps = {},
   headerProps,
+  title,
+  subtitle,
+  onBack,
 }: PageLayoutComponentProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [headerIdentity, setHeaderIdentity] = useState<PageHeaderIdentity>({});
   const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
+
+  const handleIdentityChange = useCallback((identity: PageHeaderIdentity) => {
+    setHeaderIdentity(identity);
+  }, []);
 
   return (
     <div className="page-wrapper">
@@ -104,13 +117,20 @@ export default function PageLayoutComponent({
             {mobileHeaderActions}
           </MobileHeaderComponent>
         )}
-        <LayoutHeaderComponent {...headerProps} />
+        <LayoutHeaderComponent
+          title={headerIdentity.title || title}
+          subtitle={headerIdentity.subtitle || subtitle}
+          onBack={headerIdentity.onBack || onBack}
+          {...headerProps}
+        />
 
         <main
           className={`page-content ${mainClassName || ""}`}
           style={mainStyle}
         >
-          {children}
+          <PageHeaderProvider onIdentityChange={handleIdentityChange}>
+            {children}
+          </PageHeaderProvider>
         </main>
       </div>
     </div>

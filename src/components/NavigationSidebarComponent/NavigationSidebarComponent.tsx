@@ -202,6 +202,14 @@ export default function NavigationSidebarComponent({
         "--sidebar-contrast-color-muted",
         isLightBackground ? "rgba(0, 0, 0, 0.68)" : "rgba(255, 255, 255, 0.78)"
       );
+      sidebarElement.style.setProperty(
+        "--sidebar-contrast-border",
+        isLightBackground ? "rgba(0, 0, 0, 0.15)" : "rgba(255, 255, 255, 0.15)"
+      );
+      sidebarElement.style.setProperty(
+        "--sidebar-contrast-hover-background",
+        isLightBackground ? "rgba(0, 0, 0, 0.08)" : "rgba(255, 255, 255, 0.08)"
+      );
     };
 
     computeAndApplyContrastColor();

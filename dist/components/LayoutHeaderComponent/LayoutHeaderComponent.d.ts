@@ -8,6 +8,9 @@ export interface LayoutHeaderToggleButtonProps {
     label?: string;
 }
 export interface LayoutHeaderComponentProps {
+    title?: string | ReactNode;
+    subtitle?: string | ReactNode;
+    onBack?: () => void;
     leadingToggle?: LayoutHeaderToggleButtonProps;
     trailingToggle?: LayoutHeaderToggleButtonProps;
     centerContent?: ReactNode;

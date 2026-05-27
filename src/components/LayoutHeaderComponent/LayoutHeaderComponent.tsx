@@ -1,4 +1,5 @@
 import { ReactNode, forwardRef, useEffect, useRef } from "react";
+import { ArrowLeft } from "lucide-react";
 import styles from "./LayoutHeaderComponent.module.css";
 
 export interface LayoutHeaderToggleButtonProps {
@@ -10,6 +11,9 @@ export interface LayoutHeaderToggleButtonProps {
 }
 
 export interface LayoutHeaderComponentProps {
+  title?: string | ReactNode;
+  subtitle?: string | ReactNode;
+  onBack?: () => void;
   leadingToggle?: LayoutHeaderToggleButtonProps;
   trailingToggle?: LayoutHeaderToggleButtonProps;
   centerContent?: ReactNode;
@@ -23,6 +27,9 @@ export interface LayoutHeaderComponentProps {
 const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps>(
   function LayoutHeaderComponent(
     {
+      title,
+      subtitle,
+      onBack,
       leadingToggle,
       trailingToggle,
       centerContent,
@@ -129,6 +136,20 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
                 ? leadingToggle.visibleIcon
                 : leadingToggle.hiddenIcon}
             </button>
+          )}
+
+          {title && (
+            <div className={styles["header-identity"]}>
+              {onBack && (
+                <button className={styles["header-back-button"]} onClick={onBack} title="Go back">
+                  <ArrowLeft size={16} />
+                </button>
+              )}
+              <div className={styles["header-identity-text"]}>
+                <h1 className={styles["header-page-title"]}>{title}</h1>
+                {subtitle && <p className={styles["header-page-subtitle"]}>{subtitle}</p>}
+              </div>
+            </div>
           )}
 
           {!isMobile && metaContent}

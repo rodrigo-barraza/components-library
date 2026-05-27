@@ -56,11 +56,11 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
             return;
         updateScrollState();
         track.addEventListener("scroll", updateScrollState, { passive: true });
-        const ro = new ResizeObserver(updateScrollState);
-        ro.observe(track);
+        const resizeObserver = new ResizeObserver(updateScrollState);
+        resizeObserver.observe(track);
         return () => {
             track.removeEventListener("scroll", updateScrollState);
-            ro.disconnect();
+            resizeObserver.disconnect();
         };
     }, [updateScrollState]);
     // ── Navigation ────────────────────────────────────────────────
