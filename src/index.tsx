@@ -61,6 +61,7 @@ export { default as SearchInputComponent } from "./components/SearchInputCompone
 export { default as SegmentedControlComponent } from "./components/SegmentedControlComponent/SegmentedControlComponent.js";
 export { default as SessionTrackerComponent } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
 export { default as SelectComponent } from "./components/SelectComponent/SelectComponent.js";
+export type { SelectOption, SelectComponentProps } from "./components/SelectComponent/SelectComponent.js";
 export { default as SkeletonComponent, SkeletonGroup } from "./components/SkeletonComponent/SkeletonComponent.js";
 export { default as SliderComponent } from "./components/SliderComponent/SliderComponent.js";
 export { default as SnackbarComponent, useSnackbar } from "./components/SnackbarComponent/SnackbarComponent.js";

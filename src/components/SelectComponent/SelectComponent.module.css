@@ -76,6 +76,55 @@
   cursor: not-allowed;
 }
 
+/* ── Loading state ──────────────────────────────────────── */
+
+.triggerLoading {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
+  animation: selectTriggerPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.triggerSpinner {
+  animation: selectTriggerSpin 1s linear infinite;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.triggerProgressBar {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent-primary) 12%, transparent),
+    color-mix(in srgb, var(--accent-primary) 20%, transparent)
+  );
+  transform-origin: left center;
+  transition: transform 0.3s ease-out;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@keyframes selectTriggerPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px
+      color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--accent-primary) 30%, transparent),
+      0 0 12px color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  }
+}
+
+@keyframes selectTriggerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .triggerContent {
   display: flex;
   align-items: center;
