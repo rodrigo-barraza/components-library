@@ -45,6 +45,7 @@ export { default as PaginationComponent } from "./components/PaginationComponent
 export { default as ProgressBarComponent } from "./components/ProgressBarComponent/ProgressBarComponent.js";
 export { default as RadioComponent } from "./components/RadioComponent/RadioComponent.js";
 export { default as SearchInputComponent } from "./components/SearchInputComponent/SearchInputComponent.js";
+export { default as SegmentedControlComponent } from "./components/SegmentedControlComponent/SegmentedControlComponent.js";
 export { default as SessionTrackerComponent } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
 export { default as SelectComponent } from "./components/SelectComponent/SelectComponent.js";
 export { default as SkeletonComponent, SkeletonGroup } from "./components/SkeletonComponent/SkeletonComponent.js";
@@ -117,4 +118,5 @@ export type { UseCrudOptions, UseCrudResult } from "./hooks/useCrud.js";
 export type { UseSetToggleOptions, UseSetToggleResult } from "./hooks/useSetToggle.js";
 export type { UseClipboardResult } from "./hooks/useClipboard.js";
 export type { ToolCardComponentProps } from "./components/ToolCardComponent/ToolCardComponent.js";
+export type { SegmentedControlComponentProps, SegmentDefinition } from "./components/SegmentedControlComponent/SegmentedControlComponent.js";
 //# sourceMappingURL=index.d.ts.map
