@@ -44,7 +44,6 @@ export interface PageLayoutComponentProps {
   sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
   headerProps?: Partial<LayoutHeaderComponentProps>;
   title?: string | ReactNode;
-  subtitle?: string | ReactNode;
   onBack?: () => void;
 }
 
@@ -75,7 +74,6 @@ export default function PageLayoutComponent({
   sidebarProps = {},
   headerProps,
   title,
-  subtitle,
   onBack,
 }: PageLayoutComponentProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -119,7 +117,6 @@ export default function PageLayoutComponent({
         )}
         <LayoutHeaderComponent
           title={headerIdentity.title || title}
-          subtitle={headerIdentity.subtitle || subtitle}
           onBack={headerIdentity.onBack || onBack}
           {...headerProps}
         />

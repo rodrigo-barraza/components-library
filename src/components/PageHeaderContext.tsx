@@ -4,7 +4,6 @@ import { createContext, useContext, ReactNode } from "react";
 
 export interface PageHeaderIdentity {
   title?: string | ReactNode;
-  subtitle?: string | ReactNode;
   onBack?: () => void;
 }
 

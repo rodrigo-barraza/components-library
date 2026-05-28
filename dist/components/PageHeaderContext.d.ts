@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 export interface PageHeaderIdentity {
     title?: string | ReactNode;
-    subtitle?: string | ReactNode;
     onBack?: () => void;
 }
 export type SetPageHeaderIdentity = (identity: PageHeaderIdentity) => void;

@@ -12,7 +12,6 @@ export interface LayoutHeaderToggleButtonProps {
 
 export interface LayoutHeaderComponentProps {
   title?: string | ReactNode;
-  subtitle?: string | ReactNode;
   onBack?: () => void;
   leadingToggle?: LayoutHeaderToggleButtonProps;
   trailingToggle?: LayoutHeaderToggleButtonProps;
@@ -28,7 +27,6 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
   function LayoutHeaderComponent(
     {
       title,
-      subtitle,
       onBack,
       leadingToggle,
       trailingToggle,
@@ -145,10 +143,7 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
                   <ArrowLeft size={16} />
                 </button>
               )}
-              <div className={styles["header-identity-text"]}>
-                <h1 className={styles["header-page-title"]}>{title}</h1>
-                {subtitle && <p className={styles["header-page-subtitle"]}>{subtitle}</p>}
-              </div>
+              <h1 className={styles["header-page-title"]}>{title}</h1>
             </div>
           )}
 

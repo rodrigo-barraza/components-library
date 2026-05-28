@@ -15,7 +15,7 @@ export default function PageHeaderComponent({ title, subtitle, onBack, centerCon
     const setIdentity = usePageHeaderContext();
     useEffect(() => {
         if (setIdentity) {
-            setIdentity({ title, subtitle, onBack });
+            setIdentity({ title, onBack });
         }
         return () => {
             if (setIdentity) {

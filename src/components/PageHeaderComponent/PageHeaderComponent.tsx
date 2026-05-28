@@ -34,7 +34,7 @@ export default function PageHeaderComponent({
 
   useEffect(() => {
     if (setIdentity) {
-      setIdentity({ title, subtitle, onBack });
+      setIdentity({ title, onBack });
     }
 
     return () => {

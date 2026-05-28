@@ -38,7 +38,6 @@ export interface PageLayoutComponentProps {
     sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
     headerProps?: Partial<LayoutHeaderComponentProps>;
     title?: string | ReactNode;
-    subtitle?: string | ReactNode;
     onBack?: () => void;
 }
 /**
@@ -48,6 +47,6 @@ export interface PageLayoutComponentProps {
  * Encapsulates the repeated pattern of sidebar + mobile drawer management
  * that was duplicated across iron-client and portal-client.
  */
-export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileHeaderActions, mobileBreakpoint, sidebarProps, headerProps, title, subtitle, onBack, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileHeaderActions, mobileBreakpoint, sidebarProps, headerProps, title, onBack, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=PageLayoutComponent.d.ts.map
