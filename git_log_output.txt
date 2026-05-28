@@ -1,0 +1,421 @@
+commit c11d7c2a1563ec9df799b7b26ffff90eabe4b092
+Author: Rodrigo Barraza <hello@rod.dev>
+Date:   Thu May 28 12:29:06 2026 -0700
+
+    refactor: remove subtitle support from header components and re-center the page title
+
+diff --git a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js
+index 1d1acd3..8fa2079 100644
+--- a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js
++++ b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js
+@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-run
+ import { forwardRef, useEffect, useRef } from "react";
+ import { ArrowLeft } from "lucide-react";
+ import styles from "./LayoutHeaderComponent.module.css";
+-const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title, subtitle, onBack, leadingToggle, trailingToggle, centerContent, metaContent, controls, isMobile = false, className, children, }, ref) {
++const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title, onBack, leadingToggle, trailingToggle, centerContent, metaContent, controls, isMobile = false, className, children, }, ref) {
+     const headerReference = useRef(null);
+     // Programmatic contrast color for header content based on --accent-primary luminance
+     useEffect(() => {
+@@ -59,7 +59,7 @@ const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title,
+                             ? `Hide ${leadingToggle.label || "panel"}`
+                             : `Show ${leadingToggle.label || "panel"}`, children: leadingToggle.isVisible
+                             ? leadingToggle.visibleIcon
+-                            : leadingToggle.hiddenIcon })), title && (_jsxs("div", { className: styles["header-identity"], children: [onBack && (_jsx("button", { className: styles["header-back-button"], onClick: onBack, title: "Go back", children: _jsx(ArrowLeft, { size: 16 }) })), _jsxs("div", { className: styles["header-identity-text"], children: [_jsx("h1", { className: styles["header-page-title"], children: title }), subtitle && _jsx("p", { className: styles["header-page-subtitle"], children: subtitle })] })] })), !isMobile && metaContent, centerContent && (_jsx("div", { className: styles["header-center-area"], children: centerContent })), controls, children, trailingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!trailingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: trailingToggle.onToggle, title: trailingToggle.isVisible
++                            : leadingToggle.hiddenIcon })), title && (_jsxs("div", { className: styles["header-identity"], children: [onBack && (_jsx("button", { className: styles["header-back-button"], onClick: onBack, title: "Go back", children: _jsx(ArrowLeft, { size: 16 }) })), _jsx("h1", { className: styles["header-page-title"], children: title })] })), !isMobile && metaContent, centerContent && (_jsx("div", { className: styles["header-center-area"], children: centerContent })), controls, children, trailingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!trailingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: trailingToggle.onToggle, title: trailingToggle.isVisible
+                             ? `Hide ${trailingToggle.label || "panel"}`
+                             : `Show ${trailingToggle.label || "panel"}`, children: trailingToggle.isVisible
+                             ? trailingToggle.visibleIcon
+diff --git a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+index 5340b15..3b68947 100644
+--- a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
++++ b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+@@ -17,19 +17,26 @@
+   text-transform: uppercase;
+   color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
+   flex-shrink: 0;
+-  gap: 8px;
++  gap: 0;
+   z-index: 10;
+   position: relative;
+ }
+ 
+-/* ── Page Identity (title + subtitle + back) ─────── */
++/* ── Page Identity (centered title — Windows title bar) ─── */
+ 
+ .header-identity {
++  position: absolute;
++  inset-inline: 0;
+   display: flex;
+   align-items: center;
+-  gap: 10px;
+-  min-inline-size: 0;
+-  padding-inline-start: 12px;
++  justify-content: center;
++  gap: 8px;
++  pointer-events: none;
++  block-size: 100%;
++}
++
++.header-identity > * {
++  pointer-events: auto;
+ }
+ 
+ .header-back-button {
+@@ -54,10 +61,6 @@
+   color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
+ }
+ 
+-.header-identity-text {
+-  min-inline-size: 0;
+-}
+-
+ .header-page-title {
+   font-weight: 500;
+   font-size: var(--font-size-sm, 13px);
+@@ -66,20 +69,7 @@
+   color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
+   margin: 0;
+   white-space: nowrap;
+-  line-height: 1.3;
+-}
+-
+-.header-page-subtitle {
+-  font-size: var(--font-size-xs, 11px);
+-  font-weight: 400;
+-  letter-spacing: 0.2px;
+-  text-transform: none;
+-  color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
+-  margin: 0;
+-  white-space: nowrap;
+-  overflow: hidden;
+-  text-overflow: ellipsis;
+-  line-height: 1.3;
++  line-height: 1;
+ }
+ 
+ /* ── Center content area ──────────────────────────── */
+diff --git a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+index 5340b15..3b68947 100644
+--- a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
++++ b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+@@ -17,19 +17,26 @@
+   text-transform: uppercase;
+   color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
+   flex-shrink: 0;
+-  gap: 8px;
++  gap: 0;
+   z-index: 10;
+   position: relative;
+ }
+ 
+-/* ── Page Identity (title + subtitle + back) ─────── */
++/* ── Page Identity (centered title — Windows title bar) ─── */
+ 
+ .header-identity {
++  position: absolute;
++  inset-inline: 0;
+   display: flex;
+   align-items: center;
+-  gap: 10px;
+-  min-inline-size: 0;
+-  padding-inline-start: 12px;
++  justify-content: center;
++  gap: 8px;
++  pointer-events: none;
++  block-size: 100%;
++}
++
++.header-identity > * {
++  pointer-events: auto;
+ }
+ 
+ .header-back-button {
+@@ -54,10 +61,6 @@
+   color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
+ }
+ 
+-.header-identity-text {
+-  min-inline-size: 0;
+-}
+-
+ .header-page-title {
+   font-weight: 500;
+   font-size: var(--font-size-sm, 13px);
+@@ -66,20 +69,7 @@
+   color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
+   margin: 0;
+   white-space: nowrap;
+-  line-height: 1.3;
+-}
+-
+-.header-page-subtitle {
+-  font-size: var(--font-size-xs, 11px);
+-  font-weight: 400;
+-  letter-spacing: 0.2px;
+-  text-transform: none;
+-  color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
+-  margin: 0;
+-  white-space: nowrap;
+-  overflow: hidden;
+-  text-overflow: ellipsis;
+-  line-height: 1.3;
++  line-height: 1;
+ }
+ 
+ /* ── Center content area ──────────────────────────── */
+diff --git a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx
+index 58228ca..e7c81a2 100644
+--- a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx
++++ b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx
+@@ -12,7 +12,6 @@ export interface LayoutHeaderToggleButtonProps {
+ 
+ export interface LayoutHeaderComponentProps {
+   title?: string | ReactNode;
+-  subtitle?: string | ReactNode;
+   onBack?: () => void;
+   leadingToggle?: LayoutHeaderToggleButtonProps;
+   trailingToggle?: LayoutHeaderToggleButtonProps;
+@@ -28,7 +27,6 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
+   function LayoutHeaderComponent(
+     {
+       title,
+-      subtitle,
+       onBack,
+       leadingToggle,
+       trailingToggle,
+@@ -145,10 +143,7 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
+                   <ArrowLeft size={16} />
+                 </button>
+               )}
+-              <div className={styles["header-identity-text"]}>
+-                <h1 className={styles["header-page-title"]}>{title}</h1>
+-                {subtitle && <p className={styles["header-page-subtitle"]}>{subtitle}</p>}
+-              </div>
++              <h1 className={styles["header-page-title"]}>{title}</h1>
+             </div>
+           )}
+ 
+
+commit 504aa6c877778bc9db9e02a454262380be38c8cd
+Author: Rodrigo Barraza <hello@rod.dev>
+Date:   Wed May 27 13:12:52 2026 -0700
+
+    feat: implement PageHeaderContext to manage page header state across components
+
+diff --git a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js
+index 7ca8bda..1d1acd3 100644
+--- a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js
++++ b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.js
+@@ -1,7 +1,8 @@
+ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+ import { forwardRef, useEffect, useRef } from "react";
++import { ArrowLeft } from "lucide-react";
+ import styles from "./LayoutHeaderComponent.module.css";
+-const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ leadingToggle, trailingToggle, centerContent, metaContent, controls, isMobile = false, className, children, }, ref) {
++const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title, subtitle, onBack, leadingToggle, trailingToggle, centerContent, metaContent, controls, isMobile = false, className, children, }, ref) {
+     const headerReference = useRef(null);
+     // Programmatic contrast color for header content based on --accent-primary luminance
+     useEffect(() => {
+@@ -58,7 +59,7 @@ const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ leadin
+                             ? `Hide ${leadingToggle.label || "panel"}`
+                             : `Show ${leadingToggle.label || "panel"}`, children: leadingToggle.isVisible
+                             ? leadingToggle.visibleIcon
+-                            : leadingToggle.hiddenIcon })), !isMobile && metaContent, centerContent && (_jsx("div", { className: styles["header-center-area"], children: centerContent })), controls, children, trailingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!trailingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: trailingToggle.onToggle, title: trailingToggle.isVisible
++                            : leadingToggle.hiddenIcon })), title && (_jsxs("div", { className: styles["header-identity"], children: [onBack && (_jsx("button", { className: styles["header-back-button"], onClick: onBack, title: "Go back", children: _jsx(ArrowLeft, { size: 16 }) })), _jsxs("div", { className: styles["header-identity-text"], children: [_jsx("h1", { className: styles["header-page-title"], children: title }), subtitle && _jsx("p", { className: styles["header-page-subtitle"], children: subtitle })] })] })), !isMobile && metaContent, centerContent && (_jsx("div", { className: styles["header-center-area"], children: centerContent })), controls, children, trailingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!trailingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: trailingToggle.onToggle, title: trailingToggle.isVisible
+                             ? `Hide ${trailingToggle.label || "panel"}`
+                             : `Show ${trailingToggle.label || "panel"}`, children: trailingToggle.isVisible
+                             ? trailingToggle.visibleIcon
+diff --git a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+index f1567a2..5340b15 100644
+--- a/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
++++ b/dist/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+@@ -22,6 +22,66 @@
+   position: relative;
+ }
+ 
++/* ── Page Identity (title + subtitle + back) ─────── */
++
++.header-identity {
++  display: flex;
++  align-items: center;
++  gap: 10px;
++  min-inline-size: 0;
++  padding-inline-start: 12px;
++}
++
++.header-back-button {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  inline-size: 28px;
++  block-size: 28px;
++  border-radius: var(--border-radius-sm, 6px);
++  color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
++  background: none;
++  border: none;
++  cursor: pointer;
++  flex-shrink: 0;
++  transition:
++    background-color 0.15s ease,
++    color 0.15s ease;
++}
++
++.header-back-button:hover {
++  background: var(--header-contrast-hover-background, rgba(255, 255, 255, 0.08));
++  color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
++}
++
++.header-identity-text {
++  min-inline-size: 0;
++}
++
++.header-page-title {
++  font-weight: 500;
++  font-size: var(--font-size-sm, 13px);
++  letter-spacing: 0.5px;
++  text-transform: uppercase;
++  color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
++  margin: 0;
++  white-space: nowrap;
++  line-height: 1.3;
++}
++
++.header-page-subtitle {
++  font-size: var(--font-size-xs, 11px);
++  font-weight: 400;
++  letter-spacing: 0.2px;
++  text-transform: none;
++  color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
++  margin: 0;
++  white-space: nowrap;
++  overflow: hidden;
++  text-overflow: ellipsis;
++  line-height: 1.3;
++}
++
+ /* ── Center content area ──────────────────────────── */
+ 
+ .header-center-area {
+diff --git a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+index f1567a2..5340b15 100644
+--- a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
++++ b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.module.css
+@@ -22,6 +22,66 @@
+   position: relative;
+ }
+ 
++/* ── Page Identity (title + subtitle + back) ─────── */
++
++.header-identity {
++  display: flex;
++  align-items: center;
++  gap: 10px;
++  min-inline-size: 0;
++  padding-inline-start: 12px;
++}
++
++.header-back-button {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  inline-size: 28px;
++  block-size: 28px;
++  border-radius: var(--border-radius-sm, 6px);
++  color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
++  background: none;
++  border: none;
++  cursor: pointer;
++  flex-shrink: 0;
++  transition:
++    background-color 0.15s ease,
++    color 0.15s ease;
++}
++
++.header-back-button:hover {
++  background: var(--header-contrast-hover-background, rgba(255, 255, 255, 0.08));
++  color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
++}
++
++.header-identity-text {
++  min-inline-size: 0;
++}
++
++.header-page-title {
++  font-weight: 500;
++  font-size: var(--font-size-sm, 13px);
++  letter-spacing: 0.5px;
++  text-transform: uppercase;
++  color: var(--header-contrast-color, rgba(255, 255, 255, 0.92));
++  margin: 0;
++  white-space: nowrap;
++  line-height: 1.3;
++}
++
++.header-page-subtitle {
++  font-size: var(--font-size-xs, 11px);
++  font-weight: 400;
++  letter-spacing: 0.2px;
++  text-transform: none;
++  color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
++  margin: 0;
++  white-space: nowrap;
++  overflow: hidden;
++  text-overflow: ellipsis;
++  line-height: 1.3;
++}
++
+ /* ── Center content area ──────────────────────────── */
+ 
+ .header-center-area {
+diff --git a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx
+index e14c013..58228ca 100644
+--- a/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx
++++ b/src/components/LayoutHeaderComponent/LayoutHeaderComponent.tsx
+@@ -1,4 +1,5 @@
+ import { ReactNode, forwardRef, useEffect, useRef } from "react";
++import { ArrowLeft } from "lucide-react";
+ import styles from "./LayoutHeaderComponent.module.css";
+ 
+ export interface LayoutHeaderToggleButtonProps {
+@@ -10,6 +11,9 @@ export interface LayoutHeaderToggleButtonProps {
+ }
+ 
+ export interface LayoutHeaderComponentProps {
++  title?: string | ReactNode;
++  subtitle?: string | ReactNode;
++  onBack?: () => void;
+   leadingToggle?: LayoutHeaderToggleButtonProps;
+   trailingToggle?: LayoutHeaderToggleButtonProps;
+   centerContent?: ReactNode;
+@@ -23,6 +27,9 @@ export interface LayoutHeaderComponentProps {
+ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps>(
+   function LayoutHeaderComponent(
+     {
++      title,
++      subtitle,
++      onBack,
+       leadingToggle,
+       trailingToggle,
+       centerContent,
+@@ -131,6 +138,20 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
+             </button>
+           )}
+ 
++          {title && (
++            <div className={styles["header-identity"]}>
++              {onBack && (
++                <button className={styles["header-back-button"]} onClick={onBack} title="Go back">
++                  <ArrowLeft size={16} />
++                </button>
++              )}
++              <div className={styles["header-identity-text"]}>
++                <h1 className={styles["header-page-title"]}>{title}</h1>
++                {subtitle && <p className={styles["header-page-subtitle"]}>{subtitle}</p>}
++              </div>
++            </div>
++          )}
++
+           {!isMobile && metaContent}
+ 
+           {centerContent && (

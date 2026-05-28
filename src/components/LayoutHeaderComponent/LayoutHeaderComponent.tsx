@@ -137,13 +137,18 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
           )}
 
           {title && (
-            <div className={styles["header-identity"]}>
-              {onBack && (
-                <button className={styles["header-back-button"]} onClick={onBack} title="Go back">
-                  <ArrowLeft size={16} />
-                </button>
-              )}
+            <div
+              className={`${styles["header-identity"]} ${leadingToggle ? styles["has-leading-toggle"] : ""}`}
+            >
+              <div className={styles["header-identity-start"]}>
+                {onBack && (
+                  <button className={styles["header-back-button"]} onClick={onBack} title="Go back">
+                    <ArrowLeft size={16} />
+                  </button>
+                )}
+              </div>
               <h1 className={styles["header-page-title"]}>{title}</h1>
+              <div className={styles["header-identity-end"]} />
             </div>
           )}
 
