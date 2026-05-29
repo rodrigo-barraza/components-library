@@ -14,10 +14,12 @@ import styles from "./CheckboxComponent.module.css";
  *   • Indeterminate: primary fill + white dash icon
  *   • Error:        error color outline/fill variant
  */
-export default function CheckboxComponent({ checked = false, onChange, label = "", disabled = false, indeterminate = false, error = false, className = "", id, name, labelPlacement = "end", }) {
+export default function CheckboxComponent({ checked = false, onChange, label = "", disabled = false, indeterminate = false, error = false, className = "", id, name, labelPlacement = "end", size = "default", }) {
     const { sound } = useComponents();
+    const isCompact = size === "compact";
     const rootClasses = [
         styles.checkbox,
+        isCompact && styles.isCompactSize,
         disabled && styles.isDisabledState,
         error && styles.error,
         labelPlacement === "start" && styles.labelStart,

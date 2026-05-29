@@ -14,6 +14,7 @@ export interface CheckboxComponentProps {
   id?: string;
   name?: string;
   labelPlacement?: "start" | "end";
+  size?: "default" | "compact";
 }
 
 /**
@@ -39,11 +40,15 @@ export default function CheckboxComponent({
   id,
   name,
   labelPlacement = "end",
+  size = "default",
 }: CheckboxComponentProps) {
   const { sound } = useComponents();
 
+  const isCompact = size === "compact";
+
   const rootClasses = [
     styles.checkbox,
+    isCompact && styles.isCompactSize,
     disabled && styles.isDisabledState,
     error && styles.error,
     labelPlacement === "start" && styles.labelStart,

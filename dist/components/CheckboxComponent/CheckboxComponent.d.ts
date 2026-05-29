@@ -10,6 +10,7 @@ export interface CheckboxComponentProps {
     id?: string;
     name?: string;
     labelPlacement?: "start" | "end";
+    size?: "default" | "compact";
 }
 /**
  * CheckboxComponent — M3-inspired checkbox with state layer, animations,
@@ -23,5 +24,5 @@ export interface CheckboxComponentProps {
  *   • Indeterminate: primary fill + white dash icon
  *   • Error:        error color outline/fill variant
  */
-export default function CheckboxComponent({ checked, onChange, label, disabled, indeterminate, error, className, id, name, labelPlacement, }: CheckboxComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function CheckboxComponent({ checked, onChange, label, disabled, indeterminate, error, className, id, name, labelPlacement, size, }: CheckboxComponentProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=CheckboxComponent.d.ts.map

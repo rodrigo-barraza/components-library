@@ -182,3 +182,34 @@
 .error .label {
   color: var(--color-error, #b3261e);
 }
+
+/* ── Compact size variant ────────────────────────────── */
+/* Dense contexts (tool pickers, list rows) where the M3  */
+/* 40×40 touch target is too large. Container shrinks to  */
+/* 28×28, visual box to 14×14, icon to 10×10.             */
+
+.isCompactSize {
+  gap: 2px;
+}
+
+.isCompactSize .container {
+  width: 28px;
+  height: 28px;
+}
+
+.isCompactSize .box {
+  width: 14px;
+  height: 14px;
+  border-width: 1.5px;
+  border-radius: 2px;
+}
+
+.isCompactSize .icon {
+  width: 10px;
+  height: 10px;
+}
+
+.isCompactSize .label {
+  font-size: 13px;
+  line-height: 18px;
+}
