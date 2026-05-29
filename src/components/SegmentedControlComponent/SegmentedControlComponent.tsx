@@ -1,28 +1,16 @@
 "use client";
 
-import { ReactNode, useCallback } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useRef,
+  useState,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./SegmentedControlComponent.module.css";
-
-/**
- * SegmentedControlComponent — M3 Segmented Button
- *
- * A group of 2–5 mutually-exclusive toggle segments rendered inside a
- * pill-shaped container. Selecting a segment deselects the others,
- * similar to a radio group.
- *
- * M3 Spec Reference:
- *   https://m3.material.io/components/segmented-buttons/specs
- *
- *  value       : string           — currently selected segment value
- *  onChange    : (value) => void  — called when a segment is clicked
- *  segments    : Segment[]        — segment definitions (value, label, icon?, disabled?)
- *  fullWidth?  : boolean          — stretch to fill container width
- *  compact?    : boolean          — smaller 30px height variant
- *  showCheck?  : boolean          — show checkmark icon on selected segment
- *  className?  : string           — extra class on root
- */
 
 export interface SegmentDefinition {
   value: string;
@@ -42,6 +30,14 @@ export interface SegmentedControlComponentProps {
   id?: string;
 }
 
+interface IndicatorGeometry {
+  offsetLeft: number;
+  width: number;
+}
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export default function SegmentedControlComponent({
   value,
   onChange,
@@ -54,6 +50,50 @@ export default function SegmentedControlComponent({
 }: SegmentedControlComponentProps) {
   const { sound } = useComponents();
 
+  const containerReference = useRef<HTMLDivElement>(null);
+  const segmentReferences = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const [indicatorGeometry, setIndicatorGeometry] =
+    useState<IndicatorGeometry | null>(null);
+  const [isInitialRender, setIsInitialRender] = useState(true);
+
+  const measureIndicator = useCallback(() => {
+    const container = containerReference.current;
+    if (!container) return;
+
+    const activeButton = segmentReferences.current.get(value);
+    if (!activeButton) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = activeButton.getBoundingClientRect();
+
+    setIndicatorGeometry({
+      offsetLeft: buttonRect.left - containerRect.left,
+      width: buttonRect.width,
+    });
+  }, [value]);
+
+  useIsomorphicLayoutEffect(() => {
+    measureIndicator();
+
+    const frameIdentifier = requestAnimationFrame(() => {
+      setIsInitialRender(false);
+    });
+
+    return () => cancelAnimationFrame(frameIdentifier);
+  }, [measureIndicator]);
+
+  useIsomorphicLayoutEffect(() => {
+    const container = containerReference.current;
+    if (!container) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      measureIndicator();
+    });
+
+    resizeObserver.observe(container);
+    return () => resizeObserver.disconnect();
+  }, [measureIndicator]);
+
   const handleSegmentClick = useCallback(
     (segmentValue: string, event: React.MouseEvent<HTMLButtonElement>) => {
       if (segmentValue === value) return;
@@ -63,8 +103,19 @@ export default function SegmentedControlComponent({
     [value, onChange, sound],
   );
 
+  const setSegmentReference = useCallback(
+    (segmentValue: string, node: HTMLButtonElement | null) => {
+      if (node) {
+        segmentReferences.current.set(segmentValue, node);
+      } else {
+        segmentReferences.current.delete(segmentValue);
+      }
+    },
+    [],
+  );
+
   const rootClasses = [
-    styles["segmented-control"],
+    styles["segmented-control-container"],
     fullWidth && styles["is-full-width-layout"],
     compact && styles["is-compact-size"],
     className,
@@ -73,13 +124,31 @@ export default function SegmentedControlComponent({
     .join(" ");
 
   return (
-    <div className={rootClasses} role="radiogroup" id={id}>
+    <div
+      className={rootClasses}
+      role="radiogroup"
+      id={id}
+      ref={containerReference}
+    >
+      {indicatorGeometry && (
+        <span
+          className={styles["sliding-indicator"]}
+          style={{
+            translate: `${indicatorGeometry.offsetLeft}px 0`,
+            width: `${indicatorGeometry.width}px`,
+            transitionDuration: isInitialRender ? "0ms" : undefined,
+          }}
+          aria-hidden="true"
+        />
+      )}
+
       {segments.map((segment) => {
         const isSelected = segment.value === value;
 
         return (
           <button
             key={segment.value}
+            ref={(node) => setSegmentReference(segment.value, node)}
             type="button"
             role="radio"
             aria-checked={isSelected}
