@@ -109,7 +109,7 @@ describe("FabComponent", () => {
     wrap(
       <FabComponent icon={PlusIcon} hidden aria-label="Add" />,
     );
-    expect(screen.getByRole("button").className).toContain("hidden");
+    expect(screen.getByRole("button").className).toContain("isHiddenState");
   });
 
   /* ── Disabled ──────────────────────────────────────────────────── */

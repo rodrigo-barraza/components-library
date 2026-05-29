@@ -386,11 +386,11 @@ export default function NavigationSidebarComponent({
         {/* Bottom Actions */}
         <div className={styles.bottomActions}>
           {bottomActions}
-          {themes?.length && setTheme ? (
+          {hasThemePicker ? (
             <ThemePickerComponent
               theme={theme}
               themes={themes}
-              onSelectTheme={setTheme}
+              onSelectTheme={setTheme!}
               collapsed={isMobile ? false : collapsed}
             />
           ) : onToggleTheme ? (

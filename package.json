@@ -74,6 +74,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@rodrigo-barraza/utilities-library": "git+https://github.com/rodrigo-barraza/utilities-library.git"
+    "@rodrigo-barraza/utilities-library": "file:../utilities-library"
   }
 }

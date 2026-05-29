@@ -24,7 +24,7 @@ describe("ButtonComponent", () => {
     render(<ButtonComponent>Click Me</ButtonComponent>);
     const button = screen.getByRole("button", { name: "Click Me" });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass(/btn/i);
+    expect(button).toHaveClass(/button/i);
     expect(button).toHaveClass(/primary/i);
     expect(button).not.toBeDisabled();
   });

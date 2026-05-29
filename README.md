@@ -8,14 +8,14 @@ Shared React component library for the service ecosystem. Provides a standardize
 npm install @rodrigo-barraza/components-library
 ```
 
-**Peer dependencies:** `react >= 18.0.0`, `react-dom >= 18.0.0`, `lucide-react >= 0.300.0`
+**Peer dependencies:** `react >= 18.0.0`, `react-dom >= 18.0.0`, `lucide-react >= 0.300.0`, `luxon >= 3.0.0`
 
 ## Setup
 
 Import the component styles in your app's root layout or entry point:
 
 ```js
-import "@rodrigo-barraza/components-library/styles";
+import "@rodrigo-barraza/components-library/base.css";
 ```
 
 Wrap your app with the providers:
@@ -46,64 +46,101 @@ components-library/
 ├── tests/
 ```
 
-## Components (31)
+## Components (72)
 
-### Layout
+The library provides a comprehensive set of premium, high-performance UI components, built from the ground up for optimal responsiveness, styling consistency, accessibility, and modern aesthetics.
 
-| Component | Description |
-|-----------|-------------|
-| `NavigationSidebarComponent` | Collapsible left nav with links, logo, theme toggle, and `localStorage` persistence |
-| `PageHeaderComponent` | Top-of-page header bar with title, breadcrumbs, and actions |
-| `CardComponent` | General-purpose content card container |
-| `ModalComponent` | Dialog overlay with backdrop, focus trap, and Escape-to-close |
-| `CollapsibleBlockComponent` | Expandable/collapsible content section |
-| `EmptyStateComponent` | Placeholder UI for empty data — icon, title, description, optional CTA |
-
-### Form Controls
+### Layout (15)
 
 | Component | Description |
 |-----------|-------------|
-| `ButtonComponent` | Themeable button with variants (`primary`, `secondary`, `destructive`, `creative`, `submit`, `disabled`), sizes, loading spinner, and icon support |
-| `IconButtonComponent` | Compact icon-only button |
-| `InputComponent` | Standard text input with label and validation |
-| `TextAreaComponent` | Multi-line text input |
-| `SelectComponent` | Dropdown select menu |
-| `CheckboxComponent` | Styled checkbox with label |
-| `ToggleComponent` | On/off toggle switch |
-| `SliderComponent` | Range slider control |
-| `SearchInputComponent` | Input with search icon and debounced change handling |
-| `DatePickerComponent` | Date range selector with presets |
-| `FormGroupComponent` | Label + input layout wrapper (also exports `formGroupStyles`) |
+| `NavigationSidebarComponent` | Collapsible left navigation bar with links, logo, theme toggle, and persistent `localStorage` state. |
+| `LayoutHeaderComponent` | Dynamic page-header container wrapping titles, page actions, and customizable widgets. |
+| `MobileHeaderComponent` | Compact, responsive header layout with slide-out sidebar triggers for mobile viewports. |
+| `TopAppBarComponent` | Fixed or sticky top-of-screen header container for primary navigation options. |
+| `BottomAppBarComponent` | Sticky bottom navigation bar for quick mobile shortcuts and contextual actions. |
+| `NavigationDrawerComponent` | Full-height off-canvas slide-out menu drawer providing navigation options on smaller screens. |
+| `NavigationRailComponent` | Minimalist vertical navigation side-rail showing clean icon-based shortcuts. |
+| `PageHeaderComponent` | Standard page header displaying nested breadcrumbs, page title, and primary CTA buttons. |
+| `PageLayoutComponent` | Unified layout template coordinating sidebars, headers, and standard content sections. |
+| `CardComponent` | Versatile, themeable layout card serving as clean content container. |
+| `ModalComponent` | Accessible dialog modal overlay with custom backdrop, focus-trap, and Escape-to-close behavior. |
+| `DrawerComponent` | General-purpose slide-out panel container matching layout drawers. |
+| `DividerComponent` | Flexible horizontal/vertical dividing line supporting custom margin styles. |
+| `CollapsibleBlockComponent` | Animated expandable/collapsible accordion container block. |
+| `EmptyStateComponent` | Placeholder UI for blank views complete with custom icon, CTA, title, and descriptions. |
 
-### Data Display
-
-| Component | Description |
-|-----------|-------------|
-| `TableComponent` | Sortable, paginated data table with column definitions |
-| `PaginationComponent` | Page navigation controls |
-| `TabBarComponent` | Horizontal tab strip (also exports `tabBarStyles`) |
-| `BadgeComponent` | Color-coded label pill |
-| `CountBadgeComponent` | Numeric badge indicator |
-| `StatsCardComponent` | Animated stat card — icon, value, label, trend indicator |
-| `ResponseTimeBadgeComponent` | Color-coded latency badge (green < 50ms, yellow < 100ms, red > 100ms) |
-| `VisibilityBadgeComponent` | Public/private visibility indicator |
-| `LoadingStateComponent` | Skeleton/spinner loading placeholder |
-| `SkeletonComponent` | Shimmer-animated content placeholder (text lines, circular avatars, rectangular cards) with `SkeletonGroup` compound component |
-
-### Feedback
+### Form Controls (17)
 
 | Component | Description |
 |-----------|-------------|
-| `ToastComponent` | Toast notification overlay with semantic icons and animated entries (also exports `useToast` hook) |
-| `TooltipComponent` | Hover/focus tooltip with configurable placement |
-| `CopyButtonComponent` | Copy-to-clipboard button with success feedback |
-| `CloseButtonComponent` | Standardized close/dismiss button |
+| `ButtonComponent` | Color-tailored button with distinct presets (`primary`, `secondary`, `destructive`, `creative`, `submit`), dynamic sizing, active-press animations, and loading states. |
+| `IconButtonComponent` | Compact circular button enclosing standalone custom SVG icons. |
+| `SplitButtonComponent` | Dual-function button binding a main action to the left, and a contextual option dropdown to the right. |
+| `InputComponent` | Accessible single-line input field supporting custom types and reactive states. |
+| `TextFieldComponent` | High-premium single-line input complete with dynamic floating labels, validation states, helper text, and icons. |
+| `TextAreaComponent` | Resizable multi-line text input featuring auto-height adjustments and standard labels. |
+| `SelectComponent` | Accessible drop-down selector wrapper styling native system options. |
+| `MultiSelectComponent` | Modern multi-value selector featuring tag bubble chips, value searches, and interactive drop-downs. |
+| `CheckboxComponent` | Fully styled checkbox element with dynamic state ticks and helper labels. |
+| `RadioComponent` | Standardized custom radio selector buttons for single-choice option sets. |
+| `SwitchComponent` | Modern iOS-styled binary toggling slider switch. |
+| `ToggleComponent` | Accessible state switch button matching switch controls. |
+| `SliderComponent` | Fluid range slider control for fine-grained numeric value inputs. |
+| `SearchInputComponent` | Debounced text search box complete with animated leading search icon, loading spinners, and quick clear-action button. |
+| `DatePickerComponent` | Contextual date and calendar range picker with smart preset shortcuts. |
+| `SegmentedControlComponent` | Sleek tabbed choice selectors displaying active slider slides behind options. |
+| `FormGroupComponent` | Unified helper wrapper tying labels, inputs, description text, and error bounds together. |
 
-### Specialized
+### Data Display (16)
 
 | Component | Description |
 |-----------|-------------|
-| `DiscordChatComponent` | Discord-style message feed renderer |
+| `TableComponent` | High-performance sortable and paginated tabular data grid displaying columns dynamically. |
+| `PaginationComponent` | Premium page navigator with direct page jumping. |
+| `TabBarComponent` | Modern horizontal sub-navigation tabs. |
+| `BadgeComponent` | Rounded color-coded pill tags showing semantic category names. |
+| `CountBadgeComponent` | Floating circular counter badge designed to show alert/message updates above icons. |
+| `ChipComponent` | Small interactive tags supporting click actions and quick delete icons. |
+| `AvatarComponent` | Spherical user or model profile images complete with initials fallbacks and status dots. |
+| `StatsCardComponent` | Micro-animated KPI statistics card showing current values, trend directions, and contextual icons. |
+| `ResponseTimeBadgeComponent` | Latency indicator color-coded based on response limits (green < 50ms, yellow < 100ms, red > 100ms). |
+| `VisibilityBadgeComponent` | Encrypted status pill rendering public/private visibility states. |
+| `StatusDotComponent` | Tiny reactive color dot indicating live/offline state. |
+| `LoadingIndicatorComponent` | Clean animated loading ring. |
+| `LoadingStateComponent` | Consolidated backdrop spinner block for async views. |
+| `SkeletonComponent` | Sleek shimmer-animated content placeholders supporting circles, text lines, and rounded rectangular blocks. |
+| `ProgressBarComponent` | Clean linear progress bar with GPU-optimized width animations. |
+| `ChartLineComponent` | Lightweight SVG line chart for inline stats preview. |
+
+### Feedback & Errors (8)
+
+| Component | Description |
+|-----------|-------------|
+| `ToastComponent` | Non-obtrusive overlay message notifications with sliding entries and dynamic timers. |
+| `TooltipComponent` | Micro-delayed hover card explaining icon functions. |
+| `SnackbarComponent` | Temporary floating alerts anchored at the page bottom. |
+| `DialogComponent` | Structured confirmation dialogue prompt requesting user approvals. |
+| `CopyButtonComponent` | Action button triggering direct clipboard copy with active feedback states. |
+| `CloseButtonComponent` | Reusable standard close button for overlay alerts. |
+| `ErrorBoundaryComponent` | React error boundary capturing nested component crashes. |
+| `ErrorFallbackComponent` | Beautiful fallback screen detailing app crashes and offering quick reload actions. |
+
+### Specialized / Chat & Themes (16)
+
+| Component | Description |
+|-----------|-------------|
+| `ChatComponent` | Rich conversational stream container holding interactive inputs and dynamic bubbles. |
+| `ChatInputComponent` | Responsive multiline prompt composer equipped with upload actions and send handlers. |
+| `ChatMessageComponent` | Render blocks parsing Markdown contents, code blocks, syntax highlighting, and collapsible reasoning states. |
+| `ChatPanelComponent` | Drawer workspace container showing prompt settings and system details. |
+| `ChatLauncherComponent` | Circular floating action launcher presenting quick overlay chat prompts. |
+| `DiscordChatComponent` | Pixel-perfect Discord channel mockup stream showing message lists and avatar details. |
+| `SessionTrackerComponent` | Execution progress flow tracing agent actions. |
+| `ToolCardComponent` | Detailed cards visualizing agent tool metadata, call counters, description text, and toggles. |
+| `ThemePickerComponent` | Theme selection grids displaying preset choices. |
+| `ThemeToggleButtonComponent` | Quick theme toggler button switching active presets. |
+| `CustomThemeBootComponent` | Lightweight component executing initial theme configurations. |
 
 ## Providers (2)
 
