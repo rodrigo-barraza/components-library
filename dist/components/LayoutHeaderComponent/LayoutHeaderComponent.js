@@ -1,8 +1,65 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { forwardRef, useEffect, useRef } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Server, Clock, ImageIcon, Wrench, MemoryStick, Eye, Type, Settings, Target, FlaskConical, Workflow, MessageSquare, LayoutDashboard, } from "lucide-react";
 import { useComponents } from "../ComponentsProvider.js";
 import styles from "./LayoutHeaderComponent.module.css";
+// Helper to determine the header page title icon dynamically
+function getHeaderTitleIcon(title) {
+    if (typeof title !== "string") {
+        return null;
+    }
+    const normalizedTitle = title.trim().toLowerCase();
+    switch (normalizedTitle) {
+        case "models":
+            return _jsx(Server, { className: styles["header-page-title-icon"], size: 14 });
+        case "cron jobs":
+        case "scheduled tasks":
+            return _jsx(Clock, { className: styles["header-page-title-icon"], size: 14 });
+        case "media":
+            return _jsx(ImageIcon, { className: styles["header-page-title-icon"], size: 14 });
+        case "tools":
+            return _jsx(Wrench, { className: styles["header-page-title-icon"], size: 14 });
+        case "vram benchmark":
+        case "vram bench":
+            return _jsx(MemoryStick, { className: styles["header-page-title-icon"], size: 14 });
+        case "vision":
+            return _jsx(Eye, { className: styles["header-page-title-icon"], size: 14 });
+        case "text":
+            return _jsx(Type, { className: styles["header-page-title-icon"], size: 14 });
+        case "settings":
+            return _jsx(Settings, { className: styles["header-page-title-icon"], size: 14 });
+        case "benchmarks":
+            return _jsx(Target, { className: styles["header-page-title-icon"], size: 14 });
+        case "synthesis":
+            return _jsx(FlaskConical, { className: styles["header-page-title-icon"], size: 14 });
+        case "workflows":
+        case "workflow":
+            return _jsx(Workflow, { className: styles["header-page-title-icon"], size: 14 });
+        case "conversations":
+        case "chat":
+            return _jsx(MessageSquare, { className: styles["header-page-title-icon"], size: 14 });
+        case "dashboard":
+        case "admin":
+            return _jsx(LayoutDashboard, { className: styles["header-page-title-icon"], size: 14 });
+        default:
+            if (normalizedTitle.includes("chat") || normalizedTitle.includes("conversation")) {
+                return _jsx(MessageSquare, { className: styles["header-page-title-icon"], size: 14 });
+            }
+            if (normalizedTitle.includes("benchmark")) {
+                return _jsx(Target, { className: styles["header-page-title-icon"], size: 14 });
+            }
+            if (normalizedTitle.includes("tool")) {
+                return _jsx(Wrench, { className: styles["header-page-title-icon"], size: 14 });
+            }
+            if (normalizedTitle.includes("setting")) {
+                return _jsx(Settings, { className: styles["header-page-title-icon"], size: 14 });
+            }
+            if (normalizedTitle.includes("admin") || normalizedTitle.includes("dash")) {
+                return _jsx(LayoutDashboard, { className: styles["header-page-title-icon"], size: 14 });
+            }
+            return null;
+    }
+}
 const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title, onBack, leadingToggle, trailingToggle, centerContent, metaContent, controls, isMobile = false, className, children, userMenu, }, ref) {
     const { userMenu: globalUserMenu } = useComponents();
     const resolvedUserMenu = userMenu ?? globalUserMenu;
@@ -62,7 +119,7 @@ const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title,
                             ? `Hide ${leadingToggle.label || "panel"}`
                             : `Show ${leadingToggle.label || "panel"}`, children: leadingToggle.isVisible
                             ? leadingToggle.visibleIcon
-                            : leadingToggle.hiddenIcon })), title && (_jsxs("div", { className: `${styles["header-identity"]} ${leadingToggle ? styles["has-leading-toggle"] : ""}`, children: [_jsx("div", { className: styles["header-identity-start"], children: onBack && (_jsx("button", { className: styles["header-back-button"], onClick: onBack, title: "Go back", children: _jsx(ArrowLeft, { size: 16 }) })) }), _jsx("h1", { className: styles["header-page-title"], children: title }), _jsx("div", { className: styles["header-identity-end"] })] })), !isMobile && metaContent, centerContent && (_jsx("div", { className: styles["header-center-area"], children: centerContent })), controls, children, resolvedUserMenu && (_jsx("div", { className: styles["header-user-menu-wrapper"], children: resolvedUserMenu })), trailingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!trailingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: trailingToggle.onToggle, title: trailingToggle.isVisible
+                            : leadingToggle.hiddenIcon })), title && (_jsxs("div", { className: `${styles["header-identity"]} ${leadingToggle ? styles["has-leading-toggle"] : ""}`, children: [_jsx("div", { className: styles["header-identity-start"], children: onBack && (_jsx("button", { className: styles["header-back-button"], onClick: onBack, title: "Go back", children: _jsx(ArrowLeft, { size: 16 }) })) }), _jsxs("h1", { className: styles["header-page-title"], children: [getHeaderTitleIcon(title), typeof title === "string" ? _jsx("span", { children: title }) : title] }), _jsx("div", { className: styles["header-identity-end"] })] })), !isMobile && metaContent, centerContent && (_jsx("div", { className: styles["header-center-area"], children: centerContent })), controls, children, resolvedUserMenu && (_jsx("div", { className: styles["header-user-menu-wrapper"], children: resolvedUserMenu })), trailingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!trailingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: trailingToggle.onToggle, title: trailingToggle.isVisible
                             ? `Hide ${trailingToggle.label || "panel"}`
                             : `Show ${trailingToggle.label || "panel"}`, children: trailingToggle.isVisible
                             ? trailingToggle.visibleIcon

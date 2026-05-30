@@ -1,7 +1,82 @@
 import { ReactNode, forwardRef, useEffect, useRef } from "react";
-import { ArrowLeft } from "lucide-react";
+import {
+  ArrowLeft,
+  Server,
+  Clock,
+  ImageIcon,
+  Wrench,
+  MemoryStick,
+  Eye,
+  Type,
+  Settings,
+  Target,
+  FlaskConical,
+  Workflow,
+  MessageSquare,
+  LayoutDashboard,
+} from "lucide-react";
 import { useComponents } from "../ComponentsProvider.js";
 import styles from "./LayoutHeaderComponent.module.css";
+
+// Helper to determine the header page title icon dynamically
+function getHeaderTitleIcon(title: string | ReactNode): ReactNode {
+  if (typeof title !== "string") {
+    return null;
+  }
+
+  const normalizedTitle = title.trim().toLowerCase();
+
+  switch (normalizedTitle) {
+    case "models":
+      return <Server className={styles["header-page-title-icon"]} size={14} />;
+    case "cron jobs":
+    case "scheduled tasks":
+      return <Clock className={styles["header-page-title-icon"]} size={14} />;
+    case "media":
+      return <ImageIcon className={styles["header-page-title-icon"]} size={14} />;
+    case "tools":
+      return <Wrench className={styles["header-page-title-icon"]} size={14} />;
+    case "vram benchmark":
+    case "vram bench":
+      return <MemoryStick className={styles["header-page-title-icon"]} size={14} />;
+    case "vision":
+      return <Eye className={styles["header-page-title-icon"]} size={14} />;
+    case "text":
+      return <Type className={styles["header-page-title-icon"]} size={14} />;
+    case "settings":
+      return <Settings className={styles["header-page-title-icon"]} size={14} />;
+    case "benchmarks":
+      return <Target className={styles["header-page-title-icon"]} size={14} />;
+    case "synthesis":
+      return <FlaskConical className={styles["header-page-title-icon"]} size={14} />;
+    case "workflows":
+    case "workflow":
+      return <Workflow className={styles["header-page-title-icon"]} size={14} />;
+    case "conversations":
+    case "chat":
+      return <MessageSquare className={styles["header-page-title-icon"]} size={14} />;
+    case "dashboard":
+    case "admin":
+      return <LayoutDashboard className={styles["header-page-title-icon"]} size={14} />;
+    default:
+      if (normalizedTitle.includes("chat") || normalizedTitle.includes("conversation")) {
+        return <MessageSquare className={styles["header-page-title-icon"]} size={14} />;
+      }
+      if (normalizedTitle.includes("benchmark")) {
+        return <Target className={styles["header-page-title-icon"]} size={14} />;
+      }
+      if (normalizedTitle.includes("tool")) {
+        return <Wrench className={styles["header-page-title-icon"]} size={14} />;
+      }
+      if (normalizedTitle.includes("setting")) {
+        return <Settings className={styles["header-page-title-icon"]} size={14} />;
+      }
+      if (normalizedTitle.includes("admin") || normalizedTitle.includes("dash")) {
+        return <LayoutDashboard className={styles["header-page-title-icon"]} size={14} />;
+      }
+      return null;
+  }
+}
 
 export interface LayoutHeaderToggleButtonProps {
   isVisible: boolean;
@@ -152,7 +227,10 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
                   </button>
                 )}
               </div>
-              <h1 className={styles["header-page-title"]}>{title}</h1>
+              <h1 className={styles["header-page-title"]}>
+                {getHeaderTitleIcon(title)}
+                {typeof title === "string" ? <span>{title}</span> : title}
+              </h1>
               <div className={styles["header-identity-end"]} />
             </div>
           )}

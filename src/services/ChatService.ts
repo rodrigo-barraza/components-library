@@ -42,6 +42,33 @@ const storage = {
   },
 };
 
+export interface TransformedVisitor {
+  visitorId: string;
+  [key: string]: unknown;
+}
+
+export interface TransformedConversation {
+  conversationId: string;
+  [key: string]: unknown;
+}
+
+export interface TransformedMessage {
+  messageId?: string;
+  conversationId?: string;
+  role: string;
+  content: string;
+  createdAt?: string;
+  [key: string]: unknown;
+}
+
+export interface TransformedChatResponse {
+  visitorId?: string;
+  conversationId?: string;
+  messages?: ChatMessage[];
+  hasMore?: boolean;
+  [key: string]: unknown;
+}
+
 export interface ChatServiceOptions {
   /** Base URL of messages-service */
   serviceUrl: string;
@@ -130,13 +157,26 @@ class ChatService {
 
   // ── HTTP Helpers ─────────────────────────────────────────────
 
-  private async _fetch(path: string, options: RequestInit = {}): Promise<Record<string, unknown>> {
+  private async _fetch<T = TransformedChatResponse>(path: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.serviceUrl}${path}`;
     const headers: HeadersInit = {
       "Content-Type": "application/json",
       ...(this.visitorId && { "x-visitor-id": this.visitorId }),
-      ...(options.headers as Record<string, string>),
     };
+
+    if (options.headers) {
+      if (options.headers instanceof Headers) {
+        options.headers.forEach((value, key) => {
+          (headers as Record<string, string>)[key] = value;
+        });
+      } else if (Array.isArray(options.headers)) {
+        options.headers.forEach(([key, value]) => {
+          (headers as Record<string, string>)[key] = value;
+        });
+      } else {
+        Object.assign(headers, options.headers);
+      }
+    }
 
     const response = await fetch(url, {
       ...options,
@@ -158,7 +198,7 @@ class ChatService {
           const body = await retryRes.text().catch(() => "");
           throw new Error(`ChatService: ${retryRes.status} ${retryRes.statusText} — ${body}`);
         }
-        return retryRes.json() as Promise<Record<string, unknown>>;
+        return retryRes.json() as Promise<T>;
       }
 
       const body = await response.text().catch(() => "");
@@ -167,7 +207,7 @@ class ChatService {
       );
     }
 
-    return response.json() as Promise<Record<string, unknown>>;
+    return response.json() as Promise<T>;
   }
 
   // ── Widget Config ────────────────────────────────────────────
@@ -176,7 +216,7 @@ class ChatService {
    * Fetch widget configuration from messages-service.
    */
   async fetchWidgetConfig(): Promise<ChatWidgetConfig> {
-    const config = await this._fetch(`/chat/widgets/${this.widgetId}/config`) as unknown as ChatWidgetConfig;
+    const config = await this._fetch<ChatWidgetConfig>(`/chat/widgets/${this.widgetId}/config`);
     this.config = config;
     return config;
   }
@@ -186,8 +226,8 @@ class ChatService {
   /**
    * Register or identify a returning visitor.
    */
-  async identifyVisitor(metadata: Record<string, unknown> = {}): Promise<Record<string, unknown>> {
-    const data = await this._fetch("/chat/visitors", {
+  async identifyVisitor(metadata: Record<string, unknown> = {}): Promise<TransformedVisitor> {
+    const data = await this._fetch<TransformedVisitor>("/chat/visitors", {
       method: "POST",
       body: JSON.stringify({
         widgetId: this.widgetId,
@@ -195,7 +235,7 @@ class ChatService {
         ...metadata,
       }),
     });
-    this.visitorId = data.visitorId as string;
+    this.visitorId = data.visitorId;
     this._persistSession();
     return data;
   }
@@ -205,15 +245,15 @@ class ChatService {
   /**
    * Create a new conversation.
    */
-  async createConversation(): Promise<Record<string, unknown>> {
-    const data = await this._fetch("/chat/conversations", {
+  async createConversation(): Promise<TransformedConversation> {
+    const data = await this._fetch<TransformedConversation>("/chat/conversations", {
       method: "POST",
       body: JSON.stringify({
         widgetId: this.widgetId,
         visitorId: this.visitorId,
       }),
     });
-    this.conversationId = data.conversationId as string;
+    this.conversationId = data.conversationId;
     this._persistSession();
     return data;
   }
@@ -225,9 +265,9 @@ class ChatService {
     if (!this.conversationId) return { messages: [], hasMore: false };
     const params = new URLSearchParams({ limit: String(limit) });
     if (before) params.set("before", before);
-    return this._fetch(
+    return this._fetch<{ messages: ChatMessage[]; hasMore: boolean }>(
       `/chat/conversations/${this.conversationId}/messages?${params}`,
-    ) as unknown as Promise<{ messages: ChatMessage[]; hasMore: boolean }>;
+    );
   }
 
   // ── Sending Messages ─────────────────────────────────────────
@@ -235,12 +275,12 @@ class ChatService {
   /**
    * Send a visitor message (standard mode — human operator will respond).
    */
-  async sendMessage(content: string): Promise<Record<string, unknown>> {
+  async sendMessage(content: string): Promise<TransformedMessage> {
     if (!this.conversationId) {
       await this.createConversation();
     }
 
-    return this._fetch(
+    return this._fetch<TransformedMessage>(
       `/chat/conversations/${this.conversationId}/messages`,
       {
         method: "POST",

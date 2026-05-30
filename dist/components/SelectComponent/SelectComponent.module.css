@@ -219,3 +219,101 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ── Multi-select styling ────────────────────────────────── */
+
+.triggerMultiple {
+  height: auto;
+  min-height: var(--input-height);
+  padding: 4px 12px;
+}
+
+.chip-element {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-primary);
+  background: var(--calculated-accent-primary-subtle, rgba(99, 102, 241, 0.1));
+  border-radius: var(--border-radius-sm, 4px);
+  white-space: nowrap;
+  line-height: 1.4;
+  animation: chipIn 0.15s ease-out;
+}
+
+.chip-remove-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--accent-primary);
+  opacity: 0.6;
+  cursor: pointer;
+  border-radius: 50%;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+  flex-shrink: 0;
+}
+
+.chip-remove-button:hover {
+  opacity: 1;
+  background: rgba(99, 102, 241, 0.15);
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Inline checkbox indicator ───────────────────────── */
+
+.option-checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--calculated-border-color);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-right: 2px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.option-checkbox-container-selected {
+  background: var(--accent-primary, #6366f1);
+  border-color: var(--accent-primary, #6366f1);
+}
+
+.option-checkbox-icon {
+  width: 10px;
+  height: 10px;
+  color: #fff;
+}
+
+.option-checkbox-path {
+  stroke-dasharray: 14;
+  stroke-dashoffset: 14;
+  animation: checkDraw 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes checkDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

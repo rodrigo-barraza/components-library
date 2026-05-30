@@ -1,6 +1,6 @@
 /**
  * SelectComponent — custom dropdown that supports rendering arbitrary content
- * (icons, logos, etc.) in each option.
+ * (icons, logos, etc.) in each option, with optional multi-select support.
  *
  * Operates in two modes:
  *
@@ -19,10 +19,10 @@ export interface SelectOption {
     disabled?: boolean;
     tooltip?: string;
 }
-export interface SelectComponentProps {
-    value?: string;
+export interface SelectComponentProps<T extends string | string[] = string | string[]> {
+    value?: T;
     options?: SelectOption[];
-    onChange?: (value: string) => void;
+    onChange?: (value: T) => void;
     placeholder?: string;
     icon?: React.ReactNode;
     disabled?: boolean;
@@ -36,6 +36,9 @@ export interface SelectComponentProps {
     loadingProgress?: number | null;
     onMouseEnter?: (event: React.MouseEvent) => void;
     children?: React.ReactNode;
+    multiple?: boolean;
+    allLabel?: string;
+    compact?: boolean;
 }
-export default function SelectComponent({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, triggerTooltipContent, label, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, }: SelectComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function SelectComponent<T extends string | string[] = string | string[]>({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, triggerTooltipContent, label, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple, allLabel, compact, }: SelectComponentProps<T>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SelectComponent.d.ts.map

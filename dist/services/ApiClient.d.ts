@@ -16,7 +16,7 @@ export interface ApiClientOptions {
     noCache?: boolean;
 }
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: unknown) => Promise<T>;
+export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: object | string | number | boolean | null) => Promise<T>;
 /**
  * Create a pre-configured fetch helper bound to a base URL.
  */

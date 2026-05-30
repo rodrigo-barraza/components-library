@@ -1,4 +1,27 @@
 import { type ChatMessage, type ChatWidgetConfig, type AgentStreamCallbacks } from "../constants/chat.js";
+export interface TransformedVisitor {
+    visitorId: string;
+    [key: string]: unknown;
+}
+export interface TransformedConversation {
+    conversationId: string;
+    [key: string]: unknown;
+}
+export interface TransformedMessage {
+    messageId?: string;
+    conversationId?: string;
+    role: string;
+    content: string;
+    createdAt?: string;
+    [key: string]: unknown;
+}
+export interface TransformedChatResponse {
+    visitorId?: string;
+    conversationId?: string;
+    messages?: ChatMessage[];
+    hasMore?: boolean;
+    [key: string]: unknown;
+}
 export interface ChatServiceOptions {
     /** Base URL of messages-service */
     serviceUrl: string;
@@ -35,11 +58,11 @@ declare class ChatService {
     /**
      * Register or identify a returning visitor.
      */
-    identifyVisitor(metadata?: Record<string, unknown>): Promise<Record<string, unknown>>;
+    identifyVisitor(metadata?: Record<string, unknown>): Promise<TransformedVisitor>;
     /**
      * Create a new conversation.
      */
-    createConversation(): Promise<Record<string, unknown>>;
+    createConversation(): Promise<TransformedConversation>;
     /**
      * Fetch message history for the current conversation.
      */
@@ -53,7 +76,7 @@ declare class ChatService {
     /**
      * Send a visitor message (standard mode — human operator will respond).
      */
-    sendMessage(content: string): Promise<Record<string, unknown>>;
+    sendMessage(content: string): Promise<TransformedMessage>;
     /**
      * Send a message and stream the AI agent's response via SSE.
      */

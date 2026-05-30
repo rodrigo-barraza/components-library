@@ -108,8 +108,22 @@ class ChatService {
         const headers = {
             "Content-Type": "application/json",
             ...(this.visitorId && { "x-visitor-id": this.visitorId }),
-            ...options.headers,
         };
+        if (options.headers) {
+            if (options.headers instanceof Headers) {
+                options.headers.forEach((value, key) => {
+                    headers[key] = value;
+                });
+            }
+            else if (Array.isArray(options.headers)) {
+                options.headers.forEach(([key, value]) => {
+                    headers[key] = value;
+                });
+            }
+            else {
+                Object.assign(headers, options.headers);
+            }
+        }
         const response = await fetch(url, {
             ...options,
             headers,

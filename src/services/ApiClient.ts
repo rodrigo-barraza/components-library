@@ -19,13 +19,13 @@ export interface ApiClientOptions {
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: unknown) => Promise<T>;
+export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: object | string | number | boolean | null) => Promise<T>;
 
 /**
  * Create a pre-configured fetch helper bound to a base URL.
  */
 export function createApiClient(baseUrl: string, { defaultHeaders = {}, noCache = false }: ApiClientOptions = {}): ApiRequestFn {
-  return async function request<T = unknown>(method: HttpMethod, path: string, body: unknown = null): Promise<T> {
+  return async function request<T = unknown>(method: HttpMethod, path: string, body: object | string | number | boolean | null = null): Promise<T> {
     const options: RequestInit = {
       method,
       headers: {

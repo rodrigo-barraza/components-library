@@ -242,40 +242,38 @@ function DateTimeBadge({
   );
 }
 
+type HTMLSpanProps = Omit<React.HTMLAttributes<HTMLSpanElement>, "type" | "color" | "date">;
+
 export type BadgeProps =
-  | {
+  | ({
       type?: undefined;
       variant?: string;
       children?: React.ReactNode;
       className?: string;
       mini?: boolean;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "address";
       address: string;
       link?: boolean;
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "status";
       healthy?: boolean;
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "port";
       port: string | number;
       variant?: string;
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "repository";
       repo: string;
       icons?: {
@@ -283,9 +281,8 @@ export type BadgeProps =
       };
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "device";
       device: string;
       icons?: {
@@ -293,9 +290,8 @@ export type BadgeProps =
       };
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "count";
       count: number | string | null;
       state?: string;
@@ -303,16 +299,15 @@ export type BadgeProps =
       rainbow?: boolean;
       tooltip?: string;
       className?: string;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "responseTime";
       ms?: number | null;
       formatter?: (ms: number) => string | ReactNode;
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "metric";
       value: number;
       label?: string;
@@ -326,8 +321,8 @@ export type BadgeProps =
       mini?: boolean;
       hideWhenZero?: boolean;
       className?: string;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "domain";
       domain: string;
       icons?: {
@@ -335,9 +330,8 @@ export type BadgeProps =
       };
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "visibility";
       visibility: "external" | "internal" | string;
       icons?: {
@@ -346,16 +340,15 @@ export type BadgeProps =
       };
       className?: string;
       tooltip?: React.ReactNode;
-      [key: string]: any;
-    }
-  | {
+    } & HTMLSpanProps)
+  | ({
       type: "dateTime";
       date?: string | Date | number | null;
       showIcon?: boolean;
       relative?: boolean;
       highlightNew?: boolean;
       className?: string;
-    };
+    } & HTMLSpanProps);
 
 export default function BadgeComponent(props: BadgeProps) {
   if (props.type === undefined) {
