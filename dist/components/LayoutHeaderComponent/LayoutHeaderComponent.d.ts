@@ -18,7 +18,6 @@ export interface LayoutHeaderComponentProps {
     isMobile?: boolean;
     className?: string;
     children?: ReactNode;
-    userMenu?: ReactNode;
 }
 declare const LayoutHeaderComponent: import("react").ForwardRefExoticComponent<LayoutHeaderComponentProps & import("react").RefAttributes<HTMLElement>>;
 export default LayoutHeaderComponent;

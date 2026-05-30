@@ -236,12 +236,3 @@
   }
 }
 
-.header-user-menu-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  block-size: 100%;
-  padding-inline: 8px;
-  flex-shrink: 0;
-}
-
