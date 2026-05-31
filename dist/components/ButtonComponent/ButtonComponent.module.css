@@ -314,15 +314,18 @@
 
 /* ── Disabled (legacy pass-through) ─────────────────────────────── */
 
+.disabled,
 .isDisabledState {
   background: transparent;
   color: var(--text-secondary);
 }
 
+.disabled .stateLayer,
 .isDisabledState .stateLayer {
   background: var(--text-primary);
 }
 
+.disabled:hover:not(:disabled),
 .isDisabledState:hover:not(:disabled) {
   background: var(--calculated-accent-primary-subtle);
   color: var(--text-primary);
