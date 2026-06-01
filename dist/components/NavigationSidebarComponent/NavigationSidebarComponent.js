@@ -20,13 +20,35 @@ collapsible = true, defaultCollapsed = false, storageKey, // string — localSto
 onCollapse, // function(collapsed: boolean) — called when collapsed state changes
 bottomActions, // ReactNode for extra footer actions
 // ── Mobile drawer props ──────────────────────────────────────────
-mobileOpen, // boolean — controls drawer visibility on mobile
-onMobileClose, // function — called when drawer should close (scrim tap, nav click, Escape)
+mobileOpen: externalMobileOpen, // boolean — external control for drawer visibility on mobile
+onMobileClose: externalOnMobileClose, // function — external close handler
+onMobileOpen: externalOnMobileOpen, // function — external open handler
+showMobileHamburger = true, // boolean — render built-in floating hamburger FAB on mobile
 mobileBreakpoint = 768, // number — viewport width below which drawer mode activates
  }) {
     const [collapsed, setCollapsed] = useState(defaultCollapsed);
     const [navReady, setNavReady] = useState(false);
     const sidebarReference = useRef(null);
+    // ── Internal mobile state (used when no external control is provided) ──
+    const [internalMobileOpen, setInternalMobileOpen] = useState(false);
+    const isExternallyControlled = externalMobileOpen !== undefined;
+    const mobileOpen = isExternallyControlled ? externalMobileOpen : internalMobileOpen;
+    const handleMobileClose = useCallback(() => {
+        if (isExternallyControlled) {
+            externalOnMobileClose?.();
+        }
+        else {
+            setInternalMobileOpen(false);
+        }
+    }, [isExternallyControlled, externalOnMobileClose]);
+    const handleMobileOpen = useCallback(() => {
+        if (isExternallyControlled) {
+            externalOnMobileOpen?.();
+        }
+        else {
+            setInternalMobileOpen(true);
+        }
+    }, [isExternallyControlled, externalOnMobileOpen]);
     // ── Mobile detection ──────────────────────────────────────────────
     const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
     // Normalize to sections format — single unnamed section when using flat items
@@ -72,17 +94,17 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
     }, [storageKey, onCollapse]);
     // ── Mobile: Escape key to close ───────────────────────────────────
     useEffect(() => {
-        if (!isMobile || !mobileOpen || !onMobileClose)
+        if (!isMobile || !mobileOpen)
             return;
         const handleKey = (e) => {
             if (e.key === "Escape") {
                 e.stopPropagation();
-                onMobileClose();
+                handleMobileClose();
             }
         };
         document.addEventListener("keydown", handleKey);
         return () => document.removeEventListener("keydown", handleKey);
-    }, [isMobile, mobileOpen, onMobileClose]);
+    }, [isMobile, mobileOpen, handleMobileClose]);
     // ── Mobile: prevent body scroll when drawer is open ───────────────
     useEffect(() => {
         if (!isMobile || !mobileOpen)
@@ -165,8 +187,8 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
                     onNavigate(id, item);
                 }
                 // Auto-close mobile drawer on navigation
-                if (isMobile && onMobileClose) {
-                    onMobileClose();
+                if (isMobile) {
+                    handleMobileClose();
                 }
             },
         };
@@ -180,8 +202,8 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
                         e.preventDefault();
                         onNavigate(id, item);
                     }
-                    if (isMobile && onMobileClose) {
-                        onMobileClose();
+                    if (isMobile) {
+                        handleMobileClose();
                     }
                 }, children: content }));
         }
@@ -202,8 +224,8 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { className: wrapperClasses, children: [isMobile && mobileOpen && (_jsx("div", { className: styles.mobileScrim, onClick: onMobileClose, "aria-hidden": "true" })), _jsxs("aside", { ref: sidebarReference, className: styles.sidebar, children: [(brandIcon || brandLabel) && (_jsxs("div", { className: styles.brand, children: [typeof brandIcon === "string" ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            _jsx("img", { src: brandIcon, alt: brandLabel || "Brand", className: styles.brandIconImg })) : brandIcon ? (_jsx("div", { className: styles.brandIconNode, children: brandIcon })) : null, brandLabel && _jsx("span", { className: styles.brandLabel, children: brandLabel }), isMobile ? (_jsx("button", { className: styles.mobileCloseButton, onClick: onMobileClose, title: "Close menu", "aria-label": "Close navigation menu", children: _jsx(Icons.X, { size: 20 }) })) : collapsible ? (_jsx("button", { className: styles.collapseButton, onClick: toggleCollapse, title: "Toggle Sidebar", children: _jsx(Icons.ChevronsLeft, { size: 16 }) })) : null] })), _jsx("nav", { className: styles.navigationList, children: resolvedSections.map((section, sectionIdx) => (_jsxs(React.Fragment, { children: [section.label && (_jsx("div", { className: styles.navigationDivider, children: _jsx("span", { children: section.label }) })), section.items.map(renderNavItem)] }, section.label || sectionIdx))) }), _jsxs("div", { className: styles.bottomActions, children: [bottomActions, hasThemePicker ? (_jsx(ThemePickerComponent, { theme: theme, themes: themes, onSelectTheme: setTheme, collapsed: isMobile ? false : collapsed })) : onToggleTheme ? (_jsx(TooltipComponent, { label: themeMeta.nextLabel + " Mode", position: "right", delay: 200, disabled: isMobile || !collapsed, className: styles.tooltipFill, children: _jsxs("button", { className: styles.themeToggle, onClick: onToggleTheme, title: themeMeta.title, children: [_jsx(themeMeta.NextIcon, { size: 18, strokeWidth: 1.8, className: styles.navigationIcon }), _jsx("span", { className: styles.themeLabel, children: themeMeta.nextLabel })] }) })) : null] })] })] }));
+    return (_jsxs(_Fragment, { children: [isMobile && showMobileHamburger && (_jsx("button", { type: "button", className: `${styles.mobileHamburgerButton} ${mobileOpen ? styles.mobileHamburgerButtonOpen : ""}`, onClick: mobileOpen ? handleMobileClose : handleMobileOpen, title: mobileOpen ? "Close navigation" : "Open navigation", "aria-label": mobileOpen ? "Close navigation menu" : "Open navigation menu", "aria-expanded": mobileOpen, children: mobileOpen ? _jsx(Icons.X, { size: 20, strokeWidth: 2 }) : _jsx(Icons.Menu, { size: 20, strokeWidth: 2 }) })), _jsxs("div", { className: wrapperClasses, children: [isMobile && mobileOpen && (_jsx("div", { className: styles.mobileScrim, onClick: handleMobileClose, "aria-hidden": "true" })), _jsxs("aside", { ref: sidebarReference, className: styles.sidebar, children: [(brandIcon || brandLabel) && (_jsxs("div", { className: styles.brand, children: [typeof brandIcon === "string" ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    _jsx("img", { src: brandIcon, alt: brandLabel || "Brand", className: styles.brandIconImg })) : brandIcon ? (_jsx("div", { className: styles.brandIconNode, children: brandIcon })) : null, brandLabel && _jsx("span", { className: styles.brandLabel, children: brandLabel }), isMobile ? (_jsx("button", { className: styles.mobileCloseButton, onClick: handleMobileClose, title: "Close menu", "aria-label": "Close navigation menu", children: _jsx(Icons.X, { size: 20 }) })) : collapsible ? (_jsx("button", { className: styles.collapseButton, onClick: toggleCollapse, title: "Toggle Sidebar", children: _jsx(Icons.ChevronsLeft, { size: 16 }) })) : null] })), _jsx("nav", { className: styles.navigationList, children: resolvedSections.map((section, sectionIdx) => (_jsxs(React.Fragment, { children: [section.label && (_jsx("div", { className: styles.navigationDivider, children: _jsx("span", { children: section.label }) })), section.items.map(renderNavItem)] }, section.label || sectionIdx))) }), _jsxs("div", { className: styles.bottomActions, children: [bottomActions, hasThemePicker ? (_jsx(ThemePickerComponent, { theme: theme, themes: themes, onSelectTheme: setTheme, collapsed: isMobile ? false : collapsed })) : onToggleTheme ? (_jsx(TooltipComponent, { label: themeMeta.nextLabel + " Mode", position: "right", delay: 200, disabled: isMobile || !collapsed, className: styles.tooltipFill, children: _jsxs("button", { className: styles.themeToggle, onClick: onToggleTheme, title: themeMeta.title, children: [_jsx(themeMeta.NextIcon, { size: 18, strokeWidth: 1.8, className: styles.navigationIcon }), _jsx("span", { className: styles.themeLabel, children: themeMeta.nextLabel })] }) })) : null] })] })] })] }));
 }
 //# sourceMappingURL=NavigationSidebarComponent.js.map

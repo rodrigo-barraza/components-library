@@ -58,6 +58,8 @@ interface NavigationSidebarProps {
     bottomActions?: React.ReactNode;
     mobileOpen?: boolean;
     onMobileClose?: () => void;
+    onMobileOpen?: () => void;
+    showMobileHamburger?: boolean;
     mobileBreakpoint?: number;
 }
 export default function NavigationSidebarComponent({ brandIcon, // string (url) or ReactNode
@@ -73,8 +75,10 @@ LinkComponent, // Custom Next/Link component, falls back to native <a> if href e
 collapsible, defaultCollapsed, storageKey, // string — localStorage key for persisting collapsed state (e.g. "ledger-nav-collapsed")
 onCollapse, // function(collapsed: boolean) — called when collapsed state changes
 bottomActions, // ReactNode for extra footer actions
-mobileOpen, // boolean — controls drawer visibility on mobile
-onMobileClose, // function — called when drawer should close (scrim tap, nav click, Escape)
+mobileOpen: externalMobileOpen, // boolean — external control for drawer visibility on mobile
+onMobileClose: externalOnMobileClose, // function — external close handler
+onMobileOpen: externalOnMobileOpen, // function — external open handler
+showMobileHamburger, // boolean — render built-in floating hamburger FAB on mobile
 mobileBreakpoint, }: NavigationSidebarProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=NavigationSidebarComponent.d.ts.map

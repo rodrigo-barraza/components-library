@@ -401,3 +401,55 @@
     font-size: 15px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Mobile Floating Hamburger FAB
+   A fixed bottom-left circular button that toggles the mobile drawer.
+   Uses GPU-accelerated transforms for smooth open/close transitions.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.mobileHamburgerButton {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1001;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--calculated-border-color, rgba(255, 255, 255, 0.12));
+  background: var(--background-surface, #1e1e1e);
+  color: var(--text-primary, #fff);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    0 1px 4px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.mobileHamburgerButton:active {
+  transform: scale(0.9);
+}
+
+.mobileHamburgerButton.mobileHamburgerButtonOpen {
+  background: var(--accent-primary, #6366f1);
+  color: white;
+  border-color: transparent;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 16px var(--calculated-accent-primary-glow, rgba(99, 102, 241, 0.3));
+}
+
+@media (max-width: 768px) {
+  .mobileHamburgerButton {
+    display: flex;
+  }
+}

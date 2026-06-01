@@ -1,9 +1,7 @@
 import { ReactNode, ComponentPropsWithoutRef, ElementType } from "react";
 import { useState, useCallback } from "react";
-import useMediaQuery from "../../hooks/useMediaQuery.js";
 import LayoutHeaderComponent from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
 import type { LayoutHeaderComponentProps } from "../LayoutHeaderComponent/LayoutHeaderComponent.js";
-import MobileHeaderComponent from "../MobileHeaderComponent/MobileHeaderComponent.js";
 import NavigationSidebarComponent from "../NavigationSidebarComponent/NavigationSidebarComponent.js";
 import { PageHeaderProvider } from "../PageHeaderContext.js";
 import type { PageHeaderIdentity } from "../PageHeaderContext.js";
@@ -39,7 +37,6 @@ export interface PageLayoutComponentProps {
   themes?: string[];
   setTheme?: (theme: string) => void;
   bottomActions?: ReactNode;
-  mobileHeaderActions?: ReactNode;
   mobileBreakpoint?: number;
   sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
   headerProps?: Partial<LayoutHeaderComponentProps>;
@@ -49,10 +46,10 @@ export interface PageLayoutComponentProps {
 
 /**
  * PageLayoutComponent — Unified page wrapper composing NavigationSidebar +
- * MobileHeader + main content area.
+ * main content area.
  *
- * Encapsulates the repeated pattern of sidebar + mobile drawer management
- * that was duplicated across iron-client and portal-client.
+ * Mobile navigation is fully handled by NavigationSidebarComponent's built-in
+ * floating hamburger FAB and slide-over drawer — no separate mobile header needed.
  */
 export default function PageLayoutComponent({
   children,
@@ -69,16 +66,13 @@ export default function PageLayoutComponent({
   themes,
   setTheme,
   bottomActions,
-  mobileHeaderActions,
   mobileBreakpoint = 768,
   sidebarProps = {},
   headerProps,
   title,
   onBack,
 }: PageLayoutComponentProps) {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [headerIdentity, setHeaderIdentity] = useState<PageHeaderIdentity>({});
-  const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
 
   const handleIdentityChange = useCallback((identity: PageHeaderIdentity) => {
     setHeaderIdentity(identity);
@@ -98,23 +92,11 @@ export default function PageLayoutComponent({
         LinkComponent={LinkComponent}
         storageKey={storageKey}
         bottomActions={bottomActions}
-        mobileOpen={mobileOpen}
-        onMobileClose={() => setMobileOpen(false)}
         mobileBreakpoint={mobileBreakpoint}
         {...sidebarProps}
       />
 
       <div className={styles.mainArea}>
-        {/* Mobile-only top header bar */}
-        {isMobile && (
-          <MobileHeaderComponent
-            brandIcon={brandIcon}
-            brandLabel={brandLabel}
-            onMenuClick={() => setMobileOpen(true)}
-          >
-            {mobileHeaderActions}
-          </MobileHeaderComponent>
-        )}
         <LayoutHeaderComponent
           title={headerIdentity.title || title}
           onBack={headerIdentity.onBack || onBack}

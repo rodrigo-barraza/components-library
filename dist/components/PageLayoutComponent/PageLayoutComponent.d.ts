@@ -33,7 +33,6 @@ export interface PageLayoutComponentProps {
     themes?: string[];
     setTheme?: (theme: string) => void;
     bottomActions?: ReactNode;
-    mobileHeaderActions?: ReactNode;
     mobileBreakpoint?: number;
     sidebarProps?: Partial<ComponentPropsWithoutRef<typeof NavigationSidebarComponent>>;
     headerProps?: Partial<LayoutHeaderComponentProps>;
@@ -42,11 +41,11 @@ export interface PageLayoutComponentProps {
 }
 /**
  * PageLayoutComponent — Unified page wrapper composing NavigationSidebar +
- * MobileHeader + main content area.
+ * main content area.
  *
- * Encapsulates the repeated pattern of sidebar + mobile drawer management
- * that was duplicated across iron-client and portal-client.
+ * Mobile navigation is fully handled by NavigationSidebarComponent's built-in
+ * floating hamburger FAB and slide-over drawer — no separate mobile header needed.
  */
-export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileHeaderActions, mobileBreakpoint, sidebarProps, headerProps, title, onBack, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileBreakpoint, sidebarProps, headerProps, title, onBack, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=PageLayoutComponent.d.ts.map

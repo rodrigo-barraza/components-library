@@ -64,6 +64,8 @@ interface NavigationSidebarProps {
   bottomActions?: React.ReactNode;
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  onMobileOpen?: () => void;
+  showMobileHamburger?: boolean;
   mobileBreakpoint?: number;
 }
 
@@ -85,13 +87,34 @@ export default function NavigationSidebarComponent({
   onCollapse, // function(collapsed: boolean) — called when collapsed state changes
   bottomActions, // ReactNode for extra footer actions
   // ── Mobile drawer props ──────────────────────────────────────────
-  mobileOpen, // boolean — controls drawer visibility on mobile
-  onMobileClose, // function — called when drawer should close (scrim tap, nav click, Escape)
+  mobileOpen: externalMobileOpen, // boolean — external control for drawer visibility on mobile
+  onMobileClose: externalOnMobileClose, // function — external close handler
+  onMobileOpen: externalOnMobileOpen, // function — external open handler
+  showMobileHamburger = true, // boolean — render built-in floating hamburger FAB on mobile
   mobileBreakpoint = 768, // number — viewport width below which drawer mode activates
 }: NavigationSidebarProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [navReady, setNavReady] = useState(false);
   const sidebarReference = useRef<HTMLElement>(null);
+
+  // ── Internal mobile state (used when no external control is provided) ──
+  const [internalMobileOpen, setInternalMobileOpen] = useState(false);
+  const isExternallyControlled = externalMobileOpen !== undefined;
+  const mobileOpen = isExternallyControlled ? externalMobileOpen : internalMobileOpen;
+  const handleMobileClose = useCallback(() => {
+    if (isExternallyControlled) {
+      externalOnMobileClose?.();
+    } else {
+      setInternalMobileOpen(false);
+    }
+  }, [isExternallyControlled, externalOnMobileClose]);
+  const handleMobileOpen = useCallback(() => {
+    if (isExternallyControlled) {
+      externalOnMobileOpen?.();
+    } else {
+      setInternalMobileOpen(true);
+    }
+  }, [isExternallyControlled, externalOnMobileOpen]);
 
   // ── Mobile detection ──────────────────────────────────────────────
   const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint}px)`);
@@ -140,18 +163,18 @@ export default function NavigationSidebarComponent({
 
   // ── Mobile: Escape key to close ───────────────────────────────────
   useEffect(() => {
-    if (!isMobile || !mobileOpen || !onMobileClose) return;
+    if (!isMobile || !mobileOpen) return;
 
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
-        onMobileClose();
+        handleMobileClose();
       }
     };
 
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [isMobile, mobileOpen, onMobileClose]);
+  }, [isMobile, mobileOpen, handleMobileClose]);
 
   // ── Mobile: prevent body scroll when drawer is open ───────────────
   useEffect(() => {
@@ -271,8 +294,8 @@ export default function NavigationSidebarComponent({
           onNavigate(id, item);
         }
         // Auto-close mobile drawer on navigation
-        if (isMobile && onMobileClose) {
-          onMobileClose();
+        if (isMobile) {
+          handleMobileClose();
         }
       },
     };
@@ -291,8 +314,8 @@ export default function NavigationSidebarComponent({
             e.preventDefault();
             onNavigate(id, item);
           }
-          if (isMobile && onMobileClose) {
-            onMobileClose();
+          if (isMobile) {
+            handleMobileClose();
           }
         }}>
           {content}
@@ -332,12 +355,27 @@ export default function NavigationSidebarComponent({
     .join(" ");
 
   return (
+    <>
+      {/* ── Mobile floating hamburger FAB ── */}
+      {isMobile && showMobileHamburger && (
+        <button
+          type="button"
+          className={`${styles.mobileHamburgerButton} ${mobileOpen ? styles.mobileHamburgerButtonOpen : ""}`}
+          onClick={mobileOpen ? handleMobileClose : handleMobileOpen}
+          title={mobileOpen ? "Close navigation" : "Open navigation"}
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? <Icons.X size={20} strokeWidth={2} /> : <Icons.Menu size={20} strokeWidth={2} />}
+        </button>
+      )}
+
     <div className={wrapperClasses}>
       {/* ── Mobile scrim backdrop ── */}
       {isMobile && mobileOpen && (
         <div
           className={styles.mobileScrim}
-          onClick={onMobileClose}
+          onClick={handleMobileClose}
           aria-hidden="true"
         />
       )}
@@ -357,7 +395,7 @@ export default function NavigationSidebarComponent({
 
             {/* Desktop: collapse toggle | Mobile: close button */}
             {isMobile ? (
-              <button className={styles.mobileCloseButton} onClick={onMobileClose} title="Close menu" aria-label="Close navigation menu">
+              <button className={styles.mobileCloseButton} onClick={handleMobileClose} title="Close menu" aria-label="Close navigation menu">
                 <Icons.X size={20} />
               </button>
             ) : collapsible ? (
@@ -408,5 +446,6 @@ export default function NavigationSidebarComponent({
         </div>
       </aside>
     </div>
+    </>
   );
 }
