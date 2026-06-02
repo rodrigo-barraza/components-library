@@ -5,9 +5,9 @@ import { type ReactNode } from "react";
  * Sets `data-theme` attribute on `<html>` so CSS can swap custom properties:
  *
  *   :root { --background-primary: #0a0a0f; }                    ← dark (default)
- *   [data-theme="light"]    { --background-primary: #f5f5f7; }  ← light override
+ *   [data-theme="light"]    { --background-primary: #f5f5f7; }  ← daylight override
  *   [data-theme="tropical"] { --background-primary: #1a120e; }  ← tropical override
- *   [data-theme="muted"]    { --background-primary: #dddee3; }  ← muted override
+ *   [data-theme="muted"]    { --background-primary: #dddee3; }  ← overcast override
  *   [data-theme="oceanic"]  { --background-primary: #060d18; }  ← oceanic override
  *
  * Designed for extensibility — `themes` prop accepts an array of valid theme

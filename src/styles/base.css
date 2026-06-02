@@ -145,7 +145,7 @@
   --calculated-select-option-text: #f8f8f8;
 }
 
-/* ── Theme: Light ───────────────────────────────────────────── */
+/* ── Theme: Daylight ──────────────────────────────────────── */
 
 [data-theme="light"] {
   --background-base: #f5f5f7;
@@ -186,9 +186,9 @@
   --calculated-select-option-text: #1a1a2e;
 }
 
-/* ── Theme: Muted ──────────────────────────────────────────── */
+/* ── Theme: Overcast ─────────────────────────────────────── */
 /* Desaturated warm-grey light palette — same structural intent as
-   Light but with lower luminance and contrast. Easier on the eyes
+   Daylight but with lower luminance and contrast. Easier on the eyes
    for extended sessions without going full dark. */
 
 [data-theme="muted"] {

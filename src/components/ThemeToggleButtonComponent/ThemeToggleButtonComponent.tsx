@@ -18,8 +18,8 @@ export interface ThemeToggleButtonComponentProps {
  */
 const DEFAULT_ICON_MAP: Record<string, ThemeIcon> = {
   dark: "Sun",
-  light: "CloudFog",
-  muted: "Palmtree",
+  light: "CloudFog",  // Overcast
+  muted: "Palmtree",  // Tropical
   tropical: "Waves",
   oceanic: "Waves",
   punk: "Moon",

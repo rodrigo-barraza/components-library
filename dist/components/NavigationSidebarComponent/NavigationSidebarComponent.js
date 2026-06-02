@@ -164,7 +164,7 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
     const hasThemePicker = Boolean(themes?.length && setTheme);
     // Legacy: THEME_META for backward-compatible single-button toggle
     const THEME_META = {
-        dark: { nextLabel: "Light", NextIcon: Icons.Sun, title: "Switch to light mode" },
+        dark: { nextLabel: "Daylight", NextIcon: Icons.Sun, title: "Switch to daylight mode" },
         light: { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
         tropical: { nextLabel: "Oceanic", NextIcon: Icons.Waves, title: "Switch to oceanic mode" },
         oceanic: { nextLabel: "Punk", NextIcon: Icons.Skull, title: "Switch to punk mode" },

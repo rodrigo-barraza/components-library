@@ -110,11 +110,11 @@ describe("ThemeProvider", () => {
     expect(screen.getByTestId("theme").textContent).toBe("dark");
   });
 
-  it("setTheme accepts muted, tropical, and oceanic via toggle cycle", async () => {
+  it("setTheme accepts muted (overcast), tropical, and oceanic via toggle cycle", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    // Cycle dark → light → muted → tropical → oceanic
+    // Cycle dark → daylight → overcast → tropical → oceanic
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("light");
     await user.click(screen.getByTestId("toggle"));

@@ -8,8 +8,8 @@ import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
  */
 const DEFAULT_ICON_MAP = {
     dark: "Sun",
-    light: "CloudFog",
-    muted: "Palmtree",
+    light: "CloudFog", // Overcast
+    muted: "Palmtree", // Tropical
     tropical: "Waves",
     oceanic: "Waves",
     punk: "Moon",

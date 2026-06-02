@@ -8,9 +8,9 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo, t
  * Sets `data-theme` attribute on `<html>` so CSS can swap custom properties:
  *
  *   :root { --background-primary: #0a0a0f; }                    ← dark (default)
- *   [data-theme="light"]    { --background-primary: #f5f5f7; }  ← light override
+ *   [data-theme="light"]    { --background-primary: #f5f5f7; }  ← daylight override
  *   [data-theme="tropical"] { --background-primary: #1a120e; }  ← tropical override
- *   [data-theme="muted"]    { --background-primary: #dddee3; }  ← muted override
+ *   [data-theme="muted"]    { --background-primary: #dddee3; }  ← overcast override
  *   [data-theme="oceanic"]  { --background-primary: #060d18; }  ← oceanic override
  *
  * Designed for extensibility — `themes` prop accepts an array of valid theme
@@ -72,14 +72,14 @@ export const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
     info: "#3b82f6",
   },
   light: {
-    label: "Light",
+    label: "Daylight",
     icon: "Sun",
     backgroundBase: "#f5f5f7",
     backgroundSurface: "#ffffff",
     backgroundElevated: "#edeef2",
-    primary: "#4f46e5",
-    secondary: "#e11d48",
-    tertiary: "#f59e0b",
+    primary: "#1a1a1a",
+    secondary: "#4a4a4a",
+    tertiary: "#787878",
     textPrimary: "#1a1a2e",
     textSecondary: "#64748b",
     textMuted: "#94a3b8",
@@ -144,14 +144,14 @@ export const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
     info: "#a78bfa",
   },
   muted: {
-    label: "Muted",
+    label: "Overcast",
     icon: "CloudFog",
     backgroundBase: "#dddee3",
     backgroundSurface: "#e8e9ed",
     backgroundElevated: "#d2d4da",
-    primary: "#7c8290",
-    secondary: "#9f7aea",
-    tertiary: "#7c8290",
+    primary: "#333333",
+    secondary: "#5a5a5a",
+    tertiary: "#808080",
     textPrimary: "#2d2d3f",
     textSecondary: "#6b7394",
     textMuted: "#949cb4",

@@ -261,7 +261,7 @@ export default function NavigationSidebarComponent({
 
   // Legacy: THEME_META for backward-compatible single-button toggle
   const THEME_META: Record<string, { nextLabel: string; NextIcon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>; title: string }> = {
-    dark:     { nextLabel: "Light",    NextIcon: Icons.Sun,      title: "Switch to light mode" },
+    dark:     { nextLabel: "Daylight", NextIcon: Icons.Sun,      title: "Switch to daylight mode" },
     light:    { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
     tropical: { nextLabel: "Oceanic",  NextIcon: Icons.Waves,    title: "Switch to oceanic mode" },
     oceanic:  { nextLabel: "Punk",     NextIcon: Icons.Skull,    title: "Switch to punk mode" },
