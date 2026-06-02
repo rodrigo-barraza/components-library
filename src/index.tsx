@@ -128,11 +128,8 @@ export {
 } from "./utils/datePresets.js";
 export type { DatePreset, DateRange } from "./utils/datePresets.js";
 export {
-  formatBytes,
   formatPercent,
-  formatDuration,
   formatCurrency,
-  formatCompact,
 } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
 

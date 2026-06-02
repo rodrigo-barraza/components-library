@@ -1,11 +1,13 @@
 import { describe, it, expect } from "vitest";
 import {
-  formatBytes,
   formatPercent,
-  formatDuration,
   formatCurrency,
-  formatCompact,
 } from "../src/utils/formatters.ts";
+import {
+  formatBytes,
+  formatDuration,
+  formatCompact,
+} from "@rodrigo-barraza/utilities-library";
 
 // ── formatBytes ────────────────────────────────────────────────
 

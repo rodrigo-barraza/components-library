@@ -1,4 +1,3 @@
-export { formatBytes, formatDuration, formatCompact } from "@rodrigo-barraza/utilities-library";
 /**
  * Format a percentage with adaptive precision (components-library default).
  * Wraps the utilities-library version with "adaptive" as the default mode.
