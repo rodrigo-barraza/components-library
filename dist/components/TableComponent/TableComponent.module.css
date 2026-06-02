@@ -112,14 +112,6 @@
   &.clickable {
     cursor: pointer;
   }
-
-  &:hover td {
-    background: rgba(99, 102, 241, 0.06);
-  }
-
-  &:hover td:first-child {
-    background: rgba(99, 102, 241, 0.10);
-  }
 }
 
 /* Currently selected / active row — .tr qualifier boosts specificity above zebra-stripe :nth-child(even) */
@@ -190,6 +182,17 @@
 /* Sorted-column highlight preserved on even rows */
 .tr:nth-child(even) .tdSorted {
   background: rgba(99, 102, 241, 0.06);
+}
+
+/* ── Row hover (placed after zebra rules so hover always wins via cascade) ── */
+
+.tr:hover td,
+.tr:hover .tdName {
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.tr:hover td:first-child {
+  background: rgba(99, 102, 241, 0.10);
 }
 
 /* Expandable row */
