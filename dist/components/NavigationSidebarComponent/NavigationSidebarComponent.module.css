@@ -4,7 +4,7 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--accent-primary, #6366f1);
+  background: var(--accent-surface, #6366f1);
   border-right: 1px solid var(--sidebar-contrast-border, rgba(255, 255, 255, 0.15));
   gap: 8px;
   animation: slideIn var(--transition-normal, 0.3s) ease-out;
@@ -440,7 +440,7 @@
 }
 
 .mobileHamburgerButton.mobileHamburgerButtonOpen {
-  background: var(--accent-primary, #6366f1);
+  background: var(--accent-surface, #6366f1);
   color: white;
   border-color: transparent;
   box-shadow:

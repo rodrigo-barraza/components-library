@@ -8,7 +8,7 @@
   justify-content: space-between;
   padding: 0;
   border-block-end: 1px solid var(--header-contrast-border, var(--calculated-border-color));
-  background: var(--accent-primary);
+  background: var(--accent-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   font-weight: 500;
@@ -197,7 +197,7 @@
   border-block-end: 1px solid var(--header-contrast-border, var(--calculated-border-color));
   font-size: var(--font-size-xs);
   color: var(--header-contrast-color-muted, rgba(255, 255, 255, 0.55));
-  background: var(--accent-primary);
+  background: var(--accent-surface);
   flex-shrink: 0;
   min-block-size: 28px;
   overflow-inline: auto;

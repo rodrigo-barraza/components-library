@@ -83,6 +83,11 @@
   --background-elevated-contrast: var(--calculated-background-elevated-contrast, rgba(255, 255, 255, 0.92));
   --accent-primary-contrast: var(--calculated-accent-primary-contrast, rgba(255, 255, 255, 0.92));
 
+  /* Accent Surface — background fill for large accent-colored containers
+     (sidebar, header). Defaults to accent-primary; themes where the accent
+     is too bright/light for a container fill can override this separately. */
+  --accent-surface: var(--calculated-accent-surface, var(--accent-primary));
+
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -633,6 +638,10 @@
   --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
   --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
   --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
+
+  /* Accent surface — near-black container fill for sidebar/header,
+     while --accent-primary stays at 65% for foreground readability. */
+  --calculated-accent-surface: oklch(22.0% 0.0 0.0);
 
   --calculated-border-color: rgba(255, 255, 255, 0.07);
   --calculated-border-subtle: rgba(255, 255, 255, 0.03);
