@@ -34,10 +34,7 @@
   inset-block: 0;
   inset-inline-start: 0;
   border-radius: 20px;
-  background: var(
-    --calculated-accent-primary-subtle,
-    color-mix(in srgb, var(--accent-primary, oklch(0.65 0.15 270)) 14%, transparent)
-  );
+  background: var(--accent-primary, oklch(0.65 0.15 270));
   pointer-events: none;
   z-index: 0;
   will-change: translate, width;
@@ -120,7 +117,7 @@
 /* ── Selected state ──────────────────────────────────────────────────── */
 
 .segment-button.is-selected-state {
-  color: var(--accent-primary, oklch(0.65 0.15 270));
+  color: var(--accent-primary-contrast, rgba(255, 255, 255, 0.92));
   font-weight: 600;
 }
 
