@@ -1,7 +1,13 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useMemo } from "react";
 import styles from "./InputComponent.module.css";
+
+const SIZE_CLASS_MAP: Record<string, string> = {
+  sm: "sizeSmall",
+  md: "sizeMedium",
+  lg: "sizeLarge",
+};
 
 /**
  * InputComponent — styled text input with consistent theming.
@@ -27,9 +33,14 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
   },
   ref,
 ) {
+  const sizeClassName = useMemo(() => {
+    const mappedClass = SIZE_CLASS_MAP[size ?? "md"];
+    return mappedClass ? styles[mappedClass] : styles.sizeMedium;
+  }, [size]);
+
   const classes = [
     styles.wrapper,
-    styles[size],
+    sizeClassName,
     disabled ? styles.isDisabledState : "",
     Icon ? styles.hasIcon : "",
     className,

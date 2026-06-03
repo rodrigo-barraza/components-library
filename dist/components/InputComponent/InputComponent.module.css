@@ -35,7 +35,7 @@
 }
 
 .sizeMedium {
-  height: var(--input-height, 36px);
+  height: var(--input-height);
 }
 
 .sizeMedium .input {
