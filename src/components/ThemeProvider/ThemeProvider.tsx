@@ -269,6 +269,24 @@ export const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
     warning: "#fcd34d",
     info: "#93c5fd",
   },
+  twilight: {
+    label: "Twilight",
+    icon: "Eclipse",
+    backgroundBase: "#0c0d12",
+    backgroundSurface: "#15161e",
+    backgroundElevated: "#1e1f2a",
+    primary: "#2a2b36",
+    secondary: "#4a4c5a",
+    tertiary: "#6b6e80",
+    textPrimary: "#e2e4ea",
+    textSecondary: "#8a8fa0",
+    textMuted: "#44475a",
+    borderColor: "#ffffff",
+    success: "#10b981",
+    danger: "#ef4444",
+    warning: "#f59e0b",
+    info: "#3b82f6",
+  },
 };
 
 export interface ThemeContextValue {
@@ -281,7 +299,7 @@ export interface ThemeContextValue {
   addThemes: (names: string[]) => void;
 }
 
-const THEMES_DEFAULT = ["dark", "light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal"];
+const THEMES_DEFAULT = ["dark", "light", "twilight", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal"];
 
 const ThemeContext = createContext<ThemeContextValue>({
   theme: "dark",

@@ -618,6 +618,51 @@
   --calculated-select-option-text: #dcdcf8;
 }
 
+/* ── Theme: Twilight ─────────────────────────────────────── */
+/* Dark-mode sibling of Daylight — cool neutral surfaces with
+   desaturated silver accents. The sidebar renders dark because
+   the accent is achromatic gray, mirroring how Daylight achieves
+   its dark sidebar with black accents over light backgrounds. */
+
+[data-theme="twilight"] {
+  --background-base: #0c0d12;
+  --background-surface: #15161e;
+  --background-elevated: #1e1f2a;
+
+  --calculated-background-base-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+
+  --calculated-border-color: rgba(255, 255, 255, 0.07);
+  --calculated-border-subtle: rgba(255, 255, 255, 0.03);
+  --calculated-border-medium: rgba(255, 255, 255, 0.1);
+  --calculated-border-strong: rgba(255, 255, 255, 0.15);
+
+  --text-primary: #e2e4ea;
+  --text-secondary: #8a8fa0;
+  --text-tertiary: #5e6274;
+  --text-muted: #44475a;
+  --calculated-text-inverse: #0c0d12;
+
+  --color-danger: #ef4444;
+  --calculated-color-danger-subtle: rgba(239, 68, 68, 0.1);
+  --color-success: #10b981;
+  --calculated-color-success-subtle: rgba(16, 185, 129, 0.1);
+  --color-warning: #f59e0b;
+  --calculated-color-warning-subtle: rgba(245, 158, 11, 0.1);
+  --color-info: #3b82f6;
+  --calculated-color-info-subtle: rgba(59, 130, 246, 0.1);
+
+  --calculated-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --calculated-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --calculated-select-bg: rgba(12, 13, 18, 0.6);
+  --calculated-select-option-bg: #15161e;
+  --calculated-select-option-text: #e2e4ea;
+}
+
 /* Grayscale filter — applied at root for full-page desaturation.
    Uses GPU-composited filter pipeline; contrast(1.05) compensates
    for the perceptual flattening that grayscale introduces. */
