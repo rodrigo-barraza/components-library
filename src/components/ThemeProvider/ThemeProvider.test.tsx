@@ -54,11 +54,11 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("toggles through all 10 default themes and wraps around", async () => {
+  it("toggles through all 12 default themes and wraps around", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    const expectedCycle = ["light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "dark"];
+    const expectedCycle = ["light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal", "dark"];
 
     for (const expected of expectedCycle) {
       await user.click(screen.getByTestId("toggle"));

@@ -23,7 +23,7 @@
  */
 export function generateThemeInitScript(
   storageKey: string,
-  validThemes: string[] = ["light", "dark", "tropical", "oceanic", "punk"],
+  validThemes: string[] = ["light", "dark", "tropical", "oceanic", "punk", "midnight", "regal"],
   customThemesKey?: string,
 ): string {
   const themeList = JSON.stringify(validThemes);

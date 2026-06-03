@@ -8,11 +8,13 @@ import IconButtonComponent from "../IconButtonComponent/IconButtonComponent.js";
  */
 const DEFAULT_ICON_MAP = {
     dark: "Sun",
-    light: "CloudFog", // Overcast
-    muted: "Palmtree", // Tropical
+    light: "CloudFog",
+    muted: "Palmtree",
     tropical: "Waves",
     oceanic: "Waves",
     punk: "Moon",
+    midnight: "Crown",
+    regal: "Moon",
 };
 const DEFAULT_LABEL_MAP = {
     dark: "light",
@@ -21,6 +23,8 @@ const DEFAULT_LABEL_MAP = {
     tropical: "oceanic",
     oceanic: "punk",
     punk: "dark",
+    midnight: "regal",
+    regal: "dark",
 };
 /**
  * ThemeToggleButtonComponent — one-click theme cycling button.

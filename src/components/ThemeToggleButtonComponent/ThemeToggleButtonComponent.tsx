@@ -18,11 +18,13 @@ export interface ThemeToggleButtonComponentProps {
  */
 const DEFAULT_ICON_MAP: Record<string, ThemeIcon> = {
   dark: "Sun",
-  light: "CloudFog",  // Overcast
-  muted: "Palmtree",  // Tropical
+  light: "CloudFog",
+  muted: "Palmtree",
   tropical: "Waves",
   oceanic: "Waves",
   punk: "Moon",
+  midnight: "Crown",
+  regal: "Moon",
 };
 
 const DEFAULT_LABEL_MAP: Record<string, string> = {
@@ -32,6 +34,8 @@ const DEFAULT_LABEL_MAP: Record<string, string> = {
   tropical: "oceanic",
   oceanic: "punk",
   punk: "dark",
+  midnight: "regal",
+  regal: "dark",
 };
 
 /**
