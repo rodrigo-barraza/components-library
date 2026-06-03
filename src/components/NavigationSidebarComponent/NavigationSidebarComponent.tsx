@@ -150,8 +150,8 @@ export default function NavigationSidebarComponent({
   }, [storageKey]);
 
   const toggleCollapse = useCallback(() => {
-    setCollapsed((prev) => {
-      const next = !prev;
+    setCollapsed((previousCollapsedState) => {
+      const next = !previousCollapsedState;
       if (storageKey) {
         // eslint-disable-next-line no-empty
         try { localStorage.setItem(storageKey, String(next)); } catch {}
@@ -384,7 +384,7 @@ export default function NavigationSidebarComponent({
         
         {/* Brand */}
         {(brandIcon || brandLabel) && (
-          <div className={styles.brand}>
+          <header className={styles.brand}>
             {typeof brandIcon === "string" ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={brandIcon} alt={brandLabel || "Brand"} className={styles.brandIconImg} />
@@ -395,21 +395,34 @@ export default function NavigationSidebarComponent({
 
             {/* Desktop: collapse toggle | Mobile: close button */}
             {isMobile ? (
-              <button className={styles.mobileCloseButton} onClick={handleMobileClose} title="Close menu" aria-label="Close navigation menu">
+              <button
+                type="button"
+                className={styles.mobileCloseButton}
+                onClick={handleMobileClose}
+                title="Close menu"
+                aria-label="Close navigation menu"
+              >
                 <Icons.X size={20} />
               </button>
             ) : collapsible ? (
-              <button className={styles.collapseButton} onClick={toggleCollapse} title="Toggle Sidebar">
+              <button
+                type="button"
+                className={styles.collapseButton}
+                onClick={toggleCollapse}
+                title="Toggle Sidebar"
+                aria-label="Collapse navigation sidebar"
+                aria-expanded={!collapsed}
+              >
                 <Icons.ChevronsLeft size={16} />
               </button>
             ) : null}
-          </div>
+          </header>
         )}
 
         {/* Nav List */}
         <nav className={styles.navigationList}>
-          {resolvedSections.map((section, sectionIdx) => (
-            <React.Fragment key={section.label || sectionIdx}>
+          {resolvedSections.map((section, sectionIndex) => (
+            <React.Fragment key={section.label || sectionIndex}>
               {/* Section divider — only rendered when label is truthy */}
               {section.label && (
                 <div className={styles.navigationDivider}>
@@ -422,7 +435,7 @@ export default function NavigationSidebarComponent({
         </nav>
 
         {/* Bottom Actions */}
-        <div className={styles.bottomActions}>
+        <footer className={styles.bottomActions}>
           {bottomActions}
           {hasThemePicker ? (
             <ThemePickerComponent
@@ -434,16 +447,18 @@ export default function NavigationSidebarComponent({
           ) : onToggleTheme ? (
              <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={isMobile || !collapsed} className={styles.tooltipFill}>
               <button
+                type="button"
                 className={styles.themeToggle}
                 onClick={onToggleTheme}
                 title={themeMeta.title}
+                aria-label={themeMeta.title}
               >
                 <themeMeta.NextIcon size={18} strokeWidth={1.8} className={styles.navigationIcon} />
                 <span className={styles.themeLabel}>{themeMeta.nextLabel}</span>
               </button>
             </TooltipComponent>
           ) : null}
-        </div>
+        </footer>
       </aside>
     </div>
     </>

@@ -58,7 +58,7 @@ describe("ThemeProvider", () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    const expectedCycle = ["light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal", "dark"];
+    const expectedCycle = ["light", "twilight", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal", "dark"];
 
     for (const expected of expectedCycle) {
       await user.click(screen.getByTestId("toggle"));
@@ -72,7 +72,7 @@ describe("ThemeProvider", () => {
     renderWithTheme({ storageKey: "test:theme" });
 
     await user.click(screen.getByTestId("toggle"));
-    expect(JSON.parse(localStorage.getItem("test:theme"))).toBe("light");
+    expect(JSON.parse(localStorage.getItem("test:theme") || "null")).toBe("light");
   });
 
   it("hydrates from localStorage on mount", async () => {
@@ -114,9 +114,11 @@ describe("ThemeProvider", () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    // Cycle dark → daylight → overcast → tropical → oceanic
+    // Cycle dark → daylight → twilight → overcast → tropical → oceanic
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("light");
+    await user.click(screen.getByTestId("toggle"));
+    expect(screen.getByTestId("theme").textContent).toBe("twilight");
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("muted");
     expect(document.documentElement.getAttribute("data-theme")).toBe("muted");

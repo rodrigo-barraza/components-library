@@ -48,7 +48,7 @@ export interface ThemeContextValue {
     themes: string[];
     mounted: boolean;
     toggleTheme: () => void;
-    setTheme: (theme: string | ((prev: string) => string)) => void;
+    setTheme: (theme: string | ((previousTheme: string) => string)) => void;
     /** Dynamically register additional theme names (e.g. custom user themes) */
     addThemes: (names: string[]) => void;
 }

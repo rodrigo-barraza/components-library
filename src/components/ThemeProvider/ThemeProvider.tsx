@@ -294,7 +294,7 @@ export interface ThemeContextValue {
   themes: string[];
   mounted: boolean;
   toggleTheme: () => void;
-  setTheme: (theme: string | ((prev: string) => string)) => void;
+  setTheme: (theme: string | ((previousTheme: string) => string)) => void;
   /** Dynamically register additional theme names (e.g. custom user themes) */
   addThemes: (names: string[]) => void;
 }
@@ -383,7 +383,7 @@ export function ThemeProvider({
   }, [theme, mounted, attribute, storageKey]);
 
   const setTheme = useCallback(
-    (next: string | ((prev: string) => string)) => {
+    (next: string | ((previousTheme: string) => string)) => {
       const resolved = typeof next === "function" ? next(theme) : next;
       if (isValidTheme(resolved)) {
         setThemeState(resolved);
@@ -394,16 +394,16 @@ export function ThemeProvider({
 
   // Cycle to the next theme in the ordered list (built-in only for simplicity)
   const toggleTheme = useCallback(() => {
-    setThemeState((prev) => {
-      const index = themes.indexOf(prev);
+    setThemeState((previousTheme) => {
+      const index = themes.indexOf(previousTheme);
       return themes[(index + 1) % themes.length];
     });
   }, [themes]);
 
   // Dynamically register additional theme names
   const addThemes = useCallback((names: string[]) => {
-    setExtraThemes((prev) => {
-      const next = new Set([...prev, ...names]);
+    setExtraThemes((previousThemes) => {
+      const next = new Set([...previousThemes, ...names]);
       return Array.from(next);
     });
   }, []);

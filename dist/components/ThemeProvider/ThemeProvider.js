@@ -301,15 +301,15 @@ export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "dark",
     }, [theme, isValidTheme]);
     // Cycle to the next theme in the ordered list (built-in only for simplicity)
     const toggleTheme = useCallback(() => {
-        setThemeState((prev) => {
-            const index = themes.indexOf(prev);
+        setThemeState((previousTheme) => {
+            const index = themes.indexOf(previousTheme);
             return themes[(index + 1) % themes.length];
         });
     }, [themes]);
     // Dynamically register additional theme names
     const addThemes = useCallback((names) => {
-        setExtraThemes((prev) => {
-            const next = new Set([...prev, ...names]);
+        setExtraThemes((previousThemes) => {
+            const next = new Set([...previousThemes, ...names]);
             return Array.from(next);
         });
     }, []);
