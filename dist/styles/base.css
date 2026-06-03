@@ -620,9 +620,9 @@
 
 /* ── Theme: Twilight ─────────────────────────────────────── */
 /* Dark-mode sibling of Daylight — cool neutral surfaces with
-   desaturated silver accents. The sidebar renders dark because
-   the accent is achromatic gray, mirroring how Daylight achieves
-   its dark sidebar with black accents over light backgrounds. */
+   desaturated silver-gray accents (~65% lightness). Accent is
+   bright enough for foreground readability (text, icons, active
+   states) while remaining achromatic and visually neutral. */
 
 [data-theme="twilight"] {
   --background-base: #0c0d12;
@@ -632,7 +632,7 @@
   --calculated-background-base-contrast: rgba(255, 255, 255, 0.92);
   --calculated-background-surface-contrast: rgba(255, 255, 255, 0.92);
   --calculated-background-elevated-contrast: rgba(255, 255, 255, 0.92);
-  --calculated-accent-primary-contrast: rgba(255, 255, 255, 0.92);
+  --calculated-accent-primary-contrast: rgba(0, 0, 0, 0.87);
 
   --calculated-border-color: rgba(255, 255, 255, 0.07);
   --calculated-border-subtle: rgba(255, 255, 255, 0.03);
