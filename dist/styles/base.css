@@ -59,6 +59,7 @@
   --font-size-xl: 1.25rem;
 
   /* Border Radii */
+  --border-radius: 20px;
   --border-radius-sm: 2px;
   --border-radius-md: 2px;
   --border-radius-lg: 2px;

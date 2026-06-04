@@ -16,7 +16,7 @@
   position: relative;
   display: inline-flex;
   align-items: stretch;
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   overflow: hidden;
   isolation: isolate;
   vertical-align: middle;
@@ -67,7 +67,7 @@
 .leading {
   gap: 8px;
   padding: 10px 24px;
-  border-radius: 20px 0 0 20px;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 /* When leading has an icon alongside text, left padding reduces */
@@ -88,7 +88,7 @@
 
 .trailing {
   padding: 10px 12px;
-  border-radius: 0 20px 20px 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
   min-width: 48px;
 }
 
@@ -298,11 +298,11 @@
 
 /* Outlined needs inner border-radius adjustments for the border */
 .outlined .leading {
-  border-radius: 19px 0 0 19px;
+  border-radius: calc(var(--border-radius) - 1px) 0 0 calc(var(--border-radius) - 1px);
 }
 
 .outlined .trailing {
-  border-radius: 0 19px 19px 0;
+  border-radius: 0 calc(var(--border-radius) - 1px) calc(var(--border-radius) - 1px) 0;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -366,14 +366,14 @@
 
 .small {
   min-height: 32px;
-  border-radius: 16px;
+  border-radius: calc(var(--border-radius) * 0.8);
 }
 
 .small .leading {
   padding: 6px 16px;
   font-size: 12px;
   line-height: 16px;
-  border-radius: 16px 0 0 16px;
+  border-radius: calc(var(--border-radius) * 0.8) 0 0 calc(var(--border-radius) * 0.8);
 }
 
 .small .leading.hasIcon {
@@ -388,7 +388,7 @@
 .small .trailing {
   padding: 6px 8px;
   min-width: 36px;
-  border-radius: 0 16px 16px 0;
+  border-radius: 0 calc(var(--border-radius) * 0.8) calc(var(--border-radius) * 0.8) 0;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -398,14 +398,14 @@
 
 .large {
   min-height: 48px;
-  border-radius: 24px;
+  border-radius: calc(var(--border-radius) * 1.2);
 }
 
 .large .leading {
   padding: 14px 32px;
   font-size: 16px;
   line-height: 24px;
-  border-radius: 24px 0 0 24px;
+  border-radius: calc(var(--border-radius) * 1.2) 0 0 calc(var(--border-radius) * 1.2);
 }
 
 .large .leading.hasIcon {
@@ -420,7 +420,7 @@
 .large .trailing {
   padding: 14px 16px;
   min-width: 56px;
-  border-radius: 0 24px 24px 0;
+  border-radius: 0 calc(var(--border-radius) * 1.2) calc(var(--border-radius) * 1.2) 0;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -529,17 +529,17 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 .outlined.small .leading {
-  border-radius: 15px 0 0 15px;
+  border-radius: calc(var(--border-radius) * 0.8 - 1px) 0 0 calc(var(--border-radius) * 0.8 - 1px);
 }
 
 .outlined.small .trailing {
-  border-radius: 0 15px 15px 0;
+  border-radius: 0 calc(var(--border-radius) * 0.8 - 1px) calc(var(--border-radius) * 0.8 - 1px) 0;
 }
 
 .outlined.large .leading {
-  border-radius: 23px 0 0 23px;
+  border-radius: calc(var(--border-radius) * 1.2 - 1px) 0 0 calc(var(--border-radius) * 1.2 - 1px);
 }
 
 .outlined.large .trailing {
-  border-radius: 0 23px 23px 0;
+  border-radius: 0 calc(var(--border-radius) * 1.2 - 1px) calc(var(--border-radius) * 1.2 - 1px) 0;
 }
