@@ -8,7 +8,7 @@
   color: var(--text-muted);
   font-size: 11px;
   padding: 2px 4px;
-  border-radius: var(--border-radius);
+  border-radius: var(--button-border-radius);
   transition:
     color 0.15s ease,
     background 0.15s ease;

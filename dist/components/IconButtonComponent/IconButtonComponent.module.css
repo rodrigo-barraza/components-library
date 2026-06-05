@@ -6,7 +6,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  border-radius: var(--border-radius);
+  border-radius: var(--button-border-radius);
   background: transparent;
   border: none;
   color: var(--text-muted);

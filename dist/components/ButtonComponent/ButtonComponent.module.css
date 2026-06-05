@@ -24,7 +24,7 @@
   line-height: 20px;
   letter-spacing: 0.01em;
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: var(--button-border-radius);
   cursor: pointer;
   white-space: nowrap;
   min-height: 40px;
@@ -389,7 +389,7 @@
   color: white;
   flex-shrink: 0;
   gap: 0;
-  border-radius: var(--border-radius);
+  border-radius: var(--button-border-radius);
 }
 
 .submit .stateLayer {
@@ -477,7 +477,7 @@
   padding: 6px 16px;
   font-size: 12px;
   line-height: 16px;
-  border-radius: calc(var(--border-radius) * 0.8);
+  border-radius: calc(var(--button-border-radius) * 0.8);
 }
 
 .small.hasIcon {
@@ -496,7 +496,7 @@
   padding: 14px 32px;
   font-size: 16px;
   line-height: 24px;
-  border-radius: calc(var(--border-radius) * 1.2);
+  border-radius: calc(var(--button-border-radius) * 1.2);
 }
 
 .large.hasIcon {
