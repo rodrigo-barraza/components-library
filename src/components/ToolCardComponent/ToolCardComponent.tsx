@@ -33,7 +33,13 @@ export default function ToolCardComponent({
   return (
     <div className={classes} onClick={onClick}>
       <div className={styles.header}>
-        {emoji && <span className={styles.emoji}>{emoji}</span>}
+        {emoji && (
+          emoji.startsWith("http") ? (
+            <img src={emoji} alt={name} className={styles.emojiImage} />
+          ) : (
+            <span className={styles.emoji}>{emoji}</span>
+          )
+        )}
         <div className={styles.titleBlock}>
           <span className={styles.name}>{name}</span>
           {domain && <span className={styles.domain}>{domain}</span>}

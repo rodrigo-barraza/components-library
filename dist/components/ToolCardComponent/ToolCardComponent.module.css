@@ -39,6 +39,13 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
 }
 
+.emojiImage {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
 .titleBlock {
   display: flex;
   align-items: flex-start;
