@@ -171,8 +171,8 @@ function deriveFullCSS(tokens) {
         `--calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, ${lightMode ? 0.12 : 0.5});`,
         ``,
         `/* Select (calculated) */`,
-        `--calculated-select-bg: ${lightMode ? surface : hexToRgba(surface, 0.65)};`,
-        `--calculated-select-option-bg: ${surface};`,
+        `--calculated-select-background-color: ${lightMode ? surface : hexToRgba(surface, 0.65)};`,
+        `--calculated-select-option-background-color: ${surface};`,
         `--calculated-select-option-text: ${textPrimary};`,
     ];
     return lines.join("\n  ");

@@ -39,12 +39,12 @@
 /* ── Filled variant ──────────────────────────────── */
 
 .filled .fieldContainer {
-  background: var(--surface-container-highest, var(--calculated-select-bg));
+  background: var(--surface-container-highest, var(--calculated-select-background-color));
   border-radius: var(--border-radius-sm, 4px) var(--border-radius-sm, 4px) 0 0;
 }
 
 .filled .fieldContainer:hover {
-  background: color-mix(in srgb, var(--text-primary, #1c1b1f) 8%, var(--surface-container-highest, var(--calculated-select-bg)));
+  background: color-mix(in srgb, var(--text-primary, #1c1b1f) 8%, var(--surface-container-highest, var(--calculated-select-background-color)));
 }
 
 /* Active indicator — the bottom line for filled variant */

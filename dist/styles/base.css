@@ -147,8 +147,8 @@
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
   /* Select */
-  --calculated-select-bg: rgba(0, 0, 0, 0.4);
-  --calculated-select-option-bg: #1a1b26;
+  --calculated-select-background-color: rgba(0, 0, 0, 0.4);
+  --calculated-select-option-background-color: #1a1b26;
   --calculated-select-option-text: #f8f8f8;
 }
 
@@ -188,8 +188,8 @@
   --calculated-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
 
-  --calculated-select-bg: #ffffff;
-  --calculated-select-option-bg: #ffffff;
+  --calculated-select-background-color: #ffffff;
+  --calculated-select-option-background-color: #ffffff;
   --calculated-select-option-text: #1a1a2e;
 }
 
@@ -232,8 +232,8 @@
   --calculated-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
 
-  --calculated-select-bg: #e8e9ed;
-  --calculated-select-option-bg: #e8e9ed;
+  --calculated-select-background-color: #e8e9ed;
+  --calculated-select-option-background-color: #e8e9ed;
   --calculated-select-option-text: #2c2e36;
 }
 
@@ -273,8 +273,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
 
-  --calculated-select-bg: rgba(36, 26, 20, 0.65);
-  --calculated-select-option-bg: #241a14;
+  --calculated-select-background-color: rgba(36, 26, 20, 0.65);
+  --calculated-select-option-background-color: #241a14;
   --calculated-select-option-text: #faebd7;
 }
 
@@ -314,8 +314,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
-  --calculated-select-bg: rgba(11, 22, 40, 0.65);
-  --calculated-select-option-bg: #0b1628;
+  --calculated-select-background-color: rgba(11, 22, 40, 0.65);
+  --calculated-select-option-background-color: #0b1628;
   --calculated-select-option-text: #d0e8f2;
 }
 
@@ -358,8 +358,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
 
-  --calculated-select-bg: rgba(23, 17, 25, 0.65);
-  --calculated-select-option-bg: #171119;
+  --calculated-select-background-color: rgba(23, 17, 25, 0.65);
+  --calculated-select-option-background-color: #171119;
   --calculated-select-option-text: #f0e6f4;
 }
 
@@ -401,8 +401,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
 
-  --calculated-select-bg: rgba(28, 20, 16, 0.65);
-  --calculated-select-option-bg: #1c1410;
+  --calculated-select-background-color: rgba(28, 20, 16, 0.65);
+  --calculated-select-option-background-color: #1c1410;
   --calculated-select-option-text: #f5ebe0;
 }
 
@@ -444,8 +444,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
-  --calculated-select-bg: rgba(17, 24, 32, 0.65);
-  --calculated-select-option-bg: #111820;
+  --calculated-select-background-color: rgba(17, 24, 32, 0.65);
+  --calculated-select-option-background-color: #111820;
   --calculated-select-option-text: #dce8f0;
 }
 
@@ -487,8 +487,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
 
-  --calculated-select-bg: rgba(16, 26, 16, 0.65);
-  --calculated-select-option-bg: #101a10;
+  --calculated-select-background-color: rgba(16, 26, 16, 0.65);
+  --calculated-select-option-background-color: #101a10;
   --calculated-select-option-text: #e2f0e2;
 }
 
@@ -532,8 +532,8 @@
   --calculated-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
 
-  --calculated-select-bg: rgba(26, 26, 26, 0.65);
-  --calculated-select-option-bg: #1a1a1a;
+  --calculated-select-background-color: rgba(26, 26, 26, 0.65);
+  --calculated-select-option-background-color: #1a1a1a;
   --calculated-select-option-text: #e8e8e8;
 }
 
@@ -576,8 +576,8 @@
   --calculated-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
 
-  --calculated-select-bg: rgba(0, 0, 0, 0.6);
-  --calculated-select-option-bg: #0a0a0a;
+  --calculated-select-background-color: rgba(0, 0, 0, 0.6);
+  --calculated-select-option-background-color: #0a0a0a;
   --calculated-select-option-text: #e4e4e8;
 }
 
@@ -620,8 +620,8 @@
   --calculated-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
 
-  --calculated-select-bg: rgba(16, 24, 56, 0.65);
-  --calculated-select-option-bg: #101838;
+  --calculated-select-background-color: rgba(16, 24, 56, 0.65);
+  --calculated-select-option-background-color: #101838;
   --calculated-select-option-text: #dcdcf8;
 }
 
@@ -669,8 +669,8 @@
   --calculated-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
   --calculated-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
 
-  --calculated-select-bg: rgba(12, 13, 18, 0.6);
-  --calculated-select-option-bg: #15161e;
+  --calculated-select-background-color: rgba(12, 13, 18, 0.6);
+  --calculated-select-option-background-color: #15161e;
   --calculated-select-option-text: #e2e4ea;
 }
 
@@ -759,7 +759,7 @@ textarea:focus {
 }
 
 select option {
-  background: var(--calculated-select-option-bg);
+  background: var(--calculated-select-option-background-color);
   color: var(--calculated-select-option-text);
 }
 
