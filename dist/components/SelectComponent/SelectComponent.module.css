@@ -328,7 +328,7 @@
   margin-block-end: 4px;
   border-block-end: 1px solid var(--calculated-border-color);
 
-  & > [role="search"] {
+  & > :first-child {
     height: 36px;
     padding: 0 6px 0 10px;
     border-radius: 0;

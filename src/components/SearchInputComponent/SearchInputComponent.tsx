@@ -261,7 +261,6 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
           inputRef.current?.focus();
           if (hasSuggestions && !expanded) expand();
         }}
-        role="search"
       >
         {/* Leading icon */}
         <span className={styles.leadingIcon}>

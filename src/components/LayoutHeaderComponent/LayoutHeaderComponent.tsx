@@ -87,6 +87,7 @@ export interface LayoutHeaderToggleButtonProps {
 
 export interface LayoutHeaderComponentProps {
   title?: string | ReactNode;
+  titleBadge?: ReactNode;
   onBack?: () => void;
   leadingToggle?: LayoutHeaderToggleButtonProps;
   trailingToggle?: LayoutHeaderToggleButtonProps;
@@ -102,6 +103,7 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
   function LayoutHeaderComponent(
     {
       title,
+      titleBadge,
       onBack,
       leadingToggle,
       trailingToggle,
@@ -225,6 +227,7 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
               <h1 className={styles["header-page-title"]}>
                 {getHeaderTitleIcon(title)}
                 {typeof title === "string" ? <span>{title}</span> : title}
+                {titleBadge}
               </h1>
               <div className={styles["header-identity-end"]} />
             </div>

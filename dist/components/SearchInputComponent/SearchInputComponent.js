@@ -125,7 +125,7 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
                     inputRef.current?.focus();
                     if (hasSuggestions && !expanded)
                         expand();
-                }, role: "search", children: [_jsx("span", { className: styles.leadingIcon, children: leadingIcon || defaultLeadingIcon }), _jsx("input", { ref: setInputRef, type: "search", className: styles.searchField, value: value, onChange: handleChange, onFocus: () => {
+                }, children: [_jsx("span", { className: styles.leadingIcon, children: leadingIcon || defaultLeadingIcon }), _jsx("input", { ref: setInputRef, type: "search", className: styles.searchField, value: value, onChange: handleChange, onFocus: () => {
                             if (hasSuggestions && !expanded)
                                 expand();
                         }, onKeyDown: (e) => {

@@ -9,6 +9,7 @@ export interface LayoutHeaderToggleButtonProps {
 }
 export interface LayoutHeaderComponentProps {
     title?: string | ReactNode;
+    titleBadge?: ReactNode;
     onBack?: () => void;
     leadingToggle?: LayoutHeaderToggleButtonProps;
     trailingToggle?: LayoutHeaderToggleButtonProps;
