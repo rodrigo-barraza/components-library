@@ -49,9 +49,9 @@ export default function RadioComponent<T extends string | number | boolean = str
   const checked = value === selectedValue;
 
   const rootClasses = [
-    styles.radio,
+    styles['radio'],
     disabled && styles['is-disabled-state'],
-    error && styles.error,
+    error && styles['error'],
     labelPlacement === "start" && styles['label-start'],
     className,
   ]
@@ -59,7 +59,7 @@ export default function RadioComponent<T extends string | number | boolean = str
     .join(" ");
 
   const circleClasses = [
-    styles.circle,
+    styles['circle'],
     checked && styles['is-selected-state'],
     error && styles['error-circle'],
   ]
@@ -71,7 +71,7 @@ export default function RadioComponent<T extends string | number | boolean = str
       className={rootClasses}
       onMouseEnter={(event) => sound && SoundService.playHoverButton({ event })}
     >
-      <span className={styles.container}>
+      <span className={styles['container']}>
         <input
           type="radio"
           id={id}
@@ -91,7 +91,7 @@ export default function RadioComponent<T extends string | number | boolean = str
           {/* Selected: 10×10px inner dot with scale-in animation */}
           {checked && (
             <span
-              className={`${styles.dot}${error ? ` ${styles['error-dot']}` : ""}`}
+              className={`${styles['dot']}${error ? ` ${styles['error-dot']}` : ""}`}
             />
           )}
         </span>
@@ -100,7 +100,7 @@ export default function RadioComponent<T extends string | number | boolean = str
         <span className={styles['state-layer']} />
       </span>
 
-      {label && <span className={styles.label}>{label}</span>}
+      {label && <span className={styles['label']}>{label}</span>}
     </label>
   );
 }
@@ -125,8 +125,8 @@ RadioComponent.Group = function RadioGroupComponent({
   children,
 }: RadioGroupComponentProps) {
   const groupClasses = [
-    styles.group,
-    orientation === "horizontal" && styles.horizontal,
+    styles['group'],
+    orientation === "horizontal" && styles['horizontal'],
     className,
   ]
     .filter(Boolean)

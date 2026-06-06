@@ -39,7 +39,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
   }, [size]);
 
   const classes = [
-    styles.wrapper,
+    styles['wrapper'],
     sizeClassName,
     disabled ? styles['is-disabled-state'] : "",
     Icon ? styles['has-icon'] : "",
@@ -59,7 +59,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
         ref={ref}
         id={id}
         type={type}
-        className={styles.input}
+        className={styles['input']}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -73,7 +73,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
   if (label) {
     return (
       <div className={styles['label-wrapper']}>
-        <span className={styles.label}>{label}</span>
+        <span className={styles['label']}>{label}</span>
         {inputEl}
       </div>
     );

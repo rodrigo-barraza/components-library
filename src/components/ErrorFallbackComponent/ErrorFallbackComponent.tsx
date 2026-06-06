@@ -35,10 +35,10 @@ export default function ErrorFallbackComponent({
   }, [error, logLabel]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.icon}>{icon}</div>
-      <h2 className={styles.title}>{title}</h2>
-      <p className={styles.message}>
+    <div className={styles['container']}>
+      <div className={styles['icon']}>{icon}</div>
+      <h2 className={styles['title']}>{title}</h2>
+      <p className={styles['message']}>
         {error?.message || "An unexpected error occurred."}
       </p>
       <button className={styles['retry-button']} onClick={reset}>

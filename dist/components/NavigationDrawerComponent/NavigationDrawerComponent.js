@@ -93,7 +93,7 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
     const isModal = variant === "modal";
     const isEnd = anchor === "end";
     const drawerClasses = [
-        styles.drawer,
+        styles['drawer'],
         styles[variant],
         isEnd && styles['anchor-end'],
         isModal && open && styles['is-open-state'],
@@ -103,13 +103,13 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
     ]
         .filter(Boolean)
         .join(" ");
-    const drawerEl = (_jsxs("nav", { ref: drawerRef, role: "navigation", "aria-label": ariaLabel, "aria-hidden": !open, className: drawerClasses, style: style, ...rest, children: [headline && _jsx("div", { className: styles.headline, children: headline }), _jsx("div", { className: styles.content, children: children })] }));
+    const drawerEl = (_jsxs("nav", { ref: drawerRef, role: "navigation", "aria-label": ariaLabel, "aria-hidden": !open, className: drawerClasses, style: style, ...rest, children: [headline && _jsx("div", { className: styles['headline'], children: headline }), _jsx("div", { className: styles['content'], children: children })] }));
     // ── Modal variant: wrap with scrim ──────────────────────────────
     if (isModal) {
-        return (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.scrim}${open ? ` ${styles['is-open-state']}` : ""}`, onClick: onClose, "aria-hidden": "true" }), drawerEl] }));
+        return (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['scrim']}${open ? ` ${styles['is-open-state']}` : ""}`, onClick: onClose, "aria-hidden": "true" }), drawerEl] }));
     }
     // ── Standard variant: inline ────────────────────────────────────
-    return _jsx("div", { className: styles.wrapper, children: drawerEl });
+    return _jsx("div", { className: styles['wrapper'], children: drawerEl });
 }
 /**
  * DrawerItem — individual navigation destination.
@@ -119,7 +119,7 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
  */
 function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false, href, onClick, LinkComponent, className, children, ...rest }) {
     const classes = [
-        styles.item,
+        styles['item'],
         active && styles['is-active-state'],
         disabled && styles['is-disabled-state'],
         className,
@@ -156,13 +156,13 @@ function DrawerSectionHeader({ className, children }) {
  * DrawerDivider — horizontal visual separator between sections.
  */
 function DrawerDivider({ className }) {
-    return (_jsx("div", { role: "separator", className: `${styles.divider}${className ? ` ${className}` : ""}` }));
+    return (_jsx("div", { role: "separator", className: `${styles['divider']}${className ? ` ${className}` : ""}` }));
 }
 /**
  * DrawerFooter — bottom-pinned slot for actions or secondary content.
  */
 function DrawerFooter({ className, children }) {
-    return (_jsx("div", { className: `${styles.footer}${className ? ` ${className}` : ""}`, children: children }));
+    return (_jsx("div", { className: `${styles['footer']}${className ? ` ${className}` : ""}`, children: children }));
 }
 /* ── Attach sub-components ───────────────────────────────────────── */
 NavigationDrawerComponent.Item = DrawerItem;

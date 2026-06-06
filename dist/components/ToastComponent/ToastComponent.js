@@ -39,9 +39,9 @@ export function useToast(defaultDuration = 3500) {
 export default function ToastComponent({ toasts = [], onRemove }) {
     if (!toasts.length)
         return null;
-    return (_jsx("div", { className: styles.container, id: "toast-container", children: toasts.map((toast) => {
+    return (_jsx("div", { className: styles['container'], id: "toast-container", children: toasts.map((toast) => {
             const Icon = ICONS[toast.type] || Info;
-            return (_jsxs("div", { className: `${styles.toast} ${styles[toast.type] || ""}`, children: [_jsx(Icon, { size: 16, className: styles.icon }), _jsx("span", { className: styles.message, children: toast.message }), onRemove && (_jsx("button", { className: styles.close, onClick: () => onRemove(toast.id), "aria-label": "Dismiss", children: _jsx(X, { size: 14 }) }))] }, toast.id));
+            return (_jsxs("div", { className: `${styles['toast']} ${styles[toast.type] || ""}`, children: [_jsx(Icon, { size: 16, className: styles['icon'] }), _jsx("span", { className: styles['message'], children: toast.message }), onRemove && (_jsx("button", { className: styles['close'], onClick: () => onRemove(toast.id), "aria-label": "Dismiss", children: _jsx(X, { size: 14 }) }))] }, toast.id));
         }) }));
 }
 //# sourceMappingURL=ToastComponent.js.map

@@ -122,7 +122,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
     const y = event.clientY - rect.top - size / 2;
 
     const ripple = document.createElement("span");
-    ripple.className = styles.ripple;
+    ripple.className = styles['ripple'];
     ripple.style.width = `${size}px`;
     ripple.style.height = `${size}px`;
     ripple.style.left = `${x}px`;
@@ -263,14 +263,14 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
 
   const containerClasses = [
     styles['fab-menu'],
-    fixed ? styles.fixed : "",
+    fixed ? styles['fixed'] : "",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
   const triggerClasses = [
-    styles.trigger,
+    styles['trigger'],
     variantMap[variant] || variantMap.primary,
     isOpen ? styles['is-open-state'] : "",
   ]
@@ -286,7 +286,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
       {/* Scrim overlay */}
       {showScrim && (
         <div
-          className={styles.scrim}
+          className={styles['scrim']}
           data-visible={isOpen}
           aria-hidden="true"
           onClick={close}

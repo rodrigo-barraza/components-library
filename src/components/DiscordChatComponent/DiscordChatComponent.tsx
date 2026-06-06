@@ -380,7 +380,7 @@ function formatContent(content: string | undefined, cleanContent: string | undef
           );
         }
         if (seg.startsWith("@")) {
-          return <span key={i} className={styles.mention}>{seg}</span>;
+          return <span key={i} className={styles['mention']}>{seg}</span>;
         }
         if (/^https?:\/\//.test(seg)) {
           if (TENOR_URL_RE.test(seg)) { TENOR_URL_RE.lastIndex = 0; return null; }
@@ -455,7 +455,7 @@ function TenorEmbed({ url, tenorOembedUrl }: { url: string; tenorOembedUrl: stri
 function TenorEmbeds({ content, tenorOembedUrl }: { content?: string; tenorOembedUrl: string }) {
   const urls = extractTenorUrls(content || "");
   if (!urls.length) return null;
-  return <div className={styles.attachments}>{urls.map((url: string, i: number) => <TenorEmbed key={i} url={url} tenorOembedUrl={tenorOembedUrl} />)}</div>;
+  return <div className={styles['attachments']}>{urls.map((url: string, i: number) => <TenorEmbed key={i} url={url} tenorOembedUrl={tenorOembedUrl} />)}</div>;
 }
 
 // ── Image Attachments ────────────────────────────────────────────
@@ -464,7 +464,7 @@ function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }
   const images = attachments.filter((attachment: DiscordAttachment) => attachment.contentType?.startsWith("image/") && (attachment.url || attachment.proxyURL));
   if (!images.length) return null;
   return (
-    <div className={styles.attachments}>
+    <div className={styles['attachments']}>
       {images.map((image: DiscordAttachment, i: number) => {
         const imageSource = image.proxyURL || image.url;
         const maxW = 400, maxH = 300;
@@ -704,7 +704,7 @@ function AudioAttachments({ attachments }: { attachments?: DiscordAttachment[] }
   );
   if (!audioList.length) return null;
   return (
-    <div className={styles.attachments}>
+    <div className={styles['attachments']}>
       {audioList.map((audio: DiscordAttachment, i: number) => (
         <VoiceMessagePlayer key={i} attachment={audio} />
       ))}
@@ -1236,7 +1236,7 @@ function Reactions({ reactions, messageId, reactedSet, onReact }: ReactionsProps
   // Show nothing if no existing reactions
   if (!reactions?.length) return null;
   return (
-    <div className={styles.reactions}>
+    <div className={styles['reactions']}>
       {reactions.map((reaction: DiscordReaction, i: number) => {
         const emoji = reaction.emoji;
         const emojiIdentifier = emoji.id ? `${emoji.name}:${emoji.id}` : emoji.name;
@@ -1731,7 +1731,7 @@ export default function DiscordChatComponent({
   }, [pickerMessageId, handleReact, handleClosePicker]);
 
   return (
-    <div className={styles.container} id="discord-chat">
+    <div className={styles['container']} id="discord-chat">
       {/* ── Title Bar ─────────────────────────────────────────── */}
       <div className={styles['title-bar']}>
         <div className={styles['traffic-lights']}>
@@ -1861,7 +1861,7 @@ export default function DiscordChatComponent({
               </div>
             )}
             {!!error && (
-              <div className={styles.error}>
+              <div className={styles['error']}>
                 <span className={styles['error-icon']}>⚠️</span>
                 <span>Couldn&apos;t load messages</span>
               </div>
@@ -1909,7 +1909,7 @@ export default function DiscordChatComponent({
                           <ReplyContext replyTo={message.replyTo} messageMap={messageMap} />
                         )}
                         {message.author.avatarUrl ? (
-                          <img className={styles.avatar} src={message.author.avatarUrl}
+                          <img className={styles['avatar']} src={message.author.avatarUrl}
                             alt={message.author.displayName} width={40} height={40} loading="lazy" />
                         ) : (
                           <div className={styles['avatar-fallback']} style={{ background: getAvatarColor(message.author.id) }}>
@@ -1936,7 +1936,7 @@ export default function DiscordChatComponent({
                             )}
                             <UserBadges badges={message.author.badges} />
                             <RoleTags roleTags={message.author.roleTags} />
-                            <span className={styles.timestamp}>{formatTimestamp(message.createdAtISO)}</span>
+                            <span className={styles['timestamp']}>{formatTimestamp(message.createdAtISO)}</span>
                           </div>
                           <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
                           <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />

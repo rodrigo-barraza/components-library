@@ -32,21 +32,21 @@ export default function ToolCardComponent({
 
   return (
     <div className={classes} onClick={onClick}>
-      <div className={styles.header}>
+      <div className={styles['header']}>
         {emoji && (
           emoji.startsWith("http") ? (
             <img src={emoji} alt={name} className={styles['emoji-image']} />
           ) : (
-            <span className={styles.emoji}>{emoji}</span>
+            <span className={styles['emoji']}>{emoji}</span>
           )
         )}
         <div className={styles['title-block']}>
-          <span className={styles.name}>{name}</span>
-          {domain && <span className={styles.domain}>{domain}</span>}
+          <span className={styles['name']}>{name}</span>
+          {domain && <span className={styles['domain']}>{domain}</span>}
         </div>
       </div>
-      <div className={styles.description}>{description}</div>
-      {children && <div className={styles.footer}>{children}</div>}
+      <div className={styles['description']}>{description}</div>
+      {children && <div className={styles['footer']}>{children}</div>}
     </div>
   );
 }

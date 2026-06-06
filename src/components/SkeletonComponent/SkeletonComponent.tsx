@@ -35,9 +35,9 @@ export default function SkeletonComponent({
     value == null ? undefined : typeof value === "number" ? `${value}px` : value;
 
   const baseClass = [
-    styles.skeleton,
+    styles['skeleton'],
     styles[variant],
-    animate && styles.animate,
+    animate && styles['animate'],
     className,
   ]
     .filter(Boolean)
@@ -100,7 +100,7 @@ export function SkeletonGroup({
 }: SkeletonGroupProps) {
   return (
     <div
-      className={`${styles.group} ${className}`}
+      className={`${styles['group']} ${className}`}
       style={{ gap, flexDirection: direction as React.CSSProperties['flexDirection'] }}
       role="status"
       aria-label="Loading content"

@@ -25,7 +25,7 @@ const MenuDepthContext = createContext(0);
 //  M3: 1px height, outline-variant color, 8px vertical margin
 // ──────────────────────────────────────────────────────────────────
 export function MenuDivider() {
-  return <div className={styles.divider} role="separator" />;
+  return <div className={styles['divider']} role="separator" />;
 }
 
 // ──────────────────────────────────────────────────────────────────
@@ -123,7 +123,7 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
         </span>
       )}
 
-      <span className={styles.label}>{children}</span>
+      <span className={styles['label']}>{children}</span>
 
       {trailingText && (
         <span className={styles['trailing-text']}>{trailingText}</span>
@@ -275,7 +275,7 @@ export function SubMenu({
               {leadingIcon}
             </span>
           )}
-          <span className={styles.label}>{label}</span>
+          <span className={styles['label']}>{label}</span>
           <span className={styles['submenu-arrow']} aria-hidden="true">
             {chevronSvg}
           </span>
@@ -565,7 +565,7 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
   }[position] || styles['position-bottom-start'];
 
   const surfaceClasses = [
-    styles.surface,
+    styles['surface'],
     positionClass,
     matchWidth ? styles['match-width'] : "",
     className,
@@ -595,7 +595,7 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
   return (
     <div
       ref={setAnchorRef}
-      className={styles.anchor}
+      className={styles['anchor']}
       onKeyDown={handleKeyDown}
       {...rest}
     >

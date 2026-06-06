@@ -9,10 +9,10 @@ import styles from "./StatusDotComponent.module.css";
  */
 export default function StatusDotComponent({ variant = "healthy", size = "md", pulse = true, className = "", ...rest }) {
     const classes = [
-        styles.dot,
+        styles['dot'],
         styles[size],
         styles[variant],
-        pulse ? styles.pulse : "",
+        pulse ? styles['pulse'] : "",
         className,
     ]
         .filter(Boolean)

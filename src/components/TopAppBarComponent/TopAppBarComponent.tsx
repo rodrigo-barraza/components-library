@@ -127,24 +127,24 @@ export default function TopAppBarComponent({
   // Variant class mapping
   const variantClass = (({
     "center-aligned": styles['center-aligned'],
-    small: styles.small,
-    medium: styles.medium,
-    large: styles.large,
-  }) as Record<string, string>)[variant] || styles.small;
+    small: styles['small'],
+    medium: styles['medium'],
+    large: styles['large'],
+  }) as Record<string, string>)[variant] || styles['small'];
 
   // Position class
   const positionClass =
     position === "fixed"
-      ? styles.fixed
+      ? styles['fixed']
       : position === "sticky"
-        ? styles.sticky
+        ? styles['sticky']
         : "";
 
   const rootClasses = [
     styles['top-app-bar'],
     variantClass,
     positionClass,
-    isScrolled && styles.elevated,
+    isScrolled && styles['elevated'],
     isScrolled && isExpandable && styles['is-collapsed-state'],
     className,
   ]
@@ -181,7 +181,7 @@ export default function TopAppBarComponent({
 
         {/* Title (always present in main row; hidden for medium/large when expanded) */}
         <div className={styles['title-area']}>
-          <Heading className={styles.title}>{title}</Heading>
+          <Heading className={styles['title']}>{title}</Heading>
         </div>
 
         {/* Trailing action icons */}

@@ -262,7 +262,7 @@ export default function SnackbarComponent({
   const textOnly = !hasAction && !hasClose;
 
   const containerClass = [
-    styles.container,
+    styles['container'],
     styles[layout],
     textOnly ? styles['text-only'] : "",
     className || "",
@@ -271,7 +271,7 @@ export default function SnackbarComponent({
     .join(" ");
 
   const content = (
-    <div className={styles.host} id={`${snackbarId}-host`}>
+    <div className={styles['host']} id={`${snackbarId}-host`}>
       <div
         ref={containerRef}
         className={containerClass}
@@ -290,7 +290,7 @@ export default function SnackbarComponent({
         {hasAction && (
           <button
             type="button"
-            className={styles.action}
+            className={styles['action']}
             onClick={onAction}
             id={`${snackbarId}-action`}
           >

@@ -32,11 +32,11 @@ export default function DividerComponent({
   ...rest
 }: DividerComponentProps) {
   const classes = [
-    styles.divider,
+    styles['divider'],
     styles[orientation],
-    variant === "inset" && styles.inset,
+    variant === "inset" && styles['inset'],
     variant === "middleInset" && styles['middle-inset'],
-    spacing && spacing.length > 0 && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
+    spacing && spacing !== 'none' && styles[`spacing-${({ small: 'sm', medium: 'md', large: 'lg' } as Record<string, string>)[spacing] || spacing}`],
     className,
   ]
     .filter(Boolean)
@@ -94,9 +94,9 @@ function DividerSubheader({
   ...rest
 }: DividerSubheaderProps) {
   const classes = [
-    styles.divider,
-    styles.subheader,
-    variant === "inset" && styles.inset,
+    styles['divider'],
+    styles['subheader'],
+    variant === "inset" && styles['inset'],
     variant === "middleInset" && styles['middle-inset'],
     className,
   ]

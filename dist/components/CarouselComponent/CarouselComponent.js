@@ -134,14 +134,14 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
     }, [scrollPrev, scrollNext, scrollToIndex, itemCount]);
     // ── Root classes ──────────────────────────────────────────────
     const rootClasses = [
-        styles.carousel,
+        styles['carousel'],
         styles[layout],
         peekEdge && styles['has-peek'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { className: rootClasses, role: "region", "aria-label": ariaLabel, "aria-roledescription": "carousel", onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onKeyDown: handleKeyDown, children: [_jsx("div", { ref: trackRef, className: styles.track, role: "list", style: { gap: `${gap}px` }, children: children }), showArrows && itemCount > 1 && (_jsxs(_Fragment, { children: [_jsx("button", { className: `${styles['navigation-button']} ${styles['navigation-previous']}`, onClick: scrollPrev, disabled: !loop && !canScrollPrev, "aria-label": "Previous slide", tabIndex: -1, children: _jsx("svg", { className: styles['navigation-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M15 18L9 12L15 6" }) }) }), _jsx("button", { className: `${styles['navigation-button']} ${styles['navigation-next']}`, onClick: scrollNext, disabled: !loop && !canScrollNext, "aria-label": "Next slide", tabIndex: -1, children: _jsx("svg", { className: styles['navigation-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M9 18L15 12L9 6" }) }) })] })), showIndicators && itemCount > 1 && (_jsx("div", { className: styles.indicators, role: "tablist", "aria-label": "Carousel navigation", children: Array.from({ length: itemCount }, (_, i) => (_jsx("button", { className: `${styles.dot} ${i === activeIndex ? styles['dot-active'] : ""}`, role: "tab", "aria-selected": i === activeIndex, "aria-label": `Go to slide ${i + 1}`, onClick: () => scrollToIndex(i), tabIndex: i === activeIndex ? 0 : -1 }, i))) }))] }));
+    return (_jsxs("div", { className: rootClasses, role: "region", "aria-label": ariaLabel, "aria-roledescription": "carousel", onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onKeyDown: handleKeyDown, children: [_jsx("div", { ref: trackRef, className: styles['track'], role: "list", style: { gap: `${gap}px` }, children: children }), showArrows && itemCount > 1 && (_jsxs(_Fragment, { children: [_jsx("button", { className: `${styles['navigation-button']} ${styles['navigation-previous']}`, onClick: scrollPrev, disabled: !loop && !canScrollPrev, "aria-label": "Previous slide", tabIndex: -1, children: _jsx("svg", { className: styles['navigation-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M15 18L9 12L15 6" }) }) }), _jsx("button", { className: `${styles['navigation-button']} ${styles['navigation-next']}`, onClick: scrollNext, disabled: !loop && !canScrollNext, "aria-label": "Next slide", tabIndex: -1, children: _jsx("svg", { className: styles['navigation-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M9 18L15 12L9 6" }) }) })] })), showIndicators && itemCount > 1 && (_jsx("div", { className: styles['indicators'], role: "tablist", "aria-label": "Carousel navigation", children: Array.from({ length: itemCount }, (_, i) => (_jsx("button", { className: `${styles['dot']} ${i === activeIndex ? styles['dot-active'] : ""}`, role: "tab", "aria-selected": i === activeIndex, "aria-label": `Go to slide ${i + 1}`, onClick: () => scrollToIndex(i), tabIndex: i === activeIndex ? 0 : -1 }, i))) }))] }));
 }
 /**
  * CarouselComponent.Item — individual carousel item container.
@@ -158,7 +158,7 @@ function CarouselItem({ width, height, aspectRatio, size, onClick, className, ch
     if (aspectRatio)
         itemStyle.aspectRatio = aspectRatio;
     const classes = [
-        styles.item,
+        styles['item'],
         size === "large" && styles['item-large'],
         size === "small" && styles['item-small'],
         className,

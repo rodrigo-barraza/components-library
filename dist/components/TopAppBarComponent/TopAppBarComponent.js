@@ -46,21 +46,21 @@ export default function TopAppBarComponent({ variant = "small", title, navigatio
     // Variant class mapping
     const variantClass = ({
         "center-aligned": styles['center-aligned'],
-        small: styles.small,
-        medium: styles.medium,
-        large: styles.large,
-    })[variant] || styles.small;
+        small: styles['small'],
+        medium: styles['medium'],
+        large: styles['large'],
+    })[variant] || styles['small'];
     // Position class
     const positionClass = position === "fixed"
-        ? styles.fixed
+        ? styles['fixed']
         : position === "sticky"
-            ? styles.sticky
+            ? styles['sticky']
             : "";
     const rootClasses = [
         styles['top-app-bar'],
         variantClass,
         positionClass,
-        isScrolled && styles.elevated,
+        isScrolled && styles['elevated'],
         isScrolled && isExpandable && styles['is-collapsed-state'],
         className,
     ]
@@ -68,7 +68,7 @@ export default function TopAppBarComponent({ variant = "small", title, navigatio
         .join(" ");
     // Heading element for the title
     const Heading = `h${headingLevel}`;
-    return (_jsxs("header", { ref: barRef, role: "banner", "aria-label": ariaLabel, className: rootClasses, style: style, ...rest, children: [_jsxs("div", { className: styles['main-row'], children: [navigationIcon && (_jsx("div", { className: styles['navigation-slot'], children: _jsx("button", { type: "button", className: styles['navigation-button'], "aria-label": navigationAriaLabel, onClick: onNavigationClick, children: navigationIcon }) })), _jsx("div", { className: styles['title-area'], children: _jsx(Heading, { className: styles.title, children: title }) }), children && _jsx("div", { className: styles['actions-slot'], children: children })] }), isExpandable && (_jsx("div", { className: styles['expanded-row'], children: _jsx("span", { className: styles['expanded-title'], children: title }) })), showScrollIndicator && (_jsx("div", { className: styles['scroll-indicator'], style: { width: `${scrollProgress * 100}%` }, "aria-hidden": "true" }))] }));
+    return (_jsxs("header", { ref: barRef, role: "banner", "aria-label": ariaLabel, className: rootClasses, style: style, ...rest, children: [_jsxs("div", { className: styles['main-row'], children: [navigationIcon && (_jsx("div", { className: styles['navigation-slot'], children: _jsx("button", { type: "button", className: styles['navigation-button'], "aria-label": navigationAriaLabel, onClick: onNavigationClick, children: navigationIcon }) })), _jsx("div", { className: styles['title-area'], children: _jsx(Heading, { className: styles['title'], children: title }) }), children && _jsx("div", { className: styles['actions-slot'], children: children })] }), isExpandable && (_jsx("div", { className: styles['expanded-row'], children: _jsx("span", { className: styles['expanded-title'], children: title }) })), showScrollIndicator && (_jsx("div", { className: styles['scroll-indicator'], style: { width: `${scrollProgress * 100}%` }, "aria-hidden": "true" }))] }));
 }
 const TopAppBarAction = forwardRef(function TopAppBarAction({ icon: Icon, ariaLabel, disabled = false, onClick, className, children, ...rest }, ref) {
     const classes = [styles['action-button'], className].filter(Boolean).join(" ");

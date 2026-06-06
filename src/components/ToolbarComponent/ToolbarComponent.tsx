@@ -107,12 +107,12 @@ export default function ToolbarComponent({
   );
 
   const classes = [
-    styles.toolbar,
+    styles['toolbar'],
     styles[variant],
     styles[orientation],
-    divider && styles.divider,
-    sticky && styles.sticky,
-    elevated && styles.elevated,
+    divider && styles['divider'],
+    sticky && styles['sticky'],
+    elevated && styles['elevated'],
     className,
   ]
     .filter(Boolean)
@@ -153,7 +153,7 @@ function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupProps) {
     <div
       role="group"
       aria-label={ariaLabel}
-      className={`${styles.group}${className ? ` ${className}` : ""}`}
+      className={`${styles['group']}${className ? ` ${className}` : ""}`}
     >
       {children}
     </div>
@@ -190,7 +190,7 @@ const ToolbarItem = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTM
   ref,
 ) {
   const classes = [
-    styles.item,
+    styles['item'],
     active && styles['item-active'],
     disabled && styles['item-disabled'],
     className,
@@ -240,7 +240,7 @@ function ToolbarSeparator({ className }: ToolbarSeparatorProps) {
     <div
       role="separator"
       aria-orientation="vertical"
-      className={`${styles.separator}${className ? ` ${className}` : ""}`}
+      className={`${styles['separator']}${className ? ` ${className}` : ""}`}
     />
   );
 }
@@ -259,7 +259,7 @@ interface ToolbarTitleProps {
 
 function ToolbarTitle({ className, children }: ToolbarTitleProps) {
   return (
-    <span className={`${styles.title}${className ? ` ${className}` : ""}`}>
+    <span className={`${styles['title']}${className ? ` ${className}` : ""}`}>
       {children}
     </span>
   );
@@ -274,7 +274,7 @@ function ToolbarTitle({ className, children }: ToolbarTitleProps) {
  * when placed between groups).
  */
 function ToolbarSpacer() {
-  return <div className={styles.spacer} />;
+  return <div className={styles['spacer']} />;
 }
 
 /* ── Attach sub-components ──────────────────────────────────────── */

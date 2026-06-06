@@ -47,10 +47,10 @@ export default function CheckboxComponent({
   const isCompact = size === "compact";
 
   const rootClasses = [
-    styles.checkbox,
+    styles['checkbox'],
     isCompact && styles['is-compact-size'],
     disabled && styles['is-disabled-state'],
-    error && styles.error,
+    error && styles['error'],
     labelPlacement === "start" && styles['label-start'],
     className,
   ]
@@ -58,7 +58,7 @@ export default function CheckboxComponent({
     .join(" ");
 
   const boxClasses = [
-    styles.box,
+    styles['box'],
     (checked || indeterminate) && styles['is-selected-state'],
     error && styles['error-box'],
   ]
@@ -70,7 +70,7 @@ export default function CheckboxComponent({
       className={rootClasses}
       onMouseEnter={(e) => sound && SoundService.playHoverButton({ event: e })}
     >
-      <span className={styles.container}>
+      <span className={styles['container']}>
         <input
           type="checkbox"
           id={id}
@@ -92,7 +92,7 @@ export default function CheckboxComponent({
           {/* Checked: checkmark SVG with stroke-dashoffset draw-in */}
           {checked && !indeterminate && (
             <svg
-              className={styles.icon}
+              className={styles['icon']}
               viewBox="0 0 18 18"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ export default function CheckboxComponent({
           {/* Indeterminate: horizontal dash SVG with scaleX animation */}
           {indeterminate && (
             <svg
-              className={styles.icon}
+              className={styles['icon']}
               viewBox="0 0 18 18"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,7 @@ export default function CheckboxComponent({
         <span className={styles['state-layer']} />
       </span>
 
-      {label && <span className={styles.label}>{label}</span>}
+      {label && <span className={styles['label']}>{label}</span>}
     </label>
   );
 }

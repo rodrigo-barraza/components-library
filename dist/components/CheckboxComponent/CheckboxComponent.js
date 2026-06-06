@@ -18,29 +18,29 @@ export default function CheckboxComponent({ checked = false, onChange, label = "
     const { sound } = useComponents();
     const isCompact = size === "compact";
     const rootClasses = [
-        styles.checkbox,
+        styles['checkbox'],
         isCompact && styles['is-compact-size'],
         disabled && styles['is-disabled-state'],
-        error && styles.error,
+        error && styles['error'],
         labelPlacement === "start" && styles['label-start'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
     const boxClasses = [
-        styles.box,
+        styles['box'],
         (checked || indeterminate) && styles['is-selected-state'],
         error && styles['error-box'],
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("label", { className: rootClasses, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "checkbox", id: id, name: name, className: styles['hidden-input'], checked: checked, disabled: disabled, ref: (element) => {
+    return (_jsxs("label", { className: rootClasses, onMouseEnter: (e) => sound && SoundService.playHoverButton({ event: e }), children: [_jsxs("span", { className: styles['container'], children: [_jsx("input", { type: "checkbox", id: id, name: name, className: styles['hidden-input'], checked: checked, disabled: disabled, ref: (element) => {
                             if (element)
                                 element.indeterminate = indeterminate;
                         }, onChange: (e) => {
                             if (sound)
                                 SoundService.playClickButton({ event: e });
                             onChange(e.target.checked);
-                        } }), _jsxs("span", { className: boxClasses, "aria-hidden": "true", children: [checked && !indeterminate && (_jsx("svg", { className: styles.icon, viewBox: "0 0 18 18", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: _jsx("path", { className: styles['check-path'], d: "M4 9.5L7.5 13L14 5", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round" }) })), indeterminate && (_jsx("svg", { className: styles.icon, viewBox: "0 0 18 18", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: _jsx("path", { className: styles['dash-path'], d: "M5 9H13", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round" }) }))] }), _jsx("span", { className: styles['state-layer'] })] }), label && _jsx("span", { className: styles.label, children: label })] }));
+                        } }), _jsxs("span", { className: boxClasses, "aria-hidden": "true", children: [checked && !indeterminate && (_jsx("svg", { className: styles['icon'], viewBox: "0 0 18 18", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: _jsx("path", { className: styles['check-path'], d: "M4 9.5L7.5 13L14 5", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round" }) })), indeterminate && (_jsx("svg", { className: styles['icon'], viewBox: "0 0 18 18", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: _jsx("path", { className: styles['dash-path'], d: "M5 9H13", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round" }) }))] }), _jsx("span", { className: styles['state-layer'] })] }), label && _jsx("span", { className: styles['label'], children: label })] }));
 }
 //# sourceMappingURL=CheckboxComponent.js.map

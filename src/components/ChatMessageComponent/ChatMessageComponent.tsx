@@ -23,7 +23,7 @@ function renderMarkdownLite(text: string): ReactNode {
         if (URL_RE.test(part)) {
           URL_RE.lastIndex = 0;
           const display = part.length > 45 ? part.substring(0, 42) + "..." : part;
-          return (<a key={i} href={part} target="_blank" rel="noopener noreferrer" className={styles.link}>{display}</a>);
+          return (<a key={i} href={part} target="_blank" rel="noopener noreferrer" className={styles['link']}>{display}</a>);
         }
         return <span key={i}>{applyInlineMarkdown(part)}</span>;
       })}
@@ -47,13 +47,13 @@ function applyBoldItalic(text: string, parentKey: number): ReactNode[] {
   const boldParts = text.split(boldRe);
   return boldParts.map((seg, i) => {
     if (i % 2 === 1) {
-      return (<strong key={`${parentKey}-b-${i}`} className={styles.bold}>{seg}</strong>);
+      return (<strong key={`${parentKey}-b-${i}`} className={styles['bold']}>{seg}</strong>);
     }
     const italicRe = /\*(.+?)\*/g;
     const italicParts = seg.split(italicRe);
     return italicParts.map((s, j) => {
       if (j % 2 === 1) {
-        return (<em key={`${parentKey}-i-${i}-${j}`} className={styles.italic}>{s}</em>);
+        return (<em key={`${parentKey}-i-${i}-${j}`} className={styles['italic']}>{s}</em>);
       }
       return s;
     });
@@ -68,7 +68,7 @@ function renderWithLinks(text: string): ReactNode {
         if (URL_RE.test(part)) {
           URL_RE.lastIndex = 0;
           const display = part.length > 45 ? part.substring(0, 42) + "..." : part;
-          return (<a key={i} href={part} target="_blank" rel="noopener noreferrer" className={styles.link}>{display}</a>);
+          return (<a key={i} href={part} target="_blank" rel="noopener noreferrer" className={styles['link']}>{display}</a>);
         }
         return <span key={i}>{part}</span>;
       })}
@@ -108,7 +108,7 @@ export default function ChatMessageComponent({
 
   if (role === MESSAGE_ROLES.SYSTEM) {
     return (
-      <div className={`${styles['message-row']} ${styles.system} ${error ? styles['error-message'] : ""}`}>
+      <div className={`${styles['message-row']} ${styles['system']} ${error ? styles['error-message'] : ""}`}>
         <div className={styles['system-bubble']}>
           <p className={styles['message-text']}>{content}</p>
         </div>
@@ -119,14 +119,14 @@ export default function ChatMessageComponent({
   if (role === MESSAGE_ROLES.VISITOR) {
     return (
       <div
-        className={`${styles['message-row']} ${styles.visitor} ${isGrouped ? styles.grouped : ""}`}
+        className={`${styles['message-row']} ${styles['visitor']} ${isGrouped ? styles['grouped'] : ""}`}
         onMouseEnter={() => setShowTimestamp(true)}
         onMouseLeave={() => setShowTimestamp(false)}
       >
         <div className={styles['visitor-bubble']}>
           <p className={styles['message-text']}>{renderContent(content, role)}</p>
         </div>
-        <span className={`${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`}>
+        <span className={`${styles['timestamp']} ${showTimestamp ? styles['timestamp-visible'] : ""}`}>
           {formatTime(createdAt)}
         </span>
       </div>
@@ -135,17 +135,17 @@ export default function ChatMessageComponent({
 
   return (
     <div
-      className={`${styles['message-row']} ${styles.agent} ${isGrouped ? styles.grouped : ""} ${error ? styles['error-message'] : ""}`}
+      className={`${styles['message-row']} ${styles['agent']} ${isGrouped ? styles['grouped'] : ""} ${error ? styles['error-message'] : ""}`}
       onMouseEnter={() => setShowTimestamp(true)}
       onMouseLeave={() => setShowTimestamp(false)}
     >
       <div className={styles['agent-bubble']}>
         <p className={styles['message-text']}>
           {renderContent(content, role)}
-          {streaming && <span className={styles.cursor} />}
+          {streaming && <span className={styles['cursor']} />}
         </p>
       </div>
-      <span className={`${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`}>
+      <span className={`${styles['timestamp']} ${showTimestamp ? styles['timestamp-visible'] : ""}`}>
         {formatTime(createdAt)}
       </span>
     </div>

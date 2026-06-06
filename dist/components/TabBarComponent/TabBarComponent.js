@@ -66,7 +66,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
             const isActive = activeTab === tab.key;
             const hasIcon = !!tab.icon;
             const tabClasses = [
-                styles.tab,
+                styles['tab'],
                 isActive && styles['tab-active'],
                 tab.disabled && styles['tab-disabled'],
                 glowingTabs.includes(tab.key) && styles['tab-glow'],

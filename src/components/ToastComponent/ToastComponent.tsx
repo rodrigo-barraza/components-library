@@ -62,19 +62,19 @@ export default function ToastComponent({ toasts = [], onRemove }: ToastComponent
   if (!toasts.length) return null;
 
   return (
-    <div className={styles.container} id="toast-container">
+    <div className={styles['container']} id="toast-container">
       {toasts.map((toast) => {
         const Icon = ICONS[toast.type] || Info;
         return (
           <div
             key={toast.id}
-            className={`${styles.toast} ${styles[toast.type] || ""}`}
+            className={`${styles['toast']} ${styles[toast.type] || ""}`}
           >
-            <Icon size={16} className={styles.icon} />
-            <span className={styles.message}>{toast.message}</span>
+            <Icon size={16} className={styles['icon']} />
+            <span className={styles['message']}>{toast.message}</span>
             {onRemove && (
               <button
-                className={styles.close}
+                className={styles['close']}
                 onClick={() => onRemove(toast.id)}
                 aria-label="Dismiss"
               >

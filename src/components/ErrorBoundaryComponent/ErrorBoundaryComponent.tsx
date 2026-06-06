@@ -63,7 +63,7 @@ export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps
         <div className={styles['error-card']}>
           <div className={styles['icon-container']}>
             <svg
-              className={styles.icon}
+              className={styles['icon']}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -76,10 +76,10 @@ export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <h2 className={styles.title}>{title}</h2>
-          <p className={styles.subtitle}>{subtitle}</p>
+          <h2 className={styles['title']}>{title}</h2>
+          <p className={styles['subtitle']}>{subtitle}</p>
           {showDetails && this.state.error?.message && (
-            <pre className={styles.details}>{this.state.error.message}</pre>
+            <pre className={styles['details']}>{this.state.error.message}</pre>
           )}
           <button className={styles['retry-button']} onClick={this.handleRetry}>
             Try Again

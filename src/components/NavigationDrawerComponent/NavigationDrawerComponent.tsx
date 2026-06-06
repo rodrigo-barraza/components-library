@@ -129,7 +129,7 @@ export default function NavigationDrawerComponent({
   const isEnd = anchor === "end";
 
   const drawerClasses = [
-    styles.drawer,
+    styles['drawer'],
     styles[variant],
     isEnd && styles['anchor-end'],
     isModal && open && styles['is-open-state'],
@@ -150,8 +150,8 @@ export default function NavigationDrawerComponent({
       style={style}
       {...rest}
     >
-      {headline && <div className={styles.headline}>{headline}</div>}
-      <div className={styles.content}>{children}</div>
+      {headline && <div className={styles['headline']}>{headline}</div>}
+      <div className={styles['content']}>{children}</div>
     </nav>
   );
 
@@ -160,7 +160,7 @@ export default function NavigationDrawerComponent({
     return (
       <>
         <div
-          className={`${styles.scrim}${open ? ` ${styles['is-open-state']}` : ""}`}
+          className={`${styles['scrim']}${open ? ` ${styles['is-open-state']}` : ""}`}
           onClick={onClose}
           aria-hidden="true"
         />
@@ -170,7 +170,7 @@ export default function NavigationDrawerComponent({
   }
 
   // ── Standard variant: inline ────────────────────────────────────
-  return <div className={styles.wrapper}>{drawerEl}</div>;
+  return <div className={styles['wrapper']}>{drawerEl}</div>;
 }
 
 /* ── Item ─────────────────────────────────────────────────────────── */
@@ -210,7 +210,7 @@ function DrawerItem({
   ...rest
 }: DrawerItemProps) {
   const classes = [
-    styles.item,
+    styles['item'],
     active && styles['is-active-state'],
     disabled && styles['is-disabled-state'],
     className,
@@ -304,7 +304,7 @@ function DrawerDivider({ className }: DrawerDividerProps) {
   return (
     <div
       role="separator"
-      className={`${styles.divider}${className ? ` ${className}` : ""}`}
+      className={`${styles['divider']}${className ? ` ${className}` : ""}`}
     />
   );
 }
@@ -321,7 +321,7 @@ export interface DrawerFooterProps {
  */
 function DrawerFooter({ className, children }: DrawerFooterProps) {
   return (
-    <div className={`${styles.footer}${className ? ` ${className}` : ""}`}>
+    <div className={`${styles['footer']}${className ? ` ${className}` : ""}`}>
       {children}
     </div>
   );

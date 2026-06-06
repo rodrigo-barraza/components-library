@@ -174,7 +174,7 @@ export default function CarouselComponent({
 
   // ── Root classes ──────────────────────────────────────────────
   const rootClasses = [
-    styles.carousel,
+    styles['carousel'],
     styles[layout],
     peekEdge && styles['has-peek'],
     className,
@@ -195,7 +195,7 @@ export default function CarouselComponent({
       {/* Scroll track */}
       <div
         ref={trackRef}
-        className={styles.track}
+        className={styles['track']}
         role="list"
         style={{ gap: `${gap}px` }}
       >
@@ -232,11 +232,11 @@ export default function CarouselComponent({
 
       {/* Dot indicators */}
       {showIndicators && itemCount > 1 && (
-        <div className={styles.indicators} role="tablist" aria-label="Carousel navigation">
+        <div className={styles['indicators']} role="tablist" aria-label="Carousel navigation">
           {Array.from({ length: itemCount }, (_, i) => (
             <button
               key={i}
-              className={`${styles.dot} ${i === activeIndex ? styles['dot-active'] : ""}`}
+              className={`${styles['dot']} ${i === activeIndex ? styles['dot-active'] : ""}`}
               role="tab"
               aria-selected={i === activeIndex}
               aria-label={`Go to slide ${i + 1}`}
@@ -280,7 +280,7 @@ function CarouselItem({
   if (aspectRatio) itemStyle.aspectRatio = aspectRatio;
 
   const classes = [
-    styles.item,
+    styles['item'],
     size === "large" && styles['item-large'],
     size === "small" && styles['item-small'],
     className,

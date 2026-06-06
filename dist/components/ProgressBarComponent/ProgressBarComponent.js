@@ -24,26 +24,26 @@ export default function ProgressBarComponent({ value, variant = "accent", size =
         return () => cancelAnimationFrame(raf);
     }, [clampedValue, isIndeterminate]);
     const classes = [
-        styles.wrapper,
+        styles['wrapper'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
     const trackClasses = [
-        styles.track,
+        styles['track'],
         styles[size],
     ]
         .filter(Boolean)
         .join(" ");
     const barClasses = [
-        styles.bar,
+        styles['bar'],
         styles[variant],
-        isIndeterminate && styles.indeterminate,
-        animated && !isIndeterminate && styles.animated,
-        striped && styles.striped,
+        isIndeterminate && styles['indeterminate'],
+        animated && !isIndeterminate && styles['animated'],
+        striped && styles['striped'],
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { className: classes, ...rest, children: [(label || showValue) && (_jsxs("div", { className: styles.header, children: [label && _jsx("span", { className: styles.label, children: label }), showValue && !isIndeterminate && (_jsxs("span", { className: styles.value, children: [Math.round(clampedValue), "%"] }))] })), _jsx("div", { ref: trackRef, className: trackClasses, role: "progressbar", "aria-valuenow": isIndeterminate ? undefined : clampedValue, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": label || "Progress", children: _jsx("div", { className: barClasses, style: isIndeterminate ? undefined : { width: `${displayValue}%` } }) })] }));
+    return (_jsxs("div", { className: classes, ...rest, children: [(label || showValue) && (_jsxs("div", { className: styles['header'], children: [label && _jsx("span", { className: styles['label'], children: label }), showValue && !isIndeterminate && (_jsxs("span", { className: styles['value'], children: [Math.round(clampedValue), "%"] }))] })), _jsx("div", { ref: trackRef, className: trackClasses, role: "progressbar", "aria-valuenow": isIndeterminate ? undefined : clampedValue, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": label || "Progress", children: _jsx("div", { className: barClasses, style: isIndeterminate ? undefined : { width: `${displayValue}%` } }) })] }));
 }
 //# sourceMappingURL=ProgressBarComponent.js.map

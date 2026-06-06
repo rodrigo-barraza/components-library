@@ -87,11 +87,11 @@ export default function ChatPanelComponent({
 
   return (
     <div
-      className={`${styles.panel} ${isOpen ? styles['panel-open'] : styles['panel-closed']}`}
+      className={`${styles['panel']} ${isOpen ? styles['panel-open'] : styles['panel-closed']}`}
       id="chat-panel"
     >
       {/* ── Header ─────────────────────────────────────────── */}
-      <div className={styles.header}>
+      <div className={styles['header']}>
         <div className={styles['header-info']}>
           {operatorAvatar ? (
             <img
@@ -162,7 +162,7 @@ export default function ChatPanelComponent({
       <ChatInputComponent onSend={onSend} isTyping={isTyping} />
 
       {/* ── Footer ─────────────────────────────────────────── */}
-      <div className={styles.footer}>
+      <div className={styles['footer']}>
         <span className={styles['footer-text']}>
           Powered by <span className={styles['footer-brand']}>Chat</span>
         </span>

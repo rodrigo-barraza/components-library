@@ -25,14 +25,14 @@ export default function ChatLauncherComponent({
 }: ChatLauncherComponentProps) {
   return (
     <button
-      className={`${styles.launcher} ${isOpen ? styles['is-open-state'] : ""}`}
+      className={`${styles['launcher']} ${isOpen ? styles['is-open-state'] : ""}`}
       onClick={onClick}
       aria-label={isOpen ? "Close chat" : "Open chat"}
       id="chat-launcher"
     >
       {/* Chat icon — visible when closed */}
       <svg
-        className={`${styles.icon} ${styles['chat-icon']} ${isOpen ? styles['icon-hidden'] : ""}`}
+        className={`${styles['icon']} ${styles['chat-icon']} ${isOpen ? styles['icon-hidden'] : ""}`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -45,7 +45,7 @@ export default function ChatLauncherComponent({
 
       {/* Close icon — visible when open */}
       <svg
-        className={`${styles.icon} ${styles['close-icon']} ${isOpen ? "" : styles['icon-hidden']}`}
+        className={`${styles['icon']} ${styles['close-icon']} ${isOpen ? "" : styles['icon-hidden']}`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -59,7 +59,7 @@ export default function ChatLauncherComponent({
 
       {/* Unread badge */}
       {unreadCount > 0 && !isOpen && (
-        <span className={styles.badge} id="chat-unread-badge">
+        <span className={styles['badge']} id="chat-unread-badge">
           {unreadCount > 9 ? "9+" : unreadCount}
         </span>
       )}

@@ -35,10 +35,10 @@
 }
 
 /* Size presets */
-.size_sm { width: 400px; }
-.size_md { width: 540px; }
-.size_lg { width: 720px; }
-.size_xl { width: 900px; }
+.size-sm { width: 400px; }
+.size-md { width: 540px; }
+.size-lg { width: 720px; }
+.size-xl { width: 900px; }
 
 /* ── Header ─────────────────────────────────────────── */
 

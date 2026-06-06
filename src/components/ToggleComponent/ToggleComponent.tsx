@@ -36,7 +36,7 @@ export default function ToggleComponent({
 
   return (
     <label
-      className={`${styles.toggle} ${disabled ? styles['is-disabled-state'] : ""} ${isMini ? styles.mini : ""}`}
+      className={`${styles['toggle']} ${disabled ? styles['is-disabled-state'] : ""} ${isMini ? styles['mini'] : ""}`}
       onMouseEnter={(e) => sound && SoundService.playHoverButton({ event: e })}
     >
       <input
@@ -47,13 +47,13 @@ export default function ToggleComponent({
         onChange={(e) => { if (sound) SoundService.playClickButton({ event: e }); onChange(e.target.checked); }}
       />
       <span
-        className={`${styles.track} ${checked ? styles['is-active-state'] : ""}`}
+        className={`${styles['track']} ${checked ? styles['is-active-state'] : ""}`}
         role="switch"
         aria-checked={checked}
       >
-        <span className={styles.knob} />
+        <span className={styles['knob']} />
       </span>
-      {label && <span className={styles.label}>{label}</span>}
+      {label && <span className={styles['label']}>{label}</span>}
     </label>
   );
 }

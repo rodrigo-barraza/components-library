@@ -100,7 +100,7 @@ export default function ThemePickerComponent({
   const triggerButton = (
     <button
       ref={triggerRef}
-      className={styles.trigger}
+      className={styles['trigger']}
       onClick={() => setOpen((previous) => !previous)}
       title="Change theme"
       type="button"
@@ -121,7 +121,7 @@ export default function ThemePickerComponent({
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.wrapper} ${collapsed ? styles['is-collapsed-state'] : ""} ${className || ""}`}
+      className={`${styles['wrapper']} ${collapsed ? styles['is-collapsed-state'] : ""} ${className || ""}`}
     >
       {/* Trigger — wrap in tooltip when collapsed so user sees the theme label */}
       {collapsed ? (
@@ -136,7 +136,7 @@ export default function ThemePickerComponent({
       {open && (
         <div
           ref={popoverRef}
-          className={`${styles.popover} ${collapsed ? styles['popover-flyout'] : ""}`}
+          className={`${styles['popover']} ${collapsed ? styles['popover-flyout'] : ""}`}
           style={collapsed ? popoverStyle : undefined}
         >
           <div className={styles['popover-header']}>Theme</div>

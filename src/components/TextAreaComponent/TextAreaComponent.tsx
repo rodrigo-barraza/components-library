@@ -54,7 +54,7 @@ export default function TextAreaComponent({
     onChange?.(event);
   };
 
-  const classes = [styles.textarea, className || ""].filter(Boolean).join(" ");
+  const classes = [styles['textarea'], className || ""].filter(Boolean).join(" ");
 
   return (
     <textarea

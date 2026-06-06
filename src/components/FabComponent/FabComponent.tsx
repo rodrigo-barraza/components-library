@@ -104,19 +104,19 @@ const FabComponent = forwardRef<HTMLButtonElement, FabComponentProps>(function F
 
   /* ── Build class list ───────────────────────────────────────────── */
   const classes = [
-    styles.fab,
+    styles['fab'],
     /* Size */
-    size === "small" ? styles.small : "",
-    size === "large" ? styles.large : "",
+    size === "small" ? styles['small'] : "",
+    size === "large" ? styles['large'] : "",
     /* Color */
-    styles[color] || styles.primary,
+    styles[color] || styles['primary'],
     /* Extended */
-    isExtended ? styles.extended : "",
+    isExtended ? styles['extended'] : "",
     isExtended && !Icon ? styles['extended-no-icon'] : "",
     /* Lowered elevation */
-    lowered ? styles.lowered : "",
+    lowered ? styles['lowered'] : "",
     /* Fixed positioning */
-    fixed ? styles.fixed : "",
+    fixed ? styles['fixed'] : "",
     fixed ? positionClass : "",
     /* Scroll-hide */
     hidden ? styles['is-hidden-state'] : "",
@@ -151,7 +151,7 @@ const FabComponent = forwardRef<HTMLButtonElement, FabComponentProps>(function F
       {ripples.map((ripple) => (
         <span
           key={ripple.id}
-          className={styles.ripple}
+          className={styles['ripple']}
           style={{
             width: ripple.diameter,
             height: ripple.diameter,
@@ -163,13 +163,13 @@ const FabComponent = forwardRef<HTMLButtonElement, FabComponentProps>(function F
 
       {/* Icon */}
       {Icon && (
-        <span className={styles.icon}>
+        <span className={styles['icon']}>
           <Icon size={computedIconSize} />
         </span>
       )}
 
       {/* Extended label */}
-      {isExtended && <span className={styles.label}>{label}</span>}
+      {isExtended && <span className={styles['label']}>{label}</span>}
     </button>
   );
 });

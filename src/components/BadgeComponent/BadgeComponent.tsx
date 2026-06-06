@@ -355,7 +355,7 @@ export default function BadgeComponent(props: BadgeProps) {
     const { variant = "info", children, className = "", mini = false, tooltip, ...rest } = props;
     const badgeElement = (
       <span
-        className={`${styles.badge} ${styles[variant] || ""} ${mini ? styles.mini : ""} ${className}`}
+        className={`${styles['badge']} ${styles[variant] || ""} ${mini ? styles['mini'] : ""} ${className}`}
         {...rest}
       >
         {children}
@@ -382,7 +382,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles.info} ${styles['mono-font']} ${styles['address-badge']} ${className}`}
+          className={`${styles['badge']} ${styles['info']} ${styles['mono-font']} ${styles['address-badge']} ${className}`}
           {...rest}
         >
           {displayAddress}
@@ -420,7 +420,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles[variantValue]} ${styles['status-badge']} ${className}`}
+          className={`${styles['badge']} ${styles[variantValue]} ${styles['status-badge']} ${className}`}
           {...rest}
         >
           <StatusDotComponent
@@ -449,7 +449,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles[variant] || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`}
+          className={`${styles['badge']} ${styles[variant] || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`}
           {...rest}
         >
           :{port}
@@ -484,7 +484,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles.info} ${styles['mono-font']} ${styles['repository-badge']} ${className}`}
+          className={`${styles['badge']} ${styles['info']} ${styles['mono-font']} ${styles['repository-badge']} ${className}`}
           {...rest}
         >
           {Github && <Github size={9} strokeWidth={2.2} />}
@@ -520,7 +520,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles.info} ${styles['device-badge']} ${className}`}
+          className={`${styles['badge']} ${styles['info']} ${styles['device-badge']} ${className}`}
           {...rest}
         >
           {Server && <Server size={9} strokeWidth={2.2} />}
@@ -544,7 +544,7 @@ export default function BadgeComponent(props: BadgeProps) {
       const isCountDisabled = disabled || count === 0;
 
       const stateClassName = rainbow
-        ? styles.rainbow
+        ? styles['rainbow']
         : isCountDisabled
           ? styles['state-disabled']
           : state === "new"
@@ -579,7 +579,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles[responseTier.variant]} ${styles['mono-font']} ${styles['response-time-badge']} ${className}`}
+          className={`${styles['badge']} ${styles[responseTier.variant]} ${styles['mono-font']} ${styles['response-time-badge']} ${className}`}
           {...rest}
         >
           <span className={styles['response-time-dot']} data-tier={responseTier.variant} />
@@ -608,7 +608,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles.accent} ${styles['mono-font']} ${styles['domain-badge']} ${className}`}
+          className={`${styles['badge']} ${styles['accent']} ${styles['mono-font']} ${styles['domain-badge']} ${className}`}
           {...rest}
         >
           {Globe && <Globe size={9} strokeWidth={2.2} />}
@@ -647,7 +647,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles.badge} ${styles[variantValue]} ${className}`}
+          className={`${styles['badge']} ${styles[variantValue]} ${className}`}
           {...rest}
         >
           {SelectedIcon && <SelectedIcon size={9} strokeWidth={2.2} />}

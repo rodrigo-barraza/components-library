@@ -15,10 +15,10 @@ export default function BreadcrumbComponent({ items = [], separator = "chevron",
         slash: _jsx("span", { className: styles['slash-sep'], children: "/" }),
         dot: _jsx("span", { className: styles['dot-sep'], children: "\u00B7" }),
     }[separator];
-    return (_jsx("nav", { "aria-label": "Breadcrumb", className: `${styles['navigation-bar']} ${className || ""}`, ...rest, children: _jsx("ol", { className: styles.list, children: items.map((item, i) => {
+    return (_jsx("nav", { "aria-label": "Breadcrumb", className: `${styles['navigation-bar']} ${className || ""}`, ...rest, children: _jsx("ol", { className: styles['list'], children: items.map((item, i) => {
                 const isLast = i === items.length - 1;
                 const Icon = item.icon;
-                return (_jsxs("li", { className: styles.item, children: [i > 0 && (_jsx("span", { className: styles.separator, "aria-hidden": "true", children: separatorElement })), isLast ? (_jsxs("span", { className: styles.current, "aria-current": "page", children: [Icon && _jsx(Icon, { size: 14, className: styles.icon }), item.label] })) : item.href ? (_jsxs("a", { href: item.href, className: styles.link, onClick: item.onClick, children: [Icon && _jsx(Icon, { size: 14, className: styles.icon }), item.label] })) : (_jsxs("button", { type: "button", className: styles.link, onClick: item.onClick, children: [Icon && _jsx(Icon, { size: 14, className: styles.icon }), item.label] }))] }, i));
+                return (_jsxs("li", { className: styles['item'], children: [i > 0 && (_jsx("span", { className: styles['separator'], "aria-hidden": "true", children: separatorElement })), isLast ? (_jsxs("span", { className: styles['current'], "aria-current": "page", children: [Icon && _jsx(Icon, { size: 14, className: styles['icon'] }), item.label] })) : item.href ? (_jsxs("a", { href: item.href, className: styles['link'], onClick: item.onClick, children: [Icon && _jsx(Icon, { size: 14, className: styles['icon'] }), item.label] })) : (_jsxs("button", { type: "button", className: styles['link'], onClick: item.onClick, children: [Icon && _jsx(Icon, { size: 14, className: styles['icon'] }), item.label] }))] }, i));
             }) }) }));
 }
 //# sourceMappingURL=BreadcrumbComponent.js.map

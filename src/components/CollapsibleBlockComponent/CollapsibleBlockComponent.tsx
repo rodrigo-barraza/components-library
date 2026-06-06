@@ -50,21 +50,21 @@ export default function CollapsibleBlockComponent({
   };
 
   return (
-    <div className={`${styles.container} ${className}`}>
-      <button className={styles.header} onClick={handleToggle}>
-        <span className={styles.chevron}>
+    <div className={`${styles['container']} ${className}`}>
+      <button className={styles['header']} onClick={handleToggle}>
+        <span className={styles['chevron']}>
           {isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         </span>
-        {icon && <span className={styles.icon}>{icon}</span>}
-        <span className={styles.label}>{label}</span>
-        {badge && <span className={styles.badge}>{badge}</span>}
+        {icon && <span className={styles['icon']}>{icon}</span>}
+        <span className={styles['label']}>{label}</span>
+        {badge && <span className={styles['badge']}>{badge}</span>}
         {headerActions && (
-          <div className={styles.actions} onClick={(event: MouseEvent<HTMLDivElement>) => event.stopPropagation()}>
+          <div className={styles['actions']} onClick={(event: MouseEvent<HTMLDivElement>) => event.stopPropagation()}>
             {headerActions}
           </div>
         )}
       </button>
-      {isOpen && <div className={styles.body}>{children}</div>}
+      {isOpen && <div className={styles['body']}>{children}</div>}
     </div>
   );
 }

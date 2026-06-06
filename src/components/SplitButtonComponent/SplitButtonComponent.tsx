@@ -176,19 +176,14 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
     .join(" ");
 
   const leadingClasses = [
-    styles.leading,
+    styles['leading'],
     Icon && children && styles['has-icon'],
     Icon && !children && !loading && styles['icon-only'],
   ]
     .filter(Boolean)
     .join(" ");
 
-  const trailingClasses = [
-    styles.trailing,
-    trailingToggled && styles.trailingToggled,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const trailingClasses = styles['trailing'];
 
   return (
     <div
@@ -217,7 +212,7 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
         {leadingRipples.map((ripple) => (
           <span
             key={ripple.id}
-            className={styles.ripple}
+            className={styles['ripple']}
             style={{
               width: ripple.diameter,
               height: ripple.diameter,
@@ -229,19 +224,19 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
 
         {/* Spinner or Icon */}
         {loading ? (
-          <span className={styles.spinner} aria-hidden="true" />
+          <span className={styles['spinner']} aria-hidden="true" />
         ) : Icon ? (
-          <span className={styles.icon} aria-hidden="true">
+          <span className={styles['icon']} aria-hidden="true">
             <Icon size={resolvedIconSize} />
           </span>
         ) : null}
 
         {/* Label */}
-        {children && <span className={styles.label}>{children}</span>}
+        {children && <span className={styles['label']}>{children}</span>}
       </button>
 
       {/* ── Divider ────────────────────────────────────────────────── */}
-      <span className={styles.divider} aria-hidden="true" />
+      <span className={styles['divider']} aria-hidden="true" />
 
       {/* ── Trailing toggle button ─────────────────────────────────── */}
       <button
@@ -263,7 +258,7 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
         {trailingRipples.map((ripple) => (
           <span
             key={ripple.id}
-            className={styles.ripple}
+            className={styles['ripple']}
             style={{
               width: ripple.diameter,
               height: ripple.diameter,

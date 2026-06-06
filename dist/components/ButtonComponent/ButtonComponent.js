@@ -47,7 +47,7 @@ const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary
         const x = event.clientX - rect.left - diameter / 2;
         const y = event.clientY - rect.top - diameter / 2;
         const ripple = document.createElement("span");
-        ripple.className = styles.ripple;
+        ripple.className = styles['ripple'];
         ripple.style.width = ripple.style.height = `${diameter}px`;
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
@@ -71,7 +71,7 @@ const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary
         .filter(Boolean)
         .join(" ");
     /* ── Render content ────────────────────────────────────────────── */
-    const content = (_jsxs(_Fragment, { children: [_jsx("span", { className: styles['state-layer'] }), loading ? (_jsx("span", { className: styles.spinner, "aria-hidden": "true" })) : Icon ? (_jsx("span", { className: styles.icon, "aria-hidden": "true", children: _jsx(Icon, { size: resolvedIconSize, ...(isSubmit && isGenerating ? { fill: "currentColor" } : {}) }) })) : null, hasLabel && _jsx("span", { className: styles.label, children: children })] }));
+    const content = (_jsxs(_Fragment, { children: [_jsx("span", { className: styles['state-layer'] }), loading ? (_jsx("span", { className: styles['spinner'], "aria-hidden": "true" })) : Icon ? (_jsx("span", { className: styles['icon'], "aria-hidden": "true", children: _jsx(Icon, { size: resolvedIconSize, ...(isSubmit && isGenerating ? { fill: "currentColor" } : {}) }) })) : null, hasLabel && _jsx("span", { className: styles['label'], children: children })] }));
     /* ── Shared event handlers ─────────────────────────────────────── */
     const handleMouseEnter = (event) => {
         if (sound)

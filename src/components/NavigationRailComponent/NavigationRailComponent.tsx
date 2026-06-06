@@ -123,7 +123,7 @@ export default function NavigationRailComponent({
 
   return (
     <nav
-      className={`${styles.rail} ${className}`}
+      className={`${styles['rail']} ${className}`}
       aria-label={ariaLabel}
     >
       {/* ── Menu icon (optional) ── */}
@@ -137,7 +137,7 @@ export default function NavigationRailComponent({
       {/* ── Destinations ── */}
       <div
         ref={destinationsRef}
-        className={`${styles.destinations} ${styles[`align-${alignment}`]}`}
+        className={`${styles['destinations']} ${styles[`align-${alignment}`]}`}
         role="tablist"
         aria-orientation="vertical"
         onKeyDown={handleKeyDown}
@@ -164,12 +164,12 @@ export default function NavigationRailComponent({
                 {/* State layer for hover/focus/press */}
                 <span className={styles['state-layer']} />
                 {resolvedIcon?.element ? (
-                  <span className={styles.icon}>{resolvedIcon.element}</span>
+                  <span className={styles['icon']}>{resolvedIcon.element}</span>
                 ) : resolvedIcon?.Component ? (
                   <resolvedIcon.Component
                     size={24}
                     strokeWidth={isActive ? 2 : 1.6}
-                    className={styles.icon}
+                    className={styles['icon']}
                   />
                 ) : null}
                 {/* Badge overlay */}
@@ -189,7 +189,7 @@ export default function NavigationRailComponent({
               {/* Label */}
               {!labelsHidden && (
                 <span
-                  className={`${styles.label} ${isActive ? styles['label-active'] : ""}`}
+                  className={`${styles['label']} ${isActive ? styles['label-active'] : ""}`}
                 >
                   {item.label}
                 </span>
@@ -200,7 +200,7 @@ export default function NavigationRailComponent({
           // Common props for the interactive element
           const elProps = {
             "data-rail-destination": "",
-            className: `${styles.destination} ${isActive ? styles['is-active-state'] : ""}`,
+            className: `${styles['destination']} ${isActive ? styles['is-active-state'] : ""}`,
             role: "tab",
             "aria-selected": isActive,
             tabIndex: focusedIndex === index ? 0 : -1,

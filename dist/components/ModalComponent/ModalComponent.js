@@ -94,19 +94,19 @@ export default function ModalComponent({ title, onClose, footer, size = "md", va
             onClose();
     }, [onClose]);
     const overlayClass = [
-        styles.overlay,
+        styles['overlay'],
         variant === "dark" ? styles['overlay-dark'] : "",
     ]
         .filter(Boolean)
         .join(" ");
     const panelClass = [
-        styles.panel,
-        styles[`size_${size}`],
+        styles['panel'],
+        styles[`size-${size}`],
         className || "",
     ]
         .filter(Boolean)
         .join(" ");
-    const content = (_jsx("div", { className: overlayClass, ref: overlayRef, onClick: handleOverlayClick, children: _jsxs("div", { ref: panelRef, className: panelClass, role: "dialog", "aria-modal": "true", "aria-labelledby": titleId, tabIndex: -1, children: [_jsxs("div", { className: styles.header, children: [_jsx("span", { className: styles.title, id: titleId, children: title }), _jsx("button", { className: styles['close-button'], onClick: onClose, title: "Close", "aria-label": "Close modal", children: _jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [_jsx("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), _jsx("line", { x1: "6", y1: "6", x2: "18", y2: "18" })] }) })] }), _jsx("div", { className: styles.body, children: children }), footer && _jsx("div", { className: styles.footer, children: footer })] }) }));
+    const content = (_jsx("div", { className: overlayClass, ref: overlayRef, onClick: handleOverlayClick, children: _jsxs("div", { ref: panelRef, className: panelClass, role: "dialog", "aria-modal": "true", "aria-labelledby": titleId, tabIndex: -1, children: [_jsxs("div", { className: styles['header'], children: [_jsx("span", { className: styles['title'], id: titleId, children: title }), _jsx("button", { className: styles['close-button'], onClick: onClose, title: "Close", "aria-label": "Close modal", children: _jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [_jsx("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), _jsx("line", { x1: "6", y1: "6", x2: "18", y2: "18" })] }) })] }), _jsx("div", { className: styles['body'], children: children }), footer && _jsx("div", { className: styles['footer'], children: footer })] }) }));
     if (typeof document !== "undefined") {
         return createPortal(content, document.body);
     }

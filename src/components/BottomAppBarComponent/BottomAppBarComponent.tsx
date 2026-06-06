@@ -155,7 +155,7 @@ export default function BottomAppBarComponent({
 
   const rootClasses = [
     styles['bottom-app-bar'],
-    position === "relative" && styles.relative,
+    position === "relative" && styles['relative'],
     isHidden && styles['is-hidden-state'],
     className,
   ]

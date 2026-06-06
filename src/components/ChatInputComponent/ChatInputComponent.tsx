@@ -73,7 +73,7 @@ export default function ChatInputComponent({ onSend, isTyping = false }: ChatInp
       <div className={styles['input-container']}>
         <textarea
           ref={textareaRef}
-          className={styles.textarea}
+          className={styles['textarea']}
           value={value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

@@ -19,10 +19,10 @@ import styles from "./CardComponent.module.css";
  */
 export default function CardComponent({ variant = "outlined", interactive = false, draggable: isDraggable = false, fullWidth = false, className, style, children, ...rest }) {
     const classes = [
-        styles.card,
+        styles['card'],
         styles[variant],
-        interactive && styles.interactive,
-        isDraggable && styles.draggable,
+        interactive && styles['interactive'],
+        isDraggable && styles['draggable'],
         fullWidth && styles['full-width'],
         className,
     ]
@@ -32,7 +32,7 @@ export default function CardComponent({ variant = "outlined", interactive = fals
 }
 /* ── Header ──────────────────────────────────────────────────────── */
 function CardHeader({ icon: Icon, title, subtitle, children, className }) {
-    return (_jsxs("div", { className: `${styles.header}${className ? ` ${className}` : ""}`, children: [Icon && _jsx(Icon, { size: 16, className: styles.icon }), title && _jsx("span", { className: styles.title, children: title }), subtitle && _jsx("span", { className: styles.subtitle, children: subtitle }), children] }));
+    return (_jsxs("div", { className: `${styles['header']}${className ? ` ${className}` : ""}`, children: [Icon && _jsx(Icon, { size: 16, className: styles['icon'] }), title && _jsx("span", { className: styles['title'], children: title }), subtitle && _jsx("span", { className: styles['subtitle'], children: subtitle }), children] }));
 }
 /* ── Media ───────────────────────────────────────────────────────── */
 /**
@@ -44,17 +44,17 @@ function CardMedia({ src, alt = "", height, aspectRatio, position = "top", class
         mediaStyle.height = typeof height === "number" ? `${height}px` : height;
     if (aspectRatio)
         mediaStyle.aspectRatio = aspectRatio;
-    return (_jsx("div", { className: [styles.media, styles[`media-${position}`], className]
+    return (_jsx("div", { className: [styles['media'], styles[`media-${position}`], className]
             .filter(Boolean)
             .join(" "), style: Object.keys(mediaStyle).length ? mediaStyle : undefined, children: children || (src ? (_jsx("img", { src: src, alt: alt, className: styles['media-image'], loading: "lazy", draggable: false })) : null) }));
 }
 /* ── Body ────────────────────────────────────────────────────────── */
 function CardBody({ children, className }) {
-    return (_jsx("div", { className: `${styles.body}${className ? ` ${className}` : ""}`, children: children }));
+    return (_jsx("div", { className: `${styles['body']}${className ? ` ${className}` : ""}`, children: children }));
 }
 /* ── Footer ──────────────────────────────────────────────────────── */
 function CardFooter({ children, className }) {
-    return (_jsx("div", { className: `${styles.footer}${className ? ` ${className}` : ""}`, children: children }));
+    return (_jsx("div", { className: `${styles['footer']}${className ? ` ${className}` : ""}`, children: children }));
 }
 /* ── Action Area ─────────────────────────────────────────────────── */
 /**

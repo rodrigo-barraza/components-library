@@ -75,7 +75,7 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
         if (index !== -1)
             setFocusedIndex(index);
     }, [activeItem, items]);
-    return (_jsxs("nav", { className: `${styles.rail} ${className}`, "aria-label": ariaLabel, children: [menuIcon && (_jsx("div", { className: styles['menu-slot'], children: menuIcon })), fab && _jsx("div", { className: styles['fab-slot'], children: fab }), _jsx("div", { ref: destinationsRef, className: `${styles.destinations} ${styles[`align-${alignment}`]}`, role: "tablist", "aria-orientation": "vertical", onKeyDown: handleKeyDown, children: items.map((item, index) => {
+    return (_jsxs("nav", { className: `${styles['rail']} ${className}`, "aria-label": ariaLabel, children: [menuIcon && (_jsx("div", { className: styles['menu-slot'], children: menuIcon })), fab && _jsx("div", { className: styles['fab-slot'], children: fab }), _jsx("div", { ref: destinationsRef, className: `${styles['destinations']} ${styles[`align-${alignment}`]}`, role: "tablist", "aria-orientation": "vertical", onKeyDown: handleKeyDown, children: items.map((item, index) => {
                     const id = item.id || item.key;
                     const resolvedIcon = resolveIcon(item.icon);
                     const isActive = activeItem === id;
@@ -85,11 +85,11 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
                             onNavigate?.(id, item);
                         }
                     };
-                    const destinationContent = (_jsxs("div", { className: styles['destination-inner'], children: [_jsxs("span", { className: `${styles['indicator-pill']} ${isActive ? styles['indicator-active'] : ""}`, "aria-hidden": "true", children: [_jsx("span", { className: styles['state-layer'] }), resolvedIcon?.element ? (_jsx("span", { className: styles.icon, children: resolvedIcon.element })) : resolvedIcon?.Component ? (_jsx(resolvedIcon.Component, { size: 24, strokeWidth: isActive ? 2 : 1.6, className: styles.icon })) : null, item.badge != null && (_jsx("span", { className: styles['badge-overlay'], children: typeof item.badge === "number" || typeof item.badge === "string" ? (_jsx(BadgeComponent, { variant: item.badgeVariant || "error", mini: true, children: item.badge })) : (_jsx("span", { className: styles['badge-dot'] })) }))] }), !labelsHidden && (_jsx("span", { className: `${styles.label} ${isActive ? styles['label-active'] : ""}`, children: item.label }))] }));
+                    const destinationContent = (_jsxs("div", { className: styles['destination-inner'], children: [_jsxs("span", { className: `${styles['indicator-pill']} ${isActive ? styles['indicator-active'] : ""}`, "aria-hidden": "true", children: [_jsx("span", { className: styles['state-layer'] }), resolvedIcon?.element ? (_jsx("span", { className: styles['icon'], children: resolvedIcon.element })) : resolvedIcon?.Component ? (_jsx(resolvedIcon.Component, { size: 24, strokeWidth: isActive ? 2 : 1.6, className: styles['icon'] })) : null, item.badge != null && (_jsx("span", { className: styles['badge-overlay'], children: typeof item.badge === "number" || typeof item.badge === "string" ? (_jsx(BadgeComponent, { variant: item.badgeVariant || "error", mini: true, children: item.badge })) : (_jsx("span", { className: styles['badge-dot'] })) }))] }), !labelsHidden && (_jsx("span", { className: `${styles['label']} ${isActive ? styles['label-active'] : ""}`, children: item.label }))] }));
                     // Common props for the interactive element
                     const elProps = {
                         "data-rail-destination": "",
-                        className: `${styles.destination} ${isActive ? styles['is-active-state'] : ""}`,
+                        className: `${styles['destination']} ${isActive ? styles['is-active-state'] : ""}`,
                         role: "tab",
                         "aria-selected": isActive,
                         tabIndex: focusedIndex === index ? 0 : -1,

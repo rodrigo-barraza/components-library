@@ -780,16 +780,16 @@ select option {
 }
 
 .fade-in {
-  animation: fadeIn var(--transition-normal) ease-out;
+  animation: fade-in var(--transition-normal) ease-out;
 }
 
 .slide-in {
-  animation: slideIn var(--transition-normal) ease-out;
+  animation: slide-in var(--transition-normal) ease-out;
 }
 
 /* ── Shared Keyframes ───────────────────────────────────────── */
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(8px);
@@ -801,7 +801,7 @@ select option {
   }
 }
 
-@keyframes fadeInPure {
+@keyframes fade-in-pure {
   from {
     opacity: 0;
   }
@@ -811,7 +811,7 @@ select option {
   }
 }
 
-@keyframes fadeOut {
+@keyframes fade-out {
   from {
     opacity: 1;
   }
@@ -821,7 +821,7 @@ select option {
   }
 }
 
-@keyframes fadeInOut {
+@keyframes fade-in-out {
 
   0%,
   100% {
@@ -833,7 +833,7 @@ select option {
   }
 }
 
-@keyframes slideIn {
+@keyframes slide-in {
   from {
     opacity: 0;
     transform: translateX(-12px);
@@ -845,7 +845,7 @@ select option {
   }
 }
 
-@keyframes slideInRight {
+@keyframes slide-in-right {
   from {
     transform: translateX(100%);
   }
@@ -855,7 +855,7 @@ select option {
   }
 }
 
-@keyframes slideInLeft {
+@keyframes slide-in-left {
   from {
     transform: translateX(-100%);
   }
@@ -865,7 +865,7 @@ select option {
   }
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   from {
     opacity: 0;
     transform: translateY(12px);
@@ -877,7 +877,7 @@ select option {
   }
 }
 
-@keyframes slideInUp {
+@keyframes slide-in-up {
   from {
     opacity: 0;
     transform: translateY(100%);
@@ -889,7 +889,7 @@ select option {
   }
 }
 
-@keyframes slideDown {
+@keyframes slide-down {
   from {
     opacity: 0;
     transform: translateY(-4px);
@@ -937,7 +937,7 @@ select option {
   }
 }
 
-@keyframes statusPulse {
+@keyframes status-pulse {
 
   0%,
   100% {
@@ -959,13 +959,13 @@ select option {
   }
 }
 
-@keyframes rainbowHue {
+@keyframes rainbow-hue {
   to {
     filter: hue-rotate(360deg);
   }
 }
 
-@keyframes pulseScale {
+@keyframes pulse-scale {
 
   0%,
   100% {
@@ -979,7 +979,7 @@ select option {
   }
 }
 
-@keyframes panelSlideIn {
+@keyframes panel-slide-in {
   from {
     opacity: 0;
     transform: translateX(16px);
@@ -991,7 +991,7 @@ select option {
   }
 }
 
-@keyframes popoverInUp {
+@keyframes popover-in-up {
   from {
     opacity: 0;
     transform: scale(0.9) translateY(8px);
@@ -1003,7 +1003,7 @@ select option {
   }
 }
 
-@keyframes popoverInDown {
+@keyframes popover-in-down {
   from {
     opacity: 0;
     transform: translateY(-8px) scale(0.98);
@@ -1015,7 +1015,7 @@ select option {
   }
 }
 
-@keyframes iconScrollUp {
+@keyframes icon-scroll-up {
   0% {
     transform: translateY(0);
     opacity: 1;

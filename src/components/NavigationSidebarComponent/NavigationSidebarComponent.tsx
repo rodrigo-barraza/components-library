@@ -345,7 +345,7 @@ export default function NavigationSidebarComponent({
 
   // ── Determine wrapper classes ─────────────────────────────────────
   const wrapperClasses = [
-    styles.wrapper,
+    styles['wrapper'],
     collapsed && !isMobile ? styles['is-collapsed-state'] : "",
     !navReady ? styles['no-transition'] : "",
     isMobile ? styles['mobile-wrapper'] : "",
@@ -380,11 +380,11 @@ export default function NavigationSidebarComponent({
         />
       )}
 
-      <aside ref={sidebarReference} className={styles.sidebar}>
+      <aside ref={sidebarReference} className={styles['sidebar']}>
         
         {/* Brand */}
         {(brandIcon || brandLabel) && (
-          <header className={styles.brand}>
+          <header className={styles['brand']}>
             {typeof brandIcon === "string" ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={brandIcon} alt={brandLabel || "Brand"} className={styles['brand-icon-img']} />

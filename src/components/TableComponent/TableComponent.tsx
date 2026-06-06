@@ -347,7 +347,7 @@ export default function TableComponent<T, TSub = unknown>({
       if (element && drag.pointerId !== undefined) {
         try { element.setPointerCapture(drag.pointerId); } catch { /* ignore */ }
       }
-      scrollRef.current?.classList.add(styles.grabbing);
+      scrollRef.current?.classList.add(styles['grabbing']);
     }
     if (drag.moved) {
       const element = scrollRef.current;
@@ -366,7 +366,7 @@ export default function TableComponent<T, TSub = unknown>({
     const element = scrollRef.current;
     if (element) {
       try { element.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
-      element.classList.remove(styles.grabbing);
+      element.classList.remove(styles['grabbing']);
     }
     if (wasDrag && element) {
       const handler = (ev: MouseEvent) => {
@@ -441,13 +441,13 @@ export default function TableComponent<T, TSub = unknown>({
   const showHeader = !!(title || subtitle || storageKey);
 
   return (
-    <div className={`${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles['has-header'] : ""}`}>
+    <div className={`${styles['container']} ${mini ? styles['mini'] : ""} ${showHeader ? styles['has-header'] : ""}`}>
       {showHeader && (
         <div className={styles['table-header']}>
           {(title || subtitle) && (
             <div className={styles['table-header-content']}>
-              {title && <h2 className={styles.title}>{title}</h2>}
-              {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+              {title && <h2 className={styles['title']}>{title}</h2>}
+              {subtitle && <p className={styles['subtitle']}>{subtitle}</p>}
             </div>
           )}
           {storageKey && (
@@ -472,14 +472,14 @@ export default function TableComponent<T, TSub = unknown>({
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
-        <table className={styles.table}>
+        <table className={styles['table']}>
           <thead>
             <tr>
               {visibleColumns.map((col) => {
                 const isSortable = col.sortable !== false;
                 const isActive = sort.key === col.key;
                 const thClasses = [
-                  styles.th,
+                  styles['th'],
                   isSortable ? styles['th-sortable'] : "",
                   isActive ? styles['th-active'] : "",
                 ]
@@ -528,7 +528,7 @@ export default function TableComponent<T, TSub = unknown>({
                           ? (highlightedRowRef as React.Ref<HTMLTableRowElement>)
                           : undefined
                       }
-                      className={`${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles['expandable-row'] : ""} ${isActive ? styles['active-row'] : ""} ${isHighlighted ? styles['highlighted-row'] : ""} ${customClass}`}
+                      className={`${styles['tr']} ${clickable ? styles['clickable'] : ""} ${isExpandable ? styles['expandable-row'] : ""} ${isActive ? styles['active-row'] : ""} ${isHighlighted ? styles['highlighted-row'] : ""} ${customClass}`}
                       style={customStyle}
                       {...(clickable
                         ? interactiveProps(
@@ -545,7 +545,7 @@ export default function TableComponent<T, TSub = unknown>({
                       {colsToRender.map((col, ci) => {
                         const isFirst = ci === 0;
                         const isSorted = sort.key === col.key;
-                        const tdClass = isFirst ? styles['td-name'] : styles.td;
+                        const tdClass = isFirst ? styles['td-name'] : styles['td'];
                         const extraClass = col.className || "";
                         const sortedClass =
                           !isFirst && isSorted ? styles['td-sorted'] : "";

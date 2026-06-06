@@ -151,14 +151,14 @@ export default function SnackbarComponent({ open, message, actionLabel, showClos
     const hasClose = showClose;
     const textOnly = !hasAction && !hasClose;
     const containerClass = [
-        styles.container,
+        styles['container'],
         styles[layout],
         textOnly ? styles['text-only'] : "",
         className || "",
     ]
         .filter(Boolean)
         .join(" ");
-    const content = (_jsx("div", { className: styles.host, id: `${snackbarId}-host`, children: _jsxs("div", { ref: containerRef, className: containerClass, role: "status", "aria-live": "polite", "aria-atomic": "true", "data-exiting": exiting || undefined, onAnimationEnd: handleAnimationEnd, children: [_jsx("span", { className: styles['supporting-text'], id: `${snackbarId}-message`, children: message }), hasAction && (_jsx("button", { type: "button", className: styles.action, onClick: onAction, id: `${snackbarId}-action`, children: actionLabel })), hasClose && (_jsx("button", { type: "button", className: styles['close-button'], onClick: handleDismiss, "aria-label": "Dismiss", id: `${snackbarId}-close`, children: _jsx(X, {}) }))] }) }));
+    const content = (_jsx("div", { className: styles['host'], id: `${snackbarId}-host`, children: _jsxs("div", { ref: containerRef, className: containerClass, role: "status", "aria-live": "polite", "aria-atomic": "true", "data-exiting": exiting || undefined, onAnimationEnd: handleAnimationEnd, children: [_jsx("span", { className: styles['supporting-text'], id: `${snackbarId}-message`, children: message }), hasAction && (_jsx("button", { type: "button", className: styles['action'], onClick: onAction, id: `${snackbarId}-action`, children: actionLabel })), hasClose && (_jsx("button", { type: "button", className: styles['close-button'], onClick: handleDismiss, "aria-label": "Dismiss", id: `${snackbarId}-close`, children: _jsx(X, {}) }))] }) }));
     if (typeof document !== "undefined") {
         return createPortal(content, document.body);
     }

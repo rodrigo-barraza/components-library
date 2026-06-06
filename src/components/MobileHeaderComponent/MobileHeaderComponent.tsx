@@ -37,7 +37,7 @@ export default function MobileHeaderComponent({
         <Menu size={22} strokeWidth={2} />
       </button>
 
-      <div className={styles.brand}>
+      <div className={styles['brand']}>
         {typeof brandIcon === "string" ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={brandIcon} alt={brandLabel || "Brand"} className={styles['brand-icon']} />
@@ -47,7 +47,7 @@ export default function MobileHeaderComponent({
         {brandLabel && <span className={styles['brand-label']}>{brandLabel}</span>}
       </div>
 
-      {children && <div className={styles.actions}>{children}</div>}
+      {children && <div className={styles['actions']}>{children}</div>}
     </header>
   );
 }

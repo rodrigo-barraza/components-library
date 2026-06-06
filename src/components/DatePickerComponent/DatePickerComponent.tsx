@@ -330,12 +330,12 @@ export default function DatePickerComponent({
   const showTimeRow = hasValue;
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className={styles['container']} ref={containerRef}>
       {!hideTrigger && (
         <button
           ref={triggerRef as React.RefObject<HTMLButtonElement>}
           type="button"
-          className={`${styles.trigger} ${open ? styles['trigger-open'] : ""} ${disabled ? styles['trigger-disabled'] : ""}`}
+          className={`${styles['trigger']} ${open ? styles['trigger-open'] : ""} ${disabled ? styles['trigger-disabled'] : ""}`}
           onClick={() => !disabled && setOpen((previous) => !previous)}
           disabled={disabled}
         >
@@ -354,7 +354,7 @@ export default function DatePickerComponent({
           ) : (
             <ChevronDown
               size={14}
-              className={`${styles.chevron} ${open ? styles['chevron-open'] : ""}`}
+              className={`${styles['chevron']} ${open ? styles['chevron-open'] : ""}`}
             />
           )}
         </button>
@@ -364,10 +364,10 @@ export default function DatePickerComponent({
       {open && (
         <div
           ref={dropdownElRef}
-          className={styles.dropdown}
+          className={styles['dropdown']}
           style={{ top: dropdownPos.top, left: dropdownPos.left }}
         >
-          <div className={styles.presets}>
+          <div className={styles['presets']}>
             {presets.map((preset) => {
               const isActive = getActiveDatePreset(from, to) === preset.label;
               return (
@@ -383,7 +383,7 @@ export default function DatePickerComponent({
             })}
           </div>
 
-          <div className={styles.calendars}>
+          <div className={styles['calendars']}>
             <div className={styles['month-nav']}>
               <button type="button" className={styles['month-nav-button']} onClick={prevMonth}>
                 <ChevronLeft size={14} />

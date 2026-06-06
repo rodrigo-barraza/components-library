@@ -68,12 +68,12 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
   );
 
   const classes = [
-    styles.chip,
+    styles['chip'],
     styles[variant],
     selected && styles['is-selected-state'],
     disabled && styles['is-disabled-state'],
-    elevated && styles.elevated,
-    onClick && styles.clickable,
+    elevated && styles['elevated'],
+    onClick && styles['clickable'],
     className,
   ]
     .filter(Boolean)
@@ -109,7 +109,7 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
 
       {/* Selected checkmark for filter chips */}
       {variant === "filter" && selected && !Icon && (
-        <span className={styles.checkmark} aria-hidden="true">
+        <span className={styles['checkmark']} aria-hidden="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12" />
           </svg>
@@ -117,7 +117,7 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
       )}
 
       {/* Label */}
-      <span className={styles.label}>{children}</span>
+      <span className={styles['label']}>{children}</span>
 
       {/* Trailing remove icon */}
       {removable && (

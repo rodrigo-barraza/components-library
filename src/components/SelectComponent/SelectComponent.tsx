@@ -213,7 +213,7 @@ export default function SelectComponent<T extends string | string[] = string | s
       <button
         key={option.value}
         type="button"
-        className={`${styles.option} ${checked ? styles['option-selected'] : ""} ${option.disabled ? styles['option-disabled'] : ""}`}
+        className={`${styles['option']} ${checked ? styles['option-selected'] : ""} ${option.disabled ? styles['option-disabled'] : ""}`}
         onClick={() => handleOptionClick(option)}
         disabled={option.disabled}
       >
@@ -265,7 +265,7 @@ export default function SelectComponent<T extends string | string[] = string | s
   };
 
   const triggerClassNames = [
-    styles.trigger,
+    styles['trigger'],
     isOpen ? styles['trigger-open'] : "",
     disabled ? styles['trigger-disabled'] : "",
     isLoading ? styles['trigger-loading'] : "",
@@ -329,7 +329,7 @@ export default function SelectComponent<T extends string | string[] = string | s
       {!disabled && !isLoading && (
         <ChevronDown
           size={14}
-          className={`${styles.chevron} ${isOpen ? styles['chevron-open'] : ""}`}
+          className={`${styles['chevron']} ${isOpen ? styles['chevron-open'] : ""}`}
         />
       )}
       {isLoading && (
@@ -353,11 +353,11 @@ export default function SelectComponent<T extends string | string[] = string | s
   );
 
   return (
-    <div className={`${styles.dropdown} ${label ? styles['has-label'] : ""}`} ref={containerRef}>
-      {label && <span className={styles.label}>{label}</span>}
+    <div className={`${styles['dropdown']} ${label ? styles['has-label'] : ""}`} ref={containerRef}>
+      {label && <span className={styles['label']}>{label}</span>}
 
       {!isControlled && (
-        <div className={styles.sizer} aria-hidden="true">
+        <div className={styles['sizer']} aria-hidden="true">
           {options.map((option) => (
             <span key={option.value} className={styles['sizer-item']}>
               {icon && <span className={styles['trigger-icon']}>{icon}</span>}
@@ -371,7 +371,7 @@ export default function SelectComponent<T extends string | string[] = string | s
       {wrappedTrigger}
 
       {!isControlled && isOpen && (
-        <div className={styles.menu}>
+        <div className={styles['menu']}>
           {searchable && (
             <SearchInputComponent
               ref={searchInputRef}

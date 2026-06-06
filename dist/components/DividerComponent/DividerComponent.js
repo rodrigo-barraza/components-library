@@ -16,11 +16,11 @@ import styles from "./DividerComponent.module.css";
  */
 export default function DividerComponent({ variant = "fullWidth", orientation = "horizontal", spacing, decorative = false, className, style, ...rest }) {
     const classes = [
-        styles.divider,
+        styles['divider'],
         styles[orientation],
-        variant === "inset" && styles.inset,
+        variant === "inset" && styles['inset'],
         variant === "middleInset" && styles['middle-inset'],
-        spacing && spacing.length > 0 && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
+        spacing && spacing !== 'none' && styles[`spacing-${{ small: 'sm', medium: 'md', large: 'lg' }[spacing] || spacing}`],
         className,
     ]
         .filter(Boolean)
@@ -45,9 +45,9 @@ export default function DividerComponent({ variant = "fullWidth", orientation = 
  */
 function DividerSubheader({ label, variant = "fullWidth", className, style, ...rest }) {
     const classes = [
-        styles.divider,
-        styles.subheader,
-        variant === "inset" && styles.inset,
+        styles['divider'],
+        styles['subheader'],
+        variant === "inset" && styles['inset'],
         variant === "middleInset" && styles['middle-inset'],
         className,
     ]

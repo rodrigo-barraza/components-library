@@ -105,8 +105,8 @@ export default function DrawerComponent({
   const widthValue = typeof width === "number" ? `${width}px` : width;
 
   const drawerClasses = [
-    styles.drawer,
-    anchor === "left" ? styles.left : "",
+    styles['drawer'],
+    anchor === "left" ? styles['left'] : "",
     className || "",
   ]
     .filter(Boolean)
@@ -117,7 +117,7 @@ export default function DrawerComponent({
       {/* Scrim overlay */}
       {scrim && (
         <div
-          className={styles.scrim}
+          className={styles['scrim']}
           data-closing={closing || undefined}
           onClick={dismissible ? handleClose : undefined}
         />
@@ -133,8 +133,8 @@ export default function DrawerComponent({
         onAnimationEnd={handleAnimationEnd}
       >
         {/* Header */}
-        <div className={styles.header}>
-          <span className={styles.title}>{title}</span>
+        <div className={styles['header']}>
+          <span className={styles['title']}>{title}</span>
           <div className={styles['header-actions']}>
             {headerActions}
             {dismissible && <CloseButtonComponent onClick={handleClose} />}
@@ -142,16 +142,16 @@ export default function DrawerComponent({
         </div>
 
         {/* Body */}
-        <div className={styles.body}>
+        <div className={styles['body']}>
           {sections.map((section, si) => (
-            <div key={si} className={styles.section}>
+            <div key={si} className={styles['section']}>
               <div className={styles['section-title']}>{section.title}</div>
-              <div className={styles.grid}>
+              <div className={styles['grid']}>
                 {section.items.map((item, ii) => (
-                  <div key={ii} className={styles.item}>
-                    <span className={styles.label}>{item.label}</span>
+                  <div key={ii} className={styles['item']}>
+                    <span className={styles['label']}>{item.label}</span>
                     <span
-                      className={`${styles.value} ${item.mono ? styles.mono : ""}`}
+                      className={`${styles['value']} ${item.mono ? styles['mono'] : ""}`}
                     >
                       {item.value ?? "—"}
                     </span>

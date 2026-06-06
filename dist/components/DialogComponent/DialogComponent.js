@@ -131,13 +131,13 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
     if (!open && !closing)
         return null;
     const scrimClass = [
-        styles.scrim,
-        fullscreen ? styles.fullscreen : "",
+        styles['scrim'],
+        fullscreen ? styles['fullscreen'] : "",
     ]
         .filter(Boolean)
         .join(" ");
     const containerClass = [
-        styles.container,
+        styles['container'],
         className || "",
     ]
         .filter(Boolean)
@@ -150,12 +150,12 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
     ]
         .filter(Boolean)
         .join(" ");
-    const content = (_jsx("div", { className: scrimClass, onClick: handleScrimClick, "data-closing": closing || undefined, children: _jsxs("div", { ref: containerRef, className: containerClass, role: "alertdialog", "aria-modal": "true", "aria-labelledby": headline ? headlineId : undefined, "aria-describedby": bodyId, tabIndex: -1, "data-closing": closing || undefined, onAnimationEnd: handleAnimationEnd, children: [icon && (_jsx("div", { className: styles.icon, "aria-hidden": "true", children: icon })), headline && (_jsx("h2", { id: headlineId, className: [
-                        styles.headline,
+    const content = (_jsx("div", { className: scrimClass, onClick: handleScrimClick, "data-closing": closing || undefined, children: _jsxs("div", { ref: containerRef, className: containerClass, role: "alertdialog", "aria-modal": "true", "aria-labelledby": headline ? headlineId : undefined, "aria-describedby": bodyId, tabIndex: -1, "data-closing": closing || undefined, onAnimationEnd: handleAnimationEnd, children: [icon && (_jsx("div", { className: styles['icon'], "aria-hidden": "true", children: icon })), headline && (_jsx("h2", { id: headlineId, className: [
+                        styles['headline'],
                         icon ? styles['headline-centered'] : "",
                     ]
                         .filter(Boolean)
-                        .join(" "), children: headline })), _jsx("div", { id: bodyId, className: styles.body, children: children }), _jsxs("div", { className: styles.actions, children: [!hideCancel && (_jsx("button", { type: "button", className: styles['action-button'], onClick: handleClose, children: cancelLabel })), _jsx("button", { type: "button", className: confirmBtnClass, onClick: handleConfirm, disabled: confirmDisabled, autoFocus: true, children: confirmLabel })] })] }) }));
+                        .join(" "), children: headline })), _jsx("div", { id: bodyId, className: styles['body'], children: children }), _jsxs("div", { className: styles['actions'], children: [!hideCancel && (_jsx("button", { type: "button", className: styles['action-button'], onClick: handleClose, children: cancelLabel })), _jsx("button", { type: "button", className: confirmBtnClass, onClick: handleConfirm, disabled: confirmDisabled, autoFocus: true, children: confirmLabel })] })] }) }));
     if (typeof document !== "undefined") {
         return createPortal(content, document.body);
     }

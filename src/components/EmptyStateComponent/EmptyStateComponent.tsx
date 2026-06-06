@@ -21,9 +21,9 @@ export default function EmptyStateComponent({
 }: EmptyStateComponentProps) {
   return (
     <div className={`${styles['empty-state']}${className ? ` ${className}` : ""}`}>
-      {icon && <div className={styles.icon}>{icon}</div>}
-      {title && <h2 className={styles.title}>{title}</h2>}
-      {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+      {icon && <div className={styles['icon']}>{icon}</div>}
+      {title && <h2 className={styles['title']}>{title}</h2>}
+      {subtitle && <p className={styles['subtitle']}>{subtitle}</p>}
       {children}
     </div>
   );

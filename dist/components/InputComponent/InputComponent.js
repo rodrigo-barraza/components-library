@@ -16,7 +16,7 @@ const InputComponent = forwardRef(function InputComponent({ type = "text", value
         return mappedClass ? styles[mappedClass] : styles['size-medium'];
     }, [size]);
     const classes = [
-        styles.wrapper,
+        styles['wrapper'],
         sizeClassName,
         disabled ? styles['is-disabled-state'] : "",
         Icon ? styles['has-icon'] : "",
@@ -24,9 +24,9 @@ const InputComponent = forwardRef(function InputComponent({ type = "text", value
     ]
         .filter(Boolean)
         .join(" ");
-    const inputEl = (_jsxs("div", { className: classes, children: [Icon && (_jsx("span", { className: styles['icon-slot'], children: _jsx(Icon, { size: size === "sm" ? 12 : size === "lg" ? 18 : 14 }) })), _jsx("input", { ref: ref, id: id, type: type, className: styles.input, value: value, onChange: onChange, placeholder: placeholder, disabled: disabled, readOnly: readOnly, ...rest })] }));
+    const inputEl = (_jsxs("div", { className: classes, children: [Icon && (_jsx("span", { className: styles['icon-slot'], children: _jsx(Icon, { size: size === "sm" ? 12 : size === "lg" ? 18 : 14 }) })), _jsx("input", { ref: ref, id: id, type: type, className: styles['input'], value: value, onChange: onChange, placeholder: placeholder, disabled: disabled, readOnly: readOnly, ...rest })] }));
     if (label) {
-        return (_jsxs("div", { className: styles['label-wrapper'], children: [_jsx("span", { className: styles.label, children: label }), inputEl] }));
+        return (_jsxs("div", { className: styles['label-wrapper'], children: [_jsx("span", { className: styles['label'], children: label }), inputEl] }));
     }
     return inputEl;
 });

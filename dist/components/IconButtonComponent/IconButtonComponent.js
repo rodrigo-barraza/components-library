@@ -9,7 +9,7 @@ export default function IconButtonComponent({ icon, onClick, tooltip, variant = 
     const { sound } = useComponents();
     const classes = [
         styles['icon-button'],
-        variant === "destructive" ? styles.destructive : "",
+        variant === "destructive" ? styles['destructive'] : "",
         active ? styles['is-active-state'] : "",
         hoverReveal ? styles['hover-reveal'] : "",
         className || "",

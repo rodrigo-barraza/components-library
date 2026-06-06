@@ -19,7 +19,7 @@ function renderMarkdownLite(text) {
             if (URL_RE.test(part)) {
                 URL_RE.lastIndex = 0;
                 const display = part.length > 45 ? part.substring(0, 42) + "..." : part;
-                return (_jsx("a", { href: part, target: "_blank", rel: "noopener noreferrer", className: styles.link, children: display }, i));
+                return (_jsx("a", { href: part, target: "_blank", rel: "noopener noreferrer", className: styles['link'], children: display }, i));
             }
             return _jsx("span", { children: applyInlineMarkdown(part) }, i);
         }) }));
@@ -39,13 +39,13 @@ function applyBoldItalic(text, parentKey) {
     const boldParts = text.split(boldRe);
     return boldParts.map((seg, i) => {
         if (i % 2 === 1) {
-            return (_jsx("strong", { className: styles.bold, children: seg }, `${parentKey}-b-${i}`));
+            return (_jsx("strong", { className: styles['bold'], children: seg }, `${parentKey}-b-${i}`));
         }
         const italicRe = /\*(.+?)\*/g;
         const italicParts = seg.split(italicRe);
         return italicParts.map((s, j) => {
             if (j % 2 === 1) {
-                return (_jsx("em", { className: styles.italic, children: s }, `${parentKey}-i-${i}-${j}`));
+                return (_jsx("em", { className: styles['italic'], children: s }, `${parentKey}-i-${i}-${j}`));
             }
             return s;
         });
@@ -57,7 +57,7 @@ function renderWithLinks(text) {
             if (URL_RE.test(part)) {
                 URL_RE.lastIndex = 0;
                 const display = part.length > 45 ? part.substring(0, 42) + "..." : part;
-                return (_jsx("a", { href: part, target: "_blank", rel: "noopener noreferrer", className: styles.link, children: display }, i));
+                return (_jsx("a", { href: part, target: "_blank", rel: "noopener noreferrer", className: styles['link'], children: display }, i));
             }
             return _jsx("span", { children: part }, i);
         }) }));
@@ -79,11 +79,11 @@ export default function ChatMessageComponent({ message, isFirst = false, previou
     const { role, content, createdAt, streaming, error } = message;
     const isGrouped = !isFirst && previousRole === role;
     if (role === MESSAGE_ROLES.SYSTEM) {
-        return (_jsx("div", { className: `${styles['message-row']} ${styles.system} ${error ? styles['error-message'] : ""}`, children: _jsx("div", { className: styles['system-bubble'], children: _jsx("p", { className: styles['message-text'], children: content }) }) }));
+        return (_jsx("div", { className: `${styles['message-row']} ${styles['system']} ${error ? styles['error-message'] : ""}`, children: _jsx("div", { className: styles['system-bubble'], children: _jsx("p", { className: styles['message-text'], children: content }) }) }));
     }
     if (role === MESSAGE_ROLES.VISITOR) {
-        return (_jsxs("div", { className: `${styles['message-row']} ${styles.visitor} ${isGrouped ? styles.grouped : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles['visitor-bubble'], children: _jsx("p", { className: styles['message-text'], children: renderContent(content, role) }) }), _jsx("span", { className: `${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`, children: formatTime(createdAt) })] }));
+        return (_jsxs("div", { className: `${styles['message-row']} ${styles['visitor']} ${isGrouped ? styles['grouped'] : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles['visitor-bubble'], children: _jsx("p", { className: styles['message-text'], children: renderContent(content, role) }) }), _jsx("span", { className: `${styles['timestamp']} ${showTimestamp ? styles['timestamp-visible'] : ""}`, children: formatTime(createdAt) })] }));
     }
-    return (_jsxs("div", { className: `${styles['message-row']} ${styles.agent} ${isGrouped ? styles.grouped : ""} ${error ? styles['error-message'] : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles['agent-bubble'], children: _jsxs("p", { className: styles['message-text'], children: [renderContent(content, role), streaming && _jsx("span", { className: styles.cursor })] }) }), _jsx("span", { className: `${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`, children: formatTime(createdAt) })] }));
+    return (_jsxs("div", { className: `${styles['message-row']} ${styles['agent']} ${isGrouped ? styles['grouped'] : ""} ${error ? styles['error-message'] : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles['agent-bubble'], children: _jsxs("p", { className: styles['message-text'], children: [renderContent(content, role), streaming && _jsx("span", { className: styles['cursor'] })] }) }), _jsx("span", { className: `${styles['timestamp']} ${showTimestamp ? styles['timestamp-visible'] : ""}`, children: formatTime(createdAt) })] }));
 }
 //# sourceMappingURL=ChatMessageComponent.js.map

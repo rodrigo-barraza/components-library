@@ -110,7 +110,7 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
     /* ── Build class ──────────────────────────────────────────────── */
     const barClasses = [
         styles['search-bar'],
-        compact && styles.compact,
+        compact && styles['compact'],
         expanded && styles['is-expanded-state'],
     ]
         .filter(Boolean)
@@ -139,7 +139,7 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
                         }, type: "button", "aria-label": "Clear search", children: clearIcon })), trailingIcon && (_jsx("button", { className: styles['trailing-action'], onClick: (e) => {
                             e.stopPropagation();
                             onTrailingClick?.();
-                        }, type: "button", "aria-label": "Search options", children: trailingIcon }))] }), hasSuggestions && (_jsxs("div", { ref: panelRef, id: "search-suggestions", className: `${styles['suggestions-panel']}${expanded ? ` ${styles['is-open-state']}` : ""}`, role: "listbox", "aria-label": "Search suggestions", children: [_jsx("div", { className: styles['suggestions-divider'] }), _jsx(SearchSuggestionsContext.Provider, { value: { highlightIndex, collapse, onChange }, children: children })] })), useScrim && (_jsx("div", { className: `${styles.scrim}${expanded ? ` ${styles['is-visible-state']}` : ""}`, onClick: collapse, "aria-hidden": "true" }))] }));
+                        }, type: "button", "aria-label": "Search options", children: trailingIcon }))] }), hasSuggestions && (_jsxs("div", { ref: panelRef, id: "search-suggestions", className: `${styles['suggestions-panel']}${expanded ? ` ${styles['is-open-state']}` : ""}`, role: "listbox", "aria-label": "Search suggestions", children: [_jsx("div", { className: styles['suggestions-divider'] }), _jsx(SearchSuggestionsContext.Provider, { value: { highlightIndex, collapse, onChange }, children: children })] })), useScrim && (_jsx("div", { className: `${styles['scrim']}${expanded ? ` ${styles['is-visible-state']}` : ""}`, onClick: collapse, "aria-hidden": "true" }))] }));
 });
 /* ══════════════════════════════════════════════════════════════════════
    Context for passing state to suggestion items
@@ -165,7 +165,7 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
     }, [onClick, value, text, onChange, collapse]);
     /* Default leading icon: clock for history-style suggestions */
     const defaultIcon = (_jsxs("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [_jsx("circle", { cx: "11", cy: "11", r: "8" }), _jsx("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })] }));
-    return (_jsxs("button", { className: `${styles['suggestion-item']}${isHighlighted ? ` ${styles.highlighted}` : ""}`, onClick: handleClick, type: "button", role: "option", "aria-selected": isHighlighted, id: index >= 0 ? `search-suggestion-${index}` : undefined, "data-suggestion-item": true, children: [_jsx("span", { className: styles['suggestion-icon'], children: icon || defaultIcon }), _jsx("span", { className: styles['suggestion-text'], children: text }), trailing && (_jsx("span", { className: styles['suggestion-trailing'], children: trailing }))] }));
+    return (_jsxs("button", { className: `${styles['suggestion-item']}${isHighlighted ? ` ${styles['highlighted']}` : ""}`, onClick: handleClick, type: "button", role: "option", "aria-selected": isHighlighted, id: index >= 0 ? `search-suggestion-${index}` : undefined, "data-suggestion-item": true, children: [_jsx("span", { className: styles['suggestion-icon'], children: icon || defaultIcon }), _jsx("span", { className: styles['suggestion-text'], children: text }), trailing && (_jsx("span", { className: styles['suggestion-trailing'], children: trailing }))] }));
 }
 function SuggestionGroup({ label, children }) {
     return (_jsxs("div", { role: "group", "aria-label": label, children: [label && (_jsx("div", { className: styles['suggestion-group-header'], children: label })), children] }));

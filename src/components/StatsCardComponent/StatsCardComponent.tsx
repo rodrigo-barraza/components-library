@@ -37,32 +37,32 @@ export default function StatsCardComponent({
 }: StatsCardComponentProps) {
   if (loading) {
     return (
-      <div className={`${styles.card} ${className || ""}`}>
-        <div className={styles.header}>
-          <div className={`${styles.skeleton} ${styles['skeleton-label']}`} />
+      <div className={`${styles['card']} ${className || ""}`}>
+        <div className={styles['header']}>
+          <div className={`${styles['skeleton']} ${styles['skeleton-label']}`} />
         </div>
-        <div className={`${styles.skeleton} ${styles['skeleton-value']}`} />
+        <div className={`${styles['skeleton']} ${styles['skeleton-value']}`} />
       </div>
     );
   }
 
   return (
     <div
-      className={`${styles.card} ${className || ""}`}
+      className={`${styles['card']} ${className || ""}`}
       style={color ? { "--card-accent": color } as React.CSSProperties : undefined}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className={styles.header}>
-        <span className={styles.label}>{label}</span>
+      <div className={styles['header']}>
+        <span className={styles['label']}>{label}</span>
         {Icon && (
-          <div className={`${styles.icon} ${styles[variant] || ""}`}>
+          <div className={`${styles['icon']} ${styles[variant] || ""}`}>
             <Icon size={14} />
           </div>
         )}
       </div>
-      <span className={styles.value}>{value}</span>
-      {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
+      <span className={styles['value']}>{value}</span>
+      {subtitle && <span className={styles['subtitle']}>{subtitle}</span>}
       {glow && <div className={styles['glow-bar']} />}
     </div>
   );

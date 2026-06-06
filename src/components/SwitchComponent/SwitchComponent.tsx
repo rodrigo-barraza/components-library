@@ -51,7 +51,7 @@ export default function SwitchComponent({
   const { sound } = useComponents();
 
   const rootClasses = [
-    styles.switch,
+    styles['switch'],
     disabled && styles['is-disabled-state'],
     labelPlacement === "start" && styles['label-start'],
     showIcons && styles['with-icons'],
@@ -61,7 +61,7 @@ export default function SwitchComponent({
     .join(" ");
 
   const trackClasses = [
-    styles.track,
+    styles['track'],
     checked && styles['is-selected-state'],
   ]
     .filter(Boolean)
@@ -96,11 +96,11 @@ export default function SwitchComponent({
           <span className={styles['state-layer']} />
 
           {/* Handle — 16px unselected, 24px selected */}
-          <span className={styles.handle}>
+          <span className={styles['handle']}>
             {/* Selected icon — checkmark, only when showIcons */}
             {showIcons && (
               <svg
-                className={styles.icon}
+                className={styles['icon']}
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +130,7 @@ export default function SwitchComponent({
         </span>
       </span>
 
-      {label && <span className={styles.label}>{label}</span>}
+      {label && <span className={styles['label']}>{label}</span>}
     </label>
   );
 }

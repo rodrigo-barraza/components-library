@@ -204,7 +204,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
 
   const barClasses = [
     styles['search-bar'],
-    compact && styles.compact,
+    compact && styles['compact'],
     expanded && styles['is-expanded-state'],
   ]
     .filter(Boolean)
@@ -351,7 +351,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
       {/* Scrim overlay */}
       {useScrim && (
         <div
-          className={`${styles.scrim}${expanded ? ` ${styles['is-visible-state']}` : ""}`}
+          className={`${styles['scrim']}${expanded ? ` ${styles['is-visible-state']}` : ""}`}
           onClick={collapse}
           aria-hidden="true"
         />
@@ -432,7 +432,7 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }: Sugges
 
   return (
     <button
-      className={`${styles['suggestion-item']}${isHighlighted ? ` ${styles.highlighted}` : ""}`}
+      className={`${styles['suggestion-item']}${isHighlighted ? ` ${styles['highlighted']}` : ""}`}
       onClick={handleClick}
       type="button"
       role="option"

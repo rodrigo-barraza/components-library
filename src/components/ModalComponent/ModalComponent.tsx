@@ -132,15 +132,15 @@ export default function ModalComponent({
   );
 
   const overlayClass = [
-    styles.overlay,
+    styles['overlay'],
     variant === "dark" ? styles['overlay-dark'] : "",
   ]
     .filter(Boolean)
     .join(" ");
 
   const panelClass = [
-    styles.panel,
-    styles[`size_${size}`],
+    styles['panel'],
+    styles[`size-${size}`],
     className || "",
   ]
     .filter(Boolean)
@@ -160,8 +160,8 @@ export default function ModalComponent({
         aria-labelledby={titleId}
         tabIndex={-1}
       >
-        <div className={styles.header}>
-          <span className={styles.title} id={titleId}>{title}</span>
+        <div className={styles['header']}>
+          <span className={styles['title']} id={titleId}>{title}</span>
           <button
             className={styles['close-button']}
             onClick={onClose}
@@ -183,8 +183,8 @@ export default function ModalComponent({
             </svg>
           </button>
         </div>
-        <div className={styles.body}>{children}</div>
-        {footer && <div className={styles.footer}>{footer}</div>}
+        <div className={styles['body']}>{children}</div>
+        {footer && <div className={styles['footer']}>{footer}</div>}
       </div>
     </div>
   );

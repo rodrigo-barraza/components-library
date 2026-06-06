@@ -162,10 +162,10 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
   const rootClasses = [
     styles['text-field'],
     styles[variant],
-    focused && styles.focused,
-    populated && styles.populated,
+    focused && styles['focused'],
+    populated && styles['populated'],
     hasLabel && styles['has-label'],
-    error && styles.error,
+    error && styles['error'],
     disabled && styles['is-disabled-state'],
     leadingIcon && styles['has-leading-icon'],
     className,
@@ -216,7 +216,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
           {hasLabel && (
             <label
               ref={labelRef}
-              className={styles.label}
+              className={styles['label']}
               htmlFor={fieldId}
             >
               {label}
@@ -226,12 +226,12 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
 
           {/* Input row (prefix + input + suffix) */}
           <div className={styles['input-row']}>
-            {prefix && <span className={styles.prefix}>{prefix}</span>}
+            {prefix && <span className={styles['prefix']}>{prefix}</span>}
 
             {multiline ? (
               <textarea
                 ref={inputRef as React.Ref<HTMLTextAreaElement>}
-                className={styles.textarea}
+                className={styles['textarea']}
                 rows={rows}
                 {...fieldProps}
                 {...restClean}
@@ -240,13 +240,13 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
               <input
                 ref={inputRef as React.Ref<HTMLInputElement>}
                 type={type}
-                className={styles.input}
+                className={styles['input']}
                 {...fieldProps}
                 {...restClean}
               />
             )}
 
-            {suffix && <span className={styles.suffix}>{suffix}</span>}
+            {suffix && <span className={styles['suffix']}>{suffix}</span>}
           </div>
         </div>
 
@@ -297,7 +297,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
         <div className={styles['supporting-text']} id={supportingId}>
           <span>{displaySupportingText}</span>
           {maxLength != null && (
-            <span className={styles.counter}>
+            <span className={styles['counter']}>
               {charCount}/{maxLength}
             </span>
           )}

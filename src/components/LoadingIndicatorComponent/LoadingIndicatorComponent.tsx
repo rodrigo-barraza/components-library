@@ -142,13 +142,13 @@ function CircularIndicator({
   const colorClass = getColorClass(color);
 
   const rootClasses = [
-    styles.wrapper,
+    styles['wrapper'],
     styles['fade-in'],
     className,
   ].filter(Boolean).join(" ");
 
   const circularClasses = [
-    styles.circular,
+    styles['circular'],
     sizeClass,
     colorClass,
     isIndeterminate && styles['circular-indeterminate'],
@@ -191,7 +191,7 @@ function CircularIndicator({
 
         {/* Percentage label — determinate only */}
         {!isIndeterminate && showPercentage && (
-          <span className={styles.percentage} aria-hidden="true">
+          <span className={styles['percentage']} aria-hidden="true">
             {Math.round(value)}%
           </span>
         )}
@@ -199,7 +199,7 @@ function CircularIndicator({
 
       {/* Optional descriptive label */}
       {label && (
-        <span className={styles.label} aria-live="polite">
+        <span className={styles['label']} aria-live="polite">
           {label}
         </span>
       )}
@@ -255,7 +255,7 @@ function LinearIndicator({
   ].filter(Boolean).join(" ");
 
   const linearClasses = [
-    styles.linear,
+    styles['linear'],
     trackSizeClass,
     colorClass,
     isIndeterminate && styles['linear-indeterminate'],
@@ -305,7 +305,7 @@ function LinearIndicator({
 
       {/* Optional descriptive label */}
       {label && (
-        <span className={styles.label} aria-live="polite">
+        <span className={styles['label']} aria-live="polite">
           {isIndeterminate ? label : `${label} — ${Math.round(value)}%`}
         </span>
       )}

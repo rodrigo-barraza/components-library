@@ -190,14 +190,14 @@ export default function DialogComponent({
   if (!open && !closing) return null;
 
   const scrimClass = [
-    styles.scrim,
-    fullscreen ? styles.fullscreen : "",
+    styles['scrim'],
+    fullscreen ? styles['fullscreen'] : "",
   ]
     .filter(Boolean)
     .join(" ");
 
   const containerClass = [
-    styles.container,
+    styles['container'],
     className || "",
   ]
     .filter(Boolean)
@@ -231,7 +231,7 @@ export default function DialogComponent({
       >
         {/* ── Icon ── */}
         {icon && (
-          <div className={styles.icon} aria-hidden="true">
+          <div className={styles['icon']} aria-hidden="true">
             {icon}
           </div>
         )}
@@ -241,7 +241,7 @@ export default function DialogComponent({
           <h2
             id={headlineId}
             className={[
-              styles.headline,
+              styles['headline'],
               icon ? styles['headline-centered'] : "",
             ]
               .filter(Boolean)
@@ -252,12 +252,12 @@ export default function DialogComponent({
         )}
 
         {/* ── Supporting text / body content ── */}
-        <div id={bodyId} className={styles.body}>
+        <div id={bodyId} className={styles['body']}>
           {children}
         </div>
 
         {/* ── Actions ── */}
-        <div className={styles.actions}>
+        <div className={styles['actions']}>
           {!hideCancel && (
             <button
               type="button"

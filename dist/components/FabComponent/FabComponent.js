@@ -55,19 +55,19 @@ const FabComponent = forwardRef(function FabComponent({ size = "standard", color
             : styles['bottom-end'];
     /* ── Build class list ───────────────────────────────────────────── */
     const classes = [
-        styles.fab,
+        styles['fab'],
         /* Size */
-        size === "small" ? styles.small : "",
-        size === "large" ? styles.large : "",
+        size === "small" ? styles['small'] : "",
+        size === "large" ? styles['large'] : "",
         /* Color */
-        styles[color] || styles.primary,
+        styles[color] || styles['primary'],
         /* Extended */
-        isExtended ? styles.extended : "",
+        isExtended ? styles['extended'] : "",
         isExtended && !Icon ? styles['extended-no-icon'] : "",
         /* Lowered elevation */
-        lowered ? styles.lowered : "",
+        lowered ? styles['lowered'] : "",
         /* Fixed positioning */
-        fixed ? styles.fixed : "",
+        fixed ? styles['fixed'] : "",
         fixed ? positionClass : "",
         /* Scroll-hide */
         hidden ? styles['is-hidden-state'] : "",
@@ -87,12 +87,12 @@ const FabComponent = forwardRef(function FabComponent({ size = "standard", color
             if (sound)
                 SoundService.playClickButton({ event: e });
             onClick?.(e);
-        }, ...rest, children: [ripples.map((ripple) => (_jsx("span", { className: styles.ripple, style: {
+        }, ...rest, children: [ripples.map((ripple) => (_jsx("span", { className: styles['ripple'], style: {
                     width: ripple.diameter,
                     height: ripple.diameter,
                     left: ripple.x,
                     top: ripple.y,
-                } }, ripple.id))), Icon && (_jsx("span", { className: styles.icon, children: _jsx(Icon, { size: computedIconSize }) })), isExtended && _jsx("span", { className: styles.label, children: label })] }));
+                } }, ripple.id))), Icon && (_jsx("span", { className: styles['icon'], children: _jsx(Icon, { size: computedIconSize }) })), isExtended && _jsx("span", { className: styles['label'], children: label })] }));
 });
 export default FabComponent;
 //# sourceMappingURL=FabComponent.js.map

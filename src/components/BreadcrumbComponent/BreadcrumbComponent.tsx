@@ -44,36 +44,36 @@ export default function BreadcrumbComponent({
       className={`${styles['navigation-bar']} ${className || ""}`}
       {...rest}
     >
-      <ol className={styles.list}>
+      <ol className={styles['list']}>
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
           const Icon = item.icon;
 
           return (
-            <li key={i} className={styles.item}>
+            <li key={i} className={styles['item']}>
               {i > 0 && (
-                <span className={styles.separator} aria-hidden="true">
+                <span className={styles['separator']} aria-hidden="true">
                   {separatorElement}
                 </span>
               )}
 
               {isLast ? (
-                <span className={styles.current} aria-current="page">
-                  {Icon && <Icon size={14} className={styles.icon} />}
+                <span className={styles['current']} aria-current="page">
+                  {Icon && <Icon size={14} className={styles['icon']} />}
                   {item.label}
                 </span>
               ) : item.href ? (
-                <a href={item.href} className={styles.link} onClick={item.onClick}>
-                  {Icon && <Icon size={14} className={styles.icon} />}
+                <a href={item.href} className={styles['link']} onClick={item.onClick}>
+                  {Icon && <Icon size={14} className={styles['icon']} />}
                   {item.label}
                 </a>
               ) : (
                 <button
                   type="button"
-                  className={styles.link}
+                  className={styles['link']}
                   onClick={item.onClick}
                 >
-                  {Icon && <Icon size={14} className={styles.icon} />}
+                  {Icon && <Icon size={14} className={styles['icon']} />}
                   {item.label}
                 </button>
               )}

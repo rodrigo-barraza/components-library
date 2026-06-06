@@ -45,7 +45,7 @@ export default function CopyButtonComponent({
   return (
     <button
       type="button"
-      className={`${styles['copy-button']} ${copied ? styles.copied : ""} ${className}`}
+      className={`${styles['copy-button']} ${copied ? styles['copied'] : ""} ${className}`}
       onClick={handleCopy}
       onMouseEnter={(event) => {
         if (sound) SoundService.playHoverButton({ event });

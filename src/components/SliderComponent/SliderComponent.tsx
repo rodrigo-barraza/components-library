@@ -80,7 +80,7 @@ export default function SliderComponent<T extends number | number[]>({
 
   return (
     <div
-      className={[styles.slider, disabled && styles['is-disabled-state'], className]
+      className={[styles['slider'], disabled && styles['is-disabled-state'], className]
         .filter(Boolean)
         .join(" ")}
       id={id}
@@ -263,7 +263,7 @@ function SingleTrack({
     <div className={styles['track-wrapper']}>
       <div
         ref={trackRef}
-        className={[styles.track, dragging && styles.trackDragging]
+        className={[styles['track']]
           .filter(Boolean)
           .join(" ")}
         onPointerDown={handlePointerDown}
@@ -326,7 +326,7 @@ function SingleTrack({
           <div className={styles['state-layer']} />
 
           {/* M3 thumb handle — 20px */}
-          <div className={styles.thumb} />
+          <div className={styles['thumb']} />
 
           {/* M3 value indicator — teardrop label */}
           {showValue && (pressed || dragging) && (
@@ -448,7 +448,7 @@ function RangeTrack({
     <div className={styles['track-wrapper']}>
       <div
         ref={trackRef}
-        className={[styles.track, dragging && styles.trackDragging]
+        className={[styles['track']]
           .filter(Boolean)
           .join(" ")}
         onPointerDown={handlePointerDown}
@@ -503,7 +503,7 @@ function RangeTrack({
           onKeyDown={makeThumbKeyHandler("start")}
         >
           <div className={styles['state-layer']} />
-          <div className={styles.thumb} />
+          <div className={styles['thumb']} />
           {showValue &&
             (pressedThumb === "start" ||
               (dragging && activeThumb.current === "start")) && (
@@ -534,7 +534,7 @@ function RangeTrack({
           onKeyDown={makeThumbKeyHandler("end")}
         >
           <div className={styles['state-layer']} />
-          <div className={styles.thumb} />
+          <div className={styles['thumb']} />
           {showValue &&
             (pressedThumb === "end" ||
               (dragging && activeThumb.current === "end")) && (

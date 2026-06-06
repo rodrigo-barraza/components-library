@@ -83,7 +83,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
     const y = event.clientY - rect.top - diameter / 2;
 
     const ripple = document.createElement("span");
-    ripple.className = styles.ripple;
+    ripple.className = styles['ripple'];
     ripple.style.width = ripple.style.height = `${diameter}px`;
     ripple.style.left = `${x}px`;
     ripple.style.top = `${y}px`;
@@ -118,9 +118,9 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
 
       {/* Spinner or Icon */}
       {loading ? (
-        <span className={styles.spinner} aria-hidden="true" />
+        <span className={styles['spinner']} aria-hidden="true" />
       ) : Icon ? (
-        <span className={styles.icon} aria-hidden="true">
+        <span className={styles['icon']} aria-hidden="true">
           <Icon
             size={resolvedIconSize}
             {...(isSubmit && isGenerating ? { fill: "currentColor" } : {})}
@@ -129,7 +129,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
       ) : null}
 
       {/* Label */}
-      {hasLabel && <span className={styles.label}>{children}</span>}
+      {hasLabel && <span className={styles['label']}>{children}</span>}
     </>
   );
 

@@ -30,7 +30,7 @@ export default function IconButtonComponent({
 
   const classes = [
     styles['icon-button'],
-    variant === "destructive" ? styles.destructive : "",
+    variant === "destructive" ? styles['destructive'] : "",
     active ? styles['is-active-state'] : "",
     hoverReveal ? styles['hover-reveal'] : "",
     className || "",

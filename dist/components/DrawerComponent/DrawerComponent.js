@@ -56,13 +56,13 @@ export default function DrawerComponent({ open, onClose, title = "Detail", ancho
         return null;
     const widthValue = typeof width === "number" ? `${width}px` : width;
     const drawerClasses = [
-        styles.drawer,
-        anchor === "left" ? styles.left : "",
+        styles['drawer'],
+        anchor === "left" ? styles['left'] : "",
         className || "",
     ]
         .filter(Boolean)
         .join(" ");
-    const content = (_jsxs(_Fragment, { children: [scrim && (_jsx("div", { className: styles.scrim, "data-closing": closing || undefined, onClick: dismissible ? handleClose : undefined })), _jsxs("div", { ref: drawerRef, id: id, className: drawerClasses, style: { "--drawer-width": widthValue }, "data-closing": closing || undefined, onAnimationEnd: handleAnimationEnd, children: [_jsxs("div", { className: styles.header, children: [_jsx("span", { className: styles.title, children: title }), _jsxs("div", { className: styles['header-actions'], children: [headerActions, dismissible && _jsx(CloseButtonComponent, { onClick: handleClose })] })] }), _jsxs("div", { className: styles.body, children: [sections.map((section, si) => (_jsxs("div", { className: styles.section, children: [_jsx("div", { className: styles['section-title'], children: section.title }), _jsx("div", { className: styles.grid, children: section.items.map((item, ii) => (_jsxs("div", { className: styles.item, children: [_jsx("span", { className: styles.label, children: item.label }), _jsx("span", { className: `${styles.value} ${item.mono ? styles.mono : ""}`, children: item.value ?? "—" })] }, ii))) })] }, si))), children] })] })] }));
+    const content = (_jsxs(_Fragment, { children: [scrim && (_jsx("div", { className: styles['scrim'], "data-closing": closing || undefined, onClick: dismissible ? handleClose : undefined })), _jsxs("div", { ref: drawerRef, id: id, className: drawerClasses, style: { "--drawer-width": widthValue }, "data-closing": closing || undefined, onAnimationEnd: handleAnimationEnd, children: [_jsxs("div", { className: styles['header'], children: [_jsx("span", { className: styles['title'], children: title }), _jsxs("div", { className: styles['header-actions'], children: [headerActions, dismissible && _jsx(CloseButtonComponent, { onClick: handleClose })] })] }), _jsxs("div", { className: styles['body'], children: [sections.map((section, si) => (_jsxs("div", { className: styles['section'], children: [_jsx("div", { className: styles['section-title'], children: section.title }), _jsx("div", { className: styles['grid'], children: section.items.map((item, ii) => (_jsxs("div", { className: styles['item'], children: [_jsx("span", { className: styles['label'], children: item.label }), _jsx("span", { className: `${styles['value']} ${item.mono ? styles['mono'] : ""}`, children: item.value ?? "—" })] }, ii))) })] }, si))), children] })] })] }));
     if (typeof document !== "undefined") {
         return createPortal(content, document.body);
     }

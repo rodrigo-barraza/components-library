@@ -93,10 +93,10 @@ const TextFieldComponent = forwardRef(function TextFieldComponent({ variant = "o
     const rootClasses = [
         styles['text-field'],
         styles[variant],
-        focused && styles.focused,
-        populated && styles.populated,
+        focused && styles['focused'],
+        populated && styles['populated'],
         hasLabel && styles['has-label'],
-        error && styles.error,
+        error && styles['error'],
         disabled && styles['is-disabled-state'],
         leadingIcon && styles['has-leading-icon'],
         className,
@@ -123,7 +123,7 @@ const TextFieldComponent = forwardRef(function TextFieldComponent({ variant = "o
     };
     // Remove our consumed event handlers from rest before spreading
     const { onFocus: _, onBlur: __, ...restClean } = rest;
-    return (_jsxs("div", { className: rootClasses, children: [_jsxs("div", { className: styles['field-container'], onClick: handleContainerClick, role: "presentation", children: [leadingIcon && (_jsx("span", { className: styles['leading-icon'], "aria-hidden": "true", children: leadingIcon })), _jsxs("div", { className: styles['input-wrapper'], children: [hasLabel && (_jsxs("label", { ref: labelRef, className: styles.label, htmlFor: fieldId, children: [label, required && _jsx("span", { "aria-hidden": "true", children: " *" })] })), _jsxs("div", { className: styles['input-row'], children: [prefix && _jsx("span", { className: styles.prefix, children: prefix }), multiline ? (_jsx("textarea", { ref: inputRef, className: styles.textarea, rows: rows, ...fieldProps, ...restClean })) : (_jsx("input", { ref: inputRef, type: type, className: styles.input, ...fieldProps, ...restClean })), suffix && _jsx("span", { className: styles.suffix, children: suffix })] })] }), trailingIcon && (_jsx("span", { className: styles['trailing-icon'], "aria-hidden": "true", onClick: (event) => {
+    return (_jsxs("div", { className: rootClasses, children: [_jsxs("div", { className: styles['field-container'], onClick: handleContainerClick, role: "presentation", children: [leadingIcon && (_jsx("span", { className: styles['leading-icon'], "aria-hidden": "true", children: leadingIcon })), _jsxs("div", { className: styles['input-wrapper'], children: [hasLabel && (_jsxs("label", { ref: labelRef, className: styles['label'], htmlFor: fieldId, children: [label, required && _jsx("span", { "aria-hidden": "true", children: " *" })] })), _jsxs("div", { className: styles['input-row'], children: [prefix && _jsx("span", { className: styles['prefix'], children: prefix }), multiline ? (_jsx("textarea", { ref: inputRef, className: styles['textarea'], rows: rows, ...fieldProps, ...restClean })) : (_jsx("input", { ref: inputRef, type: type, className: styles['input'], ...fieldProps, ...restClean })), suffix && _jsx("span", { className: styles['suffix'], children: suffix })] })] }), trailingIcon && (_jsx("span", { className: styles['trailing-icon'], "aria-hidden": "true", onClick: (event) => {
                             event.stopPropagation();
                             onTrailingIconClick?.(event);
                         }, role: onTrailingIconClick ? "button" : undefined, tabIndex: onTrailingIconClick ? 0 : undefined, onKeyDown: (event) => {
@@ -131,7 +131,7 @@ const TextFieldComponent = forwardRef(function TextFieldComponent({ variant = "o
                                 event.preventDefault();
                                 onTrailingIconClick(event);
                             }
-                        }, children: trailingIcon })), variant === "filled" && (_jsx("span", { className: styles['active-indicator'], "aria-hidden": "true" })), variant === "outlined" && (_jsxs(_Fragment, { children: [_jsx("span", { className: styles['outline-border'], "aria-hidden": "true" }), hasLabel && (_jsx("span", { ref: notchRef, className: styles['outline-notch'], "aria-hidden": "true" }))] }))] }), (displaySupportingText || maxLength != null) && (_jsxs("div", { className: styles['supporting-text'], id: supportingId, children: [_jsx("span", { children: displaySupportingText }), maxLength != null && (_jsxs("span", { className: styles.counter, children: [charCount, "/", maxLength] }))] }))] }));
+                        }, children: trailingIcon })), variant === "filled" && (_jsx("span", { className: styles['active-indicator'], "aria-hidden": "true" })), variant === "outlined" && (_jsxs(_Fragment, { children: [_jsx("span", { className: styles['outline-border'], "aria-hidden": "true" }), hasLabel && (_jsx("span", { ref: notchRef, className: styles['outline-notch'], "aria-hidden": "true" }))] }))] }), (displaySupportingText || maxLength != null) && (_jsxs("div", { className: styles['supporting-text'], id: supportingId, children: [_jsx("span", { children: displaySupportingText }), maxLength != null && (_jsxs("span", { className: styles['counter'], children: [charCount, "/", maxLength] }))] }))] }));
 });
 export default TextFieldComponent;
 //# sourceMappingURL=TextFieldComponent.js.map

@@ -57,7 +57,7 @@ const ExtendedFabComponent = forwardRef(function ExtendedFabComponent({ variant 
         const x = event.clientX - rect.left - size / 2;
         const y = event.clientY - rect.top - size / 2;
         const ripple = document.createElement("span");
-        ripple.className = styles.ripple;
+        ripple.className = styles['ripple'];
         ripple.style.width = `${size}px`;
         ripple.style.height = `${size}px`;
         ripple.style.left = `${x}px`;
@@ -72,8 +72,8 @@ const ExtendedFabComponent = forwardRef(function ExtendedFabComponent({ variant 
         styles['extended-fab'],
         styles[variant],
         collapsed ? styles['is-collapsed-state'] : "",
-        lowered ? styles.lowered : "",
-        fixed ? styles.fixed : "",
+        lowered ? styles['lowered'] : "",
+        fixed ? styles['fixed'] : "",
         className,
     ]
         .filter(Boolean)
@@ -95,7 +95,7 @@ const ExtendedFabComponent = forwardRef(function ExtendedFabComponent({ variant 
                 SoundService.playClickButton({ event });
             handleRipple(event);
             onClick?.(event);
-        }, ...rest, children: [Icon && (_jsx("span", { className: styles.icon, "aria-hidden": "true", children: _jsx(Icon, { size: 24 }) })), children && _jsx("span", { className: styles.label, children: children })] }));
+        }, ...rest, children: [Icon && (_jsx("span", { className: styles['icon'], "aria-hidden": "true", children: _jsx(Icon, { size: 24 }) })), children && _jsx("span", { className: styles['label'], children: children })] }));
 });
 export default ExtendedFabComponent;
 //# sourceMappingURL=ExtendedFabComponent.js.map

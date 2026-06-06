@@ -61,7 +61,7 @@ export default function PageHeaderComponent({
   // Standalone fallback: render the full pageHeader bar.
   return (
     <header
-      className={`${styles['page-header']} ${sticky ? styles.sticky : ""} ${className || ""}`}
+      className={`${styles['page-header']} ${sticky ? styles['sticky'] : ""} ${className || ""}`}
     >
       <div className={styles['header-left']}>
         {onBack && (

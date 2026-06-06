@@ -47,25 +47,25 @@ export default function ProgressBarComponent({
   }, [clampedValue, isIndeterminate]);
 
   const classes = [
-    styles.wrapper,
+    styles['wrapper'],
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
   const trackClasses = [
-    styles.track,
+    styles['track'],
     styles[size],
   ]
     .filter(Boolean)
     .join(" ");
 
   const barClasses = [
-    styles.bar,
+    styles['bar'],
     styles[variant],
-    isIndeterminate && styles.indeterminate,
-    animated && !isIndeterminate && styles.animated,
-    striped && styles.striped,
+    isIndeterminate && styles['indeterminate'],
+    animated && !isIndeterminate && styles['animated'],
+    striped && styles['striped'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -73,10 +73,10 @@ export default function ProgressBarComponent({
   return (
     <div className={classes} {...rest}>
       {(label || showValue) && (
-        <div className={styles.header}>
-          {label && <span className={styles.label}>{label}</span>}
+        <div className={styles['header']}>
+          {label && <span className={styles['label']}>{label}</span>}
           {showValue && !isIndeterminate && (
-            <span className={styles.value}>{Math.round(clampedValue)}%</span>
+            <span className={styles['value']}>{Math.round(clampedValue)}%</span>
           )}
         </div>
       )}

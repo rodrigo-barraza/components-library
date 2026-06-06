@@ -69,10 +69,10 @@ export default function CardComponent({
   ...rest
 }: CardComponentProps) {
   const classes = [
-    styles.card,
+    styles['card'],
     styles[variant],
-    interactive && styles.interactive,
-    isDraggable && styles.draggable,
+    interactive && styles['interactive'],
+    isDraggable && styles['draggable'],
     fullWidth && styles['full-width'],
     className,
   ]
@@ -90,10 +90,10 @@ export default function CardComponent({
 
 function CardHeader({ icon: Icon, title, subtitle, children, className }: CardHeaderProps) {
   return (
-    <div className={`${styles.header}${className ? ` ${className}` : ""}`}>
-      {Icon && <Icon size={16} className={styles.icon} />}
-      {title && <span className={styles.title}>{title}</span>}
-      {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
+    <div className={`${styles['header']}${className ? ` ${className}` : ""}`}>
+      {Icon && <Icon size={16} className={styles['icon']} />}
+      {title && <span className={styles['title']}>{title}</span>}
+      {subtitle && <span className={styles['subtitle']}>{subtitle}</span>}
       {children}
     </div>
   );
@@ -119,7 +119,7 @@ function CardMedia({
 
   return (
     <div
-      className={[styles.media, styles[`media-${position}`], className]
+      className={[styles['media'], styles[`media-${position}`], className]
         .filter(Boolean)
         .join(" ")}
       style={Object.keys(mediaStyle).length ? mediaStyle : undefined}
@@ -143,7 +143,7 @@ function CardMedia({
 
 function CardBody({ children, className }: CardBodyProps) {
   return (
-    <div className={`${styles.body}${className ? ` ${className}` : ""}`}>
+    <div className={`${styles['body']}${className ? ` ${className}` : ""}`}>
       {children}
     </div>
   );
@@ -153,7 +153,7 @@ function CardBody({ children, className }: CardBodyProps) {
 
 function CardFooter({ children, className }: CardFooterProps) {
   return (
-    <div className={`${styles.footer}${className ? ` ${className}` : ""}`}>
+    <div className={`${styles['footer']}${className ? ` ${className}` : ""}`}>
       {children}
     </div>
   );

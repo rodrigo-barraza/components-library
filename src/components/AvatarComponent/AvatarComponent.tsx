@@ -47,7 +47,7 @@ export default function AvatarComponent({
   const iconSize =
     size === "xs" ? 12 : size === "sm" ? 14 : size === "lg" ? 22 : size === "xl" ? 28 : 18;
 
-  const classes = [styles.avatar, styles[size], className].filter(Boolean).join(" ");
+  const classes = [styles['avatar'], styles[size], className].filter(Boolean).join(" ");
 
   return (
     <div className={classes} style={style} {...rest}>
@@ -55,21 +55,21 @@ export default function AvatarComponent({
         <img
           src={src}
           alt={alt || name || ""}
-          className={styles.image}
+          className={styles['image']}
           draggable={false}
           onError={() => setImgError(true)}
         />
       ) : initials ? (
-        <span className={styles.initials}>{initials}</span>
+        <span className={styles['initials']}>{initials}</span>
       ) : Icon ? (
-        <Icon size={iconSize} className={styles.icon} />
+        <Icon size={iconSize} className={styles['icon']} />
       ) : (
-        <span className={styles.initials}>?</span>
+        <span className={styles['initials']}>?</span>
       )}
 
       {status && (
         <span
-          className={`${styles.status} ${styles[`status-${status}`]}`}
+          className={`${styles['status']} ${styles[`status-${status}`]}`}
           aria-label={status}
         />
       )}
@@ -95,15 +95,15 @@ function AvatarGroup({ max = 5, size = "md", className, children }: AvatarGroupP
   const overflow = items.length - max;
 
   return (
-    <div className={`${styles.group} ${className || ""}`}>
+    <div className={`${styles['group']} ${className || ""}`}>
       {visible.map((child, i) => (
         <div key={i} className={styles['group-item']} style={{ zIndex: visible.length - i }}>
           {child}
         </div>
       ))}
       {overflow > 0 && (
-        <div className={`${styles.avatar} ${styles[size]} ${styles.overflow}`}>
-          <span className={styles.initials}>+{overflow}</span>
+        <div className={`${styles['avatar']} ${styles[size]} ${styles['overflow']}`}>
+          <span className={styles['initials']}>+{overflow}</span>
         </div>
       )}
     </div>

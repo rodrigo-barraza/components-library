@@ -83,7 +83,7 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
     const y = event.clientY - rect.top - size / 2;
 
     const ripple = document.createElement("span");
-    ripple.className = styles.ripple;
+    ripple.className = styles['ripple'];
     ripple.style.width = `${size}px`;
     ripple.style.height = `${size}px`;
     ripple.style.left = `${x}px`;
@@ -100,8 +100,8 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
     styles['extended-fab'],
     styles[variant],
     collapsed ? styles['is-collapsed-state'] : "",
-    lowered ? styles.lowered : "",
-    fixed ? styles.fixed : "",
+    lowered ? styles['lowered'] : "",
+    fixed ? styles['fixed'] : "",
     className,
   ]
     .filter(Boolean)
@@ -138,11 +138,11 @@ const ExtendedFabComponent = forwardRef<HTMLButtonElement, React.ButtonHTMLAttri
       {...rest}
     >
       {Icon && (
-        <span className={styles.icon} aria-hidden="true">
+        <span className={styles['icon']} aria-hidden="true">
           <Icon size={24} />
         </span>
       )}
-      {children && <span className={styles.label}>{children}</span>}
+      {children && <span className={styles['label']}>{children}</span>}
     </button>
   );
 });

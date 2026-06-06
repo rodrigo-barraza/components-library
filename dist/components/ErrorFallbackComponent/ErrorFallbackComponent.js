@@ -19,6 +19,6 @@ export default function ErrorFallbackComponent({ error, reset, title = "This pag
     useEffect(() => {
         console.error(`${logLabel} Unhandled error:`, error);
     }, [error, logLabel]);
-    return (_jsxs("div", { className: styles.container, children: [_jsx("div", { className: styles.icon, children: icon }), _jsx("h2", { className: styles.title, children: title }), _jsx("p", { className: styles.message, children: error?.message || "An unexpected error occurred." }), _jsx("button", { className: styles['retry-button'], onClick: reset, children: "Try Again" })] }));
+    return (_jsxs("div", { className: styles['container'], children: [_jsx("div", { className: styles['icon'], children: icon }), _jsx("h2", { className: styles['title'], children: title }), _jsx("p", { className: styles['message'], children: error?.message || "An unexpected error occurred." }), _jsx("button", { className: styles['retry-button'], onClick: reset, children: "Try Again" })] }));
 }
 //# sourceMappingURL=ErrorFallbackComponent.js.map

@@ -51,12 +51,12 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
             styles['size-medium'];
     const colorClass = getColorClass(color);
     const rootClasses = [
-        styles.wrapper,
+        styles['wrapper'],
         styles['fade-in'],
         className,
     ].filter(Boolean).join(" ");
     const circularClasses = [
-        styles.circular,
+        styles['circular'],
         sizeClass,
         colorClass,
         isIndeterminate && styles['circular-indeterminate'],
@@ -69,7 +69,7 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
         "aria-valuemax": 100,
         ...(isIndeterminate ? {} : { "aria-valuenow": value }),
     };
-    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsxs("div", { className: circularClasses, ...ariaProps, children: [_jsxs("svg", { className: styles['circular-svg'], viewBox: "0 0 44 44", xmlns: "http://www.w3.org/2000/svg", children: [_jsx("circle", { className: styles['circular-track'], cx: CENTER, cy: CENTER, r: RADIUS }), _jsx("circle", { className: styles['circular-indicator'], cx: CENTER, cy: CENTER, r: RADIUS, strokeDasharray: isIndeterminate ? undefined : CIRCUMFERENCE, strokeDashoffset: dashOffset })] }), !isIndeterminate && showPercentage && (_jsxs("span", { className: styles.percentage, "aria-hidden": "true", children: [Math.round(value), "%"] }))] }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: label }))] }));
+    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsxs("div", { className: circularClasses, ...ariaProps, children: [_jsxs("svg", { className: styles['circular-svg'], viewBox: "0 0 44 44", xmlns: "http://www.w3.org/2000/svg", children: [_jsx("circle", { className: styles['circular-track'], cx: CENTER, cy: CENTER, r: RADIUS }), _jsx("circle", { className: styles['circular-indicator'], cx: CENTER, cy: CENTER, r: RADIUS, strokeDasharray: isIndeterminate ? undefined : CIRCUMFERENCE, strokeDashoffset: dashOffset })] }), !isIndeterminate && showPercentage && (_jsxs("span", { className: styles['percentage'], "aria-hidden": "true", children: [Math.round(value), "%"] }))] }), label && (_jsx("span", { className: styles['label'], "aria-live": "polite", children: label }))] }));
 }
 /**
  * LinearIndicator — Horizontal progress bar.
@@ -88,7 +88,7 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
         className,
     ].filter(Boolean).join(" ");
     const linearClasses = [
-        styles.linear,
+        styles['linear'],
         trackSizeClass,
         colorClass,
         isIndeterminate && styles['linear-indeterminate'],
@@ -105,7 +105,7 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
                 /* Indeterminate: two sliding bars */
                 _jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar1']}` }), _jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar2']}` })] })) : (
                 /* Determinate: single bar + optional buffer + stop indicator */
-                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
+                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles['label'], "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
 }
 /* ═══════════════════════════════════════════════════════════ */
 /*  UTILITIES                                                 */
