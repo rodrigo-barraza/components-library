@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { ChevronDown, Loader2, X } from "lucide-react";
+import { ChevronDown, Loader2, Search, X } from "lucide-react";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./SelectComponent.module.css";
 
@@ -47,6 +47,7 @@ export interface SelectComponentProps<T extends string | string[] = string | str
   multiple?: boolean;
   allLabel?: string;
   compact?: boolean;
+  searchable?: boolean;
 }
 
 export default function SelectComponent<T extends string | string[] = string | string[]>({
@@ -69,10 +70,13 @@ export default function SelectComponent<T extends string | string[] = string | s
   multiple = false,
   allLabel = "All",
   compact = false,
+  searchable = false,
 }: SelectComponentProps<T>) {
   const [internalOpen, setInternalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const internalTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const isControlled = controlledIsOpen !== undefined && controlledOnToggle !== undefined;
   const isOpen = isControlled ? controlledIsOpen : internalOpen;
@@ -181,6 +185,25 @@ export default function SelectComponent<T extends string | string[] = string | s
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [isControlled, internalOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchQuery("");
+    } else if (searchable && isOpen) {
+      requestAnimationFrame(() => {
+        searchInputRef.current?.focus();
+      });
+    }
+  }, [isOpen, searchable]);
+
+  const filteredOptions = useMemo(() => {
+    if (!searchable || !searchQuery.trim()) return options;
+    const normalizedQuery = searchQuery.toLowerCase().trim();
+    return options.filter((option) =>
+      option.label.toLowerCase().includes(normalizedQuery) ||
+      option.value.toLowerCase().includes(normalizedQuery),
+    );
+  }, [options, searchQuery, searchable]);
 
   const renderOption = (option: SelectOption) => {
     const checked = multiple ? selectedSet.has(option.value) : option.value === (value as string);
@@ -348,7 +371,40 @@ export default function SelectComponent<T extends string | string[] = string | s
 
       {!isControlled && isOpen && (
         <div className={styles.menu}>
-          {options.map(renderOption)}
+          {searchable && (
+            <div className={styles["search-wrapper"]}>
+              <Search size={13} className={styles["search-icon"]} />
+              <input
+                ref={searchInputRef}
+                type="text"
+                className={styles["search-field"]}
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search…"
+                autoComplete="off"
+                onClick={(event) => event.stopPropagation()}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  className={styles["search-clear-button"]}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setSearchQuery("");
+                    searchInputRef.current?.focus();
+                  }}
+                >
+                  <X size={12} />
+                </button>
+              )}
+            </div>
+          )}
+          {filteredOptions.map(renderOption)}
+          {searchable && filteredOptions.length === 0 && (
+            <div className={styles["search-empty-state"]}>
+              No matches
+            </div>
+          )}
         </div>
       )}
 

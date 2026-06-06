@@ -39,6 +39,7 @@ export interface SelectComponentProps<T extends string | string[] = string | str
     multiple?: boolean;
     allLabel?: string;
     compact?: boolean;
+    searchable?: boolean;
 }
-export default function SelectComponent<T extends string | string[] = string | string[]>({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, triggerTooltipContent, label, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple, allLabel, compact, }: SelectComponentProps<T>): import("react/jsx-runtime").JSX.Element;
+export default function SelectComponent<T extends string | string[] = string | string[]>({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, triggerTooltipContent, label, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple, allLabel, compact, searchable, }: SelectComponentProps<T>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SelectComponent.d.ts.map
