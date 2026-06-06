@@ -135,15 +135,15 @@ function CircularIndicator({
 
   /* ── CSS class assembly ── */
   const sizeClass =
-    size === "small"  ? styles.sizeSmall :
-    size === "large"  ? styles.sizeLarge :
-    styles.sizeMedium;
+    size === "small"  ? styles['size-small'] :
+    size === "large"  ? styles['size-large'] :
+    styles['size-medium'];
 
   const colorClass = getColorClass(color);
 
   const rootClasses = [
     styles.wrapper,
-    styles.fadeIn,
+    styles['fade-in'],
     className,
   ].filter(Boolean).join(" ");
 
@@ -151,7 +151,7 @@ function CircularIndicator({
     styles.circular,
     sizeClass,
     colorClass,
-    isIndeterminate && styles.circularIndeterminate,
+    isIndeterminate && styles['circular-indeterminate'],
   ].filter(Boolean).join(" ");
 
   /* ── ARIA attributes ── */
@@ -167,20 +167,20 @@ function CircularIndicator({
     <div className={rootClasses} id={id}>
       <div className={circularClasses} {...ariaProps}>
         <svg
-          className={styles.circularSvg}
+          className={styles['circular-svg']}
           viewBox="0 0 44 44"
           xmlns="http://www.w3.org/2000/svg"
         >
           {/* Track ring — always visible */}
           <circle
-            className={styles.circularTrack}
+            className={styles['circular-track']}
             cx={CENTER}
             cy={CENTER}
             r={RADIUS}
           />
           {/* Active indicator arc */}
           <circle
-            className={styles.circularIndicator}
+            className={styles['circular-indicator']}
             cx={CENTER}
             cy={CENTER}
             r={RADIUS}
@@ -242,15 +242,15 @@ function LinearIndicator({
 }: LinearIndicatorProps) {
   /* ── CSS class assembly ── */
   const trackSizeClass =
-    trackSize === "thin"  ? styles.trackThin :
-    trackSize === "thick" ? styles.trackThick :
-    styles.trackDefault;
+    trackSize === "thin"  ? styles['track-thin'] :
+    trackSize === "thick" ? styles['track-thick'] :
+    styles['track-default'];
 
   const colorClass = getColorClass(color);
 
   const rootClasses = [
-    styles.wrapperLinear,
-    styles.fadeIn,
+    styles['wrapper-linear'],
+    styles['fade-in'],
     className,
   ].filter(Boolean).join(" ");
 
@@ -258,7 +258,7 @@ function LinearIndicator({
     styles.linear,
     trackSizeClass,
     colorClass,
-    isIndeterminate && styles.linearIndeterminate,
+    isIndeterminate && styles['linear-indeterminate'],
   ].filter(Boolean).join(" ");
 
   /* ── ARIA attributes ── */
@@ -276,8 +276,8 @@ function LinearIndicator({
         {isIndeterminate ? (
           /* Indeterminate: two sliding bars */
           <>
-            <div className={`${styles.linearIndicator} ${styles.linearBar1}`} />
-            <div className={`${styles.linearIndicator} ${styles.linearBar2}`} />
+            <div className={`${styles['linear-indicator']} ${styles['linear-bar1']}`} />
+            <div className={`${styles['linear-indicator']} ${styles['linear-bar2']}`} />
           </>
         ) : (
           /* Determinate: single bar + optional buffer + stop indicator */
@@ -285,17 +285,17 @@ function LinearIndicator({
             {/* Buffer layer (e.g. media buffering) — shown behind active fill */}
             {buffer !== null && buffer !== undefined && (
               <div
-                className={styles.linearBuffer}
+                className={styles['linear-buffer']}
                 style={{ width: `${clamp(buffer)}%` }}
               />
             )}
             <div
-              className={styles.linearIndicator}
+              className={styles['linear-indicator']}
               style={{ width: `${clamp(value)}%` }}
             />
             {/* M3 stop indicator — small dot at the leading edge */}
             <div
-              className={`${styles.linearStop}${value > 0 ? ` ${styles.isVisibleState}` : ""}`}
+              className={`${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`}
               style={{ left: `${clamp(value)}%` }}
               aria-hidden="true"
             />
@@ -326,11 +326,11 @@ function clamp(value: number): number {
 /** Map color prop to CSS module class */
 function getColorClass(color: string): string {
   switch (color) {
-    case "secondary":  return styles.colorSecondary;
-    case "tertiary":   return styles.colorTertiary;
-    case "error":      return styles.colorError;
-    case "inherit":    return styles.colorInherit;
+    case "secondary":  return styles['color-secondary'];
+    case "tertiary":   return styles['color-tertiary'];
+    case "error":      return styles['color-error'];
+    case "inherit":    return styles['color-inherit'];
     case "primary":
-    default:           return styles.colorPrimary;
+    default:           return styles['color-primary'];
   }
 }

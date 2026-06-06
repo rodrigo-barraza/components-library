@@ -1,6 +1,6 @@
 /* ── LoadingStateComponent ─────────────────────────── */
 
-.loadingState {
+.loading-state {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,7 +10,7 @@
   font-size: 14px;
 }
 
-.loadingDot {
+.loading-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;

@@ -35,7 +35,7 @@ export default function DividerComponent({
     styles.divider,
     styles[orientation],
     variant === "inset" && styles.inset,
-    variant === "middleInset" && styles.middleInset,
+    variant === "middleInset" && styles['middle-inset'],
     spacing && spacing.length > 0 && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
     className,
   ]
@@ -97,7 +97,7 @@ function DividerSubheader({
     styles.divider,
     styles.subheader,
     variant === "inset" && styles.inset,
-    variant === "middleInset" && styles.middleInset,
+    variant === "middleInset" && styles['middle-inset'],
     className,
   ]
     .filter(Boolean)
@@ -105,9 +105,9 @@ function DividerSubheader({
 
   return (
     <div className={classes} style={style} role="none" {...rest}>
-      <span className={styles.subheaderLine} />
-      <span className={styles.subheaderLabel}>{label}</span>
-      <span className={styles.subheaderLine} />
+      <span className={styles['subheader-line']} />
+      <span className={styles['subheader-label']}>{label}</span>
+      <span className={styles['subheader-line']} />
     </div>
   );
 }

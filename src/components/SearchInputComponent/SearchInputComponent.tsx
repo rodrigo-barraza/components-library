@@ -203,14 +203,14 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
   /* ── Build class ──────────────────────────────────────────────── */
 
   const barClasses = [
-    styles.searchBar,
+    styles['search-bar'],
     compact && styles.compact,
-    expanded && styles.isExpandedState,
+    expanded && styles['is-expanded-state'],
   ]
     .filter(Boolean)
     .join(" ");
 
-  const rootClasses = [styles.searchRoot, className].filter(Boolean).join(" ");
+  const rootClasses = [styles['search-root'], className].filter(Boolean).join(" ");
 
   /* ── Default leading icon (search magnifier) ──────────────────── */
 
@@ -263,7 +263,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
         }}
       >
         {/* Leading icon */}
-        <span className={styles.leadingIcon}>
+        <span className={styles['leading-icon']}>
           {leadingIcon || defaultLeadingIcon}
         </span>
 
@@ -271,7 +271,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
         <input
           ref={setInputRef}
           type="search"
-          className={styles.searchField}
+          className={styles['search-field']}
           value={value}
           onChange={handleChange}
           onFocus={() => {
@@ -302,7 +302,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
         {/* Clear button — shown when there's text */}
         {value && (
           <button
-            className={styles.trailingAction}
+            className={styles['trailing-action']}
             onClick={(e) => {
               e.stopPropagation();
               handleClear();
@@ -317,7 +317,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
         {/* Trailing icon slot — avatar, mic, etc. */}
         {trailingIcon && (
           <button
-            className={styles.trailingAction}
+            className={styles['trailing-action']}
             onClick={(e) => {
               e.stopPropagation();
               onTrailingClick?.();
@@ -335,11 +335,11 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
         <div
           ref={panelRef}
           id="search-suggestions"
-          className={`${styles.suggestionsPanel}${expanded ? ` ${styles.isOpenState}` : ""}`}
+          className={`${styles['suggestions-panel']}${expanded ? ` ${styles['is-open-state']}` : ""}`}
           role="listbox"
           aria-label="Search suggestions"
         >
-          <div className={styles.suggestionsDivider} />
+          <div className={styles['suggestions-divider']} />
           <SearchSuggestionsContext.Provider
             value={{ highlightIndex, collapse, onChange }}
           >
@@ -351,7 +351,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
       {/* Scrim overlay */}
       {useScrim && (
         <div
-          className={`${styles.scrim}${expanded ? ` ${styles.isVisibleState}` : ""}`}
+          className={`${styles.scrim}${expanded ? ` ${styles['is-visible-state']}` : ""}`}
           onClick={collapse}
           aria-hidden="true"
         />
@@ -432,7 +432,7 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }: Sugges
 
   return (
     <button
-      className={`${styles.suggestionItem}${isHighlighted ? ` ${styles.highlighted}` : ""}`}
+      className={`${styles['suggestion-item']}${isHighlighted ? ` ${styles.highlighted}` : ""}`}
       onClick={handleClick}
       type="button"
       role="option"
@@ -440,12 +440,12 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }: Sugges
       id={index >= 0 ? `search-suggestion-${index}` : undefined}
       data-suggestion-item
     >
-      <span className={styles.suggestionIcon}>{icon || defaultIcon}</span>
-      <span className={styles.suggestionText}>
+      <span className={styles['suggestion-icon']}>{icon || defaultIcon}</span>
+      <span className={styles['suggestion-text']}>
         {text}
       </span>
       {trailing && (
-        <span className={styles.suggestionTrailing}>{trailing}</span>
+        <span className={styles['suggestion-trailing']}>{trailing}</span>
       )}
     </button>
   );
@@ -467,7 +467,7 @@ function SuggestionGroup({ label, children }: SuggestionGroupProps) {
   return (
     <div role="group" aria-label={label}>
       {label && (
-        <div className={styles.suggestionGroupHeader}>{label}</div>
+        <div className={styles['suggestion-group-header']}>{label}</div>
       )}
       {children}
     </div>
@@ -485,7 +485,7 @@ interface SuggestionsEmptyProps {
 }
 
 function SuggestionsEmpty({ message = "No results found" }: SuggestionsEmptyProps) {
-  return <div className={styles.suggestionsEmpty}>{message}</div>;
+  return <div className={styles['suggestions-empty']}>{message}</div>;
 }
 
 /* ── Attach sub-components ──────────────────────────────────────── */

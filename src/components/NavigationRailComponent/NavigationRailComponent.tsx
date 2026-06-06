@@ -128,11 +128,11 @@ export default function NavigationRailComponent({
     >
       {/* ── Menu icon (optional) ── */}
       {menuIcon && (
-        <div className={styles.menuSlot}>{menuIcon}</div>
+        <div className={styles['menu-slot']}>{menuIcon}</div>
       )}
 
       {/* ── FAB slot (optional) ── */}
-      {fab && <div className={styles.fabSlot}>{fab}</div>}
+      {fab && <div className={styles['fab-slot']}>{fab}</div>}
 
       {/* ── Destinations ── */}
       <div
@@ -155,14 +155,14 @@ export default function NavigationRailComponent({
           };
 
           const destinationContent = (
-            <div className={styles.destinationInner}>
+            <div className={styles['destination-inner']}>
               {/* Active indicator pill */}
               <span
-                className={`${styles.indicatorPill} ${isActive ? styles.indicatorActive : ""}`}
+                className={`${styles['indicator-pill']} ${isActive ? styles['indicator-active'] : ""}`}
                 aria-hidden="true"
               >
                 {/* State layer for hover/focus/press */}
-                <span className={styles.stateLayer} />
+                <span className={styles['state-layer']} />
                 {resolvedIcon?.element ? (
                   <span className={styles.icon}>{resolvedIcon.element}</span>
                 ) : resolvedIcon?.Component ? (
@@ -174,13 +174,13 @@ export default function NavigationRailComponent({
                 ) : null}
                 {/* Badge overlay */}
                 {item.badge != null && (
-                  <span className={styles.badgeOverlay}>
+                  <span className={styles['badge-overlay']}>
                     {typeof item.badge === "number" || typeof item.badge === "string" ? (
                       <BadgeComponent variant={item.badgeVariant || "error"} mini>
                         {item.badge}
                       </BadgeComponent>
                     ) : (
-                      <span className={styles.badgeDot} />
+                      <span className={styles['badge-dot']} />
                     )}
                   </span>
                 )}
@@ -189,7 +189,7 @@ export default function NavigationRailComponent({
               {/* Label */}
               {!labelsHidden && (
                 <span
-                  className={`${styles.label} ${isActive ? styles.labelActive : ""}`}
+                  className={`${styles.label} ${isActive ? styles['label-active'] : ""}`}
                 >
                   {item.label}
                 </span>
@@ -200,7 +200,7 @@ export default function NavigationRailComponent({
           // Common props for the interactive element
           const elProps = {
             "data-rail-destination": "",
-            className: `${styles.destination} ${isActive ? styles.isActiveState : ""}`,
+            className: `${styles.destination} ${isActive ? styles['is-active-state'] : ""}`,
             role: "tab",
             "aria-selected": isActive,
             tabIndex: focusedIndex === index ? 0 : -1,
@@ -245,7 +245,7 @@ export default function NavigationRailComponent({
               position="right"
               delay={400}
               disabled={!labelsHidden}
-              className={styles.destinationWrapper}
+              className={styles['destination-wrapper']}
             >
               {element}
             </TooltipComponent>
@@ -255,7 +255,7 @@ export default function NavigationRailComponent({
 
       {/* ── Bottom slot (optional) ── */}
       {bottomSlot && (
-        <div className={styles.bottomSlot}>{bottomSlot}</div>
+        <div className={styles['bottom-slot']}>{bottomSlot}</div>
       )}
     </nav>
   );

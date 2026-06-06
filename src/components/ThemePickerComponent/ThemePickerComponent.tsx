@@ -105,15 +105,15 @@ export default function ThemePickerComponent({
       title="Change theme"
       type="button"
     >
-      <span className={styles.triggerSwatchDual}>
-        <span className={styles.triggerSwatchHalf} style={{ background: currentMeta.primary }} />
-        <span className={styles.triggerSwatchHalf} style={{ background: currentMeta.secondary }} />
+      <span className={styles['trigger-swatch-dual']}>
+        <span className={styles['trigger-swatch-half']} style={{ background: currentMeta.primary }} />
+        <span className={styles['trigger-swatch-half']} style={{ background: currentMeta.secondary }} />
       </span>
-      <CurrentIcon size={18} strokeWidth={1.8} className={styles.triggerIcon} />
-      <span className={styles.triggerLabel}>{currentMeta.label}</span>
+      <CurrentIcon size={18} strokeWidth={1.8} className={styles['trigger-icon']} />
+      <span className={styles['trigger-label']}>{currentMeta.label}</span>
       <Icons.ChevronUp
         size={14}
-        className={`${styles.triggerChevron} ${open ? styles.triggerChevronOpen : ""}`}
+        className={`${styles['trigger-chevron']} ${open ? styles['trigger-chevron-open'] : ""}`}
       />
     </button>
   );
@@ -121,11 +121,11 @@ export default function ThemePickerComponent({
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.wrapper} ${collapsed ? styles.isCollapsedState : ""} ${className || ""}`}
+      className={`${styles.wrapper} ${collapsed ? styles['is-collapsed-state'] : ""} ${className || ""}`}
     >
       {/* Trigger — wrap in tooltip when collapsed so user sees the theme label */}
       {collapsed ? (
-        <TooltipComponent label={currentMeta.label} position="right" delay={200} disabled={open} className={styles.tooltipFill}>
+        <TooltipComponent label={currentMeta.label} position="right" delay={200} disabled={open} className={styles['tooltip-fill']}>
           {triggerButton}
         </TooltipComponent>
       ) : (
@@ -136,11 +136,11 @@ export default function ThemePickerComponent({
       {open && (
         <div
           ref={popoverRef}
-          className={`${styles.popover} ${collapsed ? styles.popoverFlyout : ""}`}
+          className={`${styles.popover} ${collapsed ? styles['popover-flyout'] : ""}`}
           style={collapsed ? popoverStyle : undefined}
         >
-          <div className={styles.popoverHeader}>Theme</div>
-          <div className={styles.themeList}>
+          <div className={styles['popover-header']}>Theme</div>
+          <div className={styles['theme-list']}>
             {themes.map((themeName) => {
               const meta = THEME_CATALOG[themeName] || customThemeMeta[themeName] || DEFAULT_META;
               const ThemeIcon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>>)[meta.icon] || Icons.Palette;
@@ -149,23 +149,23 @@ export default function ThemePickerComponent({
               return (
                 <button
                   key={themeName}
-                  className={`${styles.themeOption} ${isActive ? styles.isActiveState : ""}`}
+                  className={`${styles['theme-option']} ${isActive ? styles['is-active-state'] : ""}`}
                   onClick={() => handleSelect(themeName)}
                   type="button"
                   title={`Switch to ${meta.label} theme`}
                 >
                   <span
-                    className={styles.swatchDual}
+                    className={styles['swatch-dual']}
                     style={{
                       boxShadow: isActive ? `0 0 8px ${meta.primary}88` : "none",
                     }}
                   >
-                    <span className={styles.swatchHalf} style={{ background: meta.primary }} />
-                    <span className={styles.swatchHalf} style={{ background: meta.secondary }} />
-                    {isActive && <Icons.Check size={10} strokeWidth={3} className={styles.swatchCheck} />}
+                    <span className={styles['swatch-half']} style={{ background: meta.primary }} />
+                    <span className={styles['swatch-half']} style={{ background: meta.secondary }} />
+                    {isActive && <Icons.Check size={10} strokeWidth={3} className={styles['swatch-check']} />}
                   </span>
-                  <ThemeIcon size={16} strokeWidth={1.8} className={styles.optionIcon} />
-                  <span className={styles.optionLabel}>{meta.label}</span>
+                  <ThemeIcon size={16} strokeWidth={1.8} className={styles['option-icon']} />
+                  <span className={styles['option-label']}>{meta.label}</span>
                 </button>
               );
             })}

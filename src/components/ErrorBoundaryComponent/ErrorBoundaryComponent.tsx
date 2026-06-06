@@ -59,9 +59,9 @@ export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps
     } = this.props;
 
     return (
-      <div className={styles.errorBoundary}>
-        <div className={styles.errorCard}>
-          <div className={styles.iconContainer}>
+      <div className={styles['error-boundary']}>
+        <div className={styles['error-card']}>
+          <div className={styles['icon-container']}>
             <svg
               className={styles.icon}
               viewBox="0 0 24 24"
@@ -81,7 +81,7 @@ export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps
           {showDetails && this.state.error?.message && (
             <pre className={styles.details}>{this.state.error.message}</pre>
           )}
-          <button className={styles.retryButton} onClick={this.handleRetry}>
+          <button className={styles['retry-button']} onClick={this.handleRetry}>
             Try Again
           </button>
         </div>

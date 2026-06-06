@@ -288,14 +288,14 @@ export default function ChartLineComponent({
   return (
     <div
       ref={containerRef}
-      className={`${styles.sparklineContainer} ${className || ""}`}
+      className={`${styles['sparkline-container']} ${className || ""}`}
       style={{ height: `${height}px` }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <canvas ref={canvasRef} className={styles.sparklineCanvas} />
+      <canvas ref={canvasRef} className={styles['sparkline-canvas']} />
       {hover != null && (
-        <div className={styles.sparklineTooltip} style={tooltipStyle}>
+        <div className={styles['sparkline-tooltip']} style={tooltipStyle}>
           {formattedValue}
         </div>
       )}

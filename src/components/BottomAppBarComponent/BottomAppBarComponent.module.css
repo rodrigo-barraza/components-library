@@ -14,7 +14,7 @@
 
 /* ── Root container ──────────────────────────────────────────────── */
 
-.bottomAppBar {
+.bottom-app-bar {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -28,12 +28,12 @@
   color: var(--text-primary);
   z-index: 10;
   box-shadow:
-    0 -1px 2px 0 rgb(0 0 0 / 0.06),
-    0 -2px 6px 2px rgb(0 0 0 / 0.04);
+    0 -1px 2px 0 oklch(0 0 0 / 0.06),
+    0 -2px 6px 2px oklch(0 0 0 / 0.04);
   transition:
     transform 300ms cubic-bezier(0.2, 0, 0, 1),
     box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
-  animation: bottomBarSlideIn 300ms cubic-bezier(0, 0, 0, 1) both;
+  animation: bottom-bar-slide-in 300ms cubic-bezier(0, 0, 0, 1) both;
   will-change: transform;
 }
 
@@ -49,7 +49,7 @@
 /* ── Hide on scroll ──────────────────────────────────────────────── */
 /* M3 behavior: bar slides out when scrolling down, returns on up   */
 
-.isHiddenState {
+.is-hidden-state {
   transform: translateY(100%);
   pointer-events: none;
 }
@@ -57,14 +57,14 @@
 /* ── Actions slot (leading) ──────────────────────────────────────── */
 /* M3 spec: up to 4 icon buttons, 48×48dp touch targets             */
 
-.actionsSlot {
+.actions-slot {
   display: flex;
   align-items: center;
   gap: 0;
   flex-shrink: 0;
 }
 
-.actionButton {
+.action-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -84,32 +84,32 @@
     color 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.actionButton:focus-visible {
+.action-button:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
 
-.actionButton:hover {
-  background: var(--hover-overlay, rgb(0 0 0 / 0.06));
+.action-button:hover {
+  background: var(--hover-overlay, oklch(0 0 0 / 0.06));
 }
 
-.actionButton:active {
-  background: var(--press-overlay, rgb(0 0 0 / 0.1));
+.action-button:active {
+  background: var(--press-overlay, oklch(0 0 0 / 0.1));
 }
 
-.actionButton[disabled] {
+.action-button[disabled] {
   opacity: 0.38;
   pointer-events: none;
   cursor: not-allowed;
 }
 
-.actionActive {
+.action-active {
   color: var(--accent-primary);
 }
 
 /* ── State layer (action button hover/focus/press) ───────────────── */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -119,22 +119,22 @@
   transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.actionButton:hover .stateLayer {
+.action-button:hover .state-layer {
   opacity: 0.08;
 }
 
-.actionButton:focus-visible .stateLayer {
+.action-button:focus-visible .state-layer {
   opacity: 0.1;
 }
 
-.actionButton:active .stateLayer {
+.action-button:active .state-layer {
   opacity: 0.12;
 }
 
 /* ── FAB slot (trailing) ─────────────────────────────────────────── */
 /* M3 spec: 56×56dp FAB docked on the right side                    */
 
-.fabSlot {
+.fab-slot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +147,7 @@
 /* ── Overflow menu indicator ─────────────────────────────────────── */
 /* Subtle dot showing there are more actions in an overflow menu     */
 
-.overflowDot {
+.overflow-dot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,7 +162,7 @@
 
 /* ── Entrance animation ──────────────────────────────────────────── */
 
-@keyframes bottomBarSlideIn {
+@keyframes bottom-bar-slide-in {
   from {
     opacity: 0;
     transform: translateY(24px);
@@ -176,7 +176,7 @@
 /* ── Safe area padding (mobile notches) ──────────────────────────── */
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .bottomAppBar {
+  .bottom-app-bar {
     padding-bottom: env(safe-area-inset-bottom);
     height: calc(80px + env(safe-area-inset-bottom));
   }

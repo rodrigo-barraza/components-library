@@ -46,20 +46,20 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
         return CIRCUMFERENCE - (clamp(value) / 100) * CIRCUMFERENCE;
     }, [isIndeterminate, value, CIRCUMFERENCE]);
     /* ── CSS class assembly ── */
-    const sizeClass = size === "small" ? styles.sizeSmall :
-        size === "large" ? styles.sizeLarge :
-            styles.sizeMedium;
+    const sizeClass = size === "small" ? styles['size-small'] :
+        size === "large" ? styles['size-large'] :
+            styles['size-medium'];
     const colorClass = getColorClass(color);
     const rootClasses = [
         styles.wrapper,
-        styles.fadeIn,
+        styles['fade-in'],
         className,
     ].filter(Boolean).join(" ");
     const circularClasses = [
         styles.circular,
         sizeClass,
         colorClass,
-        isIndeterminate && styles.circularIndeterminate,
+        isIndeterminate && styles['circular-indeterminate'],
     ].filter(Boolean).join(" ");
     /* ── ARIA attributes ── */
     const ariaProps = {
@@ -69,7 +69,7 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
         "aria-valuemax": 100,
         ...(isIndeterminate ? {} : { "aria-valuenow": value }),
     };
-    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsxs("div", { className: circularClasses, ...ariaProps, children: [_jsxs("svg", { className: styles.circularSvg, viewBox: "0 0 44 44", xmlns: "http://www.w3.org/2000/svg", children: [_jsx("circle", { className: styles.circularTrack, cx: CENTER, cy: CENTER, r: RADIUS }), _jsx("circle", { className: styles.circularIndicator, cx: CENTER, cy: CENTER, r: RADIUS, strokeDasharray: isIndeterminate ? undefined : CIRCUMFERENCE, strokeDashoffset: dashOffset })] }), !isIndeterminate && showPercentage && (_jsxs("span", { className: styles.percentage, "aria-hidden": "true", children: [Math.round(value), "%"] }))] }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: label }))] }));
+    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsxs("div", { className: circularClasses, ...ariaProps, children: [_jsxs("svg", { className: styles['circular-svg'], viewBox: "0 0 44 44", xmlns: "http://www.w3.org/2000/svg", children: [_jsx("circle", { className: styles['circular-track'], cx: CENTER, cy: CENTER, r: RADIUS }), _jsx("circle", { className: styles['circular-indicator'], cx: CENTER, cy: CENTER, r: RADIUS, strokeDasharray: isIndeterminate ? undefined : CIRCUMFERENCE, strokeDashoffset: dashOffset })] }), !isIndeterminate && showPercentage && (_jsxs("span", { className: styles.percentage, "aria-hidden": "true", children: [Math.round(value), "%"] }))] }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: label }))] }));
 }
 /**
  * LinearIndicator — Horizontal progress bar.
@@ -78,20 +78,20 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
  */
 function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, color, label, ariaLabel, className, id, }) {
     /* ── CSS class assembly ── */
-    const trackSizeClass = trackSize === "thin" ? styles.trackThin :
-        trackSize === "thick" ? styles.trackThick :
-            styles.trackDefault;
+    const trackSizeClass = trackSize === "thin" ? styles['track-thin'] :
+        trackSize === "thick" ? styles['track-thick'] :
+            styles['track-default'];
     const colorClass = getColorClass(color);
     const rootClasses = [
-        styles.wrapperLinear,
-        styles.fadeIn,
+        styles['wrapper-linear'],
+        styles['fade-in'],
         className,
     ].filter(Boolean).join(" ");
     const linearClasses = [
         styles.linear,
         trackSizeClass,
         colorClass,
-        isIndeterminate && styles.linearIndeterminate,
+        isIndeterminate && styles['linear-indeterminate'],
     ].filter(Boolean).join(" ");
     /* ── ARIA attributes ── */
     const ariaProps = {
@@ -103,9 +103,9 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
     };
     return (_jsxs("div", { className: rootClasses, id: id, children: [_jsx("div", { className: linearClasses, ...ariaProps, children: isIndeterminate ? (
                 /* Indeterminate: two sliding bars */
-                _jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.linearIndicator} ${styles.linearBar1}` }), _jsx("div", { className: `${styles.linearIndicator} ${styles.linearBar2}` })] })) : (
+                _jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar1']}` }), _jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar2']}` })] })) : (
                 /* Determinate: single bar + optional buffer + stop indicator */
-                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles.linearBuffer, style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles.linearIndicator, style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles.linearStop}${value > 0 ? ` ${styles.isVisibleState}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
+                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles.label, "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
 }
 /* ═══════════════════════════════════════════════════════════ */
 /*  UTILITIES                                                 */
@@ -117,12 +117,12 @@ function clamp(value) {
 /** Map color prop to CSS module class */
 function getColorClass(color) {
     switch (color) {
-        case "secondary": return styles.colorSecondary;
-        case "tertiary": return styles.colorTertiary;
-        case "error": return styles.colorError;
-        case "inherit": return styles.colorInherit;
+        case "secondary": return styles['color-secondary'];
+        case "tertiary": return styles['color-tertiary'];
+        case "error": return styles['color-error'];
+        case "inherit": return styles['color-inherit'];
         case "primary":
-        default: return styles.colorPrimary;
+        default: return styles['color-primary'];
     }
 }
 //# sourceMappingURL=LoadingIndicatorComponent.js.map

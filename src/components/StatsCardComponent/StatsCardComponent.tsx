@@ -39,9 +39,9 @@ export default function StatsCardComponent({
     return (
       <div className={`${styles.card} ${className || ""}`}>
         <div className={styles.header}>
-          <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+          <div className={`${styles.skeleton} ${styles['skeleton-label']}`} />
         </div>
-        <div className={`${styles.skeleton} ${styles.skeletonValue}`} />
+        <div className={`${styles.skeleton} ${styles['skeleton-value']}`} />
       </div>
     );
   }
@@ -63,7 +63,7 @@ export default function StatsCardComponent({
       </div>
       <span className={styles.value}>{value}</span>
       {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
-      {glow && <div className={styles.glowBar} />}
+      {glow && <div className={styles['glow-bar']} />}
     </div>
   );
 }

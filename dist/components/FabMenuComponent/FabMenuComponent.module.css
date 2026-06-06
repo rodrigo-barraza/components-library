@@ -9,7 +9,7 @@
    The root wrapper that positions the FAB and its menu items.
    Establishes the stacking context and alignment point.
    ──────────────────────────────────────────────────────────────────── */
-.fabMenu {
+.fab-menu {
   position: relative;
   display: inline-flex;
   flex-direction: column-reverse;
@@ -33,7 +33,7 @@
 .scrim {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.32);
+  background: oklch(0 0 0 / 0.32);
   z-index: 49;
   opacity: 0;
   pointer-events: none;
@@ -65,8 +65,8 @@
 
   /* Elevation level 3 */
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
 
   transition:
     background-color 200ms cubic-bezier(0.2, 0, 0, 1),
@@ -80,7 +80,7 @@
 }
 
 /* ── Trigger icon ───────────────────────────────────────────────── */
-.triggerIcon {
+.trigger-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +91,7 @@
 }
 
 /* Rotate icon 45° when menu is open (close affordance) */
-.isOpenState .triggerIcon {
+.is-open-state .trigger-icon {
   transform: rotate(45deg);
 }
 
@@ -119,142 +119,142 @@
  * ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Primary ────────────────────────────────────────────────────── */
-.triggerPrimary {
+.trigger-primary {
   background-color: var(--accent-primary, #6750A4);
   color: var(--on-accent, #FFFFFF);
 }
 
-.triggerPrimary::before {
+.trigger-primary::before {
   background-color: var(--on-accent, #FFFFFF);
 }
 
-.triggerPrimary:hover:not(:disabled) {
+.trigger-primary:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
-.triggerPrimary:hover:not(:disabled)::before {
+.trigger-primary:hover:not(:disabled)::before {
   opacity: 0.08;
 }
 
-.triggerPrimary:focus-visible::before {
+.trigger-primary:focus-visible::before {
   opacity: 0.10;
 }
 
-.triggerPrimary:active:not(:disabled)::before {
+.trigger-primary:active:not(:disabled)::before {
   opacity: 0.10;
 }
 
-.triggerPrimary:active:not(:disabled) {
+.trigger-primary:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.96);
 }
 
 /* ── Secondary ──────────────────────────────────────────────────── */
-.triggerSecondary {
+.trigger-secondary {
   background-color: var(--background-surface, #E8DEF8);
   color: var(--text-primary, #1D192B);
 }
 
-.triggerSecondary::before {
+.trigger-secondary::before {
   background-color: var(--text-primary, #1D192B);
 }
 
-.triggerSecondary:hover:not(:disabled) {
+.trigger-secondary:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
-.triggerSecondary:hover:not(:disabled)::before {
+.trigger-secondary:hover:not(:disabled)::before {
   opacity: 0.08;
 }
 
-.triggerSecondary:focus-visible::before {
+.trigger-secondary:focus-visible::before {
   opacity: 0.10;
 }
 
-.triggerSecondary:active:not(:disabled)::before {
+.trigger-secondary:active:not(:disabled)::before {
   opacity: 0.10;
 }
 
-.triggerSecondary:active:not(:disabled) {
+.trigger-secondary:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.96);
 }
 
 /* ── Tertiary ───────────────────────────────────────────────────── */
-.triggerTertiary {
+.trigger-tertiary {
   background-color: var(--calculated-accent-primary-subtle, #FFD8E4);
   color: var(--text-primary, #31111D);
 }
 
-.triggerTertiary::before {
+.trigger-tertiary::before {
   background-color: var(--text-primary, #31111D);
 }
 
-.triggerTertiary:hover:not(:disabled) {
+.trigger-tertiary:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
-.triggerTertiary:hover:not(:disabled)::before {
+.trigger-tertiary:hover:not(:disabled)::before {
   opacity: 0.08;
 }
 
-.triggerTertiary:focus-visible::before {
+.trigger-tertiary:focus-visible::before {
   opacity: 0.10;
 }
 
-.triggerTertiary:active:not(:disabled)::before {
+.trigger-tertiary:active:not(:disabled)::before {
   opacity: 0.10;
 }
 
-.triggerTertiary:active:not(:disabled) {
+.trigger-tertiary:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.96);
 }
 
 /* ── Surface ────────────────────────────────────────────────────── */
-.triggerSurface {
+.trigger-surface {
   background-color: var(--background-base, #FFFBFE);
   color: var(--accent-primary, #6750A4);
 }
 
-.triggerSurface::before {
+.trigger-surface::before {
   background-color: var(--accent-primary, #6750A4);
 }
 
-.triggerSurface:hover:not(:disabled) {
+.trigger-surface:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
-.triggerSurface:hover:not(:disabled)::before {
+.trigger-surface:hover:not(:disabled)::before {
   opacity: 0.08;
 }
 
-.triggerSurface:focus-visible::before {
+.trigger-surface:focus-visible::before {
   opacity: 0.10;
 }
 
-.triggerSurface:active:not(:disabled)::before {
+.trigger-surface:active:not(:disabled)::before {
   opacity: 0.10;
 }
 
-.triggerSurface:active:not(:disabled) {
+.trigger-surface:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.96);
 }
 
@@ -263,7 +263,7 @@
  * M3 spec: items appear in a vertical stack with 16px gap,
  * staggered entrance animation from nearest to farthest.
  * ═══════════════════════════════════════════════════════════════════ */
-.itemsList {
+.items-list {
   display: flex;
   flex-direction: column-reverse;
   align-items: flex-end;
@@ -276,7 +276,7 @@
  * MENU ITEM — each action row: [label] + [small FAB]
  * M3 anatomy: small-fab (40×40, radius 12) with optional text label
  * ═══════════════════════════════════════════════════════════════════ */
-.menuItem {
+.menu-item {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -289,22 +289,22 @@
 }
 
 /* Staggered entrance delays (nearest item first) */
-.menuItem:nth-child(1) { transition-delay: 0ms; }
-.menuItem:nth-child(2) { transition-delay: 35ms; }
-.menuItem:nth-child(3) { transition-delay: 70ms; }
-.menuItem:nth-child(4) { transition-delay: 105ms; }
-.menuItem:nth-child(5) { transition-delay: 140ms; }
-.menuItem:nth-child(6) { transition-delay: 175ms; }
+.menu-item:nth-child(1) { transition-delay: 0ms; }
+.menu-item:nth-child(2) { transition-delay: 35ms; }
+.menu-item:nth-child(3) { transition-delay: 70ms; }
+.menu-item:nth-child(4) { transition-delay: 105ms; }
+.menu-item:nth-child(5) { transition-delay: 140ms; }
+.menu-item:nth-child(6) { transition-delay: 175ms; }
 
 /* Visible state */
-.menuItemVisible {
+.menu-item-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
 /* ── Item label ─────────────────────────────────────────────────── */
-.itemLabel {
+.item-label {
   padding: 6px 16px;
   border-radius: 8px;
   font-family: inherit;
@@ -318,8 +318,8 @@
 
   /* M3 elevation level 2 for label container */
   box-shadow:
-    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
-    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+    0px 1px 2px 0px oklch(0 0 0 / 0.3),
+    0px 2px 6px 2px oklch(0 0 0 / 0.15);
 
   /* Subtle reveal */
   transition:
@@ -332,7 +332,7 @@
    M3: 40×40, 12px corner radius
    Elevation: Level 3 resting
    ──────────────────────────────────────────────────────────────── */
-.itemFab {
+.item-fab {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -349,8 +349,8 @@
 
   /* Elevation level 3 */
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
 
   transition:
     background-color 200ms cubic-bezier(0.2, 0, 0, 1),
@@ -363,7 +363,7 @@
 }
 
 /* ── Item FAB state layer ───────────────────────────────────────── */
-.itemFab::before {
+.item-fab::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -375,38 +375,38 @@
   z-index: 1;
 }
 
-.itemFab:hover::before {
+.item-fab:hover::before {
   opacity: 0.08;
 }
 
-.itemFab:focus-visible {
+.item-fab:focus-visible {
   outline: 3px solid var(--accent-primary, #6750A4);
   outline-offset: 2px;
 }
 
-.itemFab:focus-visible::before {
+.item-fab:focus-visible::before {
   opacity: 0.10;
 }
 
-.itemFab:active::before {
+.item-fab:active::before {
   opacity: 0.10;
 }
 
-.itemFab:hover {
+.item-fab:hover {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
-.itemFab:active {
+.item-fab:active {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.94);
 }
 
 /* ── Item FAB icon ──────────────────────────────────────────────── */
-.itemIcon {
+.item-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -445,17 +445,17 @@
 @media (prefers-reduced-motion: reduce) {
   .trigger,
   .trigger::before,
-  .triggerIcon,
-  .menuItem,
-  .itemFab,
-  .itemFab::before,
-  .itemLabel,
+  .trigger-icon,
+  .menu-item,
+  .item-fab,
+  .item-fab::before,
+  .item-label,
   .scrim {
     transition-duration: 0ms !important;
     animation-duration: 0ms !important;
   }
 
-  .menuItem {
+  .menu-item {
     transition-delay: 0ms !important;
   }
 }

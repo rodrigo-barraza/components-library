@@ -136,12 +136,12 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
     const rootClasses = [
         styles.carousel,
         styles[layout],
-        peekEdge && styles.hasPeek,
+        peekEdge && styles['has-peek'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { className: rootClasses, role: "region", "aria-label": ariaLabel, "aria-roledescription": "carousel", onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onKeyDown: handleKeyDown, children: [_jsx("div", { ref: trackRef, className: styles.track, role: "list", style: { gap: `${gap}px` }, children: children }), showArrows && itemCount > 1 && (_jsxs(_Fragment, { children: [_jsx("button", { className: `${styles.navigationButton} ${styles.navigationPrevious}`, onClick: scrollPrev, disabled: !loop && !canScrollPrev, "aria-label": "Previous slide", tabIndex: -1, children: _jsx("svg", { className: styles.navigationIcon, viewBox: "0 0 24 24", children: _jsx("path", { d: "M15 18L9 12L15 6" }) }) }), _jsx("button", { className: `${styles.navigationButton} ${styles.navigationNext}`, onClick: scrollNext, disabled: !loop && !canScrollNext, "aria-label": "Next slide", tabIndex: -1, children: _jsx("svg", { className: styles.navigationIcon, viewBox: "0 0 24 24", children: _jsx("path", { d: "M9 18L15 12L9 6" }) }) })] })), showIndicators && itemCount > 1 && (_jsx("div", { className: styles.indicators, role: "tablist", "aria-label": "Carousel navigation", children: Array.from({ length: itemCount }, (_, i) => (_jsx("button", { className: `${styles.dot} ${i === activeIndex ? styles.dotActive : ""}`, role: "tab", "aria-selected": i === activeIndex, "aria-label": `Go to slide ${i + 1}`, onClick: () => scrollToIndex(i), tabIndex: i === activeIndex ? 0 : -1 }, i))) }))] }));
+    return (_jsxs("div", { className: rootClasses, role: "region", "aria-label": ariaLabel, "aria-roledescription": "carousel", onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onKeyDown: handleKeyDown, children: [_jsx("div", { ref: trackRef, className: styles.track, role: "list", style: { gap: `${gap}px` }, children: children }), showArrows && itemCount > 1 && (_jsxs(_Fragment, { children: [_jsx("button", { className: `${styles['navigation-button']} ${styles['navigation-previous']}`, onClick: scrollPrev, disabled: !loop && !canScrollPrev, "aria-label": "Previous slide", tabIndex: -1, children: _jsx("svg", { className: styles['navigation-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M15 18L9 12L15 6" }) }) }), _jsx("button", { className: `${styles['navigation-button']} ${styles['navigation-next']}`, onClick: scrollNext, disabled: !loop && !canScrollNext, "aria-label": "Next slide", tabIndex: -1, children: _jsx("svg", { className: styles['navigation-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M9 18L15 12L9 6" }) }) })] })), showIndicators && itemCount > 1 && (_jsx("div", { className: styles.indicators, role: "tablist", "aria-label": "Carousel navigation", children: Array.from({ length: itemCount }, (_, i) => (_jsx("button", { className: `${styles.dot} ${i === activeIndex ? styles['dot-active'] : ""}`, role: "tab", "aria-selected": i === activeIndex, "aria-label": `Go to slide ${i + 1}`, onClick: () => scrollToIndex(i), tabIndex: i === activeIndex ? 0 : -1 }, i))) }))] }));
 }
 /**
  * CarouselComponent.Item — individual carousel item container.
@@ -159,8 +159,8 @@ function CarouselItem({ width, height, aspectRatio, size, onClick, className, ch
         itemStyle.aspectRatio = aspectRatio;
     const classes = [
         styles.item,
-        size === "large" && styles.itemLarge,
-        size === "small" && styles.itemSmall,
+        size === "large" && styles['item-large'],
+        size === "small" && styles['item-small'],
         className,
     ]
         .filter(Boolean)
@@ -172,9 +172,9 @@ function CarouselItem({ width, height, aspectRatio, size, onClick, className, ch
  */
 function CarouselItemMedia({ src, alt = "", className, children }) {
     if (children) {
-        return _jsx("div", { className: `${styles.itemMedia} ${className || ""}`, children: children });
+        return _jsx("div", { className: `${styles['item-media']} ${className || ""}`, children: children });
     }
-    return (_jsx("img", { className: `${styles.itemMedia}${className ? ` ${className}` : ""}`, src: src, alt: alt, loading: "lazy", draggable: false }));
+    return (_jsx("img", { className: `${styles['item-media']}${className ? ` ${className}` : ""}`, src: src, alt: alt, loading: "lazy", draggable: false }));
 }
 /**
  * CarouselComponent.ItemLabel — overlaid label with gradient scrim.
@@ -183,7 +183,7 @@ function CarouselItemMedia({ src, alt = "", className, children }) {
  * at the bottom of the carousel item over a gradient scrim.
  */
 function CarouselItemLabel({ title, subtitle, className, children }) {
-    return (_jsxs("div", { className: `${styles.itemLabel}${className ? ` ${className}` : ""}`, children: [title && _jsx("span", { className: styles.itemLabelTitle, children: title }), subtitle && _jsx("span", { className: styles.itemLabelSubtitle, children: subtitle }), children] }));
+    return (_jsxs("div", { className: `${styles['item-label']}${className ? ` ${className}` : ""}`, children: [title && _jsx("span", { className: styles['item-label-title'], children: title }), subtitle && _jsx("span", { className: styles['item-label-subtitle'], children: subtitle }), children] }));
 }
 /* ── Attach sub-components ──────────────────────────────────────── */
 CarouselComponent.Item = CarouselItem;

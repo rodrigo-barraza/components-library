@@ -49,10 +49,10 @@ const FabComponent = forwardRef(function FabComponent({ size = "standard", color
     }, []);
     /* ── Position mapping ───────────────────────────────────────────── */
     const positionClass = position === "bottom-start"
-        ? styles.bottomStart
+        ? styles['bottom-start']
         : position === "bottom-center"
-            ? styles.bottomCenter
-            : styles.bottomEnd;
+            ? styles['bottom-center']
+            : styles['bottom-end'];
     /* ── Build class list ───────────────────────────────────────────── */
     const classes = [
         styles.fab,
@@ -63,14 +63,14 @@ const FabComponent = forwardRef(function FabComponent({ size = "standard", color
         styles[color] || styles.primary,
         /* Extended */
         isExtended ? styles.extended : "",
-        isExtended && !Icon ? styles.extendedNoIcon : "",
+        isExtended && !Icon ? styles['extended-no-icon'] : "",
         /* Lowered elevation */
         lowered ? styles.lowered : "",
         /* Fixed positioning */
         fixed ? styles.fixed : "",
         fixed ? positionClass : "",
         /* Scroll-hide */
-        hidden ? styles.isHiddenState : "",
+        hidden ? styles['is-hidden-state'] : "",
         /* Consumer className */
         className,
     ]

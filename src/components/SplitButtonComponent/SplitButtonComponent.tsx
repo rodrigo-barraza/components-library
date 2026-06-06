@@ -164,12 +164,12 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
 
   /* ── Class composition ──────────────────────────────────────────── */
   const groupClasses = [
-    styles.splitGroup,
+    styles['split-group'],
     styles[variant],
     size !== "medium" && styles[size],
-    fullWidth && styles.fullWidth,
-    disabled && styles.isDisabledState,
-    loading && styles.isLoadingState,
+    fullWidth && styles['full-width'],
+    disabled && styles['is-disabled-state'],
+    loading && styles['is-loading-state'],
     className,
   ]
     .filter(Boolean)
@@ -177,8 +177,8 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
 
   const leadingClasses = [
     styles.leading,
-    Icon && children && styles.hasIcon,
-    Icon && !children && !loading && styles.iconOnly,
+    Icon && children && styles['has-icon'],
+    Icon && !children && !loading && styles['icon-only'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -211,7 +211,7 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
         tabIndex={0}
       >
         {/* State layer */}
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
 
         {/* Ripples */}
         {leadingRipples.map((ripple) => (
@@ -257,7 +257,7 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
         tabIndex={0}
       >
         {/* State layer */}
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
 
         {/* Ripples */}
         {trailingRipples.map((ripple) => (
@@ -275,7 +275,7 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
 
         {/* Trailing icon */}
         <span
-          className={`${styles.trailingIconWrap} ${trailingToggled ? styles.trailingIconRotated : ""}`}
+          className={`${styles['trailing-icon-wrap']} ${trailingToggled ? styles['trailing-icon-rotated'] : ""}`}
           aria-hidden="true"
         >
           <ResolvedTrailingIcon size={trailingIconSize} />

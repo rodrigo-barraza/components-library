@@ -1,6 +1,6 @@
 /* ── Icon Button ── */
 
-.iconButton {
+.icon-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,17 +23,17 @@
 /* Destructive variant hover */
 .destructive:hover {
   color: var(--color-danger);
-  background: rgba(244, 63, 94, 0.1);
+  background: oklch(0.644 0.22 14.9 / 0.1);
 }
 
 /* Active state */
-.isActiveState {
+.is-active-state {
   color: var(--accent-primary);
   background: var(--calculated-accent-primary-subtle);
 }
 
 /* Hover-reveal: hidden until parent is hovered */
-.hoverReveal {
+.hover-reveal {
   opacity: 0;
   transition: all 0.2s;
 }

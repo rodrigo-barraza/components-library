@@ -38,7 +38,7 @@ interface MenuGroupLabelProps {
 
 export function MenuGroupLabel({ children }: MenuGroupLabelProps) {
   return (
-    <div className={styles.groupLabel} role="presentation">
+    <div className={styles['group-label']} role="presentation">
       {children}
     </div>
   );
@@ -96,8 +96,8 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
   );
 
   const itemClasses = [
-    styles.menuItem,
-    selected ? styles.menuItemSelected : "",
+    styles['menu-item'],
+    selected ? styles['menu-item-selected'] : "",
     className,
   ]
     .filter(Boolean)
@@ -118,7 +118,7 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
       {...rest}
     >
       {leadingIcon && (
-        <span className={styles.leadingIcon} aria-hidden="true">
+        <span className={styles['leading-icon']} aria-hidden="true">
           {leadingIcon}
         </span>
       )}
@@ -126,11 +126,11 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
       <span className={styles.label}>{children}</span>
 
       {trailingText && (
-        <span className={styles.trailingText}>{trailingText}</span>
+        <span className={styles['trailing-text']}>{trailingText}</span>
       )}
 
       {trailingIcon && (
-        <span className={styles.trailingIcon} aria-hidden="true">
+        <span className={styles['trailing-icon']} aria-hidden="true">
           {trailingIcon}
         </span>
       )}
@@ -256,7 +256,7 @@ export function SubMenu({
     <MenuDepthContext.Provider value={depth + 1}>
       <div
         ref={containerRef}
-        className={styles.submenuAnchor}
+        className={styles['submenu-anchor']}
         onMouseEnter={open}
         onMouseLeave={close}
         onKeyDown={handleKeyDown}
@@ -264,25 +264,25 @@ export function SubMenu({
         <button
           type="button"
           role="menuitem"
-          className={styles.menuItem}
+          className={styles['menu-item']}
           aria-haspopup="menu"
           aria-expanded={isOpen}
           disabled={disabled}
           tabIndex={-1}
         >
           {leadingIcon && (
-            <span className={styles.leadingIcon} aria-hidden="true">
+            <span className={styles['leading-icon']} aria-hidden="true">
               {leadingIcon}
             </span>
           )}
           <span className={styles.label}>{label}</span>
-          <span className={styles.submenuArrow} aria-hidden="true">
+          <span className={styles['submenu-arrow']} aria-hidden="true">
             {chevronSvg}
           </span>
         </button>
 
         <div
-          className={styles.submenuSurface}
+          className={styles['submenu-surface']}
           role="menu"
           data-open={isOpen}
           aria-label={label}
@@ -558,16 +558,16 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
 
   // ── Position class ──────────────────────────────────────
   const positionClass = {
-    "bottom-start": styles.positionBottomStart,
-    "bottom-end": styles.positionBottomEnd,
-    "top-start": styles.positionTopStart,
-    "top-end": styles.positionTopEnd,
-  }[position] || styles.positionBottomStart;
+    "bottom-start": styles['position-bottom-start'],
+    "bottom-end": styles['position-bottom-end'],
+    "top-start": styles['position-top-start'],
+    "top-end": styles['position-top-end'],
+  }[position] || styles['position-bottom-start'];
 
   const surfaceClasses = [
     styles.surface,
     positionClass,
-    matchWidth ? styles.matchWidth : "",
+    matchWidth ? styles['match-width'] : "",
     className,
   ]
     .filter(Boolean)

@@ -52,9 +52,9 @@ export default function SwitchComponent({
 
   const rootClasses = [
     styles.switch,
-    disabled && styles.isDisabledState,
-    labelPlacement === "start" && styles.labelStart,
-    showIcons && styles.withIcons,
+    disabled && styles['is-disabled-state'],
+    labelPlacement === "start" && styles['label-start'],
+    showIcons && styles['with-icons'],
     className,
   ]
     .filter(Boolean)
@@ -62,7 +62,7 @@ export default function SwitchComponent({
 
   const trackClasses = [
     styles.track,
-    checked && styles.isSelectedState,
+    checked && styles['is-selected-state'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -77,7 +77,7 @@ export default function SwitchComponent({
         role="switch"
         id={id}
         name={name}
-        className={styles.hiddenInput}
+        className={styles['hidden-input']}
         checked={checked}
         disabled={disabled}
         aria-checked={checked}
@@ -91,9 +91,9 @@ export default function SwitchComponent({
       {/* M3 track — 52×32px capsule */}
       <span className={trackClasses} aria-hidden="true">
         {/* Handle container — 40×40 state layer + handle */}
-        <span className={styles.handleContainer}>
+        <span className={styles['handle-container']}>
           {/* State layer — circular 40×40 ripple target */}
-          <span className={styles.stateLayer} />
+          <span className={styles['state-layer']} />
 
           {/* Handle — 16px unselected, 24px selected */}
           <span className={styles.handle}>
@@ -115,7 +115,7 @@ export default function SwitchComponent({
             {/* Unselected icon — close/x mark, only when showIcons */}
             {showIcons && (
               <svg
-                className={styles.iconUnselected}
+                className={styles['icon-unselected']}
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

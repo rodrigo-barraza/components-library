@@ -2,17 +2,17 @@
  * ChatMessageComponent — Message bubble styles
  * ───────────────────────────────────────────────────────────── */
 
-.messageRow {
+.message-row {
   display: flex;
   flex-direction: column;
-  animation: messageSlideIn 250ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: message-slide-in 250ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-.messageRow.grouped {
+.message-row.grouped {
   margin-top: -2px;
 }
 
-@keyframes messageSlideIn {
+@keyframes message-slide-in {
   from {
     transform: translateY(8px);
     opacity: 0;
@@ -27,7 +27,7 @@
   align-items: flex-end;
 }
 
-.visitorBubble {
+.visitor-bubble {
   max-width: 85%;
   padding: 10px 16px;
   background: var(--chat-accent);
@@ -38,7 +38,7 @@
   overflow-wrap: break-word;
 }
 
-.visitor.grouped .visitorBubble {
+.visitor.grouped .visitor-bubble {
   border-top-right-radius: 4px;
 }
 
@@ -46,7 +46,7 @@
   align-items: flex-start;
 }
 
-.agentBubble {
+.agent-bubble {
   max-width: 85%;
   padding: 10px 16px;
   background: var(--chat-background-message-agent);
@@ -57,7 +57,7 @@
   overflow-wrap: break-word;
 }
 
-.agent.grouped .agentBubble {
+.agent.grouped .agent-bubble {
   border-top-left-radius: 4px;
 }
 
@@ -66,38 +66,38 @@
   padding: 4px 0;
 }
 
-.systemBubble {
+.system-bubble {
   max-width: 90%;
   padding: 10px 16px;
   text-align: center;
 }
 
-.system .messageText {
+.system .message-text {
   color: var(--chat-text-secondary);
   font-size: 0.8125rem;
   line-height: 1.5;
 }
 
-.messageText {
+.message-text {
   margin: 0;
   font-size: var(--font-size-base);
   line-height: 1.5;
   white-space: pre-wrap;
 }
 
-.errorMessage .agentBubble,
-.errorMessage .systemBubble {
-  border: 1px solid rgba(239, 68, 68, 0.2);
+.error-message .agent-bubble,
+.error-message .system-bubble {
+  border: 1px solid oklch(0.637 0.2078 25.3 / 0.2);
 }
 
-.errorMessage .messageText {
+.error-message .message-text {
   color: var(--chat-error, #f87171);
 }
 
 .link {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-decoration-color: oklch(1 0 0 / 0.35);
   text-underline-offset: 2px;
   transition: text-decoration-color var(--chat-transition-fast);
 
@@ -106,12 +106,12 @@
   }
 }
 
-.inlineCode {
+.inline-code {
   font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
   font-size: 0.88em;
   padding: 1px 5px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: oklch(1 0 0 / 0.08);
   color: var(--chat-accent-light, #e2b3ff);
 }
 
@@ -130,10 +130,10 @@
   background: var(--chat-text-primary);
   margin-left: 1px;
   vertical-align: text-bottom;
-  animation: cursorBlink 800ms step-end infinite;
+  animation: cursor-blink 800ms step-end infinite;
 }
 
-@keyframes cursorBlink {
+@keyframes cursor-blink {
   0%,
   100% {
     opacity: 1;
@@ -156,7 +156,7 @@
   user-select: none;
 }
 
-.timestampVisible {
+.timestamp-visible {
   opacity: 1;
   transform: translateY(0);
 }

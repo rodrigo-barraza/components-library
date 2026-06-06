@@ -108,24 +108,24 @@ export default function BottomAppBarComponent({ fab, position = "fixed", hideOnS
         items[nextIndex]?.focus();
     }, []);
     const rootClasses = [
-        styles.bottomAppBar,
+        styles['bottom-app-bar'],
         position === "relative" && styles.relative,
-        isHidden && styles.isHiddenState,
+        isHidden && styles['is-hidden-state'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { ref: toolbarRef, role: "toolbar", "aria-label": ariaLabel, className: rootClasses, style: style, onKeyDown: handleKeyDown, ...rest, children: [children && _jsx("div", { className: styles.actionsSlot, children: children }), fab && _jsx("div", { className: styles.fabSlot, children: fab })] }));
+    return (_jsxs("div", { ref: toolbarRef, role: "toolbar", "aria-label": ariaLabel, className: rootClasses, style: style, onKeyDown: handleKeyDown, ...rest, children: [children && _jsx("div", { className: styles['actions-slot'], children: children }), fab && _jsx("div", { className: styles['fab-slot'], children: fab })] }));
 }
 const BottomAppBarAction = forwardRef(function BottomAppBarAction({ icon: Icon, ariaLabel, active = false, disabled = false, onClick, className, children, ...rest }, ref) {
     const classes = [
-        styles.actionButton,
-        active && styles.actionActive,
+        styles['action-button'],
+        active && styles['action-active'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("button", { ref: ref, type: "button", "data-bottom-bar-action": "", className: classes, "aria-label": ariaLabel, "aria-pressed": active || undefined, disabled: disabled, tabIndex: -1, onClick: onClick, ...rest, children: [_jsx("span", { className: styles.stateLayer }), children || (Icon && _jsx(Icon, { size: 24 }))] }));
+    return (_jsxs("button", { ref: ref, type: "button", "data-bottom-bar-action": "", className: classes, "aria-label": ariaLabel, "aria-pressed": active || undefined, disabled: disabled, tabIndex: -1, onClick: onClick, ...rest, children: [_jsx("span", { className: styles['state-layer'] }), children || (Icon && _jsx(Icon, { size: 24 }))] }));
 });
 /* ── Attach sub-components ──────────────────────────────────────────── */
 BottomAppBarComponent.Action = BottomAppBarAction;

@@ -9,21 +9,21 @@
   position: fixed;
   inset: 0;
   z-index: 199;
-  background: rgba(0, 0, 0, 0.35);
-  animation: scrimFadeIn 200ms ease-out both;
+  background: oklch(0 0 0 / 0.35);
+  animation: scrim-fade-in 200ms ease-out both;
   will-change: opacity;
 }
 
 .scrim[data-closing] {
-  animation: scrimFadeOut 200ms ease-in both;
+  animation: scrim-fade-out 200ms ease-in both;
 }
 
-@keyframes scrimFadeIn {
+@keyframes scrim-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-@keyframes scrimFadeOut {
+@keyframes scrim-fade-out {
   from { opacity: 1; }
   to   { opacity: 0; }
 }
@@ -45,12 +45,12 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: drawerSlideIn 250ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: drawer-slide-in 250ms cubic-bezier(0.4, 0, 0.2, 1) both;
   will-change: transform;
 }
 
 .drawer[data-closing] {
-  animation: drawerSlideOut 200ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: drawer-slide-out 200ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 /* ── Position variants ─────────────────────────────────────────── */
@@ -60,31 +60,31 @@
   left: 0;
   border-left: none;
   border-right: 1px solid var(--calculated-border-color);
-  animation-name: drawerSlideInLeft;
+  animation-name: drawer-slide-in-left;
 }
 
 .left[data-closing] {
-  animation-name: drawerSlideOutLeft;
+  animation-name: drawer-slide-out-left;
 }
 
 /* ── Slide animations (GPU-accelerated) ────────────────────────── */
 
-@keyframes drawerSlideIn {
+@keyframes drawer-slide-in {
   from { transform: translateX(100%); }
   to   { transform: translateX(0); }
 }
 
-@keyframes drawerSlideOut {
+@keyframes drawer-slide-out {
   from { transform: translateX(0); }
   to   { transform: translateX(100%); }
 }
 
-@keyframes drawerSlideInLeft {
+@keyframes drawer-slide-in-left {
   from { transform: translateX(-100%); }
   to   { transform: translateX(0); }
 }
 
-@keyframes drawerSlideOutLeft {
+@keyframes drawer-slide-out-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-100%); }
 }
@@ -110,7 +110,7 @@
   white-space: nowrap;
 }
 
-.headerActions {
+.header-actions {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -135,7 +135,7 @@
   margin-bottom: 0;
 }
 
-.sectionTitle {
+.section-title {
   font-size: 11px;
   font-weight: 700;
   color: var(--text-secondary);

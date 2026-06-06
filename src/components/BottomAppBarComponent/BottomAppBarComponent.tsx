@@ -154,9 +154,9 @@ export default function BottomAppBarComponent({
   }, []);
 
   const rootClasses = [
-    styles.bottomAppBar,
+    styles['bottom-app-bar'],
     position === "relative" && styles.relative,
-    isHidden && styles.isHiddenState,
+    isHidden && styles['is-hidden-state'],
     className,
   ]
     .filter(Boolean)
@@ -173,10 +173,10 @@ export default function BottomAppBarComponent({
       {...rest}
     >
       {/* ── Action icons (leading) ── */}
-      {children && <div className={styles.actionsSlot}>{children}</div>}
+      {children && <div className={styles['actions-slot']}>{children}</div>}
 
       {/* ── FAB slot (trailing) ── */}
-      {fab && <div className={styles.fabSlot}>{fab}</div>}
+      {fab && <div className={styles['fab-slot']}>{fab}</div>}
     </div>
   );
 }
@@ -209,8 +209,8 @@ const BottomAppBarAction = forwardRef<HTMLButtonElement, BottomAppBarActionProps
   ref,
 ) {
   const classes = [
-    styles.actionButton,
-    active && styles.actionActive,
+    styles['action-button'],
+    active && styles['action-active'],
     className,
   ]
     .filter(Boolean)
@@ -229,7 +229,7 @@ const BottomAppBarAction = forwardRef<HTMLButtonElement, BottomAppBarActionProps
       onClick={onClick}
       {...rest}
     >
-      <span className={styles.stateLayer} />
+      <span className={styles['state-layer']} />
       {children || (Icon && <Icon size={24} />)}
     </button>
   );

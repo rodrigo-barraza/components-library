@@ -46,8 +46,8 @@ function HeaderCell({ col, thClasses, isSortable, handleSort, sort }) {
     const isActive = sort.key === col.key;
     const sortIcon = isActive
         ? sort.dir === "desc"
-            ? _jsx(ChevronDown, { size: 12, className: styles.sortIcon })
-            : _jsx(ChevronUp, { size: 12, className: styles.sortIcon })
+            ? _jsx(ChevronDown, { size: 12, className: styles['sort-icon'] })
+            : _jsx(ChevronUp, { size: 12, className: styles['sort-icon'] })
         : null;
     return (_jsxs("th", { ref: thRef, className: thClasses, style: { textAlign: col.align || "left", width: col.width, maxWidth: col.width }, onClick: isSortable ? () => handleSort(col.key) : undefined, onMouseEnter: onEnter, onMouseLeave: onLeave, children: [col.label, isSortable && sortIcon, tipMounted &&
                 createPortal(_jsx("span", { className: `${tooltipStyles.bubble} ${tooltipStyles.plain} ${tooltipStyles.bottom} ${tipVisible ? tooltipStyles.visible : ""}`, style: { top: tipCoords.top, left: tipCoords.left }, children: _jsx("span", { className: tooltipStyles.plainLabel, children: col.description }) }), document.body)] }));
@@ -104,10 +104,10 @@ function ColumnFilter({ columns, hiddenColumns, onToggle, onToggleAll, storageKe
     const hiddenCount = hiddenColumns.size;
     const hideableColumns = columns.filter((col) => col.hideable !== false);
     const isAllVisible = hideableColumns.every((col) => !hiddenColumns.has(col.key));
-    return (_jsxs(_Fragment, { children: [_jsxs("button", { ref: btnRef, className: `${styles.columnFilterButton} ${hiddenCount > 0 ? styles.columnFilterBtnActive : ""}`, onClick: toggle, title: "Show/hide columns", children: [_jsx(Columns3, { size: 12 }), _jsx("span", { children: "Columns" }), hiddenCount > 0 && (_jsxs("span", { className: styles.columnFilterCount, children: [columns.length - hiddenCount, "/", columns.length] }))] }), open &&
-                createPortal(_jsxs("div", { className: styles.columnFilterDropdown, "data-column-filter": storageKey, style: { top: coords.top, left: coords.left }, children: [_jsx("div", { className: styles.columnFilterHeader, children: "Toggle Columns" }), _jsxs("div", { className: styles.columnFilterList, children: [_jsxs("button", { className: `${styles.columnFilterItem} ${styles.columnFilterToggleAll} ${isAllVisible ? styles.columnFilterItemVisible : ""}`, onClick: () => onToggleAll(!isAllVisible), children: [_jsx("span", { className: styles.columnFilterCheck, children: isAllVisible && _jsx(Check, { size: 10 }) }), _jsx(ListChecks, { size: 11, className: styles.columnFilterToggleAllIcon }), _jsx("span", { className: styles.columnFilterLabel, children: isAllVisible ? "Deselect All" : "Select All" })] }), _jsx("div", { className: styles.columnFilterDivider }), hideableColumns.map((col) => {
+    return (_jsxs(_Fragment, { children: [_jsxs("button", { ref: btnRef, className: `${styles['column-filter-button']} ${hiddenCount > 0 ? styles['column-filter-btn-active'] : ""}`, onClick: toggle, title: "Show/hide columns", children: [_jsx(Columns3, { size: 12 }), _jsx("span", { children: "Columns" }), hiddenCount > 0 && (_jsxs("span", { className: styles['column-filter-count'], children: [columns.length - hiddenCount, "/", columns.length] }))] }), open &&
+                createPortal(_jsxs("div", { className: styles['column-filter-dropdown'], "data-column-filter": storageKey, style: { top: coords.top, left: coords.left }, children: [_jsx("div", { className: styles['column-filter-header'], children: "Toggle Columns" }), _jsxs("div", { className: styles['column-filter-list'], children: [_jsxs("button", { className: `${styles['column-filter-item']} ${styles['column-filter-toggle-all']} ${isAllVisible ? styles['column-filter-item-visible'] : ""}`, onClick: () => onToggleAll(!isAllVisible), children: [_jsx("span", { className: styles['column-filter-check'], children: isAllVisible && _jsx(Check, { size: 10 }) }), _jsx(ListChecks, { size: 11, className: styles['column-filter-toggle-all-icon'] }), _jsx("span", { className: styles['column-filter-label'], children: isAllVisible ? "Deselect All" : "Select All" })] }), _jsx("div", { className: styles['column-filter-divider'] }), hideableColumns.map((col) => {
                                     const visible = !hiddenColumns.has(col.key);
-                                    return (_jsxs("button", { className: `${styles.columnFilterItem} ${visible ? styles.columnFilterItemVisible : ""}`, onClick: () => onToggle(col.key), children: [_jsx("span", { className: styles.columnFilterCheck, children: visible && _jsx(Check, { size: 10 }) }), _jsx("span", { className: styles.columnFilterLabel, children: col.label })] }, col.key));
+                                    return (_jsxs("button", { className: `${styles['column-filter-item']} ${visible ? styles['column-filter-item-visible'] : ""}`, onClick: () => onToggle(col.key), children: [_jsx("span", { className: styles['column-filter-check'], children: visible && _jsx(Check, { size: 10 }) }), _jsx("span", { className: styles['column-filter-label'], children: col.label })] }, col.key));
                                 })] })] }), document.body)] }));
 }
 export default function TableComponent({ title, subtitle, columns, data = [], getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText = "No data", sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini = false, storageKey, }) {
@@ -281,18 +281,18 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
         return SoundService.interactive(clickHandler, enterHandler);
     };
     const showHeader = !!(title || subtitle || storageKey);
-    return (_jsxs("div", { className: `${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles.hasHeader : ""}`, children: [showHeader && (_jsxs("div", { className: styles.tableHeader, children: [(title || subtitle) && (_jsxs("div", { className: styles.tableHeaderContent, children: [title && _jsx("h2", { className: styles.title, children: title }), subtitle && _jsx("p", { className: styles.subtitle, children: subtitle })] })), storageKey && (_jsx(ColumnFilter, { columns: columns, hiddenColumns: hiddenColumns, onToggle: toggleColumn, onToggleAll: toggleAllColumns, storageKey: storageKey }))] })), _jsx("div", { ref: scrollRef, className: styles.tableScroll, style: maxHeight ? { maxHeight, overflowY: "auto" } : undefined, "data-table-scroll": true, onPointerDown: onPointerDown, onPointerMove: onPointerMove, onPointerUp: onPointerUp, onPointerCancel: onPointerUp, children: _jsxs("table", { className: styles.table, children: [_jsx("thead", { children: _jsx("tr", { children: visibleColumns.map((col) => {
+    return (_jsxs("div", { className: `${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles['has-header'] : ""}`, children: [showHeader && (_jsxs("div", { className: styles['table-header'], children: [(title || subtitle) && (_jsxs("div", { className: styles['table-header-content'], children: [title && _jsx("h2", { className: styles.title, children: title }), subtitle && _jsx("p", { className: styles.subtitle, children: subtitle })] })), storageKey && (_jsx(ColumnFilter, { columns: columns, hiddenColumns: hiddenColumns, onToggle: toggleColumn, onToggleAll: toggleAllColumns, storageKey: storageKey }))] })), _jsx("div", { ref: scrollRef, className: styles['table-scroll'], style: maxHeight ? { maxHeight, overflowY: "auto" } : undefined, "data-table-scroll": true, onPointerDown: onPointerDown, onPointerMove: onPointerMove, onPointerUp: onPointerUp, onPointerCancel: onPointerUp, children: _jsxs("table", { className: styles.table, children: [_jsx("thead", { children: _jsx("tr", { children: visibleColumns.map((col) => {
                                     const isSortable = col.sortable !== false;
                                     const isActive = sort.key === col.key;
                                     const thClasses = [
                                         styles.th,
-                                        isSortable ? styles.thSortable : "",
-                                        isActive ? styles.thActive : "",
+                                        isSortable ? styles['th-sortable'] : "",
+                                        isActive ? styles['th-active'] : "",
                                     ]
                                         .filter(Boolean)
                                         .join(" ");
                                     return (_jsx(HeaderCell, { col: col, thClasses: thClasses, isSortable: isSortable, handleSort: handleSort, sort: sort }, col.key));
-                                }) }) }), _jsx("tbody", { children: sorted.length === 0 ? (_jsx("tr", { children: _jsx("td", { colSpan: visibleColumns.length, className: styles.emptyRow, children: emptyText }) })) : (sorted.map((row, ri) => {
+                                }) }) }), _jsx("tbody", { children: sorted.length === 0 ? (_jsx("tr", { children: _jsx("td", { colSpan: visibleColumns.length, className: styles['empty-row'], children: emptyText }) })) : (sorted.map((row, ri) => {
                                 const key = getRowKey ? getRowKey(row, ri) : ri;
                                 const subRows = hasSubRows ? getSubRows(row) : [];
                                 const isExpanded = expanded.has(key);
@@ -305,14 +305,14 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
                                 const customStyle = getRowStyle ? getRowStyle(row, ri) : undefined;
                                 return (_jsxs(Fragment, { children: [_jsx("tr", { ref: isHighlighted && highlightedRowRef
                                                 ? highlightedRowRef
-                                                : undefined, className: `${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles.expandableRow : ""} ${isActive ? styles.activeRow : ""} ${isHighlighted ? styles.highlightedRow : ""} ${customClass}`, style: customStyle, ...(clickable
+                                                : undefined, className: `${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles['expandable-row'] : ""} ${isActive ? styles['active-row'] : ""} ${isHighlighted ? styles['highlighted-row'] : ""} ${customClass}`, style: customStyle, ...(clickable
                                                 ? interactiveProps(isExpandable ? () => toggleExpand(key) : () => onRowClick?.(row), onRowMouseEnter ? () => onRowMouseEnter(row, ri) : undefined)
                                                 : {}), ...(!clickable && onRowMouseEnter ? { onMouseEnter: () => onRowMouseEnter(row, ri) } : {}), onMouseLeave: onRowMouseLeave ? () => onRowMouseLeave(row, ri) : undefined, children: colsToRender.map((col, ci) => {
                                                 const isFirst = ci === 0;
                                                 const isSorted = sort.key === col.key;
-                                                const tdClass = isFirst ? styles.tdName : styles.td;
+                                                const tdClass = isFirst ? styles['td-name'] : styles.td;
                                                 const extraClass = col.className || "";
-                                                const sortedClass = !isFirst && isSorted ? styles.tdSorted : "";
+                                                const sortedClass = !isFirst && isSorted ? styles['td-sorted'] : "";
                                                 const cellStyle = {
                                                     ...(col.align ? { textAlign: col.align } : {}),
                                                     ...(col.width ? { width: col.width, maxWidth: col.width } : {}),
@@ -324,10 +324,10 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
                                                 else {
                                                     content = (row[col.key] ?? "—");
                                                 }
-                                                return (_jsxs("td", { className: `${tdClass} ${extraClass} ${sortedClass}`, style: cellStyle, children: [isFirst && isExpandable && (_jsx("span", { className: `${styles.expandIcon} ${isExpanded ? styles.expandIconOpen : ""}`, children: _jsx(ChevronDown, { size: 12 }) })), content] }, col.key));
-                                            }) }), isExpanded && hasExpandedContent && (_jsx("tr", { className: styles.expandedContentRow, children: _jsx("td", { colSpan: colsToRender.length, className: styles.expandedContentCell, children: renderExpandedContent(row) }) })), isExpanded &&
+                                                return (_jsxs("td", { className: `${tdClass} ${extraClass} ${sortedClass}`, style: cellStyle, children: [isFirst && isExpandable && (_jsx("span", { className: `${styles['expand-icon']} ${isExpanded ? styles['expand-icon-open'] : ""}`, children: _jsx(ChevronDown, { size: 12 }) })), content] }, col.key));
+                                            }) }), isExpanded && hasExpandedContent && (_jsx("tr", { className: styles['expanded-content-row'], children: _jsx("td", { colSpan: colsToRender.length, className: styles['expanded-content-cell'], children: renderExpandedContent(row) }) })), isExpanded &&
                                             !hasExpandedContent &&
-                                            subRows.map((sub, si) => (_jsx("tr", { className: styles.subRow, children: colsToRender.map((col) => {
+                                            subRows.map((sub, si) => (_jsx("tr", { className: styles['sub-row'], children: colsToRender.map((col) => {
                                                     const cellStyle = col.align
                                                         ? { textAlign: col.align }
                                                         : {};

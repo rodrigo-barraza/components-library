@@ -133,7 +133,7 @@ export default function ModalComponent({
 
   const overlayClass = [
     styles.overlay,
-    variant === "dark" ? styles.overlayDark : "",
+    variant === "dark" ? styles['overlay-dark'] : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -163,7 +163,7 @@ export default function ModalComponent({
         <div className={styles.header}>
           <span className={styles.title} id={titleId}>{title}</span>
           <button
-            className={styles.closeButton}
+            className={styles['close-button']}
             onClick={onClose}
             title="Close"
             aria-label="Close modal"

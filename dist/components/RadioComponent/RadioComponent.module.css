@@ -16,11 +16,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.radio.labelStart {
+.radio.label-start {
   flex-direction: row-reverse;
 }
 
-.radio.isDisabledState {
+.radio.is-disabled-state {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -28,7 +28,7 @@
 
 /* ── Hidden native input ─────────────────────────────── */
 
-.hiddenInput {
+.hidden-input {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -50,7 +50,7 @@
 
 /* ── State layer — 40×40 circular ripple target ──────── */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -61,43 +61,43 @@
 }
 
 /* Hover — unselected */
-.radio:hover .stateLayer {
+.radio:hover .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, transparent);
 }
 
 /* Hover — selected */
-.radio:hover .isSelectedState ~ .stateLayer {
+.radio:hover .is-selected-state ~ .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible (keyboard navigation) — unselected */
-.hiddenInput:focus-visible ~ .stateLayer {
+.hidden-input:focus-visible ~ .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
 /* Focus-visible (keyboard navigation) — selected */
-.hiddenInput:focus-visible ~ .isSelectedState ~ .stateLayer,
-.isSelectedState ~ .hiddenInput:focus-visible ~ .stateLayer {
+.hidden-input:focus-visible ~ .is-selected-state ~ .state-layer,
+.is-selected-state ~ .hidden-input:focus-visible ~ .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* Active / pressed — unselected */
-.radio:active .stateLayer {
+.radio:active .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
 /* Active / pressed — selected */
-.radio:active .isSelectedState ~ .stateLayer {
+.radio:active .is-selected-state ~ .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* ── Error state layer overrides ─────────────────────── */
 
-.error:hover .stateLayer {
+.error:hover .state-layer {
   background: color-mix(in srgb, var(--color-error, #b3261e) 8%, transparent);
 }
 
-.error:active .stateLayer {
+.error:active .state-layer {
   background: color-mix(in srgb, var(--color-error, #b3261e) 12%, transparent);
 }
 
@@ -120,17 +120,17 @@
 }
 
 /* Selected — primary-colored ring */
-.circle.isSelectedState {
+.circle.is-selected-state {
   border-color: var(--accent-primary, #6750a4);
 }
 
 /* Error — unselected */
-.circle.errorCircle {
+.circle.error-circle {
   border-color: var(--color-error, #b3261e);
 }
 
 /* Error — selected */
-.circle.errorCircle.isSelectedState {
+.circle.error-circle.is-selected-state {
   border-color: var(--color-error, #b3261e);
 }
 
@@ -141,17 +141,17 @@
   height: 10px;
   border-radius: 50%;
   background: var(--accent-primary, #6750a4);
-  animation: dotIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: dot-in 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
 }
 
 /* Error dot */
-.errorDot {
+.error-dot {
   background: var(--color-error, #b3261e);
 }
 
 /* Dot scale-in animation (GPU-composited via transform) */
-@keyframes dotIn {
+@keyframes dot-in {
   from {
     opacity: 0;
     transform: scale(0);

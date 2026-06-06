@@ -30,7 +30,7 @@
     transform: scale(1.08);
     background: var(--chat-accent-hover);
     box-shadow:
-      0 6px 28px rgba(0, 0, 0, 0.35),
+      0 6px 28px oklch(0 0 0 / 0.35),
       0 0 32px color-mix(in srgb, var(--chat-accent) 40%, transparent);
   }
 
@@ -44,12 +44,12 @@
   }
 }
 
-.launcher.isOpenState {
-  background: rgba(255, 255, 255, 0.08);
+.launcher.is-open-state {
+  background: oklch(1 0 0 / 0.08);
   box-shadow: var(--chat-shadow);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: oklch(1 0 0 / 0.12);
   }
 }
 
@@ -64,17 +64,17 @@
     opacity var(--chat-transition);
 }
 
-.chatIcon {
+.chat-icon {
   transform: scale(1) rotate(0deg);
   opacity: 1;
 }
 
-.closeIcon {
+.close-icon {
   transform: scale(1) rotate(0deg);
   opacity: 1;
 }
 
-.iconHidden {
+.icon-hidden {
   transform: scale(0.5) rotate(90deg);
   opacity: 0;
   pointer-events: none;
@@ -97,12 +97,12 @@
   font-weight: 700;
   line-height: 20px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
-  animation: badgePulse 2s ease-in-out infinite;
+  box-shadow: 0 2px 6px oklch(0.637 0.2078 25.3 / 0.4);
+  animation: badge-pulse 2s ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes badgePulse {
+@keyframes badge-pulse {
   0%,
   100% {
     transform: scale(1);

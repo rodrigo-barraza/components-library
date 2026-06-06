@@ -51,8 +51,8 @@ export default function PageHeaderComponent({
     if (!hasContent) return null;
 
     return (
-      <div className={styles.headerActions}>
-        {centerContent && <div className={styles.headerCenter}>{centerContent}</div>}
+      <div className={styles['header-actions']}>
+        {centerContent && <div className={styles['header-center']}>{centerContent}</div>}
         {children}
       </div>
     );
@@ -61,25 +61,25 @@ export default function PageHeaderComponent({
   // Standalone fallback: render the full pageHeader bar.
   return (
     <header
-      className={`${styles.pageHeader} ${sticky ? styles.sticky : ""} ${className || ""}`}
+      className={`${styles['page-header']} ${sticky ? styles.sticky : ""} ${className || ""}`}
     >
-      <div className={styles.headerLeft}>
+      <div className={styles['header-left']}>
         {onBack && (
-          <button className={styles.backButton} onClick={onBack}>
+          <button className={styles['back-button']} onClick={onBack}>
             <ArrowLeft size={16} />
           </button>
         )}
         <div>
-          <h1 className={styles.pageTitle}>{title}</h1>
-          {subtitle && <p className={styles.pageSubtitle}>{subtitle}</p>}
+          <h1 className={styles['page-title']}>{title}</h1>
+          {subtitle && <p className={styles['page-subtitle']}>{subtitle}</p>}
         </div>
       </div>
 
       {centerContent && (
-        <div className={styles.headerCenter}>{centerContent}</div>
+        <div className={styles['header-center']}>{centerContent}</div>
       )}
 
-      {children && <div className={styles.headerActions}>{children}</div>}
+      {children && <div className={styles['header-actions']}>{children}</div>}
     </header>
   );
 }

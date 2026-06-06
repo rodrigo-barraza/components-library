@@ -46,7 +46,7 @@ export default function SliderComponent({ value, min = 0, max = 100, step = 1, o
         }
         return marks;
     }, [showTicks, min, max, effectiveStep]);
-    return (_jsx("div", { className: [styles.slider, disabled && styles.isDisabledState, className]
+    return (_jsx("div", { className: [styles.slider, disabled && styles['is-disabled-state'], className]
             .filter(Boolean)
             .join(" "), id: id, children: isRange ? (_jsx(RangeTrack, { value: value, min: min, max: max, step: effectiveStep, onChange: onChange, disabled: disabled, showValue: showValue, ticks: ticks, label: label, formatValue: formatValue, sound: sound })) : (_jsx(SingleTrack, { value: value, min: min, max: max, step: effectiveStep, onChange: onChange, disabled: disabled, centered: centered, showValue: showValue, ticks: ticks, label: label, formatValue: formatValue, sound: sound })) }));
 }
@@ -145,22 +145,22 @@ function SingleTrack({ value, min, max, step, onChange, disabled, centered, show
             width: `${Math.abs(percentage - midPercentage)}%`,
         }
         : null;
-    return (_jsx("div", { className: styles.trackWrapper, children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
+    return (_jsx("div", { className: styles['track-wrapper'], children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
                 .filter(Boolean)
-                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), centered && centeredFill ? (_jsx("div", { className: styles.activeTrack, style: centeredFill })) : (_jsx("div", { className: styles.activeTrack, style: { width: `${percentage}%` } })), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
+                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles['inactive-track'] }), centered && centeredFill ? (_jsx("div", { className: styles['active-track'], style: centeredFill })) : (_jsx("div", { className: styles['active-track'], style: { width: `${percentage}%` } })), _jsx("div", { className: `${styles['stop-indicator']} ${styles['stop-start']}` }), _jsx("div", { className: `${styles['stop-indicator']} ${styles['stop-end']}` }), ticks.length > 0 &&
                     ticks.map((tick) => {
                         const tickPct = ((tick - min) / (max - min)) * 100;
                         const isActive = centered
                             ? tick >= Math.min(value, 0) && tick <= Math.max(value, 0)
                             : tick <= value;
-                        return (_jsx("div", { className: `${styles.tickMark} ${isActive ? styles.tickActive : styles.tickInactive}`, style: { left: `${tickPct}%` } }, tick));
+                        return (_jsx("div", { className: `${styles['tick-mark']} ${isActive ? styles['tick-active'] : styles['tick-inactive']}`, style: { left: `${tickPct}%` } }, tick));
                     }), _jsxs("div", { className: [
-                        styles.thumbContainer,
-                        dragging && styles.thumbDragging,
-                        pressed && styles.thumbPressed,
+                        styles['thumb-container'],
+                        dragging && styles['thumb-dragging'],
+                        pressed && styles['thumb-pressed'],
                     ]
                         .filter(Boolean)
-                        .join(" "), style: { left: `${percentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label, "aria-valuemin": min, "aria-valuemax": max, "aria-valuenow": value, "aria-valuetext": formatFunction(value), "aria-disabled": disabled, onKeyDown: (e) => !disabled && handleSliderKeyDown(e, value, min, max, step, onChange), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue && (pressed || dragging) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: formatFunction(value) }) }))] })] }) }));
+                        .join(" "), style: { left: `${percentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label, "aria-valuemin": min, "aria-valuemax": max, "aria-valuenow": value, "aria-valuetext": formatFunction(value), "aria-disabled": disabled, onKeyDown: (e) => !disabled && handleSliderKeyDown(e, value, min, max, step, onChange), children: [_jsx("div", { className: styles['state-layer'] }), _jsx("div", { className: styles.thumb }), showValue && (pressed || dragging) && (_jsx("div", { className: styles['value-indicator'], children: _jsx("span", { className: styles['value-label'], children: formatFunction(value) }) }))] })] }) }));
 }
 function RangeTrack({ value, min, max, step, onChange, disabled, showValue, ticks, label, formatValue, sound, }) {
     const trackRef = useRef(null);
@@ -235,29 +235,29 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
             }
         });
     };
-    return (_jsx("div", { className: styles.trackWrapper, children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
+    return (_jsx("div", { className: styles['track-wrapper'], children: _jsxs("div", { ref: trackRef, className: [styles.track, dragging && styles.trackDragging]
                 .filter(Boolean)
-                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles.inactiveTrack }), _jsx("div", { className: styles.activeTrack, style: { left: `${lowPercentage}%`, width: `${highPercentage - lowPercentage}%` } }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopStart}` }), _jsx("div", { className: `${styles.stopIndicator} ${styles.stopEnd}` }), ticks.length > 0 &&
+                .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles['inactive-track'] }), _jsx("div", { className: styles['active-track'], style: { left: `${lowPercentage}%`, width: `${highPercentage - lowPercentage}%` } }), _jsx("div", { className: `${styles['stop-indicator']} ${styles['stop-start']}` }), _jsx("div", { className: `${styles['stop-indicator']} ${styles['stop-end']}` }), ticks.length > 0 &&
                     ticks.map((tick) => {
                         const tickPct = ((tick - min) / (max - min)) * 100;
                         const isActive = tick >= lo && tick <= hi;
-                        return (_jsx("div", { className: `${styles.tickMark} ${isActive ? styles.tickActive : styles.tickInactive}`, style: { left: `${tickPct}%` } }, tick));
+                        return (_jsx("div", { className: `${styles['tick-mark']} ${isActive ? styles['tick-active'] : styles['tick-inactive']}`, style: { left: `${tickPct}%` } }, tick));
                     }), _jsxs("div", { className: [
-                        styles.thumbContainer,
-                        dragging && activeThumb.current === "start" && styles.thumbDragging,
-                        pressedThumb === "start" && styles.thumbPressed,
+                        styles['thumb-container'],
+                        dragging && activeThumb.current === "start" && styles['thumb-dragging'],
+                        pressedThumb === "start" && styles['thumb-pressed'],
                     ]
                         .filter(Boolean)
-                        .join(" "), style: { left: `${lowPercentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} minimum` : "Range minimum", "aria-valuemin": min, "aria-valuemax": hi, "aria-valuenow": lo, "aria-valuetext": formatFunction(lo), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("start"), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue &&
+                        .join(" "), style: { left: `${lowPercentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} minimum` : "Range minimum", "aria-valuemin": min, "aria-valuemax": hi, "aria-valuenow": lo, "aria-valuetext": formatFunction(lo), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("start"), children: [_jsx("div", { className: styles['state-layer'] }), _jsx("div", { className: styles.thumb }), showValue &&
                             (pressedThumb === "start" ||
-                                (dragging && activeThumb.current === "start")) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: formatFunction(lo) }) }))] }), _jsxs("div", { className: [
-                        styles.thumbContainer,
-                        dragging && activeThumb.current === "end" && styles.thumbDragging,
-                        pressedThumb === "end" && styles.thumbPressed,
+                                (dragging && activeThumb.current === "start")) && (_jsx("div", { className: styles['value-indicator'], children: _jsx("span", { className: styles['value-label'], children: formatFunction(lo) }) }))] }), _jsxs("div", { className: [
+                        styles['thumb-container'],
+                        dragging && activeThumb.current === "end" && styles['thumb-dragging'],
+                        pressedThumb === "end" && styles['thumb-pressed'],
                     ]
                         .filter(Boolean)
-                        .join(" "), style: { left: `${highPercentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} maximum` : "Range maximum", "aria-valuemin": lo, "aria-valuemax": max, "aria-valuenow": hi, "aria-valuetext": formatFunction(hi), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("end"), children: [_jsx("div", { className: styles.stateLayer }), _jsx("div", { className: styles.thumb }), showValue &&
+                        .join(" "), style: { left: `${highPercentage}%` }, role: "slider", tabIndex: disabled ? -1 : 0, "aria-label": label ? `${label} maximum` : "Range maximum", "aria-valuemin": lo, "aria-valuemax": max, "aria-valuenow": hi, "aria-valuetext": formatFunction(hi), "aria-disabled": disabled, onKeyDown: makeThumbKeyHandler("end"), children: [_jsx("div", { className: styles['state-layer'] }), _jsx("div", { className: styles.thumb }), showValue &&
                             (pressedThumb === "end" ||
-                                (dragging && activeThumb.current === "end")) && (_jsx("div", { className: styles.valueIndicator, children: _jsx("span", { className: styles.valueLabel, children: formatFunction(hi) }) }))] })] }) }));
+                                (dragging && activeThumb.current === "end")) && (_jsx("div", { className: styles['value-indicator'], children: _jsx("span", { className: styles['value-label'], children: formatFunction(hi) }) }))] })] }) }));
 }
 //# sourceMappingURL=SliderComponent.js.map

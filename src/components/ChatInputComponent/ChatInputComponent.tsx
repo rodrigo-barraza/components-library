@@ -69,8 +69,8 @@ export default function ChatInputComponent({ onSend, isTyping = false }: ChatInp
   const canSend = value.trim().length > 0 && !isTyping;
 
   return (
-    <div className={styles.inputBar}>
-      <div className={styles.inputContainer}>
+    <div className={styles['input-bar']}>
+      <div className={styles['input-container']}>
         <textarea
           ref={textareaRef}
           className={styles.textarea}
@@ -85,7 +85,7 @@ export default function ChatInputComponent({ onSend, isTyping = false }: ChatInp
           aria-label="Message input"
         />
         <button
-          className={`${styles.sendButton} ${canSend ? styles.sendActive : ""}`}
+          className={`${styles['send-button']} ${canSend ? styles['send-active'] : ""}`}
           onClick={handleSubmit}
           disabled={!canSend}
           aria-label="Send message"
@@ -98,7 +98,7 @@ export default function ChatInputComponent({ onSend, isTyping = false }: ChatInp
         </button>
       </div>
       {isOverLimit && (
-        <span className={`${styles.charCount} ${value.length >= maxLength ? styles.charCountOver : ""}`}>
+        <span className={`${styles['char-count']} ${value.length >= maxLength ? styles['char-count-over'] : ""}`}>
           {value.length}/{maxLength}
         </span>
       )}

@@ -1,16 +1,16 @@
-.formGroup {
+.form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.formGroup label {
+.form-group label {
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-.formGroup select,
-.inputField {
+.form-group select,
+.input-field {
   height: var(--input-height);
   padding: 0 10px;
   background: var(--calculated-select-background-color);
@@ -21,7 +21,7 @@
   font-size: 14px;
 }
 
-.formGroup textarea {
+.form-group textarea {
   height: auto;
   padding: 10px;
   background: var(--calculated-select-background-color);
@@ -32,14 +32,14 @@
   font-size: 14px;
 }
 
-.formGroup select:focus,
-.formGroup textarea:focus,
-.inputField:focus {
+.form-group select:focus,
+.form-group textarea:focus,
+.input-field:focus {
   border-color: var(--accent-primary);
   outline: none;
 }
 
-.formGroup input[type="range"] {
+.form-group input[type="range"] {
   accent-color: var(--accent-primary);
   width: 100%;
 }
@@ -53,7 +53,7 @@
   line-height: 1.3;
 }
 
-.readOnlyValue {
+.read-only-value {
   display: flex;
   align-items: center;
   gap: 6px;

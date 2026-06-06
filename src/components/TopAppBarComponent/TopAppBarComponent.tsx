@@ -126,7 +126,7 @@ export default function TopAppBarComponent({
 
   // Variant class mapping
   const variantClass = (({
-    "center-aligned": styles.centerAligned,
+    "center-aligned": styles['center-aligned'],
     small: styles.small,
     medium: styles.medium,
     large: styles.large,
@@ -141,11 +141,11 @@ export default function TopAppBarComponent({
         : "";
 
   const rootClasses = [
-    styles.topAppBar,
+    styles['top-app-bar'],
     variantClass,
     positionClass,
     isScrolled && styles.elevated,
-    isScrolled && isExpandable && styles.isCollapsedState,
+    isScrolled && isExpandable && styles['is-collapsed-state'],
     className,
   ]
     .filter(Boolean)
@@ -164,13 +164,13 @@ export default function TopAppBarComponent({
       {...rest}
     >
       {/* ── Main row: nav icon + title + actions ── */}
-      <div className={styles.mainRow}>
+      <div className={styles['main-row']}>
         {/* Leading navigation icon */}
         {navigationIcon && (
-          <div className={styles.navigationSlot}>
+          <div className={styles['navigation-slot']}>
             <button
               type="button"
-              className={styles.navigationButton}
+              className={styles['navigation-button']}
               aria-label={navigationAriaLabel}
               onClick={onNavigationClick}
             >
@@ -180,25 +180,25 @@ export default function TopAppBarComponent({
         )}
 
         {/* Title (always present in main row; hidden for medium/large when expanded) */}
-        <div className={styles.titleArea}>
+        <div className={styles['title-area']}>
           <Heading className={styles.title}>{title}</Heading>
         </div>
 
         {/* Trailing action icons */}
-        {children && <div className={styles.actionsSlot}>{children}</div>}
+        {children && <div className={styles['actions-slot']}>{children}</div>}
       </div>
 
       {/* ── Expanded title row (medium & large only) ── */}
       {isExpandable && (
-        <div className={styles.expandedRow}>
-          <span className={styles.expandedTitle}>{title}</span>
+        <div className={styles['expanded-row']}>
+          <span className={styles['expanded-title']}>{title}</span>
         </div>
       )}
 
       {/* ── Scroll progress indicator (optional wabi-sabi detail) ── */}
       {showScrollIndicator && (
         <div
-          className={styles.scrollIndicator}
+          className={styles['scroll-indicator']}
           style={{ width: `${scrollProgress * 100}%` }}
           aria-hidden="true"
         />
@@ -225,7 +225,7 @@ const TopAppBarAction = forwardRef<HTMLButtonElement, TopAppBarActionProps>(func
   { icon: Icon, ariaLabel, disabled = false, onClick, className, children, ...rest },
   ref,
 ) {
-  const classes = [styles.actionButton, className].filter(Boolean).join(" ");
+  const classes = [styles['action-button'], className].filter(Boolean).join(" ");
 
   return (
     <button

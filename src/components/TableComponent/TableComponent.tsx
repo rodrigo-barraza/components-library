@@ -74,8 +74,8 @@ function HeaderCell<T, TSub>({ col, thClasses, isSortable, handleSort, sort }: H
   const isActive = sort.key === col.key;
   const sortIcon = isActive
     ? sort.dir === "desc"
-      ? <ChevronDown size={12} className={styles.sortIcon} />
-      : <ChevronUp size={12} className={styles.sortIcon} />
+      ? <ChevronDown size={12} className={styles['sort-icon']} />
+      : <ChevronUp size={12} className={styles['sort-icon']} />
     : null;
 
   return (
@@ -167,48 +167,48 @@ function ColumnFilter<T, TSub>({ columns, hiddenColumns, onToggle, onToggleAll, 
     <>
       <button
         ref={btnRef}
-        className={`${styles.columnFilterButton} ${hiddenCount > 0 ? styles.columnFilterBtnActive : ""}`}
+        className={`${styles['column-filter-button']} ${hiddenCount > 0 ? styles['column-filter-btn-active'] : ""}`}
         onClick={toggle}
         title="Show/hide columns"
       >
         <Columns3 size={12} />
         <span>Columns</span>
         {hiddenCount > 0 && (
-          <span className={styles.columnFilterCount}>{columns.length - hiddenCount}/{columns.length}</span>
+          <span className={styles['column-filter-count']}>{columns.length - hiddenCount}/{columns.length}</span>
         )}
       </button>
       {open &&
         createPortal(
           <div
-            className={styles.columnFilterDropdown}
+            className={styles['column-filter-dropdown']}
             data-column-filter={storageKey}
             style={{ top: coords.top, left: coords.left }}
           >
-            <div className={styles.columnFilterHeader}>Toggle Columns</div>
-            <div className={styles.columnFilterList}>
+            <div className={styles['column-filter-header']}>Toggle Columns</div>
+            <div className={styles['column-filter-list']}>
               <button
-                className={`${styles.columnFilterItem} ${styles.columnFilterToggleAll} ${isAllVisible ? styles.columnFilterItemVisible : ""}`}
+                className={`${styles['column-filter-item']} ${styles['column-filter-toggle-all']} ${isAllVisible ? styles['column-filter-item-visible'] : ""}`}
                 onClick={() => onToggleAll(!isAllVisible)}
               >
-                <span className={styles.columnFilterCheck}>
+                <span className={styles['column-filter-check']}>
                   {isAllVisible && <Check size={10} />}
                 </span>
-                <ListChecks size={11} className={styles.columnFilterToggleAllIcon} />
-                <span className={styles.columnFilterLabel}>{isAllVisible ? "Deselect All" : "Select All"}</span>
+                <ListChecks size={11} className={styles['column-filter-toggle-all-icon']} />
+                <span className={styles['column-filter-label']}>{isAllVisible ? "Deselect All" : "Select All"}</span>
               </button>
-              <div className={styles.columnFilterDivider} />
+              <div className={styles['column-filter-divider']} />
               {hideableColumns.map((col) => {
                 const visible = !hiddenColumns.has(col.key);
                 return (
                   <button
                     key={col.key}
-                    className={`${styles.columnFilterItem} ${visible ? styles.columnFilterItemVisible : ""}`}
+                    className={`${styles['column-filter-item']} ${visible ? styles['column-filter-item-visible'] : ""}`}
                     onClick={() => onToggle(col.key)}
                   >
-                    <span className={styles.columnFilterCheck}>
+                    <span className={styles['column-filter-check']}>
                       {visible && <Check size={10} />}
                     </span>
-                    <span className={styles.columnFilterLabel}>{col.label}</span>
+                    <span className={styles['column-filter-label']}>{col.label}</span>
                   </button>
                 );
               })}
@@ -441,11 +441,11 @@ export default function TableComponent<T, TSub = unknown>({
   const showHeader = !!(title || subtitle || storageKey);
 
   return (
-    <div className={`${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles.hasHeader : ""}`}>
+    <div className={`${styles.container} ${mini ? styles.mini : ""} ${showHeader ? styles['has-header'] : ""}`}>
       {showHeader && (
-        <div className={styles.tableHeader}>
+        <div className={styles['table-header']}>
           {(title || subtitle) && (
-            <div className={styles.tableHeaderContent}>
+            <div className={styles['table-header-content']}>
               {title && <h2 className={styles.title}>{title}</h2>}
               {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
             </div>
@@ -464,7 +464,7 @@ export default function TableComponent<T, TSub = unknown>({
 
       <div
         ref={scrollRef}
-        className={styles.tableScroll}
+        className={styles['table-scroll']}
         style={maxHeight ? { maxHeight, overflowY: "auto" } : undefined}
         data-table-scroll
         onPointerDown={onPointerDown}
@@ -480,8 +480,8 @@ export default function TableComponent<T, TSub = unknown>({
                 const isActive = sort.key === col.key;
                 const thClasses = [
                   styles.th,
-                  isSortable ? styles.thSortable : "",
-                  isActive ? styles.thActive : "",
+                  isSortable ? styles['th-sortable'] : "",
+                  isActive ? styles['th-active'] : "",
                 ]
                   .filter(Boolean)
                   .join(" ");
@@ -502,7 +502,7 @@ export default function TableComponent<T, TSub = unknown>({
           <tbody>
             {sorted.length === 0 ? (
               <tr>
-                <td colSpan={visibleColumns.length} className={styles.emptyRow}>
+                <td colSpan={visibleColumns.length} className={styles['empty-row']}>
                   {emptyText}
                 </td>
               </tr>
@@ -528,7 +528,7 @@ export default function TableComponent<T, TSub = unknown>({
                           ? (highlightedRowRef as React.Ref<HTMLTableRowElement>)
                           : undefined
                       }
-                      className={`${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles.expandableRow : ""} ${isActive ? styles.activeRow : ""} ${isHighlighted ? styles.highlightedRow : ""} ${customClass}`}
+                      className={`${styles.tr} ${clickable ? styles.clickable : ""} ${isExpandable ? styles['expandable-row'] : ""} ${isActive ? styles['active-row'] : ""} ${isHighlighted ? styles['highlighted-row'] : ""} ${customClass}`}
                       style={customStyle}
                       {...(clickable
                         ? interactiveProps(
@@ -545,10 +545,10 @@ export default function TableComponent<T, TSub = unknown>({
                       {colsToRender.map((col, ci) => {
                         const isFirst = ci === 0;
                         const isSorted = sort.key === col.key;
-                        const tdClass = isFirst ? styles.tdName : styles.td;
+                        const tdClass = isFirst ? styles['td-name'] : styles.td;
                         const extraClass = col.className || "";
                         const sortedClass =
-                          !isFirst && isSorted ? styles.tdSorted : "";
+                          !isFirst && isSorted ? styles['td-sorted'] : "";
                         const cellStyle = {
                           ...(col.align ? { textAlign: col.align } : {}),
                           ...(col.width ? { width: col.width, maxWidth: col.width } : {}),
@@ -569,7 +569,7 @@ export default function TableComponent<T, TSub = unknown>({
                           >
                             {isFirst && isExpandable && (
                               <span
-                                className={`${styles.expandIcon} ${isExpanded ? styles.expandIconOpen : ""}`}
+                                className={`${styles['expand-icon']} ${isExpanded ? styles['expand-icon-open'] : ""}`}
                               >
                                 <ChevronDown size={12} />
                               </span>
@@ -580,8 +580,8 @@ export default function TableComponent<T, TSub = unknown>({
                       })}
                     </tr>
                     {isExpanded && hasExpandedContent && (
-                      <tr className={styles.expandedContentRow}>
-                        <td colSpan={colsToRender.length} className={styles.expandedContentCell}>
+                      <tr className={styles['expanded-content-row']}>
+                        <td colSpan={colsToRender.length} className={styles['expanded-content-cell']}>
                           {renderExpandedContent(row)}
                         </td>
                       </tr>
@@ -589,7 +589,7 @@ export default function TableComponent<T, TSub = unknown>({
                     {isExpanded &&
                       !hasExpandedContent &&
                       subRows.map((sub, si) => (
-                        <tr key={`${key}-sub-${si}`} className={styles.subRow}>
+                        <tr key={`${key}-sub-${si}`} className={styles['sub-row']}>
                           {colsToRender.map((col) => {
                             const cellStyle = col.align
                               ? { textAlign: col.align }

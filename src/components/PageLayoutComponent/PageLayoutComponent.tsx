@@ -96,7 +96,7 @@ export default function PageLayoutComponent({
         {...sidebarProps}
       />
 
-      <div className={styles.mainArea}>
+      <div className={styles['main-area']}>
         <LayoutHeaderComponent
           title={headerIdentity.title || title}
           onBack={headerIdentity.onBack || onBack}

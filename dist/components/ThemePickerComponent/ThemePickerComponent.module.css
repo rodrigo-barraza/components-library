@@ -28,75 +28,75 @@
 }
 
 .trigger:hover {
-  background: var(--calculated-accent-primary-subtle, rgba(255, 255, 255, 0.05));
+  background: var(--calculated-accent-primary-subtle, oklch(1 0 0 / 0.05));
   color: var(--text-primary, #fff);
 }
 
 /* ── Trigger Dual Swatch ── */
 
-.triggerSwatchDual {
+.trigger-swatch-dual {
   width: 14px;
   height: 14px;
   border-radius: 50%;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid oklch(1 0 0 / 0.15);
   transition: border-color 0.2s;
 }
 
-.trigger:hover .triggerSwatchDual {
-  border-color: rgba(255, 255, 255, 0.3);
+.trigger:hover .trigger-swatch-dual {
+  border-color: oklch(1 0 0 / 0.3);
 }
 
-.triggerSwatchHalf {
+.trigger-swatch-half {
   position: absolute;
   inset: 0;
 }
 
-.triggerSwatchHalf:first-child {
+.trigger-swatch-half:first-child {
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
-.triggerSwatchHalf:last-child {
+.trigger-swatch-half:last-child {
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
-.triggerIcon {
+.trigger-icon {
   flex-shrink: 0;
   display: none;
 }
 
-.triggerLabel {
+.trigger-label {
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.triggerChevron {
+.trigger-chevron {
   flex-shrink: 0;
   color: var(--text-muted, #666);
   transition: transform 0.2s ease;
 }
 
-.triggerChevronOpen {
+.trigger-chevron-open {
   transform: rotate(180deg);
 }
 
 /* ── Collapsed State ── */
 
-.isCollapsedState .triggerLabel,
-.isCollapsedState .triggerChevron {
+.is-collapsed-state .trigger-label,
+.is-collapsed-state .trigger-chevron {
   display: none;
 }
 
-.isCollapsedState .trigger {
+.is-collapsed-state .trigger {
   justify-content: center;
   padding: 10px 0;
 }
 
-.isCollapsedState .triggerSwatchDual {
+.is-collapsed-state .trigger-swatch-dual {
   width: 18px;
   height: 18px;
 }
@@ -113,26 +113,26 @@
   border: 1px solid var(--calculated-border-color, #333);
   border-radius: var(--border-radius-sm, 6px);
   box-shadow:
-    0 -4px 16px rgba(0, 0, 0, 0.25),
-    0 -1px 4px rgba(0, 0, 0, 0.15);
+    0 -4px 16px oklch(0 0 0 / 0.25),
+    0 -1px 4px oklch(0 0 0 / 0.15);
   z-index: 200;
   overflow: hidden;
-  animation: dropupIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: dropup-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: bottom center;
 }
 
 /* ── Flyout variant (collapsed sidebar) ── */
 
-.popoverFlyout {
+.popover-flyout {
   /* position/left/top are set via inline style from JS */
   min-width: 200px;
   width: auto;
-  animation: flyoutIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: flyout-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: left bottom;
   z-index: 10000;
 }
 
-@keyframes flyoutIn {
+@keyframes flyout-in {
   from {
     opacity: 0;
     transform: translateX(-6px) scale(0.96);
@@ -143,7 +143,7 @@
   }
 }
 
-@keyframes dropupIn {
+@keyframes dropup-in {
   from {
     opacity: 0;
     transform: translateY(6px) scale(0.96);
@@ -154,7 +154,7 @@
   }
 }
 
-.popoverHeader {
+.popover-header {
   padding: 10px 14px 6px;
   font-size: 10px;
   font-weight: 600;
@@ -165,14 +165,14 @@
 
 /* ── Theme List ── */
 
-.themeList {
+.theme-list {
   padding: 4px 6px 8px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.themeOption {
+.theme-option {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -191,19 +191,19 @@
   text-align: left;
 }
 
-.themeOption:hover {
-  background: var(--calculated-accent-primary-subtle, rgba(255, 255, 255, 0.05));
+.theme-option:hover {
+  background: var(--calculated-accent-primary-subtle, oklch(1 0 0 / 0.05));
   color: var(--text-primary, #fff);
 }
 
-.themeOption.isActiveState {
+.theme-option.is-active-state {
   color: var(--text-primary, #fff);
   font-weight: 500;
 }
 
 /* ── Dual Swatch (popover items) ── */
 
-.swatchDual {
+.swatch-dual {
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -216,53 +216,53 @@
   transition:
     box-shadow 0.2s ease,
     transform 0.15s ease;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid oklch(1 0 0 / 0.1);
 }
 
-.swatchHalf {
+.swatch-half {
   position: absolute;
   inset: 0;
 }
 
-.swatchHalf:first-child {
+.swatch-half:first-child {
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
-.swatchHalf:last-child {
+.swatch-half:last-child {
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
-.themeOption:hover .swatchDual {
+.theme-option:hover .swatch-dual {
   transform: scale(1.15);
 }
 
-.themeOption.isActiveState .swatchDual {
-  border-color: rgba(255, 255, 255, 0.3);
+.theme-option.is-active-state .swatch-dual {
+  border-color: oklch(1 0 0 / 0.3);
 }
 
-.swatchCheck {
+.swatch-check {
   color: #fff;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 1px 2px oklch(0 0 0 / 0.5));
   z-index: 1;
 }
 
-.optionIcon {
+.option-icon {
   flex-shrink: 0;
   opacity: 0.7;
 }
 
-.themeOption:hover .optionIcon,
-.themeOption.isActiveState .optionIcon {
+.theme-option:hover .option-icon,
+.theme-option.is-active-state .option-icon {
   opacity: 1;
 }
 
-.optionLabel {
+.option-label {
   white-space: nowrap;
 }
 
 /* ── Tooltip fill (collapsed trigger tooltip) ── */
 
-.tooltipFill {
+.tooltip-fill {
   display: flex;
   width: 100%;
 }

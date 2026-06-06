@@ -176,7 +176,7 @@ export default function CarouselComponent({
   const rootClasses = [
     styles.carousel,
     styles[layout],
-    peekEdge && styles.hasPeek,
+    peekEdge && styles['has-peek'],
     className,
   ]
     .filter(Boolean)
@@ -206,24 +206,24 @@ export default function CarouselComponent({
       {showArrows && itemCount > 1 && (
         <>
           <button
-            className={`${styles.navigationButton} ${styles.navigationPrevious}`}
+            className={`${styles['navigation-button']} ${styles['navigation-previous']}`}
             onClick={scrollPrev}
             disabled={!loop && !canScrollPrev}
             aria-label="Previous slide"
             tabIndex={-1}
           >
-            <svg className={styles.navigationIcon} viewBox="0 0 24 24">
+            <svg className={styles['navigation-icon']} viewBox="0 0 24 24">
               <path d="M15 18L9 12L15 6" />
             </svg>
           </button>
           <button
-            className={`${styles.navigationButton} ${styles.navigationNext}`}
+            className={`${styles['navigation-button']} ${styles['navigation-next']}`}
             onClick={scrollNext}
             disabled={!loop && !canScrollNext}
             aria-label="Next slide"
             tabIndex={-1}
           >
-            <svg className={styles.navigationIcon} viewBox="0 0 24 24">
+            <svg className={styles['navigation-icon']} viewBox="0 0 24 24">
               <path d="M9 18L15 12L9 6" />
             </svg>
           </button>
@@ -236,7 +236,7 @@ export default function CarouselComponent({
           {Array.from({ length: itemCount }, (_, i) => (
             <button
               key={i}
-              className={`${styles.dot} ${i === activeIndex ? styles.dotActive : ""}`}
+              className={`${styles.dot} ${i === activeIndex ? styles['dot-active'] : ""}`}
               role="tab"
               aria-selected={i === activeIndex}
               aria-label={`Go to slide ${i + 1}`}
@@ -281,8 +281,8 @@ function CarouselItem({
 
   const classes = [
     styles.item,
-    size === "large" && styles.itemLarge,
-    size === "small" && styles.itemSmall,
+    size === "large" && styles['item-large'],
+    size === "small" && styles['item-small'],
     className,
   ]
     .filter(Boolean)
@@ -315,12 +315,12 @@ export interface CarouselItemMediaProps {
  */
 function CarouselItemMedia({ src, alt = "", className, children }: CarouselItemMediaProps) {
   if (children) {
-    return <div className={`${styles.itemMedia} ${className || ""}`}>{children}</div>;
+    return <div className={`${styles['item-media']} ${className || ""}`}>{children}</div>;
   }
 
   return (
     <img
-      className={`${styles.itemMedia}${className ? ` ${className}` : ""}`}
+      className={`${styles['item-media']}${className ? ` ${className}` : ""}`}
       src={src}
       alt={alt}
       loading="lazy"
@@ -345,9 +345,9 @@ export interface CarouselItemLabelProps {
  */
 function CarouselItemLabel({ title, subtitle, className, children }: CarouselItemLabelProps) {
   return (
-    <div className={`${styles.itemLabel}${className ? ` ${className}` : ""}`}>
-      {title && <span className={styles.itemLabelTitle}>{title}</span>}
-      {subtitle && <span className={styles.itemLabelSubtitle}>{subtitle}</span>}
+    <div className={`${styles['item-label']}${className ? ` ${className}` : ""}`}>
+      {title && <span className={styles['item-label-title']}>{title}</span>}
+      {subtitle && <span className={styles['item-label-subtitle']}>{subtitle}</span>}
       {children}
     </div>
   );

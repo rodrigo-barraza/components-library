@@ -135,7 +135,7 @@ export default function DrawerComponent({
         {/* Header */}
         <div className={styles.header}>
           <span className={styles.title}>{title}</span>
-          <div className={styles.headerActions}>
+          <div className={styles['header-actions']}>
             {headerActions}
             {dismissible && <CloseButtonComponent onClick={handleClose} />}
           </div>
@@ -145,7 +145,7 @@ export default function DrawerComponent({
         <div className={styles.body}>
           {sections.map((section, si) => (
             <div key={si} className={styles.section}>
-              <div className={styles.sectionTitle}>{section.title}</div>
+              <div className={styles['section-title']}>{section.title}</div>
               <div className={styles.grid}>
                 {section.items.map((item, ii) => (
                   <div key={ii} className={styles.item}>

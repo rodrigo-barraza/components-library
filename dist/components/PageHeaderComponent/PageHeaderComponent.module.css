@@ -1,6 +1,6 @@
 /* ── Context-driven mode (inside PageLayoutComponent) ── */
 
-.headerActions {
+.header-actions {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -8,7 +8,7 @@
   padding: 12px 20px;
 }
 
-.headerCenter {
+.header-center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@
 
 /* ── Standalone fallback mode (no context) ─────────── */
 
-.pageHeader {
+.page-header {
   min-height: 80px;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
   background: var(--background-surface);
   flex-shrink: 0;
   gap: 12px;
-  animation: fadeIn var(--transition-normal, 0.2s) ease-out;
+  animation: fade-in var(--transition-normal, 0.2s) ease-out;
 }
 
 .sticky {
@@ -39,14 +39,14 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-.headerLeft {
+.header-left {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
 
-.backButton {
+.back-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,7 +65,7 @@
   }
 }
 
-.pageTitle {
+.page-title {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.5px;
@@ -75,7 +75,7 @@
   white-space: nowrap;
 }
 
-.pageSubtitle {
+.page-subtitle {
   font-size: 12px;
   color: var(--text-muted);
   margin: 0;
@@ -83,7 +83,7 @@
   opacity: 0.7;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }

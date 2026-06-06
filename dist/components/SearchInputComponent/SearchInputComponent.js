@@ -109,13 +109,13 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
     }, [onChange]);
     /* ── Build class ──────────────────────────────────────────────── */
     const barClasses = [
-        styles.searchBar,
+        styles['search-bar'],
         compact && styles.compact,
-        expanded && styles.isExpandedState,
+        expanded && styles['is-expanded-state'],
     ]
         .filter(Boolean)
         .join(" ");
-    const rootClasses = [styles.searchRoot, className].filter(Boolean).join(" ");
+    const rootClasses = [styles['search-root'], className].filter(Boolean).join(" ");
     /* ── Default leading icon (search magnifier) ──────────────────── */
     const defaultLeadingIcon = (_jsxs("svg", { width: compact ? 20 : 24, height: compact ? 20 : 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [_jsx("circle", { cx: "11", cy: "11", r: "8" }), _jsx("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })] }));
     /* ── Close icon (×) for clear ─────────────────────────────────── */
@@ -125,7 +125,7 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
                     inputRef.current?.focus();
                     if (hasSuggestions && !expanded)
                         expand();
-                }, children: [_jsx("span", { className: styles.leadingIcon, children: leadingIcon || defaultLeadingIcon }), _jsx("input", { ref: setInputRef, type: "search", className: styles.searchField, value: value, onChange: handleChange, onFocus: () => {
+                }, children: [_jsx("span", { className: styles['leading-icon'], children: leadingIcon || defaultLeadingIcon }), _jsx("input", { ref: setInputRef, type: "search", className: styles['search-field'], value: value, onChange: handleChange, onFocus: () => {
                             if (hasSuggestions && !expanded)
                                 expand();
                         }, onKeyDown: (e) => {
@@ -133,13 +133,13 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
                             handleSubmit(e);
                         }, placeholder: placeholder, autoFocus: autoFocus, autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false", role: "combobox", "aria-expanded": expanded, "aria-haspopup": "listbox", "aria-controls": expanded ? "search-suggestions" : undefined, "aria-activedescendant": highlightIndex >= 0
                             ? `search-suggestion-${highlightIndex}`
-                            : undefined, "aria-label": placeholder }), value && (_jsx("button", { className: styles.trailingAction, onClick: (e) => {
+                            : undefined, "aria-label": placeholder }), value && (_jsx("button", { className: styles['trailing-action'], onClick: (e) => {
                             e.stopPropagation();
                             handleClear();
-                        }, type: "button", "aria-label": "Clear search", children: clearIcon })), trailingIcon && (_jsx("button", { className: styles.trailingAction, onClick: (e) => {
+                        }, type: "button", "aria-label": "Clear search", children: clearIcon })), trailingIcon && (_jsx("button", { className: styles['trailing-action'], onClick: (e) => {
                             e.stopPropagation();
                             onTrailingClick?.();
-                        }, type: "button", "aria-label": "Search options", children: trailingIcon }))] }), hasSuggestions && (_jsxs("div", { ref: panelRef, id: "search-suggestions", className: `${styles.suggestionsPanel}${expanded ? ` ${styles.isOpenState}` : ""}`, role: "listbox", "aria-label": "Search suggestions", children: [_jsx("div", { className: styles.suggestionsDivider }), _jsx(SearchSuggestionsContext.Provider, { value: { highlightIndex, collapse, onChange }, children: children })] })), useScrim && (_jsx("div", { className: `${styles.scrim}${expanded ? ` ${styles.isVisibleState}` : ""}`, onClick: collapse, "aria-hidden": "true" }))] }));
+                        }, type: "button", "aria-label": "Search options", children: trailingIcon }))] }), hasSuggestions && (_jsxs("div", { ref: panelRef, id: "search-suggestions", className: `${styles['suggestions-panel']}${expanded ? ` ${styles['is-open-state']}` : ""}`, role: "listbox", "aria-label": "Search suggestions", children: [_jsx("div", { className: styles['suggestions-divider'] }), _jsx(SearchSuggestionsContext.Provider, { value: { highlightIndex, collapse, onChange }, children: children })] })), useScrim && (_jsx("div", { className: `${styles.scrim}${expanded ? ` ${styles['is-visible-state']}` : ""}`, onClick: collapse, "aria-hidden": "true" }))] }));
 });
 /* ══════════════════════════════════════════════════════════════════════
    Context for passing state to suggestion items
@@ -165,13 +165,13 @@ function Suggestion({ icon, text, trailing, onClick, value, index = -1 }) {
     }, [onClick, value, text, onChange, collapse]);
     /* Default leading icon: clock for history-style suggestions */
     const defaultIcon = (_jsxs("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [_jsx("circle", { cx: "11", cy: "11", r: "8" }), _jsx("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })] }));
-    return (_jsxs("button", { className: `${styles.suggestionItem}${isHighlighted ? ` ${styles.highlighted}` : ""}`, onClick: handleClick, type: "button", role: "option", "aria-selected": isHighlighted, id: index >= 0 ? `search-suggestion-${index}` : undefined, "data-suggestion-item": true, children: [_jsx("span", { className: styles.suggestionIcon, children: icon || defaultIcon }), _jsx("span", { className: styles.suggestionText, children: text }), trailing && (_jsx("span", { className: styles.suggestionTrailing, children: trailing }))] }));
+    return (_jsxs("button", { className: `${styles['suggestion-item']}${isHighlighted ? ` ${styles.highlighted}` : ""}`, onClick: handleClick, type: "button", role: "option", "aria-selected": isHighlighted, id: index >= 0 ? `search-suggestion-${index}` : undefined, "data-suggestion-item": true, children: [_jsx("span", { className: styles['suggestion-icon'], children: icon || defaultIcon }), _jsx("span", { className: styles['suggestion-text'], children: text }), trailing && (_jsx("span", { className: styles['suggestion-trailing'], children: trailing }))] }));
 }
 function SuggestionGroup({ label, children }) {
-    return (_jsxs("div", { role: "group", "aria-label": label, children: [label && (_jsx("div", { className: styles.suggestionGroupHeader, children: label })), children] }));
+    return (_jsxs("div", { role: "group", "aria-label": label, children: [label && (_jsx("div", { className: styles['suggestion-group-header'], children: label })), children] }));
 }
 function SuggestionsEmpty({ message = "No results found" }) {
-    return _jsx("div", { className: styles.suggestionsEmpty, children: message });
+    return _jsx("div", { className: styles['suggestions-empty'], children: message });
 }
 /* ── Attach sub-components ──────────────────────────────────────── */
 const SearchInputWithSubcomponents = Object.assign(SearchInputComponent, {

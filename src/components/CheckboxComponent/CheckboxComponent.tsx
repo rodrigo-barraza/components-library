@@ -48,10 +48,10 @@ export default function CheckboxComponent({
 
   const rootClasses = [
     styles.checkbox,
-    isCompact && styles.isCompactSize,
-    disabled && styles.isDisabledState,
+    isCompact && styles['is-compact-size'],
+    disabled && styles['is-disabled-state'],
     error && styles.error,
-    labelPlacement === "start" && styles.labelStart,
+    labelPlacement === "start" && styles['label-start'],
     className,
   ]
     .filter(Boolean)
@@ -59,8 +59,8 @@ export default function CheckboxComponent({
 
   const boxClasses = [
     styles.box,
-    (checked || indeterminate) && styles.isSelectedState,
-    error && styles.errorBox,
+    (checked || indeterminate) && styles['is-selected-state'],
+    error && styles['error-box'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -75,7 +75,7 @@ export default function CheckboxComponent({
           type="checkbox"
           id={id}
           name={name}
-          className={styles.hiddenInput}
+          className={styles['hidden-input']}
           checked={checked}
           disabled={disabled}
           ref={(element) => {
@@ -98,7 +98,7 @@ export default function CheckboxComponent({
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                className={styles.checkPath}
+                className={styles['check-path']}
                 d="M4 9.5L7.5 13L14 5"
                 stroke="currentColor"
                 strokeWidth="2.2"
@@ -117,7 +117,7 @@ export default function CheckboxComponent({
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                className={styles.dashPath}
+                className={styles['dash-path']}
                 d="M5 9H13"
                 stroke="currentColor"
                 strokeWidth="2.2"
@@ -128,7 +128,7 @@ export default function CheckboxComponent({
         </span>
 
         {/* M3 circular state layer — 40×40px touch target, positioned after box for ~ selector */}
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
       </span>
 
       {label && <span className={styles.label}>{label}</span>}

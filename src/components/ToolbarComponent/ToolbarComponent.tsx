@@ -191,8 +191,8 @@ const ToolbarItem = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTM
 ) {
   const classes = [
     styles.item,
-    active && styles.itemActive,
-    disabled && styles.itemDisabled,
+    active && styles['item-active'],
+    disabled && styles['item-disabled'],
     className,
   ]
     .filter(Boolean)
@@ -213,11 +213,11 @@ const ToolbarItem = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTM
       className={classes}
       {...rest}
     >
-      <span className={styles.stateLayer} />
+      <span className={styles['state-layer']} />
       {children || (
         <>
-          {Icon && <Icon size={20} className={styles.itemIcon} />}
-          {label && <span className={styles.itemLabel}>{label}</span>}
+          {Icon && <Icon size={20} className={styles['item-icon']} />}
+          {label && <span className={styles['item-label']}>{label}</span>}
         </>
       )}
     </button>

@@ -24,25 +24,25 @@ export default function RadioComponent({ value, selectedValue, onChange, label =
     const checked = value === selectedValue;
     const rootClasses = [
         styles.radio,
-        disabled && styles.isDisabledState,
+        disabled && styles['is-disabled-state'],
         error && styles.error,
-        labelPlacement === "start" && styles.labelStart,
+        labelPlacement === "start" && styles['label-start'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
     const circleClasses = [
         styles.circle,
-        checked && styles.isSelectedState,
-        error && styles.errorCircle,
+        checked && styles['is-selected-state'],
+        error && styles['error-circle'],
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("label", { className: rootClasses, onMouseEnter: (event) => sound && SoundService.playHoverButton({ event }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "radio", id: id, name: name, value: String(value), className: styles.hiddenInput, checked: checked, disabled: disabled, onChange: () => {
+    return (_jsxs("label", { className: rootClasses, onMouseEnter: (event) => sound && SoundService.playHoverButton({ event }), children: [_jsxs("span", { className: styles.container, children: [_jsx("input", { type: "radio", id: id, name: name, value: String(value), className: styles['hidden-input'], checked: checked, disabled: disabled, onChange: () => {
                             if (sound)
                                 SoundService.playClickButton({});
                             onChange(value);
-                        } }), _jsx("span", { className: circleClasses, "aria-hidden": "true", children: checked && (_jsx("span", { className: `${styles.dot}${error ? ` ${styles.errorDot}` : ""}` })) }), _jsx("span", { className: styles.stateLayer })] }), label && _jsx("span", { className: styles.label, children: label })] }));
+                        } }), _jsx("span", { className: circleClasses, "aria-hidden": "true", children: checked && (_jsx("span", { className: `${styles.dot}${error ? ` ${styles['error-dot']}` : ""}` })) }), _jsx("span", { className: styles['state-layer'] })] }), label && _jsx("span", { className: styles.label, children: label })] }));
 }
 /**
  * RadioGroupComponent — Layout container for a group of RadioComponents.

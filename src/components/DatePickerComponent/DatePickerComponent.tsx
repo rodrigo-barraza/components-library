@@ -68,7 +68,7 @@ function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover }:
 
   const cells = [];
   for (let i = 0; i < firstDay; i++) {
-    cells.push(<div key={`pad-${i}`} className={styles.dayCell} />);
+    cells.push(<div key={`pad-${i}`} className={styles['day-cell']} />);
   }
   for (let dayNumber = 1; dayNumber <= daysInMonth; dayNumber++) {
     const date = new Date(year, month, dayNumber);
@@ -79,12 +79,12 @@ function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover }:
     const isFuture = date > today;
 
     const cls = [
-      styles.dayButton,
-      isToday && styles.dayToday,
-      isStart && styles.dayStart,
-      isEnd && styles.dayEnd,
-      inRange && !isStart && !isEnd && styles.dayInRange,
-      isFuture && styles.dayFuture,
+      styles['day-button'],
+      isToday && styles['day-today'],
+      isStart && styles['day-start'],
+      isEnd && styles['day-end'],
+      inRange && !isStart && !isEnd && styles['day-in-range'],
+      isFuture && styles['day-future'],
     ]
       .filter(Boolean)
       .join(" ");
@@ -104,13 +104,13 @@ function MonthGrid({ year, month, from, to, hoverDate, onDayClick, onDayHover }:
   }
 
   return (
-    <div className={styles.monthGrid}>
-      <div className={styles.dayHeaders}>
+    <div className={styles['month-grid']}>
+      <div className={styles['day-headers']}>
         {DAYS.map((dayLabel) => (
-          <span key={dayLabel} className={styles.dayHeader}>{dayLabel}</span>
+          <span key={dayLabel} className={styles['day-header']}>{dayLabel}</span>
         ))}
       </div>
-      <div className={styles.dayCells}>{cells}</div>
+      <div className={styles['day-cells']}>{cells}</div>
     </div>
   );
 }
@@ -335,17 +335,17 @@ export default function DatePickerComponent({
         <button
           ref={triggerRef as React.RefObject<HTMLButtonElement>}
           type="button"
-          className={`${styles.trigger} ${open ? styles.triggerOpen : ""} ${disabled ? styles.triggerDisabled : ""}`}
+          className={`${styles.trigger} ${open ? styles['trigger-open'] : ""} ${disabled ? styles['trigger-disabled'] : ""}`}
           onClick={() => !disabled && setOpen((previous) => !previous)}
           disabled={disabled}
         >
-          <span className={styles.triggerContent}>
-            <span className={styles.triggerIcon}><Calendar size={13} /></span>
-            <span className={styles.triggerText}>{displayText || placeholder}</span>
+          <span className={styles['trigger-content']}>
+            <span className={styles['trigger-icon']}><Calendar size={13} /></span>
+            <span className={styles['trigger-text']}>{displayText || placeholder}</span>
           </span>
           {hasValue ? (
             <span
-              className={styles.triggerClear}
+              className={styles['trigger-clear']}
               onClick={(event) => { event.stopPropagation(); handleClear(); }}
               title="Clear dates"
             >
@@ -354,7 +354,7 @@ export default function DatePickerComponent({
           ) : (
             <ChevronDown
               size={14}
-              className={`${styles.chevron} ${open ? styles.chevronOpen : ""}`}
+              className={`${styles.chevron} ${open ? styles['chevron-open'] : ""}`}
             />
           )}
         </button>
@@ -374,7 +374,7 @@ export default function DatePickerComponent({
                 <button
                   key={preset.label}
                   type="button"
-                  className={`${styles.presetButton} ${isActive ? styles.presetBtnActive : ""}`}
+                  className={`${styles['preset-button']} ${isActive ? styles['preset-btn-active'] : ""}`}
                   onClick={() => handlePreset(preset)}
                 >
                   {preset.label}
@@ -384,18 +384,18 @@ export default function DatePickerComponent({
           </div>
 
           <div className={styles.calendars}>
-            <div className={styles.monthNav}>
-              <button type="button" className={styles.monthNavButton} onClick={prevMonth}>
+            <div className={styles['month-nav']}>
+              <button type="button" className={styles['month-nav-button']} onClick={prevMonth}>
                 <ChevronLeft size={14} />
               </button>
-              <span className={styles.monthLabel}>{monthLabel(viewDate.year, viewDate.month)}</span>
-              <span className={styles.monthLabel}>{monthLabel(secondMonth.year, secondMonth.month)}</span>
-              <button type="button" className={styles.monthNavButton} onClick={nextMonth}>
+              <span className={styles['month-label']}>{monthLabel(viewDate.year, viewDate.month)}</span>
+              <span className={styles['month-label']}>{monthLabel(secondMonth.year, secondMonth.month)}</span>
+              <button type="button" className={styles['month-nav-button']} onClick={nextMonth}>
                 <ChevronRight size={14} />
               </button>
             </div>
 
-            <div className={styles.monthPair}>
+            <div className={styles['month-pair']}>
               <MonthGrid
                 year={viewDate.year} month={viewDate.month}
                 from={activeFrom} to={activeTo}
@@ -411,23 +411,23 @@ export default function DatePickerComponent({
             </div>
 
             {selecting && (
-              <div className={styles.selectHint}>Click a second date to complete the range</div>
+              <div className={styles['select-hint']}>Click a second date to complete the range</div>
             )}
 
             {showTime && showTimeRow && !selecting && (
-              <div className={styles.timeRow}>
-                <div className={styles.timeField}>
-                  <Clock size={12} className={styles.timeIcon} />
-                  <span className={styles.timeLabel}>From</span>
-                  <input type="time" className={styles.timeInput} value={fromTime} onChange={(event) => setFromTime(event.target.value)} />
+              <div className={styles['time-row']}>
+                <div className={styles['time-field']}>
+                  <Clock size={12} className={styles['time-icon']} />
+                  <span className={styles['time-label']}>From</span>
+                  <input type="time" className={styles['time-input']} value={fromTime} onChange={(event) => setFromTime(event.target.value)} />
                 </div>
-                <span className={styles.timeSep}>–</span>
-                <div className={styles.timeField}>
-                  <Clock size={12} className={styles.timeIcon} />
-                  <span className={styles.timeLabel}>To</span>
-                  <input type="time" className={styles.timeInput} value={toTime} onChange={(event) => setToTime(event.target.value)} />
+                <span className={styles['time-sep']}>–</span>
+                <div className={styles['time-field']}>
+                  <Clock size={12} className={styles['time-icon']} />
+                  <span className={styles['time-label']}>To</span>
+                  <input type="time" className={styles['time-input']} value={toTime} onChange={(event) => setToTime(event.target.value)} />
                 </div>
-                <button type="button" className={styles.timeApplyButton} onClick={handleApplyTime}>Apply</button>
+                <button type="button" className={styles['time-apply-button']} onClick={handleApplyTime}>Apply</button>
               </div>
             )}
           </div>

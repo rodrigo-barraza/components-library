@@ -9,18 +9,18 @@
   border-radius: 12px;
   overflow: hidden;
   background: #2b2d31;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid oklch(1 0 0 / 0.06);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(0, 0, 0, 0.2);
+    0 8px 32px oklch(0 0 0 / 0.5),
+    0 0 0 1px oklch(0 0 0 / 0.2);
   display: flex;
   flex-direction: column;
   text-align: left;
-  animation: windowSlideUp 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: window-slide-up 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 200ms;
 }
 
-@keyframes windowSlideUp {
+@keyframes window-slide-up {
   from {
     opacity: 0;
     transform: translateY(24px) scale(0.98);
@@ -33,19 +33,19 @@
 
 /* ── Title Bar (Window Chrome) ─────────────────────────────────── */
 
-.titleBar {
+.title-bar {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 12px 16px;
   background: #1e1f22;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid oklch(0 0 0 / 0.4);
   user-select: none;
   flex-shrink: 0;
   position: relative;
 }
 
-.titleBarCenter {
+.title-bar-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -55,45 +55,45 @@
   pointer-events: none;
 }
 
-.titleBarClock {
+.title-bar-clock {
   height: 15px;
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
 }
 
-.trafficLights {
+.traffic-lights {
   display: flex;
   gap: 8px;
   padding-right: 4px;
 }
 
-.trafficDot {
+.traffic-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
 
-.trafficDot:nth-child(1) {
+.traffic-dot:nth-child(1) {
   background: #ed6a5e;
 }
-.trafficDot:nth-child(2) {
+.traffic-dot:nth-child(2) {
   background: #f4bf4f;
 }
-.trafficDot:nth-child(3) {
+.traffic-dot:nth-child(3) {
   background: #61c554;
 }
 
 /* channelIcon removed — title bar now shows centered server name */
 
-.channelName {
+.channel-name {
   font-size: 15px;
   font-weight: 600;
   color: #f2f3f5;
   letter-spacing: -0.01em;
 }
 
-.channelTopic {
+.channel-topic {
   font-size: 12px;
   color: #80848e;
   margin-left: auto;
@@ -105,7 +105,7 @@
 
 /* ── Panel Layout ──────────────────────────────────────────────── */
 
-.panelLayout {
+.panel-layout {
   display: flex;
   height: 75vh;
   min-height: 0;
@@ -114,7 +114,7 @@
 
 /* ── Guild Bar (Server List Rail) ──────────────────────────────── */
 
-.guildBar {
+.guild-bar {
   width: 72px;
   flex-shrink: 0;
   background: #1e1f22;
@@ -128,12 +128,12 @@
   scrollbar-width: none;
 }
 
-.guildBar::-webkit-scrollbar {
+.guild-bar::-webkit-scrollbar {
   display: none;
 }
 
 /* Discord logo / Home button */
-.guildBarHome {
+.guild-bar-home {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -151,19 +151,19 @@
     color 200ms ease;
 }
 
-.guildBarHome:hover {
+.guild-bar-home:hover {
   border-radius: 16px;
   background: #5865f2;
   color: #fff;
 }
 
-.guildBarHome svg {
+.guild-bar-home svg {
   width: 28px;
   height: 20px;
 }
 
 /* Horizontal line separator */
-.guildBarSeparator {
+.guild-bar-separator {
   width: 32px;
   height: 2px;
   background: #35363c;
@@ -172,7 +172,7 @@
 }
 
 /* Individual guild icon button */
-.guildBarItem {
+.guild-bar-item {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -191,23 +191,23 @@
     background-color 200ms ease;
 }
 
-.guildBarItem:hover {
+.guild-bar-item:hover {
   border-radius: 16px;
 }
 
-.guildBarItemActive {
+.guild-bar-item-active {
   border-radius: 16px;
 }
 
 /* Server icon image inside guild item */
-.guildBarIcon {
+.guild-bar-icon {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Text initial fallback */
-.guildBarInitial {
+.guild-bar-initial {
   font-size: 18px;
   font-weight: 600;
   user-select: none;
@@ -215,7 +215,7 @@
 }
 
 /* Active pill indicator (left side) */
-.guildBarPill {
+.guild-bar-pill {
   position: absolute;
   left: -16px;
   top: 50%;
@@ -227,7 +227,7 @@
   transition: height 200ms ease;
 }
 
-.guildBarItem:not(.guildBarItemActive):hover::after {
+.guild-bar-item:not(.guild-bar-item-active):hover::after {
   content: "";
   position: absolute;
   left: -16px;
@@ -241,33 +241,33 @@
 
 /* ── Left Sidebar: Channels ────────────────────────────────────── */
 
-.channelSidebar {
+.channel-sidebar {
   width: 200px;
   flex-shrink: 0;
   background: #2b2d31;
-  border-right: 1px solid rgba(0, 0, 0, 0.24);
+  border-right: 1px solid oklch(0 0 0 / 0.24);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.serverHeader {
+.server-header {
   padding: 14px 16px 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+  border-bottom: 1px solid oklch(0 0 0 / 0.24);
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
 }
 
 /* Server Banner variant — taller, with background image */
-.serverHeaderBanner {
+.server-header-banner {
   padding: 0;
   height: 134px;
   display: flex;
   align-items: flex-end;
 }
 
-.serverBannerImage {
+.server-banner-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -279,31 +279,31 @@
   -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
 }
 
-.serverHeaderBanner .serverName {
+.server-header-banner .server-name {
   position: relative;
   z-index: 1;
   padding: 12px 16px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 4px oklch(0 0 0 / 0.8);
 }
 
-.serverName {
+.server-name {
   font-size: 15px;
   font-weight: 700;
   color: #f2f3f5;
   letter-spacing: -0.01em;
 }
 
-.channelList {
+.channel-list {
   flex: 1;
   overflow-y: auto;
   padding: 8px 0;
 }
 
-.channelCategory {
+.channel-category {
   padding: 18px 8px 4px 16px;
 }
 
-.categoryName {
+.category-name {
   font-size: 11px;
   font-weight: 700;
   color: #949ba4;
@@ -311,7 +311,7 @@
   letter-spacing: 0.02em;
 }
 
-.channelItem {
+.channel-item {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -329,17 +329,17 @@
   text-align: left;
 }
 
-.channelItem:hover {
-  background: rgba(255, 255, 255, 0.06);
+.channel-item:hover {
+  background: oklch(1 0 0 / 0.06);
   color: #dbdee1;
 }
 
-.channelItemActive {
-  background: rgba(255, 255, 255, 0.08);
+.channel-item-active {
+  background: oklch(1 0 0 / 0.08);
   color: #f2f3f5;
 }
 
-.channelHash {
+.channel-hash {
   font-size: 18px;
   font-weight: 600;
   color: #80848e;
@@ -348,11 +348,11 @@
   text-align: center;
 }
 
-.channelItemActive .channelHash {
+.channel-item-active .channel-hash {
   color: #dbdee1;
 }
 
-.channelItemName {
+.channel-item-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -360,7 +360,7 @@
 
 /* ── Center: Chat Panel ────────────────────────────────────────── */
 
-.chatPanel {
+.chat-panel {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -370,7 +370,7 @@
 
 /* ── Messages Area ─────────────────────────────────────────────── */
 
-.messagesArea {
+.messages-area {
   flex: 1;
   overflow-y: auto;
   padding: 16px 0 8px;
@@ -381,24 +381,24 @@
 }
 
 /* Discord-style scrollbar */
-.messagesArea::-webkit-scrollbar {
+.messages-area::-webkit-scrollbar {
   width: 8px;
 }
-.messagesArea::-webkit-scrollbar-track {
+.messages-area::-webkit-scrollbar-track {
   background: #2b2d31;
   border-radius: 4px;
 }
-.messagesArea::-webkit-scrollbar-thumb {
+.messages-area::-webkit-scrollbar-thumb {
   background: #1a1b1e;
   border-radius: 4px;
 }
-.messagesArea::-webkit-scrollbar-thumb:hover {
+.messages-area::-webkit-scrollbar-thumb:hover {
   background: #111214;
 }
 
 /* ── Date Separator ────────────────────────────────────────────── */
 
-.dateSeparator {
+.date-separator {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -406,15 +406,15 @@
   margin: 8px 0 4px;
 }
 
-.dateSeparator::before,
-.dateSeparator::after {
+.date-separator::before,
+.date-separator::after {
   content: "";
   flex: 1;
   height: 1px;
   background: #3f4147;
 }
 
-.dateSeparatorText {
+.date-separator-text {
   font-size: 12px;
   font-weight: 600;
   color: #80848e;
@@ -425,22 +425,22 @@
 
 /* ── Message Row ───────────────────────────────────────────────── */
 
-.messageRow {
+.message-row {
   display: flex;
   gap: 16px;
   padding: 4px 16px;
   padding-top: 16px;
   position: relative;
   transition: background-color 100ms ease;
-  animation: messageAppear 300ms ease both;
+  animation: message-appear 300ms ease both;
 }
 
-.messageRow:hover {
-  background: rgba(0, 0, 0, 0.06);
+.message-row:hover {
+  background: oklch(0 0 0 / 0.06);
 }
 
 /* Reply variant — uses CSS grid so the reply bar spans above avatar + content */
-.messageRowReply {
+.message-row-reply {
   display: grid;
   grid-template-columns: 40px 1fr;
   grid-template-rows: auto auto;
@@ -450,7 +450,7 @@
 }
 
 /* Ensure messageContent lands in the 1fr content column, not the 40px avatar column */
-.messageRowReply .messageContent {
+.message-row-reply .message-content {
   grid-column: 2;
 }
 
@@ -458,7 +458,7 @@
 /* Compact bar showing who was replied to — spans full width above
    the avatar + message body, matching Discord's native reply UI. */
 
-.replyBar {
+.reply-bar {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
@@ -474,12 +474,12 @@
   white-space: nowrap;
 }
 
-.replyBar:hover .replyContent {
+.reply-bar:hover .reply-content {
   color: #dbdee1;
 }
 
 /* Curved connector spine — matches Discord’s ╰ reply connector */
-.replySpine {
+.reply-spine {
   position: absolute;
   left: 35px;
   top: 11px;
@@ -491,7 +491,7 @@
   pointer-events: none;
 }
 
-.replyAvatar {
+.reply-avatar {
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -499,7 +499,7 @@
   object-fit: cover;
 }
 
-.replyAvatarFallback {
+.reply-avatar-fallback {
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -512,7 +512,7 @@
   color: #fff;
 }
 
-.replyBotBadge {
+.reply-bot-badge {
   display: inline-flex;
   align-items: center;
   gap: 1px;
@@ -529,23 +529,23 @@
   line-height: 14px;
 }
 
-.replyBotBadge .botBadgeIcon {
+.reply-bot-badge .bot-badge-icon {
   width: 10px;
   height: 10px;
 }
 
-.replyAuthor {
+.reply-author {
   font-size: 13px;
   font-weight: 600;
   flex-shrink: 0;
   cursor: pointer;
 }
 
-.replyAuthor:hover {
+.reply-author:hover {
   text-decoration: underline;
 }
 
-.replyContent {
+.reply-content {
   font-size: 13px;
   color: #949ba4;
   overflow: hidden;
@@ -554,13 +554,13 @@
   transition: color 100ms ease;
 }
 
-.replyUnknown {
+.reply-unknown {
   font-style: italic;
   color: #6d6f78;
   font-size: 12px;
 }
 
-@keyframes messageAppear {
+@keyframes message-appear {
   from {
     opacity: 0;
     transform: translateX(-8px);
@@ -572,7 +572,7 @@
 }
 
 /* Grouped message (same author within timeframe) — no avatar */
-.messageRowGrouped {
+.message-row-grouped {
   display: flex;
   gap: 0;
   padding: 1px 16px 1px 72px;
@@ -580,19 +580,19 @@
   transition: background-color 100ms ease;
 }
 
-.messageRowGrouped:hover {
-  background: rgba(0, 0, 0, 0.06);
+.message-row-grouped:hover {
+  background: oklch(0 0 0 / 0.06);
 }
 
-.messageRowGrouped .timestamp {
+.message-row-grouped .timestamp {
   display: none;
 }
 
-.messageRowGrouped:hover .timestampInline {
+.message-row-grouped:hover .timestamp-inline {
   opacity: 1;
 }
 
-.timestampInline {
+.timestamp-inline {
   position: absolute;
   left: 16px;
   font-size: 11px;
@@ -626,7 +626,7 @@
 }
 
 /* Fallback initial avatar */
-.avatarFallback {
+.avatar-fallback {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -644,18 +644,18 @@
   z-index: 1;
 }
 
-.avatarFallback:hover {
+.avatar-fallback:hover {
   opacity: 0.8;
 }
 
 /* ── Message Content ───────────────────────────────────────────── */
 
-.messageContent {
+.message-content {
   flex: 1;
   min-width: 0;
 }
 
-.messageHeader {
+.message-header {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -663,7 +663,7 @@
   flex-wrap: wrap;
 }
 
-.authorName {
+.author-name {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -672,7 +672,7 @@
   display: inline;
 }
 
-.authorName:hover {
+.author-name:hover {
   text-decoration: underline;
   /* When using gradient text (transparent color + background-clip: text),
      the underline color must come from text-decoration-color, not color.
@@ -683,7 +683,7 @@
 }
 
 /* Discord BOT badge — verified checkmark pill */
-.botBadge {
+.bot-badge {
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -702,7 +702,7 @@
   line-height: 16px;
 }
 
-.botBadgeIcon {
+.bot-badge-icon {
   width: 12px;
   height: 12px;
   flex-shrink: 0;
@@ -710,7 +710,7 @@
 
 /* ── User Profile Badges (inline SVG icons) ───────────────────── */
 
-.userBadges {
+.user-badges {
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -719,7 +719,7 @@
   flex-shrink: 0;
 }
 
-.badgeIcon {
+.badge-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -731,19 +731,19 @@
   transition: transform 150ms ease, opacity 150ms ease;
 }
 
-.badgeIcon:hover {
+.badge-icon:hover {
   transform: scale(1.2);
   opacity: 0.85;
 }
 
-.badgeIcon svg {
+.badge-icon svg {
   width: 18px;
   height: 18px;
 }
 
 /* ── Role Tags (colored pill badges next to username) ──────────── */
 
-.roleTags {
+.role-tags {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -751,7 +751,7 @@
   flex-wrap: wrap;
 }
 
-.roleTag {
+.role-tag {
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -771,12 +771,12 @@
   margin-top: 2px;
 }
 
-.roleTag:hover {
+.role-tag:hover {
   background: color-mix(in srgb, var(--role-color) 30%, transparent);
   border-color: color-mix(in srgb, var(--role-color) 60%, transparent);
 }
 
-.roleTagIcon {
+.role-tag-icon {
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -784,7 +784,7 @@
   object-fit: contain;
 }
 
-.roleTagName {
+.role-tag-name {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100px;
@@ -797,7 +797,7 @@
   flex-shrink: 0;
 }
 
-.messageText {
+.message-text {
   font-size: 15px;
   color: #dbdee1;
   line-height: 1.375;
@@ -808,7 +808,7 @@
 /* Discord mention styling */
 .mention {
   color: #c9cdfb;
-  background: rgba(88, 101, 242, 0.3);
+  background: oklch(0.557 0.2568 288.9 / 0.3);
   border-radius: 3px;
   padding: 0 2px;
   cursor: pointer;
@@ -817,21 +817,21 @@
 }
 
 .mention:hover {
-  background: rgba(88, 101, 242, 0.5);
+  background: oklch(0.557 0.2568 288.9 / 0.5);
   color: #fff;
 }
 
 /* Links */
-.messageText a {
+.message-text a {
   color: #00a8fc;
   text-decoration: none;
 }
-.messageText a:hover {
+.message-text a:hover {
   text-decoration: underline;
 }
 
 /* Custom server emojis (inline in message text) */
-.customEmoji {
+.custom-emoji {
   display: inline-block;
   width: 22px;
   height: 22px;
@@ -851,40 +851,40 @@
   margin-top: 4px;
 }
 
-.reactionPill {
+.reaction-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 2px 6px;
   height: 26px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid oklch(1 0 0 / 0.06);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
+  background: oklch(1 0 0 / 0.06);
   color: #dbdee1;
   cursor: pointer;
   font-family: inherit;
   transition: background-color 120ms ease, border-color 120ms ease;
 }
 
-.reactionPill:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.12);
+.reaction-pill:hover {
+  background: oklch(1 0 0 / 0.12);
+  border-color: oklch(1 0 0 / 0.12);
 }
 
-.reactionEmoji {
+.reaction-emoji {
   width: 18px;
   height: 18px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-.reactionUnicode {
+.reaction-unicode {
   font-size: 16px;
   line-height: 1;
   flex-shrink: 0;
 }
 
-.reactionCount {
+.reaction-count {
   font-size: 12px;
   font-weight: 600;
   color: #b5bac1;
@@ -892,38 +892,38 @@
 }
 
 /* Reacted variant — blurple border + tinted background indicating "you reacted" */
-.reactionPillReacted {
+.reaction-pill-reacted {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 2px 6px;
   height: 26px;
-  border: 1px solid rgba(88, 101, 242, 0.5);
+  border: 1px solid oklch(0.557 0.2568 288.9 / 0.5);
   border-radius: 8px;
-  background: rgba(88, 101, 242, 0.15);
+  background: oklch(0.557 0.2568 288.9 / 0.15);
   color: #dbdee1;
   cursor: default;
   font-family: inherit;
   transition: background-color 120ms ease, border-color 120ms ease;
 }
 
-.reactionPillReacted:hover {
-  border-color: rgba(88, 101, 242, 0.6);
-  background: rgba(88, 101, 242, 0.2);
+.reaction-pill-reacted:hover {
+  border-color: oklch(0.557 0.2568 288.9 / 0.6);
+  background: oklch(0.557 0.2568 288.9 / 0.2);
 }
 
-.reactionPillReacted .reactionCount {
+.reaction-pill-reacted .reaction-count {
   color: #c9cdfb;
 }
 
 /* Add Reaction "+" pill at the end of the reaction row */
-.addReactionPill {
+.add-reaction-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 26px;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border: 1px dashed oklch(1 0 0 / 0.1);
   border-radius: 8px;
   background: transparent;
   color: #80848e;
@@ -933,9 +933,9 @@
   transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
-.addReactionPill:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.16);
+.add-reaction-pill:hover {
+  background: oklch(1 0 0 / 0.06);
+  border-color: oklch(1 0 0 / 0.16);
   color: #dbdee1;
 }
 
@@ -943,7 +943,7 @@
 /* Floating pill that appears on the top-right of a message row
    on hover, containing the "Add Reaction" button. */
 
-.messageActions {
+.message-actions {
   position: absolute;
   top: -16px;
   right: 16px;
@@ -951,28 +951,28 @@
   align-items: center;
   gap: 0;
   background: #2b2d31;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid oklch(1 0 0 / 0.08);
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px oklch(0 0 0 / 0.3);
   opacity: 0;
   pointer-events: none;
   transition: opacity 100ms ease;
   z-index: 1;
 }
 
-.messageRow:hover .messageActions,
-.messageRowGrouped:hover .messageActions {
+.message-row:hover .message-actions,
+.message-row-grouped:hover .message-actions {
   opacity: 1;
   pointer-events: auto;
 }
 
 /* Keep action bar visible while emoji picker is open */
-.messageActions.messageActionsVisible {
+.message-actions.message-actions-visible {
   opacity: 1;
   pointer-events: auto;
 }
 
-.actionButton {
+.action-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -988,37 +988,37 @@
   transition: background-color 100ms ease, color 100ms ease;
 }
 
-.actionButton:hover {
-  background: rgba(255, 255, 255, 0.08);
+.action-button:hover {
+  background: oklch(1 0 0 / 0.08);
   color: #dbdee1;
 }
 
 /* ── Emoji Picker Popover ─────────────────────────────────────── */
 
-.emojiPickerOverlay {
+.emoji-picker-overlay {
   position: fixed;
   inset: 0;
   z-index: 999;
 }
 
-.emojiPicker {
+.emoji-picker {
   position: fixed;
   z-index: 1000;
   width: 420px;
   max-height: 460px;
   background: #2b2d31;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid oklch(1 0 0 / 0.08);
   border-radius: 8px;
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(0, 0, 0, 0.2);
+    0 8px 32px oklch(0 0 0 / 0.5),
+    0 0 0 1px oklch(0 0 0 / 0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: pickerSlideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: picker-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes pickerSlideIn {
+@keyframes picker-slide-in {
   from {
     opacity: 0;
     transform: translateY(-4px) scale(0.98);
@@ -1029,7 +1029,7 @@
   }
 }
 
-.emojiPickerSearch {
+.emoji-picker-search {
   flex-shrink: 0;
   margin: 8px 8px 0;
   padding: 8px 10px;
@@ -1042,24 +1042,24 @@
   outline: none;
 }
 
-.emojiPickerSearch::placeholder {
+.emoji-picker-search::placeholder {
   color: #6d6f78;
 }
 
-.emojiPickerSearch:focus {
-  box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.4);
+.emoji-picker-search:focus {
+  box-shadow: 0 0 0 2px oklch(0.557 0.2568 288.9 / 0.4);
 }
 
 /* ── Emoji Picker Main Layout ─────────────────────────────────── */
 
-.emojiPickerMain {
+.emoji-picker-main {
   display: flex;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-.emojiCategorySidebar {
+.emoji-category-sidebar {
   width: 40px;
   flex-shrink: 0;
   display: flex;
@@ -1069,15 +1069,15 @@
   padding: 8px 4px;
   overflow-y: auto;
   background: #232428;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid oklch(1 0 0 / 0.06);
   scrollbar-width: none;
 }
 
-.emojiCategorySidebar::-webkit-scrollbar {
+.emoji-category-sidebar::-webkit-scrollbar {
   display: none;
 }
 
-.emojiCategoryTab {
+.emoji-category-tab {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1095,23 +1095,23 @@
   transition: background-color 100ms ease, transform 80ms ease;
 }
 
-.emojiCategoryTab:hover {
-  background: rgba(255, 255, 255, 0.08);
+.emoji-category-tab:hover {
+  background: oklch(1 0 0 / 0.08);
 }
 
-.emojiCategoryTabActive {
-  background: rgba(88, 101, 242, 0.2);
+.emoji-category-tab-active {
+  background: oklch(0.557 0.2568 288.9 / 0.2);
   color: #c9cdfb;
 }
 
-.emojiCategoryTabImg {
+.emoji-category-tab-img {
   width: 20px;
   height: 20px;
   object-fit: contain;
   border-radius: 2px;
 }
 
-.emojiPickerBody {
+.emoji-picker-body {
   flex: 1;
   overflow-y: auto;
   padding: 8px;
@@ -1119,18 +1119,18 @@
 }
 
 /* Discord-style scrollbar for picker body */
-.emojiPickerBody::-webkit-scrollbar {
+.emoji-picker-body::-webkit-scrollbar {
   width: 6px;
 }
-.emojiPickerBody::-webkit-scrollbar-track {
+.emoji-picker-body::-webkit-scrollbar-track {
   background: transparent;
 }
-.emojiPickerBody::-webkit-scrollbar-thumb {
+.emoji-picker-body::-webkit-scrollbar-thumb {
   background: #1a1b1e;
   border-radius: 3px;
 }
 
-.emojiPickerSection {
+.emoji-picker-section {
   font-size: 11px;
   font-weight: 700;
   color: #949ba4;
@@ -1140,17 +1140,17 @@
   margin-top: 4px;
 }
 
-.emojiPickerSection:first-child {
+.emoji-picker-section:first-child {
   margin-top: 0;
 }
 
-.emojiPickerGrid {
+.emoji-picker-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   gap: 2px;
 }
 
-.emojiPickerItem {
+.emoji-picker-item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1166,22 +1166,22 @@
   transition: background-color 80ms ease, transform 80ms ease;
 }
 
-.emojiPickerItem:hover {
-  background: rgba(255, 255, 255, 0.08);
+.emoji-picker-item:hover {
+  background: oklch(1 0 0 / 0.08);
   transform: scale(1.15);
 }
 
-.emojiPickerItem:active {
+.emoji-picker-item:active {
   transform: scale(0.95);
 }
 
-.emojiPickerCustomImg {
+.emoji-picker-custom-img {
   width: 32px;
   height: 32px;
   object-fit: contain;
 }
 
-.emojiPickerEmpty {
+.emoji-picker-empty {
   padding: 16px 4px;
   color: #6d6f78;
   font-size: 13px;
@@ -1197,7 +1197,7 @@
   margin-top: 4px;
 }
 
-.attachmentLink {
+.attachment-link {
   display: block;
   border-radius: 8px;
   overflow: hidden;
@@ -1205,11 +1205,11 @@
   transition: opacity 150ms ease;
 }
 
-.attachmentLink:hover {
+.attachment-link:hover {
   opacity: 0.9;
 }
 
-.attachmentImage {
+.attachment-image {
   display: block;
   max-width: 100%;
   height: auto;
@@ -1219,7 +1219,7 @@
 
 /* ── Tenor GIF Embeds ──────────────────────────────────────────── */
 
-.tenorGif {
+.tenor-gif {
   display: block;
   max-width: 400px;
   max-height: 300px;
@@ -1229,7 +1229,7 @@
   background: #1e1f22;
 }
 
-.tenorPlaceholder {
+.tenor-placeholder {
   width: 200px;
   height: 150px;
   border-radius: 8px;
@@ -1239,16 +1239,16 @@
   justify-content: center;
 }
 
-.tenorSpinner {
+.tenor-spinner {
   width: 24px;
   height: 24px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid oklch(1 0 0 / 0.1);
   border-top-color: #5865f2;
   border-radius: 50%;
-  animation: tenorSpin 800ms linear infinite;
+  animation: tenor-spin 800ms linear infinite;
 }
 
-@keyframes tenorSpin {
+@keyframes tenor-spin {
   to {
     transform: rotate(360deg);
   }
@@ -1256,14 +1256,14 @@
 
 /* ── Embed Video ───────────────────────────────────────────────── */
 
-.embedVideoWrap {
+.embed-video-wrap {
   max-width: 400px;
   border-radius: 8px;
   overflow: hidden;
   background: #1e1f22;
 }
 
-.embedVideo {
+.embed-video {
   display: block;
   max-width: 400px;
   max-height: 300px;
@@ -1272,7 +1272,7 @@
   border-radius: 8px;
 }
 
-.embedVideoThumbLink {
+.embed-video-thumb-link {
   display: block;
   position: relative;
   max-width: 400px;
@@ -1281,11 +1281,11 @@
   transition: opacity 150ms ease;
 }
 
-.embedVideoThumbLink:hover {
+.embed-video-thumb-link:hover {
   opacity: 0.9;
 }
 
-.embedVideoThumb {
+.embed-video-thumb {
   display: block;
   max-width: 400px;
   max-height: 300px;
@@ -1295,7 +1295,7 @@
   background: #1e1f22;
 }
 
-.embedPlayButton {
+.embed-play-button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1303,7 +1303,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.65);
+  background: oklch(0 0 0 / 0.65);
   color: #fff;
   font-size: 20px;
   display: flex;
@@ -1313,20 +1313,20 @@
   transition: background-color 150ms ease;
 }
 
-.embedVideoThumbLink:hover .embedPlayButton {
-  background: rgba(0, 0, 0, 0.8);
+.embed-video-thumb-link:hover .embed-play-button {
+  background: oklch(0 0 0 / 0.8);
 }
 
 /* ── Rich Embed Cards (link unfurl / Open Graph) ──────────────── */
 
-.embedList {
+.embed-list {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-top: 4px;
 }
 
-.embedCard {
+.embed-card {
   max-width: 432px;
   background: #2b2d31;
   border-radius: 4px;
@@ -1336,19 +1336,19 @@
   transition: background-color 120ms ease;
 }
 
-.embedCardBody {
+.embed-card-body {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-.embedCardBodyInline {
+.embed-card-body-inline {
   display: flex;
   gap: 16px;
   align-items: flex-start;
 }
 
-.embedCardText {
+.embed-card-text {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -1356,14 +1356,14 @@
   gap: 4px;
 }
 
-.embedProvider {
+.embed-provider {
   font-size: 12px;
   font-weight: 400;
   color: #dbdee1;
   line-height: 1.33;
 }
 
-.embedTitle {
+.embed-title {
   font-size: 14px;
   font-weight: 600;
   color: #00a8fc;
@@ -1372,11 +1372,11 @@
   word-break: break-word;
 }
 
-.embedTitle:hover {
+.embed-title:hover {
   text-decoration: underline;
 }
 
-.embedTitlePlain {
+.embed-title-plain {
   font-size: 14px;
   font-weight: 600;
   color: #f2f3f5;
@@ -1384,7 +1384,7 @@
   word-break: break-word;
 }
 
-.embedDescription {
+.embed-description {
   font-size: 13px;
   color: #b5bac1;
   line-height: 1.43;
@@ -1399,7 +1399,7 @@
 }
 
 /* Small right-aligned thumbnail (article-style previews) */
-.embedThumbLink {
+.embed-thumb-link {
   display: block;
   flex-shrink: 0;
   border-radius: 4px;
@@ -1410,11 +1410,11 @@
   transition: opacity 150ms ease;
 }
 
-.embedThumbLink:hover {
+.embed-thumb-link:hover {
   opacity: 0.85;
 }
 
-.embedThumb {
+.embed-thumb {
   width: 80px;
   height: 80px;
   object-fit: cover;
@@ -1422,7 +1422,7 @@
 }
 
 /* Large image below text (e.g. Newgrounds, articles with OG images) */
-.embedImageLink {
+.embed-image-link {
   display: block;
   border-radius: 4px;
   overflow: hidden;
@@ -1431,11 +1431,11 @@
   transition: opacity 150ms ease;
 }
 
-.embedImageLink:hover {
+.embed-image-link:hover {
   opacity: 0.9;
 }
 
-.embedImage {
+.embed-image {
   display: block;
   max-width: 100%;
   height: auto;
@@ -1445,13 +1445,13 @@
 
 /* ── Input Bar ─────────────────────────────────────────────────── */
 
-.inputBar {
+.input-bar {
   padding: 16px 24px;
   background: #313338;
   flex-shrink: 0;
 }
 
-.inputContainer {
+.input-container {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1460,14 +1460,14 @@
   padding: 10px 16px;
 }
 
-.inputPlaceholder {
+.input-placeholder {
   flex: 1;
   font-size: 15px;
   color: #6d6f78;
   user-select: none;
 }
 
-.inputIcons {
+.input-icons {
   display: flex;
   gap: 12px;
   color: #b5bac1;
@@ -1476,7 +1476,7 @@
 
 /* ── Join Button (CTA alternate for inputContainer) ────────────── */
 
-.joinButton {
+.join-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1500,30 +1500,30 @@
   will-change: transform;
 }
 
-.joinButton:hover {
+.join-button:hover {
   background: #4752c4;
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+  box-shadow: 0 4px 16px oklch(0.557 0.2568 288.9 / 0.4);
 }
 
-.joinButton:active {
+.join-button:active {
   background: #3c45a5;
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(88, 101, 242, 0.3);
+  box-shadow: 0 2px 8px oklch(0.557 0.2568 288.9 / 0.3);
 }
 
-.joinButtonIcon {
+.join-button-icon {
   flex-shrink: 0;
   opacity: 0.9;
 }
 
 /* ── Right Sidebar: Members ────────────────────────────────────── */
 
-.memberSidebar {
+.member-sidebar {
   width: 220px;
   flex-shrink: 0;
   background: #2b2d31;
-  border-left: 1px solid rgba(0, 0, 0, 0.24);
+  border-left: 1px solid oklch(0 0 0 / 0.24);
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -1531,18 +1531,18 @@
 }
 
 /* Discord-style scrollbar for member sidebar */
-.memberSidebar::-webkit-scrollbar {
+.member-sidebar::-webkit-scrollbar {
   width: 6px;
 }
-.memberSidebar::-webkit-scrollbar-track {
+.member-sidebar::-webkit-scrollbar-track {
   background: transparent;
 }
-.memberSidebar::-webkit-scrollbar-thumb {
+.member-sidebar::-webkit-scrollbar-thumb {
   background: #1a1b1e;
   border-radius: 3px;
 }
 
-.memberList {
+.member-list {
   flex: 1;
   overflow-y: auto;
   padding: 12px 8px;
@@ -1550,22 +1550,22 @@
 }
 
 /* Discord-style scrollbar for member list */
-.memberList::-webkit-scrollbar {
+.member-list::-webkit-scrollbar {
   width: 6px;
 }
-.memberList::-webkit-scrollbar-track {
+.member-list::-webkit-scrollbar-track {
   background: transparent;
 }
-.memberList::-webkit-scrollbar-thumb {
+.member-list::-webkit-scrollbar-thumb {
   background: #1a1b1e;
   border-radius: 3px;
 }
 
-.memberRoleGroup {
+.member-role-group {
   margin-bottom: 8px;
 }
 
-.memberRoleHeader {
+.member-role-header {
   font-size: 11px;
   font-weight: 700;
   color: #949ba4;
@@ -1574,7 +1574,7 @@
   padding: 8px 8px 4px;
 }
 
-.memberItem {
+.member-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1584,25 +1584,25 @@
   transition: background-color 120ms ease;
 }
 
-.memberItem:hover {
-  background: rgba(255, 255, 255, 0.06);
+.member-item:hover {
+  background: oklch(1 0 0 / 0.06);
 }
 
-.memberAvatarWrap {
+.member-avatar-wrap {
   position: relative;
   flex-shrink: 0;
   width: 32px;
   height: 32px;
 }
 
-.memberAvatar {
+.member-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.memberAvatarFallback {
+.member-avatar-fallback {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1615,7 +1615,7 @@
 }
 
 /* Status dot overlay on member avatar */
-.statusDot {
+.status-dot {
   position: absolute;
   bottom: -2px;
   right: -2px;
@@ -1626,20 +1626,20 @@
   box-sizing: content-box;
 }
 
-.memberInfo {
+.member-info {
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
 
-.memberNameRow {
+.member-name-row {
   display: flex;
   align-items: center;
   gap: 4px;
   min-width: 0;
 }
 
-.memberName {
+.member-name {
   font-size: 13px;
   font-weight: 500;
   overflow: hidden;
@@ -1648,7 +1648,7 @@
   line-height: 1.3;
 }
 
-.memberBotBadge {
+.member-bot-badge {
   display: inline-flex;
   align-items: center;
   gap: 1px;
@@ -1664,12 +1664,12 @@
   line-height: 1;
 }
 
-.memberBotBadge .botBadgeIcon {
+.member-bot-badge .bot-badge-icon {
   width: 10px;
   height: 10px;
 }
 
-.memberActivity {
+.member-activity {
   font-size: 11px;
   color: #949ba4;
   overflow: hidden;
@@ -1680,7 +1680,7 @@
 
 /* ── Loading / Error States ────────────────────────────────────── */
 
-.isLoadingState {
+.is-loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1691,30 +1691,30 @@
   font-size: 14px;
 }
 
-.loadingDots {
+.loading-dots {
   display: flex;
   gap: 6px;
 }
 
-.loadingDot {
+.loading-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #5865f2;
-  animation: loadingBounce 1.4s ease-in-out infinite both;
+  animation: loading-bounce 1.4s ease-in-out infinite both;
 }
 
-.loadingDot:nth-child(1) {
+.loading-dot:nth-child(1) {
   animation-delay: 0ms;
 }
-.loadingDot:nth-child(2) {
+.loading-dot:nth-child(2) {
   animation-delay: 160ms;
 }
-.loadingDot:nth-child(3) {
+.loading-dot:nth-child(3) {
   animation-delay: 320ms;
 }
 
-@keyframes loadingBounce {
+@keyframes loading-bounce {
   0%, 80%, 100% {
     transform: scale(0.6);
     opacity: 0.4;
@@ -1736,22 +1736,22 @@
   text-align: center;
 }
 
-.errorIcon {
+.error-icon {
   font-size: 32px;
 }
 
 /* ── Online Indicator (dot next to channel name) ───────────────── */
 
-.onlineDot {
+.online-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #23a559;
   flex-shrink: 0;
-  animation: onlinePulse 3s ease-in-out infinite;
+  animation: online-pulse 3s ease-in-out infinite;
 }
 
-@keyframes onlinePulse {
+@keyframes online-pulse {
   0%, 100% {
     opacity: 1;
   }
@@ -1763,13 +1763,13 @@
 /* ── Responsive ────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
-  .memberSidebar {
+  .member-sidebar {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .guildBar {
+  .guild-bar {
     display: none;
   }
 }
@@ -1780,35 +1780,35 @@
     max-width: 100%;
   }
 
-  .channelSidebar {
+  .channel-sidebar {
     display: none;
   }
 
-  .channelTopic {
+  .channel-topic {
     display: none;
   }
 
-  .panelLayout {
+  .panel-layout {
     height: 460px;
   }
 
-  .messageRow {
+  .message-row {
     gap: 12px;
     padding: 2px 12px;
   }
 
-  .messageRowGrouped {
+  .message-row-grouped {
     padding-left: 64px;
   }
 
-  .inputBar {
+  .input-bar {
     padding: 0 12px 16px;
   }
 }
 
 /* ── Voice Message Player ─────────────────────────────────────── */
 
-.voicePlayer {
+.voice-player {
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -1818,17 +1818,17 @@
   width: fit-content;
   max-width: 480px;
   margin: 6px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 12px oklch(0 0 0 / 0.15);
+  border: 1px solid oklch(1 0 0 / 0.04);
   transition: background-color 200ms ease;
   user-select: none;
 }
 
-.voicePlayer:hover {
+.voice-player:hover {
   background: #35383e;
 }
 
-.voicePlayButton {
+.voice-play-button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1843,34 +1843,34 @@
   transition: transform 150ms cubic-bezier(0.2, 0, 0, 1), background-color 150ms ease, box-shadow 150ms ease;
   padding: 0;
   outline: none;
-  box-shadow: 0 2px 6px rgba(88, 101, 242, 0.3);
+  box-shadow: 0 2px 6px oklch(0.557 0.2568 288.9 / 0.3);
 }
 
-.voicePlayButton:hover {
+.voice-play-button:hover {
   background: #4752c4;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.5);
+  box-shadow: 0 4px 12px oklch(0.557 0.2568 288.9 / 0.5);
 }
 
-.voicePlayButton:active {
+.voice-play-button:active {
   background: #3c45a5;
   transform: scale(0.95);
 }
 
-.voicePlayIcon {
+.voice-play-icon {
   width: 14px;
   height: 14px;
   fill: currentColor;
   margin-left: 2px; /* nudge play triangle to center visually */
 }
 
-.voicePauseIcon {
+.voice-pause-icon {
   width: 14px;
   height: 14px;
   fill: currentColor;
 }
 
-.voiceWaveform {
+.voice-waveform {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -1881,7 +1881,7 @@
   flex-grow: 1;
 }
 
-.voiceWaveformBar {
+.voice-waveform-bar {
   width: 3px;
   height: var(--bar-height, 100%);
   border-radius: 1.5px;
@@ -1889,15 +1889,15 @@
   transition: background-color 150ms ease;
 }
 
-.voiceWaveformBarPlayed {
+.voice-waveform-bar-played {
   background: #f2f3f5;
 }
 
-.voiceWaveformBar:hover {
+.voice-waveform-bar:hover {
   filter: brightness(1.2);
 }
 
-.voiceDuration {
+.voice-duration {
   font-size: 13px;
   font-weight: 500;
   color: #dbdee1;
@@ -1907,9 +1907,9 @@
   flex-shrink: 0;
 }
 
-.voiceSpeed {
-  background: rgba(78, 80, 88, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.voice-speed {
+  background: oklch(0.432 0.0159 285.4 / 0.4);
+  border: 1px solid oklch(1 0 0 / 0.05);
   color: #dbdee1;
   font-size: 11px;
   font-weight: 700;
@@ -1922,12 +1922,12 @@
   letter-spacing: 0.02em;
 }
 
-.voiceSpeed:hover {
-  background: rgba(78, 80, 88, 0.8);
+.voice-speed:hover {
+  background: oklch(0.432 0.0159 285.4 / 0.8);
   color: #ffffff;
 }
 
-.voiceVolume {
+.voice-volume {
   background: transparent;
   border: none;
   color: #b5bac1;
@@ -1941,12 +1941,12 @@
   flex-shrink: 0;
 }
 
-.voiceVolume:hover {
+.voice-volume:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.06);
+  background: oklch(1 0 0 / 0.06);
 }
 
-.voiceVolumeIcon {
+.voice-volume-icon {
   width: 18px;
   height: 18px;
   fill: currentColor;

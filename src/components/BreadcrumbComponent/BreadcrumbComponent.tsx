@@ -34,14 +34,14 @@ export default function BreadcrumbComponent({
         <polyline points="9 18 15 12 9 6" />
       </svg>
     ),
-    slash: <span className={styles.slashSep}>/</span>,
-    dot: <span className={styles.dotSep}>·</span>,
+    slash: <span className={styles['slash-sep']}>/</span>,
+    dot: <span className={styles['dot-sep']}>·</span>,
   }[separator];
 
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`${styles.navigationBar} ${className || ""}`}
+      className={`${styles['navigation-bar']} ${className || ""}`}
       {...rest}
     >
       <ol className={styles.list}>

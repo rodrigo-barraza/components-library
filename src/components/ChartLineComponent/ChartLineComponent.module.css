@@ -1,4 +1,4 @@
-.sparklineContainer {
+.sparkline-container {
   position: relative;
   width: 100%;
   height: 48px;
@@ -6,13 +6,13 @@
   overflow: hidden;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.01) 0%,
-    rgba(255, 255, 255, 0.02) 100%
+    oklch(1 0 0 / 0.01) 0%,
+    oklch(1 0 0 / 0.02) 100%
   );
   cursor: crosshair;
 }
 
-.sparklineCanvas {
+.sparkline-canvas {
   display: block;
   width: 100%;
   height: 100%;
@@ -22,16 +22,16 @@
 
 /* ── Hover Tooltip ─────────────────────────────────────────────── */
 
-.sparklineTooltip {
+.sparkline-tooltip {
   position: absolute;
   top: 2px;
   pointer-events: none;
   padding: 2px 6px;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.78);
+  background: oklch(0 0 0 / 0.78);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  color: rgba(255, 255, 255, 0.92);
+  color: oklch(1 0 0 / 0.92);
   font-size: 10px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -40,10 +40,10 @@
   white-space: nowrap;
   z-index: 2;
   opacity: 0;
-  animation: sparklineTooltipIn 120ms ease-out forwards;
+  animation: sparkline-tooltip-in 120ms ease-out forwards;
 }
 
-@keyframes sparklineTooltipIn {
+@keyframes sparkline-tooltip-in {
   from {
     opacity: 0;
     transform: translateY(2px);

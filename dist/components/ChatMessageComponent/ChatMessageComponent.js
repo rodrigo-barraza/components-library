@@ -29,7 +29,7 @@ function applyInlineMarkdown(text) {
     const parts = text.split(codeRe);
     return parts.map((seg, i) => {
         if (i % 2 === 1) {
-            return (_jsx("code", { className: styles.inlineCode, children: seg }, i));
+            return (_jsx("code", { className: styles['inline-code'], children: seg }, i));
         }
         return applyBoldItalic(seg, i);
     });
@@ -79,11 +79,11 @@ export default function ChatMessageComponent({ message, isFirst = false, previou
     const { role, content, createdAt, streaming, error } = message;
     const isGrouped = !isFirst && previousRole === role;
     if (role === MESSAGE_ROLES.SYSTEM) {
-        return (_jsx("div", { className: `${styles.messageRow} ${styles.system} ${error ? styles.errorMessage : ""}`, children: _jsx("div", { className: styles.systemBubble, children: _jsx("p", { className: styles.messageText, children: content }) }) }));
+        return (_jsx("div", { className: `${styles['message-row']} ${styles.system} ${error ? styles['error-message'] : ""}`, children: _jsx("div", { className: styles['system-bubble'], children: _jsx("p", { className: styles['message-text'], children: content }) }) }));
     }
     if (role === MESSAGE_ROLES.VISITOR) {
-        return (_jsxs("div", { className: `${styles.messageRow} ${styles.visitor} ${isGrouped ? styles.grouped : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles.visitorBubble, children: _jsx("p", { className: styles.messageText, children: renderContent(content, role) }) }), _jsx("span", { className: `${styles.timestamp} ${showTimestamp ? styles.timestampVisible : ""}`, children: formatTime(createdAt) })] }));
+        return (_jsxs("div", { className: `${styles['message-row']} ${styles.visitor} ${isGrouped ? styles.grouped : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles['visitor-bubble'], children: _jsx("p", { className: styles['message-text'], children: renderContent(content, role) }) }), _jsx("span", { className: `${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`, children: formatTime(createdAt) })] }));
     }
-    return (_jsxs("div", { className: `${styles.messageRow} ${styles.agent} ${isGrouped ? styles.grouped : ""} ${error ? styles.errorMessage : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles.agentBubble, children: _jsxs("p", { className: styles.messageText, children: [renderContent(content, role), streaming && _jsx("span", { className: styles.cursor })] }) }), _jsx("span", { className: `${styles.timestamp} ${showTimestamp ? styles.timestampVisible : ""}`, children: formatTime(createdAt) })] }));
+    return (_jsxs("div", { className: `${styles['message-row']} ${styles.agent} ${isGrouped ? styles.grouped : ""} ${error ? styles['error-message'] : ""}`, onMouseEnter: () => setShowTimestamp(true), onMouseLeave: () => setShowTimestamp(false), children: [_jsx("div", { className: styles['agent-bubble'], children: _jsxs("p", { className: styles['message-text'], children: [renderContent(content, role), streaming && _jsx("span", { className: styles.cursor })] }) }), _jsx("span", { className: `${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`, children: formatTime(createdAt) })] }));
 }
 //# sourceMappingURL=ChatMessageComponent.js.map

@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   background: var(--background-surface, #1e1e1e);
-  border-right: 1px solid var(--calculated-border-color, rgba(255, 255, 255, 0.08));
+  border-right: 1px solid var(--calculated-border-color, oklch(1 0 0 / 0.08));
   padding: 0;
   position: relative;
   z-index: 100;
@@ -38,7 +38,7 @@
 
 /* ── Menu Slot ──────────────────────────────────────────── */
 
-.menuSlot {
+.menu-slot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +49,7 @@
 
 /* ── FAB Slot ───────────────────────────────────────────── */
 
-.fabSlot {
+.fab-slot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +80,7 @@
 
 /* ── Single Destination ─────────────────────────────────── */
 
-.destinationWrapper {
+.destination-wrapper {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -109,7 +109,7 @@
   border-radius: 16px;
 }
 
-.destinationInner {
+.destination-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,7 +120,7 @@
 
 /* ── Active Indicator Pill ──────────────────────────────── */
 
-.indicatorPill {
+.indicator-pill {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,14 +135,14 @@
   overflow: hidden;
 }
 
-.indicatorPill.indicatorActive {
+.indicator-pill.indicator-active {
   width: 56px;
-  background: var(--secondary-container, rgba(99, 102, 241, 0.16));
+  background: var(--secondary-container, oklch(0.566 0.2532 291.3 / 0.16));
 }
 
 /* ── State Layer (hover / focus / pressed) ──────────────── */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -151,29 +151,29 @@
   pointer-events: none;
 }
 
-.destination:hover .stateLayer {
-  background: var(--on-surface-hover, rgba(255, 255, 255, 0.08));
+.destination:hover .state-layer {
+  background: var(--on-surface-hover, oklch(1 0 0 / 0.08));
 }
 
-.destination:focus-visible .stateLayer {
-  background: var(--on-surface-focus, rgba(255, 255, 255, 0.10));
+.destination:focus-visible .state-layer {
+  background: var(--on-surface-focus, oklch(1 0 0 / 0.1));
 }
 
-.destination:active .stateLayer {
-  background: var(--on-surface-pressed, rgba(255, 255, 255, 0.10));
+.destination:active .state-layer {
+  background: var(--on-surface-pressed, oklch(1 0 0 / 0.1));
 }
 
 /* Active destination — state layers use on-secondary-container */
-.destination.isActiveState:hover .stateLayer {
-  background: var(--on-secondary-container-hover, rgba(99, 102, 241, 0.08));
+.destination.is-active-state:hover .state-layer {
+  background: var(--on-secondary-container-hover, oklch(0.566 0.2532 291.3 / 0.08));
 }
 
-.destination.isActiveState:focus-visible .stateLayer {
-  background: var(--on-secondary-container-focus, rgba(99, 102, 241, 0.10));
+.destination.is-active-state:focus-visible .state-layer {
+  background: var(--on-secondary-container-focus, oklch(0.566 0.2532 291.3 / 0.1));
 }
 
-.destination.isActiveState:active .stateLayer {
-  background: var(--on-secondary-container-pressed, rgba(99, 102, 241, 0.10));
+.destination.is-active-state:active .state-layer {
+  background: var(--on-secondary-container-pressed, oklch(0.566 0.2532 291.3 / 0.1));
 }
 
 /* ── Icon ───────────────────────────────────────────────── */
@@ -181,12 +181,12 @@
 .icon {
   position: relative;
   z-index: 1;
-  color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+  color: var(--text-secondary, oklch(1 0 0 / 0.65));
   transition: color 0.2s ease;
   flex-shrink: 0;
 }
 
-.destination.isActiveState .icon {
+.destination.is-active-state .icon {
   color: var(--on-secondary-container, var(--accent-primary, #818cf8));
 }
 
@@ -194,7 +194,7 @@
   color: var(--text-primary, #fff);
 }
 
-.destination.isActiveState:hover .icon {
+.destination.is-active-state:hover .icon {
   color: var(--on-secondary-container, var(--accent-primary, #818cf8));
 }
 
@@ -205,7 +205,7 @@
   line-height: 16px;
   font-weight: 500;
   letter-spacing: 0.1px;
-  color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+  color: var(--text-secondary, oklch(1 0 0 / 0.65));
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -215,7 +215,7 @@
   user-select: none;
 }
 
-.label.labelActive {
+.label.label-active {
   color: var(--on-secondary-container, var(--accent-primary, #818cf8));
   font-weight: 600;
 }
@@ -224,13 +224,13 @@
   color: var(--text-primary, #fff);
 }
 
-.destination.isActiveState:hover .label {
+.destination.is-active-state:hover .label {
   color: var(--on-secondary-container, var(--accent-primary, #818cf8));
 }
 
 /* ── Badge Overlay ──────────────────────────────────────── */
 
-.badgeOverlay {
+.badge-overlay {
   position: absolute;
   top: 2px;
   right: 2px;
@@ -238,7 +238,7 @@
   pointer-events: none;
 }
 
-.badgeDot {
+.badge-dot {
   display: block;
   width: 6px;
   height: 6px;
@@ -248,7 +248,7 @@
 
 /* ── Bottom Slot ────────────────────────────────────────── */
 
-.bottomSlot {
+.bottom-slot {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -256,24 +256,24 @@
   padding: 12px 0;
   margin-top: auto;
   width: 100%;
-  border-top: 1px solid var(--calculated-border-color, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid var(--calculated-border-color, oklch(1 0 0 / 0.08));
 }
 
 /* ── Active Indicator entrance animation ────────────────── */
 
-@keyframes pillExpand {
+@keyframes pill-expand {
   from {
     width: 32px;
     background-color: transparent;
   }
   to {
     width: 56px;
-    background-color: var(--secondary-container, rgba(99, 102, 241, 0.16));
+    background-color: var(--secondary-container, oklch(0.566 0.2532 291.3 / 0.16));
   }
 }
 
-.indicatorPill.indicatorActive {
-  animation: pillExpand 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+.indicator-pill.indicator-active {
+  animation: pill-expand 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
 /* ── Ripple-like press feedback ─────────────────────────── */
@@ -286,7 +286,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--accent-primary, rgba(99, 102, 241, 0.2));
+  background: var(--accent-primary, oklch(0.566 0.2532 291.3 / 0.2));
   transform: translate(-50%, -50%) scale(0);
   opacity: 0;
   transition:

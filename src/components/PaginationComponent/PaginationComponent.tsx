@@ -30,17 +30,17 @@ export default function PaginationComponent({
 
   return (
     <div className={styles.pagination}>
-      <span className={styles.pageInfo}>{renderInfo()}</span>
-      <div className={styles.pageButtons}>
+      <span className={styles['page-info']}>{renderInfo()}</span>
+      <div className={styles['page-buttons']}>
         <button
-          className={styles.pageButton}
+          className={styles['page-button']}
           onClick={() => onPageChange(Math.max(1, page - 1))}
           disabled={page <= 1}
         >
           Previous
         </button>
         <button
-          className={styles.pageButton}
+          className={styles['page-button']}
           onClick={() => onPageChange(Math.min(totalPages, page + 1))}
           disabled={page >= totalPages}
         >

@@ -87,34 +87,34 @@ export default function ChatPanelComponent({
 
   return (
     <div
-      className={`${styles.panel} ${isOpen ? styles.panelOpen : styles.panelClosed}`}
+      className={`${styles.panel} ${isOpen ? styles['panel-open'] : styles['panel-closed']}`}
       id="chat-panel"
     >
       {/* ── Header ─────────────────────────────────────────── */}
       <div className={styles.header}>
-        <div className={styles.headerInfo}>
+        <div className={styles['header-info']}>
           {operatorAvatar ? (
             <img
               src={operatorAvatar}
               alt={operatorName}
-              className={styles.headerAvatar}
+              className={styles['header-avatar']}
               loading="lazy"
             />
           ) : (
-            <div className={styles.headerAvatarFallback}>
+            <div className={styles['header-avatar-fallback']}>
               {(operatorName || "S")[0].toUpperCase()}
             </div>
           )}
-          <div className={styles.headerText}>
-            <span className={styles.headerName}>{operatorName}</span>
-            <span className={styles.headerStatus}>
-              <span className={styles.statusDot} />
+          <div className={styles['header-text']}>
+            <span className={styles['header-name']}>{operatorName}</span>
+            <span className={styles['header-status']}>
+              <span className={styles['status-dot']} />
               Online
             </span>
           </div>
         </div>
         <button
-          className={styles.closeButton}
+          className={styles['close-button']}
           onClick={onClose}
           aria-label="Close chat"
           id="chat-close-button"
@@ -136,7 +136,7 @@ export default function ChatPanelComponent({
       </div>
 
       {/* ── Messages Area ──────────────────────────────────── */}
-      <div className={styles.messagesArea} ref={scrollRef}>
+      <div className={styles['messages-area']} ref={scrollRef}>
         {messages.map((message, i) => (
           <ChatMessageComponent
             key={message.id}
@@ -148,11 +148,11 @@ export default function ChatPanelComponent({
 
         {/* ── Typing Indicator ───────────────────────────── */}
         {isTyping && (
-          <div className={styles.typingIndicator}>
-            <div className={styles.typingDots}>
-              <span className={styles.typingDot} />
-              <span className={styles.typingDot} />
-              <span className={styles.typingDot} />
+          <div className={styles['typing-indicator']}>
+            <div className={styles['typing-dots']}>
+              <span className={styles['typing-dot']} />
+              <span className={styles['typing-dot']} />
+              <span className={styles['typing-dot']} />
             </div>
           </div>
         )}
@@ -163,8 +163,8 @@ export default function ChatPanelComponent({
 
       {/* ── Footer ─────────────────────────────────────────── */}
       <div className={styles.footer}>
-        <span className={styles.footerText}>
-          Powered by <span className={styles.footerBrand}>Chat</span>
+        <span className={styles['footer-text']}>
+          Powered by <span className={styles['footer-brand']}>Chat</span>
         </span>
       </div>
     </div>

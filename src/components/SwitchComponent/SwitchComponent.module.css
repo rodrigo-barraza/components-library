@@ -17,11 +17,11 @@
   min-height: 48px;           /* M3 48px min touch target */
 }
 
-.switch.labelStart {
+.switch.label-start {
   flex-direction: row-reverse;
 }
 
-.switch.isDisabledState {
+.switch.is-disabled-state {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -29,7 +29,7 @@
 
 /* ── Hidden native input ─────────────────────────────── */
 
-.hiddenInput {
+.hidden-input {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -57,7 +57,7 @@
 
 /* ── Track — Selected state ──────────────────────────── */
 
-.track.isSelectedState {
+.track.is-selected-state {
   background: var(--accent-primary, #6750a4);
   border-color: var(--accent-primary, #6750a4);
 }
@@ -68,14 +68,14 @@
   border-color: var(--text-primary, #1d1b20);
 }
 
-.switch:hover .track.isSelectedState {
+.switch:hover .track.is-selected-state {
   background: var(--accent-color-hover, var(--accent-primary, #6750a4));
   filter: brightness(1.08);
 }
 
 /* ── Handle container — manages positioning + state layer ── */
 
-.handleContainer {
+.handle-container {
   position: absolute;
   display: flex;
   align-items: center;
@@ -90,13 +90,13 @@
 }
 
 /* Selected position: handle slides to right */
-.track.isSelectedState .handleContainer {
+.track.is-selected-state .handle-container {
   left: 16px;
 }
 
 /* ── State layer — 40×40px circular ──────────────────── */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -107,31 +107,31 @@
 }
 
 /* Hover — unselected */
-.switch:hover .track:not(.selected) .stateLayer {
+.switch:hover .track:not(.selected) .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, transparent);
 }
 
 /* Hover — selected */
-.switch:hover .track.isSelectedState .stateLayer {
+.switch:hover .track.is-selected-state .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible — keyboard nav */
-.hiddenInput:focus-visible ~ .track .stateLayer {
+.hidden-input:focus-visible ~ .track .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
-.hiddenInput:focus-visible ~ .track.isSelectedState .stateLayer {
+.hidden-input:focus-visible ~ .track.is-selected-state .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* Active / pressed — unselected */
-.switch:active .track:not(.selected) .stateLayer {
+.switch:active .track:not(.selected) .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
 /* Active / pressed — selected */
-.switch:active .track.isSelectedState .stateLayer {
+.switch:active .track.is-selected-state .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -154,7 +154,7 @@
 }
 
 /* Handle — selected state: grows to 24px, changes color */
-.track.isSelectedState .handle {
+.track.is-selected-state .handle {
   width: 24px;
   height: 24px;
   background: var(--switch-handle-selected-bg, var(--text-on-accent, #fff));
@@ -186,13 +186,13 @@
 }
 
 /* Icon visible only on selected handle */
-.track.isSelectedState .icon {
+.track.is-selected-state .icon {
   opacity: 1;
   transform: scale(1);
 }
 
 /* Unselected icon (shown when showIcons is true) */
-.iconUnselected {
+.icon-unselected {
   width: 16px;
   height: 16px;
   color: var(--switch-track-outline, var(--surface-variant, #e7e0ec));
@@ -205,20 +205,20 @@
 }
 
 /* Show unselected icon when track is not selected */
-.track:not(.selected) .iconUnselected {
+.track:not(.selected) .icon-unselected {
   opacity: 1;
   transform: scale(1);
 }
 
 /* Hide unselected icon when selected */
-.track.isSelectedState .iconUnselected {
+.track.is-selected-state .icon-unselected {
   opacity: 0;
   transform: scale(0);
 }
 
 /* ── With icon variant — handle starts at 24px even unselected ── */
 
-.withIcons .track:not(.selected) .handle {
+.with-icons .track:not(.selected) .handle {
   width: 24px;
   height: 24px;
 }
@@ -234,7 +234,7 @@
 
 /* ── Focus ring — visible keyboard outline on track ──── */
 
-.hiddenInput:focus-visible ~ .track {
+.hidden-input:focus-visible ~ .track {
   outline: 2px solid var(--accent-primary, #6750a4);
   outline-offset: 2px;
 }
@@ -244,10 +244,10 @@
 @media (prefers-reduced-motion: reduce) {
   .handle,
   .track,
-  .handleContainer,
-  .stateLayer,
+  .handle-container,
+  .state-layer,
   .icon,
-  .iconUnselected {
+  .icon-unselected {
     transition-duration: 0.01ms !important;
   }
 }

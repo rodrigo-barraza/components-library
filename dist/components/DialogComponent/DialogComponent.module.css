@@ -34,16 +34,16 @@
   padding: 48px 24px;
 
   /* M3 spec: scrim is on-surface @ 32% — we blend with theme */
-  background: var(--dialog-scrim, rgba(0, 0, 0, 0.32));
+  background: var(--dialog-scrim, oklch(0 0 0 / 0.32));
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
 
-  animation: dialogScrimFadeIn 200ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  animation: dialog-scrim-fade-in 200ms cubic-bezier(0.2, 0, 0, 1) forwards;
   will-change: opacity;
 }
 
 .scrim[data-closing="true"] {
-  animation: dialogScrimFadeOut 150ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  animation: dialog-scrim-fade-out 150ms cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
 /* ── Container ────────────────────────────────────────── */
@@ -62,21 +62,21 @@
 
   /* M3 spec: surface-container-high, 28dp corner radius */
   background: var(--dialog-container-bg, var(--background-surface, #2a2a2e));
-  border: 1px solid var(--dialog-border, var(--calculated-border-color, rgba(255, 255, 255, 0.06)));
+  border: 1px solid var(--dialog-border, var(--calculated-border-color, oklch(1 0 0 / 0.06)));
   border-radius: 28px;
 
   /* M3 Level 3 elevation */
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
 
   /* Enter: standard easing, 300ms */
-  animation: dialogContainerEnter 300ms cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
+  animation: dialog-container-enter 300ms cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
   will-change: transform, opacity;
 }
 
 .container[data-closing="true"] {
-  animation: dialogContainerExit 200ms cubic-bezier(0.3, 0, 0.8, 0.15) forwards;
+  animation: dialog-container-exit 200ms cubic-bezier(0.3, 0, 0.8, 0.15) forwards;
 }
 
 /* ── Icon (optional) ──────────────────────────────────── */
@@ -111,7 +111,7 @@
 }
 
 /* When icon is present, headline is centered */
-.headlineCentered {
+.headline-centered {
   text-align: center;
 }
 
@@ -124,7 +124,7 @@
 
   /* Subtle scrollbar */
   scrollbar-width: thin;
-  scrollbar-color: var(--calculated-border-color, rgba(255, 255, 255, 0.1)) transparent;
+  scrollbar-color: var(--calculated-border-color, oklch(1 0 0 / 0.1)) transparent;
 
   /* M3 body-medium: 14/20 */
   font-size: 0.875rem;
@@ -138,7 +138,7 @@
 
 .divider {
   height: 1px;
-  background: var(--dialog-divider, var(--calculated-border-color, rgba(255, 255, 255, 0.06)));
+  background: var(--dialog-divider, var(--calculated-border-color, oklch(1 0 0 / 0.06)));
   margin: 0;
   border: none;
   flex-shrink: 0;
@@ -156,7 +156,7 @@
 }
 
 /* M3 Dialog action buttons — text buttons per spec */
-.actionButton {
+.action-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -186,7 +186,7 @@
   isolation: isolate;
 }
 
-.actionButton::before {
+.action-button::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -198,46 +198,46 @@
 }
 
 /* M3 hover state layer: 8% */
-.actionButton:hover::before {
+.action-button:hover::before {
   opacity: 0.08;
 }
 
 /* M3 focus state layer: 12% */
-.actionButton:focus-visible {
+.action-button:focus-visible {
   outline: none;
 }
 
-.actionButton:focus-visible::before {
+.action-button:focus-visible::before {
   opacity: 0.12;
 }
 
 /* M3 pressed state layer: 12% */
-.actionButton:active::before {
+.action-button:active::before {
   opacity: 0.12;
 }
 
 /* Primary (confirm) action — filled tonal per spec for emphasis */
-.actionBtnPrimary {
+.action-btn-primary {
   background: var(--dialog-primary-bg, var(--accent-primary, #8b5cf6));
   color: var(--dialog-primary-text, var(--background-base, #0f0f0f));
 }
 
-.actionBtnPrimary::before {
+.action-btn-primary::before {
   background: var(--dialog-primary-text, var(--background-base, #0f0f0f));
 }
 
 /* Destructive action variant */
-.actionBtnDestructive {
+.action-btn-destructive {
   color: var(--dialog-destructive-color, var(--color-error, #f87171));
 }
 
 /* Disabled state */
-.actionButton:disabled {
+.action-button:disabled {
   opacity: 0.38;
   cursor: not-allowed;
 }
 
-.actionButton:disabled::before {
+.action-button:disabled::before {
   opacity: 0;
 }
 
@@ -265,17 +265,17 @@
 
 /* ── Animations ───────────────────────────────────────── */
 
-@keyframes dialogScrimFadeIn {
+@keyframes dialog-scrim-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-@keyframes dialogScrimFadeOut {
+@keyframes dialog-scrim-fade-out {
   from { opacity: 1; }
   to   { opacity: 0; }
 }
 
-@keyframes dialogContainerEnter {
+@keyframes dialog-container-enter {
   0% {
     opacity: 0;
     transform: scale(0.85) translateY(8px);
@@ -290,7 +290,7 @@
   }
 }
 
-@keyframes dialogContainerExit {
+@keyframes dialog-container-exit {
   from {
     opacity: 1;
     transform: scale(1) translateY(0);

@@ -6,7 +6,7 @@
 
 /* ── Search container ────────────────────────────────────────────── */
 
-.searchRoot {
+.search-root {
   position: relative;
   width: 100%;
 }
@@ -14,7 +14,7 @@
 /* ── Search Bar (collapsed state) ────────────────────────────────── */
 /* M3 spec: 56px height, full-round shape (28px radius), surface-container-high */
 
-.searchBar {
+.search-bar {
   position: relative;
   display: flex;
   align-items: center;
@@ -34,7 +34,7 @@
   will-change: border-radius, box-shadow;
 }
 
-.searchBar.compact {
+.search-bar.compact {
   height: 48px;
   padding: 0 4px 0 12px;
   border-radius: 24px;
@@ -42,7 +42,7 @@
 
 /* ── State layer (bar) ───────────────────────────────────────────── */
 
-.searchBar::before {
+.search-bar::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -53,14 +53,14 @@
   transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.searchBar:hover::before {
+.search-bar:hover::before {
   opacity: 0.06;
 }
 
 /* ── Leading icon ─────────────────────────────────────────────────── */
 /* M3: 24px icon, 48px touch target implied by padding */
 
-.leadingIcon {
+.leading-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +71,7 @@
   pointer-events: none;
 }
 
-.compact .leadingIcon {
+.compact .leading-icon {
   width: 20px;
   height: 20px;
 }
@@ -79,7 +79,7 @@
 /* ── Input field ──────────────────────────────────────────────────── */
 /* M3: body-large (16px/24px/400) */
 
-.searchField {
+.search-field {
   flex: 1;
   min-width: 0;
   height: 100%;
@@ -96,18 +96,18 @@
   caret-color: var(--accent-primary);
 }
 
-.compact .searchField {
+.compact .search-field {
   font-size: 14px;
   line-height: 20px;
   padding: 0 6px;
 }
 
-.searchField::placeholder {
+.search-field::placeholder {
   color: var(--text-secondary);
 }
 
-.searchField::-webkit-search-cancel-button,
-.searchField::-webkit-search-decoration {
+.search-field::-webkit-search-cancel-button,
+.search-field::-webkit-search-decoration {
   -webkit-appearance: none;
   appearance: none;
 }
@@ -115,7 +115,7 @@
 /* ── Trailing icon button ─────────────────────────────────────────── */
 /* M3 trailing icons: avatar/icon, 48px touch target */
 
-.trailingAction {
+.trailing-action {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,25 +135,25 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.compact .trailingAction {
+.compact .trailing-action {
   width: 36px;
   height: 36px;
 }
 
-.trailingAction:hover {
+.trailing-action:hover {
   background: color-mix(in srgb, var(--text-primary) 8%, transparent);
 }
 
-.trailingAction:active {
+.trailing-action:active {
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
-.trailingAction:focus-visible {
+.trailing-action:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
-.trailingAction svg {
+.trailing-action svg {
   display: block;
 }
 
@@ -165,25 +165,25 @@
 /* M3: The bar morphs into a full search view with rounded-top corners
    and a suggestions panel below */
 
-.searchBar.isExpandedState {
+.search-bar.is-expanded-state {
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
   border-color: var(--calculated-border-color);
   background: var(--background-surface);
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.12),
-    0 2px 6px 2px rgb(0 0 0 / 0.08);
+    0 1px 2px 0 oklch(0 0 0 / 0.12),
+    0 2px 6px 2px oklch(0 0 0 / 0.08);
 }
 
-.searchBar.isExpandedState:focus-within {
+.search-bar.is-expanded-state:focus-within {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.12),
-    0 2px 6px 2px rgb(0 0 0 / 0.08);
+    0 1px 2px 0 oklch(0 0 0 / 0.12),
+    0 2px 6px 2px oklch(0 0 0 / 0.08);
   border-color: var(--calculated-border-color);
 }
 
 /* ── Suggestions panel (search view body) ────────────────────────── */
 
-.suggestionsPanel {
+.suggestions-panel {
   position: absolute;
   top: 100%;
   left: 0;
@@ -204,20 +204,20 @@
   will-change: max-height, opacity, transform;
 }
 
-.suggestionsPanel.isOpenState {
+.suggestions-panel.is-open-state {
   max-height: 400px;
   opacity: 1;
   transform: translateY(0);
   border-color: var(--calculated-border-color);
   box-shadow:
-    0 2px 3px 0 rgb(0 0 0 / 0.10),
-    0 6px 10px 4px rgb(0 0 0 / 0.06);
+    0 2px 3px 0 oklch(0 0 0 / 0.1),
+    0 6px 10px 4px oklch(0 0 0 / 0.06);
   overflow-y: auto;
 }
 
 /* ── Divider between bar and suggestions ─────────────────────────── */
 
-.suggestionsDivider {
+.suggestions-divider {
   height: 1px;
   margin: 0 16px;
   background: var(--calculated-border-color);
@@ -226,7 +226,7 @@
 
 /* ── Suggestion group header ─────────────────────────────────────── */
 
-.suggestionGroupHeader {
+.suggestion-group-header {
   padding: 12px 16px 4px;
   font-size: 11px;
   font-weight: 600;
@@ -239,7 +239,7 @@
 /* ── Suggestion item ─────────────────────────────────────────────── */
 /* M3 list-item anatomy: 56px height, leading icon, text, trailing icon */
 
-.suggestionItem {
+.suggestion-item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -259,19 +259,19 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.suggestionItem:hover {
+.suggestion-item:hover {
   background: color-mix(in srgb, var(--text-primary) 6%, transparent);
 }
 
-.suggestionItem:active {
+.suggestion-item:active {
   background: color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
 
-.suggestionItem.highlighted {
+.suggestion-item.highlighted {
   background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
 }
 
-.suggestionItem:focus-visible {
+.suggestion-item:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
   border-radius: var(--border-radius-sm);
@@ -279,7 +279,7 @@
 
 /* ── Suggestion item parts ───────────────────────────────────────── */
 
-.suggestionIcon {
+.suggestion-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,7 +289,7 @@
   color: var(--text-secondary);
 }
 
-.suggestionText {
+.suggestion-text {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -297,13 +297,13 @@
   white-space: nowrap;
 }
 
-.suggestionText mark {
+.suggestion-text mark {
   background: transparent;
   color: var(--accent-primary);
   font-weight: 600;
 }
 
-.suggestionTrailing {
+.suggestion-trailing {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -314,7 +314,7 @@
 
 /* ── Empty state in suggestions ──────────────────────────────────── */
 
-.suggestionsEmpty {
+.suggestions-empty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,13 +329,13 @@
   position: fixed;
   inset: 0;
   z-index: 49;
-  background: rgb(0 0 0 / 0.32);
+  background: oklch(0 0 0 / 0.32);
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.scrim.isVisibleState {
+.scrim.is-visible-state {
   opacity: 1;
   pointer-events: auto;
 }
@@ -343,11 +343,11 @@
 /* ── Accessibility: reduced motion ───────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .searchBar,
-  .suggestionsPanel,
-  .searchBar::before,
-  .trailingAction,
-  .suggestionItem {
+  .search-bar,
+  .suggestions-panel,
+  .search-bar::before,
+  .trailing-action,
+  .suggestion-item {
     transition-duration: 0ms;
   }
 }

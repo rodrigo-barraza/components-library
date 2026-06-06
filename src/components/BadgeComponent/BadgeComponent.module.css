@@ -102,45 +102,45 @@
 
 /* ── Monospace Utilities ──────────────────────────── */
 
-.monoFont {
+.mono-font {
   font-family: var(--font-mono) !important;
   font-variant-numeric: tabular-nums;
 }
 
 /* ── Address & Port & Domain Link ────────────────── */
 
-.badgeLink {
+.badge-link {
   text-decoration: none;
   display: inline-flex;
   min-width: 0;
   max-width: 100%;
 }
 
-.badgeLink:hover .addressBadge {
+.badge-link:hover .address-badge {
   border-color: color-mix(in srgb, var(--color-info) 45%, transparent);
 }
 
-.badgeLink:hover .domainBadge {
+.badge-link:hover .domain-badge {
   border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
   box-shadow: 0 0 8px color-mix(in srgb, var(--accent-primary) 15%, transparent);
 }
 
-.badgeLink:hover .repositoryBadge {
+.badge-link:hover .repository-badge {
   border-color: color-mix(in srgb, var(--color-info) 50%, transparent);
   box-shadow: 0 0 8px color-mix(in srgb, var(--color-info) 15%, transparent);
 }
 
-.addressBadge {
+.address-badge {
   font-size: 9px;
   font-weight: 500;
 }
 
-.portBadge {
+.port-badge {
   font-weight: 600;
   letter-spacing: 0.03em;
 }
 
-.repositoryBadge {
+.repository-badge {
   font-weight: 500;
   font-size: 10px;
   overflow: hidden;
@@ -149,24 +149,24 @@
   min-width: 0;
 }
 
-.domainBadge {
+.domain-badge {
   font-weight: 500;
   font-size: 10px;
 }
 
-.deviceBadge {
+.device-badge {
   font-weight: 500;
 }
 
 /* ── Status Badge ────────────────────────────────── */
 
-.statusBadge {
+.status-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
 }
 
-.statusIcon {
+.status-icon {
   font-family: var(--font-emoji);
   font-size: 8px;
   line-height: 1;
@@ -175,7 +175,7 @@
 
 /* ── Count Badge ─────────────────────────────────── */
 
-.countBadge {
+.count-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -191,19 +191,19 @@
   transition: background 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
 }
 
-.stateDefault {
+.state-default {
   background: var(--count-badge-default, #6366f1);
   box-shadow: none;
 }
 
-.stateNew {
+.state-new {
   background: var(--count-badge-new, #22d3ee);
   filter: drop-shadow(0 0 6px color-mix(in srgb, var(--count-badge-new, #22d3ee) 50%, transparent));
-  animation: countBadgeNewPulse 1.6s ease-in-out infinite;
+  animation: count-badge-new-pulse 1.6s ease-in-out infinite;
   will-change: transform, filter;
 }
 
-@keyframes countBadgeNewPulse {
+@keyframes count-badge-new-pulse {
   0%, 100% {
     filter: drop-shadow(0 0 4px color-mix(in srgb, var(--count-badge-new, #22d3ee) 35%, transparent));
     transform: scale(1);
@@ -214,20 +214,20 @@
   }
 }
 
-.stateDisabled {
+.state-disabled {
   color: var(--text-tertiary);
   background: color-mix(in srgb, var(--text-tertiary) 12%, transparent);
   opacity: 0.5;
 }
 
 .rainbow {
-  background: hsl(0, 90%, 55%);
+  background: oklch(0.62 0.2365 27.7);
   filter: hue-rotate(0deg);
-  animation: countBadgeRainbow 4s linear infinite;
+  animation: count-badge-rainbow 4s linear infinite;
   will-change: filter;
 }
 
-@keyframes countBadgeRainbow {
+@keyframes count-badge-rainbow {
   to {
     filter: hue-rotate(360deg);
   }
@@ -235,12 +235,12 @@
 
 /* ── Response Time Badge ────────────────────────── */
 
-.responseTimeBadge {
+.response-time-badge {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
-.responseTimeDot {
+.response-time-dot {
   display: inline-block;
   width: 5px;
   height: 5px;
@@ -248,29 +248,29 @@
   flex-shrink: 0;
 }
 
-.responseTimeDot[data-tier="success"] {
+.response-time-dot[data-tier="success"] {
   background: var(--color-success);
   box-shadow: 0 0 4px var(--color-success);
 }
 
-.responseTimeDot[data-tier="info"] {
+.response-time-dot[data-tier="info"] {
   background: var(--color-info);
   box-shadow: 0 0 4px var(--color-info);
 }
 
-.responseTimeDot[data-tier="warning"] {
+.response-time-dot[data-tier="warning"] {
   background: var(--color-warning);
   box-shadow: 0 0 4px var(--color-warning);
 }
 
-.responseTimeDot[data-tier="error"] {
+.response-time-dot[data-tier="error"] {
   background: var(--color-danger);
   box-shadow: 0 0 4px var(--color-danger);
 }
 
 /* ── Metric Badge ───────────────────────────────── */
 
-.metricBadge {
+.metric-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -287,102 +287,102 @@
   border: 1px solid var(--calculated-border-color);
 }
 
-.metricBadge:hover {
+.metric-badge:hover {
   border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
   color: var(--text-primary);
 }
 
-.metricIcon {
+.metric-icon {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
 }
 
-.metricIcon svg {
+.metric-icon svg {
   display: block;
 }
 
-.miniMetric {
+.mini-metric {
   padding: 1px 5px;
   font-size: 0.5625rem;
   gap: 3px;
 }
 
 .green {
-  color: rgb(16, 185, 129);
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.2);
+  color: oklch(0.701 0.1715 160.1);
+  background: oklch(0.701 0.1715 160.1 / 0.08);
+  border-color: oklch(0.701 0.1715 160.1 / 0.2);
 }
 .green:hover {
-  border-color: rgba(16, 185, 129, 0.45);
-  background: rgba(16, 185, 129, 0.12);
+  border-color: oklch(0.701 0.1715 160.1 / 0.45);
+  background: oklch(0.701 0.1715 160.1 / 0.12);
 }
 
 .blue {
-  color: rgb(96, 165, 250);
-  background: rgba(96, 165, 250, 0.08);
-  border-color: rgba(96, 165, 250, 0.2);
+  color: oklch(0.704 0.158 269.1);
+  background: oklch(0.704 0.158 269.1 / 0.08);
+  border-color: oklch(0.704 0.158 269.1 / 0.2);
 }
 .blue:hover {
-  border-color: rgba(96, 165, 250, 0.45);
-  background: rgba(96, 165, 250, 0.12);
+  border-color: oklch(0.704 0.158 269.1 / 0.45);
+  background: oklch(0.704 0.158 269.1 / 0.12);
 }
 
 .amber {
-  color: rgb(245, 158, 11);
-  background: rgba(245, 158, 11, 0.08);
-  border-color: rgba(245, 158, 11, 0.2);
+  color: oklch(0.774 0.1784 79.8);
+  background: oklch(0.774 0.1784 79.8 / 0.08);
+  border-color: oklch(0.774 0.1784 79.8 / 0.2);
 }
 .amber:hover {
-  border-color: rgba(245, 158, 11, 0.45);
-  background: rgba(245, 158, 11, 0.12);
+  border-color: oklch(0.774 0.1784 79.8 / 0.45);
+  background: oklch(0.774 0.1784 79.8 / 0.12);
 }
 
 .cyan {
-  color: rgb(34, 211, 238);
-  background: rgba(34, 211, 238, 0.08);
-  border-color: rgba(34, 211, 238, 0.2);
+  color: oklch(0.794 0.1289 216.3);
+  background: oklch(0.794 0.1289 216.3 / 0.08);
+  border-color: oklch(0.794 0.1289 216.3 / 0.2);
 }
 .cyan:hover {
-  border-color: rgba(34, 211, 238, 0.45);
-  background: rgba(34, 211, 238, 0.12);
+  border-color: oklch(0.794 0.1289 216.3 / 0.45);
+  background: oklch(0.794 0.1289 216.3 / 0.12);
 }
 
 .red {
-  color: rgb(248, 113, 113);
-  background: rgba(248, 113, 113, 0.08);
-  border-color: rgba(248, 113, 113, 0.2);
+  color: oklch(0.711 0.1661 22.2);
+  background: oklch(0.711 0.1661 22.2 / 0.08);
+  border-color: oklch(0.711 0.1661 22.2 / 0.2);
 }
 .red:hover {
-  border-color: rgba(248, 113, 113, 0.45);
-  background: rgba(248, 113, 113, 0.12);
+  border-color: oklch(0.711 0.1661 22.2 / 0.45);
+  background: oklch(0.711 0.1661 22.2 / 0.12);
 }
 
 .purple {
-  color: rgb(167, 139, 250);
-  background: rgba(167, 139, 250, 0.08);
-  border-color: rgba(167, 139, 250, 0.2);
+  color: oklch(0.697 0.2017 302.4);
+  background: oklch(0.697 0.2017 302.4 / 0.08);
+  border-color: oklch(0.697 0.2017 302.4 / 0.2);
 }
 .purple:hover {
-  border-color: rgba(167, 139, 250, 0.45);
-  background: rgba(167, 139, 250, 0.12);
+  border-color: oklch(0.697 0.2017 302.4 / 0.45);
+  background: oklch(0.697 0.2017 302.4 / 0.12);
 }
 
-.customMetric {
+.custom-metric {
   color: var(--metric-color);
   background: color-mix(in srgb, var(--metric-color) 8%, transparent);
   border-color: color-mix(in srgb, var(--metric-color) 20%, transparent);
 }
-.customMetric:hover {
+.custom-metric:hover {
   border-color: color-mix(in srgb, var(--metric-color) 45%, transparent);
   background: color-mix(in srgb, var(--metric-color) 12%, transparent);
 }
 
-.isTweeningMetric {
-  animation: metricHueRotate 0.6s linear;
+.is-tweening-metric {
+  animation: metric-hue-rotate 0.6s linear;
 }
 
-@keyframes metricHueRotate {
+@keyframes metric-hue-rotate {
   0%   { filter: hue-rotate(0deg); }
   50%  { filter: hue-rotate(60deg); }
   100% { filter: hue-rotate(0deg); }
@@ -390,7 +390,7 @@
 
 /* ── Date Time Badge ────────────────────────────── */
 
-.dateTimeBadge {
+.date-time-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -407,24 +407,24 @@
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
-.dateTimeBadge:hover {
+.date-time-badge:hover {
   border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
   color: var(--text-primary);
 }
 
-.dateTimeIcon {
+.date-time-icon {
   flex-shrink: 0;
   opacity: 0.5;
 }
 
-.justNow {
+.just-now {
   color: var(--accent-primary);
   border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
   background: color-mix(in srgb, var(--accent-primary) 12%, var(--background-elevated));
-  animation: justNowPulse 2s ease-in-out infinite;
+  animation: just-now-pulse 2s ease-in-out infinite;
 }
 
-@keyframes justNowPulse {
+@keyframes just-now-pulse {
   0%, 100% {
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary) 30%, transparent);
   }
@@ -433,11 +433,11 @@
   }
 }
 
-.justNowFadeOut {
-  animation: justNowFade 1s ease-out forwards;
+.just-now-fade-out {
+  animation: just-now-fade 1s ease-out forwards;
 }
 
-@keyframes justNowFade {
+@keyframes just-now-fade {
   0% {
     color: var(--accent-primary);
     border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);

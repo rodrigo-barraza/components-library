@@ -1,5 +1,5 @@
 /* ── Close Button (in-modal header) ── */
-.closeButton {
+.close-button {
   width: 32px;
   height: 32px;
   display: flex;
@@ -23,8 +23,8 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: oklch(1 0 0 / 0.1);
+  border: 1px solid oklch(1 0 0 / 0.15);
   border-radius: 50%;
   color: #fff;
   width: 40px;
@@ -32,6 +32,6 @@
   z-index: 10;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: oklch(1 0 0 / 0.2);
   }
 }

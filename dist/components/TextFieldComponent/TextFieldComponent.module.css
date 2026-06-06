@@ -17,7 +17,7 @@
 
 /* ── Root container ──────────────────────────────── */
 
-.textField {
+.text-field {
   display: inline-flex;
   flex-direction: column;
   width: 100%;
@@ -27,7 +27,7 @@
 
 /* ── Field container (the 56px box) ──────────────── */
 
-.fieldContainer {
+.field-container {
   position: relative;
   display: flex;
   align-items: center;
@@ -38,17 +38,17 @@
 
 /* ── Filled variant ──────────────────────────────── */
 
-.filled .fieldContainer {
+.filled .field-container {
   background: var(--surface-container-highest, var(--calculated-select-background-color));
   border-radius: var(--border-radius-sm, 4px) var(--border-radius-sm, 4px) 0 0;
 }
 
-.filled .fieldContainer:hover {
+.filled .field-container:hover {
   background: color-mix(in srgb, var(--text-primary, #1c1b1f) 8%, var(--surface-container-highest, var(--calculated-select-background-color)));
 }
 
 /* Active indicator — the bottom line for filled variant */
-.activeIndicator {
+.active-indicator {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -62,25 +62,25 @@
   pointer-events: none;
 }
 
-.fieldContainer:hover .activeIndicator {
+.field-container:hover .active-indicator {
   background: var(--text-primary, #1c1b1f);
 }
 
 /* Focused: thick indicator in primary */
-.focused .activeIndicator {
+.focused .active-indicator {
   height: 3px;
   background: var(--accent-primary, #6750a4);
 }
 
 /* ── Outlined variant ────────────────────────────── */
 
-.outlined .fieldContainer {
+.outlined .field-container {
   background: transparent;
   border-radius: var(--border-radius-sm, 4px);
 }
 
 /* Outline border — uses a fieldset trick for the notch, but CSS-only approach */
-.outlineBorder {
+.outline-border {
   position: absolute;
   inset: 0;
   border: 1px solid var(--calculated-border-color, #79747e);
@@ -91,17 +91,17 @@
     border-width 0.15s ease;
 }
 
-.outlined .fieldContainer:hover .outlineBorder {
+.outlined .field-container:hover .outline-border {
   border-color: var(--text-primary, #1c1b1f);
 }
 
-.outlined.focused .outlineBorder {
+.outlined.focused .outline-border {
   border-color: var(--accent-primary, #6750a4);
   border-width: 2px;
 }
 
 /* Notch cutout — the gap in the top border for the floating label */
-.outlineNotch {
+.outline-notch {
   position: absolute;
   top: -1px;
   height: 2px;
@@ -114,19 +114,19 @@
   opacity: 0;
 }
 
-.outlined.populated .outlineNotch,
-.outlined.focused .outlineNotch {
+.outlined.populated .outline-notch,
+.outlined.focused .outline-notch {
   opacity: 1;
 }
 
-.outlined.focused .outlineNotch {
+.outlined.focused .outline-notch {
   top: -2px;
   height: 3px;
 }
 
 /* ── Input content area ──────────────────────────── */
 
-.inputWrapper {
+.input-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -137,21 +137,21 @@
 }
 
 /* Padding adjusts for label presence */
-.filled .inputWrapper {
+.filled .input-wrapper {
   padding: 8px 16px 8px 16px;
 }
 
-.outlined .inputWrapper {
+.outlined .input-wrapper {
   padding: 8px 16px;
 }
 
 /* When label is present and floating, add top padding for filled */
-.filled.hasLabel .inputWrapper {
+.filled.has-label .input-wrapper {
   padding-top: 24px;
   padding-bottom: 8px;
 }
 
-.outlined.hasLabel .inputWrapper {
+.outlined.has-label .input-wrapper {
   padding-top: 20px;
   padding-bottom: 8px;
 }
@@ -183,7 +183,7 @@
 }
 
 /* Adjust label left for leading icon */
-.hasLeadingIcon .label {
+.has-leading-icon .label {
   left: 52px;
 }
 
@@ -206,8 +206,8 @@
   padding: 0 4px;
 }
 
-.hasLeadingIcon.outlined.focused .label,
-.hasLeadingIcon.outlined.populated .label {
+.has-leading-icon.outlined.focused .label,
+.has-leading-icon.outlined.populated .label {
   left: 12px;
 }
 
@@ -250,7 +250,7 @@
 }
 
 /* When there's no label, always show placeholder */
-.textField:not(.hasLabel) .input::placeholder {
+.text-field:not(.has-label) .input::placeholder {
   opacity: 1;
 }
 
@@ -288,7 +288,7 @@
   transition-delay: 0.05s;
 }
 
-.textField:not(.hasLabel) .textarea::placeholder {
+.text-field:not(.has-label) .textarea::placeholder {
   opacity: 1;
 }
 
@@ -299,8 +299,8 @@
 
 /* ── Icons ───────────────────────────────────────── */
 
-.leadingIcon,
-.trailingIcon {
+.leading-icon,
+.trailing-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,22 +311,22 @@
   transition: color 0.15s ease;
 }
 
-.leadingIcon {
+.leading-icon {
   margin-left: 12px;
 }
 
-.trailingIcon {
+.trailing-icon {
   margin-right: 12px;
   cursor: pointer;
 }
 
-.trailingIcon:hover {
+.trailing-icon:hover {
   color: var(--text-primary, #1c1b1f);
 }
 
 /* ── Supporting text ─────────────────────────────── */
 
-.supportingText {
+.supporting-text {
   display: flex;
   justify-content: space-between;
   padding: 4px 16px 0;
@@ -336,7 +336,7 @@
   min-height: 20px;
 }
 
-.supportingText span {
+.supporting-text span {
   display: block;
 }
 
@@ -356,24 +356,24 @@
 }
 
 /* Filled error */
-.error.filled .activeIndicator {
+.error.filled .active-indicator {
   background: var(--error-color, #b3261e);
 }
 
-.error.filled.focused .activeIndicator {
+.error.filled.focused .active-indicator {
   background: var(--error-color, #b3261e);
 }
 
 /* Outlined error */
-.error .outlineBorder {
+.error .outline-border {
   border-color: var(--error-color, #b3261e);
 }
 
-.error.outlined .fieldContainer:hover .outlineBorder {
+.error.outlined .field-container:hover .outline-border {
   border-color: color-mix(in srgb, var(--error-color, #b3261e) 80%, var(--text-primary));
 }
 
-.error.outlined.focused .outlineBorder {
+.error.outlined.focused .outline-border {
   border-color: var(--error-color, #b3261e);
 }
 
@@ -383,41 +383,41 @@
   caret-color: var(--error-color, #b3261e);
 }
 
-.error .trailingIcon {
+.error .trailing-icon {
   color: var(--error-color, #b3261e);
 }
 
-.error .supportingText {
+.error .supporting-text {
   color: var(--error-color, #b3261e);
 }
 
 /* ── Disabled state ──────────────────────────────── */
 
-.isDisabledState {
+.is-disabled-state {
   pointer-events: none;
 }
 
-.isDisabledState .fieldContainer {
+.is-disabled-state .field-container {
   opacity: 0.38;
 }
 
-.isDisabledState .supportingText {
+.is-disabled-state .supporting-text {
   opacity: 0.38;
 }
 
-.isDisabledState.filled .fieldContainer {
+.is-disabled-state.filled .field-container {
   background: color-mix(in srgb, var(--text-primary, #1c1b1f) 4%, transparent);
 }
 
-.isDisabledState .activeIndicator {
+.is-disabled-state .active-indicator {
   background: color-mix(in srgb, var(--text-primary, #1c1b1f) 38%, transparent);
 }
 
-.isDisabledState .outlineBorder {
+.is-disabled-state .outline-border {
   border-color: color-mix(in srgb, var(--text-primary, #1c1b1f) 12%, transparent);
 }
 
-.isDisabledState .label {
+.is-disabled-state .label {
   color: color-mix(in srgb, var(--text-primary, #1c1b1f) 38%, transparent);
 }
 
@@ -439,8 +439,8 @@
 .focused .suffix,
 .populated .prefix,
 .populated .suffix,
-.textField:not(.hasLabel) .prefix,
-.textField:not(.hasLabel) .suffix {
+.text-field:not(.has-label) .prefix,
+.text-field:not(.has-label) .suffix {
   opacity: 1;
 }
 
@@ -454,7 +454,7 @@
 
 /* ── Input row layout ────────────────────────────── */
 
-.inputRow {
+.input-row {
   display: flex;
   align-items: center;
   width: 100%;
@@ -463,7 +463,7 @@
 
 /* ── Focus ring for keyboard navigation ──────────── */
 
-.fieldContainer:focus-visible {
+.field-container:focus-visible {
   outline: 2px solid var(--accent-primary, #6750a4);
   outline-offset: 2px;
 }

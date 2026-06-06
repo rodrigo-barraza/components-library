@@ -8,10 +8,10 @@ import SoundService from "../../services/SoundService.js";
 export default function IconButtonComponent({ icon, onClick, tooltip, variant = "default", active = false, hoverReveal = false, disabled = false, className, ...rest }) {
     const { sound } = useComponents();
     const classes = [
-        styles.iconButton,
+        styles['icon-button'],
         variant === "destructive" ? styles.destructive : "",
-        active ? styles.isActiveState : "",
-        hoverReveal ? styles.hoverReveal : "",
+        active ? styles['is-active-state'] : "",
+        hoverReveal ? styles['hover-reveal'] : "",
         className || "",
     ]
         .filter(Boolean)

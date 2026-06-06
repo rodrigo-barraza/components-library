@@ -13,20 +13,20 @@ const SIZE_CLASS_MAP = {
 const InputComponent = forwardRef(function InputComponent({ type = "text", value, onChange, placeholder, disabled = false, readOnly = false, className = "", id, icon: Icon, size = "md", label = null, ...rest }, ref) {
     const sizeClassName = useMemo(() => {
         const mappedClass = SIZE_CLASS_MAP[size ?? "md"];
-        return mappedClass ? styles[mappedClass] : styles.sizeMedium;
+        return mappedClass ? styles[mappedClass] : styles['size-medium'];
     }, [size]);
     const classes = [
         styles.wrapper,
         sizeClassName,
-        disabled ? styles.isDisabledState : "",
-        Icon ? styles.hasIcon : "",
+        disabled ? styles['is-disabled-state'] : "",
+        Icon ? styles['has-icon'] : "",
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    const inputEl = (_jsxs("div", { className: classes, children: [Icon && (_jsx("span", { className: styles.iconSlot, children: _jsx(Icon, { size: size === "sm" ? 12 : size === "lg" ? 18 : 14 }) })), _jsx("input", { ref: ref, id: id, type: type, className: styles.input, value: value, onChange: onChange, placeholder: placeholder, disabled: disabled, readOnly: readOnly, ...rest })] }));
+    const inputEl = (_jsxs("div", { className: classes, children: [Icon && (_jsx("span", { className: styles['icon-slot'], children: _jsx(Icon, { size: size === "sm" ? 12 : size === "lg" ? 18 : 14 }) })), _jsx("input", { ref: ref, id: id, type: type, className: styles.input, value: value, onChange: onChange, placeholder: placeholder, disabled: disabled, readOnly: readOnly, ...rest })] }));
     if (label) {
-        return (_jsxs("div", { className: styles.labelWrapper, children: [_jsx("span", { className: styles.label, children: label }), inputEl] }));
+        return (_jsxs("div", { className: styles['label-wrapper'], children: [_jsx("span", { className: styles.label, children: label }), inputEl] }));
     }
     return inputEl;
 });

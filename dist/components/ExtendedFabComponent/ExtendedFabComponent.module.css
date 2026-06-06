@@ -9,7 +9,7 @@
  */
 
 /* ── Container ────────────────────────────────────────────── */
-.extendedFab {
+.extended-fab {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -33,8 +33,8 @@
 
   /* Elevation level 3 (resting) */
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
 
   /* Smooth transitions */
   transition:
@@ -57,7 +57,7 @@
 }
 
 /* ── State Layer (pseudo-element for M3 state overlay) ───── */
-.extendedFab::before {
+.extended-fab::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -69,13 +69,13 @@
 }
 
 /* ── Focus ring (visible keyboard focus only) ────────────── */
-.extendedFab:focus-visible {
+.extended-fab:focus-visible {
   outline: 3px solid var(--accent-primary, #6750A4);
   outline-offset: 2px;
 }
 
 /* ── Disabled state ──────────────────────────────────────── */
-.extendedFab:disabled {
+.extended-fab:disabled {
   cursor: not-allowed;
   box-shadow: none;
   opacity: 0.38;
@@ -109,14 +109,14 @@
  * Per M3: Extended FABs can collapse to a standard FAB when
  * the user scrolls down, keeping only the icon.
  * ═══════════════════════════════════════════════════════════ */
-.isCollapsedState {
+.is-collapsed-state {
   min-width: 56px;
   width: 56px;
   padding: 0 16px;
   gap: 0;
 }
 
-.isCollapsedState .label {
+.is-collapsed-state .label {
   max-width: 0;
   opacity: 0;
   overflow: hidden;
@@ -139,8 +139,8 @@
 /* Hover: state-layer 8%, elevation 4 */
 .primary:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
 .primary:hover:not(:disabled)::before {
@@ -159,8 +159,8 @@
 
 .primary:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.98);
 }
 
@@ -176,8 +176,8 @@
 
 .secondary:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
 .secondary:hover:not(:disabled)::before {
@@ -194,8 +194,8 @@
 
 .secondary:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.98);
 }
 
@@ -211,8 +211,8 @@
 
 .tertiary:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
 .tertiary:hover:not(:disabled)::before {
@@ -229,8 +229,8 @@
 
 .tertiary:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.98);
 }
 
@@ -246,8 +246,8 @@
 
 .surface:hover:not(:disabled) {
   box-shadow:
-    0px 2px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+    0px 2px 3px 0px oklch(0 0 0 / 0.3),
+    0px 6px 10px 4px oklch(0 0 0 / 0.15);
 }
 
 .surface:hover:not(:disabled)::before {
@@ -264,8 +264,8 @@
 
 .surface:active:not(:disabled) {
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: scale(0.98);
 }
 
@@ -286,20 +286,20 @@
  * ═══════════════════════════════════════════════════════════ */
 .lowered {
   box-shadow:
-    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
-    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    0px 1px 2px 0px oklch(0 0 0 / 0.3),
+    0px 1px 3px 1px oklch(0 0 0 / 0.15);
 }
 
 .lowered:hover:not(:disabled) {
   box-shadow:
-    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
-    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+    0px 1px 2px 0px oklch(0 0 0 / 0.3),
+    0px 2px 6px 2px oklch(0 0 0 / 0.15);
 }
 
 .lowered:active:not(:disabled) {
   box-shadow:
-    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
-    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    0px 1px 2px 0px oklch(0 0 0 / 0.3),
+    0px 1px 3px 1px oklch(0 0 0 / 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -336,8 +336,8 @@
  * Reduced motion — respect user preference
  * ═══════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .extendedFab,
-  .extendedFab::before,
+  .extended-fab,
+  .extended-fab::before,
   .label,
   .icon {
     transition-duration: 0ms !important;

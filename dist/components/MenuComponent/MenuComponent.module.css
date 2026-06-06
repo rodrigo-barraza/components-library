@@ -35,8 +35,8 @@
 
   /* M3 elevation level 2 */
   box-shadow:
-    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
-    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+    0px 1px 2px 0px oklch(0 0 0 / 0.3),
+    0px 2px 6px 2px oklch(0 0 0 / 0.15);
 
   /* Initial hidden state — transform origin set via JS */
   opacity: 0;
@@ -51,7 +51,7 @@
 
   /* Scrollbar styling */
   scrollbar-width: thin;
-  scrollbar-color: var(--border-secondary, rgba(255, 255, 255, 0.08)) transparent;
+  scrollbar-color: var(--border-secondary, oklch(1 0 0 / 0.08)) transparent;
 }
 
 /* Visible state */
@@ -70,28 +70,28 @@
 }
 
 /* ── Position variants ─────────────────────────────────────────── */
-.positionBottomStart {
+.position-bottom-start {
   top: 100%;
   left: 0;
   margin-top: 4px;
   transform-origin: top left;
 }
 
-.positionBottomEnd {
+.position-bottom-end {
   top: 100%;
   right: 0;
   margin-top: 4px;
   transform-origin: top right;
 }
 
-.positionTopStart {
+.position-top-start {
   bottom: 100%;
   left: 0;
   margin-bottom: 4px;
   transform-origin: bottom left;
 }
 
-.positionTopEnd {
+.position-top-end {
   bottom: 100%;
   right: 0;
   margin-bottom: 4px;
@@ -99,7 +99,7 @@
 }
 
 /* Width match trigger */
-.matchWidth {
+.match-width {
   min-width: 100%;
 }
 
@@ -109,7 +109,7 @@
  * Height: 48px (single-line) · Padding: 0 12px
  * Typography: body-large (16/24, weight 400)
  * ═══════════════════════════════════════════════════════════════════ */
-.menuItem {
+.menu-item {
   position: relative;
   display: flex;
   align-items: center;
@@ -139,7 +139,7 @@
 }
 
 /* ── State layer (::before) ────────────────────────────────────── */
-.menuItem::before {
+.menu-item::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -151,45 +151,45 @@
 }
 
 /* Hover: 8% state layer */
-.menuItem:hover:not(:disabled)::before {
+.menu-item:hover:not(:disabled)::before {
   opacity: 0.08;
 }
 
 /* Focus: 10% state layer */
-.menuItem:focus-visible::before {
+.menu-item:focus-visible::before {
   opacity: 0.10;
 }
 
 /* Pressed: 10% state layer */
-.menuItem:active:not(:disabled)::before {
+.menu-item:active:not(:disabled)::before {
   opacity: 0.10;
 }
 
 /* ── Focus ring ────────────────────────────────────────────────── */
-.menuItem:focus-visible {
+.menu-item:focus-visible {
   outline: none;
 }
 
 /* ── Disabled state ────────────────────────────────────────────── */
-.menuItem:disabled {
+.menu-item:disabled {
   opacity: 0.38;
   cursor: default;
   pointer-events: none;
 }
 
 /* ── Selected state (for selectable menus) ─────────────────────── */
-.menuItemSelected::before {
+.menu-item-selected::before {
   opacity: 0.08;
 }
 
-.menuItemSelected:hover:not(:disabled)::before {
+.menu-item-selected:hover:not(:disabled)::before {
   opacity: 0.12;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
  * LEADING ICON — 24×24, on-surface-variant color
  * ═══════════════════════════════════════════════════════════════════ */
-.leadingIcon {
+.leading-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -216,7 +216,7 @@
  * TRAILING ELEMENT — text or icon on the right
  * M3: trailing text uses body-large, on-surface-variant color
  * ═══════════════════════════════════════════════════════════════════ */
-.trailingText {
+.trailing-text {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
@@ -230,7 +230,7 @@
   white-space: nowrap;
 }
 
-.trailingIcon {
+.trailing-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -244,7 +244,7 @@
 /* ═══════════════════════════════════════════════════════════════════
  * SUBMENU ARROW — chevron for cascading submenus
  * ═══════════════════════════════════════════════════════════════════ */
-.submenuArrow {
+.submenu-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -264,7 +264,7 @@
   width: 100%;
   height: 1px;
   margin: 8px 0;
-  background-color: var(--border-primary, rgba(255, 255, 255, 0.06));
+  background-color: var(--border-primary, oklch(1 0 0 / 0.06));
   flex-shrink: 0;
 }
 
@@ -272,7 +272,7 @@
  * GROUP LABEL — Optional header for a group of menu items
  * M3: label-large typography, on-surface-variant color
  * ═══════════════════════════════════════════════════════════════════ */
-.groupLabel {
+.group-label {
   display: flex;
   align-items: center;
   padding: 8px 12px 4px;
@@ -289,12 +289,12 @@
 /* ═══════════════════════════════════════════════════════════════════
  * SUBMENU CONTAINER — nested menu that opens to the side
  * ═══════════════════════════════════════════════════════════════════ */
-.submenuAnchor {
+.submenu-anchor {
   position: relative;
   width: 100%;
 }
 
-.submenuSurface {
+.submenu-surface {
   position: absolute;
   top: -8px;
   left: 100%;
@@ -311,8 +311,8 @@
   color: var(--text-primary, #1D1B20);
 
   box-shadow:
-    0px 1px 2px 0px rgba(0, 0, 0, 0.30),
-    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+    0px 1px 2px 0px oklch(0 0 0 / 0.3),
+    0px 2px 6px 2px oklch(0 0 0 / 0.15);
 
   /* Hidden by default */
   opacity: 0;
@@ -325,7 +325,7 @@
     transform 120ms cubic-bezier(0.0, 0.0, 0.2, 1);
 }
 
-.submenuSurface[data-open="true"] {
+.submenu-surface[data-open="true"] {
   opacity: 1;
   transform: scaleX(1) scaleY(1);
   pointer-events: auto;
@@ -363,8 +363,8 @@
  * ═══════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   .surface,
-  .submenuSurface,
-  .menuItem::before {
+  .submenu-surface,
+  .menu-item::before {
     transition-duration: 0ms !important;
     animation-duration: 0ms !important;
   }

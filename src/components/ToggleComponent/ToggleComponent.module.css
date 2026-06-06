@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 
-.toggle.isDisabledState {
+.toggle.is-disabled-state {
   opacity: 0.4;
   cursor: not-allowed;
 }
@@ -31,18 +31,18 @@
 }
 
 .track:hover {
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: oklch(0.566 0.2532 291.3 / 0.3);
 }
 
-.track.isActiveState {
+.track.is-active-state {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   filter: hue-rotate(0deg);
-  animation: rainbowHue 4s linear infinite;
+  animation: rainbow-hue 4s linear infinite;
   will-change: filter;
 }
 
-@keyframes rainbowHue {
+@keyframes rainbow-hue {
   to {
     filter: hue-rotate(360deg);
   }
@@ -60,16 +60,16 @@
   transition:
     transform 0.12s,
     background 0.12s;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px oklch(0 0 0 / 0.2);
 }
 
-.track.isActiveState .knob {
+.track.is-active-state .knob {
   transform: translateX(18px);
   background: #fff;
 }
 
 /* Hidden checkbox for accessibility */
-.hiddenInput {
+.hidden-input {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -103,7 +103,7 @@
   height: 10px;
 }
 
-.mini .track.isActiveState .knob {
+.mini .track.is-active-state .knob {
   transform: translateX(14px);
 }
 

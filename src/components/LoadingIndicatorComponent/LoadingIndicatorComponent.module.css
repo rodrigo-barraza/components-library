@@ -23,7 +23,7 @@
 
 /* ── SVG canvas ──────────────────────────────────────── */
 
-.circularSvg {
+.circular-svg {
   width: 100%;
   height: 100%;
   /* M3 indeterminate: continuous rotation at 1080°/3s */
@@ -32,7 +32,7 @@
 
 /* ── Track circle (background ring) ──────────────────── */
 
-.circularTrack {
+.circular-track {
   fill: none;
   stroke: var(--loading-indicator-track-color,
     color-mix(in srgb, var(--accent-primary, #6750a4) 20%, transparent));
@@ -43,7 +43,7 @@
 
 /* ── Active indicator (animated arc) ─────────────────── */
 
-.circularIndicator {
+.circular-indicator {
   fill: none;
   stroke: var(--loading-indicator-color, var(--accent-primary, #6750a4));
   stroke-width: var(--loading-indicator-stroke-width, 4);
@@ -57,11 +57,11 @@
 /* Two-phase: container rotates continuously while the    */
 /* arc stretches and contracts (dash animation).          */
 
-.circularIndeterminate .circularSvg {
+.circular-indeterminate .circular-svg {
   animation: circular-rotate 1.568s linear infinite;
 }
 
-.circularIndeterminate .circularIndicator {
+.circular-indeterminate .circular-indicator {
   animation: circular-dash 1.568s ease-in-out infinite;
   /* Starting state — tiny visible arc */
   stroke-dasharray: 1, 200;
@@ -100,17 +100,17 @@
 
 /* ── Size variants ───────────────────────────────────── */
 
-.sizeSmall {
+.size-small {
   --loading-indicator-size: 24px;
   --loading-indicator-stroke-width: 3;
 }
 
-.sizeMedium {
+.size-medium {
   --loading-indicator-size: 48px;
   --loading-indicator-stroke-width: 4;
 }
 
-.sizeLarge {
+.size-large {
   --loading-indicator-size: 64px;
   --loading-indicator-stroke-width: 4.5;
 }
@@ -136,7 +136,7 @@
 
 /* ── Active indicator (fill bar) ─────────────────────── */
 
-.linearIndicator {
+.linear-indicator {
   position: absolute;
   top: 0;
   left: 0;
@@ -151,7 +151,7 @@
 /* ── Buffer layer (e.g. media loading) ───────────────── */
 /* Sits behind active indicator at reduced opacity         */
 
-.linearBuffer {
+.linear-buffer {
   position: absolute;
   top: 0;
   left: 0;
@@ -167,7 +167,7 @@
 /* ── Stop indicator — M3 end-stop dot ────────────────── */
 /* Visible in determinate mode to mark the end of fill    */
 
-.linearStop {
+.linear-stop {
   position: absolute;
   top: 50%;
   right: 0;
@@ -181,7 +181,7 @@
 }
 
 /* Show stop indicator once progress begins */
-.linearStop.isVisibleState {
+.linear-stop.is-visible-state {
   opacity: 1;
 }
 
@@ -189,19 +189,19 @@
 /* M3 sliding bar animation — two bars that slide and     */
 /* grow/shrink across the track asynchronously.           */
 
-.linearIndeterminate .linearIndicator {
+.linear-indeterminate .linear-indicator {
   width: 100%;
   animation: none;
 }
 
 /* Primary bar */
-.linearBar1 {
+.linear-bar1 {
   animation: linear-indeterminate-bar1 2s linear infinite;
   transform-origin: left center;
 }
 
 /* Secondary bar — offset timing for continuous feel */
-.linearBar2 {
+.linear-bar2 {
   animation: linear-indeterminate-bar2 2s linear infinite;
   transform-origin: left center;
 }
@@ -253,15 +253,15 @@
 
 /* ── Linear size variants ────────────────────────────── */
 
-.trackThin {
+.track-thin {
   --loading-indicator-track-height: 2px;
 }
 
-.trackDefault {
+.track-default {
   --loading-indicator-track-height: 4px;
 }
 
-.trackThick {
+.track-thick {
   --loading-indicator-track-height: 8px;
 }
 
@@ -272,31 +272,31 @@
 
 /* ── Color variants ──────────────────────────────────── */
 
-.colorPrimary {
+.color-primary {
   --loading-indicator-color: var(--accent-primary, #6750a4);
   --loading-indicator-track-color:
     color-mix(in srgb, var(--accent-primary, #6750a4) 20%, transparent);
 }
 
-.colorSecondary {
+.color-secondary {
   --loading-indicator-color: var(--text-secondary, #625b71);
   --loading-indicator-track-color:
     color-mix(in srgb, var(--text-secondary, #625b71) 20%, transparent);
 }
 
-.colorTertiary {
+.color-tertiary {
   --loading-indicator-color: var(--tertiary-color, #7d5260);
   --loading-indicator-track-color:
     color-mix(in srgb, var(--tertiary-color, #7d5260) 20%, transparent);
 }
 
-.colorError {
+.color-error {
   --loading-indicator-color: var(--error-color, #b3261e);
   --loading-indicator-track-color:
     color-mix(in srgb, var(--error-color, #b3261e) 20%, transparent);
 }
 
-.colorInherit {
+.color-inherit {
   --loading-indicator-color: currentColor;
   --loading-indicator-track-color:
     color-mix(in srgb, currentColor 20%, transparent);
@@ -329,11 +329,11 @@
   pointer-events: none;
 }
 
-.sizeSmall .percentage {
+.size-small .percentage {
   font-size: 8px;
 }
 
-.sizeLarge .percentage {
+.size-large .percentage {
   font-size: 14px;
 }
 
@@ -345,19 +345,19 @@
   align-items: center;
 }
 
-.wrapperLinear {
+.wrapper-linear {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.wrapperLinear .label {
+.wrapper-linear .label {
   text-align: start;
 }
 
 /* ── Fade-in entrance ────────────────────────────────── */
 
-.fadeIn {
+.fade-in {
   animation: loading-fade-in 0.3s ease-out;
 }
 
@@ -369,16 +369,16 @@
 /* ── Reduced motion ──────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .circularSvg,
-  .circularIndicator,
-  .linearIndicator,
-  .linearBar1,
-  .linearBar2 {
+  .circular-svg,
+  .circular-indicator,
+  .linear-indicator,
+  .linear-bar1,
+  .linear-bar2 {
     animation-duration: 6s !important;
     transition-duration: 0.01ms !important;
   }
 
-  .fadeIn {
+  .fade-in {
     animation: none;
   }
 }

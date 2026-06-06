@@ -183,13 +183,13 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
     }, [isOpen]);
     // ── Variant class for trigger ─────────────────────────
     const variantMap = {
-        primary: styles.triggerPrimary,
-        secondary: styles.triggerSecondary,
-        tertiary: styles.triggerTertiary,
-        surface: styles.triggerSurface,
+        primary: styles['trigger-primary'],
+        secondary: styles['trigger-secondary'],
+        tertiary: styles['trigger-tertiary'],
+        surface: styles['trigger-surface'],
     };
     const containerClasses = [
-        styles.fabMenu,
+        styles['fab-menu'],
         fixed ? styles.fixed : "",
         className,
     ]
@@ -198,30 +198,30 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
     const triggerClasses = [
         styles.trigger,
         variantMap[variant] || variantMap.primary,
-        isOpen ? styles.isOpenState : "",
+        isOpen ? styles['is-open-state'] : "",
     ]
         .filter(Boolean)
         .join(" ");
     // ── Resolve trigger icon ──────────────────────────────
     const ActiveIcon = isOpen && CloseIcon ? CloseIcon : TriggerIcon;
     const shouldRotate = isOpen && !CloseIcon;
-    return (_jsxs(_Fragment, { children: [showScrim && (_jsx("div", { className: styles.scrim, "data-visible": isOpen, "aria-hidden": "true", onClick: close })), _jsxs("div", { ref: setContainerRef, className: containerClasses, onKeyDown: handleKeyDown, ...rest, children: [_jsx("div", { className: styles.itemsList, role: "menu", "aria-label": ariaLabel, "aria-hidden": !isOpen, children: items.map((item, index) => {
+    return (_jsxs(_Fragment, { children: [showScrim && (_jsx("div", { className: styles.scrim, "data-visible": isOpen, "aria-hidden": "true", onClick: close })), _jsxs("div", { ref: setContainerRef, className: containerClasses, onKeyDown: handleKeyDown, ...rest, children: [_jsx("div", { className: styles['items-list'], role: "menu", "aria-label": ariaLabel, "aria-hidden": !isOpen, children: items.map((item, index) => {
                             const ItemIcon = item.icon;
                             return (_jsxs("div", { className: [
-                                    styles.menuItem,
-                                    isOpen ? styles.menuItemVisible : "",
+                                    styles['menu-item'],
+                                    isOpen ? styles['menu-item-visible'] : "",
                                 ]
                                     .filter(Boolean)
-                                    .join(" "), children: [item.label && (_jsx("span", { className: styles.itemLabel, "aria-hidden": "true", children: item.label })), _jsx("button", { ref: (element) => {
+                                    .join(" "), children: [item.label && (_jsx("span", { className: styles['item-label'], "aria-hidden": "true", children: item.label })), _jsx("button", { ref: (element) => {
                                             itemRefs.current[index] = element;
-                                        }, className: styles.itemFab, role: "menuitem", tabIndex: isOpen ? 0 : -1, "aria-label": item.ariaLabel || item.label, onClick: (event) => handleItemClick(event, item), onMouseEnter: (event) => {
+                                        }, className: styles['item-fab'], role: "menuitem", tabIndex: isOpen ? 0 : -1, "aria-label": item.ariaLabel || item.label, onClick: (event) => handleItemClick(event, item), onMouseEnter: (event) => {
                                             if (sound)
                                                 SoundService.playHoverButton({ event });
-                                        }, children: ItemIcon && (_jsx("span", { className: styles.itemIcon, "aria-hidden": "true", children: _jsx(ItemIcon, { size: 24 }) })) })] }, index));
+                                        }, children: ItemIcon && (_jsx("span", { className: styles['item-icon'], "aria-hidden": "true", children: _jsx(ItemIcon, { size: 24 }) })) })] }, index));
                         }) }), _jsx("button", { ref: triggerRef, className: triggerClasses, type: "button", disabled: disabled, "aria-expanded": isOpen, "aria-haspopup": "menu", "aria-label": isOpen ? "Close menu" : ariaLabel, onClick: handleTriggerClick, onMouseEnter: (event) => {
                             if (sound)
                                 SoundService.playHoverButton({ event });
-                        }, children: _jsx("span", { className: styles.triggerIcon, style: shouldRotate
+                        }, children: _jsx("span", { className: styles['trigger-icon'], style: shouldRotate
                                 ? { transform: "rotate(45deg)" }
                                 : { transform: "rotate(0deg)" }, children: ActiveIcon ? (_jsx(ActiveIcon, { size: 24 })) : (
                             /* Default plus icon when no icon provided */

@@ -131,10 +131,10 @@ export default function NavigationDrawerComponent({
   const drawerClasses = [
     styles.drawer,
     styles[variant],
-    isEnd && styles.anchorEnd,
-    isModal && open && styles.isOpenState,
-    !isModal && !open && styles.isClosedState,
-    !ready && styles.noTransition,
+    isEnd && styles['anchor-end'],
+    isModal && open && styles['is-open-state'],
+    !isModal && !open && styles['is-closed-state'],
+    !ready && styles['no-transition'],
     className,
   ]
     .filter(Boolean)
@@ -160,7 +160,7 @@ export default function NavigationDrawerComponent({
     return (
       <>
         <div
-          className={`${styles.scrim}${open ? ` ${styles.isOpenState}` : ""}`}
+          className={`${styles.scrim}${open ? ` ${styles['is-open-state']}` : ""}`}
           onClick={onClose}
           aria-hidden="true"
         />
@@ -211,8 +211,8 @@ function DrawerItem({
 }: DrawerItemProps) {
   const classes = [
     styles.item,
-    active && styles.isActiveState,
-    disabled && styles.isDisabledState,
+    active && styles['is-active-state'],
+    disabled && styles['is-disabled-state'],
     className,
   ]
     .filter(Boolean)
@@ -220,9 +220,9 @@ function DrawerItem({
 
   const content = children || (
     <>
-      {Icon && <Icon size={24} className={styles.itemIcon} />}
-      <span className={styles.itemLabel}>{label}</span>
-      {badge != null && <span className={styles.itemBadge}>{badge}</span>}
+      {Icon && <Icon size={24} className={styles['item-icon']} />}
+      <span className={styles['item-label']}>{label}</span>
+      {badge != null && <span className={styles['item-badge']}>{badge}</span>}
     </>
   );
 
@@ -237,7 +237,7 @@ function DrawerItem({
   if (LinkComponent && href) {
     return (
       <LinkComponent href={href} onClick={onClick} {...sharedProps}>
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
         {content}
       </LinkComponent>
     );
@@ -247,7 +247,7 @@ function DrawerItem({
   if (href) {
     return (
       <a href={href} onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>} {...sharedProps}>
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
         {content}
       </a>
     );
@@ -261,7 +261,7 @@ function DrawerItem({
       disabled={disabled}
       {...sharedProps}
     >
-      <span className={styles.stateLayer} />
+      <span className={styles['state-layer']} />
       {content}
     </button>
   );
@@ -282,7 +282,7 @@ export interface DrawerSectionHeaderProps {
 function DrawerSectionHeader({ className, children }: DrawerSectionHeaderProps) {
   return (
     <div
-      className={`${styles.sectionHeader}${className ? ` ${className}` : ""}`}
+      className={`${styles['section-header']}${className ? ` ${className}` : ""}`}
       role="heading"
       aria-level={2}
     >

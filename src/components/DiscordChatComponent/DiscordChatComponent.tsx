@@ -260,14 +260,14 @@ const BADGE_ICONS = {
 function UserBadges({ badges }: { badges?: (string | DiscordBadge)[] }) {
   if (!badges?.length) return null;
   return (
-    <span className={styles.userBadges}>
+    <span className={styles['user-badges']}>
       {badges.map((badge: string | DiscordBadge) => {
         // badge can be a string ID or { id, label } object
         const id = typeof badge === "string" ? badge : badge.id;
         const icon = BADGE_ICONS[id as keyof typeof BADGE_ICONS];
         if (!icon) return null;
         return (
-          <span key={id} className={styles.badgeIcon} title={icon.label}>
+          <span key={id} className={styles['badge-icon']} title={icon.label}>
             <svg viewBox="0 0 20 20" fill={icon.color} width="18" height="18">
               <path d={icon.path} />
             </svg>
@@ -284,11 +284,11 @@ function UserBadges({ badges }: { badges?: (string | DiscordBadge)[] }) {
 function RoleTags({ roleTags }: { roleTags?: DiscordRoleTag[] }) {
   if (!roleTags?.length) return null;
   return (
-    <span className={styles.roleTags}>
+    <span className={styles['role-tags']}>
       {roleTags.map((tag: DiscordRoleTag) => (
         <span
           key={tag.name}
-          className={styles.roleTag}
+          className={styles['role-tag']}
           style={{
             "--role-color": tag.color || "#99aab5",
           } as React.CSSProperties}
@@ -298,14 +298,14 @@ function RoleTags({ roleTags }: { roleTags?: DiscordRoleTag[] }) {
             <img
               src={tag.iconUrl}
               alt=""
-              className={styles.roleTagIcon}
+              className={styles['role-tag-icon']}
               width={14}
               height={14}
               loading="lazy"
               draggable={false}
             />
           )}
-          <span className={styles.roleTagName}>{tag.name}</span>
+          <span className={styles['role-tag-name']}>{tag.name}</span>
         </span>
       ))}
     </span>
@@ -368,7 +368,7 @@ function formatContent(content: string | undefined, cleanContent: string | undef
           const [, animated, name, id] = rawEmojiMatch;
           return (
             <img key={i} src={emojiUrl(id, animated === "a")} alt={`:${name}:`}
-              title={`:${name}:`} className={styles.customEmoji} draggable={false} loading="lazy" />
+              title={`:${name}:`} className={styles['custom-emoji']} draggable={false} loading="lazy" />
           );
         }
         const cleanEmojiMatch = /^:(\w+):$/.exec(seg);
@@ -376,7 +376,7 @@ function formatContent(content: string | undefined, cleanContent: string | undef
           const emoji = emojiMap.get(cleanEmojiMatch[1])!;
           return (
             <img key={i} src={emojiUrl(emoji.id, emoji.animated)} alt={`:${emoji.name}:`}
-              title={`:${emoji.name}:`} className={styles.customEmoji} draggable={false} loading="lazy" />
+              title={`:${emoji.name}:`} className={styles['custom-emoji']} draggable={false} loading="lazy" />
           );
         }
         if (seg.startsWith("@")) {
@@ -444,10 +444,10 @@ function TenorEmbed({ url, tenorOembedUrl }: { url: string; tenorOembedUrl: stri
     return () => { cancelled = true; };
   }, [url, tenorOembedUrl]);
   if (error) return null;
-  if (!gifUrl) return <div className={styles.tenorPlaceholder}><div className={styles.tenorSpinner} /></div>;
+  if (!gifUrl) return <div className={styles['tenor-placeholder']}><div className={styles['tenor-spinner']} /></div>;
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className={styles.attachmentLink}>
-      <img src={gifUrl} alt="Tenor GIF" className={styles.tenorGif} loading="lazy" />
+    <a href={url} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
+      <img src={gifUrl} alt="Tenor GIF" className={styles['tenor-gif']} loading="lazy" />
     </a>
   );
 }
@@ -472,9 +472,9 @@ function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }
         if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
         if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
         return (
-          <a key={i} href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles.attachmentLink}>
+          <a key={i} href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
             <img src={imageSource} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
-              className={styles.attachmentImage} loading="lazy" />
+              className={styles['attachment-image']} loading="lazy" />
           </a>
         );
       })}
@@ -634,7 +634,7 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
   const activeBarIndex = Math.floor((progressPercent / 100) * bars.length);
 
   return (
-    <div className={styles.voicePlayer}>
+    <div className={styles['voice-player']}>
       <audio
         ref={audioRef}
         src={attachment.url}
@@ -644,47 +644,47 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
         onEnded={handleAudioEnded}
       />
       
-      <button className={styles.voicePlayButton} onClick={togglePlay} type="button">
+      <button className={styles['voice-play-button']} onClick={togglePlay} type="button">
         {playing ? (
-          <svg className={styles.voicePauseIcon} viewBox="0 0 24 24">
+          <svg className={styles['voice-pause-icon']} viewBox="0 0 24 24">
             <rect x="5" y="4" width="4" height="16" rx="1" />
             <rect x="15" y="4" width="4" height="16" rx="1" />
           </svg>
         ) : (
-          <svg className={styles.voicePlayIcon} viewBox="0 0 24 24">
+          <svg className={styles['voice-play-icon']} viewBox="0 0 24 24">
             <path d="M8 5v14l11-7z" />
           </svg>
         )}
       </button>
 
-      <div className={styles.voiceWaveform} onClick={handleWaveformClick}>
+      <div className={styles['voice-waveform']} onClick={handleWaveformClick}>
         {bars.map((height, barIndex) => {
           const isPlayed = barIndex <= activeBarIndex;
           return (
             <div
               key={barIndex}
-              className={`${styles.voiceWaveformBar} ${isPlayed ? styles.voiceWaveformBarPlayed : ""}`}
+              className={`${styles['voice-waveform-bar']} ${isPlayed ? styles['voice-waveform-bar-played'] : ""}`}
               style={{ "--bar-height": `${height}%` } as React.CSSProperties}
             />
           );
         })}
       </div>
 
-      <span className={styles.voiceDuration}>
+      <span className={styles['voice-duration']}>
         {formatTime(playing ? currentTime : duration)}
       </span>
 
-      <button className={styles.voiceSpeed} onClick={cycleSpeed} type="button">
+      <button className={styles['voice-speed']} onClick={cycleSpeed} type="button">
         {playbackRate}X
       </button>
 
-      <button className={styles.voiceVolume} onClick={toggleMute} type="button">
+      <button className={styles['voice-volume']} onClick={toggleMute} type="button">
         {muted ? (
-          <svg className={styles.voiceVolumeIcon} viewBox="0 0 24 24">
+          <svg className={styles['voice-volume-icon']} viewBox="0 0 24 24">
             <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
           </svg>
         ) : (
-          <svg className={styles.voiceVolumeIcon} viewBox="0 0 24 24">
+          <svg className={styles['voice-volume-icon']} viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
           </svg>
         )}
@@ -728,7 +728,7 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
   if (!filteredEmbeds.length) return null;
 
   return (
-    <div className={styles.embedList}>
+    <div className={styles['embed-list']}>
       {filteredEmbeds.map((embed: DiscordEmbed, i: number) => {
         const hasMetadata = embed.title || embed.description || embed.provider;
         const hasThumbnailOnly = embed.thumbnail && !embed.image && !embed.video;
@@ -749,9 +749,9 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
           if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
           if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
           return (
-            <a key={i} href={embed.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles.attachmentLink}>
+            <a key={i} href={embed.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
                 <img src={imageSource} alt={embed.title || "embed"} width={imageWidth} height={imageHeight}
-                className={styles.attachmentImage} loading="lazy" />
+                className={styles['attachment-image']} loading="lazy" />
           </a>
           );
         }
@@ -765,34 +765,34 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
         return (
           <div
             key={i}
-            className={styles.embedCard}
+            className={styles['embed-card']}
             style={accentColor ? { borderLeftColor: accentColor } : undefined}
           >
-            <div className={hasThumbnailOnly ? styles.embedCardBodyInline : styles.embedCardBody}>
-              <div className={styles.embedCardText}>
+            <div className={hasThumbnailOnly ? styles['embed-card-body-inline'] : styles['embed-card-body']}>
+              <div className={styles['embed-card-text']}>
                 {embed.provider?.name && (
-                  <span className={styles.embedProvider}>{embed.provider.name}</span>
+                  <span className={styles['embed-provider']}>{embed.provider.name}</span>
                 )}
                 {embed.title && (
                   embed.url ? (
-                    <a href={embed.url} target="_blank" rel="noopener noreferrer" className={styles.embedTitle}>
+                    <a href={embed.url} target="_blank" rel="noopener noreferrer" className={styles['embed-title']}>
                       {embed.title}
                     </a>
                   ) : (
-                    <span className={styles.embedTitlePlain}>{embed.title}</span>
+                    <span className={styles['embed-title-plain']}>{embed.title}</span>
                   )
                 )}
                 {embed.description && (
-                  <p className={styles.embedDescription}>{embed.description}</p>
+                  <p className={styles['embed-description']}>{embed.description}</p>
                 )}
               </div>
               {/* Inline thumbnail (small, right-aligned — e.g. article previews) */}
               {hasThumbnailOnly && embed.thumbnail?.url && (
-                <a href={embed.url || embed.thumbnail.url} target="_blank" rel="noopener noreferrer" className={styles.embedThumbLink}>
+                <a href={embed.url || embed.thumbnail.url} target="_blank" rel="noopener noreferrer" className={styles['embed-thumb-link']}>
                         <img
                     src={embed.thumbnail.proxyURL || embed.thumbnail.url}
                     alt={embed.title || "thumbnail"}
-                    className={styles.embedThumb}
+                    className={styles['embed-thumb']}
                     loading="lazy"
                   />
                 </a>
@@ -806,9 +806,9 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
               if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
               if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
               return (
-                <a href={embed.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles.embedImageLink}>
+                <a href={embed.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['embed-image-link']}>
                         <img src={imageSource} alt={embed.title || "embed image"} width={imageWidth} height={imageHeight}
-                    className={styles.embedImage} loading="lazy" />
+                    className={styles['embed-image']} loading="lazy" />
                 </a>
               );
             })()}
@@ -828,11 +828,11 @@ function EmbedVideo({ embed }: { embed: DiscordEmbed }) {
   const isDirectVideo = videoUrl && /\.(mp4|webm|mov)(\?|$)/i.test(videoUrl);
   if (isDirectVideo) {
     return (
-      <div className={styles.embedVideoWrap}>
+      <div className={styles['embed-video-wrap']}>
         <video
           src={videoUrl}
           poster={poster || undefined}
-          className={styles.embedVideo}
+          className={styles['embed-video']}
           controls
           preload="metadata"
           loop
@@ -845,9 +845,9 @@ function EmbedVideo({ embed }: { embed: DiscordEmbed }) {
   }
   if (poster) {
     return (
-      <a href={embed.url || videoUrl || undefined} target="_blank" rel="noopener noreferrer" className={styles.embedVideoThumbLink}>
-        <img src={poster} alt={embed.title || "Video"} className={styles.embedVideoThumb} loading="lazy" />
-        <span className={styles.embedPlayButton}>▶</span>
+      <a href={embed.url || videoUrl || undefined} target="_blank" rel="noopener noreferrer" className={styles['embed-video-thumb-link']}>
+        <img src={poster} alt={embed.title || "Video"} className={styles['embed-video-thumb']} loading="lazy" />
+        <span className={styles['embed-play-button']}>▶</span>
       </a>
     );
   }
@@ -864,10 +864,10 @@ function ReplyContext({ replyTo, messageMap }: { replyTo: string; messageMap: Ma
     // Referenced message is outside the loaded window — show fallback
     return (
       <>
-        <div className={styles.replySpine} />
-        <div className={styles.replyBar}>
-          <span className={styles.replyContent}>
-            <span className={styles.replyUnknown}>Original message was deleted or is not loaded</span>
+        <div className={styles['reply-spine']} />
+        <div className={styles['reply-bar']}>
+          <span className={styles['reply-content']}>
+            <span className={styles['reply-unknown']}>Original message was deleted or is not loaded</span>
           </span>
         </div>
       </>
@@ -879,27 +879,27 @@ function ReplyContext({ replyTo, messageMap }: { replyTo: string; messageMap: Ma
   const hasAttachment = (messageReference.attachments && messageReference.attachments.length > 0) || (messageReference.embeds && messageReference.embeds.length > 0);
   return (
     <>
-      <div className={styles.replySpine} />
-      <div className={styles.replyBar}>
+      <div className={styles['reply-spine']} />
+      <div className={styles['reply-bar']}>
         {messageReference.author.avatarUrl ? (
-          <img src={messageReference.author.avatarUrl} alt="" className={styles.replyAvatar} loading="lazy" />
+          <img src={messageReference.author.avatarUrl} alt="" className={styles['reply-avatar']} loading="lazy" />
         ) : (
-          <div className={styles.replyAvatarFallback} style={{ background: getAvatarColor(messageReference.author.id) }}>
+          <div className={styles['reply-avatar-fallback']} style={{ background: getAvatarColor(messageReference.author.id) }}>
             {(messageReference.author.displayName || "?")[0].toUpperCase()}
           </div>
         )}
         {messageReference.author.isBot && (
-          <span className={styles.replyBotBadge}>
-            <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+          <span className={styles['reply-bot-badge']}>
+            <svg className={styles['bot-badge-icon']} viewBox="0 0 16 16" fill="currentColor">
               <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
             </svg>
             APP
           </span>
         )}
-        <span className={styles.replyAuthor} style={nameStyle}>
+        <span className={styles['reply-author']} style={nameStyle}>
           @{messageReference.author.displayName}
         </span>
-        <span className={styles.replyContent}>
+        <span className={styles['reply-content']}>
           {truncated || (hasAttachment ? <>Click to see attachment <span aria-hidden="true">🖼️</span></> : "…")}
         </span>
       </div>
@@ -1045,23 +1045,23 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
 
   return (
     <>
-      <div className={styles.emojiPickerOverlay} onClick={onClose} />
-      <div className={styles.emojiPicker} ref={pickerRef}>
+      <div className={styles['emoji-picker-overlay']} onClick={onClose} />
+      <div className={styles['emoji-picker']} ref={pickerRef}>
         <input
           ref={searchRef}
-          className={styles.emojiPickerSearch}
+          className={styles['emoji-picker-search']}
           type="text"
           placeholder="Search emojis…"
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
         />
-        <div className={styles.emojiPickerMain}>
+        <div className={styles['emoji-picker-main']}>
           {/* Category sidebar tabs */}
-          <div className={styles.emojiCategorySidebar}>
+          <div className={styles['emoji-category-sidebar']}>
             {allCategories.map((cat) => (
               <button
                 key={cat.id}
-                className={`${styles.emojiCategoryTab} ${activeCategory === cat.id ? styles.emojiCategoryTabActive : ""}`}
+                className={`${styles['emoji-category-tab']} ${activeCategory === cat.id ? styles['emoji-category-tab-active'] : ""}`}
                 type="button"
                 onClick={() => scrollToCategory(cat.id)}
                 title={cat.name}
@@ -1070,7 +1070,7 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                   <img
                     src={emojiUrl(serverEmojis[0].id!, serverEmojis[0].animated)}
                     alt=""
-                    className={styles.emojiCategoryTabImg}
+                    className={styles['emoji-category-tab-img']}
                     draggable={false}
                   />
                 ) : (
@@ -1081,18 +1081,18 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
           </div>
 
           {/* Emoji grid body */}
-          <div className={styles.emojiPickerBody} ref={bodyRef}>
+          <div className={styles['emoji-picker-body']} ref={bodyRef}>
             {isSearching ? (
               /* ── Search results view ────────────────────────── */
               <>
                 {filteredCustom.length > 0 && (
                   <>
-                    <div className={styles.emojiPickerSection}>Server Emojis</div>
-                    <div className={styles.emojiPickerGrid}>
+                    <div className={styles['emoji-picker-section']}>Server Emojis</div>
+                    <div className={styles['emoji-picker-grid']}>
                       {filteredCustom.map((emoji) => (
                         <button
                           key={emoji.id}
-                          className={styles.emojiPickerItem}
+                          className={styles['emoji-picker-item']}
                           type="button"
                           onClick={() => onSelect(`${emoji.name}:${emoji.id}`)}
                           title={`:${emoji.name}:`}
@@ -1100,7 +1100,7 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                           <img
                             src={emojiUrl(emoji.id!, emoji.animated)}
                             alt={`:${emoji.name}:`}
-                            className={styles.emojiPickerCustomImg}
+                            className={styles['emoji-picker-custom-img']}
                             draggable={false}
                             loading="lazy"
                           />
@@ -1112,12 +1112,12 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                 {/* Unicode categories that match are harder to search, show all */}
                 {EMOJI_CATEGORIES.map((cat) => (
                   <div key={cat.id}>
-                    <div className={styles.emojiPickerSection}>{cat.name}</div>
-                    <div className={styles.emojiPickerGrid}>
+                    <div className={styles['emoji-picker-section']}>{cat.name}</div>
+                    <div className={styles['emoji-picker-grid']}>
                       {cat.emojis.map((emoji) => (
                         <button
                           key={emoji}
-                          className={styles.emojiPickerItem}
+                          className={styles['emoji-picker-item']}
                           type="button"
                           onClick={() => onSelect(emoji)}
                           title={emoji}
@@ -1129,7 +1129,7 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                   </div>
                 ))}
                 {filteredCustom.length === 0 && (
-                  <div className={styles.emojiPickerEmpty}>No matching emojis found</div>
+                  <div className={styles['emoji-picker-empty']}>No matching emojis found</div>
                 )}
               </>
             ) : (
@@ -1138,12 +1138,12 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                 {/* Server emojis (first, if present) */}
                 {serverEmojis && serverEmojis.length > 0 && (
                   <div data-category="server">
-                    <div className={styles.emojiPickerSection}>Server Emojis</div>
-                    <div className={styles.emojiPickerGrid}>
+                    <div className={styles['emoji-picker-section']}>Server Emojis</div>
+                    <div className={styles['emoji-picker-grid']}>
                       {serverEmojis.map((emoji) => (
                         <button
                           key={emoji.id}
-                          className={styles.emojiPickerItem}
+                          className={styles['emoji-picker-item']}
                           type="button"
                           onClick={() => onSelect(`${emoji.name}:${emoji.id}`)}
                           title={`:${emoji.name}:`}
@@ -1151,7 +1151,7 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                           <img
                             src={emojiUrl(emoji.id!, emoji.animated)}
                             alt={`:${emoji.name}:`}
-                            className={styles.emojiPickerCustomImg}
+                            className={styles['emoji-picker-custom-img']}
                             draggable={false}
                             loading="lazy"
                           />
@@ -1163,12 +1163,12 @@ function EmojiPicker({ anchorRef, serverEmojis, onSelect, onClose }: EmojiPicker
                 {/* Unicode categories */}
                 {EMOJI_CATEGORIES.map((cat) => (
                   <div key={cat.id} data-category={cat.id}>
-                    <div className={styles.emojiPickerSection}>{cat.name}</div>
-                    <div className={styles.emojiPickerGrid}>
+                    <div className={styles['emoji-picker-section']}>{cat.name}</div>
+                    <div className={styles['emoji-picker-grid']}>
                       {cat.emojis.map((emoji) => (
                         <button
                           key={emoji}
-                          className={styles.emojiPickerItem}
+                          className={styles['emoji-picker-item']}
                           type="button"
                           onClick={() => onSelect(emoji)}
                           title={emoji}
@@ -1201,10 +1201,10 @@ function MessageActions({ messageId, onOpenPicker, pickerMessageId }: MessageAct
   const isPickerOpen = pickerMessageId === messageId;
 
   return (
-    <div className={`${styles.messageActions} ${isPickerOpen ? styles.messageActionsVisible : ""}`}>
+    <div className={`${styles['message-actions']} ${isPickerOpen ? styles['message-actions-visible'] : ""}`}>
       <button
         ref={btnRef}
-        className={styles.actionButton}
+        className={styles['action-button']}
         type="button"
         onClick={() => onOpenPicker(messageId, btnRef)}
         title="Add Reaction"
@@ -1244,7 +1244,7 @@ function Reactions({ reactions, messageId, reactedSet, onReact }: ReactionsProps
         // Treat as "already reacted" if either the user clicked it this session
         // (localStorage) OR the bot already holds this reaction (`reaction.me`).
         const hasReacted = reactedSet?.has(reactKey) || reaction.me === true;
-        const pillClass = hasReacted ? styles.reactionPillReacted : styles.reactionPill;
+        const pillClass = hasReacted ? styles['reaction-pill-reacted'] : styles['reaction-pill'];
 
         // Custom server emoji → CDN image
         if (emoji.id) {
@@ -1259,11 +1259,11 @@ function Reactions({ reactions, messageId, reactedSet, onReact }: ReactionsProps
               <img
                 src={emojiUrl(emoji.id, emoji.animated)}
                 alt={`:${emoji.name}:`}
-                className={styles.reactionEmoji}
+                className={styles['reaction-emoji']}
                 loading="lazy"
                 draggable={false}
               />
-              <span className={styles.reactionCount}>{reaction.count}</span>
+              <span className={styles['reaction-count']}>{reaction.count}</span>
             </button>
           );
         }
@@ -1276,8 +1276,8 @@ function Reactions({ reactions, messageId, reactedSet, onReact }: ReactionsProps
             onClick={() => !hasReacted && onReact?.(messageId, emojiIdentifier)}
             title={hasReacted ? "You reacted" : emoji.name}
           >
-            <span className={styles.reactionUnicode}>{emoji.name}</span>
-            <span className={styles.reactionCount}>{reaction.count}</span>
+            <span className={styles['reaction-unicode']}>{emoji.name}</span>
+            <span className={styles['reaction-count']}>{reaction.count}</span>
           </button>
         );
       })}
@@ -1289,7 +1289,7 @@ function Reactions({ reactions, messageId, reactedSet, onReact }: ReactionsProps
 function StatusDot({ status }: { status?: string }) {
   const colors: Record<string, string> = { online: "#23a559", idle: "#f0b232", dnd: "#f23f43" };
   return (
-    <span className={styles.statusDot} style={{ background: colors[status || "offline"] || "#80848e" }}
+    <span className={styles['status-dot']} style={{ background: colors[status || "offline"] || "#80848e" }}
       title={status} />
   );
 }
@@ -1304,12 +1304,12 @@ interface ChannelItemProps {
 function ChannelItem({ channel, isActive, onClick }: ChannelItemProps) {
   return (
     <button
-      className={`${styles.channelItem} ${isActive ? styles.channelItemActive : ""}`}
+      className={`${styles['channel-item']} ${isActive ? styles['channel-item-active'] : ""}`}
       onClick={() => onClick(channel)}
       title={channel.topic || channel.name}
     >
-      <span className={styles.channelHash}>#</span>
-      <span className={styles.channelItemName}>{channel.name}</span>
+      <span className={styles['channel-hash']}>#</span>
+      <span className={styles['channel-item-name']}>{channel.name}</span>
     </button>
   );
 }
@@ -1317,21 +1317,21 @@ function ChannelItem({ channel, isActive, onClick }: ChannelItemProps) {
 // ── Members Sidebar ──────────────────────────────────────────────
 function MemberItem({ member }: { member: DiscordMember }) {
   return (
-    <div className={styles.memberItem}>
-      <div className={styles.memberAvatarWrap}>
+    <div className={styles['member-item']}>
+      <div className={styles['member-avatar-wrap']}>
         {member.avatarUrl ? (
-          <img src={member.avatarUrl} alt="" className={styles.memberAvatar} loading="lazy" />
+          <img src={member.avatarUrl} alt="" className={styles['member-avatar']} loading="lazy" />
         ) : (
-          <div className={styles.memberAvatarFallback} style={{ background: getAvatarColor(member.id) }}>
+          <div className={styles['member-avatar-fallback']} style={{ background: getAvatarColor(member.id) }}>
             {(member.displayName || "?")[0].toUpperCase()}
           </div>
         )}
         <StatusDot status={member.status} />
       </div>
-      <div className={styles.memberInfo}>
-        <div className={styles.memberNameRow}>
+      <div className={styles['member-info']}>
+        <div className={styles['member-name-row']}>
           <span
-            className={styles.memberName}
+            className={styles['member-name']}
             style={member.roleColors?.secondary
               ? resolveRoleColorStyle(member)
               : { color: member.roleColor || "#dbdee1" }
@@ -1340,8 +1340,8 @@ function MemberItem({ member }: { member: DiscordMember }) {
             {member.displayName}
           </span>
           {member.isBot && (
-            <span className={styles.memberBotBadge}>
-              <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+            <span className={styles['member-bot-badge']}>
+              <svg className={styles['bot-badge-icon']} viewBox="0 0 16 16" fill="currentColor">
                 <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
               </svg>
               APP
@@ -1353,7 +1353,7 @@ function MemberItem({ member }: { member: DiscordMember }) {
           <RoleTags roleTags={member.roleTags} />
         )}
         {member.activity && (
-          <span className={styles.memberActivity}>{member.activity}</span>
+          <span className={styles['member-activity']}>{member.activity}</span>
         )}
       </div>
     </div>
@@ -1733,64 +1733,64 @@ export default function DiscordChatComponent({
   return (
     <div className={styles.container} id="discord-chat">
       {/* ── Title Bar ─────────────────────────────────────────── */}
-      <div className={styles.titleBar}>
-        <div className={styles.trafficLights}>
-          <span className={styles.trafficDot} />
-          <span className={styles.trafficDot} />
-          <span className={styles.trafficDot} />
+      <div className={styles['title-bar']}>
+        <div className={styles['traffic-lights']}>
+          <span className={styles['traffic-dot']} />
+          <span className={styles['traffic-dot']} />
+          <span className={styles['traffic-dot']} />
         </div>
-        <span className={styles.titleBarCenter}>
+        <span className={styles['title-bar-center']}>
           {serverIcon && (
-            <img src={serverIcon} alt="" className={styles.titleBarClock} aria-hidden="true" />
+            <img src={serverIcon} alt="" className={styles['title-bar-clock']} aria-hidden="true" />
           )}
-          <span className={styles.channelName}>{serverName || "Discord"}</span>
+          <span className={styles['channel-name']}>{serverName || "Discord"}</span>
         </span>
-        <span className={styles.onlineDot} />
+        <span className={styles['online-dot']} />
         {members && (
-          <span className={styles.channelTopic}>
+          <span className={styles['channel-topic']}>
             {members.totalOnline} online · {members.totalMembers} members
           </span>
         )}
       </div>
 
       {/* ── Four-Panel Layout (Guild Bar + Channels + Chat + Members) */}
-      <div className={styles.panelLayout}>
+      <div className={styles['panel-layout']}>
         {/* ── Guild Bar (Server List Rail) ─────────────────────── */}
-        <nav className={styles.guildBar} aria-label="Servers">
+        <nav className={styles['guild-bar']} aria-label="Servers">
           {/* Home / DM button */}
-          <button className={styles.guildBarHome} title="Direct Messages">
+          <button className={styles['guild-bar-home']} title="Direct Messages">
             <svg width="28" height="20" viewBox="0 0 28 20" fill="currentColor">
               <path d="M23.0212 1.67671C21.3107 0.879656 19.5079 0.318797 17.6584 0C17.4062 0.461742 17.1749 0.934541 16.966 1.4184C15.0099 1.11706 13.0236 1.11706 11.0675 1.4184C10.8585 0.934541 10.6272 0.461742 10.3749 0C8.52404 0.320819 6.72029 0.882524 5.00882 1.68093C1.47767 7.01788 0.404834 12.216 0.93776 17.3363C3.01815 18.8838 5.37198 19.9903 7.87029 20.5984C8.39591 19.8931 8.86441 19.1447 9.27153 18.3603C8.51536 18.0784 7.78792 17.7241 7.09936 17.3023C7.28989 17.1629 7.47591 17.0186 7.65739 16.8744C12.0547 18.9136 16.9758 18.9136 21.376 16.8744C21.5575 17.0186 21.7435 17.1629 21.934 17.3023C21.2447 17.7248 20.5165 18.0797 19.7597 18.3624C20.1661 19.1454 20.6337 19.8925 21.1583 20.5963C23.6581 19.99 26.0132 18.8845 28.0936 17.3384C28.7196 11.3653 27.1385 6.21906 23.0212 1.67671Z" />
             </svg>
           </button>
-          <div className={styles.guildBarSeparator} />
+          <div className={styles['guild-bar-separator']} />
 
           {/* Current server */}
           <button
-            className={`${styles.guildBarItem} ${styles.guildBarItemActive}`}
+            className={`${styles['guild-bar-item']} ${styles['guild-bar-item-active']}`}
             title={serverName || "Discord"}
           >
             {serverIcon ? (
-              <img src={serverIcon} alt="" className={styles.guildBarIcon} />
+              <img src={serverIcon} alt="" className={styles['guild-bar-icon']} />
             ) : (
-              <span className={styles.guildBarInitial}>
+              <span className={styles['guild-bar-initial']}>
                 {(serverName || "D")[0].toUpperCase()}
               </span>
             )}
-            <span className={styles.guildBarPill} />
+            <span className={styles['guild-bar-pill']} />
           </button>
 
           {/* Additional servers from props */}
           {servers.map((srv: DiscordServer) => (
             <button
               key={srv.id || srv.name}
-              className={styles.guildBarItem}
+              className={styles['guild-bar-item']}
               title={srv.name}
             >
               {srv.iconUrl ? (
-                <img src={srv.iconUrl} alt="" className={styles.guildBarIcon} />
+                <img src={srv.iconUrl} alt="" className={styles['guild-bar-icon']} />
               ) : (
-                <span className={styles.guildBarInitial}>
+                <span className={styles['guild-bar-initial']}>
                   {(srv.name || "?")[0].toUpperCase()}
                 </span>
               )}
@@ -1799,21 +1799,21 @@ export default function DiscordChatComponent({
         </nav>
 
         {/* ── Left Sidebar: Channels ──────────────────────────── */}
-        <aside className={styles.channelSidebar}>
+        <aside className={styles['channel-sidebar']}>
           {/* Server Banner / Header */}
-          <div className={`${styles.serverHeader} ${serverBannerUrl ? styles.serverHeaderBanner : ""}`}>
+          <div className={`${styles['server-header']} ${serverBannerUrl ? styles['server-header-banner'] : ""}`}>
             {serverBannerUrl && (
               <img
                 src={serverBannerUrl}
                 alt=""
-                className={styles.serverBannerImage}
+                className={styles['server-banner-image']}
                 loading="lazy"
                 draggable={false}
               />
             )}
-            <span className={styles.serverName}>{serverName || "Discord"}</span>
+            <span className={styles['server-name']}>{serverName || "Discord"}</span>
           </div>
-          <div className={styles.channelList}>
+          <div className={styles['channel-list']}>
             {(() => {
               // Group channels by their Discord category (parentName).
               // Preserves the order channels arrive from the API (sorted
@@ -1830,8 +1830,8 @@ export default function DiscordChatComponent({
               }
               return groups.map((group) => (
                 <div key={group.category}>
-                  <div className={styles.channelCategory}>
-                    <span className={styles.categoryName}>{group.category}</span>
+                  <div className={styles['channel-category']}>
+                    <span className={styles['category-name']}>{group.category}</span>
                   </div>
                   {group.items.map((ch) => (
                     <ChannelItem
@@ -1848,21 +1848,21 @@ export default function DiscordChatComponent({
         </aside>
 
         {/* ── Center: Messages ────────────────────────────────── */}
-        <div className={styles.chatPanel}>
-          <div className={styles.messagesArea} ref={scrollRef}>
+        <div className={styles['chat-panel']}>
+          <div className={styles['messages-area']} ref={scrollRef}>
             {loading && (
-              <div className={styles.isLoadingState}>
-                <div className={styles.loadingDots}>
-                  <span className={styles.loadingDot} />
-                  <span className={styles.loadingDot} />
-                  <span className={styles.loadingDot} />
+              <div className={styles['is-loading-state']}>
+                <div className={styles['loading-dots']}>
+                  <span className={styles['loading-dot']} />
+                  <span className={styles['loading-dot']} />
+                  <span className={styles['loading-dot']} />
                 </div>
                 <span>Loading messages…</span>
               </div>
             )}
             {!!error && (
               <div className={styles.error}>
-                <span className={styles.errorIcon}>⚠️</span>
+                <span className={styles['error-icon']}>⚠️</span>
                 <span>Couldn&apos;t load messages</span>
               </div>
             )}
@@ -1877,20 +1877,20 @@ export default function DiscordChatComponent({
                 return (
                   <div key={message.id}>
                     {newDay && (
-                      <div className={styles.dateSeparator}>
-                        <span className={styles.dateSeparatorText}>{formatDateSeparator(message.createdAtISO)}</span>
+                      <div className={styles['date-separator']}>
+                        <span className={styles['date-separator-text']}>{formatDateSeparator(message.createdAtISO)}</span>
                       </div>
                     )}
                     {grouped && !newDay ? (
-                      <div className={styles.messageRowGrouped}>
-                        <span className={styles.timestampInline}>{formatShortTime(message.createdAtISO)}</span>
+                      <div className={styles['message-row-grouped']}>
+                        <span className={styles['timestamp-inline']}>{formatShortTime(message.createdAtISO)}</span>
                         <MessageActions
                           messageId={message.id}
                           onOpenPicker={handleOpenPicker}
                           pickerMessageId={pickerMessageId}
                         />
-                        <div className={styles.messageContent}>
-                          <p className={styles.messageText}>{formatContent(message.content, message.cleanContent)}</p>
+                        <div className={styles['message-content']}>
+                          <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
                           <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
                           <ImageAttachments attachments={message.attachments} />
                           <AudioAttachments attachments={message.attachments} />
@@ -1904,7 +1904,7 @@ export default function DiscordChatComponent({
                         </div>
                       </div>
                     ) : (
-                      <div className={`${styles.messageRow} ${message.replyTo ? styles.messageRowReply : ""}`}>
+                      <div className={`${styles['message-row']} ${message.replyTo ? styles['message-row-reply'] : ""}`}>
                         {message.replyTo && (
                           <ReplyContext replyTo={message.replyTo} messageMap={messageMap} />
                         )}
@@ -1912,7 +1912,7 @@ export default function DiscordChatComponent({
                           <img className={styles.avatar} src={message.author.avatarUrl}
                             alt={message.author.displayName} width={40} height={40} loading="lazy" />
                         ) : (
-                          <div className={styles.avatarFallback} style={{ background: getAvatarColor(message.author.id) }}>
+                          <div className={styles['avatar-fallback']} style={{ background: getAvatarColor(message.author.id) }}>
                             {(message.author.displayName || "?")[0].toUpperCase()}
                           </div>
                         )}
@@ -1921,14 +1921,14 @@ export default function DiscordChatComponent({
                           onOpenPicker={handleOpenPicker}
                           pickerMessageId={pickerMessageId}
                         />
-                        <div className={styles.messageContent}>
-                          <div className={styles.messageHeader}>
-                            <span className={styles.authorName} style={nameStyle}>
+                        <div className={styles['message-content']}>
+                          <div className={styles['message-header']}>
+                            <span className={styles['author-name']} style={nameStyle}>
                               {message.author.displayName}
                             </span>
                             {message.author.isBot && (
-                              <span className={styles.botBadge}>
-                                <svg className={styles.botBadgeIcon} viewBox="0 0 16 16" fill="currentColor">
+                              <span className={styles['bot-badge']}>
+                                <svg className={styles['bot-badge-icon']} viewBox="0 0 16 16" fill="currentColor">
                                   <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" />
                                 </svg>
                                 BOT
@@ -1938,7 +1938,7 @@ export default function DiscordChatComponent({
                             <RoleTags roleTags={message.author.roleTags} />
                             <span className={styles.timestamp}>{formatTimestamp(message.createdAtISO)}</span>
                           </div>
-                          <p className={styles.messageText}>{formatContent(message.content, message.cleanContent)}</p>
+                          <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
                           <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
                           <ImageAttachments attachments={message.attachments} />
                           <AudioAttachments attachments={message.attachments} />
@@ -1959,21 +1959,21 @@ export default function DiscordChatComponent({
           </div>
 
           {/* ── Input Bar / Join CTA ──────────────────────────── */}
-          <div className={styles.inputBar}>
+          <div className={styles['input-bar']}>
             {joinMode ? (
               <a href={inviteUrl} target="_blank" rel="noopener noreferrer"
-                className={styles.joinButton} id="discord-join-button"
+                className={styles['join-button']} id="discord-join-button"
                 onMouseEnter={() => onJoinHoverChange?.(true)}
                 onMouseLeave={() => onJoinHoverChange?.(false)}>
-                <svg className={styles.joinButtonIcon} viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <svg className={styles['join-button-icon']} viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.36-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.24-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z" />
                 </svg>
                 Join the Discord Server
               </a>
             ) : (
-              <div className={styles.inputContainer}>
-                <span className={styles.inputPlaceholder}>Message #{activeChannel.name}</span>
-                <div className={styles.inputIcons}>
+              <div className={styles['input-container']}>
+                <span className={styles['input-placeholder']}>Message #{activeChannel.name}</span>
+                <div className={styles['input-icons']}>
                   <span>😀</span><span>🎁</span><span>📎</span>
                 </div>
               </div>
@@ -1982,12 +1982,12 @@ export default function DiscordChatComponent({
         </div>
 
         {/* ── Right Sidebar: Members ──────────────────────────── */}
-        <aside className={styles.memberSidebar}>
+        <aside className={styles['member-sidebar']}>
           {members ? (
-            <div className={styles.memberList}>
+            <div className={styles['member-list']}>
               {members.roles?.map((role) => (
-                <div key={role.id} className={styles.memberRoleGroup}>
-                  <div className={styles.memberRoleHeader}>
+                <div key={role.id} className={styles['member-role-group']}>
+                  <div className={styles['member-role-header']}>
                     {role.name} — {role.members.length}
                   </div>
                   {role.members.map((member) => (
@@ -1996,8 +1996,8 @@ export default function DiscordChatComponent({
                 </div>
               ))}
               {members.bots && members.bots.length > 0 && (
-                <div className={styles.memberRoleGroup}>
-                  <div className={styles.memberRoleHeader}>
+                <div className={styles['member-role-group']}>
+                  <div className={styles['member-role-header']}>
                     Bots — {members.bots.length}
                   </div>
                   {members.bots.map((member) => (
@@ -2007,11 +2007,11 @@ export default function DiscordChatComponent({
               )}
             </div>
           ) : (
-            <div className={styles.isLoadingState}>
-              <div className={styles.loadingDots}>
-                <span className={styles.loadingDot} />
-                <span className={styles.loadingDot} />
-                <span className={styles.loadingDot} />
+            <div className={styles['is-loading-state']}>
+              <div className={styles['loading-dots']}>
+                <span className={styles['loading-dot']} />
+                <span className={styles['loading-dot']} />
+                <span className={styles['loading-dot']} />
               </div>
             </div>
           )}

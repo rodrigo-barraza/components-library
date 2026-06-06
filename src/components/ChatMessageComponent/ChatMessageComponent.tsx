@@ -36,7 +36,7 @@ function applyInlineMarkdown(text: string): ReactNode[] {
   const parts = text.split(codeRe);
   return parts.map((seg, i) => {
     if (i % 2 === 1) {
-      return (<code key={i} className={styles.inlineCode}>{seg}</code>);
+      return (<code key={i} className={styles['inline-code']}>{seg}</code>);
     }
     return applyBoldItalic(seg, i);
   });
@@ -108,9 +108,9 @@ export default function ChatMessageComponent({
 
   if (role === MESSAGE_ROLES.SYSTEM) {
     return (
-      <div className={`${styles.messageRow} ${styles.system} ${error ? styles.errorMessage : ""}`}>
-        <div className={styles.systemBubble}>
-          <p className={styles.messageText}>{content}</p>
+      <div className={`${styles['message-row']} ${styles.system} ${error ? styles['error-message'] : ""}`}>
+        <div className={styles['system-bubble']}>
+          <p className={styles['message-text']}>{content}</p>
         </div>
       </div>
     );
@@ -119,14 +119,14 @@ export default function ChatMessageComponent({
   if (role === MESSAGE_ROLES.VISITOR) {
     return (
       <div
-        className={`${styles.messageRow} ${styles.visitor} ${isGrouped ? styles.grouped : ""}`}
+        className={`${styles['message-row']} ${styles.visitor} ${isGrouped ? styles.grouped : ""}`}
         onMouseEnter={() => setShowTimestamp(true)}
         onMouseLeave={() => setShowTimestamp(false)}
       >
-        <div className={styles.visitorBubble}>
-          <p className={styles.messageText}>{renderContent(content, role)}</p>
+        <div className={styles['visitor-bubble']}>
+          <p className={styles['message-text']}>{renderContent(content, role)}</p>
         </div>
-        <span className={`${styles.timestamp} ${showTimestamp ? styles.timestampVisible : ""}`}>
+        <span className={`${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`}>
           {formatTime(createdAt)}
         </span>
       </div>
@@ -135,17 +135,17 @@ export default function ChatMessageComponent({
 
   return (
     <div
-      className={`${styles.messageRow} ${styles.agent} ${isGrouped ? styles.grouped : ""} ${error ? styles.errorMessage : ""}`}
+      className={`${styles['message-row']} ${styles.agent} ${isGrouped ? styles.grouped : ""} ${error ? styles['error-message'] : ""}`}
       onMouseEnter={() => setShowTimestamp(true)}
       onMouseLeave={() => setShowTimestamp(false)}
     >
-      <div className={styles.agentBubble}>
-        <p className={styles.messageText}>
+      <div className={styles['agent-bubble']}>
+        <p className={styles['message-text']}>
           {renderContent(content, role)}
           {streaming && <span className={styles.cursor} />}
         </p>
       </div>
-      <span className={`${styles.timestamp} ${showTimestamp ? styles.timestampVisible : ""}`}>
+      <span className={`${styles.timestamp} ${showTimestamp ? styles['timestamp-visible'] : ""}`}>
         {formatTime(createdAt)}
       </span>
     </div>

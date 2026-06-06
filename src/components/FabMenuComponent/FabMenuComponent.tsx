@@ -255,14 +255,14 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
 
   // ── Variant class for trigger ─────────────────────────
   const variantMap = {
-    primary: styles.triggerPrimary,
-    secondary: styles.triggerSecondary,
-    tertiary: styles.triggerTertiary,
-    surface: styles.triggerSurface,
+    primary: styles['trigger-primary'],
+    secondary: styles['trigger-secondary'],
+    tertiary: styles['trigger-tertiary'],
+    surface: styles['trigger-surface'],
   };
 
   const containerClasses = [
-    styles.fabMenu,
+    styles['fab-menu'],
     fixed ? styles.fixed : "",
     className,
   ]
@@ -272,7 +272,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
   const triggerClasses = [
     styles.trigger,
     variantMap[variant] || variantMap.primary,
-    isOpen ? styles.isOpenState : "",
+    isOpen ? styles['is-open-state'] : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -302,7 +302,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
       >
         {/* Menu items list */}
         <div
-          className={styles.itemsList}
+          className={styles['items-list']}
           role="menu"
           aria-label={ariaLabel}
           aria-hidden={!isOpen}
@@ -313,15 +313,15 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
               <div
                 key={index}
                 className={[
-                  styles.menuItem,
-                  isOpen ? styles.menuItemVisible : "",
+                  styles['menu-item'],
+                  isOpen ? styles['menu-item-visible'] : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
               >
                 {/* Text label */}
                 {item.label && (
-                  <span className={styles.itemLabel} aria-hidden="true">
+                  <span className={styles['item-label']} aria-hidden="true">
                     {item.label}
                   </span>
                 )}
@@ -331,7 +331,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
                   ref={(element) => {
                     itemRefs.current[index] = element;
                   }}
-                  className={styles.itemFab}
+                  className={styles['item-fab']}
                   role="menuitem"
                   tabIndex={isOpen ? 0 : -1}
                   aria-label={item.ariaLabel || item.label}
@@ -341,7 +341,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
                   }}
                 >
                   {ItemIcon && (
-                    <span className={styles.itemIcon} aria-hidden="true">
+                    <span className={styles['item-icon']} aria-hidden="true">
                       <ItemIcon size={24} />
                     </span>
                   )}
@@ -366,7 +366,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
           }}
         >
           <span
-            className={styles.triggerIcon}
+            className={styles['trigger-icon']}
             style={
               shouldRotate
                 ? { transform: "rotate(45deg)" }

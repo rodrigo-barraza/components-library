@@ -35,14 +35,14 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
 ) {
   const sizeClassName = useMemo(() => {
     const mappedClass = SIZE_CLASS_MAP[size ?? "md"];
-    return mappedClass ? styles[mappedClass] : styles.sizeMedium;
+    return mappedClass ? styles[mappedClass] : styles['size-medium'];
   }, [size]);
 
   const classes = [
     styles.wrapper,
     sizeClassName,
-    disabled ? styles.isDisabledState : "",
-    Icon ? styles.hasIcon : "",
+    disabled ? styles['is-disabled-state'] : "",
+    Icon ? styles['has-icon'] : "",
     className,
   ]
     .filter(Boolean)
@@ -51,7 +51,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
   const inputEl = (
     <div className={classes}>
       {Icon && (
-        <span className={styles.iconSlot}>
+        <span className={styles['icon-slot']}>
           <Icon size={size === "sm" ? 12 : size === "lg" ? 18 : 14} />
         </span>
       )}
@@ -72,7 +72,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
 
   if (label) {
     return (
-      <div className={styles.labelWrapper}>
+      <div className={styles['label-wrapper']}>
         <span className={styles.label}>{label}</span>
         {inputEl}
       </div>

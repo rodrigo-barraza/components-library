@@ -12,19 +12,19 @@
 
 /* ── Table header (title + column filter) ─────────── */
 
-.tableHeader {
+.table-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 10px 14px;
   border: 1px solid var(--calculated-border-color);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid oklch(1 0 0 / 0.06);
   border-radius: 2px 2px 0 0;
   background: var(--background-elevated);
 }
 
-.tableHeaderContent {
+.table-header-content {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -33,7 +33,7 @@
 
 /* ── Table scroll area ────────────────────────────── */
 
-.tableScroll {
+.table-scroll {
   overflow-x: auto;
   border: 1px solid var(--calculated-border-color);
   border-radius: 2px;
@@ -41,12 +41,12 @@
 }
 
 /* When header is present, connect border and remove top radius from scroll */
-.hasHeader .tableScroll {
+.has-header .table-scroll {
   border-top: none;
   border-radius: 0 0 2px 2px;
 }
 
-.tableScroll.grabbing {
+.table-scroll.grabbing {
   cursor: grabbing;
   user-select: none;
 }
@@ -70,7 +70,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   white-space: nowrap;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid oklch(1 0 0 / 0.08);
   background: var(--background-elevated);
   position: sticky;
   top: 0;
@@ -78,7 +78,7 @@
   user-select: none;
 }
 
-.thSortable {
+.th-sortable {
   cursor: pointer;
   transition: color 0.15s;
 
@@ -89,11 +89,11 @@
 
 }
 
-.thActive {
+.th-active {
   color: var(--accent-primary);
 }
 
-.sortIcon {
+.sort-icon {
   display: inline-block;
   vertical-align: middle;
   margin-left: 2px;
@@ -115,31 +115,31 @@
 }
 
 /* Currently selected / active row — .tr qualifier boosts specificity above zebra-stripe :nth-child(even) */
-.tr.activeRow td {
+.tr.active-row td {
   background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
   color: var(--text-primary);
 }
 
-.tr.activeRow td:first-child {
+.tr.active-row td:first-child {
   background: color-mix(in srgb, var(--accent-primary) 24%, transparent);
   box-shadow: inset 4px 0 0 var(--accent-primary);
 }
 
-.tr.activeRow:hover td {
+.tr.active-row:hover td {
   background: color-mix(in srgb, var(--accent-primary) 22%, transparent);
 }
 
-.tr.activeRow:hover td:first-child {
+.tr.active-row:hover td:first-child {
   background: color-mix(in srgb, var(--accent-primary) 28%, transparent);
 }
 
 /* Keyboard-highlighted row */
-.highlightedRow td {
-  background: rgba(99, 102, 241, 0.12);
+.highlighted-row td {
+  background: oklch(0.566 0.2532 291.3 / 0.12);
 }
 
-.highlightedRow td:first-child {
-  background: rgba(99, 102, 241, 0.16);
+.highlighted-row td:first-child {
+  background: oklch(0.566 0.2532 291.3 / 0.16);
 }
 
 /* ── Cells ────────────────────────────────────────── */
@@ -156,13 +156,13 @@
 }
 
 /* Sorted-column highlight for data cells */
-.tdSorted {
-  background: rgba(99, 102, 241, 0.05);
+.td-sorted {
+  background: oklch(0.566 0.2532 291.3 / 0.05);
   color: var(--text-primary);
 }
 
 /* Primary name column */
-.tdName {
+.td-name {
   padding: 2px 14px;
   white-space: nowrap;
   background: transparent;
@@ -172,36 +172,36 @@
 /* ── Row alternation (zebra rows) ──────────────────── */
 
 .tr:nth-child(even) td {
-  background: rgba(255, 255, 255, 0.02);
+  background: oklch(1 0 0 / 0.02);
 }
 
-.tr:nth-child(even) .tdName {
-  background: rgba(255, 255, 255, 0.02);
+.tr:nth-child(even) .td-name {
+  background: oklch(1 0 0 / 0.02);
 }
 
 /* Sorted-column highlight preserved on even rows */
-.tr:nth-child(even) .tdSorted {
-  background: rgba(99, 102, 241, 0.06);
+.tr:nth-child(even) .td-sorted {
+  background: oklch(0.566 0.2532 291.3 / 0.06);
 }
 
 /* ── Row hover (placed after zebra rules so hover always wins via cascade) ── */
 
 .tr:hover td,
-.tr:hover .tdName {
-  background: rgba(99, 102, 241, 0.06);
+.tr:hover .td-name {
+  background: oklch(0.566 0.2532 291.3 / 0.06);
 }
 
 .tr:hover td:first-child {
-  background: rgba(99, 102, 241, 0.10);
+  background: oklch(0.566 0.2532 291.3 / 0.1);
 }
 
 /* Expandable row */
-.expandableRow {
+.expandable-row {
   cursor: pointer;
   user-select: none;
 }
 
-.expandIcon {
+.expand-icon {
   display: inline-flex;
   width: 16px;
   height: 16px;
@@ -212,51 +212,51 @@
   transition: transform 0.15s ease;
 }
 
-.expandIconOpen {
+.expand-icon-open {
   transform: rotate(90deg);
 }
 
 /* Full-width expanded content panel (accordion table) */
-.expandedContentRow > td {
+.expanded-content-row > td {
   padding: 0;
   background: var(--background-elevated);
   border-bottom: 1px solid var(--calculated-border-color);
 }
 
-.expandedContentCell .container {
+.expanded-content-cell .container {
   padding: 0;
 }
 
-.expandedContentCell .th,
-.expandedContentCell .td,
-.expandedContentCell .tdName {
+.expanded-content-cell .th,
+.expanded-content-cell .td,
+.expanded-content-cell .td-name {
   padding-left: 4px;
   padding-right: 4px;
 }
 
 /* Nested expanded content (2 levels deep, e.g. session → convo → requests) */
-.expandedContentCell .expandedContentRow td {
-  background: rgba(0, 0, 0, 0.06);
+.expanded-content-cell .expanded-content-row td {
+  background: oklch(0 0 0 / 0.06);
   border-left: 2px solid var(--accent-primary);
 }
 
 /* Sub-rows */
-.subRow td {
+.sub-row td {
   background: var(--background-elevated);
   font-size: 9px;
   padding: 8px 14px;
 }
 
-.subRow td:first-child {
+.sub-row td:first-child {
   padding-left: 38px;
   background: var(--background-elevated);
 }
 
-.subRow:hover td {
-  background: rgba(99, 102, 241, 0.06);
+.sub-row:hover td {
+  background: oklch(0.566 0.2532 291.3 / 0.06);
 }
 
-.subRow:not(:last-child) td {
+.sub-row:not(:last-child) td {
   border-bottom: 1px solid var(--calculated-border-color);
 }
 
@@ -279,7 +279,7 @@
 }
 
 /* Empty state — rendered as a full-width <td> inside the table */
-.emptyRow {
+.empty-row {
   padding: 32px 14px;
   text-align: center;
   font-size: 11px;
@@ -295,17 +295,17 @@
 }
 
 .mini .td,
-.mini .tdName {
+.mini .td-name {
   padding: 4px 6px;
 }
 
-.mini .expandIcon {
+.mini .expand-icon {
   width: 12px;
   height: 12px;
   margin-right: 4px;
 }
 
-.mini .emptyRow {
+.mini .empty-row {
   padding: 12px;
 }
 
@@ -313,14 +313,14 @@
 @media (max-width: 600px) {
   .th,
   .td,
-  .tdName {
+  .td-name {
     padding: 8px 10px;
   }
 }
 
 /* ── Column filter ────────────────────────────────── */
 
-.columnFilterButton {
+.column-filter-button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -343,19 +343,19 @@
   }
 }
 
-.columnFilterBtnActive {
+.column-filter-btn-active {
   color: var(--accent-primary);
-  border-color: rgba(99, 102, 241, 0.3);
-  background: rgba(99, 102, 241, 0.06);
+  border-color: oklch(0.566 0.2532 291.3 / 0.3);
+  background: oklch(0.566 0.2532 291.3 / 0.06);
 }
 
-.columnFilterCount {
+.column-filter-count {
   font-size: 9px;
   font-variant-numeric: tabular-nums;
   opacity: 0.7;
 }
 
-.columnFilterDropdown {
+.column-filter-dropdown {
   position: fixed;
   transform: translateX(-100%);
   z-index: 9999;
@@ -366,27 +366,27 @@
   border: 1px solid var(--calculated-border-color);
   border-radius: 2px;
   box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.25),
-    0 2px 8px rgba(0, 0, 0, 0.15);
+    0 8px 30px oklch(0 0 0 / 0.25),
+    0 2px 8px oklch(0 0 0 / 0.15);
   padding: 4px;
-  animation: columnFilterIn 0.12s ease-out;
+  animation: column-filter-in 0.12s ease-out;
 }
 
 /* Scrollbar */
-.columnFilterDropdown::-webkit-scrollbar {
+.column-filter-dropdown::-webkit-scrollbar {
   width: 4px;
 }
 
-.columnFilterDropdown::-webkit-scrollbar-track {
+.column-filter-dropdown::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.columnFilterDropdown::-webkit-scrollbar-thumb {
+.column-filter-dropdown::-webkit-scrollbar-thumb {
   background: var(--calculated-border-color);
   border-radius: 2px;
 }
 
-@keyframes columnFilterIn {
+@keyframes column-filter-in {
   from {
     opacity: 0;
     transform: translateX(-100%) translateY(-4px);
@@ -397,7 +397,7 @@
   }
 }
 
-.columnFilterHeader {
+.column-filter-header {
   padding: 6px 8px 4px;
   font-size: 9px;
   font-weight: 600;
@@ -408,12 +408,12 @@
   margin-bottom: 2px;
 }
 
-.columnFilterList {
+.column-filter-list {
   display: flex;
   flex-direction: column;
 }
 
-.columnFilterItem {
+.column-filter-item {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -431,21 +431,21 @@
   opacity: 0.55;
 
   &:hover {
-    background: rgba(99, 102, 241, 0.08);
+    background: oklch(0.566 0.2532 291.3 / 0.08);
     color: var(--text-primary);
     opacity: 1;
     text-decoration: none;
   }
 }
 
-.columnFilterItemVisible {
+.column-filter-item-visible {
   color: var(--text-primary);
   text-decoration: none;
   opacity: 1;
 }
 
 /* Select All / Deselect All toggle */
-.columnFilterToggleAll {
+.column-filter-toggle-all {
   font-weight: 600;
   text-decoration: none;
   opacity: 0.7;
@@ -455,23 +455,23 @@
   }
 }
 
-.columnFilterToggleAll.columnFilterItemVisible {
+.column-filter-toggle-all.column-filter-item-visible {
   opacity: 1;
 }
 
-.columnFilterToggleAllIcon {
+.column-filter-toggle-all-icon {
   flex-shrink: 0;
   color: var(--accent-primary);
   opacity: 0.7;
 }
 
-.columnFilterDivider {
+.column-filter-divider {
   height: 1px;
   background: var(--calculated-border-color);
   margin: 2px 4px;
 }
 
-.columnFilterCheck {
+.column-filter-check {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -484,13 +484,13 @@
   transition: all 0.1s ease;
 }
 
-.columnFilterItemVisible .columnFilterCheck {
+.column-filter-item-visible .column-filter-check {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   color: #fff;
 }
 
-.columnFilterLabel {
+.column-filter-label {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -23,7 +23,7 @@ export default function CardComponent({ variant = "outlined", interactive = fals
         styles[variant],
         interactive && styles.interactive,
         isDraggable && styles.draggable,
-        fullWidth && styles.fullWidth,
+        fullWidth && styles['full-width'],
         className,
     ]
         .filter(Boolean)
@@ -46,7 +46,7 @@ function CardMedia({ src, alt = "", height, aspectRatio, position = "top", class
         mediaStyle.aspectRatio = aspectRatio;
     return (_jsx("div", { className: [styles.media, styles[`media-${position}`], className]
             .filter(Boolean)
-            .join(" "), style: Object.keys(mediaStyle).length ? mediaStyle : undefined, children: children || (src ? (_jsx("img", { src: src, alt: alt, className: styles.mediaImage, loading: "lazy", draggable: false })) : null) }));
+            .join(" "), style: Object.keys(mediaStyle).length ? mediaStyle : undefined, children: children || (src ? (_jsx("img", { src: src, alt: alt, className: styles['media-image'], loading: "lazy", draggable: false })) : null) }));
 }
 /* ── Body ────────────────────────────────────────────────────────── */
 function CardBody({ children, className }) {
@@ -62,11 +62,11 @@ function CardFooter({ children, className }) {
  * Renders a full-surface interactive layer with ripple and state layer.
  */
 const CardActionArea = forwardRef(function CardActionArea({ onClick, href, className, children, ...rest }, ref) {
-    const classes = [styles.actionArea, className].filter(Boolean).join(" ");
+    const classes = [styles['action-area'], className].filter(Boolean).join(" ");
     if (href) {
-        return (_jsxs("a", { ref: ref, href: href, className: classes, ...rest, children: [_jsx("span", { className: styles.stateLayer }), children] }));
+        return (_jsxs("a", { ref: ref, href: href, className: classes, ...rest, children: [_jsx("span", { className: styles['state-layer'] }), children] }));
     }
-    return (_jsxs("button", { ref: ref, type: "button", onClick: onClick, className: classes, ...rest, children: [_jsx("span", { className: styles.stateLayer }), children] }));
+    return (_jsxs("button", { ref: ref, type: "button", onClick: onClick, className: classes, ...rest, children: [_jsx("span", { className: styles['state-layer'] }), children] }));
 });
 /* ── Attach sub-components ───────────────────────────────────────── */
 CardComponent.Header = CardHeader;

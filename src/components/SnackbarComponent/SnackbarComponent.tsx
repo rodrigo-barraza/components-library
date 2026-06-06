@@ -264,7 +264,7 @@ export default function SnackbarComponent({
   const containerClass = [
     styles.container,
     styles[layout],
-    textOnly ? styles.textOnly : "",
+    textOnly ? styles['text-only'] : "",
     className || "",
   ]
     .filter(Boolean)
@@ -282,7 +282,7 @@ export default function SnackbarComponent({
         onAnimationEnd={handleAnimationEnd}
       >
         {/* ── Supporting text ── */}
-        <span className={styles.supportingText} id={`${snackbarId}-message`}>
+        <span className={styles['supporting-text']} id={`${snackbarId}-message`}>
           {message}
         </span>
 
@@ -302,7 +302,7 @@ export default function SnackbarComponent({
         {hasClose && (
           <button
             type="button"
-            className={styles.closeButton}
+            className={styles['close-button']}
             onClick={handleDismiss}
             aria-label="Dismiss"
             id={`${snackbarId}-close`}

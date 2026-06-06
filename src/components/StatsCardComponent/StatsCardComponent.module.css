@@ -101,7 +101,7 @@
 
 /* ── Glow bar (opt-in) ── */
 
-.glowBar {
+.glow-bar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -112,7 +112,7 @@
   transition: opacity var(--transition-normal, 0.2s);
 }
 
-.card:hover .glowBar {
+.card:hover .glow-bar {
   opacity: 1;
 }
 
@@ -133,12 +133,12 @@
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
-.skeletonValue {
+.skeleton-value {
   width: 80px;
   height: 28px;
 }
 
-.skeletonLabel {
+.skeleton-label {
   width: 100px;
   height: 14px;
 }

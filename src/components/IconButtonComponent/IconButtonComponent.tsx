@@ -29,10 +29,10 @@ export default function IconButtonComponent({
   const { sound } = useComponents();
 
   const classes = [
-    styles.iconButton,
+    styles['icon-button'],
     variant === "destructive" ? styles.destructive : "",
-    active ? styles.isActiveState : "",
-    hoverReveal ? styles.hoverReveal : "",
+    active ? styles['is-active-state'] : "",
+    hoverReveal ? styles['hover-reveal'] : "",
     className || "",
   ]
     .filter(Boolean)

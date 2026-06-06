@@ -70,8 +70,8 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
   const classes = [
     styles.chip,
     styles[variant],
-    selected && styles.isSelectedState,
-    disabled && styles.isDisabledState,
+    selected && styles['is-selected-state'],
+    disabled && styles['is-disabled-state'],
     elevated && styles.elevated,
     onClick && styles.clickable,
     className,
@@ -98,11 +98,11 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
       {...rest}
     >
       {/* State layer */}
-      <span className={styles.stateLayer} />
+      <span className={styles['state-layer']} />
 
       {/* Leading icon */}
       {Icon && (
-        <span className={styles.leadingIcon} aria-hidden="true">
+        <span className={styles['leading-icon']} aria-hidden="true">
           <Icon size={16} />
         </span>
       )}
@@ -123,7 +123,7 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
       {removable && (
         <button
           type="button"
-          className={styles.removeButton}
+          className={styles['remove-button']}
           onClick={handleRemove}
           aria-label="Remove"
           tabIndex={-1}

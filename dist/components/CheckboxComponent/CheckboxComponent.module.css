@@ -14,11 +14,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.checkbox.labelStart {
+.checkbox.label-start {
   flex-direction: row-reverse;
 }
 
-.checkbox.isDisabledState {
+.checkbox.is-disabled-state {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -26,7 +26,7 @@
 
 /* ── Hidden native input ─────────────────────────────── */
 
-.hiddenInput {
+.hidden-input {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -48,7 +48,7 @@
 
 /* ── State layer — 40×40 circular ripple target ──────── */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -59,37 +59,37 @@
 }
 
 /* Hover — unchecked */
-.checkbox:hover .stateLayer {
+.checkbox:hover .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 8%, transparent);
 }
 
 /* Hover — checked/indeterminate (selected) */
-.checkbox:hover .isSelectedState ~ .stateLayer {
+.checkbox:hover .is-selected-state ~ .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible (keyboard navigation) */
-.hiddenInput:focus-visible ~ .stateLayer {
+.hidden-input:focus-visible ~ .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
 /* Active / pressed — unchecked */
-.checkbox:active .stateLayer {
+.checkbox:active .state-layer {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
 /* Active / pressed — selected */
-.checkbox:active .isSelectedState ~ .stateLayer {
+.checkbox:active .is-selected-state ~ .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* ── Error state layer overrides ─────────────────────── */
 
-.error:hover .stateLayer {
+.error:hover .state-layer {
   background: color-mix(in srgb, var(--color-error, #b3261e) 8%, transparent);
 }
 
-.error:active .stateLayer {
+.error:active .state-layer {
   background: color-mix(in srgb, var(--color-error, #b3261e) 12%, transparent);
 }
 
@@ -113,18 +113,18 @@
 }
 
 /* Checked / indeterminate — filled state */
-.box.isSelectedState {
+.box.is-selected-state {
   background: var(--accent-primary, #6750a4);
   border-color: var(--accent-primary, #6750a4);
 }
 
 /* Error unchecked */
-.box.errorBox {
+.box.error-box {
   border-color: var(--color-error, #b3261e);
 }
 
 /* Error + checked */
-.box.errorBox.isSelectedState {
+.box.error-box.is-selected-state {
   background: var(--color-error, #b3261e);
   border-color: var(--color-error, #b3261e);
 }
@@ -139,24 +139,24 @@
 }
 
 /* Checkmark draw-in animation via stroke-dashoffset (GPU-composited) */
-.checkPath {
+.check-path {
   stroke-dasharray: 20;
   stroke-dashoffset: 20;
-  animation: checkDraw 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: check-draw 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes checkDraw {
+@keyframes check-draw {
   to {
     stroke-dashoffset: 0;
   }
 }
 
 /* Dash scale-in animation */
-.dashPath {
-  animation: dashIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+.dash-path {
+  animation: dash-in 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes dashIn {
+@keyframes dash-in {
   from {
     opacity: 0;
     transform: scaleX(0);
@@ -188,28 +188,28 @@
 /* 40×40 touch target is too large. Container shrinks to  */
 /* 28×28, visual box to 14×14, icon to 10×10.             */
 
-.isCompactSize {
+.is-compact-size {
   gap: 2px;
 }
 
-.isCompactSize .container {
+.is-compact-size .container {
   width: 28px;
   height: 28px;
 }
 
-.isCompactSize .box {
+.is-compact-size .box {
   width: 14px;
   height: 14px;
   border-width: 1.5px;
   border-radius: 2px;
 }
 
-.isCompactSize .icon {
+.is-compact-size .icon {
   width: 10px;
   height: 10px;
 }
 
-.isCompactSize .label {
+.is-compact-size .label {
   font-size: 13px;
   line-height: 18px;
 }

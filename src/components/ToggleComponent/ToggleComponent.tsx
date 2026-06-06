@@ -36,18 +36,18 @@ export default function ToggleComponent({
 
   return (
     <label
-      className={`${styles.toggle} ${disabled ? styles.isDisabledState : ""} ${isMini ? styles.mini : ""}`}
+      className={`${styles.toggle} ${disabled ? styles['is-disabled-state'] : ""} ${isMini ? styles.mini : ""}`}
       onMouseEnter={(e) => sound && SoundService.playHoverButton({ event: e })}
     >
       <input
         type="checkbox"
-        className={styles.hiddenInput}
+        className={styles['hidden-input']}
         checked={checked}
         disabled={disabled}
         onChange={(e) => { if (sound) SoundService.playClickButton({ event: e }); onChange(e.target.checked); }}
       />
       <span
-        className={`${styles.track} ${checked ? styles.isActiveState : ""}`}
+        className={`${styles.track} ${checked ? styles['is-active-state'] : ""}`}
         role="switch"
         aria-checked={checked}
       >

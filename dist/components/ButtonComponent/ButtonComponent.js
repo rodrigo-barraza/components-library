@@ -58,20 +58,20 @@ const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary
     }, []);
     /* ── Class composition ─────────────────────────────────────────── */
     const classes = [
-        styles.buttonElement,
+        styles['button-element'],
         styles[variant],
         size !== "medium" && styles[size],
-        fullWidth && styles.fullWidth,
-        loading && styles.isLoadingState,
-        Icon && hasLabel && styles.hasIcon,
-        isIconOnly && styles.iconOnly,
-        isSubmit && isGenerating && styles.submitGenerating,
+        fullWidth && styles['full-width'],
+        loading && styles['is-loading-state'],
+        Icon && hasLabel && styles['has-icon'],
+        isIconOnly && styles['icon-only'],
+        isSubmit && isGenerating && styles['submit-generating'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
     /* ── Render content ────────────────────────────────────────────── */
-    const content = (_jsxs(_Fragment, { children: [_jsx("span", { className: styles.stateLayer }), loading ? (_jsx("span", { className: styles.spinner, "aria-hidden": "true" })) : Icon ? (_jsx("span", { className: styles.icon, "aria-hidden": "true", children: _jsx(Icon, { size: resolvedIconSize, ...(isSubmit && isGenerating ? { fill: "currentColor" } : {}) }) })) : null, hasLabel && _jsx("span", { className: styles.label, children: children })] }));
+    const content = (_jsxs(_Fragment, { children: [_jsx("span", { className: styles['state-layer'] }), loading ? (_jsx("span", { className: styles.spinner, "aria-hidden": "true" })) : Icon ? (_jsx("span", { className: styles.icon, "aria-hidden": "true", children: _jsx(Icon, { size: resolvedIconSize, ...(isSubmit && isGenerating ? { fill: "currentColor" } : {}) }) })) : null, hasLabel && _jsx("span", { className: styles.label, children: children })] }));
     /* ── Shared event handlers ─────────────────────────────────────── */
     const handleMouseEnter = (event) => {
         if (sound)

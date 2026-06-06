@@ -73,7 +73,7 @@ export default function CardComponent({
     styles[variant],
     interactive && styles.interactive,
     isDraggable && styles.draggable,
-    fullWidth && styles.fullWidth,
+    fullWidth && styles['full-width'],
     className,
   ]
     .filter(Boolean)
@@ -129,7 +129,7 @@ function CardMedia({
           <img
             src={src}
             alt={alt}
-            className={styles.mediaImage}
+            className={styles['media-image']}
             loading="lazy"
             draggable={false}
           />
@@ -169,12 +169,12 @@ const CardActionArea = forwardRef<HTMLAnchorElement | HTMLButtonElement, CardAct
   { onClick, href, className, children, ...rest },
   ref,
 ) {
-  const classes = [styles.actionArea, className].filter(Boolean).join(" ");
+  const classes = [styles['action-area'], className].filter(Boolean).join(" ");
 
   if (href) {
     return (
       <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} className={classes} {...rest}>
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
         {children}
       </a>
     );
@@ -182,7 +182,7 @@ const CardActionArea = forwardRef<HTMLAnchorElement | HTMLButtonElement, CardAct
 
   return (
     <button ref={ref as React.Ref<HTMLButtonElement>} type="button" onClick={onClick} className={classes} {...rest}>
-      <span className={styles.stateLayer} />
+      <span className={styles['state-layer']} />
       {children}
     </button>
   );

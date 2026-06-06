@@ -97,7 +97,7 @@ function AvatarGroup({ max = 5, size = "md", className, children }: AvatarGroupP
   return (
     <div className={`${styles.group} ${className || ""}`}>
       {visible.map((child, i) => (
-        <div key={i} className={styles.groupItem} style={{ zIndex: visible.length - i }}>
+        <div key={i} className={styles['group-item']} style={{ zIndex: visible.length - i }}>
           {child}
         </div>
       ))}

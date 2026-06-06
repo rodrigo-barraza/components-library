@@ -276,7 +276,7 @@ export default function TooltipComponent({
     styles.bubble,
     rich ? styles.rich : styles.plain,
     styles[resolvedPosition],
-    visible && styles.isVisibleState,
+    visible && styles['is-visible-state'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -295,19 +295,19 @@ export default function TooltipComponent({
           onMouseLeave={handleBubbleMouseLeave}
         >
           {/* ── Plain variant ── */}
-          {!rich && <span className={styles.plainLabel}>{label}</span>}
+          {!rich && <span className={styles['plain-label']}>{label}</span>}
 
           {/* ── Rich variant ── */}
           {rich && (
-            <span className={styles.richContent}>
+            <span className={styles['rich-content']}>
               {title && (
-                <span className={styles.richTitle}>{title}</span>
+                <span className={styles['rich-title']}>{title}</span>
               )}
               {content && (
-                <span className={styles.richBody}>{content}</span>
+                <span className={styles['rich-body']}>{content}</span>
               )}
               {action && (
-                <span className={styles.richAction}>{action}</span>
+                <span className={styles['rich-action']}>{action}</span>
               )}
             </span>
           )}
@@ -319,7 +319,7 @@ export default function TooltipComponent({
   return (
     <span
       ref={wrapperRef}
-      className={`${styles.wrapper} ${trigger === "hover" ? styles.hoverTrigger : ""} ${className}`}
+      className={`${styles.wrapper} ${trigger === "hover" ? styles['hover-trigger'] : ""} ${className}`}
       onClick={trigger === "click" ? handleClick : undefined}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

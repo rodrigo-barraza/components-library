@@ -97,14 +97,14 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
 
   /* ── Class composition ─────────────────────────────────────────── */
   const classes = [
-    styles.buttonElement,
+    styles['button-element'],
     styles[variant],
     size !== "medium" && styles[size],
-    fullWidth && styles.fullWidth,
-    loading && styles.isLoadingState,
-    Icon && hasLabel && styles.hasIcon,
-    isIconOnly && styles.iconOnly,
-    isSubmit && isGenerating && styles.submitGenerating,
+    fullWidth && styles['full-width'],
+    loading && styles['is-loading-state'],
+    Icon && hasLabel && styles['has-icon'],
+    isIconOnly && styles['icon-only'],
+    isSubmit && isGenerating && styles['submit-generating'],
     className,
   ]
     .filter(Boolean)
@@ -114,7 +114,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
   const content = (
     <>
       {/* M3 State Layer */}
-      <span className={styles.stateLayer} />
+      <span className={styles['state-layer']} />
 
       {/* Spinner or Icon */}
       {loading ? (

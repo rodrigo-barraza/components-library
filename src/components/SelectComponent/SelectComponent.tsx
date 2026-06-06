@@ -213,7 +213,7 @@ export default function SelectComponent<T extends string | string[] = string | s
       <button
         key={option.value}
         type="button"
-        className={`${styles.option} ${checked ? styles.optionSelected : ""} ${option.disabled ? styles.optionDisabled : ""}`}
+        className={`${styles.option} ${checked ? styles['option-selected'] : ""} ${option.disabled ? styles['option-disabled'] : ""}`}
         onClick={() => handleOptionClick(option)}
         disabled={option.disabled}
       >
@@ -242,9 +242,9 @@ export default function SelectComponent<T extends string | string[] = string | s
         )}
 
         {option.icon && (
-          <span className={styles.optionIcon}>{option.icon}</span>
+          <span className={styles['option-icon']}>{option.icon}</span>
         )}
-        <span className={styles.optionLabel}>{option.label}</span>
+        <span className={styles['option-label']}>{option.label}</span>
       </button>
     );
 
@@ -266,10 +266,10 @@ export default function SelectComponent<T extends string | string[] = string | s
 
   const triggerClassNames = [
     styles.trigger,
-    isOpen ? styles.triggerOpen : "",
-    disabled ? styles.triggerDisabled : "",
-    isLoading ? styles.triggerLoading : "",
-    multiple ? styles.triggerMultiple : "",
+    isOpen ? styles['trigger-open'] : "",
+    disabled ? styles['trigger-disabled'] : "",
+    isLoading ? styles['trigger-loading'] : "",
+    multiple ? styles['trigger-multiple'] : "",
     triggerClassName || "",
   ]
     .filter(Boolean)
@@ -285,21 +285,21 @@ export default function SelectComponent<T extends string | string[] = string | s
       disabled={disabled}
       style={disabled ? { cursor: "default" } : undefined}
     >
-      <span className={styles.triggerContent}>
+      <span className={styles['trigger-content']}>
         {isLoading && (
-          <Loader2 size={14} className={styles.triggerSpinner} />
+          <Loader2 size={14} className={styles['trigger-spinner']} />
         )}
-        {!isLoading && icon && <span className={styles.triggerIcon}>{icon}</span>}
-        {!isLoading && !icon && !multiple && selected?.icon && <span className={styles.optionIcon}>{selected.icon}</span>}
+        {!isLoading && icon && <span className={styles['trigger-icon']}>{icon}</span>}
+        {!isLoading && !icon && !multiple && selected?.icon && <span className={styles['option-icon']}>{selected.icon}</span>}
         {multiple && !isLoading ? (
           allSelected ? (
-            <span className={styles.triggerLabel}>{allLabel}</span>
+            <span className={styles['trigger-label']}>{allLabel}</span>
           ) : compact ? (
-            <span className={styles.triggerLabel}>
+            <span className={styles['trigger-label']}>
               {selectedOptions.length} selected
             </span>
           ) : selectedOptions.length === 0 ? (
-            <span className={styles.triggerLabel}>{placeholder}</span>
+            <span className={styles['trigger-label']}>{placeholder}</span>
           ) : (
             selectedOptions.map((option) => (
               <span key={option.value} className={styles["chip-element"]}>
@@ -317,7 +317,7 @@ export default function SelectComponent<T extends string | string[] = string | s
             ))
           )
         ) : (
-          <span className={styles.triggerLabel}>
+          <span className={styles['trigger-label']}>
             {isLoading
               ? `Loading… ${Math.round((loadingProgress ?? 0) * 100)}%`
               : selected
@@ -329,12 +329,12 @@ export default function SelectComponent<T extends string | string[] = string | s
       {!disabled && !isLoading && (
         <ChevronDown
           size={14}
-          className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ""}`}
+          className={`${styles.chevron} ${isOpen ? styles['chevron-open'] : ""}`}
         />
       )}
       {isLoading && (
         <span
-          className={styles.triggerProgressBar}
+          className={styles['trigger-progress-bar']}
           style={{ transform: `scaleX(${loadingProgress ?? 0})` }}
         />
       )}
@@ -353,15 +353,15 @@ export default function SelectComponent<T extends string | string[] = string | s
   );
 
   return (
-    <div className={`${styles.dropdown} ${label ? styles.hasLabel : ""}`} ref={containerRef}>
+    <div className={`${styles.dropdown} ${label ? styles['has-label'] : ""}`} ref={containerRef}>
       {label && <span className={styles.label}>{label}</span>}
 
       {!isControlled && (
         <div className={styles.sizer} aria-hidden="true">
           {options.map((option) => (
-            <span key={option.value} className={styles.sizerItem}>
-              {icon && <span className={styles.triggerIcon}>{icon}</span>}
-              {option.icon && <span className={styles.optionIcon}>{option.icon}</span>}
+            <span key={option.value} className={styles['sizer-item']}>
+              {icon && <span className={styles['trigger-icon']}>{icon}</span>}
+              {option.icon && <span className={styles['option-icon']}>{option.icon}</span>}
               <span>{option.label}</span>
             </span>
           ))}

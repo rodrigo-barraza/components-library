@@ -117,7 +117,7 @@
 /* ── Selected state ──────────────────────────────────────────────────── */
 
 .segment-button.is-selected-state {
-  color: var(--accent-primary-contrast, rgba(255, 255, 255, 0.92));
+  color: var(--accent-primary-contrast, oklch(1 0 0 / 0.92));
   font-weight: 600;
 }
 

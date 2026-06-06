@@ -21,9 +21,9 @@ export default function FormGroupComponent({
   style,
 }: FormGroupComponentProps) {
   return (
-    <div className={`${styles.formGroup}${className ? ` ${className}` : ""}`} style={style}>
+    <div className={`${styles['form-group']}${className ? ` ${className}` : ""}`} style={style}>
       {label && <label>{label}</label>}
-      {readOnly ? <div className={styles.readOnlyValue}>{readOnlyContent ?? "—"}</div> : children}
+      {readOnly ? <div className={styles['read-only-value']}>{readOnlyContent ?? "—"}</div> : children}
       {hint && <span className={styles.hint}>{hint}</span>}
     </div>
   );

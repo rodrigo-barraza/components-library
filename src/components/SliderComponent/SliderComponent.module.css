@@ -20,7 +20,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.slider.isDisabledState {
+.slider.is-disabled-state {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -28,7 +28,7 @@
 
 /* ── Track wrapper — ensures proper spacing for thumbs ─ */
 
-.trackWrapper {
+.track-wrapper {
   position: relative;
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@
 
 /* ── Inactive track — background rail ────────────────── */
 
-.inactiveTrack {
+.inactive-track {
   position: absolute;
   left: 0;
   right: 0;
@@ -62,7 +62,7 @@
 
 /* ── Active track — filled portion ───────────────────── */
 
-.activeTrack {
+.active-track {
   position: absolute;
   height: 4px;
   background: var(--slider-active-track, var(--accent-primary, #6750a4));
@@ -75,7 +75,7 @@
 
 /* ── Stop indicators — 4×4 dots at track endpoints ───── */
 
-.stopIndicator {
+.stop-indicator {
   position: absolute;
   top: 50%;
   width: 4px;
@@ -87,25 +87,25 @@
   transition: opacity 0.2s ease;
 }
 
-.stopStart {
+.stop-start {
   left: 0;
   background: var(--slider-stop-active, var(--accent-primary, #6750a4));
 }
 
-.stopEnd {
+.stop-end {
   right: 0;
   background: var(--slider-stop-inactive, var(--text-secondary, #49454f));
 }
 
 /* Show stop indicators when there's some fill */
-.track .stopStart,
-.track .stopEnd {
+.track .stop-start,
+.track .stop-end {
   opacity: 0.38;
 }
 
 /* ── Tick marks — discrete step indicators ───────────── */
 
-.tickMark {
+.tick-mark {
   position: absolute;
   top: 50%;
   width: 4px;
@@ -117,17 +117,17 @@
   z-index: 1;
 }
 
-.tickActive {
+.tick-active {
   background: var(--slider-tick-active, color-mix(in srgb, var(--accent-primary, #6750a4) 38%, transparent));
 }
 
-.tickInactive {
+.tick-inactive {
   background: var(--slider-tick-inactive, color-mix(in srgb, var(--text-primary, #49454f) 38%, transparent));
 }
 
 /* ── Thumb container — positions thumb + state layer ─── */
 
-.thumbContainer {
+.thumb-container {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -141,7 +141,7 @@
 
 /* ── State layer — 40×40 M3 circular hover/press zone ── */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   width: 40px;
   height: 40px;
@@ -153,18 +153,18 @@
 }
 
 /* Hover state */
-.thumbContainer:hover .stateLayer {
+.thumb-container:hover .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 8%, transparent);
 }
 
 /* Focus-visible state (keyboard) */
-.thumbContainer:focus-visible .stateLayer {
+.thumb-container:focus-visible .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
 /* Active / pressed state */
-.thumbPressed .stateLayer,
-.thumbDragging .stateLayer {
+.thumb-pressed .state-layer,
+.thumb-dragging .state-layer {
   background: color-mix(in srgb, var(--accent-primary, #6750a4) 12%, transparent);
 }
 
@@ -177,8 +177,8 @@
   border-radius: 50%;
   background: var(--slider-thumb, var(--accent-primary, #6750a4));
   box-shadow:
-    0 1px 3px 1px rgba(0, 0, 0, 0.15),
-    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+    0 1px 3px 1px oklch(0 0 0 / 0.15),
+    0 1px 2px 0 oklch(0 0 0 / 0.3);
   transition:
     transform 0.2s cubic-bezier(0.2, 0, 0, 1),
     box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
@@ -187,30 +187,30 @@
 }
 
 /* Hover — slight scale-up */
-.thumbContainer:hover .thumb {
+.thumb-container:hover .thumb {
   box-shadow:
-    0 2px 4px 1px rgba(0, 0, 0, 0.18),
-    0 1px 3px 0 rgba(0, 0, 0, 0.33);
+    0 2px 4px 1px oklch(0 0 0 / 0.18),
+    0 1px 3px 0 oklch(0 0 0 / 0.33);
 }
 
 /* Pressed/dragging — thumb grows per M3 spec */
-.thumbPressed .thumb,
-.thumbDragging .thumb {
+.thumb-pressed .thumb,
+.thumb-dragging .thumb {
   transform: scale(1.1);
   box-shadow:
-    0 2px 6px 2px rgba(0, 0, 0, 0.15),
-    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+    0 2px 6px 2px oklch(0 0 0 / 0.15),
+    0 1px 2px 0 oklch(0 0 0 / 0.3);
 }
 
 /* Focus-visible ring (keyboard) */
-.thumbContainer:focus-visible .thumb {
+.thumb-container:focus-visible .thumb {
   outline: 2px solid var(--slider-focus-ring, var(--accent-primary, #6750a4));
   outline-offset: 2px;
 }
 
 /* ── Value indicator — M3 teardrop label ─────────────── */
 
-.valueIndicator {
+.value-indicator {
   position: absolute;
   bottom: calc(100% + 4px);
   left: 50%;
@@ -227,10 +227,10 @@
   pointer-events: none;
   z-index: 10;
   /* Scale-in entrance animation */
-  animation: indicatorIn 0.15s cubic-bezier(0.2, 0, 0, 1) forwards;
+  animation: indicator-in 0.15s cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
-@keyframes indicatorIn {
+@keyframes indicator-in {
   from {
     opacity: 0;
     transform: translateX(-50%) scale(0.6) translateY(4px);
@@ -243,7 +243,7 @@
 
 /* ── Indicator stem (pseudo-element teardrop tail) ───── */
 
-.valueIndicator::after {
+.value-indicator::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -256,7 +256,7 @@
   border-top: 5px solid var(--slider-indicator-bg, var(--accent-primary, #6750a4));
 }
 
-.valueLabel {
+.value-label {
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
@@ -267,20 +267,20 @@
 
 /* ── Disabled-specific overrides ─────────────────────── */
 
-.isDisabledState .inactiveTrack {
+.is-disabled-state .inactive-track {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 12%, transparent);
 }
 
-.isDisabledState .activeTrack {
+.is-disabled-state .active-track {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
 }
 
-.isDisabledState .thumb {
+.is-disabled-state .thumb {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
   box-shadow: none;
 }
 
-.isDisabledState .tickActive,
-.isDisabledState .tickInactive {
+.is-disabled-state .tick-active,
+.is-disabled-state .tick-inactive {
   background: color-mix(in srgb, var(--text-primary, #1d1b20) 38%, transparent);
 }

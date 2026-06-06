@@ -46,7 +46,7 @@ export default function SkeletonComponent({
   // Text variant: render multiple lines
   if (variant === "text" && lines > 1) {
     return (
-      <div className={styles.textGroup} id={id}>
+      <div className={styles['text-group']} id={id}>
         {Array.from({ length: lines }, (_, i) => {
           // Last line is shorter for a natural look
           const isLast = i === lines - 1;

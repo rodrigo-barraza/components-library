@@ -50,9 +50,9 @@ export default function RadioComponent<T extends string | number | boolean = str
 
   const rootClasses = [
     styles.radio,
-    disabled && styles.isDisabledState,
+    disabled && styles['is-disabled-state'],
     error && styles.error,
-    labelPlacement === "start" && styles.labelStart,
+    labelPlacement === "start" && styles['label-start'],
     className,
   ]
     .filter(Boolean)
@@ -60,8 +60,8 @@ export default function RadioComponent<T extends string | number | boolean = str
 
   const circleClasses = [
     styles.circle,
-    checked && styles.isSelectedState,
-    error && styles.errorCircle,
+    checked && styles['is-selected-state'],
+    error && styles['error-circle'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -77,7 +77,7 @@ export default function RadioComponent<T extends string | number | boolean = str
           id={id}
           name={name}
           value={String(value)}
-          className={styles.hiddenInput}
+          className={styles['hidden-input']}
           checked={checked}
           disabled={disabled}
           onChange={() => {
@@ -91,13 +91,13 @@ export default function RadioComponent<T extends string | number | boolean = str
           {/* Selected: 10×10px inner dot with scale-in animation */}
           {checked && (
             <span
-              className={`${styles.dot}${error ? ` ${styles.errorDot}` : ""}`}
+              className={`${styles.dot}${error ? ` ${styles['error-dot']}` : ""}`}
             />
           )}
         </span>
 
         {/* M3 circular state layer — 40×40px touch target */}
-        <span className={styles.stateLayer} />
+        <span className={styles['state-layer']} />
       </span>
 
       {label && <span className={styles.label}>{label}</span>}

@@ -17,7 +17,7 @@
 
 /* ── Root container ──────────────────────────────────────────────── */
 
-.topAppBar {
+.top-app-bar {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   transition:
     box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
     background 200ms cubic-bezier(0.2, 0, 0, 1);
-  animation: topBarSlideIn 250ms cubic-bezier(0, 0, 0, 1) both;
+  animation: top-bar-slide-in 250ms cubic-bezier(0, 0, 0, 1) both;
 }
 
 .sticky {
@@ -49,14 +49,14 @@
 
 .elevated {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.08),
-    0 2px 6px 2px rgb(0 0 0 / 0.04);
+    0 1px 2px 0 oklch(0 0 0 / 0.08),
+    0 2px 6px 2px oklch(0 0 0 / 0.04);
 }
 
 /* ── Main row (always visible: nav icon + title + actions) ───────── */
 /* M3 spec: 64dp fixed height for the main row across all variants  */
 
-.mainRow {
+.main-row {
   display: flex;
   align-items: center;
   height: 64px;
@@ -69,14 +69,14 @@
 /* ── Navigation icon slot ────────────────────────────────────────── */
 /* M3 spec: leading icon 48×48dp touch target, 4dp from left edge   */
 
-.navigationSlot {
+.navigation-slot {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.navigationButton {
+.navigation-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -94,22 +94,22 @@
   transition: background 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.navigationButton:focus-visible {
+.navigation-button:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
 
-.navigationButton:hover {
-  background: var(--hover-overlay, rgb(0 0 0 / 0.06));
+.navigation-button:hover {
+  background: var(--hover-overlay, oklch(0 0 0 / 0.06));
 }
 
-.navigationButton:active {
-  background: var(--press-overlay, rgb(0 0 0 / 0.1));
+.navigation-button:active {
+  background: var(--press-overlay, oklch(0 0 0 / 0.1));
 }
 
 /* ── Title area ──────────────────────────────────────────────────── */
 
-.titleArea {
+.title-area {
   flex: 1 1 auto;
   min-width: 0;
   padding: 0 4px;
@@ -132,11 +132,11 @@
 /* ── Center-aligned variant ──────────────────────────────────────── */
 /* M3 spec: title-large (22px), centered in the main row            */
 
-.centerAligned .titleArea {
+.center-aligned .title-area {
   text-align: center;
 }
 
-.centerAligned .title {
+.center-aligned .title {
   font-size: 22px;
   font-weight: 400;
   line-height: 28px;
@@ -157,7 +157,7 @@
 /* M3 spec: 112dp total height (expanded), headline-small (24px)    */
 /* On scroll: collapses to 64dp, title transitions to main row      */
 
-.medium .mainRow .title {
+.medium .main-row .title {
   font-size: 22px;
   font-weight: 400;
   line-height: 28px;
@@ -168,7 +168,7 @@
     transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.medium.isCollapsedState .mainRow .title {
+.medium.is-collapsed-state .main-row .title {
   opacity: 1;
   transform: translateY(0);
 }
@@ -177,7 +177,7 @@
 /* M3 spec: 152dp total height (expanded), headline-medium (28px)   */
 /* On scroll: collapses to 64dp, title transitions to main row      */
 
-.large .mainRow .title {
+.large .main-row .title {
   font-size: 22px;
   font-weight: 400;
   line-height: 28px;
@@ -188,7 +188,7 @@
     transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.large.isCollapsedState .mainRow .title {
+.large.is-collapsed-state .main-row .title {
   opacity: 1;
   transform: translateY(0);
 }
@@ -196,7 +196,7 @@
 /* ── Expanded title row (medium & large only) ────────────────────── */
 /* Additional row below the main row for the prominent headline     */
 
-.expandedRow {
+.expanded-row {
   display: flex;
   align-items: flex-end;
   padding: 0 16px 20px 16px;
@@ -209,12 +209,12 @@
 }
 
 /* Medium expanded row: 48dp (112 - 64 main row) */
-.medium .expandedRow {
+.medium .expanded-row {
   height: 48px;
   min-height: 0;
 }
 
-.medium .expandedTitle {
+.medium .expanded-title {
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -229,14 +229,14 @@
 }
 
 /* Large expanded row: 88dp (152 - 64 main row) */
-.large .expandedRow {
+.large .expanded-row {
   height: 88px;
   min-height: 0;
   align-items: flex-end;
   padding-bottom: 28px;
 }
 
-.large .expandedTitle {
+.large .expanded-title {
   font-size: 28px;
   font-weight: 400;
   line-height: 36px;
@@ -255,7 +255,7 @@
 
 /* ── Collapsed state (medium & large) ────────────────────────────── */
 
-.isCollapsedState .expandedRow {
+.is-collapsed-state .expanded-row {
   height: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -266,14 +266,14 @@
 /* ── Actions slot ────────────────────────────────────────────────── */
 /* M3 spec: up to 3 trailing icon buttons, 48×48dp touch targets    */
 
-.actionsSlot {
+.actions-slot {
   display: flex;
   align-items: center;
   gap: 0;
   flex-shrink: 0;
 }
 
-.actionButton {
+.action-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -291,20 +291,20 @@
   transition: background 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.actionButton:focus-visible {
+.action-button:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
 
-.actionButton:hover {
-  background: var(--hover-overlay, rgb(0 0 0 / 0.06));
+.action-button:hover {
+  background: var(--hover-overlay, oklch(0 0 0 / 0.06));
 }
 
-.actionButton:active {
-  background: var(--press-overlay, rgb(0 0 0 / 0.1));
+.action-button:active {
+  background: var(--press-overlay, oklch(0 0 0 / 0.1));
 }
 
-.actionButton[disabled] {
+.action-button[disabled] {
   opacity: 0.38;
   pointer-events: none;
   cursor: not-allowed;
@@ -312,7 +312,7 @@
 
 /* ── Entrance animation ──────────────────────────────────────────── */
 
-@keyframes topBarSlideIn {
+@keyframes top-bar-slide-in {
   from {
     opacity: 0;
     transform: translateY(-8px);
@@ -326,7 +326,7 @@
 /* ── Scroll progress shadow (thin accent line for polish) ────────── */
 /* A subtle 2px gradient line under the bar when elevated — wabi-sabi */
 
-.scrollIndicator {
+.scroll-indicator {
   position: absolute;
   bottom: 0;
   left: 0;

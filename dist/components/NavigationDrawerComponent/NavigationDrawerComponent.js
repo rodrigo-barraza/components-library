@@ -95,10 +95,10 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
     const drawerClasses = [
         styles.drawer,
         styles[variant],
-        isEnd && styles.anchorEnd,
-        isModal && open && styles.isOpenState,
-        !isModal && !open && styles.isClosedState,
-        !ready && styles.noTransition,
+        isEnd && styles['anchor-end'],
+        isModal && open && styles['is-open-state'],
+        !isModal && !open && styles['is-closed-state'],
+        !ready && styles['no-transition'],
         className,
     ]
         .filter(Boolean)
@@ -106,7 +106,7 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
     const drawerEl = (_jsxs("nav", { ref: drawerRef, role: "navigation", "aria-label": ariaLabel, "aria-hidden": !open, className: drawerClasses, style: style, ...rest, children: [headline && _jsx("div", { className: styles.headline, children: headline }), _jsx("div", { className: styles.content, children: children })] }));
     // ── Modal variant: wrap with scrim ──────────────────────────────
     if (isModal) {
-        return (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.scrim}${open ? ` ${styles.isOpenState}` : ""}`, onClick: onClose, "aria-hidden": "true" }), drawerEl] }));
+        return (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles.scrim}${open ? ` ${styles['is-open-state']}` : ""}`, onClick: onClose, "aria-hidden": "true" }), drawerEl] }));
     }
     // ── Standard variant: inline ────────────────────────────────────
     return _jsx("div", { className: styles.wrapper, children: drawerEl });
@@ -120,13 +120,13 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
 function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false, href, onClick, LinkComponent, className, children, ...rest }) {
     const classes = [
         styles.item,
-        active && styles.isActiveState,
-        disabled && styles.isDisabledState,
+        active && styles['is-active-state'],
+        disabled && styles['is-disabled-state'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    const content = children || (_jsxs(_Fragment, { children: [Icon && _jsx(Icon, { size: 24, className: styles.itemIcon }), _jsx("span", { className: styles.itemLabel, children: label }), badge != null && _jsx("span", { className: styles.itemBadge, children: badge })] }));
+    const content = children || (_jsxs(_Fragment, { children: [Icon && _jsx(Icon, { size: 24, className: styles['item-icon'] }), _jsx("span", { className: styles['item-label'], children: label }), badge != null && _jsx("span", { className: styles['item-badge'], children: badge })] }));
     const sharedProps = {
         className: classes,
         "aria-current": active ? "page" : undefined,
@@ -135,14 +135,14 @@ function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false
     };
     // Render with custom Link component
     if (LinkComponent && href) {
-        return (_jsxs(LinkComponent, { href: href, onClick: onClick, ...sharedProps, children: [_jsx("span", { className: styles.stateLayer }), content] }));
+        return (_jsxs(LinkComponent, { href: href, onClick: onClick, ...sharedProps, children: [_jsx("span", { className: styles['state-layer'] }), content] }));
     }
     // Render as native anchor
     if (href) {
-        return (_jsxs("a", { href: href, onClick: onClick, ...sharedProps, children: [_jsx("span", { className: styles.stateLayer }), content] }));
+        return (_jsxs("a", { href: href, onClick: onClick, ...sharedProps, children: [_jsx("span", { className: styles['state-layer'] }), content] }));
     }
     // Render as button
-    return (_jsxs("button", { type: "button", onClick: onClick, disabled: disabled, ...sharedProps, children: [_jsx("span", { className: styles.stateLayer }), content] }));
+    return (_jsxs("button", { type: "button", onClick: onClick, disabled: disabled, ...sharedProps, children: [_jsx("span", { className: styles['state-layer'] }), content] }));
 }
 /**
  * DrawerSectionHeader — labelled group heading.
@@ -150,7 +150,7 @@ function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false
  * M3 spec: title-small typography, 56dp total height with padding.
  */
 function DrawerSectionHeader({ className, children }) {
-    return (_jsx("div", { className: `${styles.sectionHeader}${className ? ` ${className}` : ""}`, role: "heading", "aria-level": 2, children: children }));
+    return (_jsx("div", { className: `${styles['section-header']}${className ? ` ${className}` : ""}`, role: "heading", "aria-level": 2, children: children }));
 }
 /**
  * DrawerDivider — horizontal visual separator between sections.

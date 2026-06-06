@@ -19,7 +19,7 @@ export default function DividerComponent({ variant = "fullWidth", orientation = 
         styles.divider,
         styles[orientation],
         variant === "inset" && styles.inset,
-        variant === "middleInset" && styles.middleInset,
+        variant === "middleInset" && styles['middle-inset'],
         spacing && spacing.length > 0 && styles[`spacing${spacing.charAt(0).toUpperCase()}${spacing.slice(1)}`],
         className,
     ]
@@ -48,12 +48,12 @@ function DividerSubheader({ label, variant = "fullWidth", className, style, ...r
         styles.divider,
         styles.subheader,
         variant === "inset" && styles.inset,
-        variant === "middleInset" && styles.middleInset,
+        variant === "middleInset" && styles['middle-inset'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("div", { className: classes, style: style, role: "none", ...rest, children: [_jsx("span", { className: styles.subheaderLine }), _jsx("span", { className: styles.subheaderLabel, children: label }), _jsx("span", { className: styles.subheaderLine })] }));
+    return (_jsxs("div", { className: classes, style: style, role: "none", ...rest, children: [_jsx("span", { className: styles['subheader-line'] }), _jsx("span", { className: styles['subheader-label'], children: label }), _jsx("span", { className: styles['subheader-line'] })] }));
 }
 /* ── Attach sub-components ───────────────────────────────────────── */
 DividerComponent.Subheader = DividerSubheader;

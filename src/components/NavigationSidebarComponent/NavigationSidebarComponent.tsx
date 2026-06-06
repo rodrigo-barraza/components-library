@@ -281,14 +281,14 @@ export default function NavigationSidebarComponent({
 
     const content = (
       <>
-        {IconComponent && <IconComponent size={18} strokeWidth={1.8} className={styles.navigationIcon} />}
-        <span className={styles.navigationLabel}>{item.label}</span>
-        {isActive && <div className={styles.activeIndicator} />}
+        {IconComponent && <IconComponent size={18} strokeWidth={1.8} className={styles['navigation-icon']} />}
+        <span className={styles['navigation-label']}>{item.label}</span>
+        {isActive && <div className={styles['active-indicator']} />}
       </>
     );
 
     const linkProps = {
-      className: `${styles.navigationItem} ${isActive ? styles.isActiveState : ""}`,
+      className: `${styles['navigation-item']} ${isActive ? styles['is-active-state'] : ""}`,
       onClick: () => {
         if (onNavigate && id) {
           onNavigate(id, item);
@@ -333,7 +333,7 @@ export default function NavigationSidebarComponent({
     const showTooltip = collapsible && !isMobile;
 
     return showTooltip ? (
-      <TooltipComponent key={id || item.label} label={item.label} position="right" delay={200} disabled={!collapsed} className={styles.tooltipFill}>
+      <TooltipComponent key={id || item.label} label={item.label} position="right" delay={200} disabled={!collapsed} className={styles['tooltip-fill']}>
         {LinkElement}
       </TooltipComponent>
     ) : (
@@ -346,10 +346,10 @@ export default function NavigationSidebarComponent({
   // ── Determine wrapper classes ─────────────────────────────────────
   const wrapperClasses = [
     styles.wrapper,
-    collapsed && !isMobile ? styles.isCollapsedState : "",
-    !navReady ? styles.noTransition : "",
-    isMobile ? styles.mobileWrapper : "",
-    isMobile && mobileOpen ? styles.mobileOpen : "",
+    collapsed && !isMobile ? styles['is-collapsed-state'] : "",
+    !navReady ? styles['no-transition'] : "",
+    isMobile ? styles['mobile-wrapper'] : "",
+    isMobile && mobileOpen ? styles['mobile-open'] : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -360,7 +360,7 @@ export default function NavigationSidebarComponent({
       {isMobile && showMobileHamburger && (
         <button
           type="button"
-          className={`${styles.mobileHamburgerButton} ${mobileOpen ? styles.mobileHamburgerButtonOpen : ""}`}
+          className={`${styles['mobile-hamburger-button']} ${mobileOpen ? styles['mobile-hamburger-button-open'] : ""}`}
           onClick={mobileOpen ? handleMobileClose : handleMobileOpen}
           title={mobileOpen ? "Close navigation" : "Open navigation"}
           aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -374,7 +374,7 @@ export default function NavigationSidebarComponent({
       {/* ── Mobile scrim backdrop ── */}
       {isMobile && mobileOpen && (
         <div
-          className={styles.mobileScrim}
+          className={styles['mobile-scrim']}
           onClick={handleMobileClose}
           aria-hidden="true"
         />
@@ -387,17 +387,17 @@ export default function NavigationSidebarComponent({
           <header className={styles.brand}>
             {typeof brandIcon === "string" ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={brandIcon} alt={brandLabel || "Brand"} className={styles.brandIconImg} />
+              <img src={brandIcon} alt={brandLabel || "Brand"} className={styles['brand-icon-img']} />
             ) : brandIcon ? (
-              <div className={styles.brandIconNode}>{brandIcon}</div>
+              <div className={styles['brand-icon-node']}>{brandIcon}</div>
             ) : null}
-            {brandLabel && <span className={styles.brandLabel}>{brandLabel}</span>}
+            {brandLabel && <span className={styles['brand-label']}>{brandLabel}</span>}
 
             {/* Desktop: collapse toggle | Mobile: close button */}
             {isMobile ? (
               <button
                 type="button"
-                className={styles.mobileCloseButton}
+                className={styles['mobile-close-button']}
                 onClick={handleMobileClose}
                 title="Close menu"
                 aria-label="Close navigation menu"
@@ -407,7 +407,7 @@ export default function NavigationSidebarComponent({
             ) : collapsible ? (
               <button
                 type="button"
-                className={styles.collapseButton}
+                className={styles['collapse-button']}
                 onClick={toggleCollapse}
                 title="Toggle Sidebar"
                 aria-label="Collapse navigation sidebar"
@@ -420,12 +420,12 @@ export default function NavigationSidebarComponent({
         )}
 
         {/* Nav List */}
-        <nav className={styles.navigationList}>
+        <nav className={styles['navigation-list']}>
           {resolvedSections.map((section, sectionIndex) => (
             <React.Fragment key={section.label || sectionIndex}>
               {/* Section divider — only rendered when label is truthy */}
               {section.label && (
-                <div className={styles.navigationDivider}>
+                <div className={styles['navigation-divider']}>
                   <span>{section.label}</span>
                 </div>
               )}
@@ -435,7 +435,7 @@ export default function NavigationSidebarComponent({
         </nav>
 
         {/* Bottom Actions */}
-        <footer className={styles.bottomActions}>
+        <footer className={styles['bottom-actions']}>
           {bottomActions}
           {hasThemePicker ? (
             <ThemePickerComponent
@@ -445,16 +445,16 @@ export default function NavigationSidebarComponent({
               collapsed={isMobile ? false : collapsed}
             />
           ) : onToggleTheme ? (
-             <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={isMobile || !collapsed} className={styles.tooltipFill}>
+             <TooltipComponent label={themeMeta.nextLabel + " Mode"} position="right" delay={200} disabled={isMobile || !collapsed} className={styles['tooltip-fill']}>
               <button
                 type="button"
-                className={styles.themeToggle}
+                className={styles['theme-toggle']}
                 onClick={onToggleTheme}
                 title={themeMeta.title}
                 aria-label={themeMeta.title}
               >
-                <themeMeta.NextIcon size={18} strokeWidth={1.8} className={styles.navigationIcon} />
-                <span className={styles.themeLabel}>{themeMeta.nextLabel}</span>
+                <themeMeta.NextIcon size={18} strokeWidth={1.8} className={styles['navigation-icon']} />
+                <span className={styles['theme-label']}>{themeMeta.nextLabel}</span>
               </button>
             </TooltipComponent>
           ) : null}

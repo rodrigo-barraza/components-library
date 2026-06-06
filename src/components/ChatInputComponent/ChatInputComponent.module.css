@@ -2,18 +2,18 @@
  * ChatInputComponent — Message input styles
  * ───────────────────────────────────────────────────────────── */
 
-.inputBar {
+.input-bar {
   padding: 10px 14px;
   border-top: 1px solid var(--chat-border);
   background: var(--chat-background-input);
   flex-shrink: 0;
 }
 
-.inputContainer {
+.input-container {
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  background: oklch(1 0 0 / 0.04);
   border: 1px solid var(--chat-border);
   border-radius: 22px;
   padding: 6px 6px 6px 16px;
@@ -39,7 +39,7 @@
   min-height: 24px;
   max-height: 96px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: oklch(1 0 0 / 0.1) transparent;
 
   &::placeholder {
     color: var(--chat-text-muted);
@@ -55,12 +55,12 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: oklch(1 0 0 / 0.1);
     border-radius: 2px;
   }
 }
 
-.sendButton {
+.send-button {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -75,7 +75,7 @@
     color var(--chat-transition-fast),
     transform var(--chat-transition-fast),
     opacity var(--chat-transition-fast);
-  background: rgba(255, 255, 255, 0.06);
+  background: oklch(1 0 0 / 0.06);
   color: var(--chat-text-muted);
   opacity: 0.5;
   -webkit-tap-highlight-color: transparent;
@@ -85,7 +85,7 @@
   }
 }
 
-.sendActive {
+.send-active {
   background: var(--chat-accent);
   color: var(--chat-text-on-accent);
   opacity: 1;
@@ -100,7 +100,7 @@
   }
 }
 
-.charCount {
+.char-count {
   display: block;
   text-align: right;
   font-size: 0.625rem;
@@ -108,12 +108,12 @@
   padding: 4px 8px 0;
 }
 
-.charCountOver {
+.char-count-over {
   color: var(--chat-error, #f87171);
 }
 
 @media (max-width: 480px) {
-  .inputBar {
+  .input-bar {
     padding: 8px 10px;
   }
 }

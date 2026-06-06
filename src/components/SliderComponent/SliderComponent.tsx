@@ -80,7 +80,7 @@ export default function SliderComponent<T extends number | number[]>({
 
   return (
     <div
-      className={[styles.slider, disabled && styles.isDisabledState, className]
+      className={[styles.slider, disabled && styles['is-disabled-state'], className]
         .filter(Boolean)
         .join(" ")}
       id={id}
@@ -260,7 +260,7 @@ function SingleTrack({
     : null;
 
   return (
-    <div className={styles.trackWrapper}>
+    <div className={styles['track-wrapper']}>
       <div
         ref={trackRef}
         className={[styles.track, dragging && styles.trackDragging]
@@ -271,18 +271,18 @@ function SingleTrack({
         onPointerUp={handlePointerUp}
       >
         {/* ── Inactive track ── */}
-        <div className={styles.inactiveTrack} />
+        <div className={styles['inactive-track']} />
 
         {/* ── Active fill ── */}
         {centered && centeredFill ? (
-          <div className={styles.activeTrack} style={centeredFill} />
+          <div className={styles['active-track']} style={centeredFill} />
         ) : (
-          <div className={styles.activeTrack} style={{ width: `${percentage}%` }} />
+          <div className={styles['active-track']} style={{ width: `${percentage}%` }} />
         )}
 
         {/* ── Stop indicators (M3 endpoints) ── */}
-        <div className={`${styles.stopIndicator} ${styles.stopStart}`} />
-        <div className={`${styles.stopIndicator} ${styles.stopEnd}`} />
+        <div className={`${styles['stop-indicator']} ${styles['stop-start']}`} />
+        <div className={`${styles['stop-indicator']} ${styles['stop-end']}`} />
 
         {/* ── Discrete tick marks ── */}
         {ticks.length > 0 &&
@@ -294,7 +294,7 @@ function SingleTrack({
             return (
               <div
                 key={tick}
-                className={`${styles.tickMark} ${isActive ? styles.tickActive : styles.tickInactive}`}
+                className={`${styles['tick-mark']} ${isActive ? styles['tick-active'] : styles['tick-inactive']}`}
                 style={{ left: `${tickPct}%` }}
               />
             );
@@ -303,9 +303,9 @@ function SingleTrack({
         {/* ── Thumb ── */}
         <div
           className={[
-            styles.thumbContainer,
-            dragging && styles.thumbDragging,
-            pressed && styles.thumbPressed,
+            styles['thumb-container'],
+            dragging && styles['thumb-dragging'],
+            pressed && styles['thumb-pressed'],
           ]
             .filter(Boolean)
             .join(" ")}
@@ -323,15 +323,15 @@ function SingleTrack({
           }
         >
           {/* M3 state layer — 40×40px */}
-          <div className={styles.stateLayer} />
+          <div className={styles['state-layer']} />
 
           {/* M3 thumb handle — 20px */}
           <div className={styles.thumb} />
 
           {/* M3 value indicator — teardrop label */}
           {showValue && (pressed || dragging) && (
-            <div className={styles.valueIndicator}>
-              <span className={styles.valueLabel}>{formatFunction(value)}</span>
+            <div className={styles['value-indicator']}>
+              <span className={styles['value-label']}>{formatFunction(value)}</span>
             </div>
           )}
         </div>
@@ -445,7 +445,7 @@ function RangeTrack({
   };
 
   return (
-    <div className={styles.trackWrapper}>
+    <div className={styles['track-wrapper']}>
       <div
         ref={trackRef}
         className={[styles.track, dragging && styles.trackDragging]
@@ -456,17 +456,17 @@ function RangeTrack({
         onPointerUp={handlePointerUp}
       >
         {/* ── Inactive track ── */}
-        <div className={styles.inactiveTrack} />
+        <div className={styles['inactive-track']} />
 
         {/* ── Active range fill ── */}
         <div
-          className={styles.activeTrack}
+          className={styles['active-track']}
           style={{ left: `${lowPercentage}%`, width: `${highPercentage - lowPercentage}%` }}
         />
 
         {/* ── Stop indicators ── */}
-        <div className={`${styles.stopIndicator} ${styles.stopStart}`} />
-        <div className={`${styles.stopIndicator} ${styles.stopEnd}`} />
+        <div className={`${styles['stop-indicator']} ${styles['stop-start']}`} />
+        <div className={`${styles['stop-indicator']} ${styles['stop-end']}`} />
 
         {/* ── Tick marks ── */}
         {ticks.length > 0 &&
@@ -476,7 +476,7 @@ function RangeTrack({
             return (
               <div
                 key={tick}
-                className={`${styles.tickMark} ${isActive ? styles.tickActive : styles.tickInactive}`}
+                className={`${styles['tick-mark']} ${isActive ? styles['tick-active'] : styles['tick-inactive']}`}
                 style={{ left: `${tickPct}%` }}
               />
             );
@@ -485,9 +485,9 @@ function RangeTrack({
         {/* ── Start thumb ── */}
         <div
           className={[
-            styles.thumbContainer,
-            dragging && activeThumb.current === "start" && styles.thumbDragging,
-            pressedThumb === "start" && styles.thumbPressed,
+            styles['thumb-container'],
+            dragging && activeThumb.current === "start" && styles['thumb-dragging'],
+            pressedThumb === "start" && styles['thumb-pressed'],
           ]
             .filter(Boolean)
             .join(" ")}
@@ -502,13 +502,13 @@ function RangeTrack({
           aria-disabled={disabled}
           onKeyDown={makeThumbKeyHandler("start")}
         >
-          <div className={styles.stateLayer} />
+          <div className={styles['state-layer']} />
           <div className={styles.thumb} />
           {showValue &&
             (pressedThumb === "start" ||
               (dragging && activeThumb.current === "start")) && (
-              <div className={styles.valueIndicator}>
-                <span className={styles.valueLabel}>{formatFunction(lo)}</span>
+              <div className={styles['value-indicator']}>
+                <span className={styles['value-label']}>{formatFunction(lo)}</span>
               </div>
             )}
         </div>
@@ -516,9 +516,9 @@ function RangeTrack({
         {/* ── End thumb ── */}
         <div
           className={[
-            styles.thumbContainer,
-            dragging && activeThumb.current === "end" && styles.thumbDragging,
-            pressedThumb === "end" && styles.thumbPressed,
+            styles['thumb-container'],
+            dragging && activeThumb.current === "end" && styles['thumb-dragging'],
+            pressedThumb === "end" && styles['thumb-pressed'],
           ]
             .filter(Boolean)
             .join(" ")}
@@ -533,13 +533,13 @@ function RangeTrack({
           aria-disabled={disabled}
           onKeyDown={makeThumbKeyHandler("end")}
         >
-          <div className={styles.stateLayer} />
+          <div className={styles['state-layer']} />
           <div className={styles.thumb} />
           {showValue &&
             (pressedThumb === "end" ||
               (dragging && activeThumb.current === "end")) && (
-              <div className={styles.valueIndicator}>
-                <span className={styles.valueLabel}>{formatFunction(hi)}</span>
+              <div className={styles['value-indicator']}>
+                <span className={styles['value-label']}>{formatFunction(hi)}</span>
               </div>
             )}
         </div>

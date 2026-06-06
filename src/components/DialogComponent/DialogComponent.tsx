@@ -204,10 +204,10 @@ export default function DialogComponent({
     .join(" ");
 
   const confirmBtnClass = [
-    styles.actionButton,
+    styles['action-button'],
     confirmVariant === "destructive"
-      ? styles.actionBtnDestructive
-      : styles.actionBtnPrimary,
+      ? styles['action-btn-destructive']
+      : styles['action-btn-primary'],
   ]
     .filter(Boolean)
     .join(" ");
@@ -242,7 +242,7 @@ export default function DialogComponent({
             id={headlineId}
             className={[
               styles.headline,
-              icon ? styles.headlineCentered : "",
+              icon ? styles['headline-centered'] : "",
             ]
               .filter(Boolean)
               .join(" ")}
@@ -261,7 +261,7 @@ export default function DialogComponent({
           {!hideCancel && (
             <button
               type="button"
-              className={styles.actionButton}
+              className={styles['action-button']}
               onClick={handleClose}
             >
               {cancelLabel}

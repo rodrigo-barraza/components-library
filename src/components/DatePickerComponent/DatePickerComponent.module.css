@@ -22,35 +22,35 @@
   white-space: nowrap;
 
   &:hover {
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: oklch(0.566 0.2532 291.3 / 0.3);
   }
 }
 
-.triggerOpen {
+.trigger-open {
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 2px var(--calculated-accent-primary-glow);
 }
 
-.triggerDisabled {
+.trigger-disabled {
   opacity: 0.35;
   pointer-events: none;
   cursor: not-allowed;
 }
 
-.triggerContent {
+.trigger-content {
   display: flex;
   align-items: center;
   gap: 8px;
   overflow: hidden;
 }
 
-.triggerIcon {
+.trigger-icon {
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
-.triggerText {
+.trigger-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -63,11 +63,11 @@
   transition: transform 0.2s;
 }
 
-.chevronOpen {
+.chevron-open {
   transform: rotate(180deg);
 }
 
-.triggerClear {
+.trigger-clear {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +92,8 @@
   background: var(--background-surface);
   border: 1px solid var(--calculated-border-color);
   border-radius: var(--border-radius-md);
-  box-shadow: var(--calculated-shadow-lg, 0 12px 40px rgba(0, 0, 0, 0.25));
-  animation: slideDown 0.15s ease-out;
+  box-shadow: var(--calculated-shadow-lg, 0 12px 40px oklch(0 0 0 / 0.25));
+  animation: slide-down 0.15s ease-out;
   overflow: hidden;
 }
 
@@ -108,7 +108,7 @@
   min-width: 120px;
 }
 
-.presetButton {
+.preset-button {
   padding: 6px 12px;
   font-size: 12px;
   font-weight: 500;
@@ -127,7 +127,7 @@
   }
 }
 
-.presetBtnActive {
+.preset-btn-active {
   color: var(--accent-primary);
   background: var(--calculated-accent-primary-subtle);
   font-weight: 600;
@@ -144,14 +144,14 @@
 
 /* Month navigation row */
 
-.monthNav {
+.month-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
-.monthLabel {
+.month-label {
   flex: 1;
   text-align: center;
   font-size: 13px;
@@ -160,7 +160,7 @@
   white-space: nowrap;
 }
 
-.monthNavButton {
+.month-nav-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,26 +181,26 @@
 
 /* Two-month pair */
 
-.monthPair {
+.month-pair {
   display: flex;
   gap: 20px;
 }
 
 /* Single month grid */
 
-.monthGrid {
+.month-grid {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.dayHeaders {
+.day-headers {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
 }
 
-.dayHeader {
+.day-header {
   text-align: center;
   font-size: 10px;
   font-weight: 600;
@@ -210,13 +210,13 @@
   padding: 4px 0;
 }
 
-.dayCells {
+.day-cells {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
 }
 
-.dayCell {
+.day-cell {
   /* Empty padding cell */
   width: 30px;
   height: 28px;
@@ -224,7 +224,7 @@
 
 /* Day button */
 
-.dayButton {
+.day-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,19 +251,19 @@
   }
 }
 
-.dayToday {
+.day-today {
   font-weight: 700;
   color: var(--accent-primary);
 }
 
-.dayStart {
+.day-start {
   background: var(--accent-primary) !important;
   color: white !important;
   border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
   font-weight: 600;
 }
 
-.dayEnd {
+.day-end {
   background: var(--accent-primary) !important;
   color: white !important;
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
@@ -271,42 +271,42 @@
 }
 
 /* When start and end are the same day */
-.dayStart.dayEnd {
+.day-start.day-end {
   border-radius: var(--border-radius-sm);
 }
 
-.dayInRange {
+.day-in-range {
   background: var(--calculated-accent-primary-subtle);
   color: var(--text-primary);
 }
 
-.dayFuture {
+.day-future {
   opacity: 0.3;
 }
 
 /* Selection hint */
 
-.selectHint {
+.select-hint {
   text-align: center;
   font-size: 11px;
   color: var(--text-muted);
   padding: 4px 0 0;
-  animation: slideDown 0.15s ease-out;
+  animation: slide-down 0.15s ease-out;
 }
 
 /* ── Time inputs ── */
 
-.timeRow {
+.time-row {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 0 2px;
   border-top: 1px solid var(--calculated-border-subtle);
   margin-top: 4px;
-  animation: slideDown 0.15s ease-out;
+  animation: slide-down 0.15s ease-out;
 }
 
-.timeField {
+.time-field {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -314,12 +314,12 @@
   min-width: 0;
 }
 
-.timeIcon {
+.time-icon {
   color: var(--text-muted);
   flex-shrink: 0;
 }
 
-.timeLabel {
+.time-label {
   font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
@@ -328,7 +328,7 @@
   flex-shrink: 0;
 }
 
-.timeInput {
+.time-input {
   width: 100%;
   min-width: 0;
   padding: 4px 6px;
@@ -350,14 +350,14 @@
   color-scheme: dark;
 }
 
-.timeSep {
+.time-sep {
   font-size: 13px;
   color: var(--text-muted);
   flex-shrink: 0;
   padding: 0 2px;
 }
 
-.timeApplyButton {
+.time-apply-button {
   padding: 5px 14px;
   font-size: 11px;
   font-weight: 600;
@@ -395,7 +395,7 @@
     min-width: 0;
   }
 
-  .monthPair {
+  .month-pair {
     flex-direction: column;
     gap: 12px;
   }

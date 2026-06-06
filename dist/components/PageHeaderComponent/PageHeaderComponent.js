@@ -29,9 +29,9 @@ export default function PageHeaderComponent({ title, subtitle, onBack, centerCon
         const hasContent = children || centerContent;
         if (!hasContent)
             return null;
-        return (_jsxs("div", { className: styles.headerActions, children: [centerContent && _jsx("div", { className: styles.headerCenter, children: centerContent }), children] }));
+        return (_jsxs("div", { className: styles['header-actions'], children: [centerContent && _jsx("div", { className: styles['header-center'], children: centerContent }), children] }));
     }
     // Standalone fallback: render the full pageHeader bar.
-    return (_jsxs("header", { className: `${styles.pageHeader} ${sticky ? styles.sticky : ""} ${className || ""}`, children: [_jsxs("div", { className: styles.headerLeft, children: [onBack && (_jsx("button", { className: styles.backButton, onClick: onBack, children: _jsx(ArrowLeft, { size: 16 }) })), _jsxs("div", { children: [_jsx("h1", { className: styles.pageTitle, children: title }), subtitle && _jsx("p", { className: styles.pageSubtitle, children: subtitle })] })] }), centerContent && (_jsx("div", { className: styles.headerCenter, children: centerContent })), children && _jsx("div", { className: styles.headerActions, children: children })] }));
+    return (_jsxs("header", { className: `${styles['page-header']} ${sticky ? styles.sticky : ""} ${className || ""}`, children: [_jsxs("div", { className: styles['header-left'], children: [onBack && (_jsx("button", { className: styles['back-button'], onClick: onBack, children: _jsx(ArrowLeft, { size: 16 }) })), _jsxs("div", { children: [_jsx("h1", { className: styles['page-title'], children: title }), subtitle && _jsx("p", { className: styles['page-subtitle'], children: subtitle })] })] }), centerContent && (_jsx("div", { className: styles['header-center'], children: centerContent })), children && _jsx("div", { className: styles['header-actions'], children: children })] }));
 }
 //# sourceMappingURL=PageHeaderComponent.js.map

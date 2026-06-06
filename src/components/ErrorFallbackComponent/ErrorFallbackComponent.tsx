@@ -41,7 +41,7 @@ export default function ErrorFallbackComponent({
       <p className={styles.message}>
         {error?.message || "An unexpected error occurred."}
       </p>
-      <button className={styles.retryButton} onClick={reset}>
+      <button className={styles['retry-button']} onClick={reset}>
         Try Again
       </button>
     </div>

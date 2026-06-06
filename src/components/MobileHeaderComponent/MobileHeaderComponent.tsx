@@ -27,10 +27,10 @@ export default function MobileHeaderComponent({
   className,
 }: MobileHeaderProps) {
   return (
-    <header className={`${styles.mobileHeader} ${className || ""}`}>
+    <header className={`${styles['mobile-header']} ${className || ""}`}>
       <button
         type="button"
-        className={styles.menuButton}
+        className={styles['menu-button']}
         onClick={onMenuClick}
         aria-label="Open navigation menu"
       >
@@ -40,11 +40,11 @@ export default function MobileHeaderComponent({
       <div className={styles.brand}>
         {typeof brandIcon === "string" ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={brandIcon} alt={brandLabel || "Brand"} className={styles.brandIcon} />
+          <img src={brandIcon} alt={brandLabel || "Brand"} className={styles['brand-icon']} />
         ) : brandIcon ? (
-          <span className={styles.brandIconNode}>{brandIcon}</span>
+          <span className={styles['brand-icon-node']}>{brandIcon}</span>
         ) : null}
-        {brandLabel && <span className={styles.brandLabel}>{brandLabel}</span>}
+        {brandLabel && <span className={styles['brand-label']}>{brandLabel}</span>}
       </div>
 
       {children && <div className={styles.actions}>{children}</div>}

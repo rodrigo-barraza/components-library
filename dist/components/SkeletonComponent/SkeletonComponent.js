@@ -13,7 +13,7 @@ export default function SkeletonComponent({ variant = "text", width, height, lin
         .join(" ");
     // Text variant: render multiple lines
     if (variant === "text" && lines > 1) {
-        return (_jsx("div", { className: styles.textGroup, id: id, children: Array.from({ length: lines }, (_, i) => {
+        return (_jsx("div", { className: styles['text-group'], id: id, children: Array.from({ length: lines }, (_, i) => {
                 // Last line is shorter for a natural look
                 const isLast = i === lines - 1;
                 const lineWidth = isLast ? "75%" : width || "100%";

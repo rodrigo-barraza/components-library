@@ -160,14 +160,14 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
 
   // ── Root classes ───────────────────────────────────
   const rootClasses = [
-    styles.textField,
+    styles['text-field'],
     styles[variant],
     focused && styles.focused,
     populated && styles.populated,
-    hasLabel && styles.hasLabel,
+    hasLabel && styles['has-label'],
     error && styles.error,
-    disabled && styles.isDisabledState,
-    leadingIcon && styles.hasLeadingIcon,
+    disabled && styles['is-disabled-state'],
+    leadingIcon && styles['has-leading-icon'],
     className,
   ]
     .filter(Boolean)
@@ -199,19 +199,19 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
     <div className={rootClasses}>
       {/* ── Field container ─────────────────────────── */}
       <div
-        className={styles.fieldContainer}
+        className={styles['field-container']}
         onClick={handleContainerClick}
         role="presentation"
       >
         {/* Leading icon */}
         {leadingIcon && (
-          <span className={styles.leadingIcon} aria-hidden="true">
+          <span className={styles['leading-icon']} aria-hidden="true">
             {leadingIcon}
           </span>
         )}
 
         {/* Input wrapper with label */}
-        <div className={styles.inputWrapper}>
+        <div className={styles['input-wrapper']}>
           {/* Floating label */}
           {hasLabel && (
             <label
@@ -225,7 +225,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
           )}
 
           {/* Input row (prefix + input + suffix) */}
-          <div className={styles.inputRow}>
+          <div className={styles['input-row']}>
             {prefix && <span className={styles.prefix}>{prefix}</span>}
 
             {multiline ? (
@@ -253,7 +253,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
         {/* Trailing icon */}
         {trailingIcon && (
           <span
-            className={styles.trailingIcon}
+            className={styles['trailing-icon']}
             aria-hidden="true"
             onClick={(event) => {
               event.stopPropagation();
@@ -274,17 +274,17 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
 
         {/* Filled: active indicator (bottom line) */}
         {variant === "filled" && (
-          <span className={styles.activeIndicator} aria-hidden="true" />
+          <span className={styles['active-indicator']} aria-hidden="true" />
         )}
 
         {/* Outlined: border + notch */}
         {variant === "outlined" && (
           <>
-            <span className={styles.outlineBorder} aria-hidden="true" />
+            <span className={styles['outline-border']} aria-hidden="true" />
             {hasLabel && (
               <span
                 ref={notchRef}
-                className={styles.outlineNotch}
+                className={styles['outline-notch']}
                 aria-hidden="true"
               />
             )}
@@ -294,7 +294,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
 
       {/* ── Supporting text / Counter ──────────────── */}
       {(displaySupportingText || maxLength != null) && (
-        <div className={styles.supportingText} id={supportingId}>
+        <div className={styles['supporting-text']} id={supportingId}>
           <span>{displaySupportingText}</span>
           {maxLength != null && (
             <span className={styles.counter}>

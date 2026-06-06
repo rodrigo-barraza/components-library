@@ -35,8 +35,8 @@ const ChipComponent = forwardRef(function ChipComponent({ variant = "assist", se
     const classes = [
         styles.chip,
         styles[variant],
-        selected && styles.isSelectedState,
-        disabled && styles.isDisabledState,
+        selected && styles['is-selected-state'],
+        disabled && styles['is-disabled-state'],
         elevated && styles.elevated,
         onClick && styles.clickable,
         className,
@@ -48,7 +48,7 @@ const ChipComponent = forwardRef(function ChipComponent({ variant = "assist", se
                 e.preventDefault();
                 handleClick(e);
             }
-        }, "aria-selected": selected || undefined, "aria-disabled": disabled || undefined, ...rest, children: [_jsx("span", { className: styles.stateLayer }), Icon && (_jsx("span", { className: styles.leadingIcon, "aria-hidden": "true", children: _jsx(Icon, { size: 16 }) })), variant === "filter" && selected && !Icon && (_jsx("span", { className: styles.checkmark, "aria-hidden": "true", children: _jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: _jsx("polyline", { points: "20 6 9 17 4 12" }) }) })), _jsx("span", { className: styles.label, children: children }), removable && (_jsx("button", { type: "button", className: styles.removeButton, onClick: handleRemove, "aria-label": "Remove", tabIndex: -1, disabled: disabled, children: _jsxs("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [_jsx("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), _jsx("line", { x1: "6", y1: "6", x2: "18", y2: "18" })] }) }))] }));
+        }, "aria-selected": selected || undefined, "aria-disabled": disabled || undefined, ...rest, children: [_jsx("span", { className: styles['state-layer'] }), Icon && (_jsx("span", { className: styles['leading-icon'], "aria-hidden": "true", children: _jsx(Icon, { size: 16 }) })), variant === "filter" && selected && !Icon && (_jsx("span", { className: styles.checkmark, "aria-hidden": "true", children: _jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: _jsx("polyline", { points: "20 6 9 17 4 12" }) }) })), _jsx("span", { className: styles.label, children: children }), removable && (_jsx("button", { type: "button", className: styles['remove-button'], onClick: handleRemove, "aria-label": "Remove", tabIndex: -1, disabled: disabled, children: _jsxs("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [_jsx("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), _jsx("line", { x1: "6", y1: "6", x2: "18", y2: "18" })] }) }))] }));
 });
 export default ChipComponent;
 //# sourceMappingURL=ChipComponent.js.map

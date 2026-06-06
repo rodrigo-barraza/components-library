@@ -35,8 +35,8 @@
 
   /* M3 elevation level 3 — the resting elevation for FABs */
   box-shadow:
-    0 1px 3px 0 rgb(0 0 0 / 0.30),
-    0 4px 8px 3px rgb(0 0 0 / 0.15);
+    0 1px 3px 0 oklch(0 0 0 / 0.3),
+    0 4px 8px 3px oklch(0 0 0 / 0.15);
 
   /* M3 standard easing across all animated properties */
   transition:
@@ -104,8 +104,8 @@
 
 .fab:hover:not(:disabled) {
   box-shadow:
-    0 2px 3px 0 rgb(0 0 0 / 0.30),
-    0 6px 10px 4px rgb(0 0 0 / 0.15);
+    0 2px 3px 0 oklch(0 0 0 / 0.3),
+    0 6px 10px 4px oklch(0 0 0 / 0.15);
   transform: translateY(-1px);
 }
 
@@ -115,8 +115,8 @@
 
 .fab:active:not(:disabled) {
   box-shadow:
-    0 1px 3px 0 rgb(0 0 0 / 0.30),
-    0 4px 8px 3px rgb(0 0 0 / 0.15);
+    0 1px 3px 0 oklch(0 0 0 / 0.3),
+    0 4px 8px 3px oklch(0 0 0 / 0.15);
   transform: translateY(0);
 }
 
@@ -234,20 +234,20 @@
 
 .lowered {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.20),
-    0 1px 3px 1px rgb(0 0 0 / 0.10);
+    0 1px 2px 0 oklch(0 0 0 / 0.2),
+    0 1px 3px 1px oklch(0 0 0 / 0.1);
 }
 
 .lowered:hover:not(:disabled) {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.20),
-    0 2px 6px 2px rgb(0 0 0 / 0.10);
+    0 1px 2px 0 oklch(0 0 0 / 0.2),
+    0 2px 6px 2px oklch(0 0 0 / 0.1);
 }
 
 .lowered:active:not(:disabled) {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.20),
-    0 1px 3px 1px rgb(0 0 0 / 0.10);
+    0 1px 2px 0 oklch(0 0 0 / 0.2),
+    0 1px 3px 1px oklch(0 0 0 / 0.1);
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -263,10 +263,10 @@
   background: currentColor;
   transform: scale(0);
   opacity: 0.12;
-  animation: fabRippleExpand 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  animation: fab-ripple-expand 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
-@keyframes fabRippleExpand {
+@keyframes fab-ripple-expand {
   0% {
     transform: scale(0);
     opacity: 0.12;
@@ -317,7 +317,7 @@
    M3: when no icon, padding adjusts to 24px on both sides.
    ──────────────────────────────────────────────────────────────────── */
 
-.extendedNoIcon {
+.extended-no-icon {
   padding: 0 24px;
 }
 
@@ -333,28 +333,28 @@
   z-index: 1000;
 }
 
-.bottomEnd {
+.bottom-end {
   bottom: 16px;
   right: 16px;
 }
 
-.bottomStart {
+.bottom-start {
   bottom: 16px;
   left: 16px;
 }
 
-.bottomCenter {
+.bottom-center {
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 /* Override hover transform for centered FABs so they don't jitter */
-.bottomCenter:hover:not(:disabled) {
+.bottom-center:hover:not(:disabled) {
   transform: translateX(-50%) translateY(-1px);
 }
 
-.bottomCenter:active:not(:disabled) {
+.bottom-center:active:not(:disabled) {
   transform: translateX(-50%) translateY(0);
 }
 
@@ -364,14 +364,14 @@
    and reappear on scroll-up. Uses GPU-friendly transforms.
    ══════════════════════════════════════════════════════════════════════ */
 
-.isHiddenState {
+.is-hidden-state {
   transform: translateY(calc(100% + 32px)) !important;
   transition:
     transform 280ms cubic-bezier(0.4, 0, 1, 1),
     box-shadow 280ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.bottomCenter.isHiddenState {
+.bottom-center.is-hidden-state {
   transform: translateX(-50%) translateY(calc(100% + 32px)) !important;
 }
 
@@ -382,23 +382,23 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 599px) {
-  .bottomEnd,
-  .bottomStart {
+  .bottom-end,
+  .bottom-start {
     bottom: 16px;
   }
 }
 
 @media (min-width: 600px) {
-  .bottomEnd,
-  .bottomStart {
+  .bottom-end,
+  .bottom-start {
     bottom: 24px;
   }
 
-  .bottomEnd {
+  .bottom-end {
     right: 24px;
   }
 
-  .bottomStart {
+  .bottom-start {
     left: 24px;
   }
 }
@@ -411,7 +411,7 @@
 @media (prefers-reduced-motion: reduce) {
   .fab,
   .fab::before,
-  .isHiddenState {
+  .is-hidden-state {
     transition-duration: 0ms !important;
   }
 

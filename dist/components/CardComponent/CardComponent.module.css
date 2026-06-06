@@ -20,7 +20,7 @@
   will-change: box-shadow, transform;
 }
 
-.fullWidth {
+.full-width {
   width: 100%;
 }
 
@@ -32,28 +32,28 @@
   background: var(--background-surface);
   border: 1px solid transparent;
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.12),
-    0 1px 3px 1px rgb(0 0 0 / 0.08);
+    0 1px 2px 0 oklch(0 0 0 / 0.12),
+    0 1px 3px 1px oklch(0 0 0 / 0.08);
 }
 
 .elevated.interactive:hover {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.15),
-    0 2px 6px 2px rgb(0 0 0 / 0.1);
+    0 1px 2px 0 oklch(0 0 0 / 0.15),
+    0 2px 6px 2px oklch(0 0 0 / 0.1);
   transform: translateY(-1px);
 }
 
 .elevated.interactive:active {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.12),
-    0 1px 3px 1px rgb(0 0 0 / 0.08);
+    0 1px 2px 0 oklch(0 0 0 / 0.12),
+    0 1px 3px 1px oklch(0 0 0 / 0.08);
   transform: translateY(0);
 }
 
 .elevated.draggable:active {
   box-shadow:
-    0 2px 3px 0 rgb(0 0 0 / 0.18),
-    0 6px 10px 4px rgb(0 0 0 / 0.12);
+    0 2px 3px 0 oklch(0 0 0 / 0.18),
+    0 6px 10px 4px oklch(0 0 0 / 0.12);
   transform: translateY(-4px);
 }
 
@@ -69,8 +69,8 @@
 
 .filled.interactive:hover {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.12),
-    0 1px 3px 1px rgb(0 0 0 / 0.08);
+    0 1px 2px 0 oklch(0 0 0 / 0.12),
+    0 1px 3px 1px oklch(0 0 0 / 0.08);
   transform: translateY(-1px);
 }
 
@@ -81,8 +81,8 @@
 
 .filled.draggable:active {
   box-shadow:
-    0 2px 3px 0 rgb(0 0 0 / 0.18),
-    0 6px 10px 4px rgb(0 0 0 / 0.12);
+    0 2px 3px 0 oklch(0 0 0 / 0.18),
+    0 6px 10px 4px oklch(0 0 0 / 0.12);
   transform: translateY(-4px);
 }
 
@@ -98,8 +98,8 @@
 
 .outlined.interactive:hover {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.12),
-    0 1px 3px 1px rgb(0 0 0 / 0.08);
+    0 1px 2px 0 oklch(0 0 0 / 0.12),
+    0 1px 3px 1px oklch(0 0 0 / 0.08);
   transform: translateY(-1px);
 }
 
@@ -110,8 +110,8 @@
 
 .outlined.draggable:active {
   box-shadow:
-    0 2px 3px 0 rgb(0 0 0 / 0.18),
-    0 6px 10px 4px rgb(0 0 0 / 0.12);
+    0 2px 3px 0 oklch(0 0 0 / 0.18),
+    0 6px 10px 4px oklch(0 0 0 / 0.12);
   transform: translateY(-4px);
 }
 
@@ -173,7 +173,7 @@
   /* when media is the only element */
 }
 
-.mediaImage {
+.media-image {
   display: block;
   width: 100%;
   height: 100%;
@@ -202,7 +202,7 @@
 /* M3 "Clickable card" — the entire card is tappable.
    Uses a state layer for hover/press/focus feedback.              */
 
-.actionArea {
+.action-area {
   all: unset;
   display: flex;
   flex-direction: column;
@@ -216,14 +216,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.actionArea:focus-visible {
+.action-area:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
 /* State layer — semi-transparent overlay for interaction feedback  */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -234,14 +234,14 @@
   z-index: 1;
 }
 
-.actionArea:hover .stateLayer {
+.action-area:hover .state-layer {
   opacity: 0.06;
 }
 
-.actionArea:active .stateLayer {
+.action-area:active .state-layer {
   opacity: 0.1;
 }
 
-.actionArea:focus-visible .stateLayer {
+.action-area:focus-visible .state-layer {
   opacity: 0.08;
 }

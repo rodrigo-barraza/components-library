@@ -78,13 +78,13 @@ function ToolbarGroup({ ariaLabel, className, children }) {
 const ToolbarItem = forwardRef(function ToolbarItem({ icon: Icon, label, ariaLabel, active = false, disabled = false, onClick, className, children, ...rest }, ref) {
     const classes = [
         styles.item,
-        active && styles.itemActive,
-        disabled && styles.itemDisabled,
+        active && styles['item-active'],
+        disabled && styles['item-disabled'],
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("button", { ref: ref, type: "button", role: "button", "data-toolbar-item": "", tabIndex: -1, "aria-label": ariaLabel || label, "aria-pressed": active || undefined, "aria-disabled": disabled || undefined, disabled: disabled, onClick: onClick, className: classes, ...rest, children: [_jsx("span", { className: styles.stateLayer }), children || (_jsxs(_Fragment, { children: [Icon && _jsx(Icon, { size: 20, className: styles.itemIcon }), label && _jsx("span", { className: styles.itemLabel, children: label })] }))] }));
+    return (_jsxs("button", { ref: ref, type: "button", role: "button", "data-toolbar-item": "", tabIndex: -1, "aria-label": ariaLabel || label, "aria-pressed": active || undefined, "aria-disabled": disabled || undefined, disabled: disabled, onClick: onClick, className: classes, ...rest, children: [_jsx("span", { className: styles['state-layer'] }), children || (_jsxs(_Fragment, { children: [Icon && _jsx(Icon, { size: 20, className: styles['item-icon'] }), label && _jsx("span", { className: styles['item-label'], children: label })] }))] }));
 });
 function ToolbarSeparator({ className }) {
     return (_jsx("div", { role: "separator", "aria-orientation": "vertical", className: `${styles.separator}${className ? ` ${className}` : ""}` }));

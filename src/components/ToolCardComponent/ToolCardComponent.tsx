@@ -28,19 +28,19 @@ export default function ToolCardComponent({
   children,
   className,
 }: ToolCardComponentProps) {
-  const classes = [styles.toolCard, className].filter(Boolean).join(" ");
+  const classes = [styles['tool-card'], className].filter(Boolean).join(" ");
 
   return (
     <div className={classes} onClick={onClick}>
       <div className={styles.header}>
         {emoji && (
           emoji.startsWith("http") ? (
-            <img src={emoji} alt={name} className={styles.emojiImage} />
+            <img src={emoji} alt={name} className={styles['emoji-image']} />
           ) : (
             <span className={styles.emoji}>{emoji}</span>
           )
         )}
-        <div className={styles.titleBlock}>
+        <div className={styles['title-block']}>
           <span className={styles.name}>{name}</span>
           {domain && <span className={styles.domain}>{domain}</span>}
         </div>

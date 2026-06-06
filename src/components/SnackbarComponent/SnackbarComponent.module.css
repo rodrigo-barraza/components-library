@@ -66,11 +66,11 @@
 
   /* M3 Level 3 elevation */
   box-shadow:
-    0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    0px 1px 3px 0px oklch(0 0 0 / 0.3),
+    0px 4px 8px 3px oklch(0 0 0 / 0.15);
 
   /* Enter animation */
-  animation: snackbarEnter 300ms cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
+  animation: snackbar-enter 300ms cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
   will-change: transform, opacity;
 
   /* Smooth transition for layout changes */
@@ -78,26 +78,26 @@
 }
 
 .container[data-exiting="true"] {
-  animation: snackbarExit 200ms cubic-bezier(0.3, 0, 0.8, 0.15) forwards;
+  animation: snackbar-exit 200ms cubic-bezier(0.3, 0, 0.8, 0.15) forwards;
 }
 
 /* ── Single-line layout ──────────────────────────────── */
 /* Default: vertically centered content, 48dp min height */
 
-.container.singleLine {
+.container.single-line {
   min-height: 48px;
   padding: 0 8px 0 16px;
   gap: 0;
 }
 
 /* Without action or close — just text padding */
-.container.singleLine.textOnly {
+.container.single-line.text-only {
   padding: 0 16px;
 }
 
 /* ── Multi-line layout ───────────────────────────────── */
 
-.container.multiLine {
+.container.multi-line {
   flex-wrap: wrap;
   align-items: flex-start;
   min-height: 68px;
@@ -105,13 +105,13 @@
   gap: 0;
 }
 
-.container.multiLine.textOnly {
+.container.multi-line.text-only {
   padding: 12px 16px;
 }
 
 /* ── Longer-action layout (action on second row) ─────── */
 
-.container.longerAction {
+.container.longer-action {
   flex-wrap: wrap;
   align-items: flex-start;
   min-height: 68px;
@@ -120,7 +120,7 @@
 
 /* ── Supporting text ─────────────────────────────────── */
 
-.supportingText {
+.supporting-text {
   flex: 1 1 0%;
   min-width: 0;
 
@@ -139,20 +139,20 @@
 }
 
 /* Single-line: vertically center the text */
-.singleLine .supportingText {
+.single-line .supporting-text {
   display: flex;
   align-items: center;
   padding: 14px 0;
 }
 
 /* Multi-line: top-aligned with appropriate padding */
-.multiLine .supportingText {
+.multi-line .supporting-text {
   padding: 0;
   margin-right: 8px;
 }
 
 /* Longer-action: text in first row, full-width */
-.longerAction .supportingText {
+.longer-action .supporting-text {
   flex: 1 1 100%;
   padding: 12px 40px 0 16px;
 }
@@ -224,7 +224,7 @@
 }
 
 /* Longer-action: action on second row, end-aligned */
-.longerAction .action {
+.longer-action .action {
   margin-left: auto;
   margin-right: 8px;
   margin-bottom: 2px;
@@ -232,7 +232,7 @@
 
 /* ── Close icon button ───────────────────────────────── */
 
-.closeButton {
+.close-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -257,7 +257,7 @@
   isolation: isolate;
 }
 
-.closeButton::before {
+.close-button::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -268,30 +268,30 @@
   pointer-events: none;
 }
 
-.closeButton:hover::before {
+.close-button:hover::before {
   opacity: 0.08;
 }
 
-.closeButton:focus-visible {
+.close-button:focus-visible {
   outline: none;
 }
 
-.closeButton:focus-visible::before {
+.close-button:focus-visible::before {
   opacity: 0.12;
 }
 
-.closeButton:active::before {
+.close-button:active::before {
   opacity: 0.12;
 }
 
-.closeButton svg {
+.close-button svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
 }
 
 /* Absolute position close in longer-action layout */
-.longerAction .closeButton {
+.longer-action .close-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -299,7 +299,7 @@
 
 /* ── Animations ──────────────────────────────────────── */
 
-@keyframes snackbarEnter {
+@keyframes snackbar-enter {
   0% {
     opacity: 0;
     transform: translateY(100%) scale(0.95);
@@ -313,7 +313,7 @@
   }
 }
 
-@keyframes snackbarExit {
+@keyframes snackbar-exit {
   from {
     opacity: 1;
     transform: translateY(0) scale(1);

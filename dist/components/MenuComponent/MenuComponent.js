@@ -14,7 +14,7 @@ export function MenuDivider() {
     return _jsx("div", { className: styles.divider, role: "separator" });
 }
 export function MenuGroupLabel({ children }) {
-    return (_jsx("div", { className: styles.groupLabel, role: "presentation", children: children }));
+    return (_jsx("div", { className: styles['group-label'], role: "presentation", children: children }));
 }
 export const MenuItem = forwardRef(function MenuItem({ leadingIcon, trailingIcon, trailingText, disabled = false, selected = false, onClick, onMouseEnter, onFocus, children, className = "", ...rest }, ref) {
     const { sound } = useComponents();
@@ -31,13 +31,13 @@ export const MenuItem = forwardRef(function MenuItem({ leadingIcon, trailingIcon
         onMouseEnter?.(event);
     }, [sound, onMouseEnter]);
     const itemClasses = [
-        styles.menuItem,
-        selected ? styles.menuItemSelected : "",
+        styles['menu-item'],
+        selected ? styles['menu-item-selected'] : "",
         className,
     ]
         .filter(Boolean)
         .join(" ");
-    return (_jsxs("button", { ref: ref, type: "button", role: "menuitem", className: itemClasses, disabled: disabled, "aria-disabled": disabled || undefined, tabIndex: -1, onClick: handleClick, onMouseEnter: handleMouseEnter, onFocus: onFocus, ...rest, children: [leadingIcon && (_jsx("span", { className: styles.leadingIcon, "aria-hidden": "true", children: leadingIcon })), _jsx("span", { className: styles.label, children: children }), trailingText && (_jsx("span", { className: styles.trailingText, children: trailingText })), trailingIcon && (_jsx("span", { className: styles.trailingIcon, "aria-hidden": "true", children: trailingIcon }))] }));
+    return (_jsxs("button", { ref: ref, type: "button", role: "menuitem", className: itemClasses, disabled: disabled, "aria-disabled": disabled || undefined, tabIndex: -1, onClick: handleClick, onMouseEnter: handleMouseEnter, onFocus: onFocus, ...rest, children: [leadingIcon && (_jsx("span", { className: styles['leading-icon'], "aria-hidden": "true", children: leadingIcon })), _jsx("span", { className: styles.label, children: children }), trailingText && (_jsx("span", { className: styles['trailing-text'], children: trailingText })), trailingIcon && (_jsx("span", { className: styles['trailing-icon'], "aria-hidden": "true", children: trailingIcon }))] }));
 });
 export function SubMenu({ label, leadingIcon, disabled = false, children, }) {
     const depth = useContext(MenuDepthContext);
@@ -114,7 +114,7 @@ export function SubMenu({ label, leadingIcon, disabled = false, children, }) {
         });
     }, [children, isOpen]);
     const chevronSvg = (_jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: _jsx("polyline", { points: "9 18 15 12 9 6" }) }));
-    return (_jsx(MenuDepthContext.Provider, { value: depth + 1, children: _jsxs("div", { ref: containerRef, className: styles.submenuAnchor, onMouseEnter: open, onMouseLeave: close, onKeyDown: handleKeyDown, children: [_jsxs("button", { type: "button", role: "menuitem", className: styles.menuItem, "aria-haspopup": "menu", "aria-expanded": isOpen, disabled: disabled, tabIndex: -1, children: [leadingIcon && (_jsx("span", { className: styles.leadingIcon, "aria-hidden": "true", children: leadingIcon })), _jsx("span", { className: styles.label, children: label }), _jsx("span", { className: styles.submenuArrow, "aria-hidden": "true", children: chevronSvg })] }), _jsx("div", { className: styles.submenuSurface, role: "menu", "data-open": isOpen, "aria-label": label, children: indexedChildren })] }) }));
+    return (_jsx(MenuDepthContext.Provider, { value: depth + 1, children: _jsxs("div", { ref: containerRef, className: styles['submenu-anchor'], onMouseEnter: open, onMouseLeave: close, onKeyDown: handleKeyDown, children: [_jsxs("button", { type: "button", role: "menuitem", className: styles['menu-item'], "aria-haspopup": "menu", "aria-expanded": isOpen, disabled: disabled, tabIndex: -1, children: [leadingIcon && (_jsx("span", { className: styles['leading-icon'], "aria-hidden": "true", children: leadingIcon })), _jsx("span", { className: styles.label, children: label }), _jsx("span", { className: styles['submenu-arrow'], "aria-hidden": "true", children: chevronSvg })] }), _jsx("div", { className: styles['submenu-surface'], role: "menu", "data-open": isOpen, "aria-label": label, children: indexedChildren })] }) }));
 }
 const MenuComponent = forwardRef(function MenuComponent({ trigger, open: controlledOpen, onOpenChange, position = "bottom-start", matchWidth = false, closeOnSelect = true, maxHeight, ariaLabel = "Menu", className = "", children, ...rest }, ref) {
     const isControlled = controlledOpen !== undefined;
@@ -280,15 +280,15 @@ const MenuComponent = forwardRef(function MenuComponent({ trigger, open: control
     }, [children, isOpen, closeOnSelect, close]);
     // ── Position class ──────────────────────────────────────
     const positionClass = {
-        "bottom-start": styles.positionBottomStart,
-        "bottom-end": styles.positionBottomEnd,
-        "top-start": styles.positionTopStart,
-        "top-end": styles.positionTopEnd,
-    }[position] || styles.positionBottomStart;
+        "bottom-start": styles['position-bottom-start'],
+        "bottom-end": styles['position-bottom-end'],
+        "top-start": styles['position-top-start'],
+        "top-end": styles['position-top-end'],
+    }[position] || styles['position-bottom-start'];
     const surfaceClasses = [
         styles.surface,
         positionClass,
-        matchWidth ? styles.matchWidth : "",
+        matchWidth ? styles['match-width'] : "",
         className,
     ]
         .filter(Boolean)

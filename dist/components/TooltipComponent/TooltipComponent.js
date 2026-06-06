@@ -224,14 +224,14 @@ delay, }) {
         styles.bubble,
         rich ? styles.rich : styles.plain,
         styles[resolvedPosition],
-        visible && styles.isVisibleState,
+        visible && styles['is-visible-state'],
     ]
         .filter(Boolean)
         .join(" ");
     /* ── Render ── */
     const bubble = mounted
-        ? createPortal(_jsxs("span", { ref: bubbleRef, id: tooltipId, className: bubbleClasses, style: { top: coords.top, left: coords.left }, role: rich ? "status" : "tooltip", "aria-live": rich ? "polite" : undefined, onMouseEnter: handleBubbleMouseEnter, onMouseLeave: handleBubbleMouseLeave, children: [!rich && _jsx("span", { className: styles.plainLabel, children: label }), rich && (_jsxs("span", { className: styles.richContent, children: [title && (_jsx("span", { className: styles.richTitle, children: title })), content && (_jsx("span", { className: styles.richBody, children: content })), action && (_jsx("span", { className: styles.richAction, children: action }))] }))] }), document.body)
+        ? createPortal(_jsxs("span", { ref: bubbleRef, id: tooltipId, className: bubbleClasses, style: { top: coords.top, left: coords.left }, role: rich ? "status" : "tooltip", "aria-live": rich ? "polite" : undefined, onMouseEnter: handleBubbleMouseEnter, onMouseLeave: handleBubbleMouseLeave, children: [!rich && _jsx("span", { className: styles['plain-label'], children: label }), rich && (_jsxs("span", { className: styles['rich-content'], children: [title && (_jsx("span", { className: styles['rich-title'], children: title })), content && (_jsx("span", { className: styles['rich-body'], children: content })), action && (_jsx("span", { className: styles['rich-action'], children: action }))] }))] }), document.body)
         : null;
-    return (_jsxs("span", { ref: wrapperRef, className: `${styles.wrapper} ${trigger === "hover" ? styles.hoverTrigger : ""} ${className}`, onClick: trigger === "click" ? handleClick : undefined, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onFocus: handleFocus, onBlur: handleBlur, "aria-describedby": !rich && mounted ? tooltipId : undefined, children: [children, bubble] }));
+    return (_jsxs("span", { ref: wrapperRef, className: `${styles.wrapper} ${trigger === "hover" ? styles['hover-trigger'] : ""} ${className}`, onClick: trigger === "click" ? handleClick : undefined, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onFocus: handleFocus, onBlur: handleBlur, "aria-describedby": !rich && mounted ? tooltipId : undefined, children: [children, bubble] }));
 }
 //# sourceMappingURL=TooltipComponent.js.map

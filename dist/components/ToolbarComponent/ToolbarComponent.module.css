@@ -16,7 +16,7 @@
   transition:
     box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
     background 200ms cubic-bezier(0.2, 0, 0, 1);
-  animation: toolbarFadeIn 200ms ease-out;
+  animation: toolbar-fade-in 200ms ease-out;
 }
 
 /* ── Orientation ─────────────────────────────────────────────────── */
@@ -84,8 +84,8 @@
 
 .elevated {
   box-shadow:
-    0 1px 2px 0 rgb(0 0 0 / 0.08),
-    0 1px 3px 1px rgb(0 0 0 / 0.06);
+    0 1px 2px 0 oklch(0 0 0 / 0.08),
+    0 1px 3px 1px oklch(0 0 0 / 0.06);
 }
 
 /* ── Group ───────────────────────────────────────────────────────── */
@@ -140,7 +140,7 @@
 /* ── State layer ─────────────────────────────────────────────────── */
 /* M3 specifies transparent overlays for hover / focus / press       */
 
-.stateLayer {
+.state-layer {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -150,30 +150,30 @@
   transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.item:hover .stateLayer {
+.item:hover .state-layer {
   opacity: 0.08;
 }
 
-.item:focus-visible .stateLayer {
+.item:focus-visible .state-layer {
   opacity: 0.1;
 }
 
-.item:active .stateLayer {
+.item:active .state-layer {
   opacity: 0.12;
 }
 
 /* ── Item states ─────────────────────────────────────────────────── */
 
-.itemActive {
+.item-active {
   color: var(--accent-primary);
   background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
 }
 
-.itemActive .stateLayer {
+.item-active .state-layer {
   background: var(--accent-primary);
 }
 
-.itemDisabled {
+.item-disabled {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
@@ -181,13 +181,13 @@
 
 /* ── Item icon / label ───────────────────────────────────────────── */
 
-.itemIcon {
+.item-icon {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
 }
 
-.itemLabel {
+.item-label {
   /* M3 label-large: 14px / 500 weight */
   font-size: 13px;
   font-weight: 500;
@@ -237,7 +237,7 @@
 
 /* ── Entrance animation ──────────────────────────────────────────── */
 
-@keyframes toolbarFadeIn {
+@keyframes toolbar-fade-in {
   from {
     opacity: 0;
     transform: translateY(-4px);
@@ -249,10 +249,10 @@
 }
 
 .vertical .toolbar {
-  animation-name: toolbarFadeInVertical;
+  animation-name: toolbar-fade-in-vertical;
 }
 
-@keyframes toolbarFadeInVertical {
+@keyframes toolbar-fade-in-vertical {
   from {
     opacity: 0;
     transform: translateX(-4px);

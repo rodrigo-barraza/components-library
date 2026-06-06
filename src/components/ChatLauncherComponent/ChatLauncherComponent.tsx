@@ -25,14 +25,14 @@ export default function ChatLauncherComponent({
 }: ChatLauncherComponentProps) {
   return (
     <button
-      className={`${styles.launcher} ${isOpen ? styles.isOpenState : ""}`}
+      className={`${styles.launcher} ${isOpen ? styles['is-open-state'] : ""}`}
       onClick={onClick}
       aria-label={isOpen ? "Close chat" : "Open chat"}
       id="chat-launcher"
     >
       {/* Chat icon — visible when closed */}
       <svg
-        className={`${styles.icon} ${styles.chatIcon} ${isOpen ? styles.iconHidden : ""}`}
+        className={`${styles.icon} ${styles['chat-icon']} ${isOpen ? styles['icon-hidden'] : ""}`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -45,7 +45,7 @@ export default function ChatLauncherComponent({
 
       {/* Close icon — visible when open */}
       <svg
-        className={`${styles.icon} ${styles.closeIcon} ${isOpen ? "" : styles.iconHidden}`}
+        className={`${styles.icon} ${styles['close-icon']} ${isOpen ? "" : styles['icon-hidden']}`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"

@@ -18,36 +18,36 @@
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-primary) 15%, transparent);
 }
 
-.wrapper.isDisabledState {
+.wrapper.is-disabled-state {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 /* ── Sizes ──────────────────────────────────────── */
 
-.sizeSmall {
+.size-small {
   height: 28px;
 }
 
-.sizeSmall .input {
+.size-small .input {
   font-size: 12px;
   padding: 0 8px;
 }
 
-.sizeMedium {
+.size-medium {
   height: var(--input-height);
 }
 
-.sizeMedium .input {
+.size-medium .input {
   font-size: 13px;
   padding: 0 12px;
 }
 
-.sizeLarge {
+.size-large {
   height: 44px;
 }
 
-.sizeLarge .input {
+.size-large .input {
   font-size: 15px;
   padding: 0 14px;
 }
@@ -76,7 +76,7 @@
 
 /* ── Icon slot ─────────────────────────────────── */
 
-.iconSlot {
+.icon-slot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,13 +85,13 @@
   color: var(--text-muted);
 }
 
-.hasIcon .input {
+.has-icon .input {
   padding-left: 6px;
 }
 
 /* ── Inline label wrapper ─────────────────────────── */
 
-.labelWrapper {
+.label-wrapper {
   display: flex;
   align-items: center;
   gap: 6px;
