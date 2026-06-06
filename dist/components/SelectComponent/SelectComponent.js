@@ -1,7 +1,8 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { ChevronDown, Loader2, Search, X } from "lucide-react";
+import { ChevronDown, Loader2, X } from "lucide-react";
+import SearchInputComponent from "../SearchInputComponent/SearchInputComponent.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./SelectComponent.module.css";
 export default function SelectComponent({ value, options = [], onChange, placeholder = "Select...", icon = null, disabled = false, triggerTooltip = null, triggerTooltipContent = null, label = null, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple = false, allLabel = "All", compact = false, searchable = false, }) {
@@ -144,10 +145,6 @@ export default function SelectComponent({ value, options = [], onChange, placeho
     const tooltipContent = triggerTooltipContent || triggerTooltip;
     const shouldShowTooltip = !!tooltipContent && !isOpen && !isLoading;
     const wrappedTrigger = shouldShowTooltip ? (_jsx(TooltipComponent, { label: tooltipContent, position: "bottom", enterDelay: 150, children: triggerButton })) : (triggerButton);
-    return (_jsxs("div", { className: `${styles.dropdown} ${label ? styles.hasLabel : ""}`, ref: containerRef, children: [label && _jsx("span", { className: styles.label, children: label }), !isControlled && (_jsx("div", { className: styles.sizer, "aria-hidden": "true", children: options.map((option) => (_jsxs("span", { className: styles.sizerItem, children: [icon && _jsx("span", { className: styles.triggerIcon, children: icon }), option.icon && _jsx("span", { className: styles.optionIcon, children: option.icon }), _jsx("span", { children: option.label })] }, option.value))) })), wrappedTrigger, !isControlled && isOpen && (_jsxs("div", { className: styles.menu, children: [searchable && (_jsxs("div", { className: styles["search-wrapper"], children: [_jsx(Search, { size: 13, className: styles["search-icon"] }), _jsx("input", { ref: searchInputRef, type: "text", className: styles["search-field"], value: searchQuery, onChange: (event) => setSearchQuery(event.target.value), placeholder: "Search\u2026", autoComplete: "off", onClick: (event) => event.stopPropagation() }), searchQuery && (_jsx("button", { type: "button", className: styles["search-clear-button"], onClick: (event) => {
-                                    event.stopPropagation();
-                                    setSearchQuery("");
-                                    searchInputRef.current?.focus();
-                                }, children: _jsx(X, { size: 12 }) }))] })), filteredOptions.map(renderOption), searchable && filteredOptions.length === 0 && (_jsx("div", { className: styles["search-empty-state"], children: "No matches" }))] })), children] }));
+    return (_jsxs("div", { className: `${styles.dropdown} ${label ? styles.hasLabel : ""}`, ref: containerRef, children: [label && _jsx("span", { className: styles.label, children: label }), !isControlled && (_jsx("div", { className: styles.sizer, "aria-hidden": "true", children: options.map((option) => (_jsxs("span", { className: styles.sizerItem, children: [icon && _jsx("span", { className: styles.triggerIcon, children: icon }), option.icon && _jsx("span", { className: styles.optionIcon, children: option.icon }), _jsx("span", { children: option.label })] }, option.value))) })), wrappedTrigger, !isControlled && isOpen && (_jsxs("div", { className: styles.menu, children: [searchable && (_jsx(SearchInputComponent, { ref: searchInputRef, value: searchQuery, onChange: (nextValue) => setSearchQuery(nextValue), placeholder: "Search\u2026", compact: true, className: styles["inline-search-input"] })), filteredOptions.map(renderOption), searchable && filteredOptions.length === 0 && (_jsx("div", { className: styles["search-empty-state"], children: "No matches" }))] })), children] }));
 }
 //# sourceMappingURL=SelectComponent.js.map

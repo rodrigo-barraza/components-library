@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { ChevronDown, Loader2, Search, X } from "lucide-react";
+import { ChevronDown, Loader2, X } from "lucide-react";
+import SearchInputComponent from "../SearchInputComponent/SearchInputComponent.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./SelectComponent.module.css";
 
@@ -75,7 +76,7 @@ export default function SelectComponent<T extends string | string[] = string | s
   const [internalOpen, setInternalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const internalTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const isControlled = controlledIsOpen !== undefined && controlledOnToggle !== undefined;
@@ -372,32 +373,14 @@ export default function SelectComponent<T extends string | string[] = string | s
       {!isControlled && isOpen && (
         <div className={styles.menu}>
           {searchable && (
-            <div className={styles["search-wrapper"]}>
-              <Search size={13} className={styles["search-icon"]} />
-              <input
-                ref={searchInputRef}
-                type="text"
-                className={styles["search-field"]}
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search…"
-                autoComplete="off"
-                onClick={(event) => event.stopPropagation()}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  className={styles["search-clear-button"]}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setSearchQuery("");
-                    searchInputRef.current?.focus();
-                  }}
-                >
-                  <X size={12} />
-                </button>
-              )}
-            </div>
+            <SearchInputComponent
+              ref={searchInputRef}
+              value={searchQuery}
+              onChange={(nextValue) => setSearchQuery(nextValue)}
+              placeholder="Search…"
+              compact
+              className={styles["inline-search-input"]}
+            />
           )}
           {filteredOptions.map(renderOption)}
           {searchable && filteredOptions.length === 0 && (
