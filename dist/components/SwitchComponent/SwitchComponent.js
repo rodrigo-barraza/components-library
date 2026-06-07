@@ -25,6 +25,7 @@ import styles from "./SwitchComponent.module.css";
 export default function SwitchComponent({ checked = false, onChange, label = "", disabled = false, showIcons = false, className = "", id, name, labelPlacement = "end", ariaLabel, }) {
     const { sound } = useComponents();
     const rootClasses = [
+        "switch-component",
         styles['switch'],
         disabled && styles['is-disabled-state'],
         labelPlacement === "start" && styles['label-start'],

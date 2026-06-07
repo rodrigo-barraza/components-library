@@ -35,7 +35,7 @@ export default function ErrorFallbackComponent({
   }, [error, logLabel]);
 
   return (
-    <div className={styles['container']}>
+    <div className={`error-fallback-component ${styles['container']}`}>
       <div className={styles['icon']}>{icon}</div>
       <h2 className={styles['title']}>{title}</h2>
       <p className={styles['message']}>

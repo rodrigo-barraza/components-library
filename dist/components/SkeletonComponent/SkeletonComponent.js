@@ -29,6 +29,6 @@ export default function SkeletonComponent({ variant = "text", width, height, lin
         }, role: "status", "aria-label": "Loading", "aria-hidden": "true" }));
 }
 export function SkeletonGroup({ gap = "12px", direction = "column", className = "", children, }) {
-    return (_jsx("div", { className: `${styles['group']} ${className}`, style: { gap, flexDirection: direction }, role: "status", "aria-label": "Loading content", children: children }));
+    return (_jsx("div", { className: `skeleton-component ${styles['group']} ${className}`, style: { gap, flexDirection: direction }, role: "status", "aria-label": "Loading content", children: children }));
 }
 //# sourceMappingURL=SkeletonComponent.js.map

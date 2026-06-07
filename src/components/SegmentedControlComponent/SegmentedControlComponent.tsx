@@ -115,6 +115,7 @@ export default function SegmentedControlComponent({
   );
 
   const rootClasses = [
+    "segmented-control-component",
     styles["segmented-control-container"],
     fullWidth && styles["is-full-width-layout"],
     compact && styles["is-compact-size"],

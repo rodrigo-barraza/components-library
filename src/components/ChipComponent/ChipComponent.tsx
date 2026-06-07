@@ -68,6 +68,7 @@ const ChipComponent = forwardRef<HTMLDivElement, ChipComponentProps>(function Ch
   );
 
   const classes = [
+    "chip-component",
     styles['chip'],
     styles[variant],
     selected && styles['is-selected-state'],

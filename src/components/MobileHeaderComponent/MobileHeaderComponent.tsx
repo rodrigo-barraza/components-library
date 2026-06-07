@@ -27,7 +27,7 @@ export default function MobileHeaderComponent({
   className,
 }: MobileHeaderProps) {
   return (
-    <header className={`${styles['mobile-header']} ${className || ""}`}>
+    <header className={`mobile-header-component ${styles['mobile-header']} ${className || ""}`}>
       <button
         type="button"
         className={styles['menu-button']}

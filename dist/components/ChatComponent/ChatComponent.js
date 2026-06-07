@@ -157,6 +157,6 @@ export default function ChatComponent({ className = "" }) {
         "--chat-accent-subtle": `${accentColor}1a`,
         "--chat-accent-glow": `0 0 24px ${accentColor}40`,
     };
-    return (_jsxs("div", { className: `${styles['container']} ${styles[position] || ""} ${className}`, style: style, id: "chat-widget", children: [_jsx(ChatPanelComponent, { isOpen: isOpen, messages: messages, isTyping: isTyping, operatorName: operatorName, operatorAvatar: operatorAvatar, onClose: handleClose, onSend: handleSend }), _jsx(ChatLauncherComponent, { isOpen: isOpen, unreadCount: unreadCount, onClick: handleToggle })] }));
+    return (_jsxs("div", { className: `chat-component ${styles['container']} ${styles[position] || ""} ${className}`, style: style, id: "chat-widget", children: [_jsx(ChatPanelComponent, { isOpen: isOpen, messages: messages, isTyping: isTyping, operatorName: operatorName, operatorAvatar: operatorAvatar, onClose: handleClose, onSend: handleSend }), _jsx(ChatLauncherComponent, { isOpen: isOpen, unreadCount: unreadCount, onClick: handleToggle })] }));
 }
 //# sourceMappingURL=ChatComponent.js.map

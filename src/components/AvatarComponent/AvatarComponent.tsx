@@ -47,7 +47,7 @@ export default function AvatarComponent({
   const iconSize =
     size === "xs" ? 12 : size === "sm" ? 14 : size === "lg" ? 22 : size === "xl" ? 28 : 18;
 
-  const classes = [styles['avatar'], styles[size], className].filter(Boolean).join(" ");
+  const classes = ["avatar-component", styles['avatar'], styles[size], className].filter(Boolean).join(" ");
 
   return (
     <div className={classes} style={style} {...rest}>

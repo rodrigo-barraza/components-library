@@ -9,6 +9,7 @@ import styles from "./StatusDotComponent.module.css";
  */
 export default function StatusDotComponent({ variant = "healthy", size = "md", pulse = true, className = "", ...rest }) {
     const classes = [
+        "status-dot-component",
         styles['dot'],
         styles[size],
         styles[variant],

@@ -142,6 +142,7 @@ function CircularIndicator({
   const colorClass = getColorClass(color);
 
   const rootClasses = [
+    "loading-indicator-component",
     styles['wrapper'],
     styles['fade-in'],
     className,

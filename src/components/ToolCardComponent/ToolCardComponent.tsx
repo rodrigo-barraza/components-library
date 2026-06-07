@@ -28,7 +28,8 @@ export default function ToolCardComponent({
   children,
   className,
 }: ToolCardComponentProps) {
-  const classes = [styles['tool-card'], className].filter(Boolean).join(" ");
+  const classes = [
+    "tool-card-component",styles['tool-card'], className].filter(Boolean).join(" ");
 
   return (
     <div className={classes} onClick={onClick}>

@@ -198,7 +198,7 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
             if (typeof ref === "function") ref(node);
             else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
           }}
-          className={`${styles["layout-header-container"]}${className ? ` ${className}` : ""}`}
+          className={`layout-header-component ${styles["layout-header-container"]}${className ? ` ${className}` : ""}`}
         >
           {leadingToggle && (
             <button

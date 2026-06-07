@@ -99,6 +99,7 @@ const SplitButtonComponent = forwardRef(function SplitButtonComponent({ variant 
     }, []);
     /* ── Class composition ──────────────────────────────────────────── */
     const groupClasses = [
+        "split-button-component",
         styles['split-group'],
         styles[variant],
         size !== "medium" && styles[size],

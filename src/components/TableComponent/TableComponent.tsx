@@ -243,6 +243,7 @@ export interface TableComponentProps<T, TSub = unknown> {
   getRowStyle?: (row: T, index: number) => React.CSSProperties;
   mini?: boolean;
   storageKey?: string;
+  className?: string;
 }
 
 export default function TableComponent<T, TSub = unknown>({
@@ -268,6 +269,7 @@ export default function TableComponent<T, TSub = unknown>({
   getRowStyle,
   mini = false,
   storageKey,
+  className,
 }: TableComponentProps<T, TSub>) {
   const { sound } = useComponents();
   const [internalSort, setInternalSort] = useState<{ key: string | null; dir: "asc" | "desc" }>(() => {
@@ -441,7 +443,7 @@ export default function TableComponent<T, TSub = unknown>({
   const showHeader = !!(title || subtitle || storageKey);
 
   return (
-    <div className={`${styles['container']} ${mini ? styles['mini'] : ""} ${showHeader ? styles['has-header'] : ""}`}>
+    <div className={`table-component ${styles['container']} ${mini ? styles['mini'] : ""} ${showHeader ? styles['has-header'] : ""} ${className || ""}`}>
       {showHeader && (
         <div className={styles['table-header']}>
           {(title || subtitle) && (

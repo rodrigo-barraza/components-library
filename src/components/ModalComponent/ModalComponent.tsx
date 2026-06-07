@@ -132,6 +132,7 @@ export default function ModalComponent({
   );
 
   const overlayClass = [
+    "modal-component",
     styles['overlay'],
     variant === "dark" ? styles['overlay-dark'] : "",
   ]

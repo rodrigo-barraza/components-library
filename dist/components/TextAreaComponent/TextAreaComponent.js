@@ -24,7 +24,9 @@ export default function TextAreaComponent({ value, onChange, placeholder, minRow
     const handleChange = (event) => {
         onChange?.(event);
     };
-    const classes = [styles['textarea'], className || ""].filter(Boolean).join(" ");
+    const classes = [
+        "text-area-component", styles['textarea'], className || ""
+    ].filter(Boolean).join(" ");
     return (_jsx("textarea", { ref: textAreaRef, id: id, className: classes, value: value, onChange: handleChange, placeholder: placeholder, disabled: disabled, readOnly: readOnly, rows: minRows, ...rest }));
 }
 //# sourceMappingURL=TextAreaComponent.js.map

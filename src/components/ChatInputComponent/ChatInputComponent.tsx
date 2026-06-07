@@ -69,7 +69,7 @@ export default function ChatInputComponent({ onSend, isTyping = false }: ChatInp
   const canSend = value.trim().length > 0 && !isTyping;
 
   return (
-    <div className={styles['input-bar']}>
+    <div className={`chat-input-component ${styles['input-bar']}`}>
       <div className={styles['input-container']}>
         <textarea
           ref={textareaRef}

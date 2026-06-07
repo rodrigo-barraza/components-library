@@ -135,6 +135,7 @@ function MetricBadge({
     <TooltipComponent label={tooltipText} position="top">
       <span
         className={[
+          "badge-component",
           styles['metric-badge'],
           colorClass,
           !colorClass && color ? styles['custom-metric'] : "",
@@ -233,7 +234,7 @@ function DateTimeBadge({
   return (
     <TooltipComponent label={fullFormattedDateTime} position="top">
       <span
-        className={`${styles['date-time-badge']} ${highlightClassName} ${className}`}
+        className={`badge-component ${styles['date-time-badge']} ${highlightClassName} ${className}`}
       >
         {showIcon && <Calendar size={10} className={styles['date-time-icon']} />}
         {shortLabel}
@@ -355,7 +356,7 @@ export default function BadgeComponent(props: BadgeProps) {
     const { variant = "info", children, className = "", mini = false, tooltip, ...rest } = props;
     const badgeElement = (
       <span
-        className={`${styles['badge']} ${styles[variant] || ""} ${mini ? styles['mini'] : ""} ${className}`}
+        className={`badge-component ${styles['badge']} ${styles[variant] || ""} ${mini ? styles['mini'] : ""} ${className}`}
         {...rest}
       >
         {children}
@@ -382,7 +383,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles['info']} ${styles['mono-font']} ${styles['address-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles['info']} ${styles['mono-font']} ${styles['address-badge']} ${className}`}
           {...rest}
         >
           {displayAddress}
@@ -420,7 +421,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles[variantValue]} ${styles['status-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles[variantValue]} ${styles['status-badge']} ${className}`}
           {...rest}
         >
           <StatusDotComponent
@@ -449,7 +450,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles[variant] || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles[variant] || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`}
           {...rest}
         >
           :{port}
@@ -484,7 +485,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles['info']} ${styles['mono-font']} ${styles['repository-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles['info']} ${styles['mono-font']} ${styles['repository-badge']} ${className}`}
           {...rest}
         >
           {Github && <Github size={9} strokeWidth={2.2} />}
@@ -520,7 +521,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles['info']} ${styles['device-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles['info']} ${styles['device-badge']} ${className}`}
           {...rest}
         >
           {Server && <Server size={9} strokeWidth={2.2} />}
@@ -553,7 +554,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['count-badge']} ${stateClassName} ${className}`}
+          className={`badge-component ${styles['count-badge']} ${stateClassName} ${className}`}
         >
           {count}
         </span>
@@ -579,7 +580,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles[responseTier.variant]} ${styles['mono-font']} ${styles['response-time-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles[responseTier.variant]} ${styles['mono-font']} ${styles['response-time-badge']} ${className}`}
           {...rest}
         >
           <span className={styles['response-time-dot']} data-tier={responseTier.variant} />
@@ -608,7 +609,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles['accent']} ${styles['mono-font']} ${styles['domain-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles['accent']} ${styles['mono-font']} ${styles['domain-badge']} ${className}`}
           {...rest}
         >
           {Globe && <Globe size={9} strokeWidth={2.2} />}
@@ -647,7 +648,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`${styles['badge']} ${styles[variantValue]} ${className}`}
+          className={`badge-component ${styles['badge']} ${styles[variantValue]} ${className}`}
           {...rest}
         >
           {SelectedIcon && <SelectedIcon size={9} strokeWidth={2.2} />}

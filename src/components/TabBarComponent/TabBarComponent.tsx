@@ -119,6 +119,7 @@ export default function TabBarComponent({
   const isSecondary = variant === "secondary";
 
   const containerClasses = [
+    "tab-bar-component",
     styles['tab-bar'],
     isSecondary && styles['tab-bar-secondary'],
     scrollable && styles['tab-bar-scrollable'],

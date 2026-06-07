@@ -51,6 +51,7 @@ export default function ToolbarComponent({ variant = "standard", orientation = "
         items[nextIndex]?.focus();
     }, [orientation]);
     const classes = [
+        "toolbar-component",
         styles['toolbar'],
         styles[variant],
         styles[orientation],

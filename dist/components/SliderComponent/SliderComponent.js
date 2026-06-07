@@ -235,7 +235,7 @@ function RangeTrack({ value, min, max, step, onChange, disabled, showValue, tick
             }
         });
     };
-    return (_jsx("div", { className: styles['track-wrapper'], children: _jsxs("div", { ref: trackRef, className: [styles['track']]
+    return (_jsx("div", { className: `slider-component ${styles['track-wrapper']}`, children: _jsxs("div", { ref: trackRef, className: [styles['track']]
                 .filter(Boolean)
                 .join(" "), onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, children: [_jsx("div", { className: styles['inactive-track'] }), _jsx("div", { className: styles['active-track'], style: { left: `${lowPercentage}%`, width: `${highPercentage - lowPercentage}%` } }), _jsx("div", { className: `${styles['stop-indicator']} ${styles['stop-start']}` }), _jsx("div", { className: `${styles['stop-indicator']} ${styles['stop-end']}` }), ticks.length > 0 &&
                     ticks.map((tick) => {

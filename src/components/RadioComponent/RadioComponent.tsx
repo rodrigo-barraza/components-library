@@ -49,6 +49,7 @@ export default function RadioComponent<T extends string | number | boolean = str
   const checked = value === selectedValue;
 
   const rootClasses = [
+    "radio-component",
     styles['radio'],
     disabled && styles['is-disabled-state'],
     error && styles['error'],

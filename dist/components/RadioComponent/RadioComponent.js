@@ -23,6 +23,7 @@ export default function RadioComponent({ value, selectedValue, onChange, label =
     const { sound } = useComponents();
     const checked = value === selectedValue;
     const rootClasses = [
+        "radio-component",
         styles['radio'],
         disabled && styles['is-disabled-state'],
         error && styles['error'],

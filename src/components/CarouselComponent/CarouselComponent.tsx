@@ -174,6 +174,7 @@ export default function CarouselComponent({
 
   // ── Root classes ──────────────────────────────────────────────
   const rootClasses = [
+    "carousel-component",
     styles['carousel'],
     styles[layout],
     peekEdge && styles['has-peek'],

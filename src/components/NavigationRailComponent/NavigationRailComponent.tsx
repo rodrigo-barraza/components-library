@@ -123,7 +123,7 @@ export default function NavigationRailComponent({
 
   return (
     <nav
-      className={`${styles['rail']} ${className}`}
+      className={`navigation-rail-component ${styles['rail']} ${className}`}
       aria-label={ariaLabel}
     >
       {/* ── Menu icon (optional) ── */}

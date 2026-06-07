@@ -55,6 +55,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
     const isStacked = layout === "stacked";
     const isSecondary = variant === "secondary";
     const containerClasses = [
+        "tab-bar-component",
         styles['tab-bar'],
         isSecondary && styles['tab-bar-secondary'],
         scrollable && styles['tab-bar-scrollable'],

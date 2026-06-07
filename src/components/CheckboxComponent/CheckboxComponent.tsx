@@ -47,6 +47,7 @@ export default function CheckboxComponent({
   const isCompact = size === "compact";
 
   const rootClasses = [
+    "checkbox-component",
     styles['checkbox'],
     isCompact && styles['is-compact-size'],
     disabled && styles['is-disabled-state'],

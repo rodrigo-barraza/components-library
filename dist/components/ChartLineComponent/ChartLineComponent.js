@@ -220,6 +220,6 @@ export default function ChartLineComponent({ data, color = "#10b981", maxValue =
                 : "translateX(0)",
         }
         : {};
-    return (_jsxs("div", { ref: containerRef, className: `${styles['sparkline-container']} ${className || ""}`, style: { height: `${height}px` }, onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave, children: [_jsx("canvas", { ref: canvasRef, className: styles['sparkline-canvas'] }), hover != null && (_jsx("div", { className: styles['sparkline-tooltip'], style: tooltipStyle, children: formattedValue }))] }));
+    return (_jsxs("div", { ref: containerRef, className: `chart-line-component ${styles['sparkline-container']} ${className || ""}`, style: { height: `${height}px` }, onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave, children: [_jsx("canvas", { ref: canvasRef, className: styles['sparkline-canvas'] }), hover != null && (_jsx("div", { className: styles['sparkline-tooltip'], style: tooltipStyle, children: formattedValue }))] }));
 }
 //# sourceMappingURL=ChartLineComponent.js.map

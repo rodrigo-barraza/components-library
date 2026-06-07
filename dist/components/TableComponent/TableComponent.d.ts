@@ -40,6 +40,7 @@ export interface TableComponentProps<T, TSub = unknown> {
     getRowStyle?: (row: T, index: number) => React.CSSProperties;
     mini?: boolean;
     storageKey?: string;
+    className?: string;
 }
-export default function TableComponent<T, TSub = unknown>({ title, subtitle, columns, data, getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText, sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini, storageKey, }: TableComponentProps<T, TSub>): import("react/jsx-runtime").JSX.Element;
+export default function TableComponent<T, TSub = unknown>({ title, subtitle, columns, data, getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText, sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini, storageKey, className, }: TableComponentProps<T, TSub>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=TableComponent.d.ts.map

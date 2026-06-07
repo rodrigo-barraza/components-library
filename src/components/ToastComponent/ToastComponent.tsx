@@ -62,7 +62,7 @@ export default function ToastComponent({ toasts = [], onRemove }: ToastComponent
   if (!toasts.length) return null;
 
   return (
-    <div className={styles['container']} id="toast-container">
+    <div className={`toast-component ${styles['container']}`} id="toast-container">
       {toasts.map((toast) => {
         const Icon = ICONS[toast.type] || Info;
         return (

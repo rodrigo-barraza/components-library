@@ -12,6 +12,6 @@ export default function PaginationComponent({ page, totalPages, totalItems, onPa
         }
         return `Page ${page} of ${totalPages} · ${totalItems} total`;
     };
-    return (_jsxs("div", { className: styles['pagination'], children: [_jsx("span", { className: styles['page-info'], children: renderInfo() }), _jsxs("div", { className: styles['page-buttons'], children: [_jsx("button", { className: styles['page-button'], onClick: () => onPageChange(Math.max(1, page - 1)), disabled: page <= 1, children: "Previous" }), _jsx("button", { className: styles['page-button'], onClick: () => onPageChange(Math.min(totalPages, page + 1)), disabled: page >= totalPages, children: "Next" })] })] }));
+    return (_jsxs("div", { className: `pagination-component ${styles['pagination']}`, children: [_jsx("span", { className: styles['page-info'], children: renderInfo() }), _jsxs("div", { className: styles['page-buttons'], children: [_jsx("button", { className: styles['page-button'], onClick: () => onPageChange(Math.max(1, page - 1)), disabled: page <= 1, children: "Previous" }), _jsx("button", { className: styles['page-button'], onClick: () => onPageChange(Math.min(totalPages, page + 1)), disabled: page >= totalPages, children: "Next" })] })] }));
 }
 //# sourceMappingURL=PaginationComponent.js.map

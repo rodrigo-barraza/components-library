@@ -94,6 +94,7 @@ export default function ModalComponent({ title, onClose, footer, size = "md", va
             onClose();
     }, [onClose]);
     const overlayClass = [
+        "modal-component",
         styles['overlay'],
         variant === "dark" ? styles['overlay-dark'] : "",
     ]

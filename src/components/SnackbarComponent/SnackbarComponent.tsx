@@ -271,7 +271,7 @@ export default function SnackbarComponent({
     .join(" ");
 
   const content = (
-    <div className={styles['host']} id={`${snackbarId}-host`}>
+    <div className={`snackbar-component ${styles['host']}`} id={`${snackbarId}-host`}>
       <div
         ref={containerRef}
         className={containerClass}

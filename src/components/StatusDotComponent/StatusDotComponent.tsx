@@ -16,6 +16,7 @@ export default function StatusDotComponent({
   ...rest
 }) {
   const classes = [
+    "status-dot-component",
     styles['dot'],
     styles[size],
     styles[variant],

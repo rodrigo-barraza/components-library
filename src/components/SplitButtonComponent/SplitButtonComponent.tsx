@@ -164,6 +164,7 @@ const SplitButtonComponent = forwardRef<HTMLDivElement, SplitButtonComponentProp
 
   /* ── Class composition ──────────────────────────────────────────── */
   const groupClasses = [
+    "split-button-component",
     styles['split-group'],
     styles[variant],
     size !== "medium" && styles[size],

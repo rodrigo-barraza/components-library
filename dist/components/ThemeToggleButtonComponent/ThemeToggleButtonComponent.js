@@ -46,6 +46,6 @@ export default function ThemeToggleButtonComponent({ iconMap, labelMap, size = 1
         : typeof IconElement === "object"
             ? IconElement
             : null;
-    return (_jsx(IconButtonComponent, { icon: iconNode, onClick: toggleTheme, tooltip: tooltip, className: className, ...rest }));
+    return (_jsx(IconButtonComponent, { icon: iconNode, onClick: toggleTheme, tooltip: tooltip, className: `theme-toggle-button-component${className ? ` ${className}` : ""}`, ...rest }));
 }
 //# sourceMappingURL=ThemeToggleButtonComponent.js.map

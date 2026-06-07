@@ -199,7 +199,7 @@ export default function ChatComponent({ className = "" }: ChatComponentProps) {
 
   return (
     <div
-      className={`${styles['container']} ${styles[position] || ""} ${className}`}
+      className={`chat-component ${styles['container']} ${styles[position] || ""} ${className}`}
       style={style}
       id="chat-widget"
     >

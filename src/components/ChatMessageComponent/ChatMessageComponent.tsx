@@ -108,7 +108,7 @@ export default function ChatMessageComponent({
 
   if (role === MESSAGE_ROLES.SYSTEM) {
     return (
-      <div className={`${styles['message-row']} ${styles['system']} ${error ? styles['error-message'] : ""}`}>
+      <div className={`chat-message-component ${styles['message-row']} ${styles['system']} ${error ? styles['error-message'] : ""}`}>
         <div className={styles['system-bubble']}>
           <p className={styles['message-text']}>{content}</p>
         </div>
@@ -119,7 +119,7 @@ export default function ChatMessageComponent({
   if (role === MESSAGE_ROLES.VISITOR) {
     return (
       <div
-        className={`${styles['message-row']} ${styles['visitor']} ${isGrouped ? styles['grouped'] : ""}`}
+        className={`chat-message-component ${styles['message-row']} ${styles['visitor']} ${isGrouped ? styles['grouped'] : ""}`}
         onMouseEnter={() => setShowTimestamp(true)}
         onMouseLeave={() => setShowTimestamp(false)}
       >
@@ -135,7 +135,7 @@ export default function ChatMessageComponent({
 
   return (
     <div
-      className={`${styles['message-row']} ${styles['agent']} ${isGrouped ? styles['grouped'] : ""} ${error ? styles['error-message'] : ""}`}
+      className={`chat-message-component ${styles['message-row']} ${styles['agent']} ${isGrouped ? styles['grouped'] : ""} ${error ? styles['error-message'] : ""}`}
       onMouseEnter={() => setShowTimestamp(true)}
       onMouseLeave={() => setShowTimestamp(false)}
     >

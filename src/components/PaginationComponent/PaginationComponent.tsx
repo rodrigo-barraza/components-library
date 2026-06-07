@@ -29,7 +29,7 @@ export default function PaginationComponent({
   };
 
   return (
-    <div className={styles['pagination']}>
+    <div className={`pagination-component ${styles['pagination']}`}>
       <span className={styles['page-info']}>{renderInfo()}</span>
       <div className={styles['page-buttons']}>
         <button

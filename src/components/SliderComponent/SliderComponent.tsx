@@ -445,7 +445,7 @@ function RangeTrack({
   };
 
   return (
-    <div className={styles['track-wrapper']}>
+    <div className={`slider-component ${styles['track-wrapper']}`}>
       <div
         ref={trackRef}
         className={[styles['track']]

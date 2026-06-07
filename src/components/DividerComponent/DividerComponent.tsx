@@ -32,6 +32,7 @@ export default function DividerComponent({
   ...rest
 }: DividerComponentProps) {
   const classes = [
+    "divider-component",
     styles['divider'],
     styles[orientation],
     variant === "inset" && styles['inset'],

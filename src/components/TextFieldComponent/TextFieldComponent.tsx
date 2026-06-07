@@ -160,6 +160,7 @@ const TextFieldComponent = forwardRef<TextFieldElement, TextFieldComponentProps>
 
   // ── Root classes ───────────────────────────────────
   const rootClasses = [
+    "text-field-component",
     styles['text-field'],
     styles[variant],
     focused && styles['focused'],

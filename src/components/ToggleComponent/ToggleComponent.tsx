@@ -36,7 +36,7 @@ export default function ToggleComponent({
 
   return (
     <label
-      className={`${styles['toggle']} ${disabled ? styles['is-disabled-state'] : ""} ${isMini ? styles['mini'] : ""}`}
+      className={`toggle-component ${styles['toggle']} ${disabled ? styles['is-disabled-state'] : ""} ${isMini ? styles['mini'] : ""}`}
       onMouseEnter={(e) => sound && SoundService.playHoverButton({ event: e })}
     >
       <input

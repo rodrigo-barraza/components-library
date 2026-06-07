@@ -57,6 +57,7 @@ export default function TopAppBarComponent({ variant = "small", title, navigatio
             ? styles['sticky']
             : "";
     const rootClasses = [
+        "top-app-bar-component",
         styles['top-app-bar'],
         variantClass,
         positionClass,

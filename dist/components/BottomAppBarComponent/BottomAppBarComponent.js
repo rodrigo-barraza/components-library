@@ -108,6 +108,7 @@ export default function BottomAppBarComponent({ fab, position = "fixed", hideOnS
         items[nextIndex]?.focus();
     }, []);
     const rootClasses = [
+        "bottom-app-bar-component",
         styles['bottom-app-bar'],
         position === "relative" && styles['relative'],
         isHidden && styles['is-hidden-state'],

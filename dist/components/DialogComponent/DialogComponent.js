@@ -131,6 +131,7 @@ export default function DialogComponent({ open, onClose, icon, headline, onConfi
     if (!open && !closing)
         return null;
     const scrimClass = [
+        "dialog-component",
         styles['scrim'],
         fullscreen ? styles['fullscreen'] : "",
     ]

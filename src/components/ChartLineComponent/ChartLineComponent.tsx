@@ -288,7 +288,7 @@ export default function ChartLineComponent({
   return (
     <div
       ref={containerRef}
-      className={`${styles['sparkline-container']} ${className || ""}`}
+      className={`chart-line-component ${styles['sparkline-container']} ${className || ""}`}
       style={{ height: `${height}px` }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

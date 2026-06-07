@@ -134,6 +134,7 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
     }, [scrollPrev, scrollNext, scrollToIndex, itemCount]);
     // ── Root classes ──────────────────────────────────────────────
     const rootClasses = [
+        "carousel-component",
         styles['carousel'],
         styles[layout],
         peekEdge && styles['has-peek'],

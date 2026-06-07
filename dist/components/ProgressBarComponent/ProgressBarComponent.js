@@ -24,6 +24,7 @@ export default function ProgressBarComponent({ value, variant = "accent", size =
         return () => cancelAnimationFrame(raf);
     }, [clampedValue, isIndeterminate]);
     const classes = [
+        "progress-bar-component",
         styles['wrapper'],
         className,
     ]

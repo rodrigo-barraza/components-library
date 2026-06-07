@@ -595,7 +595,7 @@ const MenuComponent = forwardRef<HTMLDivElement, MenuComponentProps>(function Me
   return (
     <div
       ref={setAnchorRef}
-      className={styles['anchor']}
+      className={`menu-component ${styles['anchor']}`}
       onKeyDown={handleKeyDown}
       {...rest}
     >

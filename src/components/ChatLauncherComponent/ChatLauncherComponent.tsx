@@ -25,7 +25,7 @@ export default function ChatLauncherComponent({
 }: ChatLauncherComponentProps) {
   return (
     <button
-      className={`${styles['launcher']} ${isOpen ? styles['is-open-state'] : ""}`}
+      className={`chat-launcher-component ${styles['launcher']} ${isOpen ? styles['is-open-state'] : ""}`}
       onClick={onClick}
       aria-label={isOpen ? "Close chat" : "Open chat"}
       id="chat-launcher"

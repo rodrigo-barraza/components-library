@@ -19,6 +19,7 @@ import styles from "./CardComponent.module.css";
  */
 export default function CardComponent({ variant = "outlined", interactive = false, draggable: isDraggable = false, fullWidth = false, className, style, children, ...rest }) {
     const classes = [
+        "card-component",
         styles['card'],
         styles[variant],
         interactive && styles['interactive'],

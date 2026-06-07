@@ -23,7 +23,7 @@ export default function CloseButtonComponent({
 }: CloseButtonProps) {
   const { sound } = useComponents();
 
-  const classes = [styles['close-button'], variant === "dark" ? styles['dark'] : "", className || ""]
+  const classes = ["close-button-component", styles['close-button'], variant === "dark" ? styles['dark'] : "", className || ""]
     .filter(Boolean)
     .join(" ");
 

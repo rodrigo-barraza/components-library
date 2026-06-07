@@ -11,7 +11,7 @@ export interface LoadingStateComponentProps {
  */
 export default function LoadingStateComponent({ message = "Loading…", className }: LoadingStateComponentProps) {
   return (
-    <div className={`${styles['loading-state']}${className ? ` ${className}` : ""}`}>
+    <div className={`loading-state-component ${styles['loading-state']}${className ? ` ${className}` : ""}`}>
       <div className={styles['loading-dot']} />
       <span>{message}</span>
     </div>

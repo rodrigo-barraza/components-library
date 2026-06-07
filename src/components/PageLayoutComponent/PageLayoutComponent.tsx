@@ -79,7 +79,7 @@ export default function PageLayoutComponent({
   }, []);
 
   return (
-    <div className="page-wrapper">
+    <div className="page-layout-component page-wrapper">
       <NavigationSidebarComponent
         brandIcon={brandIcon}
         brandLabel={brandLabel}

@@ -105,6 +105,7 @@ export default function DrawerComponent({
   const widthValue = typeof width === "number" ? `${width}px` : width;
 
   const drawerClasses = [
+    "drawer-component",
     styles['drawer'],
     anchor === "left" ? styles['left'] : "",
     className || "",

@@ -69,6 +69,7 @@ const ExtendedFabComponent = forwardRef(function ExtendedFabComponent({ variant 
     }, []);
     // ── Class composition ─────────────────────────────────
     const classes = [
+        "extended-fab-component",
         styles['extended-fab'],
         styles[variant],
         collapsed ? styles['is-collapsed-state'] : "",

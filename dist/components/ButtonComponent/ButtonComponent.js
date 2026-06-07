@@ -58,6 +58,7 @@ const ButtonComponent = forwardRef(function ButtonComponent({ variant = "primary
     }, []);
     /* ── Class composition ─────────────────────────────────────────── */
     const classes = [
+        "button-component",
         styles['button-element'],
         styles[variant],
         size !== "medium" && styles[size],

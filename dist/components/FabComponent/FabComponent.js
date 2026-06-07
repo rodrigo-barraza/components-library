@@ -55,6 +55,7 @@ const FabComponent = forwardRef(function FabComponent({ size = "standard", color
             : styles['bottom-end'];
     /* ── Build class list ───────────────────────────────────────────── */
     const classes = [
+        "fab-component",
         styles['fab'],
         /* Size */
         size === "small" ? styles['small'] : "",

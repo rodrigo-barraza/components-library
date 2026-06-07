@@ -87,7 +87,7 @@ export default function ChatPanelComponent({
 
   return (
     <div
-      className={`${styles['panel']} ${isOpen ? styles['panel-open'] : styles['panel-closed']}`}
+      className={`chat-panel-component ${styles['panel']} ${isOpen ? styles['panel-open'] : styles['panel-closed']}`}
       id="chat-panel"
     >
       {/* ── Header ─────────────────────────────────────────── */}

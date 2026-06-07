@@ -353,7 +353,7 @@ export default function SelectComponent<T extends string | string[] = string | s
   );
 
   return (
-    <div className={`${styles['dropdown']} ${label ? styles['has-label'] : ""}`} ref={containerRef}>
+    <div className={`select-component ${styles['dropdown']} ${label ? styles['has-label'] : ""}`} ref={containerRef}>
       {label && <span className={styles['label']}>{label}</span>}
 
       {!isControlled && (

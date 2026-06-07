@@ -319,7 +319,7 @@ export default function TooltipComponent({
   return (
     <span
       ref={wrapperRef}
-      className={`${styles['wrapper']} ${trigger === "hover" ? styles['hover-trigger'] : ""} ${className}`}
+      className={`tooltip-component ${styles['wrapper']} ${trigger === "hover" ? styles['hover-trigger'] : ""} ${className}`}
       onClick={trigger === "click" ? handleClick : undefined}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

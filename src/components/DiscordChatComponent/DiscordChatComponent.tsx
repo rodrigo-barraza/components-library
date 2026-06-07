@@ -1731,7 +1731,7 @@ export default function DiscordChatComponent({
   }, [pickerMessageId, handleReact, handleClosePicker]);
 
   return (
-    <div className={styles['container']} id="discord-chat">
+    <div className={`discord-chat-component ${styles['container']}`} id="discord-chat">
       {/* ── Title Bar ─────────────────────────────────────────── */}
       <div className={styles['title-bar']}>
         <div className={styles['traffic-lights']}>

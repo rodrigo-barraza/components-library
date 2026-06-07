@@ -75,7 +75,7 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
         if (index !== -1)
             setFocusedIndex(index);
     }, [activeItem, items]);
-    return (_jsxs("nav", { className: `${styles['rail']} ${className}`, "aria-label": ariaLabel, children: [menuIcon && (_jsx("div", { className: styles['menu-slot'], children: menuIcon })), fab && _jsx("div", { className: styles['fab-slot'], children: fab }), _jsx("div", { ref: destinationsRef, className: `${styles['destinations']} ${styles[`align-${alignment}`]}`, role: "tablist", "aria-orientation": "vertical", onKeyDown: handleKeyDown, children: items.map((item, index) => {
+    return (_jsxs("nav", { className: `navigation-rail-component ${styles['rail']} ${className}`, "aria-label": ariaLabel, children: [menuIcon && (_jsx("div", { className: styles['menu-slot'], children: menuIcon })), fab && _jsx("div", { className: styles['fab-slot'], children: fab }), _jsx("div", { ref: destinationsRef, className: `${styles['destinations']} ${styles[`align-${alignment}`]}`, role: "tablist", "aria-orientation": "vertical", onKeyDown: handleKeyDown, children: items.map((item, index) => {
                     const id = item.id || item.key;
                     const resolvedIcon = resolveIcon(item.icon);
                     const isActive = activeItem === id;

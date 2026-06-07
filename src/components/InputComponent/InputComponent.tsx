@@ -39,6 +39,7 @@ const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HT
   }, [size]);
 
   const classes = [
+    "input-component",
     styles['wrapper'],
     sizeClassName,
     disabled ? styles['is-disabled-state'] : "",

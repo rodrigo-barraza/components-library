@@ -330,7 +330,7 @@ export default function DatePickerComponent({
   const showTimeRow = hasValue;
 
   return (
-    <div className={styles['container']} ref={containerRef}>
+    <div className={`date-picker-component ${styles['container']}`} ref={containerRef}>
       {!hideTrigger && (
         <button
           ref={triggerRef as React.RefObject<HTMLButtonElement>}

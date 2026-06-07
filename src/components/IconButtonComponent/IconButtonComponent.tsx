@@ -29,6 +29,7 @@ export default function IconButtonComponent({
   const { sound } = useComponents();
 
   const classes = [
+    "icon-button-component",
     styles['icon-button'],
     variant === "destructive" ? styles['destructive'] : "",
     active ? styles['is-active-state'] : "",

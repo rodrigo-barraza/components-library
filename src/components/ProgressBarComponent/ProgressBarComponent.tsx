@@ -47,6 +47,7 @@ export default function ProgressBarComponent({
   }, [clampedValue, isIndeterminate]);
 
   const classes = [
+    "progress-bar-component",
     styles['wrapper'],
     className,
   ]

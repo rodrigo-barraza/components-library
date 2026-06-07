@@ -104,6 +104,7 @@ const FabComponent = forwardRef<HTMLButtonElement, FabComponentProps>(function F
 
   /* ── Build class list ───────────────────────────────────────────── */
   const classes = [
+    "fab-component",
     styles['fab'],
     /* Size */
     size === "small" ? styles['small'] : "",

@@ -97,6 +97,7 @@ const ButtonComponent = forwardRef<HTMLElement, Omit<React.HTMLAttributes<HTMLEl
 
   /* ── Class composition ─────────────────────────────────────────── */
   const classes = [
+    "button-component",
     styles['button-element'],
     styles[variant],
     size !== "medium" && styles[size],

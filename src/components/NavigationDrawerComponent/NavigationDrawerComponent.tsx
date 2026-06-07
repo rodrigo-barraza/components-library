@@ -210,6 +210,7 @@ function DrawerItem({
   ...rest
 }: DrawerItemProps) {
   const classes = [
+    "navigation-drawer-component",
     styles['item'],
     active && styles['is-active-state'],
     disabled && styles['is-disabled-state'],

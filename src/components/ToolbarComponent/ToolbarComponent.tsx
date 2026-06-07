@@ -107,6 +107,7 @@ export default function ToolbarComponent({
   );
 
   const classes = [
+    "toolbar-component",
     styles['toolbar'],
     styles[variant],
     styles[orientation],

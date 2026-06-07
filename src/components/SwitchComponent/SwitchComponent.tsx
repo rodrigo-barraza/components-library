@@ -51,6 +51,7 @@ export default function SwitchComponent({
   const { sound } = useComponents();
 
   const rootClasses = [
+    "switch-component",
     styles['switch'],
     disabled && styles['is-disabled-state'],
     labelPlacement === "start" && styles['label-start'],

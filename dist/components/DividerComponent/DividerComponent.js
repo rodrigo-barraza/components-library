@@ -16,6 +16,7 @@ import styles from "./DividerComponent.module.css";
  */
 export default function DividerComponent({ variant = "fullWidth", orientation = "horizontal", spacing, decorative = false, className, style, ...rest }) {
     const classes = [
+        "divider-component",
         styles['divider'],
         styles[orientation],
         variant === "inset" && styles['inset'],

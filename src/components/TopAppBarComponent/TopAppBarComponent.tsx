@@ -141,6 +141,7 @@ export default function TopAppBarComponent({
         : "";
 
   const rootClasses = [
+    "top-app-bar-component",
     styles['top-app-bar'],
     variantClass,
     positionClass,

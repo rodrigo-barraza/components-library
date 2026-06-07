@@ -69,6 +69,7 @@ export default function CardComponent({
   ...rest
 }: CardComponentProps) {
   const classes = [
+    "card-component",
     styles['card'],
     styles[variant],
     interactive && styles['interactive'],

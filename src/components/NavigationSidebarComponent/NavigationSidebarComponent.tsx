@@ -360,7 +360,7 @@ export default function NavigationSidebarComponent({
       {isMobile && showMobileHamburger && (
         <button
           type="button"
-          className={`${styles['mobile-hamburger-button']} ${mobileOpen ? styles['mobile-hamburger-button-open'] : ""}`}
+          className={`navigation-sidebar-component ${styles['mobile-hamburger-button']} ${mobileOpen ? styles['mobile-hamburger-button-open'] : ""}`}
           onClick={mobileOpen ? handleMobileClose : handleMobileOpen}
           title={mobileOpen ? "Close navigation" : "Open navigation"}
           aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}

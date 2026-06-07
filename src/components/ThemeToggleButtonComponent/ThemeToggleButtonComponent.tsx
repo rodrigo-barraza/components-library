@@ -74,7 +74,7 @@ export default function ThemeToggleButtonComponent({
       icon={iconNode}
       onClick={toggleTheme}
       tooltip={tooltip}
-      className={className}
+      className={`theme-toggle-button-component${className ? ` ${className}` : ""}`}
       {...rest}
     />
   );

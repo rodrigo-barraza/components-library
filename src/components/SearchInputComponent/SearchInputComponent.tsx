@@ -210,7 +210,8 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
     .filter(Boolean)
     .join(" ");
 
-  const rootClasses = [styles['search-root'], className].filter(Boolean).join(" ");
+  const rootClasses = [
+    "search-input-component",styles['search-root'], className].filter(Boolean).join(" ");
 
   /* ── Default leading icon (search magnifier) ──────────────────── */
 

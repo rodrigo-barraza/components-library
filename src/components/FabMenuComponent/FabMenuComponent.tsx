@@ -286,7 +286,7 @@ const FabMenuComponent = forwardRef<HTMLDivElement, FabMenuComponentProps>(funct
       {/* Scrim overlay */}
       {showScrim && (
         <div
-          className={styles['scrim']}
+          className={`fab-menu-component ${styles['scrim']}`}
           data-visible={isOpen}
           aria-hidden="true"
           onClick={close}

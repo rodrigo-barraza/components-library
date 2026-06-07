@@ -119,6 +119,7 @@ export default function NavigationDrawerComponent({ variant = "standard", anchor
  */
 function DrawerItem({ icon: Icon, label, badge, active = false, disabled = false, href, onClick, LinkComponent, className, children, ...rest }) {
     const classes = [
+        "navigation-drawer-component",
         styles['item'],
         active && styles['is-active-state'],
         disabled && styles['is-disabled-state'],

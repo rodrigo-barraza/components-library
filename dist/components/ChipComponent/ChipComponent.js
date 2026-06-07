@@ -33,6 +33,7 @@ const ChipComponent = forwardRef(function ChipComponent({ variant = "assist", se
             SoundService.playHoverButton({ event: e });
     }, [sound, disabled]);
     const classes = [
+        "chip-component",
         styles['chip'],
         styles[variant],
         selected && styles['is-selected-state'],

@@ -205,7 +205,7 @@ const FabMenuComponent = forwardRef(function FabMenuComponent({ items = [], icon
     // ── Resolve trigger icon ──────────────────────────────
     const ActiveIcon = isOpen && CloseIcon ? CloseIcon : TriggerIcon;
     const shouldRotate = isOpen && !CloseIcon;
-    return (_jsxs(_Fragment, { children: [showScrim && (_jsx("div", { className: styles['scrim'], "data-visible": isOpen, "aria-hidden": "true", onClick: close })), _jsxs("div", { ref: setContainerRef, className: containerClasses, onKeyDown: handleKeyDown, ...rest, children: [_jsx("div", { className: styles['items-list'], role: "menu", "aria-label": ariaLabel, "aria-hidden": !isOpen, children: items.map((item, index) => {
+    return (_jsxs(_Fragment, { children: [showScrim && (_jsx("div", { className: `fab-menu-component ${styles['scrim']}`, "data-visible": isOpen, "aria-hidden": "true", onClick: close })), _jsxs("div", { ref: setContainerRef, className: containerClasses, onKeyDown: handleKeyDown, ...rest, children: [_jsx("div", { className: styles['items-list'], role: "menu", "aria-label": ariaLabel, "aria-hidden": !isOpen, children: items.map((item, index) => {
                             const ItemIcon = item.icon;
                             return (_jsxs("div", { className: [
                                     styles['menu-item'],

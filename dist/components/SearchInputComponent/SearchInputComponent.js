@@ -115,7 +115,9 @@ const SearchInputComponent = forwardRef(function SearchInputComponent({ value = 
     ]
         .filter(Boolean)
         .join(" ");
-    const rootClasses = [styles['search-root'], className].filter(Boolean).join(" ");
+    const rootClasses = [
+        "search-input-component", styles['search-root'], className
+    ].filter(Boolean).join(" ");
     /* ── Default leading icon (search magnifier) ──────────────────── */
     const defaultLeadingIcon = (_jsxs("svg", { width: compact ? 20 : 24, height: compact ? 20 : 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [_jsx("circle", { cx: "11", cy: "11", r: "8" }), _jsx("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })] }));
     /* ── Close icon (×) for clear ─────────────────────────────────── */

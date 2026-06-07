@@ -121,7 +121,7 @@ export default function ThemePickerComponent({
   return (
     <div
       ref={wrapperRef}
-      className={`${styles['wrapper']} ${collapsed ? styles['is-collapsed-state'] : ""} ${className || ""}`}
+      className={`theme-picker-component ${styles['wrapper']} ${collapsed ? styles['is-collapsed-state'] : ""} ${className || ""}`}
     >
       {/* Trigger — wrap in tooltip when collapsed so user sees the theme label */}
       {collapsed ? (

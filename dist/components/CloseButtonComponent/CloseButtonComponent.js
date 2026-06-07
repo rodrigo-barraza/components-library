@@ -6,7 +6,7 @@ import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 export default function CloseButtonComponent({ onClick, size = 18, variant = "default", className, }) {
     const { sound } = useComponents();
-    const classes = [styles['close-button'], variant === "dark" ? styles['dark'] : "", className || ""]
+    const classes = ["close-button-component", styles['close-button'], variant === "dark" ? styles['dark'] : "", className || ""]
         .filter(Boolean)
         .join(" ");
     return (_jsx("button", { className: classes, onClick: (event) => {

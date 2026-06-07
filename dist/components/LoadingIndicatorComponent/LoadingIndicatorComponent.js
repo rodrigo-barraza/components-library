@@ -51,6 +51,7 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
             styles['size-medium'];
     const colorClass = getColorClass(color);
     const rootClasses = [
+        "loading-indicator-component",
         styles['wrapper'],
         styles['fade-in'],
         className,

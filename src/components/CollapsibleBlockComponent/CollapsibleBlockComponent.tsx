@@ -50,7 +50,7 @@ export default function CollapsibleBlockComponent({
   };
 
   return (
-    <div className={`${styles['container']} ${className}`}>
+    <div className={`collapsible-block-component ${styles['container']} ${className}`}>
       <button className={styles['header']} onClick={handleToggle}>
         <span className={styles['chevron']}>
           {isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}

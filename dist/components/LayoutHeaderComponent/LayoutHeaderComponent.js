@@ -112,7 +112,7 @@ const LayoutHeaderComponent = forwardRef(function LayoutHeaderComponent({ title,
                         ref(node);
                     else if (ref)
                         ref.current = node;
-                }, className: `${styles["layout-header-container"]}${className ? ` ${className}` : ""}`, children: [leadingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!leadingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: leadingToggle.onToggle, title: leadingToggle.isVisible
+                }, className: `layout-header-component ${styles["layout-header-container"]}${className ? ` ${className}` : ""}`, children: [leadingToggle && (_jsx("button", { className: `${styles["header-toggle-button"]} ${!leadingToggle.isVisible ? styles["is-panel-hidden"] : ""}`, onClick: leadingToggle.onToggle, title: leadingToggle.isVisible
                             ? `Hide ${leadingToggle.label || "panel"}`
                             : `Show ${leadingToggle.label || "panel"}`, children: leadingToggle.isVisible
                             ? leadingToggle.visibleIcon

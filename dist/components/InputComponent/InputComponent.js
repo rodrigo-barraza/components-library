@@ -16,6 +16,7 @@ const InputComponent = forwardRef(function InputComponent({ type = "text", value
         return mappedClass ? styles[mappedClass] : styles['size-medium'];
     }, [size]);
     const classes = [
+        "input-component",
         styles['wrapper'],
         sizeClassName,
         disabled ? styles['is-disabled-state'] : "",

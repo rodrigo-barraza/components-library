@@ -59,7 +59,7 @@ export default class ErrorBoundaryComponent extends Component<ErrorBoundaryProps
     } = this.props;
 
     return (
-      <div className={styles['error-boundary']}>
+      <div className={`error-boundary-component ${styles['error-boundary']}`}>
         <div className={styles['error-card']}>
           <div className={styles['icon-container']}>
             <svg

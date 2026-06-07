@@ -18,6 +18,7 @@ export default function CheckboxComponent({ checked = false, onChange, label = "
     const { sound } = useComponents();
     const isCompact = size === "compact";
     const rootClasses = [
+        "checkbox-component",
         styles['checkbox'],
         isCompact && styles['is-compact-size'],
         disabled && styles['is-disabled-state'],

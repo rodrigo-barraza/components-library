@@ -313,7 +313,7 @@ const MenuComponent = forwardRef(function MenuComponent({ trigger, open: control
             },
         })
         : trigger;
-    return (_jsxs("div", { ref: setAnchorRef, className: styles['anchor'], onKeyDown: handleKeyDown, ...rest, children: [clonedTrigger, _jsx("div", { ref: surfaceRef, className: surfaceClasses, role: "menu", "aria-label": ariaLabel, "data-open": isOpen, "data-scrollable": maxHeight ? true : undefined, style: maxHeight ? { "--menu-max-height": `${maxHeight}px` } : undefined, children: indexedChildren })] }));
+    return (_jsxs("div", { ref: setAnchorRef, className: `menu-component ${styles['anchor']}`, onKeyDown: handleKeyDown, ...rest, children: [clonedTrigger, _jsx("div", { ref: surfaceRef, className: surfaceClasses, role: "menu", "aria-label": ariaLabel, "data-open": isOpen, "data-scrollable": maxHeight ? true : undefined, style: maxHeight ? { "--menu-max-height": `${maxHeight}px` } : undefined, children: indexedChildren })] }));
 });
 export default MenuComponent;
 //# sourceMappingURL=MenuComponent.js.map
