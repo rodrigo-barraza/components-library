@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 import styles from "./LayoutHeaderComponent.module.css";
 export interface LayoutHeaderToggleButtonProps {
     isVisible: boolean;
@@ -9,6 +10,7 @@ export interface LayoutHeaderToggleButtonProps {
 }
 export interface LayoutHeaderComponentProps {
     title?: string | ReactNode;
+    titleIcon?: LucideIcon;
     titleBadge?: ReactNode;
     onBack?: () => void;
     leadingToggle?: LayoutHeaderToggleButtonProps;

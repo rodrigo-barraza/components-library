@@ -1,4 +1,5 @@
 import { ReactNode, forwardRef, useEffect, useRef } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeft,
   Server,
@@ -87,6 +88,7 @@ export interface LayoutHeaderToggleButtonProps {
 
 export interface LayoutHeaderComponentProps {
   title?: string | ReactNode;
+  titleIcon?: LucideIcon;
   titleBadge?: ReactNode;
   onBack?: () => void;
   leadingToggle?: LayoutHeaderToggleButtonProps;
@@ -103,6 +105,7 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
   function LayoutHeaderComponent(
     {
       title,
+      titleIcon: TitleIconComponent,
       titleBadge,
       onBack,
       leadingToggle,
@@ -225,7 +228,9 @@ const LayoutHeaderComponent = forwardRef<HTMLElement, LayoutHeaderComponentProps
                 )}
               </div>
               <h1 className={styles["header-page-title"]}>
-                {getHeaderTitleIcon(title)}
+                {TitleIconComponent
+                  ? <TitleIconComponent className={styles["header-page-title-icon"]} size={14} />
+                  : getHeaderTitleIcon(title)}
                 {typeof title === "string" ? <span>{title}</span> : title}
                 {titleBadge}
               </h1>
