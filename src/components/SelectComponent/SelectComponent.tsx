@@ -319,7 +319,9 @@ export default function SelectComponent<T extends string | string[] = string | s
         ) : (
           <span className={styles['trigger-label']}>
             {isLoading
-              ? `Loading… ${Math.round((loadingProgress ?? 0) * 100)}%`
+              ? loadingProgress
+                ? `Loading… ${Math.round(loadingProgress * 100)}%`
+                : "Loading…"
               : selected
                 ? selected.label
                 : placeholder}
