@@ -1,7 +1,7 @@
 import { useState, useCallback, MouseEvent } from "react";
 import { Copy, Check } from "lucide-react";
 // Inlined from utilities-library/time — node_modules copy is stale until deploy-kit sync
-const FEEDBACK_STANDARD_MS = 2_000;
+const FEEDBACK_STANDARD_MILLISECONDS = 2_000;
 import styles from "./CopyButtonComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
@@ -34,7 +34,7 @@ export default function CopyButtonComponent({
         await navigator.clipboard.writeText(text);
         if (sound) SoundService.playClickButton({ event });
         setCopied(true);
-        setTimeout(() => setCopied(false), FEEDBACK_STANDARD_MS);
+        setTimeout(() => setCopied(false), FEEDBACK_STANDARD_MILLISECONDS);
       } catch {
         /* clipboard not available — silent fail */
       }
