@@ -123,7 +123,9 @@ export default function SelectComponent({ value, options = [], onChange, placeho
         const checked = multiple ? selectedSet.has(option.value) : option.value === value;
         const button = (_jsxs("button", { type: "button", className: `${styles['option']} ${checked ? styles['option-selected'] : ""} ${option.disabled ? styles['option-disabled'] : ""}`, onClick: () => handleOptionClick(option), disabled: option.disabled, children: [multiple && (_jsx("span", { className: `${styles["option-checkbox-container"]} ${checked ? styles["option-checkbox-container-selected"] : ""}`, children: checked && (_jsx("svg", { className: styles["option-checkbox-icon"], viewBox: "0 0 18 18", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: _jsx("path", { className: styles["option-checkbox-path"], d: "M4 9.5L7.5 13L14 5", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round" }) })) })), option.icon && (_jsx("span", { className: styles['option-icon'], children: option.icon })), _jsx("span", { className: styles['option-label'], children: option.label })] }, option.value));
         if (option.tooltip) {
-            return (_jsx(TooltipComponent, { label: option.tooltip, position: "right", delay: 200, children: button }, option.value));
+            return (_jsx(TooltipComponent, { ...(option.tooltipRich
+                    ? { rich: true, content: option.tooltip }
+                    : { label: option.tooltip }), position: "right", delay: 200, children: button }, option.value));
         }
         return button;
     };

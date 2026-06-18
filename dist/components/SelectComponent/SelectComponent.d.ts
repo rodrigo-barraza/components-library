@@ -17,7 +17,8 @@ export interface SelectOption {
     label: string;
     icon?: React.ReactNode;
     disabled?: boolean;
-    tooltip?: string;
+    tooltip?: React.ReactNode;
+    tooltipRich?: boolean;
 }
 export interface SelectComponentProps<T extends string | string[] = string | string[]> {
     value?: T;
