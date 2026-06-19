@@ -125,7 +125,7 @@ export default function SelectComponent({ value, options = [], onChange, placeho
         if (option.tooltip) {
             return (_jsx(TooltipComponent, { ...(option.tooltipRich
                     ? { rich: true, content: option.tooltip }
-                    : { label: option.tooltip }), position: "right", delay: 200, children: button }, option.value));
+                    : { label: option.tooltip }), position: "right", delay: 200, className: styles['tooltip-full-width'], children: button }, option.value));
         }
         return button;
     };
@@ -148,7 +148,7 @@ export default function SelectComponent({ value, options = [], onChange, placeho
                                 : placeholder }))] }), !disabled && !isLoading && (_jsx(ChevronDown, { size: 14, className: `${styles['chevron']} ${isOpen ? styles['chevron-open'] : ""}` })), isLoading && (_jsx("span", { className: styles['trigger-progress-bar'], style: { transform: `scaleX(${loadingProgress ?? 0})` } }))] }));
     const tooltipContent = triggerTooltipContent || triggerTooltip;
     const shouldShowTooltip = !!tooltipContent && !isOpen && !isLoading;
-    const wrappedTrigger = shouldShowTooltip ? (_jsx(TooltipComponent, { label: tooltipContent, position: "bottom", enterDelay: 150, children: triggerButton })) : (triggerButton);
+    const wrappedTrigger = shouldShowTooltip ? (_jsx(TooltipComponent, { label: tooltipContent, position: "bottom", enterDelay: 150, className: styles['tooltip-full-width'], children: triggerButton })) : (triggerButton);
     return (_jsxs("div", { className: `select-component ${styles['dropdown']} ${label ? styles['has-label'] : ""}`, ref: containerRef, children: [label && _jsx("span", { className: styles['label'], children: label }), !isControlled && (_jsx("div", { className: styles['sizer'], "aria-hidden": "true", children: options.map((option) => (_jsxs("span", { className: styles['sizer-item'], children: [icon && _jsx("span", { className: styles['trigger-icon'], children: icon }), option.icon && _jsx("span", { className: styles['option-icon'], children: option.icon }), _jsx("span", { children: option.label })] }, option.value))) })), wrappedTrigger, !isControlled && isOpen && (_jsxs("div", { className: styles['menu'], children: [searchable && (_jsx(SearchInputComponent, { ref: searchInputRef, value: searchQuery, onChange: (nextValue) => setSearchQuery(nextValue), placeholder: "Search\u2026", compact: true, className: styles["inline-search-input"] })), filteredOptions.map(renderOption), searchable && filteredOptions.length === 0 && (_jsx("div", { className: styles["search-empty-state"], children: "No matches" }))] })), children] }));
 }
 //# sourceMappingURL=SelectComponent.js.map

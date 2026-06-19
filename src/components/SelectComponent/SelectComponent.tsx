@@ -258,6 +258,7 @@ export default function SelectComponent<T extends string | string[] = string | s
             : { label: option.tooltip })}
           position="right"
           delay={200}
+          className={styles['tooltip-full-width']}
         >
           {button}
         </TooltipComponent>
@@ -350,7 +351,7 @@ export default function SelectComponent<T extends string | string[] = string | s
   const shouldShowTooltip = !!tooltipContent && !isOpen && !isLoading;
 
   const wrappedTrigger = shouldShowTooltip ? (
-    <TooltipComponent label={tooltipContent} position="bottom" enterDelay={150}>
+    <TooltipComponent label={tooltipContent} position="bottom" enterDelay={150} className={styles['tooltip-full-width']}>
       {triggerButton}
     </TooltipComponent>
   ) : (

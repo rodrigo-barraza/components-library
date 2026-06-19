@@ -351,4 +351,9 @@
   color: var(--text-tertiary);
   font-size: 13px;
 }
+/* ── Tooltip wrapper override ─────────────────────────────── */
 
+.tooltip-full-width {
+  display: flex;
+  width: 100%;
+}
