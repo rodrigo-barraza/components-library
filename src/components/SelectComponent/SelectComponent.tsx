@@ -38,6 +38,7 @@ export interface SelectComponentProps<T extends string | string[] = string | str
   disabled?: boolean;
   triggerTooltip?: string | null;
   triggerTooltipContent?: React.ReactNode;
+  triggerTooltipRich?: boolean;
   label?: string | null;
   isOpen?: boolean;
   onToggle?: () => void;
@@ -61,6 +62,7 @@ export default function SelectComponent<T extends string | string[] = string | s
   disabled = false,
   triggerTooltip = null,
   triggerTooltipContent = null,
+  triggerTooltipRich = false,
   label = null,
   isOpen: controlledIsOpen,
   onToggle: controlledOnToggle,
@@ -351,7 +353,14 @@ export default function SelectComponent<T extends string | string[] = string | s
   const shouldShowTooltip = !!tooltipContent && !isOpen && !isLoading;
 
   const wrappedTrigger = shouldShowTooltip ? (
-    <TooltipComponent label={tooltipContent} position="bottom" enterDelay={150} className={styles['tooltip-full-width']}>
+    <TooltipComponent
+      {...(triggerTooltipRich
+        ? { rich: true, content: tooltipContent }
+        : { label: tooltipContent })}
+      position="right"
+      delay={200}
+      className={styles['tooltip-full-width']}
+    >
       {triggerButton}
     </TooltipComponent>
   ) : (

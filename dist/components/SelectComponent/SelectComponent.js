@@ -5,7 +5,7 @@ import { ChevronDown, Loader2, X } from "lucide-react";
 import SearchInputComponent from "../SearchInputComponent/SearchInputComponent.js";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import styles from "./SelectComponent.module.css";
-export default function SelectComponent({ value, options = [], onChange, placeholder = "Select...", icon = null, disabled = false, triggerTooltip = null, triggerTooltipContent = null, label = null, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple = false, allLabel = "All", compact = false, searchable = false, }) {
+export default function SelectComponent({ value, options = [], onChange, placeholder = "Select...", icon = null, disabled = false, triggerTooltip = null, triggerTooltipContent = null, triggerTooltipRich = false, label = null, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple = false, allLabel = "All", compact = false, searchable = false, }) {
     const [internalOpen, setInternalOpen] = useState(false);
     const containerRef = useRef(null);
     const internalTriggerRef = useRef(null);
@@ -148,7 +148,9 @@ export default function SelectComponent({ value, options = [], onChange, placeho
                                 : placeholder }))] }), !disabled && !isLoading && (_jsx(ChevronDown, { size: 14, className: `${styles['chevron']} ${isOpen ? styles['chevron-open'] : ""}` })), isLoading && (_jsx("span", { className: styles['trigger-progress-bar'], style: { transform: `scaleX(${loadingProgress ?? 0})` } }))] }));
     const tooltipContent = triggerTooltipContent || triggerTooltip;
     const shouldShowTooltip = !!tooltipContent && !isOpen && !isLoading;
-    const wrappedTrigger = shouldShowTooltip ? (_jsx(TooltipComponent, { label: tooltipContent, position: "bottom", enterDelay: 150, className: styles['tooltip-full-width'], children: triggerButton })) : (triggerButton);
+    const wrappedTrigger = shouldShowTooltip ? (_jsx(TooltipComponent, { ...(triggerTooltipRich
+            ? { rich: true, content: tooltipContent }
+            : { label: tooltipContent }), position: "right", delay: 200, className: styles['tooltip-full-width'], children: triggerButton })) : (triggerButton);
     return (_jsxs("div", { className: `select-component ${styles['dropdown']} ${label ? styles['has-label'] : ""}`, ref: containerRef, children: [label && _jsx("span", { className: styles['label'], children: label }), !isControlled && (_jsx("div", { className: styles['sizer'], "aria-hidden": "true", children: options.map((option) => (_jsxs("span", { className: styles['sizer-item'], children: [icon && _jsx("span", { className: styles['trigger-icon'], children: icon }), option.icon && _jsx("span", { className: styles['option-icon'], children: option.icon }), _jsx("span", { children: option.label })] }, option.value))) })), wrappedTrigger, !isControlled && isOpen && (_jsxs("div", { className: styles['menu'], children: [searchable && (_jsx(SearchInputComponent, { ref: searchInputRef, value: searchQuery, onChange: (nextValue) => setSearchQuery(nextValue), placeholder: "Search\u2026", compact: true, className: styles["inline-search-input"] })), filteredOptions.map(renderOption), searchable && filteredOptions.length === 0 && (_jsx("div", { className: styles["search-empty-state"], children: "No matches" }))] })), children] }));
 }
 //# sourceMappingURL=SelectComponent.js.map
