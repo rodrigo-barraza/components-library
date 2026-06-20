@@ -14,6 +14,9 @@
 /* ── Inline label ───────────────────────────────────────── */
 
 .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 11px;
   font-weight: 500;
   color: var(--text-tertiary);
@@ -21,6 +24,13 @@
   white-space: nowrap;
   flex-shrink: 0;
   user-select: none;
+}
+
+.label-icon {
+  display: flex;
+  align-items: center;
+  color: var(--accent-primary);
+  flex-shrink: 0;
 }
 
 /* Invisible ghost that measures the widest option label */

@@ -31,6 +31,7 @@ export interface SelectComponentProps<T extends string | string[] = string | str
     triggerTooltipContent?: React.ReactNode;
     triggerTooltipRich?: boolean;
     label?: string | null;
+    labelIcon?: React.ReactNode;
     isOpen?: boolean;
     onToggle?: () => void;
     triggerRef?: React.Ref<HTMLButtonElement>;
@@ -43,5 +44,5 @@ export interface SelectComponentProps<T extends string | string[] = string | str
     compact?: boolean;
     searchable?: boolean;
 }
-export default function SelectComponent<T extends string | string[] = string | string[]>({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, triggerTooltipContent, triggerTooltipRich, label, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple, allLabel, compact, searchable, }: SelectComponentProps<T>): import("react/jsx-runtime").JSX.Element;
+export default function SelectComponent<T extends string | string[] = string | string[]>({ value, options, onChange, placeholder, icon, disabled, triggerTooltip, triggerTooltipContent, triggerTooltipRich, label, labelIcon, isOpen: controlledIsOpen, onToggle: controlledOnToggle, triggerRef: externalTriggerRef, triggerClassName, loadingProgress, onMouseEnter, children, multiple, allLabel, compact, searchable, }: SelectComponentProps<T>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=SelectComponent.d.ts.map

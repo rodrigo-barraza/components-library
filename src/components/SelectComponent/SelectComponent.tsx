@@ -40,6 +40,7 @@ export interface SelectComponentProps<T extends string | string[] = string | str
   triggerTooltipContent?: React.ReactNode;
   triggerTooltipRich?: boolean;
   label?: string | null;
+  labelIcon?: React.ReactNode;
   isOpen?: boolean;
   onToggle?: () => void;
   triggerRef?: React.Ref<HTMLButtonElement>;
@@ -64,6 +65,7 @@ export default function SelectComponent<T extends string | string[] = string | s
   triggerTooltipContent = null,
   triggerTooltipRich = false,
   label = null,
+  labelIcon = null,
   isOpen: controlledIsOpen,
   onToggle: controlledOnToggle,
   triggerRef: externalTriggerRef,
@@ -369,7 +371,12 @@ export default function SelectComponent<T extends string | string[] = string | s
 
   return (
     <div className={`select-component ${styles['dropdown']} ${label ? styles['has-label'] : ""}`} ref={containerRef}>
-      {label && <span className={styles['label']}>{label}</span>}
+      {label && (
+        <span className={styles['label']}>
+          {labelIcon && <span className={styles['label-icon']}>{labelIcon}</span>}
+          {label}
+        </span>
+      )}
 
       {!isControlled && (
         <div className={styles['sizer']} aria-hidden="true">
