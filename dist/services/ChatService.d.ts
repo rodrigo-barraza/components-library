@@ -36,8 +36,8 @@ declare class ChatService {
     config: ChatWidgetConfig | null;
     private _abortController;
     constructor({ serviceUrl, widgetId }: ChatServiceOptions);
-    private _restoreSession;
-    private _persistSession;
+    private _restoreConversation;
+    private _persistConversation;
     /**
      * Get persisted messages from localStorage.
      */
@@ -47,9 +47,9 @@ declare class ChatService {
      */
     persistMessages(messages: ChatMessage[]): void;
     /**
-     * Clear all persisted session data.
+     * Clear all persisted conversation data.
      */
-    clearSession(): void;
+    clearConversation(): void;
     private _fetch;
     /**
      * Fetch widget configuration from messages-service.

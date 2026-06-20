@@ -234,7 +234,7 @@
   padding-right: 4px;
 }
 
-/* Nested expanded content (2 levels deep, e.g. session → convo → requests) */
+/* Nested expanded content (2 levels deep, e.g. conversation → convo → requests) */
 .expanded-content-cell .expanded-content-row td {
   background: oklch(0 0 0 / 0.06);
   border-left: 2px solid var(--accent-primary);

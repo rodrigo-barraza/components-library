@@ -93,18 +93,18 @@ class ChatService {
     this._abortController = null;
 
     // Restore persisted visitor/conversation IDs
-    this._restoreSession();
+    this._restoreConversation();
   }
 
-  // ── Session Persistence ──────────────────────────────────────
+  // ── Conversation Persistence ─────────────────────────────────
 
-  private _restoreSession(): void {
+  private _restoreConversation(): void {
     this.visitorId = storage.get(CHAT_DEFAULTS.STORAGE_KEY_VISITOR) || null;
     this.conversationId =
       storage.get(CHAT_DEFAULTS.STORAGE_KEY_CONVERSATION) || null;
   }
 
-  private _persistSession(): void {
+  private _persistConversation(): void {
     if (this.visitorId) {
       storage.set(CHAT_DEFAULTS.STORAGE_KEY_VISITOR, this.visitorId);
     }
@@ -145,9 +145,9 @@ class ChatService {
   }
 
   /**
-   * Clear all persisted session data.
+   * Clear all persisted conversation data.
    */
-  clearSession(): void {
+  clearConversation(): void {
     this.conversationId = null;
     this.visitorId = null;
     storage.remove(CHAT_DEFAULTS.STORAGE_KEY_CONVERSATION);
@@ -186,7 +186,7 @@ class ChatService {
     if (!response.ok) {
       // ── Auto-recover from stale conversation ────────────────
       if (response.status === 404 && path.includes("/conversations/") && this.conversationId) {
-        this.clearSession();
+        this.clearConversation();
         await this.createConversation();
 
         // Rebuild the path with the new conversationId
@@ -236,7 +236,7 @@ class ChatService {
       }),
     });
     this.visitorId = data.visitorId;
-    this._persistSession();
+    this._persistConversation();
     return data;
   }
 
@@ -254,7 +254,7 @@ class ChatService {
       }),
     });
     this.conversationId = data.conversationId;
-    this._persistSession();
+    this._persistConversation();
     return data;
   }
 
@@ -314,7 +314,7 @@ class ChatService {
 
       // ── Auto-retry on stale conversation ──────────────────────
       if (streamResponse.status === 404) {
-        this.clearSession();
+        this.clearConversation();
         await this.createConversation();
         const retryResponse = await this._postAgentStream(content, controller.signal);
 
@@ -441,7 +441,7 @@ class ChatService {
     // Ensure visitor is registered
     if (!this.visitorId) {
       this.visitorId = generateUUID();
-      this._persistSession();
+      this._persistConversation();
     }
 
     await this.createConversation();
