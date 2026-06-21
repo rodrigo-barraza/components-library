@@ -27,6 +27,7 @@ export interface DrawerComponentProps {
   children?: ReactNode;
   className?: string;
   id?: string;
+  contentKey?: string | number | null;
 }
 
 /**
@@ -49,6 +50,7 @@ export default function DrawerComponent({
   children,
   className,
   id,
+  contentKey,
 }: DrawerComponentProps) {
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const [closing, setClosing] = useState(false);
@@ -59,24 +61,15 @@ export default function DrawerComponent({
     setClosing(true);
   }, [dismissible]);
 
-  // Cancel closing if the parent re-asserts `open` while the exit
-  // animation is still running (e.g. a table row click selects new
-  // data right after click-outside triggered the close).
-  useEffect(() => {
-    if (open && closing) {
-      setClosing(false);
-    }
-  }, [open, closing]);
-
   // After exit animation completes, fire the real onClose
   const handleAnimationEnd = useCallback(
     (e: React.AnimationEvent<HTMLDivElement>) => {
-      if (closing && !open && e.target === drawerRef.current) {
+      if (closing && e.target === drawerRef.current) {
         setClosing(false);
         onClose?.();
       }
     },
-    [closing, open, onClose],
+    [closing, onClose],
   );
 
   // ── Keyboard: Escape to dismiss ──────────────────────
@@ -95,11 +88,17 @@ export default function DrawerComponent({
   }, [open, dismissible, handleClose]);
 
   // ── Click outside detection ──────────────────────────
+  // Respects [data-drawer-ignore-click-outside] on ancestor elements
+  // so consumers can mark regions (e.g. a table) where clicks should
+  // update the drawer content rather than dismiss it.
   useEffect(() => {
     if (!open || !dismissible) return;
 
     const handleMouseDown = (e: MouseEvent) => {
       if (drawerRef.current && e.target instanceof Node && !drawerRef.current.contains(e.target)) {
+        if ((e.target as Element).closest?.("[data-drawer-ignore-click-outside]")) {
+          return;
+        }
         handleClose();
       }
     };
@@ -152,7 +151,7 @@ export default function DrawerComponent({
         </div>
 
         {/* Body */}
-        <div className={styles['body']}>
+        <div key={contentKey ?? undefined} className={styles['body']}>
           {sections.map((section, si) => (
             <div key={si} className={styles['section']}>
               <div className={styles['section-title']}>{section.title}</div>

@@ -21,6 +21,7 @@ export interface DrawerComponentProps {
     children?: ReactNode;
     className?: string;
     id?: string;
+    contentKey?: string | number | null;
 }
 /**
  * DrawerComponent — M3 Side Sheet / slide-in drawer panel.
@@ -29,5 +30,5 @@ export interface DrawerComponentProps {
  * Supports click-outside dismiss, Escape key, optional scrim overlay,
  * structured sections with label/value grids, and arbitrary children.
  */
-export default function DrawerComponent({ open, onClose, title, anchor, width, scrim, dismissible, headerActions, sections, children, className, id, }: DrawerComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function DrawerComponent({ open, onClose, title, anchor, width, scrim, dismissible, headerActions, sections, children, className, id, contentKey, }: DrawerComponentProps): import("react/jsx-runtime").JSX.Element | null;
 //# sourceMappingURL=DrawerComponent.d.ts.map
