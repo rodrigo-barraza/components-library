@@ -59,15 +59,24 @@ export default function DrawerComponent({
     setClosing(true);
   }, [dismissible]);
 
+  // Cancel closing if the parent re-asserts `open` while the exit
+  // animation is still running (e.g. a table row click selects new
+  // data right after click-outside triggered the close).
+  useEffect(() => {
+    if (open && closing) {
+      setClosing(false);
+    }
+  }, [open, closing]);
+
   // After exit animation completes, fire the real onClose
   const handleAnimationEnd = useCallback(
     (e: React.AnimationEvent<HTMLDivElement>) => {
-      if (closing && e.target === drawerRef.current) {
+      if (closing && !open && e.target === drawerRef.current) {
         setClosing(false);
         onClose?.();
       }
     },
-    [closing, onClose],
+    [closing, open, onClose],
   );
 
   // ── Keyboard: Escape to dismiss ──────────────────────
