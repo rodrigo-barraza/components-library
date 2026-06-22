@@ -75,5 +75,6 @@
   },
   "dependencies": {
     "@rodrigo-barraza/utilities-library": "file:../utilities-library"
-  }
+  },
+  "packageManager": "pnpm@11.8.0"
 }
