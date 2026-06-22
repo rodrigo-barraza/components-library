@@ -10,5 +10,5 @@ export default function StatusDotComponent({ variant, size, pulse, className, ..
     size?: string | undefined;
     pulse?: boolean | undefined;
     className?: string | undefined;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=StatusDotComponent.d.ts.map

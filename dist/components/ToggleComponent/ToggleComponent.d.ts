@@ -19,5 +19,5 @@ export interface ToggleComponentProps {
  *  disabled? : boolean
  *  size?     : "default" | "mini"
  */
-export default function ToggleComponent({ checked, onChange, label, disabled, size, }: ToggleComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ToggleComponent({ checked, onChange, label, disabled, size, }: ToggleComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ToggleComponent.d.ts.map

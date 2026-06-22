@@ -1,3 +1,4 @@
+import React from "react";
 export interface DatePreset {
     label: string;
     getValue: () => {
@@ -21,5 +22,5 @@ export interface DatePickerComponentProps {
     presets?: DatePreset[];
     showTime?: boolean;
 }
-export default function DatePickerComponent({ from, to, onChange, placeholder, storageKey, disabled, defaultOpen, onClose, hideTrigger, presets, showTime, }: DatePickerComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function DatePickerComponent({ from, to, onChange, placeholder, storageKey, disabled, defaultOpen, onClose, hideTrigger, presets, showTime, }: DatePickerComponentProps): React.JSX.Element;
 //# sourceMappingURL=DatePickerComponent.d.ts.map

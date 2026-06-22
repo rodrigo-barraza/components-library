@@ -39,5 +39,5 @@ export interface NavigationRailComponentProps {
  * - Keyboard navigation: ArrowUp/Down cycles, Home/End jumps
  * - Full ARIA: role="navigation", tablist pattern on destinations
  */
-export default function NavigationRailComponent({ items, activeItem, onNavigate, fab, menuIcon, alignment, labelsHidden, bottomSlot, LinkComponent, className, ariaLabel, }: NavigationRailComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function NavigationRailComponent({ items, activeItem, onNavigate, fab, menuIcon, alignment, labelsHidden, bottomSlot, LinkComponent, className, ariaLabel, }: NavigationRailComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=NavigationRailComponent.d.ts.map

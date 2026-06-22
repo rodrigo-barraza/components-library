@@ -7,6 +7,6 @@ interface CloseButtonProps {
     variant?: string;
     className?: string;
 }
-export default function CloseButtonComponent({ onClick, size, variant, className, }: CloseButtonProps): import("react/jsx-runtime").JSX.Element;
+export default function CloseButtonComponent({ onClick, size, variant, className, }: CloseButtonProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=CloseButtonComponent.d.ts.map

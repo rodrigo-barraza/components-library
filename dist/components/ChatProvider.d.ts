@@ -32,7 +32,7 @@ export interface ChatProviderProps {
     accentColor?: string;
     children: ReactNode;
 }
-export declare function ChatProvider({ serviceUrl, widgetId, position, theme, greeting, operatorName, operatorAvatar, accentColor, children, }: ChatProviderProps): import("react/jsx-runtime").JSX.Element;
+export declare function ChatProvider({ serviceUrl, widgetId, position, theme, greeting, operatorName, operatorAvatar, accentColor, children, }: ChatProviderProps): import("react").JSX.Element;
 /**
  * Hook to access chat configuration and service instance.
  */

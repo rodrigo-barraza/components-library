@@ -5,5 +5,5 @@ export interface PaginationComponentProps {
     onPageChange: (page: number) => void;
     limit?: number;
 }
-export default function PaginationComponent({ page, totalPages, totalItems, onPageChange, limit, }: PaginationComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function PaginationComponent({ page, totalPages, totalItems, onPageChange, limit, }: PaginationComponentProps): import("react").JSX.Element | null;
 //# sourceMappingURL=PaginationComponent.d.ts.map

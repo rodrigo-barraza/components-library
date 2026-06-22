@@ -30,5 +30,5 @@ export interface SwitchComponentProps {
  *   • Keyboard: Space/Enter toggles (native behaviour)
  *   • prefers-reduced-motion respected
  */
-export default function SwitchComponent({ checked, onChange, label, disabled, showIcons, className, id, name, labelPlacement, ariaLabel, }: SwitchComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function SwitchComponent({ checked, onChange, label, disabled, showIcons, className, id, name, labelPlacement, ariaLabel, }: SwitchComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=SwitchComponent.d.ts.map

@@ -63,7 +63,7 @@ interface ThemeProviderProps {
     attribute?: string;
     children: ReactNode;
 }
-export declare function ThemeProvider({ storageKey, defaultTheme, themes: initialThemes, attribute, children, }: ThemeProviderProps): import("react/jsx-runtime").JSX.Element;
+export declare function ThemeProvider({ storageKey, defaultTheme, themes: initialThemes, attribute, children, }: ThemeProviderProps): import("react").JSX.Element;
 /**
  * Hook to access theme state and controls.
  */

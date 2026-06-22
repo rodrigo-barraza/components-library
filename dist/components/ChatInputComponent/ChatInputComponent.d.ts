@@ -12,5 +12,5 @@ export interface ChatInputComponentProps {
  * - Disabled during AI generation
  * - Character limit indicator
  */
-export default function ChatInputComponent({ onSend, isTyping }: ChatInputComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatInputComponent({ onSend, isTyping }: ChatInputComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ChatInputComponent.d.ts.map

@@ -19,7 +19,7 @@ export interface DividerComponentProps extends HTMLAttributes<HTMLElement> {
  * @see https://m3.material.io/components/divider/overview
  * @see https://m3.material.io/components/divider/specs
  */
-declare function DividerComponent({ variant, orientation, spacing, decorative, className, style, ...rest }: DividerComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function DividerComponent({ variant, orientation, spacing, decorative, className, style, ...rest }: DividerComponentProps): import("react").JSX.Element;
 declare namespace DividerComponent {
     var Subheader: typeof DividerSubheader;
 }
@@ -35,5 +35,5 @@ export interface DividerSubheaderProps extends HTMLAttributes<HTMLDivElement> {
  * Common in lists, settings panels, and form sections.
  * Always decorative — the label itself provides the semantic meaning.
  */
-declare function DividerSubheader({ label, variant, className, style, ...rest }: DividerSubheaderProps): import("react/jsx-runtime").JSX.Element;
+declare function DividerSubheader({ label, variant, className, style, ...rest }: DividerSubheaderProps): import("react").JSX.Element;
 //# sourceMappingURL=DividerComponent.d.ts.map

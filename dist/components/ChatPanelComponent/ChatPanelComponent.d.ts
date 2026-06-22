@@ -21,5 +21,5 @@ export interface ChatPanelComponentProps {
  * Contains a header (operator info + close), scrollable message list
  * with auto-scroll, typing indicator, and the message input bar.
  */
-export default function ChatPanelComponent({ isOpen, messages, isTyping, operatorName, operatorAvatar, onClose, onSend, }: ChatPanelComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatPanelComponent({ isOpen, messages, isTyping, operatorName, operatorAvatar, onClose, onSend, }: ChatPanelComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ChatPanelComponent.d.ts.map

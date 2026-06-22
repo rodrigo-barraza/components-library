@@ -16,5 +16,5 @@ export interface PageHeaderComponentProps {
  * When used standalone (no context provider), falls back to rendering
  * the classic pageHeader bar with title/subtitle/back inline.
  */
-export default function PageHeaderComponent({ title, subtitle, onBack, centerContent, children, sticky, className, }: PageHeaderComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function PageHeaderComponent({ title, subtitle, onBack, centerContent, children, sticky, className, }: PageHeaderComponentProps): import("react").JSX.Element | null;
 //# sourceMappingURL=PageHeaderComponent.d.ts.map

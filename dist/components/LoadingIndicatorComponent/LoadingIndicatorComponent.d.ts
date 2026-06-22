@@ -33,5 +33,5 @@ export interface LoadingIndicatorComponentProps {
  *   • aria-live="polite" on label for progress updates
  *   • Reduced motion: animation durations extended (not removed) per M3 guidelines
  */
-export default function LoadingIndicatorComponent({ variant, mode, value, buffer, size, trackSize, color, showPercentage, label, ariaLabel, className, id, }: LoadingIndicatorComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function LoadingIndicatorComponent({ variant, mode, value, buffer, size, trackSize, color, showPercentage, label, ariaLabel, className, id, }: LoadingIndicatorComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=LoadingIndicatorComponent.d.ts.map

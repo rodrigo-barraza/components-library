@@ -13,6 +13,6 @@ export interface ThemeToggleButtonComponentProps {
  *
  * Uses IconButtonComponent internally and gets theme state from ThemeProvider.
  */
-export default function ThemeToggleButtonComponent({ iconMap, labelMap, size, className, ...rest }: ThemeToggleButtonComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ThemeToggleButtonComponent({ iconMap, labelMap, size, className, ...rest }: ThemeToggleButtonComponentProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=ThemeToggleButtonComponent.d.ts.map

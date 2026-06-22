@@ -1,3 +1,4 @@
+import React from "react";
 export interface SliderComponentProps<T extends number | number[] = number | number[]> {
     value: T;
     min?: number;
@@ -37,5 +38,5 @@ export interface SliderComponentProps<T extends number | number[] = number | num
  *   • Centered:              Origin at center, fills left/right from midpoint
  *   • Range:                 Two handles for selecting a value range
  */
-export default function SliderComponent<T extends number | number[]>({ value, min, max, step, onChange, disabled, centered, showValue, discrete, label, formatValue, className, id, }: SliderComponentProps<T>): import("react/jsx-runtime").JSX.Element;
+export default function SliderComponent<T extends number | number[]>({ value, min, max, step, onChange, disabled, centered, showValue, discrete, label, formatValue, className, id, }: SliderComponentProps<T>): React.JSX.Element;
 //# sourceMappingURL=SliderComponent.d.ts.map

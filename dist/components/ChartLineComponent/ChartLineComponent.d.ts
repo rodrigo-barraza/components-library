@@ -1,3 +1,4 @@
+import React from "react";
 export interface ChartLineComponentProps {
     data: number[];
     color?: string;
@@ -19,5 +20,5 @@ export interface ChartLineComponentProps {
  * On hover, a vertical crosshair and floating tooltip display the
  * Y-axis value at the nearest data point.
  */
-export default function ChartLineComponent({ data, color, maxValue, height, historyMax, showGrid, formatValue, className, }: ChartLineComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ChartLineComponent({ data, color, maxValue, height, historyMax, showGrid, formatValue, className, }: ChartLineComponentProps): React.JSX.Element;
 //# sourceMappingURL=ChartLineComponent.d.ts.map

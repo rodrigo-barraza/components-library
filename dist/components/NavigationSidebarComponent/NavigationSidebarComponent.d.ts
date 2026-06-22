@@ -79,6 +79,6 @@ mobileOpen: externalMobileOpen, // boolean — external control for drawer visib
 onMobileClose: externalOnMobileClose, // function — external close handler
 onMobileOpen: externalOnMobileOpen, // function — external open handler
 showMobileHamburger, // boolean — render built-in floating hamburger FAB on mobile
-mobileBreakpoint, }: NavigationSidebarProps): import("react/jsx-runtime").JSX.Element;
+mobileBreakpoint, }: NavigationSidebarProps): React.JSX.Element;
 export {};
 //# sourceMappingURL=NavigationSidebarComponent.d.ts.map

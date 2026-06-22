@@ -10,5 +10,5 @@ export interface ChatComponentProps {
  *
  * Must be used inside a `<ChatProvider>`.
  */
-export default function ChatComponent({ className }: ChatComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatComponent({ className }: ChatComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ChatComponent.d.ts.map

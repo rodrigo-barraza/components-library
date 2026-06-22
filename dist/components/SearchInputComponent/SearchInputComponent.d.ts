@@ -21,16 +21,16 @@ interface SuggestionProps {
     value?: string;
     index?: number;
 }
-declare function Suggestion({ icon, text, trailing, onClick, value, index }: SuggestionProps): import("react/jsx-runtime").JSX.Element;
+declare function Suggestion({ icon, text, trailing, onClick, value, index }: SuggestionProps): import("react").JSX.Element;
 interface SuggestionGroupProps {
     label?: string;
     children?: React.ReactNode;
 }
-declare function SuggestionGroup({ label, children }: SuggestionGroupProps): import("react/jsx-runtime").JSX.Element;
+declare function SuggestionGroup({ label, children }: SuggestionGroupProps): import("react").JSX.Element;
 interface SuggestionsEmptyProps {
     message?: string | React.ReactNode;
 }
-declare function SuggestionsEmpty({ message }: SuggestionsEmptyProps): import("react/jsx-runtime").JSX.Element;
+declare function SuggestionsEmpty({ message }: SuggestionsEmptyProps): import("react").JSX.Element;
 declare const SearchInputWithSubcomponents: import("react").ForwardRefExoticComponent<SearchInputProps & import("react").RefAttributes<HTMLInputElement>> & {
     Suggestion: typeof Suggestion;
     SuggestionGroup: typeof SuggestionGroup;

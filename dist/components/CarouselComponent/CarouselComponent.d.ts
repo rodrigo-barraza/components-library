@@ -26,7 +26,7 @@ export interface CarouselComponentProps {
  *   CarouselComponent.ItemMedia  — full-bleed image/video slot
  *   CarouselComponent.ItemLabel  — overlaid label with gradient scrim
  */
-declare function CarouselComponent({ layout, showArrows, showIndicators, peekEdge, autoPlay, loop, gap, className, ariaLabel, children, }: CarouselComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function CarouselComponent({ layout, showArrows, showIndicators, peekEdge, autoPlay, loop, gap, className, ariaLabel, children, }: CarouselComponentProps): React.JSX.Element;
 declare namespace CarouselComponent {
     var Item: typeof CarouselItem;
     var ItemMedia: typeof CarouselItemMedia;
@@ -45,7 +45,7 @@ export interface CarouselItemProps extends React.HTMLAttributes<HTMLDivElement> 
  * M3 spec: rounded-corner container (28px shape-large) with
  * optional content masking and state layer for interaction.
  */
-declare function CarouselItem({ width, height, aspectRatio, size, onClick, className, children, ...rest }: CarouselItemProps): import("react/jsx-runtime").JSX.Element;
+declare function CarouselItem({ width, height, aspectRatio, size, onClick, className, children, ...rest }: CarouselItemProps): React.JSX.Element;
 export interface CarouselItemMediaProps {
     src?: string;
     alt?: string;
@@ -55,7 +55,7 @@ export interface CarouselItemMediaProps {
 /**
  * CarouselComponent.ItemMedia — full-bleed image/video slot.
  */
-declare function CarouselItemMedia({ src, alt, className, children }: CarouselItemMediaProps): import("react/jsx-runtime").JSX.Element;
+declare function CarouselItemMedia({ src, alt, className, children }: CarouselItemMediaProps): React.JSX.Element;
 export interface CarouselItemLabelProps {
     title?: React.ReactNode;
     subtitle?: React.ReactNode;
@@ -68,5 +68,5 @@ export interface CarouselItemLabelProps {
  * M3 spec: optional label text with supporting text, positioned
  * at the bottom of the carousel item over a gradient scrim.
  */
-declare function CarouselItemLabel({ title, subtitle, className, children }: CarouselItemLabelProps): import("react/jsx-runtime").JSX.Element;
+declare function CarouselItemLabel({ title, subtitle, className, children }: CarouselItemLabelProps): React.JSX.Element;
 //# sourceMappingURL=CarouselComponent.d.ts.map

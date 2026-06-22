@@ -45,7 +45,7 @@ export interface TopAppBarComponentProps extends Omit<React.HTMLAttributes<HTMLE
     headingLevel?: 1 | 2 | 3 | 4 | 5 | 6 | number;
     ariaLabel?: string;
 }
-declare function TopAppBarComponent({ variant, title, navigationIcon, onNavigationClick, navigationAriaLabel, position, scrollTargetRef, scrollThreshold, showScrollIndicator, headingLevel, ariaLabel, className, style, children, ...rest }: TopAppBarComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function TopAppBarComponent({ variant, title, navigationIcon, onNavigationClick, navigationAriaLabel, position, scrollTargetRef, scrollThreshold, showScrollIndicator, headingLevel, ariaLabel, className, style, children, ...rest }: TopAppBarComponentProps): import("react").JSX.Element;
 declare namespace TopAppBarComponent {
     var Action: import("react").ForwardRefExoticComponent<TopAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
 }

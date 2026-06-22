@@ -9,5 +9,5 @@ export interface EmptyStateComponentProps {
 /**
  * EmptyStateComponent — A centered "no data" placeholder with icon, title, and subtitle.
  */
-export default function EmptyStateComponent({ icon, title, subtitle, children, className, }: EmptyStateComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function EmptyStateComponent({ icon, title, subtitle, children, className, }: EmptyStateComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=EmptyStateComponent.d.ts.map

@@ -23,7 +23,7 @@ interface ComponentsProviderProps {
     userMenu?: ReactNode;
     children: ReactNode;
 }
-export declare function ComponentsProvider({ sound, userMenu, children }: ComponentsProviderProps): import("react/jsx-runtime").JSX.Element;
+export declare function ComponentsProvider({ sound, userMenu, children }: ComponentsProviderProps): import("react").JSX.Element;
 /**
  * Hook to access library-wide configuration.
  */

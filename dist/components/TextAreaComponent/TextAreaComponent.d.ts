@@ -8,5 +8,5 @@ export interface TextAreaComponentProps extends Omit<React.TextareaHTMLAttribute
     maxRows?: number;
     autoResize?: boolean;
 }
-export default function TextAreaComponent({ value, onChange, placeholder, minRows, maxRows, autoResize, disabled, readOnly, className, id, ...rest }: TextAreaComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function TextAreaComponent({ value, onChange, placeholder, minRows, maxRows, autoResize, disabled, readOnly, className, id, ...rest }: TextAreaComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=TextAreaComponent.d.ts.map

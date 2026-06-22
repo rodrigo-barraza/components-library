@@ -16,5 +16,5 @@ export interface CollapsibleBlockComponentProps {
  * Wraps any content behind a clickable header with an icon, label,
  * and optional badge. Supports both controlled and uncontrolled modes.
  */
-export default function CollapsibleBlockComponent({ icon, label, badge, defaultCollapsed, open: controlledOpen, onToggle, headerActions, className, children, }: CollapsibleBlockComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function CollapsibleBlockComponent({ icon, label, badge, defaultCollapsed, open: controlledOpen, onToggle, headerActions, className, children, }: CollapsibleBlockComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=CollapsibleBlockComponent.d.ts.map

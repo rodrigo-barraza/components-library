@@ -132,5 +132,5 @@ export interface DiscordChatComponentProps {
     serverBannerUrl?: string;
     servers?: DiscordServer[];
 }
-export default function DiscordChatComponent({ messageCount, joinMode, inviteUrl, onJoinHoverChange, channelIds, channelsUrl, streamUrl, membersUrl, tenorOembedUrl, reactUrl, emojisUrl, serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers, }: DiscordChatComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function DiscordChatComponent({ messageCount, joinMode, inviteUrl, onJoinHoverChange, channelIds, channelsUrl, streamUrl, membersUrl, tenorOembedUrl, reactUrl, emojisUrl, serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers, }: DiscordChatComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=DiscordChatComponent.d.ts.map

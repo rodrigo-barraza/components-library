@@ -9,7 +9,7 @@ export interface FormGroupComponentProps extends ComponentPropsWithoutRef<"div">
 /**
  * FormGroupComponent — A labeled form field wrapper.
  */
-export default function FormGroupComponent({ label, hint, readOnly, readOnlyContent, children, className, style, }: FormGroupComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function FormGroupComponent({ label, hint, readOnly, readOnlyContent, children, className, style, }: FormGroupComponentProps): import("react").JSX.Element;
 /**
  * Re-export the inputField class for raw <input> elements that need
  * consistent styling without a full FormGroupComponent wrapper.

@@ -102,11 +102,7 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
         "aria-valuemax": 100,
         ...(isIndeterminate ? {} : { "aria-valuenow": value }),
     };
-    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsx("div", { className: linearClasses, ...ariaProps, children: isIndeterminate ? (
-                /* Indeterminate: two sliding bars */
-                _jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar1']}` }), _jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar2']}` })] })) : (
-                /* Determinate: single bar + optional buffer + stop indicator */
-                _jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles['label'], "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
+    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsx("div", { className: linearClasses, ...ariaProps, children: isIndeterminate ? (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar1']}` }), _jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar2']}` })] })) : (_jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles['label'], "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
 }
 /* ═══════════════════════════════════════════════════════════ */
 /*  UTILITIES                                                 */

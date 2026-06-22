@@ -39,6 +39,6 @@ export interface TabBarComponentProps {
     glowingTabs?: string[];
     ariaLabel?: string;
 }
-export default function TabBarComponent({ tabs, activeTab, onChange, variant, layout, scrollable, className, onTabHover, glowingTabs, ariaLabel, }: TabBarComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function TabBarComponent({ tabs, activeTab, onChange, variant, layout, scrollable, className, onTabHover, glowingTabs, ariaLabel, }: TabBarComponentProps): import("react").JSX.Element;
 export { styles as tabBarStyles };
 //# sourceMappingURL=TabBarComponent.d.ts.map

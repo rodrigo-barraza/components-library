@@ -13,5 +13,5 @@ export interface ChatLauncherComponentProps {
  * close icon when the panel is open. Includes an unread badge with
  * pulse animation.
  */
-export default function ChatLauncherComponent({ isOpen, unreadCount, onClick, }: ChatLauncherComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatLauncherComponent({ isOpen, unreadCount, onClick, }: ChatLauncherComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ChatLauncherComponent.d.ts.map

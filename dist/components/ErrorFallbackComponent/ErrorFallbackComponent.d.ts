@@ -19,5 +19,5 @@ export interface ErrorFallbackComponentProps {
  * }
  * ```
  */
-export default function ErrorFallbackComponent({ error, reset, title, logLabel, icon, }: ErrorFallbackComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ErrorFallbackComponent({ error, reset, title, logLabel, icon, }: ErrorFallbackComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ErrorFallbackComponent.d.ts.map

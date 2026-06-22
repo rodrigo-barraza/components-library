@@ -16,5 +16,5 @@ export interface ModalComponentProps {
  * and click-outside dismissal, React Portal mounting, body scroll lock,
  * focus trapping with focus restoration, and four size presets.
  */
-export default function ModalComponent({ title, onClose, footer, size, variant, className, id, children, }: ModalComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ModalComponent({ title, onClose, footer, size, variant, className, id, children, }: ModalComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ModalComponent.d.ts.map

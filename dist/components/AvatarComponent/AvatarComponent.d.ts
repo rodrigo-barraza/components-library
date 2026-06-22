@@ -14,7 +14,7 @@ export interface AvatarComponentProps extends ComponentPropsWithoutRef<"div"> {
  * Compound sub-component `AvatarComponent.Group` stacks avatars with
  * overlapping borders and a "+N" overflow indicator.
  */
-declare function AvatarComponent({ src, alt, name, icon: Icon, size, status, className, style, ...rest }: AvatarComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function AvatarComponent({ src, alt, name, icon: Icon, size, status, className, style, ...rest }: AvatarComponentProps): import("react").JSX.Element;
 declare namespace AvatarComponent {
     var Group: typeof AvatarGroup;
 }
@@ -28,5 +28,5 @@ export interface AvatarGroupProps {
 /**
  * AvatarComponent.Group — stacks avatars with overlapping layout.
  */
-declare function AvatarGroup({ max, size, className, children }: AvatarGroupProps): import("react/jsx-runtime").JSX.Element;
+declare function AvatarGroup({ max, size, className, children }: AvatarGroupProps): import("react").JSX.Element;
 //# sourceMappingURL=AvatarComponent.d.ts.map

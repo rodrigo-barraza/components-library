@@ -13,5 +13,5 @@ export interface ToolCardComponentProps {
     children?: React.ReactNode;
     className?: string;
 }
-export default function ToolCardComponent({ name, description, emoji, domain, onClick, children, className, }: ToolCardComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ToolCardComponent({ name, description, emoji, domain, onClick, children, className, }: ToolCardComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ToolCardComponent.d.ts.map

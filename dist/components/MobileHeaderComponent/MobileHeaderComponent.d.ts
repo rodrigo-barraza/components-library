@@ -13,6 +13,6 @@ interface MobileHeaderProps {
     children?: React.ReactNode;
     className?: string;
 }
-export default function MobileHeaderComponent({ brandLabel, brandIcon, onMenuClick, children, className, }: MobileHeaderProps): import("react/jsx-runtime").JSX.Element;
+export default function MobileHeaderComponent({ brandLabel, brandIcon, onMenuClick, children, className, }: MobileHeaderProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=MobileHeaderComponent.d.ts.map

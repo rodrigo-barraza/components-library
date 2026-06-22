@@ -51,7 +51,7 @@ interface CardActionAreaProps extends React.HTMLAttributes<HTMLElement> {
  *   CardComponent.Footer      — bottom bar (e.g. action buttons)
  *   CardComponent.ActionArea  — makes the card (or a region) clickable with ripple
  */
-declare function CardComponent({ variant, interactive, draggable: isDraggable, fullWidth, className, style, children, ...rest }: CardComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function CardComponent({ variant, interactive, draggable: isDraggable, fullWidth, className, style, children, ...rest }: CardComponentProps): import("react").JSX.Element;
 declare namespace CardComponent {
     var Header: typeof CardHeader;
     var Media: typeof CardMedia;
@@ -60,11 +60,11 @@ declare namespace CardComponent {
     var ActionArea: import("react").ForwardRefExoticComponent<CardActionAreaProps & import("react").RefAttributes<HTMLAnchorElement | HTMLButtonElement>>;
 }
 export default CardComponent;
-declare function CardHeader({ icon: Icon, title, subtitle, children, className }: CardHeaderProps): import("react/jsx-runtime").JSX.Element;
+declare function CardHeader({ icon: Icon, title, subtitle, children, className }: CardHeaderProps): import("react").JSX.Element;
 /**
  * CardMedia — M3 media slot for full-bleed images, video, or illustrations.
  */
-declare function CardMedia({ src, alt, height, aspectRatio, position, className, children, }: CardMediaProps): import("react/jsx-runtime").JSX.Element;
-declare function CardBody({ children, className }: CardBodyProps): import("react/jsx-runtime").JSX.Element;
-declare function CardFooter({ children, className }: CardFooterProps): import("react/jsx-runtime").JSX.Element;
+declare function CardMedia({ src, alt, height, aspectRatio, position, className, children, }: CardMediaProps): import("react").JSX.Element;
+declare function CardBody({ children, className }: CardBodyProps): import("react").JSX.Element;
+declare function CardFooter({ children, className }: CardFooterProps): import("react").JSX.Element;
 //# sourceMappingURL=CardComponent.d.ts.map

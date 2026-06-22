@@ -18,5 +18,5 @@ export interface MultiSelectComponentProps {
 /**
  * @deprecated Use SelectComponent with the `multiple` prop instead.
  */
-export default function MultiSelectComponent(props: MultiSelectComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function MultiSelectComponent(props: MultiSelectComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=MultiSelectComponent.d.ts.map

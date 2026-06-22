@@ -16,5 +16,5 @@ export interface BreadcrumbComponentProps extends ComponentPropsWithoutRef<"nav"
  * a chevron divider. The last item is styled as the current page
  * (non-interactive, bold). Supports icon prefixes per segment.
  */
-export default function BreadcrumbComponent({ items, separator, className, ...rest }: BreadcrumbComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function BreadcrumbComponent({ items, separator, className, ...rest }: BreadcrumbComponentProps): import("react").JSX.Element | null;
 //# sourceMappingURL=BreadcrumbComponent.d.ts.map

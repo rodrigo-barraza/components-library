@@ -26,6 +26,6 @@ export interface SnackbarComponentProps {
     className?: string;
     id?: string;
 }
-export default function SnackbarComponent({ open, message, actionLabel, showClose, onAction, onDismiss, className, id, }: SnackbarComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function SnackbarComponent({ open, message, actionLabel, showClose, onAction, onDismiss, className, id, }: SnackbarComponentProps): import("react").JSX.Element | null;
 export {};
 //# sourceMappingURL=SnackbarComponent.d.ts.map

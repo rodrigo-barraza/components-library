@@ -15,5 +15,5 @@ export interface SegmentedControlComponentProps {
     className?: string;
     id?: string;
 }
-export default function SegmentedControlComponent({ value, onChange, segments, fullWidth, compact, showCheck, className, id, }: SegmentedControlComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function SegmentedControlComponent({ value, onChange, segments, fullWidth, compact, showCheck, className, id, }: SegmentedControlComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=SegmentedControlComponent.d.ts.map

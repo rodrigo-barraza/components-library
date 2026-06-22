@@ -6,5 +6,5 @@ export interface LoadingStateComponentProps {
 /**
  * LoadingStateComponent — Centered loading indicator with a pulsing dot and message.
  */
-export default function LoadingStateComponent({ message, className }: LoadingStateComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function LoadingStateComponent({ message, className }: LoadingStateComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=LoadingStateComponent.d.ts.map

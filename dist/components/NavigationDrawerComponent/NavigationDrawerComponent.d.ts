@@ -28,7 +28,7 @@ export interface NavigationDrawerComponentProps extends HTMLAttributes<HTMLEleme
  *
  * @see https://m3.material.io/components/navigation-drawer/overview
  */
-declare function NavigationDrawerComponent({ variant, anchor, open, onClose, headline, ariaLabel, className, style, children, ...rest }: NavigationDrawerComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function NavigationDrawerComponent({ variant, anchor, open, onClose, headline, ariaLabel, className, style, children, ...rest }: NavigationDrawerComponentProps): import("react").JSX.Element;
 declare namespace NavigationDrawerComponent {
     var Item: typeof DrawerItem;
     var SectionHeader: typeof DrawerSectionHeader;
@@ -55,7 +55,7 @@ import { ElementType, MouseEvent } from "react";
  * M3 spec: 56dp height, full-width rounded-pill shape,
  *          leading icon, label, optional trailing badge.
  */
-declare function DrawerItem({ icon: Icon, label, badge, active, disabled, href, onClick, LinkComponent, className, children, ...rest }: DrawerItemProps): import("react/jsx-runtime").JSX.Element;
+declare function DrawerItem({ icon: Icon, label, badge, active, disabled, href, onClick, LinkComponent, className, children, ...rest }: DrawerItemProps): import("react").JSX.Element;
 export interface DrawerSectionHeaderProps {
     className?: string;
     children?: ReactNode;
@@ -65,14 +65,14 @@ export interface DrawerSectionHeaderProps {
  *
  * M3 spec: title-small typography, 56dp total height with padding.
  */
-declare function DrawerSectionHeader({ className, children }: DrawerSectionHeaderProps): import("react/jsx-runtime").JSX.Element;
+declare function DrawerSectionHeader({ className, children }: DrawerSectionHeaderProps): import("react").JSX.Element;
 export interface DrawerDividerProps {
     className?: string;
 }
 /**
  * DrawerDivider — horizontal visual separator between sections.
  */
-declare function DrawerDivider({ className }: DrawerDividerProps): import("react/jsx-runtime").JSX.Element;
+declare function DrawerDivider({ className }: DrawerDividerProps): import("react").JSX.Element;
 export interface DrawerFooterProps {
     className?: string;
     children?: ReactNode;
@@ -80,5 +80,5 @@ export interface DrawerFooterProps {
 /**
  * DrawerFooter — bottom-pinned slot for actions or secondary content.
  */
-declare function DrawerFooter({ className, children }: DrawerFooterProps): import("react/jsx-runtime").JSX.Element;
+declare function DrawerFooter({ className, children }: DrawerFooterProps): import("react").JSX.Element;
 //# sourceMappingURL=NavigationDrawerComponent.d.ts.map

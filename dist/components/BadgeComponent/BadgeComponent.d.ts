@@ -93,6 +93,6 @@ export type BadgeProps = ({
     highlightNew?: boolean;
     className?: string;
 } & HTMLSpanProps);
-export default function BadgeComponent(props: BadgeProps): import("react/jsx-runtime").JSX.Element | null;
+export default function BadgeComponent(props: BadgeProps): React.JSX.Element | null;
 export {};
 //# sourceMappingURL=BadgeComponent.d.ts.map

@@ -28,9 +28,9 @@ export interface RadioComponentProps<T extends string | number | boolean = strin
  *   arrow-key navigation per WAI-ARIA Radio Group pattern.
  *   Tab moves focus into/out of the group; arrows cycle within.
  */
-declare function RadioComponent<T extends string | number | boolean = string | number | boolean>({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: RadioComponentProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function RadioComponent<T extends string | number | boolean = string | number | boolean>({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: RadioComponentProps<T>): import("react").JSX.Element;
 declare namespace RadioComponent {
-    var Group: ({ legend, orientation, className, children, }: RadioGroupComponentProps) => import("react/jsx-runtime").JSX.Element;
+    var Group: ({ legend, orientation, className, children, }: RadioGroupComponentProps) => import("react").JSX.Element;
 }
 export default RadioComponent;
 export interface RadioGroupComponentProps {

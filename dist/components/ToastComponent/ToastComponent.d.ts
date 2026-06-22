@@ -21,5 +21,5 @@ export interface ToastComponentProps {
 /**
  * ToastComponent — renders a stacked toast container.
  */
-export default function ToastComponent({ toasts, onRemove }: ToastComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function ToastComponent({ toasts, onRemove }: ToastComponentProps): import("react").JSX.Element | null;
 //# sourceMappingURL=ToastComponent.d.ts.map

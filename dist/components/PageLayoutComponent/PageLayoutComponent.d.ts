@@ -46,6 +46,6 @@ export interface PageLayoutComponentProps {
  * Mobile navigation is fully handled by NavigationSidebarComponent's built-in
  * floating hamburger FAB and slide-over drawer — no separate mobile header needed.
  */
-export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileBreakpoint, sidebarProps, headerProps, title, onBack, }: PageLayoutComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function PageLayoutComponent({ children, brandIcon, brandLabel, items, sections, activeItem, storageKey, LinkComponent, mainStyle, mainClassName, theme, themes, setTheme, bottomActions, mobileBreakpoint, sidebarProps, headerProps, title, onBack, }: PageLayoutComponentProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=PageLayoutComponent.d.ts.map

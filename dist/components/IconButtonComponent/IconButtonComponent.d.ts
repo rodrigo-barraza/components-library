@@ -10,5 +10,5 @@ export interface IconButtonComponentProps extends ComponentPropsWithoutRef<"butt
 /**
  * IconButtonComponent — A small icon-only action button.
  */
-export default function IconButtonComponent({ icon, onClick, tooltip, variant, active, hoverReveal, disabled, className, ...rest }: IconButtonComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function IconButtonComponent({ icon, onClick, tooltip, variant, active, hoverReveal, disabled, className, ...rest }: IconButtonComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=IconButtonComponent.d.ts.map

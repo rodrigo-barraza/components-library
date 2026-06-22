@@ -15,5 +15,5 @@ export interface ProgressBarComponentProps extends ComponentPropsWithoutRef<"div
  *   • **Determinate** — pass `value` (0–100) to show a definite progress bar
  *   • **Indeterminate** — omit `value` to show the M3 infinite sliding animation
  */
-export default function ProgressBarComponent({ value, variant, size, label, showValue, animated, striped, className, ...rest }: ProgressBarComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ProgressBarComponent({ value, variant, size, label, showValue, animated, striped, className, ...rest }: ProgressBarComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ProgressBarComponent.d.ts.map

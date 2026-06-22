@@ -8,5 +8,5 @@ export interface CopyButtonComponentProps {
 /**
  * CopyButtonComponent — Copy-to-clipboard button with a "copied" confirmation state.
  */
-export default function CopyButtonComponent({ text, size, showLabel, className, tooltip, }: CopyButtonComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function CopyButtonComponent({ text, size, showLabel, className, tooltip, }: CopyButtonComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=CopyButtonComponent.d.ts.map

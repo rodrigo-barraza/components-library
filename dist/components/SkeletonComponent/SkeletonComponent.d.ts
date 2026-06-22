@@ -17,7 +17,7 @@ export interface SkeletonComponentProps {
     className?: string;
     id?: string;
 }
-export default function SkeletonComponent({ variant, width, height, lines, animate, className, id, }: SkeletonComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function SkeletonComponent({ variant, width, height, lines, animate, className, id, }: SkeletonComponentProps): import("react").JSX.Element;
 /**
  * SkeletonGroup — Compose multiple skeleton shapes inside a container.
  */
@@ -27,5 +27,5 @@ export interface SkeletonGroupProps {
     className?: string;
     children?: React.ReactNode;
 }
-export declare function SkeletonGroup({ gap, direction, className, children, }: SkeletonGroupProps): import("react/jsx-runtime").JSX.Element;
+export declare function SkeletonGroup({ gap, direction, className, children, }: SkeletonGroupProps): import("react").JSX.Element;
 //# sourceMappingURL=SkeletonComponent.d.ts.map

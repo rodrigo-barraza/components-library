@@ -10,5 +10,5 @@ export interface ChatMessageComponentProps {
 /**
  * ChatMessageComponent — Individual message bubble.
  */
-export default function ChatMessageComponent({ message, isFirst, previousRole, }: ChatMessageComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function ChatMessageComponent({ message, isFirst, previousRole, }: ChatMessageComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=ChatMessageComponent.d.ts.map

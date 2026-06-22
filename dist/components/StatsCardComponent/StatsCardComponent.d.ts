@@ -20,5 +20,5 @@ export interface StatsCardComponentProps {
     onMouseEnter?: (event: React.MouseEvent<HTMLDivElement>) => void;
     onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
-export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant, color, loading, glow, className, onMouseEnter, onMouseLeave, }: StatsCardComponentProps): import("react/jsx-runtime").JSX.Element;
+export default function StatsCardComponent({ label, value, subtitle, icon: Icon, variant, color, loading, glow, className, onMouseEnter, onMouseLeave, }: StatsCardComponentProps): import("react").JSX.Element;
 //# sourceMappingURL=StatsCardComponent.d.ts.map

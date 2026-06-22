@@ -27,5 +27,5 @@ export interface DialogComponentProps {
  *
  * Anatomy: [scrim] → [container] → [icon?] → [headline?] → [body] → [actions]
  */
-export default function DialogComponent({ open, onClose, icon, headline, onConfirm, confirmLabel, cancelLabel, hideCancel, confirmVariant, confirmDisabled, fullscreen, dismissible, className, id, children, }: DialogComponentProps): import("react/jsx-runtime").JSX.Element | null;
+export default function DialogComponent({ open, onClose, icon, headline, onConfirm, confirmLabel, cancelLabel, hideCancel, confirmVariant, confirmDisabled, fullscreen, dismissible, className, id, children, }: DialogComponentProps): import("react").JSX.Element | null;
 //# sourceMappingURL=DialogComponent.d.ts.map

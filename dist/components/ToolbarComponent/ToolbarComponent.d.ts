@@ -28,7 +28,7 @@ export interface ToolbarComponentProps extends React.HTMLAttributes<HTMLDivEleme
     elevated?: boolean;
     ariaLabel?: string;
 }
-declare function ToolbarComponent({ variant, orientation, divider, sticky, elevated, ariaLabel, className, style, children, ...rest }: ToolbarComponentProps): import("react/jsx-runtime").JSX.Element;
+declare function ToolbarComponent({ variant, orientation, divider, sticky, elevated, ariaLabel, className, style, children, ...rest }: ToolbarComponentProps): import("react").JSX.Element;
 declare namespace ToolbarComponent {
     var Group: typeof ToolbarGroup;
     var Item: import("react").ForwardRefExoticComponent<import("react").ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -57,7 +57,7 @@ interface ToolbarGroupProps {
     className?: string;
     children?: React.ReactNode;
 }
-declare function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupProps): import("react/jsx-runtime").JSX.Element;
+declare function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupProps): import("react").JSX.Element;
 /**
  * ToolbarSeparator — visual divider between toolbar groups.
  *
@@ -66,7 +66,7 @@ declare function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupPr
 interface ToolbarSeparatorProps {
     className?: string;
 }
-declare function ToolbarSeparator({ className }: ToolbarSeparatorProps): import("react/jsx-runtime").JSX.Element;
+declare function ToolbarSeparator({ className }: ToolbarSeparatorProps): import("react").JSX.Element;
 /**
  * ToolbarTitle — text label displayed within the toolbar.
  *
@@ -76,12 +76,12 @@ interface ToolbarTitleProps {
     className?: string;
     children?: React.ReactNode;
 }
-declare function ToolbarTitle({ className, children }: ToolbarTitleProps): import("react/jsx-runtime").JSX.Element;
+declare function ToolbarTitle({ className, children }: ToolbarTitleProps): import("react").JSX.Element;
 /**
  * ToolbarSpacer — flex spacer to distribute space between groups.
  *
  * Pushes trailing items to the end (or distributes space evenly
  * when placed between groups).
  */
-declare function ToolbarSpacer(): import("react/jsx-runtime").JSX.Element;
+declare function ToolbarSpacer(): import("react").JSX.Element;
 //# sourceMappingURL=ToolbarComponent.d.ts.map
