@@ -26,7 +26,7 @@
     "test": "vitest run --passWithNoTests",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",
-    "prepare": "[ -d node_modules/typescript ] && tsc || true && git config core.hooksPath .githooks || true",
+    "prepare-local": "[ -d node_modules/typescript ] && tsc || true && git config core.hooksPath .githooks || true",
     "prepublishOnly": "npm run build && vitest run"
   },
   "peerDependencies": {
