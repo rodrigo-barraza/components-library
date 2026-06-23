@@ -5,8 +5,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 /**
  * useClipboard — copy-to-clipboard with success feedback timeout.
  *
- * Used across CopyButtonComponent and any "copy to clipboard" interaction.
- * Returns a stable copy function and a `copied` boolean that auto-resets.
+ * Uses the modern Clipboard API with a legacy execCommand fallback
+ * for insecure contexts (plain HTTP on non-localhost origins).
  */
 
 export interface UseClipboardResult {
@@ -14,11 +14,33 @@ export interface UseClipboardResult {
   copied: boolean;
 }
 
+function copyViaLegacyExecCommand(text: string): boolean {
+  const textAreaElement = document.createElement("textarea");
+  textAreaElement.value = text;
+  textAreaElement.setAttribute("readonly", "");
+  textAreaElement.style.position = "fixed";
+  textAreaElement.style.left = "-9999px";
+  textAreaElement.style.opacity = "0";
+  document.body.appendChild(textAreaElement);
+
+  textAreaElement.select();
+  textAreaElement.setSelectionRange(0, text.length);
+
+  let isSuccessful = false;
+  try {
+    isSuccessful = document.execCommand("copy");
+  } catch {
+    isSuccessful = false;
+  }
+
+  document.body.removeChild(textAreaElement);
+  return isSuccessful;
+}
+
 export default function useClipboard(resetMs = 2000): UseClipboardResult {
   const [copied, setCopied] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
@@ -27,16 +49,25 @@ export default function useClipboard(resetMs = 2000): UseClipboardResult {
 
   const copy = useCallback(
     async (text: string): Promise<boolean> => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setCopied(false), resetMs);
-        return true;
-      } catch {
-        setCopied(false);
-        return false;
+      let isSuccessful = false;
+
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          isSuccessful = true;
+        } catch {
+          isSuccessful = copyViaLegacyExecCommand(text);
+        }
+      } else {
+        isSuccessful = copyViaLegacyExecCommand(text);
       }
+
+      setCopied(isSuccessful);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (isSuccessful) {
+        timerRef.current = setTimeout(() => setCopied(false), resetMs);
+      }
+      return isSuccessful;
     },
     [resetMs],
   );

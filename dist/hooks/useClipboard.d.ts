@@ -1,8 +1,8 @@
 /**
  * useClipboard — copy-to-clipboard with success feedback timeout.
  *
- * Used across CopyButtonComponent and any "copy to clipboard" interaction.
- * Returns a stable copy function and a `copied` boolean that auto-resets.
+ * Uses the modern Clipboard API with a legacy execCommand fallback
+ * for insecure contexts (plain HTTP on non-localhost origins).
  */
 export interface UseClipboardResult {
     copy: (text: string) => Promise<boolean>;
