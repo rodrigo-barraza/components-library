@@ -74,7 +74,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@rodrigo-barraza/utilities-library": "file:../utilities-library"
+    "@rodrigo-barraza/utilities-library": "github:rodrigo-barraza/utilities-library"
   },
   "packageManager": "pnpm@11.8.0"
 }
