@@ -2,24 +2,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 export const THEME_CATALOG = {
-    dark: {
-        label: "Dark",
-        icon: "Moon",
-        backgroundBase: "#0a0a0f",
-        backgroundSurface: "#13141c",
-        backgroundElevated: "#1a1b26",
-        primary: "#6366f1",
-        secondary: "#a78bfa",
-        tertiary: "#38bdf8",
-        textPrimary: "#f8f8f8",
-        textSecondary: "#8e95ae",
-        textMuted: "#565c74",
-        borderColor: "#ffffff",
-        success: "#10b981",
-        danger: "#ef4444",
-        warning: "#f59e0b",
-        info: "#3b82f6",
-    },
     light: {
         label: "Daylight",
         icon: "Sun",
@@ -182,24 +164,6 @@ export const THEME_CATALOG = {
         warning: "#a0a0a0",
         info: "#bcbcbc",
     },
-    midnight: {
-        label: "Midnight",
-        icon: "MoonStar",
-        backgroundBase: "#000000",
-        backgroundSurface: "#0a0a0a",
-        backgroundElevated: "#141414",
-        primary: "#8b8bff",
-        secondary: "#c4b5fd",
-        tertiary: "#60a5fa",
-        textPrimary: "#e4e4e8",
-        textSecondary: "#8c8c96",
-        textMuted: "#484850",
-        borderColor: "#ffffff",
-        success: "#34d399",
-        danger: "#f87171",
-        warning: "#fbbf24",
-        info: "#60a5fa",
-    },
     regal: {
         label: "Regal",
         icon: "Crown",
@@ -237,9 +201,9 @@ export const THEME_CATALOG = {
         info: "#3b82f6",
     },
 };
-const THEMES_DEFAULT = ["dark", "light", "twilight", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal"];
+const THEMES_DEFAULT = ["twilight", "light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "regal"];
 const ThemeContext = createContext({
-    theme: "dark",
+    theme: "twilight",
     themes: THEMES_DEFAULT,
     mounted: false,
     toggleTheme: () => { },
@@ -248,7 +212,7 @@ const ThemeContext = createContext({
 });
 /** Custom themes use a `custom-` prefix — accept them without strict list membership */
 const isCustomTheme = (name) => name.startsWith("custom-");
-export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "dark", themes: initialThemes = THEMES_DEFAULT, attribute = "data-theme", children, }) {
+export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "twilight", themes: initialThemes = THEMES_DEFAULT, attribute = "data-theme", children, }) {
     // Always start with defaultTheme to match SSR — avoids hydration mismatch
     const [theme, setThemeState] = useState(defaultTheme);
     const [mounted, setMounted] = useState(false);

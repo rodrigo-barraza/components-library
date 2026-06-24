@@ -261,13 +261,13 @@ export default function NavigationSidebarComponent({
 
   // Legacy: THEME_META for backward-compatible single-button toggle
   const THEME_META: Record<string, { nextLabel: string; NextIcon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>; title: string }> = {
-    dark:     { nextLabel: "Daylight", NextIcon: Icons.Sun,      title: "Switch to daylight mode" },
+    twilight: { nextLabel: "Daylight", NextIcon: Icons.Sun,      title: "Switch to daylight mode" },
     light:    { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
     tropical: { nextLabel: "Oceanic",  NextIcon: Icons.Waves,    title: "Switch to oceanic mode" },
     oceanic:  { nextLabel: "Punk",     NextIcon: Icons.Skull,    title: "Switch to punk mode" },
-    punk:     { nextLabel: "Dark",     NextIcon: Icons.Moon,     title: "Switch to dark mode" },
+    punk:     { nextLabel: "Twilight", NextIcon: Icons.Eclipse,  title: "Switch to twilight mode" },
   };
-  const themeMeta = THEME_META[theme] || THEME_META.dark;
+  const themeMeta = THEME_META[theme] || THEME_META.twilight;
 
   // ── Render a single nav item ──────────────────────────────────
   const renderNavItem = (item: NavItem) => {

@@ -20,7 +20,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo, t
  *   import { ThemeProvider, useTheme } from "@rodrigo-barraza/components-library";
  *
  *   // In layout:
- *   <ThemeProvider storageKey="portal:theme" defaultTheme="dark">
+ *   <ThemeProvider storageKey="portal:theme" defaultTheme="twilight">
  *     <App />
  *   </ThemeProvider>
  *
@@ -53,24 +53,6 @@ export interface ThemeCatalogEntry {
 }
 
 export const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
-  dark: {
-    label: "Dark",
-    icon: "Moon",
-    backgroundBase: "#0a0a0f",
-    backgroundSurface: "#13141c",
-    backgroundElevated: "#1a1b26",
-    primary: "#6366f1",
-    secondary: "#a78bfa",
-    tertiary: "#38bdf8",
-    textPrimary: "#f8f8f8",
-    textSecondary: "#8e95ae",
-    textMuted: "#565c74",
-    borderColor: "#ffffff",
-    success: "#10b981",
-    danger: "#ef4444",
-    warning: "#f59e0b",
-    info: "#3b82f6",
-  },
   light: {
     label: "Daylight",
     icon: "Sun",
@@ -233,24 +215,6 @@ export const THEME_CATALOG: Record<string, ThemeCatalogEntry> = {
     warning: "#a0a0a0",
     info: "#bcbcbc",
   },
-  midnight: {
-    label: "Midnight",
-    icon: "MoonStar",
-    backgroundBase: "#000000",
-    backgroundSurface: "#0a0a0a",
-    backgroundElevated: "#141414",
-    primary: "#8b8bff",
-    secondary: "#c4b5fd",
-    tertiary: "#60a5fa",
-    textPrimary: "#e4e4e8",
-    textSecondary: "#8c8c96",
-    textMuted: "#484850",
-    borderColor: "#ffffff",
-    success: "#34d399",
-    danger: "#f87171",
-    warning: "#fbbf24",
-    info: "#60a5fa",
-  },
   regal: {
     label: "Regal",
     icon: "Crown",
@@ -299,10 +263,10 @@ export interface ThemeContextValue {
   addThemes: (names: string[]) => void;
 }
 
-const THEMES_DEFAULT = ["dark", "light", "twilight", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal"];
+const THEMES_DEFAULT = ["twilight", "light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "regal"];
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: "dark",
+  theme: "twilight",
   themes: THEMES_DEFAULT,
   mounted: false,
   toggleTheme: () => {},
@@ -327,7 +291,7 @@ const isCustomTheme = (name: string) => name.startsWith("custom-");
 
 export function ThemeProvider({
   storageKey = "app:theme",
-  defaultTheme = "dark",
+  defaultTheme = "twilight",
   themes: initialThemes = THEMES_DEFAULT,
   attribute = "data-theme",
   children,

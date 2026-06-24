@@ -27,7 +27,7 @@ export type ChatEvent = (typeof CHAT_EVENTS)[keyof typeof CHAT_EVENTS];
  */
 export declare const CHAT_DEFAULTS: {
     readonly POSITION: "bottom-right";
-    readonly THEME: "dark";
+    readonly THEME: "twilight";
     readonly GREETING: "Hey! 👋 How can we help you today?";
     readonly OPERATOR_NAME: "Support";
     readonly ACCENT_COLOR: "#6366f1";

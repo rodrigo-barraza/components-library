@@ -164,13 +164,13 @@ mobileBreakpoint = 768, // number — viewport width below which drawer mode act
     const hasThemePicker = Boolean(themes?.length && setTheme);
     // Legacy: THEME_META for backward-compatible single-button toggle
     const THEME_META = {
-        dark: { nextLabel: "Daylight", NextIcon: Icons.Sun, title: "Switch to daylight mode" },
+        twilight: { nextLabel: "Daylight", NextIcon: Icons.Sun, title: "Switch to daylight mode" },
         light: { nextLabel: "Tropical", NextIcon: Icons.Palmtree, title: "Switch to tropical mode" },
         tropical: { nextLabel: "Oceanic", NextIcon: Icons.Waves, title: "Switch to oceanic mode" },
         oceanic: { nextLabel: "Punk", NextIcon: Icons.Skull, title: "Switch to punk mode" },
-        punk: { nextLabel: "Dark", NextIcon: Icons.Moon, title: "Switch to dark mode" },
+        punk: { nextLabel: "Twilight", NextIcon: Icons.Eclipse, title: "Switch to twilight mode" },
     };
-    const themeMeta = THEME_META[theme] || THEME_META.dark;
+    const themeMeta = THEME_META[theme] || THEME_META.twilight;
     // ── Render a single nav item ──────────────────────────────────
     const renderNavItem = (item) => {
         const id = item.id || item.key;

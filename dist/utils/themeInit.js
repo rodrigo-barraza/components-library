@@ -21,7 +21,7 @@
  *     suppressHydrationWarning
  *   />
  */
-export function generateThemeInitScript(storageKey, validThemes = ["light", "dark", "tropical", "oceanic", "punk", "midnight", "regal"], customThemesKey) {
+export function generateThemeInitScript(storageKey, validThemes = ["light", "twilight", "tropical", "oceanic", "punk", "regal"], customThemesKey) {
     const themeList = JSON.stringify(validThemes);
     // Derive the custom themes storage key from the main storageKey if not provided
     // e.g. "prism:theme" -> "prism:custom-themes"

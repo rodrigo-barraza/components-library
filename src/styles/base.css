@@ -104,10 +104,9 @@
   --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Theme: Dark (default) ──────────────────────────────────── */
+/* ── Default Token Values (fallback) ───────────────────────── */
 
-:root,
-[data-theme="dark"] {
+:root {
   /* Surfaces */
   --background-base: #0a0a0f;
   --background-surface: #13141c;
@@ -537,49 +536,7 @@
   --calculated-select-option-text: #e8e8e8;
 }
 
-/* ── Theme: Midnight ──────────────────────────────────────── */
-/* True pitch-black AMOLED night mode — #000 surfaces, zero
-   luminance base, soft cool-grey text. Designed for maximum
-   contrast and battery efficiency on OLED displays. */
 
-[data-theme="midnight"] {
-  --background-base: #000000;
-  --background-surface: #0a0a0a;
-  --background-elevated: #141414;
-
-  --calculated-background-base-contrast: oklch(1 0 0 / 0.92);
-  --calculated-background-surface-contrast: oklch(1 0 0 / 0.92);
-  --calculated-background-elevated-contrast: oklch(1 0 0 / 0.92);
-  --calculated-accent-primary-contrast: oklch(0 0 0 / 0.87);
-
-  --calculated-border-color: oklch(1 0 0 / 0.06);
-  --calculated-border-subtle: oklch(1 0 0 / 0.03);
-  --calculated-border-medium: oklch(1 0 0 / 0.09);
-  --calculated-border-strong: oklch(1 0 0 / 0.14);
-
-  --text-primary: #e4e4e8;
-  --text-secondary: #8c8c96;
-  --text-tertiary: #62626c;
-  --text-muted: #484850;
-  --calculated-text-inverse: #000000;
-
-  --color-danger: #f87171;
-  --calculated-color-danger-subtle: oklch(0.711 0.1661 22.2 / 0.1);
-  --color-success: #34d399;
-  --calculated-color-success-subtle: oklch(0.778 0.1761 160.8 / 0.1);
-  --color-warning: #fbbf24;
-  --calculated-color-warning-subtle: oklch(0.843 0.1896 94.3 / 0.1);
-  --color-info: #60a5fa;
-  --calculated-color-info-subtle: oklch(0.704 0.158 269.1 / 0.1);
-
-  --calculated-shadow-sm: 0 1px 3px oklch(0 0 0 / 0.5);
-  --calculated-shadow-md: 0 4px 12px oklch(0 0 0 / 0.6);
-  --calculated-shadow-lg: 0 8px 32px oklch(0 0 0 / 0.7);
-
-  --calculated-select-background-color: oklch(0 0 0 / 0.6);
-  --calculated-select-option-background-color: #0a0a0a;
-  --calculated-select-option-text: #e4e4e8;
-}
 
 /* ── Theme: Regal ─────────────────────────────────────────── */
 /* Dark royal blue — deep navy surfaces with gold and lavender

@@ -17,7 +17,7 @@ import { type ReactNode } from "react";
  *   import { ThemeProvider, useTheme } from "@rodrigo-barraza/components-library";
  *
  *   // In layout:
- *   <ThemeProvider storageKey="portal:theme" defaultTheme="dark">
+ *   <ThemeProvider storageKey="portal:theme" defaultTheme="twilight">
  *     <App />
  *   </ThemeProvider>
  *

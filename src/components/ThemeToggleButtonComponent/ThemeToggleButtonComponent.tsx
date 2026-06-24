@@ -17,25 +17,23 @@ export interface ThemeToggleButtonComponentProps {
  * consumers can also pass custom `iconMap` / `labelMap` overrides.
  */
 const DEFAULT_ICON_MAP: Record<string, ThemeIcon> = {
-  dark: "Sun",
+  twilight: "Sun",
   light: "CloudFog",
   muted: "Palmtree",
   tropical: "Waves",
   oceanic: "Waves",
-  punk: "Moon",
-  midnight: "Crown",
-  regal: "Moon",
+  punk: "Eclipse",
+  regal: "Eclipse",
 };
 
 const DEFAULT_LABEL_MAP: Record<string, string> = {
-  dark: "light",
+  twilight: "light",
   light: "muted",
   muted: "tropical",
   tropical: "oceanic",
   oceanic: "punk",
-  punk: "dark",
-  midnight: "regal",
-  regal: "dark",
+  punk: "twilight",
+  regal: "twilight",
 };
 
 /**
@@ -56,7 +54,7 @@ export default function ThemeToggleButtonComponent({
   const labels = labelMap || DEFAULT_LABEL_MAP;
 
   // Resolve the icon component — support both React elements and Lucide imports
-  const IconElement = icons[theme] || icons.dark;
+  const IconElement = icons[theme] || icons.twilight;
   const nextTheme = labels[theme] || themes[(themes.indexOf(theme) + 1) % themes.length];
   const tooltip = `Switch to ${nextTheme} mode`;
 
