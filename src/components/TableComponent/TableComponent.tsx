@@ -233,6 +233,7 @@ export interface TableComponentProps<T, TSub = unknown> {
   sortKey?: string | null;
   sortDir?: "asc" | "desc" | string;
   onSort?: (key: string, dir: "asc" | "desc") => void;
+  sortPinBottom?: (row: T) => boolean;
   maxHeight?: string | number;
   activeRowKey?: string | number | null;
   highlightedRowKey?: string | number | null;
@@ -259,6 +260,7 @@ export default function TableComponent<T, TSub = unknown>({
   sortKey: externalSortKey,
   sortDir: externalSortDir,
   onSort,
+  sortPinBottom,
   maxHeight,
   activeRowKey,
   highlightedRowKey,
@@ -412,6 +414,11 @@ export default function TableComponent<T, TSub = unknown>({
   const sorted =
     sort.key && !onSort
       ? [...data].sort((a, b) => {
+          if (sortPinBottom) {
+            const isPinnedA = sortPinBottom(a);
+            const isPinnedB = sortPinBottom(b);
+            if (isPinnedA !== isPinnedB) return isPinnedA ? 1 : -1;
+          }
           const sortValueA = sortCol?.sortValue ? sortCol.sortValue(a) : ((a as Record<string, unknown>)[sort.key!] ?? 0);
           const sortValueB = sortCol?.sortValue ? sortCol.sortValue(b) : ((b as Record<string, unknown>)[sort.key!] ?? 0);
           if (typeof sortValueA === "string" && typeof sortValueB === "string") {

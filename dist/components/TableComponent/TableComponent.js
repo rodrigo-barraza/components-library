@@ -110,7 +110,7 @@ function ColumnFilter({ columns, hiddenColumns, onToggle, onToggleAll, storageKe
                                     return (_jsxs("button", { className: `${styles['column-filter-item']} ${visible ? styles['column-filter-item-visible'] : ""}`, onClick: () => onToggle(col.key), children: [_jsx("span", { className: styles['column-filter-check'], children: visible && _jsx(Check, { size: 10 }) }), _jsx("span", { className: styles['column-filter-label'], children: col.label })] }, col.key));
                                 })] })] }), document.body)] }));
 }
-export default function TableComponent({ title, subtitle, columns, data = [], getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText = "No data", sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini = false, storageKey, className, }) {
+export default function TableComponent({ title, subtitle, columns, data = [], getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText = "No data", sortKey: externalSortKey, sortDir: externalSortDir, onSort, sortPinBottom, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini = false, storageKey, className, }) {
     const { sound } = useComponents();
     const [internalSort, setInternalSort] = useState(() => {
         if (storageKey) {
@@ -258,6 +258,12 @@ export default function TableComponent({ title, subtitle, columns, data = [], ge
     const sortCol = sort.key ? columns.find((column) => column.key === sort.key) : null;
     const sorted = sort.key && !onSort
         ? [...data].sort((a, b) => {
+            if (sortPinBottom) {
+                const isPinnedA = sortPinBottom(a);
+                const isPinnedB = sortPinBottom(b);
+                if (isPinnedA !== isPinnedB)
+                    return isPinnedA ? 1 : -1;
+            }
             const sortValueA = sortCol?.sortValue ? sortCol.sortValue(a) : (a[sort.key] ?? 0);
             const sortValueB = sortCol?.sortValue ? sortCol.sortValue(b) : (b[sort.key] ?? 0);
             if (typeof sortValueA === "string" && typeof sortValueB === "string") {

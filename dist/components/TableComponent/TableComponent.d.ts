@@ -30,6 +30,7 @@ export interface TableComponentProps<T, TSub = unknown> {
     sortKey?: string | null;
     sortDir?: "asc" | "desc" | string;
     onSort?: (key: string, dir: "asc" | "desc") => void;
+    sortPinBottom?: (row: T) => boolean;
     maxHeight?: string | number;
     activeRowKey?: string | number | null;
     highlightedRowKey?: string | number | null;
@@ -42,5 +43,5 @@ export interface TableComponentProps<T, TSub = unknown> {
     storageKey?: string;
     className?: string;
 }
-export default function TableComponent<T, TSub = unknown>({ title, subtitle, columns, data, getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText, sortKey: externalSortKey, sortDir: externalSortDir, onSort, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini, storageKey, className, }: TableComponentProps<T, TSub>): React.JSX.Element;
+export default function TableComponent<T, TSub = unknown>({ title, subtitle, columns, data, getRowKey, getSubRows, renderExpandedContent, onRowClick, emptyText, sortKey: externalSortKey, sortDir: externalSortDir, onSort, sortPinBottom, maxHeight, activeRowKey, highlightedRowKey, highlightedRowRef, onRowMouseEnter, onRowMouseLeave, getRowClassName, getRowStyle, mini, storageKey, className, }: TableComponentProps<T, TSub>): React.JSX.Element;
 //# sourceMappingURL=TableComponent.d.ts.map
