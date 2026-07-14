@@ -9,7 +9,9 @@ export interface SessionInitResult {
 }
 export interface SessionServiceInstance {
     init(): SessionInitResult;
-    heartbeat(duration: number, width: number, height: number): void;
+    /** Associate the session with a logged-in user (included in heartbeats). */
+    identify(userId: string | null): void;
+    heartbeat(duration: number, width: number, height: number, useBeacon?: boolean): void;
     pageView(url: string, title: string, referrer?: string): void;
     event(category: string, action: string, label?: string, value?: string | number): void;
 }

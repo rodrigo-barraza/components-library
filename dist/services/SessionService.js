@@ -47,29 +47,67 @@ function isReturningSession() {
         return false;
     return sessionStorage.getItem(SESSION_KEY) !== null;
 }
+// ─── UTM / Click-ID Extraction ─────────────────────────────────
+const ACQUISITION_KEYS = [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "gclid",
+    "fbclid",
+];
 function extractUtmParams() {
     if (typeof window === "undefined")
         return null;
     const params = new URLSearchParams(window.location.search);
     const utm = {};
-    const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
-    for (const key of keys) {
+    for (const key of ACQUISITION_KEYS) {
         const value = params.get(key);
         if (value)
-            utm[key.replace("utm_", "")] = value;
+            utm[key] = value;
     }
     return Object.keys(utm).length > 0 ? utm : null;
 }
-// ─── Fire-and-forget fetch ─────────────────────────────────────
-function send(apiBase, projectId, path, body) {
+function collectEnrichment() {
+    if (typeof window === "undefined")
+        return {};
+    const nav = navigator;
+    let timezone = null;
     try {
+        timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || null;
+    }
+    catch {
+        // Intl unavailable — skip
+    }
+    return {
+        screenResolution: `${screen.width}x${screen.height}`,
+        timezone,
+        languages: nav.languages ? [...nav.languages] : null,
+        devicePixelRatio: window.devicePixelRatio || null,
+        colorDepth: screen.colorDepth || null,
+        hardwareConcurrency: nav.hardwareConcurrency || null,
+        deviceMemory: nav.deviceMemory ?? null,
+        connectionType: nav.connection?.effectiveType || null,
+        touchSupport: "ontouchstart" in window || nav.maxTouchPoints > 0,
+    };
+}
+// ─── Fire-and-forget transport ─────────────────────────────────
+function send(apiBase, projectId, path, body, useBeacon = false) {
+    try {
+        const payload = JSON.stringify({ ...body, projectId });
+        // sendBeacon survives page unload more reliably than fetch
+        if (useBeacon && typeof navigator !== "undefined" && navigator.sendBeacon) {
+            navigator.sendBeacon(`${apiBase}${path}`, new Blob([payload], { type: "application/json" }));
+            return;
+        }
         fetch(`${apiBase}${path}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "x-session-id": getSessionId(),
             },
-            body: JSON.stringify({ ...body, projectId }),
+            body: payload,
             keepalive: true,
         }).catch(() => { });
     }
@@ -82,6 +120,7 @@ function send(apiBase, projectId, path, body) {
  */
 export function createSessionService(projectId, options = {}) {
     const { apiBase = "/api/sessions" } = options;
+    let userId = null;
     return {
         /**
          * Initialize session tracking. Call once on app mount.
@@ -94,18 +133,30 @@ export function createSessionService(projectId, options = {}) {
             return { isNew, sessionId, visitorId };
         },
         /**
-         * Send a session heartbeat (call on interval, e.g. every 5s).
+         * Associate subsequent heartbeats with a logged-in user id, linking
+         * the anonymous visitor history to a known identity server-side.
          */
-        heartbeat(duration, width, height) {
+        identify(id) {
+            userId = id;
+        },
+        /**
+         * Send a session heartbeat (call on interval, e.g. every 5s, and once
+         * on page hide with useBeacon so short visits are still recorded).
+         * Duration is in milliseconds.
+         */
+        heartbeat(duration, width, height, useBeacon = false) {
             send(apiBase, projectId, "/sessions", {
                 sessionId: getSessionId(),
                 visitorId: getVisitorId(),
+                userId,
                 duration,
                 width,
                 height,
                 referrer: document.referrer || null,
                 utm: extractUtmParams(),
-            });
+                url: window.location.href,
+                ...collectEnrichment(),
+            }, useBeacon);
         },
         /**
          * Record a page view.
@@ -128,8 +179,8 @@ export function createSessionService(projectId, options = {}) {
                 visitorId: getVisitorId(),
                 category,
                 action,
-                label: label || null,
-                value: value || null,
+                label: label ?? null,
+                value: value ?? null,
             });
         },
     };

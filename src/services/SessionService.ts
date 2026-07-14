@@ -51,41 +51,87 @@ function isReturningSession(): boolean {
   return sessionStorage.getItem(SESSION_KEY) !== null;
 }
 
-// ─── UTM Parameter Extraction ──────────────────────────────────
+// ─── UTM / Click-ID Extraction ─────────────────────────────────
 
-interface UtmParams {
-  source?: string;
-  medium?: string;
-  campaign?: string;
-  term?: string;
-  content?: string;
-}
+const ACQUISITION_KEYS = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+  "gclid",
+  "fbclid",
+] as const;
 
-function extractUtmParams(): UtmParams | null {
+function extractUtmParams(): Record<string, string> | null {
   if (typeof window === "undefined") return null;
   const params = new URLSearchParams(window.location.search);
-  const utm: UtmParams = {};
-  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
+  const utm: Record<string, string> = {};
 
-  for (const key of keys) {
+  for (const key of ACQUISITION_KEYS) {
     const value = params.get(key);
-    if (value) (utm as Record<string, string>)[key.replace("utm_", "")] = value;
+    if (value) utm[key] = value;
   }
 
   return Object.keys(utm).length > 0 ? utm : null;
 }
 
-// ─── Fire-and-forget fetch ─────────────────────────────────────
+// ─── Device / Environment Enrichment ───────────────────────────
 
-function send(apiBase: string, projectId: string, path: string, body: Record<string, unknown>): void {
+interface NavigatorExtras extends Navigator {
+  deviceMemory?: number;
+  connection?: { effectiveType?: string };
+}
+
+function collectEnrichment(): Record<string, unknown> {
+  if (typeof window === "undefined") return {};
+  const nav = navigator as NavigatorExtras;
+
+  let timezone: string | null = null;
   try {
+    timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || null;
+  } catch {
+    // Intl unavailable — skip
+  }
+
+  return {
+    screenResolution: `${screen.width}x${screen.height}`,
+    timezone,
+    languages: nav.languages ? [...nav.languages] : null,
+    devicePixelRatio: window.devicePixelRatio || null,
+    colorDepth: screen.colorDepth || null,
+    hardwareConcurrency: nav.hardwareConcurrency || null,
+    deviceMemory: nav.deviceMemory ?? null,
+    connectionType: nav.connection?.effectiveType || null,
+    touchSupport: "ontouchstart" in window || nav.maxTouchPoints > 0,
+  };
+}
+
+// ─── Fire-and-forget transport ─────────────────────────────────
+
+function send(
+  apiBase: string,
+  projectId: string,
+  path: string,
+  body: Record<string, unknown>,
+  useBeacon = false,
+): void {
+  try {
+    const payload = JSON.stringify({ ...body, projectId });
+
+    // sendBeacon survives page unload more reliably than fetch
+    if (useBeacon && typeof navigator !== "undefined" && navigator.sendBeacon) {
+      navigator.sendBeacon(`${apiBase}${path}`, new Blob([payload], { type: "application/json" }));
+      return;
+    }
+
     fetch(`${apiBase}${path}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-session-id": getSessionId(),
       },
-      body: JSON.stringify({ ...body, projectId }),
+      body: payload,
       keepalive: true,
     }).catch(() => {});
   } catch {
@@ -108,7 +154,9 @@ export interface SessionInitResult {
 
 export interface SessionServiceInstance {
   init(): SessionInitResult;
-  heartbeat(duration: number, width: number, height: number): void;
+  /** Associate the session with a logged-in user (included in heartbeats). */
+  identify(userId: string | null): void;
+  heartbeat(duration: number, width: number, height: number, useBeacon?: boolean): void;
   pageView(url: string, title: string, referrer?: string): void;
   event(category: string, action: string, label?: string, value?: string | number): void;
 }
@@ -118,6 +166,8 @@ export interface SessionServiceInstance {
  */
 export function createSessionService(projectId: string, options: SessionServiceOptions = {}): SessionServiceInstance {
   const { apiBase = "/api/sessions" } = options;
+
+  let userId: string | null = null;
 
   return {
     /**
@@ -132,18 +182,37 @@ export function createSessionService(projectId: string, options: SessionServiceO
     },
 
     /**
-     * Send a session heartbeat (call on interval, e.g. every 5s).
+     * Associate subsequent heartbeats with a logged-in user id, linking
+     * the anonymous visitor history to a known identity server-side.
      */
-    heartbeat(duration: number, width: number, height: number): void {
-      send(apiBase, projectId, "/sessions", {
-        sessionId: getSessionId(),
-        visitorId: getVisitorId(),
-        duration,
-        width,
-        height,
-        referrer: document.referrer || null,
-        utm: extractUtmParams(),
-      });
+    identify(id: string | null): void {
+      userId = id;
+    },
+
+    /**
+     * Send a session heartbeat (call on interval, e.g. every 5s, and once
+     * on page hide with useBeacon so short visits are still recorded).
+     * Duration is in milliseconds.
+     */
+    heartbeat(duration: number, width: number, height: number, useBeacon = false): void {
+      send(
+        apiBase,
+        projectId,
+        "/sessions",
+        {
+          sessionId: getSessionId(),
+          visitorId: getVisitorId(),
+          userId,
+          duration,
+          width,
+          height,
+          referrer: document.referrer || null,
+          utm: extractUtmParams(),
+          url: window.location.href,
+          ...collectEnrichment(),
+        },
+        useBeacon,
+      );
     },
 
     /**
@@ -168,8 +237,8 @@ export function createSessionService(projectId: string, options: SessionServiceO
         visitorId: getVisitorId(),
         category,
         action,
-        label: label || null,
-        value: value || null,
+        label: label ?? null,
+        value: value ?? null,
       });
     },
   };
