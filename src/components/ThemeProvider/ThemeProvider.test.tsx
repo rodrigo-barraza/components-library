@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider, useTheme } from "./ThemeProvider.js";
 
@@ -14,7 +14,6 @@ function ThemeReader() {
       <span data-testid="mounted">{String(mounted)}</span>
       <button data-testid="toggle" onClick={toggleTheme}>Toggle</button>
       <button data-testid="set-light" onClick={() => setTheme("light")}>Light</button>
-      <button data-testid="set-dark" onClick={() => setTheme("dark")}>Dark</button>
       <button data-testid="set-invalid" onClick={() => setTheme("neon")}>Invalid</button>
     </div>
   );
@@ -36,9 +35,9 @@ describe("ThemeProvider", () => {
     document.documentElement.removeAttribute("data-theme");
   });
 
-  it("defaults to dark theme", () => {
+  it("defaults to twilight theme", () => {
     renderWithTheme();
-    expect(screen.getByTestId("theme").textContent).toBe("dark");
+    expect(screen.getByTestId("theme").textContent).toBe("twilight");
   });
 
   it("accepts a custom defaultTheme", () => {
@@ -47,18 +46,18 @@ describe("ThemeProvider", () => {
   });
 
   it("sets data-theme attribute on <html> after mount", async () => {
-    renderWithTheme({ defaultTheme: "dark" });
+    renderWithTheme({ defaultTheme: "oceanic" });
     // After mount effect runs, attribute should be set
     await vi.waitFor(() => {
-      expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+      expect(document.documentElement.getAttribute("data-theme")).toBe("oceanic");
     });
   });
 
-  it("toggles through all 12 default themes and wraps around", async () => {
+  it("toggles through all 11 default themes and wraps around", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    const expectedCycle = ["light", "twilight", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "midnight", "regal", "dark"];
+    const expectedCycle = ["light", "muted", "tropical", "oceanic", "punk", "ember", "arctic", "forest", "mono", "regal", "twilight"];
 
     for (const expected of expectedCycle) {
       await user.click(screen.getByTestId("toggle"));
@@ -86,10 +85,10 @@ describe("ThemeProvider", () => {
 
   it("ignores invalid stored values", async () => {
     localStorage.setItem("test:theme", JSON.stringify("neon"));
-    renderWithTheme({ storageKey: "test:theme", defaultTheme: "dark" });
+    renderWithTheme({ storageKey: "test:theme", defaultTheme: "twilight" });
 
     await vi.waitFor(() => {
-      expect(screen.getByTestId("theme").textContent).toBe("dark");
+      expect(screen.getByTestId("theme").textContent).toBe("twilight");
     });
   });
 
@@ -106,19 +105,17 @@ describe("ThemeProvider", () => {
     renderWithTheme();
 
     await user.click(screen.getByTestId("set-invalid"));
-    // Should stay on dark since "neon" is not in the default themes list
-    expect(screen.getByTestId("theme").textContent).toBe("dark");
+    // Should stay on twilight since "neon" is not in the default themes list
+    expect(screen.getByTestId("theme").textContent).toBe("twilight");
   });
 
   it("setTheme accepts muted (overcast), tropical, and oceanic via toggle cycle", async () => {
     const user = userEvent.setup();
     renderWithTheme();
 
-    // Cycle dark → daylight → twilight → overcast → tropical → oceanic
+    // Cycle twilight → daylight → overcast → tropical → oceanic
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("light");
-    await user.click(screen.getByTestId("toggle"));
-    expect(screen.getByTestId("theme").textContent).toBe("twilight");
     await user.click(screen.getByTestId("toggle"));
     expect(screen.getByTestId("theme").textContent).toBe("muted");
     expect(document.documentElement.getAttribute("data-theme")).toBe("muted");
@@ -157,7 +154,7 @@ describe("ThemeProvider", () => {
     renderWithTheme({ attribute: "data-color-mode" });
 
     await vi.waitFor(() => {
-      expect(document.documentElement.getAttribute("data-color-mode")).toBe("dark");
+      expect(document.documentElement.getAttribute("data-color-mode")).toBe("twilight");
     });
 
     await user.click(screen.getByTestId("toggle"));

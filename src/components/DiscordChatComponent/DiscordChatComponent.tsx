@@ -1,3 +1,4 @@
+"use client";
 
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import styles from "./DiscordChatComponent.module.css";
@@ -314,6 +315,9 @@ function RoleTags({ roleTags }: { roleTags?: DiscordRoleTag[] }) {
 
 // ── Tenor URL detection ──────────────────────────────────────────
 const TENOR_URL_RE = /https?:\/\/tenor\.com\/view\/[\w-]+/g;
+// Non-global copy for single-URL tests — a global regex is stateful
+// (lastIndex persists between .test() calls), so never use it there.
+const TENOR_URL_TEST_RE = /https?:\/\/tenor\.com\/view\/[\w-]+/;
 
 function extractTenorUrls(content: string) {
   return (content || "").match(TENOR_URL_RE) || [];
@@ -383,7 +387,7 @@ function formatContent(content: string | undefined, cleanContent: string | undef
           return <span key={i} className={styles['mention']}>{seg}</span>;
         }
         if (/^https?:\/\//.test(seg)) {
-          if (TENOR_URL_RE.test(seg)) { TENOR_URL_RE.lastIndex = 0; return null; }
+          if (TENOR_URL_TEST_RE.test(seg)) return null; // rendered by TenorEmbeds
           const display = seg.length > 50 ? seg.substring(0, 47) + "..." : seg;
           return <a key={i} href={seg} target="_blank" rel="noopener noreferrer">{display}</a>;
         }
@@ -458,6 +462,26 @@ function TenorEmbeds({ content, tenorOembedUrl }: { content?: string; tenorOembe
   return <div className={styles['attachments']}>{urls.map((url: string, i: number) => <TenorEmbed key={i} url={url} tenorOembedUrl={tenorOembedUrl} />)}</div>;
 }
 
+// ── Image sizing ─────────────────────────────────────────────────
+// Scale intrinsic dimensions down to fit the chat's max media box
+// while preserving aspect ratio.
+const MEDIA_MAX_WIDTH = 400;
+const MEDIA_MAX_HEIGHT = 300;
+
+function fitMediaDimensions(width?: number, height?: number) {
+  let imageWidth = width || MEDIA_MAX_WIDTH;
+  let imageHeight = height || MEDIA_MAX_HEIGHT;
+  if (imageWidth > MEDIA_MAX_WIDTH) {
+    imageHeight = Math.round(imageHeight * (MEDIA_MAX_WIDTH / imageWidth));
+    imageWidth = MEDIA_MAX_WIDTH;
+  }
+  if (imageHeight > MEDIA_MAX_HEIGHT) {
+    imageWidth = Math.round(imageWidth * (MEDIA_MAX_HEIGHT / imageHeight));
+    imageHeight = MEDIA_MAX_HEIGHT;
+  }
+  return { width: imageWidth, height: imageHeight };
+}
+
 // ── Image Attachments ────────────────────────────────────────────
 function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }) {
   if (!attachments?.length) return null;
@@ -467,10 +491,7 @@ function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }
     <div className={styles['attachments']}>
       {images.map((image: DiscordAttachment, i: number) => {
         const imageSource = image.proxyURL || image.url;
-        const maxW = 400, maxH = 300;
-        let imageWidth = image.width || maxW, imageHeight = image.height || maxH;
-        if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
-        if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
+        const { width: imageWidth, height: imageHeight } = fitMediaDimensions(image.width, image.height);
         return (
           <a key={i} href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
             <img src={imageSource} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
@@ -744,10 +765,7 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
           if (!imageSource) return null;
           const imgMeta = embed.image || embed.thumbnail;
           if (!imgMeta) return null;
-          const maxW = 400, maxH = 300;
-          let imageWidth = imgMeta.width || maxW, imageHeight = imgMeta.height || maxH;
-          if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
-          if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
+          const { width: imageWidth, height: imageHeight } = fitMediaDimensions(imgMeta.width, imgMeta.height);
           return (
             <a key={i} href={embed.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
                 <img src={imageSource} alt={embed.title || "embed"} width={imageWidth} height={imageHeight}
@@ -801,10 +819,7 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
             {/* Large image below text (e.g. Newgrounds portal submissions) */}
             {hasLargeImage && embed.image && (() => {
               const imageSource = embed.image!.proxyURL || embed.image!.url;
-              const maxW = 400, maxH = 300;
-              let imageWidth = embed.image!.width || maxW, imageHeight = embed.image!.height || maxH;
-              if (imageWidth > maxW) { imageHeight = Math.round(imageHeight * (maxW / imageWidth)); imageWidth = maxW; }
-              if (imageHeight > maxH) { imageWidth = Math.round(imageWidth * (maxH / imageHeight)); imageHeight = maxH; }
+              const { width: imageWidth, height: imageHeight } = fitMediaDimensions(embed.image!.width, embed.image!.height);
               return (
                 <a href={embed.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['embed-image-link']}>
                         <img src={imageSource} alt={embed.title || "embed image"} width={imageWidth} height={imageHeight}
@@ -1360,6 +1375,34 @@ function MemberItem({ member }: { member: DiscordMember }) {
   );
 }
 
+// ── Message Body ─────────────────────────────────────────────────
+// Text content, media attachments, embeds, and reactions — shared
+// by the full message row and the grouped (header-less) row.
+interface MessageBodyProps {
+  message: DiscordMessage;
+  tenorOembedUrl: string;
+  reactedSet: Set<string>;
+  onReact: (messageId: string, emoji: string) => void;
+}
+
+function MessageBody({ message, tenorOembedUrl, reactedSet, onReact }: MessageBodyProps) {
+  return (
+    <>
+      <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
+      <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
+      <ImageAttachments attachments={message.attachments} />
+      <AudioAttachments attachments={message.attachments} />
+      <EmbedMedia embeds={message.embeds} />
+      <Reactions
+        reactions={message.reactions}
+        messageId={message.id}
+        reactedSet={reactedSet}
+        onReact={onReact}
+      />
+    </>
+  );
+}
+
 // ═════════════════════════════════════════════════════════════════
 //  DiscordChat Component
 // ═════════════════════════════════════════════════════════════════
@@ -1397,12 +1440,11 @@ export default function DiscordChatComponent({
   serverBannerUrl: serverBannerUrlProp,
   servers = [],
 }: DiscordChatComponentProps) {
-  const CHANNEL_IDS = channelIds;
   const [channels, setChannels] = useState<DiscordChannel[]>([]);
   const [serverName, setServerName] = useState("");
   const [serverIcon, setServerIcon] = useState(serverIconUrl || null);
   const [serverBannerUrl, setServerBannerUrl] = useState(serverBannerUrlProp || null);
-  const [activeChannelId, setActiveChannelId] = useState(CHANNEL_IDS[0]);
+  const [activeChannelId, setActiveChannelId] = useState(channelIds[0]);
   const [messages, setMessages] = useState<DiscordMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
@@ -1432,15 +1474,15 @@ export default function DiscordChatComponent({
         if (data.guildBanner) setServerBannerUrl((prev) => prev || data.guildBanner!);
         else if (data.guildSplash) setServerBannerUrl((prev) => prev || data.guildSplash!);
         // Filter to only the whitelisted channels, sorted by Discord position
-        const idSet = new Set(CHANNEL_IDS);
+        const idSet = new Set(channelIds);
         const filtered = (data.channels || [])
           .filter((ch: DiscordChannel) => idSet.has(ch.id))
           .sort((channelA: DiscordChannel, channelB: DiscordChannel) => (channelA.position ?? 0) - (channelB.position ?? 0));
-        setChannels(filtered.length > 0 ? filtered : CHANNEL_IDS.map((id) => ({ id, name: id })));
+        setChannels(filtered.length > 0 ? filtered : channelIds.map((id) => ({ id, name: id })));
       })
       .catch(() => {
         // Fallback — use IDs as names
-        if (!cancelled) setChannels(CHANNEL_IDS.map((id) => ({ id, name: id })));
+        if (!cancelled) setChannels(channelIds.map((id) => ({ id, name: id })));
       });
     return () => { cancelled = true; };
   }, [channelsUrl]);
@@ -1568,11 +1610,11 @@ export default function DiscordChatComponent({
         try {
           const { messages: updatedMsgs } = JSON.parse(event.data) as { messages?: DiscordMessage[] };
           if (!updatedMsgs?.length) return;
-          const updateMap = new Map((updatedMsgs || []).map((message) => [message.id, message]));
+          const updateMap = new Map(updatedMsgs.map((message) => [message.id, message]));
           setMessages((prev) =>
             prev.map((message) => {
               const updated = updateMap.get(message.id);
-              return updated ? { ...message, reactions: (updated as DiscordMessage).reactions } : message;
+              return updated ? { ...message, reactions: updated.reactions } : message;
             }),
           );
         } catch (error) {
@@ -1594,7 +1636,7 @@ export default function DiscordChatComponent({
       if (eventSource) eventSource.close();
       if (retryTimeout) clearTimeout(retryTimeout);
     };
-  }, [messageCount, scrollToBottom, activeChannelId]);
+  }, [messageCount, activeChannelId, streamUrl]);
 
   // ── Fetch members (poll every 30s) ──────────────────────────────
   useEffect(() => {
@@ -1612,7 +1654,7 @@ export default function DiscordChatComponent({
     fetchMembers();
     const interval = setInterval(fetchMembers, 30_000);
     return () => { cancelled = true; clearInterval(interval); };
-  }, []);
+  }, [membersUrl]);
 
   // ── Channel switch — reset message state eagerly ────────────────
   const handleChannelClick = useCallback((channel: DiscordChannel) => {
@@ -1890,14 +1932,9 @@ export default function DiscordChatComponent({
                           pickerMessageId={pickerMessageId}
                         />
                         <div className={styles['message-content']}>
-                          <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
-                          <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
-                          <ImageAttachments attachments={message.attachments} />
-                          <AudioAttachments attachments={message.attachments} />
-                          <EmbedMedia embeds={message.embeds} />
-                          <Reactions
-                            reactions={message.reactions}
-                            messageId={message.id}
+                          <MessageBody
+                            message={message}
+                            tenorOembedUrl={tenorOembedUrl}
                             reactedSet={reactedSet}
                             onReact={handleReact}
                           />
@@ -1938,14 +1975,9 @@ export default function DiscordChatComponent({
                             <RoleTags roleTags={message.author.roleTags} />
                             <span className={styles['timestamp']}>{formatTimestamp(message.createdAtISO)}</span>
                           </div>
-                          <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
-                          <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
-                          <ImageAttachments attachments={message.attachments} />
-                          <AudioAttachments attachments={message.attachments} />
-                          <EmbedMedia embeds={message.embeds} />
-                          <Reactions
-                            reactions={message.reactions}
-                            messageId={message.id}
+                          <MessageBody
+                            message={message}
+                            tenorOembedUrl={tenorOembedUrl}
                             reactedSet={reactedSet}
                             onReact={handleReact}
                           />

@@ -1,3 +1,4 @@
+"use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import styles from "./DiscordChatComponent.module.css";
@@ -144,6 +145,9 @@ function RoleTags({ roleTags }) {
 }
 // ── Tenor URL detection ──────────────────────────────────────────
 const TENOR_URL_RE = /https?:\/\/tenor\.com\/view\/[\w-]+/g;
+// Non-global copy for single-URL tests — a global regex is stateful
+// (lastIndex persists between .test() calls), so never use it there.
+const TENOR_URL_TEST_RE = /https?:\/\/tenor\.com\/view\/[\w-]+/;
 function extractTenorUrls(content) {
     return (content || "").match(TENOR_URL_RE) || [];
 }
@@ -198,10 +202,8 @@ function formatContent(content, cleanContent) {
                 return _jsx("span", { className: styles['mention'], children: seg }, i);
             }
             if (/^https?:\/\//.test(seg)) {
-                if (TENOR_URL_RE.test(seg)) {
-                    TENOR_URL_RE.lastIndex = 0;
-                    return null;
-                }
+                if (TENOR_URL_TEST_RE.test(seg))
+                    return null; // rendered by TenorEmbeds
                 const display = seg.length > 50 ? seg.substring(0, 47) + "..." : seg;
                 return _jsx("a", { href: seg, target: "_blank", rel: "noopener noreferrer", children: display }, i);
             }
@@ -273,6 +275,24 @@ function TenorEmbeds({ content, tenorOembedUrl }) {
         return null;
     return _jsx("div", { className: styles['attachments'], children: urls.map((url, i) => _jsx(TenorEmbed, { url: url, tenorOembedUrl: tenorOembedUrl }, i)) });
 }
+// ── Image sizing ─────────────────────────────────────────────────
+// Scale intrinsic dimensions down to fit the chat's max media box
+// while preserving aspect ratio.
+const MEDIA_MAX_WIDTH = 400;
+const MEDIA_MAX_HEIGHT = 300;
+function fitMediaDimensions(width, height) {
+    let imageWidth = width || MEDIA_MAX_WIDTH;
+    let imageHeight = height || MEDIA_MAX_HEIGHT;
+    if (imageWidth > MEDIA_MAX_WIDTH) {
+        imageHeight = Math.round(imageHeight * (MEDIA_MAX_WIDTH / imageWidth));
+        imageWidth = MEDIA_MAX_WIDTH;
+    }
+    if (imageHeight > MEDIA_MAX_HEIGHT) {
+        imageWidth = Math.round(imageWidth * (MEDIA_MAX_HEIGHT / imageHeight));
+        imageHeight = MEDIA_MAX_HEIGHT;
+    }
+    return { width: imageWidth, height: imageHeight };
+}
 // ── Image Attachments ────────────────────────────────────────────
 function ImageAttachments({ attachments }) {
     if (!attachments?.length)
@@ -282,16 +302,7 @@ function ImageAttachments({ attachments }) {
         return null;
     return (_jsx("div", { className: styles['attachments'], children: images.map((image, i) => {
             const imageSource = image.proxyURL || image.url;
-            const maxW = 400, maxH = 300;
-            let imageWidth = image.width || maxW, imageHeight = image.height || maxH;
-            if (imageWidth > maxW) {
-                imageHeight = Math.round(imageHeight * (maxW / imageWidth));
-                imageWidth = maxW;
-            }
-            if (imageHeight > maxH) {
-                imageWidth = Math.round(imageWidth * (maxH / imageHeight));
-                imageHeight = maxH;
-            }
+            const { width: imageWidth, height: imageHeight } = fitMediaDimensions(image.width, image.height);
             return (_jsx("a", { href: image.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['attachment-link'], children: _jsx("img", { src: imageSource, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles['attachment-image'], loading: "lazy" }) }, i));
         }) }));
 }
@@ -479,16 +490,7 @@ function EmbedMedia({ embeds }) {
                 const imgMeta = embed.image || embed.thumbnail;
                 if (!imgMeta)
                     return null;
-                const maxW = 400, maxH = 300;
-                let imageWidth = imgMeta.width || maxW, imageHeight = imgMeta.height || maxH;
-                if (imageWidth > maxW) {
-                    imageHeight = Math.round(imageHeight * (maxW / imageWidth));
-                    imageWidth = maxW;
-                }
-                if (imageHeight > maxH) {
-                    imageWidth = Math.round(imageWidth * (maxH / imageHeight));
-                    imageHeight = maxH;
-                }
+                const { width: imageWidth, height: imageHeight } = fitMediaDimensions(imgMeta.width, imgMeta.height);
                 return (_jsx("a", { href: embed.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['attachment-link'], children: _jsx("img", { src: imageSource, alt: embed.title || "embed", width: imageWidth, height: imageHeight, className: styles['attachment-image'], loading: "lazy" }) }, i));
             }
             // Pure video embeds with NO metadata → render inline or thumbnail
@@ -498,16 +500,7 @@ function EmbedMedia({ embeds }) {
             // ── Rich embed card ───────────────────────────────────
             return (_jsxs("div", { className: styles['embed-card'], style: accentColor ? { borderLeftColor: accentColor } : undefined, children: [_jsxs("div", { className: hasThumbnailOnly ? styles['embed-card-body-inline'] : styles['embed-card-body'], children: [_jsxs("div", { className: styles['embed-card-text'], children: [embed.provider?.name && (_jsx("span", { className: styles['embed-provider'], children: embed.provider.name })), embed.title && (embed.url ? (_jsx("a", { href: embed.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-title'], children: embed.title })) : (_jsx("span", { className: styles['embed-title-plain'], children: embed.title }))), embed.description && (_jsx("p", { className: styles['embed-description'], children: embed.description }))] }), hasThumbnailOnly && embed.thumbnail?.url && (_jsx("a", { href: embed.url || embed.thumbnail.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-thumb-link'], children: _jsx("img", { src: embed.thumbnail.proxyURL || embed.thumbnail.url, alt: embed.title || "thumbnail", className: styles['embed-thumb'], loading: "lazy" }) }))] }), hasLargeImage && embed.image && (() => {
                         const imageSource = embed.image.proxyURL || embed.image.url;
-                        const maxW = 400, maxH = 300;
-                        let imageWidth = embed.image.width || maxW, imageHeight = embed.image.height || maxH;
-                        if (imageWidth > maxW) {
-                            imageHeight = Math.round(imageHeight * (maxW / imageWidth));
-                            imageWidth = maxW;
-                        }
-                        if (imageHeight > maxH) {
-                            imageWidth = Math.round(imageWidth * (maxH / imageHeight));
-                            imageHeight = maxH;
-                        }
+                        const { width: imageWidth, height: imageHeight } = fitMediaDimensions(embed.image.width, embed.image.height);
                         return (_jsx("a", { href: embed.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['embed-image-link'], children: _jsx("img", { src: imageSource, alt: embed.title || "embed image", width: imageWidth, height: imageHeight, className: styles['embed-image'], loading: "lazy" }) }));
                     })(), embed.video && _jsx(EmbedVideo, { embed: embed })] }, i));
         }) }));
@@ -698,13 +691,15 @@ function MemberItem({ member }) {
                                     ? resolveRoleColorStyle(member)
                                     : { color: member.roleColor || "#dbdee1" }, children: member.displayName }), member.isBot && (_jsxs("span", { className: styles['member-bot-badge'], children: [_jsx("svg", { className: styles['bot-badge-icon'], viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "APP"] })), _jsx(UserBadges, { badges: member.badges })] }), member.roleTags && member.roleTags.length > 0 && (_jsx(RoleTags, { roleTags: member.roleTags })), member.activity && (_jsx("span", { className: styles['member-activity'], children: member.activity }))] })] }));
 }
+function MessageBody({ message, tenorOembedUrl, reactedSet, onReact }) {
+    return (_jsxs(_Fragment, { children: [_jsx("p", { className: styles['message-text'], children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: onReact })] }));
+}
 export default function DiscordChatComponent({ messageCount = 500, joinMode = false, inviteUrl = "https://discord.gg/sBX7BxP", onJoinHoverChange, channelIds = [], channelsUrl = "/api/discord/channels", streamUrl = "/api/discord/stream", membersUrl = "/api/discord/members", tenorOembedUrl = "/api/tenor/oembed", reactUrl = "/api/discord/react", emojisUrl = "/api/discord/emojis", serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers = [], }) {
-    const CHANNEL_IDS = channelIds;
     const [channels, setChannels] = useState([]);
     const [serverName, setServerName] = useState("");
     const [serverIcon, setServerIcon] = useState(serverIconUrl || null);
     const [serverBannerUrl, setServerBannerUrl] = useState(serverBannerUrlProp || null);
-    const [activeChannelId, setActiveChannelId] = useState(CHANNEL_IDS[0]);
+    const [activeChannelId, setActiveChannelId] = useState(channelIds[0]);
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -736,16 +731,16 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
             else if (data.guildSplash)
                 setServerBannerUrl((prev) => prev || data.guildSplash);
             // Filter to only the whitelisted channels, sorted by Discord position
-            const idSet = new Set(CHANNEL_IDS);
+            const idSet = new Set(channelIds);
             const filtered = (data.channels || [])
                 .filter((ch) => idSet.has(ch.id))
                 .sort((channelA, channelB) => (channelA.position ?? 0) - (channelB.position ?? 0));
-            setChannels(filtered.length > 0 ? filtered : CHANNEL_IDS.map((id) => ({ id, name: id })));
+            setChannels(filtered.length > 0 ? filtered : channelIds.map((id) => ({ id, name: id })));
         })
             .catch(() => {
             // Fallback — use IDs as names
             if (!cancelled)
-                setChannels(CHANNEL_IDS.map((id) => ({ id, name: id })));
+                setChannels(channelIds.map((id) => ({ id, name: id })));
         });
         return () => { cancelled = true; };
     }, [channelsUrl]);
@@ -872,7 +867,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                     const { messages: updatedMsgs } = JSON.parse(event.data);
                     if (!updatedMsgs?.length)
                         return;
-                    const updateMap = new Map((updatedMsgs || []).map((message) => [message.id, message]));
+                    const updateMap = new Map(updatedMsgs.map((message) => [message.id, message]));
                     setMessages((prev) => prev.map((message) => {
                         const updated = updateMap.get(message.id);
                         return updated ? { ...message, reactions: updated.reactions } : message;
@@ -897,7 +892,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
             if (retryTimeout)
                 clearTimeout(retryTimeout);
         };
-    }, [messageCount, scrollToBottom, activeChannelId]);
+    }, [messageCount, activeChannelId, streamUrl]);
     // ── Fetch members (poll every 30s) ──────────────────────────────
     useEffect(() => {
         let cancelled = false;
@@ -915,7 +910,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
         fetchMembers();
         const interval = setInterval(fetchMembers, 30_000);
         return () => { cancelled = true; clearInterval(interval); };
-    }, []);
+    }, [membersUrl]);
     // ── Channel switch — reset message state eagerly ────────────────
     const handleChannelClick = useCallback((channel) => {
         setActiveChannelId(channel.id);
@@ -1050,7 +1045,7 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                                             const grouped = shouldGroup(message, previousMessage);
                                             const newDay = isDifferentDay(message, previousMessage);
                                             const nameStyle = resolveRoleColorStyle(message.author);
-                                            return (_jsxs("div", { children: [newDay && (_jsx("div", { className: styles['date-separator'], children: _jsx("span", { className: styles['date-separator-text'], children: formatDateSeparator(message.createdAtISO) }) })), grouped && !newDay ? (_jsxs("div", { className: styles['message-row-grouped'], children: [_jsx("span", { className: styles['timestamp-inline'], children: formatShortTime(message.createdAtISO) }), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles['message-content'], children: [_jsx("p", { className: styles['message-text'], children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] })) : (_jsxs("div", { className: `${styles['message-row']} ${message.replyTo ? styles['message-row-reply'] : ""}`, children: [message.replyTo && (_jsx(ReplyContext, { replyTo: message.replyTo, messageMap: messageMap })), message.author.avatarUrl ? (_jsx("img", { className: styles['avatar'], src: message.author.avatarUrl, alt: message.author.displayName, width: 40, height: 40, loading: "lazy" })) : (_jsx("div", { className: styles['avatar-fallback'], style: { background: getAvatarColor(message.author.id) }, children: (message.author.displayName || "?")[0].toUpperCase() })), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles['message-content'], children: [_jsxs("div", { className: styles['message-header'], children: [_jsx("span", { className: styles['author-name'], style: nameStyle, children: message.author.displayName }), message.author.isBot && (_jsxs("span", { className: styles['bot-badge'], children: [_jsx("svg", { className: styles['bot-badge-icon'], viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "BOT"] })), _jsx(UserBadges, { badges: message.author.badges }), _jsx(RoleTags, { roleTags: message.author.roleTags }), _jsx("span", { className: styles['timestamp'], children: formatTimestamp(message.createdAtISO) })] }), _jsx("p", { className: styles['message-text'], children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: handleReact })] })] }))] }, message.id));
+                                            return (_jsxs("div", { children: [newDay && (_jsx("div", { className: styles['date-separator'], children: _jsx("span", { className: styles['date-separator-text'], children: formatDateSeparator(message.createdAtISO) }) })), grouped && !newDay ? (_jsxs("div", { className: styles['message-row-grouped'], children: [_jsx("span", { className: styles['timestamp-inline'], children: formatShortTime(message.createdAtISO) }), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsx("div", { className: styles['message-content'], children: _jsx(MessageBody, { message: message, tenorOembedUrl: tenorOembedUrl, reactedSet: reactedSet, onReact: handleReact }) })] })) : (_jsxs("div", { className: `${styles['message-row']} ${message.replyTo ? styles['message-row-reply'] : ""}`, children: [message.replyTo && (_jsx(ReplyContext, { replyTo: message.replyTo, messageMap: messageMap })), message.author.avatarUrl ? (_jsx("img", { className: styles['avatar'], src: message.author.avatarUrl, alt: message.author.displayName, width: 40, height: 40, loading: "lazy" })) : (_jsx("div", { className: styles['avatar-fallback'], style: { background: getAvatarColor(message.author.id) }, children: (message.author.displayName || "?")[0].toUpperCase() })), _jsx(MessageActions, { messageId: message.id, onOpenPicker: handleOpenPicker, pickerMessageId: pickerMessageId }), _jsxs("div", { className: styles['message-content'], children: [_jsxs("div", { className: styles['message-header'], children: [_jsx("span", { className: styles['author-name'], style: nameStyle, children: message.author.displayName }), message.author.isBot && (_jsxs("span", { className: styles['bot-badge'], children: [_jsx("svg", { className: styles['bot-badge-icon'], viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "BOT"] })), _jsx(UserBadges, { badges: message.author.badges }), _jsx(RoleTags, { roleTags: message.author.roleTags }), _jsx("span", { className: styles['timestamp'], children: formatTimestamp(message.createdAtISO) })] }), _jsx(MessageBody, { message: message, tenorOembedUrl: tenorOembedUrl, reactedSet: reactedSet, onReact: handleReact })] })] }))] }, message.id));
                                         });
                                     })()] }), _jsx("div", { className: styles['input-bar'], children: joinMode ? (_jsxs("a", { href: inviteUrl, target: "_blank", rel: "noopener noreferrer", className: styles['join-button'], id: "discord-join-button", onMouseEnter: () => onJoinHoverChange?.(true), onMouseLeave: () => onJoinHoverChange?.(false), children: [_jsx("svg", { className: styles['join-button-icon'], viewBox: "0 0 24 24", width: "20", height: "20", fill: "currentColor", children: _jsx("path", { d: "M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.36-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.24-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z" }) }), "Join the Discord Server"] })) : (_jsxs("div", { className: styles['input-container'], children: [_jsxs("span", { className: styles['input-placeholder'], children: ["Message #", activeChannel.name] }), _jsxs("div", { className: styles['input-icons'], children: [_jsx("span", { children: "\uD83D\uDE00" }), _jsx("span", { children: "\uD83C\uDF81" }), _jsx("span", { children: "\uD83D\uDCCE" })] })] })) })] }), _jsx("aside", { className: styles['member-sidebar'], children: members ? (_jsxs("div", { className: styles['member-list'], children: [members.roles?.map((role) => (_jsxs("div", { className: styles['member-role-group'], children: [_jsxs("div", { className: styles['member-role-header'], children: [role.name, " \u2014 ", role.members.length] }), role.members.map((member) => (_jsx(MemberItem, { member: member }, member.id)))] }, role.id))), members.bots && members.bots.length > 0 && (_jsxs("div", { className: styles['member-role-group'], children: [_jsxs("div", { className: styles['member-role-header'], children: ["Bots \u2014 ", members.bots.length] }), members.bots.map((member) => (_jsx(MemberItem, { member: member }, member.id)))] }))] })) : (_jsx("div", { className: styles['is-loading-state'], children: _jsxs("div", { className: styles['loading-dots'], children: [_jsx("span", { className: styles['loading-dot'] }), _jsx("span", { className: styles['loading-dot'] }), _jsx("span", { className: styles['loading-dot'] })] }) })) })] }), pickerMessageId && (_jsx(EmojiPicker, { anchorRef: pickerAnchorRef.current, serverEmojis: serverEmojis, onSelect: handlePickerSelect, onClose: handleClosePicker }))] }));
 }

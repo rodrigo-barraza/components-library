@@ -333,7 +333,8 @@ export function ThemeProvider({
       document.documentElement.setAttribute(attribute, defaultTheme);
     }
     setMounted(true);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // Intentionally runs once — hydration from localStorage must not re-fire
+  }, []);
 
   // Sync DOM attribute + localStorage on theme change (skip initial mount)
   useEffect(() => {
