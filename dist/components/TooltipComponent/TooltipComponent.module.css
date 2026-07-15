@@ -1,6 +1,9 @@
 /* ══════════════════════════════════════════════════════════
-   TooltipComponent — M3-inspired
+   TooltipComponent
    Two variants: Plain (label) and Rich.
+   Surfaces derive from theme tokens so tooltips match the
+   active theme (same popover surface family as SelectComponent
+   menus), with a translucent glass treatment.
    ══════════════════════════════════════════════════════════ */
 
 /* ── Wrapper (inline-flex anchor) ── */
@@ -22,72 +25,65 @@
   pointer-events: none;
   user-select: none;
 
-  /* entrance animation */
+  background: color-mix(
+    in oklch,
+    var(--calculated-select-option-background-color, var(--background-elevated, #1a1b26)) 88%,
+    transparent
+  );
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  backdrop-filter: blur(12px) saturate(1.3);
+  border: 1px solid var(--calculated-border-medium, oklch(1 0 0 / 0.1));
+  color: var(--text-primary, #f8f8f8);
+
+  /* entrance animation — per-position hidden transforms below */
   opacity: 0;
-  transform: scale(0.85);
+  will-change: opacity, transform;
   transition:
-    opacity 150ms cubic-bezier(0, 0, 0.2, 1),
-    transform 150ms cubic-bezier(0, 0, 0.2, 1);
+    opacity 140ms cubic-bezier(0.2, 0, 0, 1),
+    transform 140ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .is-visible-state {
   opacity: 1;
-  transform: scale(1);
 }
 
 /* ══════════════════════════════════════════════════════════
-   Plain (Label) Tooltip — M3 Spec
-   • Container: inverse-surface, 4px radius
-   • Padding:   4px 8px
-   • Text:      body-small (12px / 16px lh), inverse-on-surface
-   • Max width: 200px
-   • No elevation
+   Plain (Label) Tooltip
+   • Compact single-surface label on the theme popover surface
+   • Radius/shadow from theme tokens
    ══════════════════════════════════════════════════════════ */
 .plain {
-  max-width: 200px;
-  padding: 4px 8px;
-  border-radius: 4px;
-
-  /* Hardcoded inverse-surface — theme-invariant per M3 spec.
-     Tooltips must always be legible regardless of light/dark mode. */
-  background: oklch(0.156 0 0);
-  color: oklch(1 0 0);
-
-  /* No elevation for plain tooltips (M3) */
-  box-shadow: none;
+  max-width: 240px;
+  padding: 5px 10px;
+  border-radius: var(--border-radius-md, 6px);
+  box-shadow:
+    var(--calculated-shadow-md, 0 4px 12px oklch(0 0 0 / 0.4)),
+    inset 0 1px 0 oklch(1 0 0 / 0.05);
 }
 
 .plain-label {
-  font-size: 0.75rem;           /* 12px — body-small */
-  line-height: 1rem;            /* 16px */
-  font-weight: 400;
-  letter-spacing: 0.025em;      /* 0.4px */
+  font-size: 0.75rem;           /* 12px */
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   white-space: normal;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ══════════════════════════════════════════════════════════
-   Rich Tooltip — M3 Spec
-   • Container: surface-container, 12px radius, elevation 2
-   • Min width: 200px, max width: 320px
-   • Padding:   12px 16px
-   • Subhead:   title-small (14px / 20px lh, 500 weight)
-   • Body:      body-medium (14px / 20px lh, 400 weight)
-   • Action:    label-large text button
+   Rich Tooltip
+   • Same surface family, larger radius + elevation
+   • Optional title (subhead), body, and action slot
    • Interactive — receives pointer events
    ══════════════════════════════════════════════════════════ */
 .rich {
   min-width: 200px;
   max-width: 320px;
-  padding: 12px 16px;
-  border-radius: 2px;
-  /* Hardcoded inverse-surface — theme-invariant, matching plain tooltip. */
-  background: oklch(0.156 0 0);
-  color: oklch(0.908 0.008 295);
-  border: 1px solid oklch(1 0 0 / 0.08);
+  padding: 12px 14px;
+  border-radius: var(--border-radius-lg, 10px);
   box-shadow:
-    0 1px 2px 0 oklch(0 0 0 / 0.3),
-    0 2px 6px 2px oklch(0 0 0 / 0.15);
+    var(--calculated-shadow-lg, 0 8px 32px oklch(0 0 0 / 0.5)),
+    inset 0 1px 0 oklch(1 0 0 / 0.05);
 
   /* Rich tooltips are interactive — can contain links/buttons */
   pointer-events: auto;
@@ -100,21 +96,21 @@
 }
 
 .rich-title {
-  font-size: 0.875rem;          /* 14px — title-small */
-  line-height: 1.25rem;         /* 20px */
-  font-weight: 500;
-  letter-spacing: 0.006em;      /* 0.1px */
-  color: oklch(0.908 0.008 295);
+  font-size: 0.8125rem;         /* 13px */
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: var(--text-primary, #f8f8f8);
 }
 
 .rich-body {
-  font-size: 0.875rem;          /* 14px — body-medium */
-  line-height: 1.25rem;         /* 20px */
+  font-size: 0.8125rem;         /* 13px */
+  line-height: 1.5;
   font-weight: 400;
-  letter-spacing: 0.016em;      /* 0.25px */
-  color: oklch(0.822 0.013 295);
+  letter-spacing: 0.01em;
+  color: var(--text-secondary, #8e95ae);
   white-space: normal;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .rich-action {
@@ -122,64 +118,60 @@
   justify-content: flex-end;
   margin-top: 8px;
   padding-top: 8px;
+  border-top: 1px solid var(--calculated-border-subtle, oklch(1 0 0 / 0.04));
 }
 
 /* ══════════════════════════════════════════════════════════
    Positional offsets (top / bottom / left / right)
-   Uses CSS translate for centering relative to anchor.
+   `translate` centers the bubble on the anchor edge;
+   `transform` is reserved for the entrance motion so the
+   two never fight.
    ══════════════════════════════════════════════════════════ */
-
-/* ── top: centered above anchor, translate up fully ── */
 .top {
   translate: -50% -100%;
 }
 
-/* ── bottom: centered below anchor ── */
 .bottom {
   translate: -50% 0;
 }
 
-/* ── left: centered to the left ── */
 .left {
   translate: -100% -50%;
 }
 
-/* ── right: centered to the right ── */
 .right {
   translate: 0 -50%;
 }
 
 /* ══════════════════════════════════════════════════════════
-   Motion: per-position entrance direction
-   Uses transform-origin and subtle directional slide.
-   GPU-composited via will-change.
+   Motion: per-position entrance — slight scale + 4px slide
+   from the anchor side, settling to identity when visible.
    ══════════════════════════════════════════════════════════ */
-.bubble {
-  will-change: opacity, transform;
+.top.bubble {
+  transform: scale(0.96) translateY(4px);
+  transform-origin: bottom center;
 }
 
-.top.bubble:not(.visible) {
-  transform: scale(0.85) translateY(4px);
+.bottom.bubble {
+  transform: scale(0.96) translateY(-4px);
+  transform-origin: top center;
 }
 
-.bottom.bubble:not(.visible) {
-  transform: scale(0.85) translateY(-4px);
+.left.bubble {
+  transform: scale(0.96) translateX(4px);
+  transform-origin: right center;
 }
 
-.left.bubble:not(.visible) {
-  transform: scale(0.85) translateX(4px);
+.right.bubble {
+  transform: scale(0.96) translateX(-4px);
+  transform-origin: left center;
 }
 
-.right.bubble:not(.visible) {
-  transform: scale(0.85) translateX(-4px);
-}
-
-/* ── Visible state resets directional slide ── */
 .top.is-visible-state,
 .bottom.is-visible-state,
 .left.is-visible-state,
 .right.is-visible-state {
-  transform: scale(1) translate(0);
+  transform: scale(1) translate(0, 0);
 }
 
 /* ══════════════════════════════════════════════════════════

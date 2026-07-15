@@ -5,21 +5,23 @@ import { createPortal } from "react-dom";
 import styles from "./TooltipComponent.module.css";
 
 /**
- * TooltipComponent — M3-inspired tooltip with Plain and Rich variants.
+ * TooltipComponent — theme-aware tooltip with Plain and Rich variants.
  *
- * M3 Spec Reference (Tooltips):
+ * Both variants render on the theme's popover surface tokens (same family
+ * as SelectComponent menus) with a translucent glass treatment, so tooltips
+ * follow the active theme in every client.
+ *
  *   • Two variants:
- *       - Plain (label):  single-line label, inverse-surface bg, 4px radius
- *       - Rich:           multi-line subhead + supporting text, surface-container bg,
- *                         12px radius, optional action button, elevation 2
- *   • Plain tooltip: max 1 line, concise label text
- *   • Rich tooltip:  optional title (subhead), supporting text (body-small),
+ *       - Plain (label):  compact label, popover surface, --border-radius-md
+ *       - Rich:           subhead + supporting text, --border-radius-lg,
+ *                         optional action slot, higher elevation
+ *   • Rich tooltip:  optional title (subhead), supporting text,
  *                    optional action slot, optional persistent mode
  *   • Trigger: hover or focus on the anchor element
- *   • Enter delay: 500ms for plain, immediate for rich (on long-press on touch)
+ *   • Enter delay: 500ms for plain, immediate for rich
  *   • Exit: plain auto-dismisses after 1500ms; rich stays until pointer leaves
- *   • Positioning: prefers below anchor with 4px–8px gap, flips to opposite
- *   • Caret/no-caret: M3 plain tooltips have no caret
+ *   • Positioning: prefers the requested side, flips when viewport space runs out
+ *   • No caret — clean floating surface
  *
  * Accessibility (per M3 Tooltips/Accessibility):
  *   • Plain tooltip uses `role="tooltip"` and `aria-describedby` on trigger
