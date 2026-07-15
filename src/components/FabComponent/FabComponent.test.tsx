@@ -102,14 +102,14 @@ describe("FabComponent", () => {
     );
     const button = screen.getByRole("button");
     expect(button.className).toContain("fixed");
-    expect(button.className).toContain("bottomStart");
+    expect(button.className).toContain("bottom-start");
   });
 
   it("applies hidden class for scroll-hide", () => {
     wrap(
       <FabComponent icon={PlusIcon} hidden aria-label="Add" />,
     );
-    expect(screen.getByRole("button").className).toContain("isHiddenState");
+    expect(screen.getByRole("button").className).toContain("is-hidden-state");
   });
 
   /* ── Disabled ──────────────────────────────────────────────────── */

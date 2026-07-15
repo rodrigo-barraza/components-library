@@ -52,7 +52,7 @@ describe("FabMenuComponent", () => {
   it("applies the primary variant class by default", () => {
     render(<FabMenuComponent items={mockItems} />);
     const trigger = screen.getByRole("button", { name: "Actions menu" });
-    expect(trigger).toHaveClass(/triggerPrimary/i);
+    expect(trigger).toHaveClass(/trigger-primary/i);
   });
 
   // ── Variants ────────────────────────────────────────────
@@ -61,8 +61,7 @@ describe("FabMenuComponent", () => {
     (variant) => {
       render(<FabMenuComponent items={mockItems} variant={variant} />);
       const trigger = screen.getByRole("button", { name: "Actions menu" });
-      const className = `trigger${variant.charAt(0).toUpperCase() + variant.slice(1)}`;
-      expect(trigger).toHaveClass(new RegExp(className, "i"));
+      expect(trigger).toHaveClass(new RegExp(`trigger-${variant}`, "i"));
     },
   );
 

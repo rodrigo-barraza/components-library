@@ -30,7 +30,7 @@ describe("DividerComponent", () => {
   it("applies middleInset variant class", () => {
     const { container } = render(<DividerComponent variant="middleInset" />);
     const hr = container.querySelector("hr");
-    expect(hr).toHaveClass(/middleInset/i);
+    expect(hr).toHaveClass(/middle-inset/i);
   });
 
   /* ── Accessibility ──────────────────────────────────────────────── */
@@ -60,7 +60,7 @@ describe("DividerComponent", () => {
   it("applies spacing class when spacing prop is provided", () => {
     const { container } = render(<DividerComponent spacing="md" />);
     const hr = container.querySelector("hr");
-    expect(hr).toHaveClass(/spacingMd/i);
+    expect(hr).toHaveClass(/spacing-md/i);
   });
 
   /* ── Custom className ───────────────────────────────────────────── */

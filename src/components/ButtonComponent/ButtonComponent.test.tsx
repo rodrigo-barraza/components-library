@@ -64,7 +64,7 @@ describe("ButtonComponent", () => {
     const { container } = render(
       <ButtonComponent>With State Layer</ButtonComponent>,
     );
-    const stateLayer = container.querySelector('[class*="stateLayer"]');
+    const stateLayer = container.querySelector('[class*="state-layer"]');
     expect(stateLayer).toBeInTheDocument();
   });
 
@@ -118,7 +118,7 @@ describe("ButtonComponent", () => {
   it("applies fullWidth class when fullWidth prop is true", () => {
     render(<ButtonComponent fullWidth>Full Width</ButtonComponent>);
     const button = screen.getByRole("button", { name: "Full Width" });
-    expect(button).toHaveClass(/fullWidth/i);
+    expect(button).toHaveClass(/full-width/i);
   });
 
   /* ── Icon support ──────────────────────────────────────────────── */
@@ -136,7 +136,7 @@ describe("ButtonComponent", () => {
       <ButtonComponent icon={MockIcon}>With Icon</ButtonComponent>,
     );
     const button = screen.getByRole("button", { name: "With Icon" });
-    expect(button).toHaveClass(/hasIcon/i);
+    expect(button).toHaveClass(/has-icon/i);
   });
 
   it("applies iconOnly class when icon present but no children", () => {
@@ -145,7 +145,7 @@ describe("ButtonComponent", () => {
       <ButtonComponent icon={MockIcon} aria-label="Icon Only" />,
     );
     const button = screen.getByRole("button", { name: "Icon Only" });
-    expect(button).toHaveClass(/iconOnly/i);
+    expect(button).toHaveClass(/icon-only/i);
   });
 
   /* ── Sizes ─────────────────────────────────────────────────────── */
@@ -196,7 +196,7 @@ describe("ButtonComponent", () => {
       <ButtonComponent variant="submit" isGenerating icon={MockIcon} />,
     );
     const button = screen.getByRole("button");
-    expect(button).toHaveClass(/submitGenerating/i);
+    expect(button).toHaveClass(/submit-generating/i);
   });
 
   /* ── Accessibility ─────────────────────────────────────────────── */

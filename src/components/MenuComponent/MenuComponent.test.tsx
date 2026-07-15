@@ -291,7 +291,7 @@ describe("MenuComponent", () => {
     it("applies matchWidth class", () => {
       renderMenu({ matchWidth: true, open: true });
       const menu = screen.getByRole("menu");
-      expect(menu.className).toContain("matchWidth");
+      expect(menu.className).toContain("match-width");
     });
   });
 

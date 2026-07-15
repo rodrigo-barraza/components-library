@@ -245,7 +245,9 @@ describe("SplitButtonComponent", () => {
         <SplitButtonComponent trailingToggled>Save</SplitButtonComponent>,
       );
       const buttons = screen.getAllByRole("button");
-      expect(buttons[1].className).toContain("trailingToggled");
+      // Toggled state: aria-expanded on the button, rotation on the icon wrap
+      expect(buttons[1]).toHaveAttribute("aria-expanded", "true");
+      expect(buttons[1].querySelector('[class*="trailing-icon-rotated"]')).not.toBeNull();
     });
   });
 
@@ -259,7 +261,7 @@ describe("SplitButtonComponent", () => {
         <SplitButtonComponent fullWidth>Save</SplitButtonComponent>,
       );
       const group = screen.getByRole("group");
-      expect(group.className).toContain("fullWidth");
+      expect(group.className).toContain("full-width");
     });
   });
 });

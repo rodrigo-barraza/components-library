@@ -23,7 +23,7 @@ describe("ExtendedFabComponent", () => {
     render(<ExtendedFabComponent>Create</ExtendedFabComponent>);
     const button = screen.getByRole("button", { name: "Create" });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass(/extendedFab/i);
+    expect(button).toHaveClass(/extended-fab/i);
     expect(button).toHaveClass(/primary/i);
     expect(button).not.toBeDisabled();
   });
