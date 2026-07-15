@@ -42,6 +42,7 @@ export { default as NavigationRailComponent } from "./components/NavigationRailC
 export { default as NavigationSidebarComponent } from "./components/NavigationSidebarComponent/NavigationSidebarComponent.js";
 export { default as PageHeaderComponent } from "./components/PageHeaderComponent/PageHeaderComponent.js";
 export { PageHeaderProvider, usePageHeaderContext } from "./components/PageHeaderContext.js";
+export { default as PageHeroComponent } from "./components/PageHeroComponent/PageHeroComponent.js";
 export { default as PageLayoutComponent } from "./components/PageLayoutComponent/PageLayoutComponent.js";
 export { default as PaginationComponent } from "./components/PaginationComponent/PaginationComponent.js";
 export { default as ProgressBarComponent } from "./components/ProgressBarComponent/ProgressBarComponent.js";
@@ -57,6 +58,7 @@ export { default as ChartLineComponent } from "./components/ChartLineComponent/C
 /** @deprecated Use ChartLineComponent instead */
 export { default as SparklineComponent } from "./components/ChartLineComponent/ChartLineComponent.js";
 export { default as SplitButtonComponent } from "./components/SplitButtonComponent/SplitButtonComponent.js";
+export { default as StatBadgeComponent } from "./components/StatBadgeComponent/StatBadgeComponent.js";
 export { default as StatsCardComponent } from "./components/StatsCardComponent/StatsCardComponent.js";
 export { default as StatusDotComponent } from "./components/StatusDotComponent/StatusDotComponent.js";
 export { default as SwitchComponent } from "./components/SwitchComponent/SwitchComponent.js";

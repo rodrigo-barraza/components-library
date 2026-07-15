@@ -1,0 +1,51 @@
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--background-elevated);
+  border: 1px solid var(--calculated-border-color);
+  border-radius: var(--border-radius-sm);
+  white-space: nowrap;
+}
+
+.icon {
+  color: var(--stat-badge-accent, var(--text-tertiary));
+  flex-shrink: 0;
+}
+
+.value {
+  color: var(--stat-badge-accent, var(--text-primary));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Variants ─────────────────────────────────────────────── */
+
+.variant-accent {
+  --stat-badge-accent: var(--accent-primary);
+  border-color: var(--calculated-accent-primary-subtle);
+}
+
+.variant-success {
+  --stat-badge-accent: var(--color-success);
+  border-color: var(--calculated-color-success-subtle);
+}
+
+.variant-warning {
+  --stat-badge-accent: var(--color-warning);
+  border-color: var(--calculated-color-warning-subtle);
+}
+
+.variant-danger {
+  --stat-badge-accent: var(--color-danger);
+  border-color: var(--calculated-color-danger-subtle);
+}
+
+.variant-info {
+  --stat-badge-accent: var(--color-info);
+  border-color: var(--calculated-color-info-subtle);
+}

@@ -1,0 +1,132 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+/* ── Row variant ──────────────────────────────────────────── */
+
+.row-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.row-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.row-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.row-icon {
+  color: var(--accent-primary);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.row-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin: 0;
+}
+
+.row-trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ── Display variant ──────────────────────────────────────── */
+
+.display {
+  align-items: center;
+  text-align: center;
+}
+
+.display-icon {
+  color: var(--accent-primary);
+  opacity: 0.85;
+}
+
+.display-title {
+  font-size: 2.75rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary),
+    var(--accent-secondary, var(--accent-primary)),
+    var(--accent-tertiary, var(--accent-secondary, var(--accent-primary)))
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.display-subtitle {
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-inline-size: 680px;
+  margin: 0;
+}
+
+.display-trailing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .row-main {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .row-trailing {
+    justify-content: flex-start;
+  }
+
+  .display-title {
+    font-size: 2rem;
+  }
+
+  .display-subtitle {
+    font-size: var(--font-size-base);
+  }
+}
