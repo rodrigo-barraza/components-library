@@ -11,6 +11,7 @@ export { default as ChatLauncherComponent } from "./components/ChatLauncherCompo
 export { default as ChatMessageComponent } from "./components/ChatMessageComponent/ChatMessageComponent.js";
 export { default as ChatPanelComponent } from "./components/ChatPanelComponent/ChatPanelComponent.js";
 export { default as CheckboxComponent } from "./components/CheckboxComponent/CheckboxComponent.js";
+export { default as ChipComponent } from "./components/ChipComponent/ChipComponent.js";
 export { default as CloseButtonComponent } from "./components/CloseButtonComponent/CloseButtonComponent.js";
 export { default as CustomThemeBootComponent } from "./components/CustomThemeBootComponent/CustomThemeBootComponent.js";
 export { default as CollapsibleBlockComponent } from "./components/CollapsibleBlockComponent/CollapsibleBlockComponent.js";
