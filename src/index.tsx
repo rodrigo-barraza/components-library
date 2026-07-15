@@ -105,6 +105,17 @@ export {
   THEME_CATALOG,
 } from "./components/ThemeProvider/ThemeProvider.js";
 export type { ThemeCatalogEntry } from "./components/ThemeProvider/ThemeProvider.js";
+export {
+  AUTO_THEME,
+  AUTO_DAY_START_HOUR,
+  AUTO_DAY_END_HOUR,
+  AUTO_DAY_THEME,
+  AUTO_NIGHT_THEME,
+  THEMES_DEFAULT,
+  THEME_TRANSITION_MS,
+  resolveAutoTheme,
+  msUntilNextAutoBoundary,
+} from "./components/ThemeProvider/themeConstants.js";
 
 // ── Services ────────────────────────────────────────────
 export { default as ChatService } from "./services/ChatService.js";
@@ -137,6 +148,7 @@ export {
   formatCurrency,
 } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
+export { getReadableTextColor, relativeLuminance } from "./utils/colorContrast.js";
 
 // ── Hooks ───────────────────────────────────────────────
 export { default as useClickOutside } from "./hooks/useClickOutside.js";

@@ -78,6 +78,7 @@ export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleB
 export { ChatProvider, useChat } from "./components/ChatProvider.js";
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
 export { ThemeProvider, useTheme, THEME_CATALOG, } from "./components/ThemeProvider/ThemeProvider.js";
+export { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, THEMES_DEFAULT, THEME_TRANSITION_MS, resolveAutoTheme, msUntilNextAutoBoundary, } from "./components/ThemeProvider/themeConstants.js";
 // ── Services ────────────────────────────────────────────
 export { default as ChatService } from "./services/ChatService.js";
 export { default as CustomThemeService } from "./services/CustomThemeService.js";
@@ -90,6 +91,7 @@ export { CHAT_STATES, CHAT_EVENTS, CHAT_DEFAULTS, MESSAGE_ROLES, } from "./const
 export { DATE_PRESETS, DATE_PRESETS_DATE_ONLY, formatDate, daysAgo, parseDateValue, formatDateDisplay, getActiveDatePreset, } from "./utils/datePresets.js";
 export { formatPercent, formatCurrency, } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
+export { getReadableTextColor, relativeLuminance } from "./utils/colorContrast.js";
 // ── Hooks ───────────────────────────────────────────────
 export { default as useClickOutside } from "./hooks/useClickOutside.js";
 export { default as useClipboard } from "./hooks/useClipboard.js";

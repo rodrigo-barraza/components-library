@@ -1,19 +1,29 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider, useTheme } from "./ThemeProvider.js";
+import {
+  AUTO_THEME,
+  AUTO_DAY_START_HOUR,
+  AUTO_DAY_END_HOUR,
+  THEME_TRANSITION_MS,
+  resolveAutoTheme,
+  msUntilNextAutoBoundary,
+} from "./themeConstants.js";
 
 /* ── Helpers ──────────────────────────────────────────────── */
 
 function ThemeReader() {
-  const { theme, themes, mounted, toggleTheme, setTheme } = useTheme();
+  const { theme, themes, mounted, resolvedTheme, toggleTheme, setTheme } = useTheme();
   return (
     <div>
       <span data-testid="theme">{theme}</span>
+      <span data-testid="resolved-theme">{resolvedTheme}</span>
       <span data-testid="themes">{themes.join(",")}</span>
       <span data-testid="mounted">{String(mounted)}</span>
       <button data-testid="toggle" onClick={toggleTheme}>Toggle</button>
       <button data-testid="set-light" onClick={() => setTheme("light")}>Light</button>
+      <button data-testid="set-auto" onClick={() => setTheme(AUTO_THEME)}>Auto</button>
       <button data-testid="set-invalid" onClick={() => setTheme("neon")}>Invalid</button>
     </div>
   );

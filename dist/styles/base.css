@@ -127,7 +127,7 @@
   --text-primary: #f8f8f8;
   --text-secondary: #8e95ae;
   --text-tertiary: #6b728e;
-  --text-muted: #5a6078;
+  --text-muted: #626981;
   --calculated-text-inverse: #0a0a0f;
 
   /* Semantic Status Colors */
@@ -171,15 +171,15 @@
   --text-primary: #1a1a2e;
   --text-secondary: #64748b;
   --text-tertiary: #78849c;
-  --text-muted: #94a3b8;
+  --text-muted: #7f8ea2;
   --calculated-text-inverse: #ffffff;
 
   --color-danger: #dc2626;
   --calculated-color-danger-subtle: oklch(0.577 0.2152 27.3 / 0.06);
-  --color-success: #059669;
-  --calculated-color-success-subtle: oklch(0.6 0.1462 160.8 / 0.06);
-  --color-warning: #d97706;
-  --calculated-color-warning-subtle: oklch(0.67 0.1625 66.5 / 0.06);
+  --color-success: #01855d;
+  --calculated-color-success-subtle: oklch(0.546 0.1169 163.5 / 0.06);
+  --color-warning: #b16002;
+  --calculated-color-warning-subtle: oklch(0.572 0.1355 58.5 / 0.06);
   --color-info: #2563eb;
   --calculated-color-info-subtle: oklch(0.526 0.2519 280 / 0.06);
 
@@ -215,17 +215,17 @@
   --text-primary: #2c2e36;
   --text-secondary: #5e6272;
   --text-tertiary: #787c8e;
-  --text-muted: #959aac;
+  --text-muted: #797d8f;
   --calculated-text-inverse: #e8e9ed;
 
   --color-danger: #c92a2a;
   --calculated-color-danger-subtle: oklch(0.546 0.1949 26.6 / 0.08);
-  --color-success: #0c8346;
-  --calculated-color-success-subtle: oklch(0.541 0.1601 151.5 / 0.08);
-  --color-warning: #c77c08;
-  --calculated-color-warning-subtle: oklch(0.655 0.1515 77.3 / 0.08);
-  --color-info: #1d6fdb;
-  --calculated-color-info-subtle: oklch(0.541 0.2057 273.9 / 0.08);
+  --color-success: #01783e;
+  --calculated-color-success-subtle: oklch(0.502 0.129 153.0 / 0.08);
+  --color-warning: #935a03;
+  --calculated-color-warning-subtle: oklch(0.52 0.1133 67.6 / 0.08);
+  --color-info: #0d64cf;
+  --calculated-color-info-subtle: oklch(0.521 0.1821 257.6 / 0.08);
 
   --calculated-shadow-sm: 0 1px 3px oklch(0 0 0 / 0.08);
   --calculated-shadow-md: 0 4px 12px oklch(0 0 0 / 0.1);
@@ -256,7 +256,7 @@
   --text-primary: #faebd7;
   --text-secondary: #c4a882;
   --text-tertiary: #8a7560;
-  --text-muted: #6b5a48;
+  --text-muted: #7e6c5a;
   --calculated-text-inverse: #1a120e;
 
   --color-danger: #ff5252;
@@ -297,7 +297,7 @@
   --text-primary: #d0e8f2;
   --text-secondary: #7ba7c2;
   --text-tertiary: #4a7a96;
-  --text-muted: #365a72;
+  --text-muted: #4b6f88;
   --calculated-text-inverse: #060d18;
 
   --color-danger: #ff6b6b;
@@ -331,7 +331,8 @@
   --calculated-background-base-contrast: oklch(0.936 0.0267 318.5 / 0.92);
   --calculated-background-surface-contrast: oklch(0.936 0.0267 318.5 / 0.92);
   --calculated-background-elevated-contrast: oklch(0.936 0.0267 318.5 / 0.92);
-  --calculated-accent-primary-contrast: oklch(1 0 0 / 0.92);
+  /* Dark label on the hot-fuchsia accent — white only hits ~3.1:1 */
+  --calculated-accent-primary-contrast: oklch(0 0 0 / 0.87);
 
   --calculated-border-color: oklch(0.661 0.2779 352.6 / 0.14);
   --calculated-border-subtle: oklch(0.661 0.2779 352.6 / 0.06);
@@ -341,7 +342,7 @@
   --text-primary: #f0e6f4;
   --text-secondary: #b893c4;
   --text-tertiary: #7d5f8e;
-  --text-muted: #5e4570;
+  --text-muted: #795f8c;
   --calculated-text-inverse: #0e0a10;
 
   --color-danger: #ff3d5a;
@@ -384,7 +385,7 @@
   --text-primary: #f5ebe0;
   --text-secondary: #c2a68a;
   --text-tertiary: #8b7260;
-  --text-muted: #6b5546;
+  --text-muted: #7d6656;
   --calculated-text-inverse: #120c08;
 
   --color-danger: #ef4444;
@@ -427,7 +428,7 @@
   --text-primary: #dce8f0;
   --text-secondary: #8aa4b8;
   --text-tertiary: #5c7a8e;
-  --text-muted: #3e5a6e;
+  --text-muted: #536f84;
   --calculated-text-inverse: #0a0e14;
 
   --color-danger: #f87171;
@@ -470,7 +471,7 @@
   --text-primary: #e2f0e2;
   --text-secondary: #8caa8c;
   --text-tertiary: #5e7a5e;
-  --text-muted: #3f5c3f;
+  --text-muted: #557355;
   --calculated-text-inverse: #080e08;
 
   --color-danger: #f87171;
@@ -515,7 +516,7 @@
   --text-primary: #e8e8e8;
   --text-secondary: #a0a0a0;
   --text-tertiary: #787878;
-  --text-muted: #585858;
+  --text-muted: #6d6d6d;
   --calculated-text-inverse: #101010;
 
   --color-danger: #d4d4d4;
@@ -560,8 +561,8 @@
 
   --text-primary: #dcdcf8;
   --text-secondary: #8e92c4;
-  --text-tertiary: #5c6094;
-  --text-muted: #3e4270;
+  --text-tertiary: #7176ac;
+  --text-muted: #656b9c;
   --calculated-text-inverse: #0a1028;
 
   --color-danger: #f87171;
@@ -609,8 +610,8 @@
 
   --text-primary: #e2e4ea;
   --text-secondary: #8a8fa0;
-  --text-tertiary: #5e6274;
-  --text-muted: #44475a;
+  --text-tertiary: #727689;
+  --text-muted: #666a7e;
   --calculated-text-inverse: #0c0d12;
 
   --color-danger: #ef4444;
@@ -637,6 +638,39 @@
 html[data-theme="mono"] {
   filter: grayscale(1) contrast(1.05);
   -webkit-filter: grayscale(1) contrast(1.05);
+}
+
+/* ── Theme-Switch Transition ────────────────────────────────── */
+/* ThemeProvider tags <html data-theme-transition> for ~350ms around a
+   data-theme swap (see THEME_TRANSITION_MS). While tagged, every element
+   animates its color-bearing properties so the new palette cross-fades
+   instead of snapping. !important intentionally suspends per-component
+   transitions for the duration so nothing snaps out of sync. */
+
+html[data-theme-transition],
+html[data-theme-transition] *,
+html[data-theme-transition] *::before,
+html[data-theme-transition] *::after {
+  transition:
+    background-color 350ms ease,
+    color 350ms ease,
+    border-color 350ms ease,
+    outline-color 350ms ease,
+    fill 350ms ease,
+    stroke 350ms ease,
+    box-shadow 350ms ease,
+    filter 350ms ease !important;
+  transition-delay: 0ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html[data-theme-transition],
+  html[data-theme-transition] *,
+  html[data-theme-transition] *::before,
+  html[data-theme-transition] *::after {
+    transition: none !important;
+  }
 }
 
 /* ── Body Defaults ──────────────────────────────────────────── */

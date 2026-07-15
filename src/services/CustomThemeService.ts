@@ -394,10 +394,14 @@ function generateAllCustomThemeCSS(): string {
 
 // ── Default Token Presets ──────────────────────────────────────────────
 
-const BUILT_IN_PRESETS = THEME_CATALOG;
+// "auto" is a day/night resolver, not a palette (its preview values are
+// gradient strings) — never offer it as a base for custom themes.
+const BUILT_IN_PRESETS: Record<string, ThemeCatalogEntry> = Object.fromEntries(
+  Object.entries(THEME_CATALOG).filter(([themeId]) => themeId !== "auto"),
+);
 
 function getBuiltInPreset(themeId: string): CustomThemeTokens {
-  return THEME_CATALOG[themeId] || THEME_CATALOG.dark;
+  return BUILT_IN_PRESETS[themeId] || THEME_CATALOG.twilight;
 }
 
 // ── Public API ─────────────────────────────────────────────────────────
