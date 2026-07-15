@@ -12,8 +12,9 @@ const SIZE_CLASS_MAP: Record<string, string> = {
 /**
  * InputComponent — styled text input with consistent theming.
  */
-const InputComponent = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & {
+const InputComponent = forwardRef<HTMLInputElement, Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> & {
   icon?: React.ComponentType<{ size?: number; className?: string }>;
+  /** Visual size ("sm" | "md" | "lg") — replaces the native numeric `size` attribute */
   size?: string;
   label?: React.ReactNode;
 }>(function InputComponent(
