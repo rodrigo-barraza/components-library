@@ -157,12 +157,288 @@ function emojiUrl(id, animated) {
     const imageFormat = animated ? "gif" : "webp";
     return `https://cdn.discordapp.com/emojis/${id}.${imageFormat}?size=48&quality=lossless`;
 }
+// Click-to-reveal inline spoiler (||text||), Discord-style.
+function TextSpoiler({ children }) {
+    const [revealed, setRevealed] = useState(false);
+    return (_jsx("span", { className: revealed ? styles['spoiler-text-revealed'] : styles['spoiler-text'], onClick: revealed ? undefined : () => setRevealed(true), title: revealed ? undefined : "Spoiler — click to reveal", children: children }));
+}
+// <t:unixSeconds:style> — Discord timestamp tokens
+function formatDiscordTimestamp(unixSeconds, style = "f") {
+    const date = new Date(unixSeconds * 1000);
+    if (isNaN(date.getTime()))
+        return "";
+    const time = date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+    switch (style) {
+        case "t": return time;
+        case "T": return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", hour12: true });
+        case "d": return date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+        case "D": return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+        case "F": return `${date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })} ${time}`;
+        case "R": {
+            const diffSeconds = Math.round((date.getTime() - Date.now()) / 1000);
+            const absSeconds = Math.abs(diffSeconds);
+            const units = [
+                [31536000, "year"], [2592000, "month"], [86400, "day"],
+                [3600, "hour"], [60, "minute"], [1, "second"],
+            ];
+            for (const [unitSeconds, label] of units) {
+                if (absSeconds >= unitSeconds || unitSeconds === 1) {
+                    const count = Math.max(1, Math.floor(absSeconds / unitSeconds));
+                    const unitLabel = count === 1 ? label : `${label}s`;
+                    return diffSeconds < 0 ? `${count} ${unitLabel} ago` : `in ${count} ${unitLabel}`;
+                }
+            }
+            return "now";
+        }
+        default:
+            return `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} ${time}`;
+    }
+}
+// Ordered by priority — when two patterns match at the same index,
+// the earlier entry wins. All regexes must be non-global.
+const INLINE_PATTERNS = [
+    // `inline code` — no nested formatting inside
+    {
+        re: /`([^`\n]+)`/,
+        render: (match, _ctx, key) => _jsx("code", { className: styles['inline-code'], children: match[1] }, key),
+    },
+    // ||spoiler||
+    {
+        re: /\|\|([\s\S]+?)\|\|/,
+        render: (match, _ctx, key, parse) => _jsx(TextSpoiler, { children: parse(match[1], key) }, key),
+    },
+    // ***bold italic***
+    {
+        re: /\*\*\*([\s\S]+?)\*\*\*/,
+        render: (match, _ctx, key, parse) => _jsx("strong", { children: _jsx("em", { children: parse(match[1], key) }) }, key),
+    },
+    // **bold**
+    {
+        re: /\*\*([\s\S]+?)\*\*/,
+        render: (match, _ctx, key, parse) => _jsx("strong", { children: parse(match[1], key) }, key),
+    },
+    // __underline__
+    {
+        re: /__([\s\S]+?)__/,
+        render: (match, _ctx, key, parse) => _jsx("u", { children: parse(match[1], key) }, key),
+    },
+    // ~~strikethrough~~
+    {
+        re: /~~([\s\S]+?)~~/,
+        render: (match, _ctx, key, parse) => _jsx("s", { children: parse(match[1], key) }, key),
+    },
+    // *italic*
+    {
+        re: /\*([^*\n]+)\*/,
+        render: (match, _ctx, key, parse) => _jsx("em", { children: parse(match[1], key) }, key),
+    },
+    // _italic_ — match[1] is the preceding non-word char (or start)
+    {
+        re: /(^|[^\w_])_([^_\n]+)_(?![\w_])/,
+        render: (match, _ctx, key, parse) => (_jsxs("span", { children: [match[1], _jsx("em", { children: parse(match[2], key) })] }, key)),
+    },
+    // [label](url) masked links
+    {
+        re: /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/,
+        render: (match, _ctx, key, parse) => (_jsx("a", { href: match[2], target: "_blank", rel: "noopener noreferrer", children: parse(match[1], key) }, key)),
+    },
+    // <a:name:id> raw custom emoji tokens
+    {
+        re: /<(a?):(\w+):(\d+)>/,
+        render: (match, ctx, key) => (_jsx("img", { src: emojiUrl(match[3], match[1] === "a"), alt: `:${match[2]}:`, title: `:${match[2]}:`, className: ctx.jumbo ? `${styles['custom-emoji']} ${styles['custom-emoji-jumbo']}` : styles['custom-emoji'], draggable: false, loading: "lazy" }, key)),
+    },
+    // <t:unix:style> timestamps
+    {
+        re: /<t:(-?\d+)(?::([tTdDfFR]))?>/,
+        render: (match, _ctx, key) => (_jsx("span", { className: styles['md-timestamp'], children: formatDiscordTimestamp(Number(match[1]), match[2] || "f") }, key)),
+    },
+    // Raw mention tokens (usually already resolved in cleanContent)
+    {
+        re: /<(@[!&]?|#)\d+>/,
+        render: (match, _ctx, key) => (_jsx("span", { className: styles['mention'], children: match[1] === "#" ? "#channel" : match[1] === "@&" ? "@role" : "@user" }, key)),
+    },
+    // Bare URLs
+    {
+        re: /https?:\/\/[^\s<]+/,
+        render: (match, _ctx, key) => {
+            const url = match[0];
+            if (TENOR_URL_TEST_RE.test(url))
+                return null; // rendered by TenorEmbeds
+            const display = url.length > 50 ? url.substring(0, 47) + "..." : url;
+            return _jsx("a", { href: url, target: "_blank", rel: "noopener noreferrer", children: display }, key);
+        },
+    },
+    // :name: custom emoji resolved via the raw-content emoji map
+    {
+        re: /:(\w+):/,
+        render: (match, ctx, key) => {
+            const emoji = ctx.emojiMap.get(match[1]);
+            if (!emoji)
+                return match[0];
+            return (_jsx("img", { src: emojiUrl(emoji.id, emoji.animated), alt: `:${emoji.name}:`, title: `:${emoji.name}:`, className: ctx.jumbo ? `${styles['custom-emoji']} ${styles['custom-emoji-jumbo']}` : styles['custom-emoji'], draggable: false, loading: "lazy" }, key));
+        },
+    },
+    // @mentions (cleanContent form)
+    {
+        re: /@[\w.]+/,
+        render: (match, _ctx, key) => _jsx("span", { className: styles['mention'], children: match[0] }, key),
+    },
+];
+// Scan for the earliest-matching inline pattern, emit preceding text
+// verbatim, render the match (recursing for nestable styles), repeat.
+function parseInline(text, ctx, keyBase) {
+    const nodes = [];
+    let remaining = text;
+    let keyIndex = 0;
+    let guard = 0;
+    while (remaining.length > 0 && guard++ < 2000) {
+        let best = null;
+        for (const { re, render } of INLINE_PATTERNS) {
+            const match = re.exec(remaining);
+            if (!match)
+                continue;
+            if (!best || match.index < best.index) {
+                best = { index: match.index, match, render };
+                if (best.index === 0)
+                    break; // earlier patterns already had their shot
+            }
+        }
+        if (!best) {
+            nodes.push(remaining);
+            break;
+        }
+        if (best.index > 0)
+            nodes.push(remaining.slice(0, best.index));
+        const parse = (inner, innerKeyBase) => parseInline(inner, ctx, `${innerKeyBase}-i`);
+        const rendered = best.render(best.match, ctx, `${keyBase}-${keyIndex++}`, parse);
+        if (rendered !== null)
+            nodes.push(rendered);
+        remaining = remaining.slice(best.index + best.match[0].length);
+    }
+    return nodes;
+}
+// Line-level constructs: headers, subtext, block quotes, list items.
+// Plain lines are joined with "\n" (message text is white-space:
+// pre-wrap) so hard line breaks survive.
+function renderBlockLines(segment, ctx, keyBase) {
+    const lines = segment.split("\n");
+    const nodes = [];
+    let inlineRun = [];
+    let quoteRun = [];
+    let restIsQuote = false;
+    const flushInline = () => {
+        if (inlineRun.length) {
+            nodes.push(...inlineRun);
+            inlineRun = [];
+        }
+    };
+    const flushQuote = (key) => {
+        if (!quoteRun.length)
+            return;
+        nodes.push(_jsx("blockquote", { className: styles['block-quote'], children: parseInline(quoteRun.join("\n"), ctx, `${key}-q`) }, key));
+        quoteRun = [];
+    };
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+        const line = lines[lineIndex];
+        const key = `${keyBase}-l${lineIndex}`;
+        if (restIsQuote) {
+            quoteRun.push(line);
+            continue;
+        }
+        const multiQuoteMatch = /^>>> ?([\s\S]*)$/.exec(line);
+        if (multiQuoteMatch) {
+            flushInline();
+            restIsQuote = true;
+            quoteRun.push(multiQuoteMatch[1]);
+            continue;
+        }
+        const quoteMatch = /^> ?(.*)$/.exec(line);
+        if (quoteMatch) {
+            flushInline();
+            quoteRun.push(quoteMatch[1]);
+            continue;
+        }
+        flushQuote(`${key}-fq`);
+        const headerMatch = /^(#{1,3}) (.+)$/.exec(line);
+        if (headerMatch) {
+            flushInline();
+            const level = headerMatch[1].length;
+            nodes.push(_jsx("div", { className: styles[`md-h${level}`], children: parseInline(headerMatch[2], ctx, key) }, key));
+            continue;
+        }
+        const subtextMatch = /^-# (.+)$/.exec(line);
+        if (subtextMatch) {
+            flushInline();
+            nodes.push(_jsx("div", { className: styles['md-subtext'], children: parseInline(subtextMatch[1], ctx, key) }, key));
+            continue;
+        }
+        const listMatch = /^(\s*)[-*] (.+)$/.exec(line);
+        if (listMatch) {
+            flushInline();
+            const depth = Math.min(Math.floor(listMatch[1].length / 2), 3);
+            nodes.push(_jsxs("div", { className: styles['md-list-item'], style: depth ? { marginLeft: depth * 16 } : undefined, children: [_jsx("span", { className: styles['md-list-bullet'], children: "\u2022" }), _jsx("span", { children: parseInline(listMatch[2], ctx, key) })] }, key));
+            continue;
+        }
+        if (inlineRun.length)
+            inlineRun.push("\n");
+        inlineRun.push(...parseInline(line, ctx, key));
+    }
+    flushQuote(`${keyBase}-fq-end`);
+    flushInline();
+    return nodes;
+}
+// Top level: extract ```fenced code blocks``` first, everything else
+// goes through line-level + inline parsing.
+const CODE_FENCE_RE = /```(?:([\w+-]+)\n)?([\s\S]*?)```/g;
+function renderMarkdown(text, ctx) {
+    const nodes = [];
+    let lastIndex = 0;
+    let blockIndex = 0;
+    CODE_FENCE_RE.lastIndex = 0;
+    let fenceMatch;
+    while ((fenceMatch = CODE_FENCE_RE.exec(text)) !== null) {
+        if (fenceMatch.index > lastIndex) {
+            const before = text.slice(lastIndex, fenceMatch.index).replace(/\n$/, "");
+            if (before)
+                nodes.push(...renderBlockLines(before, ctx, `b${blockIndex++}`));
+        }
+        const code = (fenceMatch[2] || "").replace(/^\n/, "").replace(/\n$/, "");
+        nodes.push(_jsx("pre", { className: styles['code-block'], children: _jsx("code", { children: code }) }, `code-${blockIndex++}`));
+        lastIndex = fenceMatch.index + fenceMatch[0].length;
+    }
+    let tail = text.slice(lastIndex);
+    if (lastIndex > 0)
+        tail = tail.replace(/^\n/, "");
+    if (tail)
+        nodes.push(...renderBlockLines(tail, ctx, `b${blockIndex++}`));
+    return nodes;
+}
+// Emoji-only messages render jumbo (48px), like Discord — capped at 30.
+function isEmojiOnly(text, emojiMap) {
+    const trimmed = text.trim();
+    if (!trimmed)
+        return false;
+    let count = 0;
+    let rest = trimmed.replace(/<a?:\w+:\d+>/g, () => { count++; return ""; });
+    rest = rest.replace(/:(\w+):/g, (full, name) => {
+        if (emojiMap.has(name)) {
+            count++;
+            return "";
+        }
+        return full;
+    });
+    rest = rest.replace(/\p{Extended_Pictographic}/gu, () => { count++; return ""; });
+    rest = rest.replace(/[\u{1F3FB}-\u{1F3FF}\u{1F1E6}-\u{1F1FF}\u200d\ufe0f\u20e3]/gu, "");
+    return rest.trim().length === 0 && count > 0 && count <= 30;
+}
 // ── Format Discord message content ───────────────────────────────
 function formatContent(content, cleanContent) {
     const text = cleanContent || content || "";
     const rawContent = content || "";
     if (!text)
         return null;
+    // Map emoji names → ids from the raw content so cleanContent's
+    // ":name:" forms resolve to CDN images.
     const emojiMap = new Map();
     let emojiMatch;
     CUSTOM_EMOJI_RE.lastIndex = 0;
@@ -170,45 +446,8 @@ function formatContent(content, cleanContent) {
         const [, animated, name, id] = emojiMatch;
         emojiMap.set(name, { animated: animated === "a", id, name });
     }
-    const emojiRawPattern = "<a?:[\\w]+:\\d+>";
-    const emojiCleanPattern = emojiMap.size > 0
-        ? `:(?:${[...emojiMap.keys()].map(emojiName => emojiName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")}):`
-        : null;
-    const splitParts = [
-        emojiRawPattern,
-        ...(emojiCleanPattern ? [emojiCleanPattern] : []),
-        "@[\\w.]+",
-        "https?:\\/\\/\\S+",
-    ];
-    const splitRe = new RegExp(`(${splitParts.join("|")})`, "g");
-    const segments = text.split(splitRe);
-    if (segments.length <= 1 && emojiMap.size === 0) {
-        return _jsx("span", { children: text });
-    }
-    return (_jsx("span", { children: segments.map((seg, i) => {
-            if (!seg)
-                return null;
-            const rawEmojiMatch = /^<(a?):(\w+):(\d+)>$/.exec(seg);
-            if (rawEmojiMatch) {
-                const [, animated, name, id] = rawEmojiMatch;
-                return (_jsx("img", { src: emojiUrl(id, animated === "a"), alt: `:${name}:`, title: `:${name}:`, className: styles['custom-emoji'], draggable: false, loading: "lazy" }, i));
-            }
-            const cleanEmojiMatch = /^:(\w+):$/.exec(seg);
-            if (cleanEmojiMatch && emojiMap.has(cleanEmojiMatch[1])) {
-                const emoji = emojiMap.get(cleanEmojiMatch[1]);
-                return (_jsx("img", { src: emojiUrl(emoji.id, emoji.animated), alt: `:${emoji.name}:`, title: `:${emoji.name}:`, className: styles['custom-emoji'], draggable: false, loading: "lazy" }, i));
-            }
-            if (seg.startsWith("@")) {
-                return _jsx("span", { className: styles['mention'], children: seg }, i);
-            }
-            if (/^https?:\/\//.test(seg)) {
-                if (TENOR_URL_TEST_RE.test(seg))
-                    return null; // rendered by TenorEmbeds
-                const display = seg.length > 50 ? seg.substring(0, 47) + "..." : seg;
-                return _jsx("a", { href: seg, target: "_blank", rel: "noopener noreferrer", children: display }, i);
-            }
-            return _jsx("span", { children: seg }, i);
-        }) }));
+    const jumbo = isEmojiOnly(text, emojiMap);
+    return (_jsx("span", { className: jumbo ? styles['message-jumbo'] : undefined, children: renderMarkdown(text, { emojiMap, jumbo }) }));
 }
 // ── Timestamps ───────────────────────────────────────────────────
 function formatTimestamp(isoString) {
@@ -293,17 +532,75 @@ function fitMediaDimensions(width, height) {
     }
     return { width: imageWidth, height: imageHeight };
 }
+// ── Attachment classification ────────────────────────────────────
+// Discord renders attachments by kind: images inline, videos with an
+// inline player, voice messages with a waveform player, audio files
+// as a file card with a player, and everything else as a file card.
+const IMAGE_EXT_RE = /\.(png|jpe?g|gif|webp|avif)$/i;
+const VIDEO_EXT_RE = /\.(mp4|webm|mov|m4v)$/i;
+const AUDIO_EXT_RE = /\.(ogg|mp3|wav|m4a|flac|aac|opus)$/i;
+function hasMediaUrl(attachment) {
+    return Boolean(attachment.url || attachment.proxyURL);
+}
+function isImageAttachment(attachment) {
+    if (attachment.contentType)
+        return attachment.contentType.startsWith("image/");
+    return IMAGE_EXT_RE.test(attachment.name || "");
+}
+function isVideoAttachment(attachment) {
+    if (attachment.contentType)
+        return attachment.contentType.startsWith("video/");
+    return VIDEO_EXT_RE.test(attachment.name || "");
+}
+function isAudioAttachment(attachment) {
+    if (attachment.contentType)
+        return attachment.contentType.startsWith("audio/");
+    return AUDIO_EXT_RE.test(attachment.name || "");
+}
+// Voice messages carry a waveform; a bare `duration` is NOT enough —
+// video attachments also have durations.
+function isVoiceMessage(attachment) {
+    if (attachment.waveform)
+        return true;
+    return isAudioAttachment(attachment) && Boolean(attachment.duration);
+}
+function isSpoilerAttachment(attachment) {
+    return attachment.spoiler === true || (attachment.name || "").startsWith("SPOILER_");
+}
+// ── Spoiler Wrapper ──────────────────────────────────────────────
+// Blurs spoilered media behind a SPOILER pill until clicked,
+// matching Discord's click-to-reveal behavior.
+function MediaSpoiler({ spoiler, children }) {
+    const [revealed, setRevealed] = useState(false);
+    if (!spoiler)
+        return _jsx(_Fragment, { children: children });
+    return (_jsxs("div", { className: revealed ? styles['spoiler-media-revealed'] : styles['spoiler-media'], onClick: revealed ? undefined : (event) => { event.preventDefault(); setRevealed(true); }, role: revealed ? undefined : "button", title: revealed ? undefined : "Spoiler — click to reveal", children: [_jsx("div", { className: styles['spoiler-media-content'], children: children }), !revealed && _jsx("span", { className: styles['spoiler-pill'], children: "SPOILER" })] }));
+}
 // ── Image Attachments ────────────────────────────────────────────
 function ImageAttachments({ attachments }) {
     if (!attachments?.length)
         return null;
-    const images = attachments.filter((attachment) => attachment.contentType?.startsWith("image/") && (attachment.url || attachment.proxyURL));
+    const images = attachments.filter((attachment) => isImageAttachment(attachment) && hasMediaUrl(attachment));
     if (!images.length)
         return null;
     return (_jsx("div", { className: styles['attachments'], children: images.map((image, i) => {
             const imageSource = image.proxyURL || image.url;
             const { width: imageWidth, height: imageHeight } = fitMediaDimensions(image.width, image.height);
-            return (_jsx("a", { href: image.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['attachment-link'], children: _jsx("img", { src: imageSource, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles['attachment-image'], loading: "lazy" }) }, i));
+            return (_jsx(MediaSpoiler, { spoiler: isSpoilerAttachment(image), children: _jsx("a", { href: image.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['attachment-link'], children: _jsx("img", { src: imageSource, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles['attachment-image'], loading: "lazy" }) }) }, i));
+        }) }));
+}
+// ── Video Attachments ────────────────────────────────────────────
+// Uploaded videos (mp4/webm/mov) get an inline player, matching
+// Discord's native video attachment rendering.
+function VideoAttachments({ attachments }) {
+    if (!attachments?.length)
+        return null;
+    const videos = attachments.filter((attachment) => isVideoAttachment(attachment) && hasMediaUrl(attachment));
+    if (!videos.length)
+        return null;
+    return (_jsx("div", { className: styles['attachments'], children: videos.map((video, i) => {
+            const { width: videoWidth, height: videoHeight } = fitMediaDimensions(video.width, video.height);
+            return (_jsx(MediaSpoiler, { spoiler: isSpoilerAttachment(video), children: _jsx("video", { src: video.proxyURL || video.url, className: styles['attachment-video'], width: videoWidth, height: videoHeight, controls: true, preload: "metadata", playsInline: true }) }, i));
         }) }));
 }
 // ── Voice Message Player ─────────────────────────────────────────
@@ -448,34 +745,98 @@ function VoiceMessagePlayer({ attachment }) {
                     return (_jsx("div", { className: `${styles['voice-waveform-bar']} ${isPlayed ? styles['voice-waveform-bar-played'] : ""}`, style: { "--bar-height": `${height}%` } }, barIndex));
                 }) }), _jsx("span", { className: styles['voice-duration'], children: formatTime(playing ? currentTime : duration) }), _jsxs("button", { className: styles['voice-speed'], onClick: cycleSpeed, type: "button", children: [playbackRate, "X"] }), _jsx("button", { className: styles['voice-volume'], onClick: toggleMute, type: "button", children: muted ? (_jsx("svg", { className: styles['voice-volume-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" }) })) : (_jsx("svg", { className: styles['voice-volume-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" }) })) })] }));
 }
+// Voice messages only — regular audio files render as file cards
+// with a player (see FileAttachments), matching Discord.
 function AudioAttachments({ attachments }) {
     if (!attachments?.length)
         return null;
-    const audioList = attachments.filter((attachment) => (attachment.contentType?.startsWith("audio/") ||
-        attachment.name?.endsWith(".ogg") ||
-        attachment.name?.endsWith(".mp3") ||
-        attachment.duration ||
-        attachment.waveform) && (attachment.url || attachment.proxyURL));
-    if (!audioList.length)
+    const voiceMessages = attachments.filter((attachment) => isVoiceMessage(attachment) && hasMediaUrl(attachment));
+    if (!voiceMessages.length)
         return null;
-    return (_jsx("div", { className: styles['attachments'], children: audioList.map((audio, i) => (_jsx(VoiceMessagePlayer, { attachment: audio }, i))) }));
+    return (_jsx("div", { className: styles['attachments'], children: voiceMessages.map((audio, i) => (_jsx(VoiceMessagePlayer, { attachment: audio }, i))) }));
+}
+// ── File Attachments ─────────────────────────────────────────────
+// Everything that isn't inline-renderable media gets a Discord-style
+// file card: icon, filename (download link), and human-readable size.
+// Non-voice audio files additionally embed a playback bar.
+function formatFileSize(bytes) {
+    if (!bytes || bytes <= 0)
+        return "";
+    const units = ["bytes", "KB", "MB", "GB"];
+    let value = bytes;
+    let unitIndex = 0;
+    while (value >= 1024 && unitIndex < units.length - 1) {
+        value /= 1024;
+        unitIndex++;
+    }
+    return `${unitIndex === 0 ? value : value.toFixed(2)} ${units[unitIndex]}`;
+}
+function FileAttachments({ attachments }) {
+    if (!attachments?.length)
+        return null;
+    const files = attachments.filter((attachment) => hasMediaUrl(attachment)
+        && !isImageAttachment(attachment)
+        && !isVideoAttachment(attachment)
+        && !isVoiceMessage(attachment));
+    if (!files.length)
+        return null;
+    return (_jsx("div", { className: styles['attachments'], children: files.map((file, i) => {
+            const href = file.url || file.proxyURL;
+            const sizeLabel = formatFileSize(file.size);
+            return (_jsxs("div", { className: styles['file-card'], children: [_jsxs("div", { className: styles['file-card-row'], children: [_jsx("svg", { className: styles['file-icon'], viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: _jsx("path", { d: "M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v1.5H8V13zm0 4h8v1.5H8V17z" }) }), _jsxs("div", { className: styles['file-info'], children: [_jsx("a", { href: href, target: "_blank", rel: "noopener noreferrer", className: styles['file-name'], children: file.name || "Unknown file" }), sizeLabel && _jsx("span", { className: styles['file-size'], children: sizeLabel })] }), _jsx("a", { href: href, target: "_blank", rel: "noopener noreferrer", className: styles['file-download'], title: "Download", children: _jsx("svg", { viewBox: "0 0 24 24", fill: "currentColor", width: "20", height: "20", children: _jsx("path", { d: "M12 2a1 1 0 0 1 1 1v10.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V3a1 1 0 0 1 1-1zM4 19a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z" }) }) })] }), isAudioAttachment(file) && (_jsx("audio", { src: href, controls: true, preload: "metadata", className: styles['file-audio'] }))] }, i));
+        }) }));
+}
+// ── Stickers ─────────────────────────────────────────────────────
+// Discord stickers render as 160px images. Format 3 (Lottie JSON)
+// can't be shown in an <img>, so it falls back to a labeled pill.
+function stickerUrl(sticker) {
+    if (sticker.format === 3)
+        return null;
+    if (sticker.url)
+        return sticker.url;
+    const ext = sticker.format === 4 ? "gif" : "png";
+    // passthrough=true preserves APNG animation frames
+    const passthrough = sticker.format === 2 ? "&passthrough=true" : "";
+    return `https://media.discordapp.net/stickers/${sticker.id}.${ext}?size=160${passthrough}`;
+}
+function Stickers({ stickers }) {
+    if (!stickers?.length)
+        return null;
+    return (_jsx("div", { className: styles['attachments'], children: stickers.map((sticker) => {
+            const url = stickerUrl(sticker);
+            if (!url) {
+                return (_jsx("div", { className: styles['sticker-fallback'], title: sticker.name, children: sticker.name || "Sticker" }, sticker.id));
+            }
+            return (_jsx("img", { src: url, alt: sticker.name || "Sticker", title: sticker.name, className: styles['sticker'], width: 160, height: 160, loading: "lazy", draggable: false }, sticker.id));
+        }) }));
 }
 // ── Rich Embed Card (Discord link unfurl / Open Graph preview) ───
 // Renders Discord-style embed cards with provider, title, description,
 // thumbnail/image, and video. Matches the native Discord embed UI.
+// Embed descriptions/fields render markdown with no message-level
+// emoji map — raw <:name:id> tokens still resolve via their ids.
+const EMBED_MARKDOWN_CTX = { emojiMap: new Map() };
+function formatEmbedTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    if (isNaN(date.getTime()))
+        return "";
+    return formatTimestamp(date.toISOString());
+}
 function EmbedMedia({ embeds }) {
     if (!embeds?.length)
         return null;
     // Skip non-object embeds (legacy string data), Tenor (handled separately),
     // and embeds with nothing renderable
     const filteredEmbeds = embeds.filter((embed) => typeof embed === "object" && embed !== null
-        && (embed.title || embed.description || embed.provider || embed.image || embed.thumbnail || embed.video)
+        && (embed.title || embed.description || embed.provider || embed.author || embed.footer
+            || embed.fields?.length || embed.image || embed.thumbnail || embed.video)
         && embed.provider?.name !== "Tenor"
         && !/tenor\.com/i.test(embed.url || ""));
     if (!filteredEmbeds.length)
         return null;
     return (_jsx("div", { className: styles['embed-list'], children: filteredEmbeds.map((embed, i) => {
-            const hasMetadata = embed.title || embed.description || embed.provider;
+            const hasMetadata = embed.title || embed.description || embed.provider
+                || embed.author || embed.footer || embed.fields?.length;
             const hasThumbnailOnly = embed.thumbnail && !embed.image && !embed.video;
             const hasLargeImage = embed.image && !embed.video;
             const accentColor = embed.color
@@ -498,11 +859,11 @@ function EmbedMedia({ embeds }) {
                 return _jsx(EmbedVideo, { embed: embed }, i);
             }
             // ── Rich embed card ───────────────────────────────────
-            return (_jsxs("div", { className: styles['embed-card'], style: accentColor ? { borderLeftColor: accentColor } : undefined, children: [_jsxs("div", { className: hasThumbnailOnly ? styles['embed-card-body-inline'] : styles['embed-card-body'], children: [_jsxs("div", { className: styles['embed-card-text'], children: [embed.provider?.name && (_jsx("span", { className: styles['embed-provider'], children: embed.provider.name })), embed.title && (embed.url ? (_jsx("a", { href: embed.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-title'], children: embed.title })) : (_jsx("span", { className: styles['embed-title-plain'], children: embed.title }))), embed.description && (_jsx("p", { className: styles['embed-description'], children: embed.description }))] }), hasThumbnailOnly && embed.thumbnail?.url && (_jsx("a", { href: embed.url || embed.thumbnail.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-thumb-link'], children: _jsx("img", { src: embed.thumbnail.proxyURL || embed.thumbnail.url, alt: embed.title || "thumbnail", className: styles['embed-thumb'], loading: "lazy" }) }))] }), hasLargeImage && embed.image && (() => {
+            return (_jsxs("div", { className: styles['embed-card'], style: accentColor ? { borderLeftColor: accentColor } : undefined, children: [_jsxs("div", { className: hasThumbnailOnly ? styles['embed-card-body-inline'] : styles['embed-card-body'], children: [_jsxs("div", { className: styles['embed-card-text'], children: [embed.provider?.name && (_jsx("span", { className: styles['embed-provider'], children: embed.provider.name })), embed.author?.name && (_jsxs("span", { className: styles['embed-author'], children: [(embed.author.iconURL || embed.author.proxyIconURL) && (_jsx("img", { src: embed.author.proxyIconURL || embed.author.iconURL, alt: "", className: styles['embed-author-icon'], loading: "lazy", draggable: false })), embed.author.url ? (_jsx("a", { href: embed.author.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-author-name'], children: embed.author.name })) : (_jsx("span", { className: styles['embed-author-name'], children: embed.author.name }))] })), embed.title && (embed.url ? (_jsx("a", { href: embed.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-title'], children: embed.title })) : (_jsx("span", { className: styles['embed-title-plain'], children: embed.title }))), embed.description && (_jsx("div", { className: styles['embed-description'], children: renderMarkdown(embed.description, EMBED_MARKDOWN_CTX) })), embed.fields && embed.fields.length > 0 && (_jsx("div", { className: styles['embed-fields'], children: embed.fields.map((field, fieldIndex) => (_jsxs("div", { className: field.inline ? styles['embed-field-inline'] : styles['embed-field'], children: [_jsx("div", { className: styles['embed-field-name'], children: parseInline(field.name || "", EMBED_MARKDOWN_CTX, `f${fieldIndex}`) }), _jsx("div", { className: styles['embed-field-value'], children: renderMarkdown(field.value || "", EMBED_MARKDOWN_CTX) })] }, fieldIndex))) }))] }), hasThumbnailOnly && embed.thumbnail?.url && (_jsx("a", { href: embed.url || embed.thumbnail.url, target: "_blank", rel: "noopener noreferrer", className: styles['embed-thumb-link'], children: _jsx("img", { src: embed.thumbnail.proxyURL || embed.thumbnail.url, alt: embed.title || "thumbnail", className: styles['embed-thumb'], loading: "lazy" }) }))] }), hasLargeImage && embed.image && (() => {
                         const imageSource = embed.image.proxyURL || embed.image.url;
                         const { width: imageWidth, height: imageHeight } = fitMediaDimensions(embed.image.width, embed.image.height);
                         return (_jsx("a", { href: embed.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['embed-image-link'], children: _jsx("img", { src: imageSource, alt: embed.title || "embed image", width: imageWidth, height: imageHeight, className: styles['embed-image'], loading: "lazy" }) }));
-                    })(), embed.video && _jsx(EmbedVideo, { embed: embed })] }, i));
+                    })(), embed.video && _jsx(EmbedVideo, { embed: embed }), (embed.footer?.text || embed.timestamp) && (_jsxs("div", { className: styles['embed-footer'], children: [(embed.footer?.iconURL || embed.footer?.proxyIconURL) && (_jsx("img", { src: embed.footer.proxyIconURL || embed.footer.iconURL, alt: "", className: styles['embed-footer-icon'], loading: "lazy", draggable: false })), _jsxs("span", { className: styles['embed-footer-text'], children: [embed.footer?.text, embed.footer?.text && embed.timestamp ? " • " : "", embed.timestamp ? formatEmbedTimestamp(embed.timestamp) : ""] })] }))] }, i));
         }) }));
 }
 // ── Embed Video Sub-Component ────────────────────────────────────
@@ -531,7 +892,9 @@ function ReplyContext({ replyTo, messageMap }) {
     const nameStyle = resolveRoleColorStyle(messageReference.author);
     const snippet = messageReference.content || messageReference.cleanContent || "";
     const truncated = snippet.length > 80 ? snippet.slice(0, 77) + "…" : snippet;
-    const hasAttachment = (messageReference.attachments && messageReference.attachments.length > 0) || (messageReference.embeds && messageReference.embeds.length > 0);
+    const hasAttachment = (messageReference.attachments && messageReference.attachments.length > 0)
+        || (messageReference.embeds && messageReference.embeds.length > 0)
+        || (messageReference.stickers && messageReference.stickers.length > 0);
     return (_jsxs(_Fragment, { children: [_jsx("div", { className: styles['reply-spine'] }), _jsxs("div", { className: styles['reply-bar'], children: [messageReference.author.avatarUrl ? (_jsx("img", { src: messageReference.author.avatarUrl, alt: "", className: styles['reply-avatar'], loading: "lazy" })) : (_jsx("div", { className: styles['reply-avatar-fallback'], style: { background: getAvatarColor(messageReference.author.id) }, children: (messageReference.author.displayName || "?")[0].toUpperCase() })), messageReference.author.isBot && (_jsxs("span", { className: styles['reply-bot-badge'], children: [_jsx("svg", { className: styles['bot-badge-icon'], viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "APP"] })), _jsxs("span", { className: styles['reply-author'], style: nameStyle, children: ["@", messageReference.author.displayName] }), _jsx("span", { className: styles['reply-content'], children: truncated || (hasAttachment ? _jsxs(_Fragment, { children: ["Click to see attachment ", _jsx("span", { "aria-hidden": "true", children: "\uD83D\uDDBC\uFE0F" })] }) : "…") })] })] }));
 }
 // ── Comprehensive Unicode Emojis for the picker (categorized) ────
@@ -692,8 +1055,26 @@ function MemberItem({ member }) {
                                     : { color: member.roleColor || "#dbdee1" }, children: member.displayName }), member.isBot && (_jsxs("span", { className: styles['member-bot-badge'], children: [_jsx("svg", { className: styles['bot-badge-icon'], viewBox: "0 0 16 16", fill: "currentColor", children: _jsx("path", { d: "M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" }) }), "APP"] })), _jsx(UserBadges, { badges: member.badges })] }), member.roleTags && member.roleTags.length > 0 && (_jsx(RoleTags, { roleTags: member.roleTags })), member.activity && (_jsx("span", { className: styles['member-activity'], children: member.activity }))] })] }));
 }
 function MessageBody({ message, tenorOembedUrl, reactedSet, onReact }) {
-    return (_jsxs(_Fragment, { children: [_jsx("p", { className: styles['message-text'], children: formatContent(message.content, message.cleanContent) }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: onReact })] }));
+    const formatted = formatContent(message.content, message.cleanContent);
+    return (_jsxs(_Fragment, { children: [formatted && _jsx("div", { className: styles['message-text'], children: formatted }), _jsx(TenorEmbeds, { content: message.content, tenorOembedUrl: tenorOembedUrl }), _jsx(ImageAttachments, { attachments: message.attachments }), _jsx(VideoAttachments, { attachments: message.attachments }), _jsx(AudioAttachments, { attachments: message.attachments }), _jsx(FileAttachments, { attachments: message.attachments }), _jsx(Stickers, { stickers: message.stickers }), _jsx(EmbedMedia, { embeds: message.embeds }), _jsx(Reactions, { reactions: message.reactions, messageId: message.id, reactedSet: reactedSet, onReact: onReact })] }));
 }
+// ── Test-only exports ────────────────────────────────────────────
+// Internal pure helpers exposed for unit tests — not public API.
+export const __internal = {
+    formatContent,
+    renderMarkdown,
+    parseInline,
+    isEmojiOnly,
+    formatDiscordTimestamp,
+    formatFileSize,
+    isImageAttachment,
+    isVideoAttachment,
+    isAudioAttachment,
+    isVoiceMessage,
+    isSpoilerAttachment,
+    stickerUrl,
+    fitMediaDimensions,
+};
 export default function DiscordChatComponent({ messageCount = 500, joinMode = false, inviteUrl = "https://discord.gg/sBX7BxP", onJoinHoverChange, channelIds = [], channelsUrl = "/api/discord/channels", streamUrl = "/api/discord/stream", membersUrl = "/api/discord/members", tenorOembedUrl = "/api/tenor/oembed", reactUrl = "/api/discord/react", emojisUrl = "/api/discord/emojis", serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers = [], }) {
     const [channels, setChannels] = useState([]);
     const [serverName, setServerName] = useState("");

@@ -28,10 +28,34 @@ export interface DiscordAttachment {
     proxyURL?: string;
     contentType?: string;
     name?: string;
+    size?: number;
     width?: number;
     height?: number;
     duration?: number;
     waveform?: string;
+    spoiler?: boolean;
+}
+export interface DiscordSticker {
+    id: string;
+    name?: string;
+    format?: number;
+    url?: string;
+}
+export interface DiscordEmbedAuthor {
+    name: string;
+    url?: string;
+    iconURL?: string;
+    proxyIconURL?: string;
+}
+export interface DiscordEmbedFooter {
+    text: string;
+    iconURL?: string;
+    proxyIconURL?: string;
+}
+export interface DiscordEmbedField {
+    name: string;
+    value: string;
+    inline?: boolean;
 }
 export interface DiscordEmbedMediaItem {
     url: string;
@@ -48,6 +72,10 @@ export interface DiscordEmbed {
         name: string;
         url?: string;
     };
+    author?: DiscordEmbedAuthor;
+    footer?: DiscordEmbedFooter;
+    fields?: DiscordEmbedField[];
+    timestamp?: string | number;
     image?: DiscordEmbedMediaItem;
     thumbnail?: DiscordEmbedMediaItem;
     video?: DiscordEmbedMediaItem;
@@ -70,6 +98,7 @@ export interface DiscordMessage {
     createdAtISO: string;
     replyTo?: string;
     attachments?: DiscordAttachment[];
+    stickers?: DiscordSticker[];
     embeds?: DiscordEmbed[];
     reactions?: DiscordReaction[];
     author: DiscordAuthor;
@@ -116,6 +145,46 @@ export interface DiscordMembersData {
     totalOnline?: number;
     totalMembers?: number;
 }
+type EmojiMap = Map<string, {
+    animated: boolean;
+    id: string;
+    name: string;
+}>;
+interface MarkdownContext {
+    emojiMap: EmojiMap;
+    jumbo?: boolean;
+}
+declare function formatDiscordTimestamp(unixSeconds: number, style?: string): string;
+declare function parseInline(text: string, ctx: MarkdownContext, keyBase: string): React.ReactNode[];
+declare function renderMarkdown(text: string, ctx: MarkdownContext): React.ReactNode[];
+declare function isEmojiOnly(text: string, emojiMap: EmojiMap): boolean;
+declare function formatContent(content: string | undefined, cleanContent: string | undefined): import("react").JSX.Element | null;
+declare function fitMediaDimensions(width?: number, height?: number): {
+    width: number;
+    height: number;
+};
+declare function isImageAttachment(attachment: DiscordAttachment): boolean;
+declare function isVideoAttachment(attachment: DiscordAttachment): boolean;
+declare function isAudioAttachment(attachment: DiscordAttachment): boolean;
+declare function isVoiceMessage(attachment: DiscordAttachment): boolean;
+declare function isSpoilerAttachment(attachment: DiscordAttachment): boolean;
+declare function formatFileSize(bytes?: number | null): string;
+declare function stickerUrl(sticker: DiscordSticker): string | null;
+export declare const __internal: {
+    formatContent: typeof formatContent;
+    renderMarkdown: typeof renderMarkdown;
+    parseInline: typeof parseInline;
+    isEmojiOnly: typeof isEmojiOnly;
+    formatDiscordTimestamp: typeof formatDiscordTimestamp;
+    formatFileSize: typeof formatFileSize;
+    isImageAttachment: typeof isImageAttachment;
+    isVideoAttachment: typeof isVideoAttachment;
+    isAudioAttachment: typeof isAudioAttachment;
+    isVoiceMessage: typeof isVoiceMessage;
+    isSpoilerAttachment: typeof isSpoilerAttachment;
+    stickerUrl: typeof stickerUrl;
+    fitMediaDimensions: typeof fitMediaDimensions;
+};
 export interface DiscordChatComponentProps {
     messageCount?: number;
     joinMode?: boolean;
@@ -133,4 +202,5 @@ export interface DiscordChatComponentProps {
     servers?: DiscordServer[];
 }
 export default function DiscordChatComponent({ messageCount, joinMode, inviteUrl, onJoinHoverChange, channelIds, channelsUrl, streamUrl, membersUrl, tenorOembedUrl, reactUrl, emojisUrl, serverIconUrl, serverBannerUrl: serverBannerUrlProp, servers, }: DiscordChatComponentProps): import("react").JSX.Element;
+export {};
 //# sourceMappingURL=DiscordChatComponent.d.ts.map

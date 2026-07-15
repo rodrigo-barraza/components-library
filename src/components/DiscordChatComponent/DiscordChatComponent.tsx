@@ -38,10 +38,39 @@ export interface DiscordAttachment {
   proxyURL?: string;
   contentType?: string;
   name?: string;
+  size?: number;
   width?: number;
   height?: number;
   duration?: number;
   waveform?: string;
+  spoiler?: boolean;
+}
+
+export interface DiscordSticker {
+  id: string;
+  name?: string;
+  // Discord StickerFormatType: 1 = PNG, 2 = APNG, 3 = Lottie, 4 = GIF
+  format?: number;
+  url?: string;
+}
+
+export interface DiscordEmbedAuthor {
+  name: string;
+  url?: string;
+  iconURL?: string;
+  proxyIconURL?: string;
+}
+
+export interface DiscordEmbedFooter {
+  text: string;
+  iconURL?: string;
+  proxyIconURL?: string;
+}
+
+export interface DiscordEmbedField {
+  name: string;
+  value: string;
+  inline?: boolean;
 }
 
 export interface DiscordEmbedMediaItem {
@@ -57,6 +86,10 @@ export interface DiscordEmbed {
   description?: string;
   color?: number;
   provider?: { name: string; url?: string };
+  author?: DiscordEmbedAuthor;
+  footer?: DiscordEmbedFooter;
+  fields?: DiscordEmbedField[];
+  timestamp?: string | number;
   image?: DiscordEmbedMediaItem;
   thumbnail?: DiscordEmbedMediaItem;
   video?: DiscordEmbedMediaItem;
@@ -82,6 +115,7 @@ export interface DiscordMessage {
   createdAtISO: string;
   replyTo?: string;
   attachments?: DiscordAttachment[];
+  stickers?: DiscordSticker[];
   embeds?: DiscordEmbed[];
   reactions?: DiscordReaction[];
   author: DiscordAuthor;
@@ -331,13 +365,348 @@ function emojiUrl(id: string, animated?: boolean) {
   return `https://cdn.discordapp.com/emojis/${id}.${imageFormat}?size=48&quality=lossless`;
 }
 
+// ── Discord-flavored markdown rendering ──────────────────────────
+// Renders the markdown subset Discord supports in chat: bold, italic,
+// underline, strikethrough, inline code, fenced code blocks, block
+// quotes, headers, subtext, lists, ||spoilers||, masked links,
+// <t:…> timestamps, mention tokens, custom emojis, and jumbo emoji
+// sizing for emoji-only messages.
+
+type EmojiMap = Map<string, { animated: boolean; id: string; name: string }>;
+
+interface MarkdownContext {
+  emojiMap: EmojiMap;
+  jumbo?: boolean;
+}
+
+// Click-to-reveal inline spoiler (||text||), Discord-style.
+function TextSpoiler({ children }: { children: React.ReactNode }) {
+  const [revealed, setRevealed] = useState(false);
+  return (
+    <span
+      className={revealed ? styles['spoiler-text-revealed'] : styles['spoiler-text']}
+      onClick={revealed ? undefined : () => setRevealed(true)}
+      title={revealed ? undefined : "Spoiler — click to reveal"}
+    >
+      {children}
+    </span>
+  );
+}
+
+// <t:unixSeconds:style> — Discord timestamp tokens
+function formatDiscordTimestamp(unixSeconds: number, style = "f") {
+  const date = new Date(unixSeconds * 1000);
+  if (isNaN(date.getTime())) return "";
+  const time = date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+  switch (style) {
+    case "t": return time;
+    case "T": return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", hour12: true });
+    case "d": return date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+    case "D": return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    case "F": return `${date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })} ${time}`;
+    case "R": {
+      const diffSeconds = Math.round((date.getTime() - Date.now()) / 1000);
+      const absSeconds = Math.abs(diffSeconds);
+      const units: [number, string][] = [
+        [31536000, "year"], [2592000, "month"], [86400, "day"],
+        [3600, "hour"], [60, "minute"], [1, "second"],
+      ];
+      for (const [unitSeconds, label] of units) {
+        if (absSeconds >= unitSeconds || unitSeconds === 1) {
+          const count = Math.max(1, Math.floor(absSeconds / unitSeconds));
+          const unitLabel = count === 1 ? label : `${label}s`;
+          return diffSeconds < 0 ? `${count} ${unitLabel} ago` : `in ${count} ${unitLabel}`;
+        }
+      }
+      return "now";
+    }
+    default:
+      return `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} ${time}`;
+  }
+}
+
+type InlineRender = (
+  match: RegExpExecArray,
+  ctx: MarkdownContext,
+  key: string,
+  parse: (inner: string, keyBase: string) => React.ReactNode[],
+) => React.ReactNode;
+
+// Ordered by priority — when two patterns match at the same index,
+// the earlier entry wins. All regexes must be non-global.
+const INLINE_PATTERNS: { re: RegExp; render: InlineRender }[] = [
+  // `inline code` — no nested formatting inside
+  {
+    re: /`([^`\n]+)`/,
+    render: (match, _ctx, key) => <code key={key} className={styles['inline-code']}>{match[1]}</code>,
+  },
+  // ||spoiler||
+  {
+    re: /\|\|([\s\S]+?)\|\|/,
+    render: (match, _ctx, key, parse) => <TextSpoiler key={key}>{parse(match[1], key)}</TextSpoiler>,
+  },
+  // ***bold italic***
+  {
+    re: /\*\*\*([\s\S]+?)\*\*\*/,
+    render: (match, _ctx, key, parse) => <strong key={key}><em>{parse(match[1], key)}</em></strong>,
+  },
+  // **bold**
+  {
+    re: /\*\*([\s\S]+?)\*\*/,
+    render: (match, _ctx, key, parse) => <strong key={key}>{parse(match[1], key)}</strong>,
+  },
+  // __underline__
+  {
+    re: /__([\s\S]+?)__/,
+    render: (match, _ctx, key, parse) => <u key={key}>{parse(match[1], key)}</u>,
+  },
+  // ~~strikethrough~~
+  {
+    re: /~~([\s\S]+?)~~/,
+    render: (match, _ctx, key, parse) => <s key={key}>{parse(match[1], key)}</s>,
+  },
+  // *italic*
+  {
+    re: /\*([^*\n]+)\*/,
+    render: (match, _ctx, key, parse) => <em key={key}>{parse(match[1], key)}</em>,
+  },
+  // _italic_ — match[1] is the preceding non-word char (or start)
+  {
+    re: /(^|[^\w_])_([^_\n]+)_(?![\w_])/,
+    render: (match, _ctx, key, parse) => (
+      <span key={key}>{match[1]}<em>{parse(match[2], key)}</em></span>
+    ),
+  },
+  // [label](url) masked links
+  {
+    re: /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/,
+    render: (match, _ctx, key, parse) => (
+      <a key={key} href={match[2]} target="_blank" rel="noopener noreferrer">{parse(match[1], key)}</a>
+    ),
+  },
+  // <a:name:id> raw custom emoji tokens
+  {
+    re: /<(a?):(\w+):(\d+)>/,
+    render: (match, ctx, key) => (
+      <img key={key} src={emojiUrl(match[3], match[1] === "a")} alt={`:${match[2]}:`} title={`:${match[2]}:`}
+        className={ctx.jumbo ? `${styles['custom-emoji']} ${styles['custom-emoji-jumbo']}` : styles['custom-emoji']}
+        draggable={false} loading="lazy" />
+    ),
+  },
+  // <t:unix:style> timestamps
+  {
+    re: /<t:(-?\d+)(?::([tTdDfFR]))?>/,
+    render: (match, _ctx, key) => (
+      <span key={key} className={styles['md-timestamp']}>{formatDiscordTimestamp(Number(match[1]), match[2] || "f")}</span>
+    ),
+  },
+  // Raw mention tokens (usually already resolved in cleanContent)
+  {
+    re: /<(@[!&]?|#)\d+>/,
+    render: (match, _ctx, key) => (
+      <span key={key} className={styles['mention']}>
+        {match[1] === "#" ? "#channel" : match[1] === "@&" ? "@role" : "@user"}
+      </span>
+    ),
+  },
+  // Bare URLs
+  {
+    re: /https?:\/\/[^\s<]+/,
+    render: (match, _ctx, key) => {
+      const url = match[0];
+      if (TENOR_URL_TEST_RE.test(url)) return null; // rendered by TenorEmbeds
+      const display = url.length > 50 ? url.substring(0, 47) + "..." : url;
+      return <a key={key} href={url} target="_blank" rel="noopener noreferrer">{display}</a>;
+    },
+  },
+  // :name: custom emoji resolved via the raw-content emoji map
+  {
+    re: /:(\w+):/,
+    render: (match, ctx, key) => {
+      const emoji = ctx.emojiMap.get(match[1]);
+      if (!emoji) return match[0];
+      return (
+        <img key={key} src={emojiUrl(emoji.id, emoji.animated)} alt={`:${emoji.name}:`} title={`:${emoji.name}:`}
+          className={ctx.jumbo ? `${styles['custom-emoji']} ${styles['custom-emoji-jumbo']}` : styles['custom-emoji']}
+          draggable={false} loading="lazy" />
+      );
+    },
+  },
+  // @mentions (cleanContent form)
+  {
+    re: /@[\w.]+/,
+    render: (match, _ctx, key) => <span key={key} className={styles['mention']}>{match[0]}</span>,
+  },
+];
+
+// Scan for the earliest-matching inline pattern, emit preceding text
+// verbatim, render the match (recursing for nestable styles), repeat.
+function parseInline(text: string, ctx: MarkdownContext, keyBase: string): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  let remaining = text;
+  let keyIndex = 0;
+  let guard = 0;
+  while (remaining.length > 0 && guard++ < 2000) {
+    let best: { index: number; match: RegExpExecArray; render: InlineRender } | null = null;
+    for (const { re, render } of INLINE_PATTERNS) {
+      const match = re.exec(remaining);
+      if (!match) continue;
+      if (!best || match.index < best.index) {
+        best = { index: match.index, match, render };
+        if (best.index === 0) break; // earlier patterns already had their shot
+      }
+    }
+    if (!best) {
+      nodes.push(remaining);
+      break;
+    }
+    if (best.index > 0) nodes.push(remaining.slice(0, best.index));
+    const parse = (inner: string, innerKeyBase: string) => parseInline(inner, ctx, `${innerKeyBase}-i`);
+    const rendered = best.render(best.match, ctx, `${keyBase}-${keyIndex++}`, parse);
+    if (rendered !== null) nodes.push(rendered);
+    remaining = remaining.slice(best.index + best.match[0].length);
+  }
+  return nodes;
+}
+
+// Line-level constructs: headers, subtext, block quotes, list items.
+// Plain lines are joined with "\n" (message text is white-space:
+// pre-wrap) so hard line breaks survive.
+function renderBlockLines(segment: string, ctx: MarkdownContext, keyBase: string): React.ReactNode[] {
+  const lines = segment.split("\n");
+  const nodes: React.ReactNode[] = [];
+  let inlineRun: React.ReactNode[] = [];
+  let quoteRun: string[] = [];
+  let restIsQuote = false;
+
+  const flushInline = () => {
+    if (inlineRun.length) {
+      nodes.push(...inlineRun);
+      inlineRun = [];
+    }
+  };
+  const flushQuote = (key: string) => {
+    if (!quoteRun.length) return;
+    nodes.push(
+      <blockquote key={key} className={styles['block-quote']}>
+        {parseInline(quoteRun.join("\n"), ctx, `${key}-q`)}
+      </blockquote>,
+    );
+    quoteRun = [];
+  };
+
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    const line = lines[lineIndex];
+    const key = `${keyBase}-l${lineIndex}`;
+
+    if (restIsQuote) {
+      quoteRun.push(line);
+      continue;
+    }
+    const multiQuoteMatch = /^>>> ?([\s\S]*)$/.exec(line);
+    if (multiQuoteMatch) {
+      flushInline();
+      restIsQuote = true;
+      quoteRun.push(multiQuoteMatch[1]);
+      continue;
+    }
+    const quoteMatch = /^> ?(.*)$/.exec(line);
+    if (quoteMatch) {
+      flushInline();
+      quoteRun.push(quoteMatch[1]);
+      continue;
+    }
+    flushQuote(`${key}-fq`);
+
+    const headerMatch = /^(#{1,3}) (.+)$/.exec(line);
+    if (headerMatch) {
+      flushInline();
+      const level = headerMatch[1].length;
+      nodes.push(
+        <div key={key} className={styles[`md-h${level}`]}>{parseInline(headerMatch[2], ctx, key)}</div>,
+      );
+      continue;
+    }
+    const subtextMatch = /^-# (.+)$/.exec(line);
+    if (subtextMatch) {
+      flushInline();
+      nodes.push(
+        <div key={key} className={styles['md-subtext']}>{parseInline(subtextMatch[1], ctx, key)}</div>,
+      );
+      continue;
+    }
+    const listMatch = /^(\s*)[-*] (.+)$/.exec(line);
+    if (listMatch) {
+      flushInline();
+      const depth = Math.min(Math.floor(listMatch[1].length / 2), 3);
+      nodes.push(
+        <div key={key} className={styles['md-list-item']} style={depth ? { marginLeft: depth * 16 } : undefined}>
+          <span className={styles['md-list-bullet']}>•</span>
+          <span>{parseInline(listMatch[2], ctx, key)}</span>
+        </div>,
+      );
+      continue;
+    }
+
+    if (inlineRun.length) inlineRun.push("\n");
+    inlineRun.push(...parseInline(line, ctx, key));
+  }
+  flushQuote(`${keyBase}-fq-end`);
+  flushInline();
+  return nodes;
+}
+
+// Top level: extract ```fenced code blocks``` first, everything else
+// goes through line-level + inline parsing.
+const CODE_FENCE_RE = /```(?:([\w+-]+)\n)?([\s\S]*?)```/g;
+
+function renderMarkdown(text: string, ctx: MarkdownContext): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let blockIndex = 0;
+  CODE_FENCE_RE.lastIndex = 0;
+  let fenceMatch;
+  while ((fenceMatch = CODE_FENCE_RE.exec(text)) !== null) {
+    if (fenceMatch.index > lastIndex) {
+      const before = text.slice(lastIndex, fenceMatch.index).replace(/\n$/, "");
+      if (before) nodes.push(...renderBlockLines(before, ctx, `b${blockIndex++}`));
+    }
+    const code = (fenceMatch[2] || "").replace(/^\n/, "").replace(/\n$/, "");
+    nodes.push(
+      <pre key={`code-${blockIndex++}`} className={styles['code-block']}><code>{code}</code></pre>,
+    );
+    lastIndex = fenceMatch.index + fenceMatch[0].length;
+  }
+  let tail = text.slice(lastIndex);
+  if (lastIndex > 0) tail = tail.replace(/^\n/, "");
+  if (tail) nodes.push(...renderBlockLines(tail, ctx, `b${blockIndex++}`));
+  return nodes;
+}
+
+// Emoji-only messages render jumbo (48px), like Discord — capped at 30.
+function isEmojiOnly(text: string, emojiMap: EmojiMap): boolean {
+  const trimmed = text.trim();
+  if (!trimmed) return false;
+  let count = 0;
+  let rest = trimmed.replace(/<a?:\w+:\d+>/g, () => { count++; return ""; });
+  rest = rest.replace(/:(\w+):/g, (full, name) => {
+    if (emojiMap.has(name)) { count++; return ""; }
+    return full;
+  });
+  rest = rest.replace(/\p{Extended_Pictographic}/gu, () => { count++; return ""; });
+  rest = rest.replace(/[\u{1F3FB}-\u{1F3FF}\u{1F1E6}-\u{1F1FF}\u200d\ufe0f\u20e3]/gu, "");
+  return rest.trim().length === 0 && count > 0 && count <= 30;
+}
+
 // ── Format Discord message content ───────────────────────────────
 function formatContent(content: string | undefined, cleanContent: string | undefined) {
   const text = cleanContent || content || "";
   const rawContent = content || "";
   if (!text) return null;
 
-  const emojiMap = new Map<string, { animated: boolean; id: string; name: string }>();
+  // Map emoji names → ids from the raw content so cleanContent's
+  // ":name:" forms resolve to CDN images.
+  const emojiMap: EmojiMap = new Map();
   let emojiMatch;
   CUSTOM_EMOJI_RE.lastIndex = 0;
   while ((emojiMatch = CUSTOM_EMOJI_RE.exec(rawContent)) !== null) {
@@ -345,54 +714,10 @@ function formatContent(content: string | undefined, cleanContent: string | undef
     emojiMap.set(name, { animated: animated === "a", id, name });
   }
 
-  const emojiRawPattern = "<a?:[\\w]+:\\d+>";
-  const emojiCleanPattern = emojiMap.size > 0
-    ? `:(?:${[...emojiMap.keys()].map(emojiName => emojiName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")}):`
-    : null;
-
-  const splitParts = [
-    emojiRawPattern,
-    ...(emojiCleanPattern ? [emojiCleanPattern] : []),
-    "@[\\w.]+",
-    "https?:\\/\\/\\S+",
-  ];
-  const splitRe = new RegExp(`(${splitParts.join("|")})`, "g");
-  const segments = text.split(splitRe);
-
-  if (segments.length <= 1 && emojiMap.size === 0) {
-    return <span>{text}</span>;
-  }
-
+  const jumbo = isEmojiOnly(text, emojiMap);
   return (
-    <span>
-      {segments.map((seg: string, i: number) => {
-        if (!seg) return null;
-        const rawEmojiMatch = /^<(a?):(\w+):(\d+)>$/.exec(seg);
-        if (rawEmojiMatch) {
-          const [, animated, name, id] = rawEmojiMatch;
-          return (
-            <img key={i} src={emojiUrl(id, animated === "a")} alt={`:${name}:`}
-              title={`:${name}:`} className={styles['custom-emoji']} draggable={false} loading="lazy" />
-          );
-        }
-        const cleanEmojiMatch = /^:(\w+):$/.exec(seg);
-        if (cleanEmojiMatch && emojiMap.has(cleanEmojiMatch[1])) {
-          const emoji = emojiMap.get(cleanEmojiMatch[1])!;
-          return (
-            <img key={i} src={emojiUrl(emoji.id, emoji.animated)} alt={`:${emoji.name}:`}
-              title={`:${emoji.name}:`} className={styles['custom-emoji']} draggable={false} loading="lazy" />
-          );
-        }
-        if (seg.startsWith("@")) {
-          return <span key={i} className={styles['mention']}>{seg}</span>;
-        }
-        if (/^https?:\/\//.test(seg)) {
-          if (TENOR_URL_TEST_RE.test(seg)) return null; // rendered by TenorEmbeds
-          const display = seg.length > 50 ? seg.substring(0, 47) + "..." : seg;
-          return <a key={i} href={seg} target="_blank" rel="noopener noreferrer">{display}</a>;
-        }
-        return <span key={i}>{seg}</span>;
-      })}
+    <span className={jumbo ? styles['message-jumbo'] : undefined}>
+      {renderMarkdown(text, { emojiMap, jumbo })}
     </span>
   );
 }
@@ -482,10 +807,67 @@ function fitMediaDimensions(width?: number, height?: number) {
   return { width: imageWidth, height: imageHeight };
 }
 
+// ── Attachment classification ────────────────────────────────────
+// Discord renders attachments by kind: images inline, videos with an
+// inline player, voice messages with a waveform player, audio files
+// as a file card with a player, and everything else as a file card.
+const IMAGE_EXT_RE = /\.(png|jpe?g|gif|webp|avif)$/i;
+const VIDEO_EXT_RE = /\.(mp4|webm|mov|m4v)$/i;
+const AUDIO_EXT_RE = /\.(ogg|mp3|wav|m4a|flac|aac|opus)$/i;
+
+function hasMediaUrl(attachment: DiscordAttachment) {
+  return Boolean(attachment.url || attachment.proxyURL);
+}
+
+function isImageAttachment(attachment: DiscordAttachment) {
+  if (attachment.contentType) return attachment.contentType.startsWith("image/");
+  return IMAGE_EXT_RE.test(attachment.name || "");
+}
+
+function isVideoAttachment(attachment: DiscordAttachment) {
+  if (attachment.contentType) return attachment.contentType.startsWith("video/");
+  return VIDEO_EXT_RE.test(attachment.name || "");
+}
+
+function isAudioAttachment(attachment: DiscordAttachment) {
+  if (attachment.contentType) return attachment.contentType.startsWith("audio/");
+  return AUDIO_EXT_RE.test(attachment.name || "");
+}
+
+// Voice messages carry a waveform; a bare `duration` is NOT enough —
+// video attachments also have durations.
+function isVoiceMessage(attachment: DiscordAttachment) {
+  if (attachment.waveform) return true;
+  return isAudioAttachment(attachment) && Boolean(attachment.duration);
+}
+
+function isSpoilerAttachment(attachment: DiscordAttachment) {
+  return attachment.spoiler === true || (attachment.name || "").startsWith("SPOILER_");
+}
+
+// ── Spoiler Wrapper ──────────────────────────────────────────────
+// Blurs spoilered media behind a SPOILER pill until clicked,
+// matching Discord's click-to-reveal behavior.
+function MediaSpoiler({ spoiler, children }: { spoiler: boolean; children: React.ReactNode }) {
+  const [revealed, setRevealed] = useState(false);
+  if (!spoiler) return <>{children}</>;
+  return (
+    <div
+      className={revealed ? styles['spoiler-media-revealed'] : styles['spoiler-media']}
+      onClick={revealed ? undefined : (event) => { event.preventDefault(); setRevealed(true); }}
+      role={revealed ? undefined : "button"}
+      title={revealed ? undefined : "Spoiler — click to reveal"}
+    >
+      <div className={styles['spoiler-media-content']}>{children}</div>
+      {!revealed && <span className={styles['spoiler-pill']}>SPOILER</span>}
+    </div>
+  );
+}
+
 // ── Image Attachments ────────────────────────────────────────────
 function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }) {
   if (!attachments?.length) return null;
-  const images = attachments.filter((attachment: DiscordAttachment) => attachment.contentType?.startsWith("image/") && (attachment.url || attachment.proxyURL));
+  const images = attachments.filter((attachment: DiscordAttachment) => isImageAttachment(attachment) && hasMediaUrl(attachment));
   if (!images.length) return null;
   return (
     <div className={styles['attachments']}>
@@ -493,10 +875,41 @@ function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }
         const imageSource = image.proxyURL || image.url;
         const { width: imageWidth, height: imageHeight } = fitMediaDimensions(image.width, image.height);
         return (
-          <a key={i} href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
-            <img src={imageSource} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
-              className={styles['attachment-image']} loading="lazy" />
-          </a>
+          <MediaSpoiler key={i} spoiler={isSpoilerAttachment(image)}>
+            <a href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
+              <img src={imageSource} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
+                className={styles['attachment-image']} loading="lazy" />
+            </a>
+          </MediaSpoiler>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Video Attachments ────────────────────────────────────────────
+// Uploaded videos (mp4/webm/mov) get an inline player, matching
+// Discord's native video attachment rendering.
+function VideoAttachments({ attachments }: { attachments?: DiscordAttachment[] }) {
+  if (!attachments?.length) return null;
+  const videos = attachments.filter((attachment: DiscordAttachment) => isVideoAttachment(attachment) && hasMediaUrl(attachment));
+  if (!videos.length) return null;
+  return (
+    <div className={styles['attachments']}>
+      {videos.map((video: DiscordAttachment, i: number) => {
+        const { width: videoWidth, height: videoHeight } = fitMediaDimensions(video.width, video.height);
+        return (
+          <MediaSpoiler key={i} spoiler={isSpoilerAttachment(video)}>
+            <video
+              src={video.proxyURL || video.url}
+              className={styles['attachment-video']}
+              width={videoWidth}
+              height={videoHeight}
+              controls
+              preload="metadata"
+              playsInline
+            />
+          </MediaSpoiler>
         );
       })}
     </div>
@@ -714,21 +1127,118 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
   );
 }
 
+// Voice messages only — regular audio files render as file cards
+// with a player (see FileAttachments), matching Discord.
 function AudioAttachments({ attachments }: { attachments?: DiscordAttachment[] }) {
   if (!attachments?.length) return null;
-  const audioList = attachments.filter((attachment: DiscordAttachment) =>
-    (attachment.contentType?.startsWith("audio/") ||
-     attachment.name?.endsWith(".ogg") ||
-     attachment.name?.endsWith(".mp3") ||
-     attachment.duration ||
-     attachment.waveform) && (attachment.url || attachment.proxyURL)
-  );
-  if (!audioList.length) return null;
+  const voiceMessages = attachments.filter((attachment: DiscordAttachment) => isVoiceMessage(attachment) && hasMediaUrl(attachment));
+  if (!voiceMessages.length) return null;
   return (
     <div className={styles['attachments']}>
-      {audioList.map((audio: DiscordAttachment, i: number) => (
+      {voiceMessages.map((audio: DiscordAttachment, i: number) => (
         <VoiceMessagePlayer key={i} attachment={audio} />
       ))}
+    </div>
+  );
+}
+
+// ── File Attachments ─────────────────────────────────────────────
+// Everything that isn't inline-renderable media gets a Discord-style
+// file card: icon, filename (download link), and human-readable size.
+// Non-voice audio files additionally embed a playback bar.
+function formatFileSize(bytes?: number | null) {
+  if (!bytes || bytes <= 0) return "";
+  const units = ["bytes", "KB", "MB", "GB"];
+  let value = bytes;
+  let unitIndex = 0;
+  while (value >= 1024 && unitIndex < units.length - 1) {
+    value /= 1024;
+    unitIndex++;
+  }
+  return `${unitIndex === 0 ? value : value.toFixed(2)} ${units[unitIndex]}`;
+}
+
+function FileAttachments({ attachments }: { attachments?: DiscordAttachment[] }) {
+  if (!attachments?.length) return null;
+  const files = attachments.filter((attachment: DiscordAttachment) =>
+    hasMediaUrl(attachment)
+    && !isImageAttachment(attachment)
+    && !isVideoAttachment(attachment)
+    && !isVoiceMessage(attachment)
+  );
+  if (!files.length) return null;
+  return (
+    <div className={styles['attachments']}>
+      {files.map((file: DiscordAttachment, i: number) => {
+        const href = file.url || file.proxyURL;
+        const sizeLabel = formatFileSize(file.size);
+        return (
+          <div key={i} className={styles['file-card']}>
+            <div className={styles['file-card-row']}>
+              <svg className={styles['file-icon']} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H13V3.5zM8 13h8v1.5H8V13zm0 4h8v1.5H8V17z" />
+              </svg>
+              <div className={styles['file-info']}>
+                <a href={href} target="_blank" rel="noopener noreferrer" className={styles['file-name']}>
+                  {file.name || "Unknown file"}
+                </a>
+                {sizeLabel && <span className={styles['file-size']}>{sizeLabel}</span>}
+              </div>
+              <a href={href} target="_blank" rel="noopener noreferrer" className={styles['file-download']} title="Download">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                  <path d="M12 2a1 1 0 0 1 1 1v10.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V3a1 1 0 0 1 1-1zM4 19a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z" />
+                </svg>
+              </a>
+            </div>
+            {isAudioAttachment(file) && (
+              <audio src={href} controls preload="metadata" className={styles['file-audio']} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Stickers ─────────────────────────────────────────────────────
+// Discord stickers render as 160px images. Format 3 (Lottie JSON)
+// can't be shown in an <img>, so it falls back to a labeled pill.
+function stickerUrl(sticker: DiscordSticker) {
+  if (sticker.format === 3) return null;
+  if (sticker.url) return sticker.url;
+  const ext = sticker.format === 4 ? "gif" : "png";
+  // passthrough=true preserves APNG animation frames
+  const passthrough = sticker.format === 2 ? "&passthrough=true" : "";
+  return `https://media.discordapp.net/stickers/${sticker.id}.${ext}?size=160${passthrough}`;
+}
+
+function Stickers({ stickers }: { stickers?: DiscordSticker[] }) {
+  if (!stickers?.length) return null;
+  return (
+    <div className={styles['attachments']}>
+      {stickers.map((sticker: DiscordSticker) => {
+        const url = stickerUrl(sticker);
+        if (!url) {
+          return (
+            <div key={sticker.id} className={styles['sticker-fallback']} title={sticker.name}>
+              {sticker.name || "Sticker"}
+            </div>
+          );
+        }
+        return (
+          <img
+            key={sticker.id}
+            src={url}
+            alt={sticker.name || "Sticker"}
+            title={sticker.name}
+            className={styles['sticker']}
+            width={160}
+            height={160}
+            loading="lazy"
+            draggable={false}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -736,13 +1246,24 @@ function AudioAttachments({ attachments }: { attachments?: DiscordAttachment[] }
 // ── Rich Embed Card (Discord link unfurl / Open Graph preview) ───
 // Renders Discord-style embed cards with provider, title, description,
 // thumbnail/image, and video. Matches the native Discord embed UI.
+// Embed descriptions/fields render markdown with no message-level
+// emoji map — raw <:name:id> tokens still resolve via their ids.
+const EMBED_MARKDOWN_CTX: MarkdownContext = { emojiMap: new Map() };
+
+function formatEmbedTimestamp(timestamp: string | number) {
+  const date = new Date(timestamp);
+  if (isNaN(date.getTime())) return "";
+  return formatTimestamp(date.toISOString());
+}
+
 function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
   if (!embeds?.length) return null;
   // Skip non-object embeds (legacy string data), Tenor (handled separately),
   // and embeds with nothing renderable
   const filteredEmbeds = embeds.filter((embed: DiscordEmbed) =>
     typeof embed === "object" && embed !== null
-    && (embed.title || embed.description || embed.provider || embed.image || embed.thumbnail || embed.video)
+    && (embed.title || embed.description || embed.provider || embed.author || embed.footer
+      || embed.fields?.length || embed.image || embed.thumbnail || embed.video)
     && embed.provider?.name !== "Tenor"
     && !/tenor\.com/i.test(embed.url || "")
   );
@@ -751,7 +1272,8 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
   return (
     <div className={styles['embed-list']}>
       {filteredEmbeds.map((embed: DiscordEmbed, i: number) => {
-        const hasMetadata = embed.title || embed.description || embed.provider;
+        const hasMetadata = embed.title || embed.description || embed.provider
+          || embed.author || embed.footer || embed.fields?.length;
         const hasThumbnailOnly = embed.thumbnail && !embed.image && !embed.video;
         const hasLargeImage = embed.image && !embed.video;
         const accentColor = embed.color
@@ -791,6 +1313,26 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
                 {embed.provider?.name && (
                   <span className={styles['embed-provider']}>{embed.provider.name}</span>
                 )}
+                {embed.author?.name && (
+                  <span className={styles['embed-author']}>
+                    {(embed.author.iconURL || embed.author.proxyIconURL) && (
+                      <img
+                        src={embed.author.proxyIconURL || embed.author.iconURL}
+                        alt=""
+                        className={styles['embed-author-icon']}
+                        loading="lazy"
+                        draggable={false}
+                      />
+                    )}
+                    {embed.author.url ? (
+                      <a href={embed.author.url} target="_blank" rel="noopener noreferrer" className={styles['embed-author-name']}>
+                        {embed.author.name}
+                      </a>
+                    ) : (
+                      <span className={styles['embed-author-name']}>{embed.author.name}</span>
+                    )}
+                  </span>
+                )}
                 {embed.title && (
                   embed.url ? (
                     <a href={embed.url} target="_blank" rel="noopener noreferrer" className={styles['embed-title']}>
@@ -801,7 +1343,26 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
                   )
                 )}
                 {embed.description && (
-                  <p className={styles['embed-description']}>{embed.description}</p>
+                  <div className={styles['embed-description']}>
+                    {renderMarkdown(embed.description, EMBED_MARKDOWN_CTX)}
+                  </div>
+                )}
+                {embed.fields && embed.fields.length > 0 && (
+                  <div className={styles['embed-fields']}>
+                    {embed.fields.map((field: DiscordEmbedField, fieldIndex: number) => (
+                      <div
+                        key={fieldIndex}
+                        className={field.inline ? styles['embed-field-inline'] : styles['embed-field']}
+                      >
+                        <div className={styles['embed-field-name']}>
+                          {parseInline(field.name || "", EMBED_MARKDOWN_CTX, `f${fieldIndex}`)}
+                        </div>
+                        <div className={styles['embed-field-value']}>
+                          {renderMarkdown(field.value || "", EMBED_MARKDOWN_CTX)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
               {/* Inline thumbnail (small, right-aligned — e.g. article previews) */}
@@ -829,6 +1390,25 @@ function EmbedMedia({ embeds }: { embeds?: DiscordEmbed[] }) {
             })()}
             {/* Video embed inside the card */}
             {embed.video && <EmbedVideo embed={embed} />}
+            {/* Footer: icon + text + timestamp */}
+            {(embed.footer?.text || embed.timestamp) && (
+              <div className={styles['embed-footer']}>
+                {(embed.footer?.iconURL || embed.footer?.proxyIconURL) && (
+                  <img
+                    src={embed.footer.proxyIconURL || embed.footer.iconURL}
+                    alt=""
+                    className={styles['embed-footer-icon']}
+                    loading="lazy"
+                    draggable={false}
+                  />
+                )}
+                <span className={styles['embed-footer-text']}>
+                  {embed.footer?.text}
+                  {embed.footer?.text && embed.timestamp ? " • " : ""}
+                  {embed.timestamp ? formatEmbedTimestamp(embed.timestamp) : ""}
+                </span>
+              </div>
+            )}
           </div>
         );
       })}
@@ -891,7 +1471,9 @@ function ReplyContext({ replyTo, messageMap }: { replyTo: string; messageMap: Ma
   const nameStyle = resolveRoleColorStyle(messageReference.author);
   const snippet = messageReference.content || messageReference.cleanContent || "";
   const truncated = snippet.length > 80 ? snippet.slice(0, 77) + "…" : snippet;
-  const hasAttachment = (messageReference.attachments && messageReference.attachments.length > 0) || (messageReference.embeds && messageReference.embeds.length > 0);
+  const hasAttachment = (messageReference.attachments && messageReference.attachments.length > 0)
+    || (messageReference.embeds && messageReference.embeds.length > 0)
+    || (messageReference.stickers && messageReference.stickers.length > 0);
   return (
     <>
       <div className={styles['reply-spine']} />
@@ -1386,12 +1968,16 @@ interface MessageBodyProps {
 }
 
 function MessageBody({ message, tenorOembedUrl, reactedSet, onReact }: MessageBodyProps) {
+  const formatted = formatContent(message.content, message.cleanContent);
   return (
     <>
-      <p className={styles['message-text']}>{formatContent(message.content, message.cleanContent)}</p>
+      {formatted && <div className={styles['message-text']}>{formatted}</div>}
       <TenorEmbeds content={message.content} tenorOembedUrl={tenorOembedUrl} />
       <ImageAttachments attachments={message.attachments} />
+      <VideoAttachments attachments={message.attachments} />
       <AudioAttachments attachments={message.attachments} />
+      <FileAttachments attachments={message.attachments} />
+      <Stickers stickers={message.stickers} />
       <EmbedMedia embeds={message.embeds} />
       <Reactions
         reactions={message.reactions}
@@ -1402,6 +1988,24 @@ function MessageBody({ message, tenorOembedUrl, reactedSet, onReact }: MessageBo
     </>
   );
 }
+
+// ── Test-only exports ────────────────────────────────────────────
+// Internal pure helpers exposed for unit tests — not public API.
+export const __internal = {
+  formatContent,
+  renderMarkdown,
+  parseInline,
+  isEmojiOnly,
+  formatDiscordTimestamp,
+  formatFileSize,
+  isImageAttachment,
+  isVideoAttachment,
+  isAudioAttachment,
+  isVoiceMessage,
+  isSpoilerAttachment,
+  stickerUrl,
+  fitMediaDimensions,
+};
 
 // ═════════════════════════════════════════════════════════════════
 //  DiscordChat Component
