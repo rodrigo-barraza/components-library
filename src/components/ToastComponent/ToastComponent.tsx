@@ -15,6 +15,8 @@ export interface ToastEntry {
   id: number;
   message: string;
   type: "success" | "warning" | "error" | "info" | string;
+  /** Auto-dismiss duration in ms — drives the progress rail. 0 = sticky. */
+  duration?: number;
 }
 
 /**
@@ -30,7 +32,7 @@ export function useToast(defaultDuration = 3500) {
   const addToast = useCallback(
     (message: string, type: "success" | "warning" | "error" | "info" | string = "info", duration: number = defaultDuration) => {
       const id = ++idRef.current;
-      setToasts((prev) => [...prev, { id, message, type }]);
+      setToasts((prev) => [...prev, { id, message, type, duration }]);
 
       if (duration > 0) {
         setTimeout(() => {
@@ -65,12 +67,17 @@ export default function ToastComponent({ toasts = [], onRemove }: ToastComponent
     <div className={`toast-component ${styles['container']}`} id="toast-container">
       {toasts.map((toast) => {
         const Icon = ICONS[toast.type] || Info;
+        const duration = toast.duration ?? 0;
         return (
           <div
             key={toast.id}
+            role="status"
             className={`${styles['toast']} ${styles[toast.type] || ""}`}
+            style={duration > 0 ? ({ "--toast-duration": `${duration}ms` } as React.CSSProperties) : undefined}
           >
-            <Icon size={16} className={styles['icon']} />
+            <span className={styles['icon-chip']}>
+              <Icon size={15} />
+            </span>
             <span className={styles['message']}>{toast.message}</span>
             {onRemove && (
               <button
@@ -81,6 +88,7 @@ export default function ToastComponent({ toasts = [], onRemove }: ToastComponent
                 <X size={14} />
               </button>
             )}
+            {duration > 0 && <span className={styles['progress']} />}
           </div>
         );
       })}

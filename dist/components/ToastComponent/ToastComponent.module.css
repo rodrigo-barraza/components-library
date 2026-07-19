@@ -7,87 +7,144 @@
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   pointer-events: none;
-  max-width: 380px;
+  max-width: 400px;
 }
 
 .toast {
+  --toast-accent: var(--color-info, #6366f1);
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: var(--background-surface, oklch(0.211 0.0144 294.5 / 0.92));
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--background-elevated, var(--background-surface, oklch(0.211 0.0144 294.5 / 0.92)));
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid var(--calculated-border-subtle, oklch(1 0 0 / 0.06));
-  box-shadow: 0 8px 32px oklch(0 0 0 / 0.35);
+  border: 1px solid var(--calculated-border-color, var(--calculated-border-subtle, oklch(1 0 0 / 0.08)));
+  box-shadow:
+    0 1px 2px oklch(0 0 0 / 0.08),
+    0 8px 24px oklch(0 0 0 / 0.12),
+    0 24px 48px -12px oklch(0 0 0 / 0.18);
   font-size: 13px;
   font-weight: 500;
   color: var(--text-primary, #e4e4e7);
   pointer-events: auto;
-  animation: toast-slide-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  min-width: 240px;
+  animation: toast-enter 0.42s cubic-bezier(0.34, 1.3, 0.5, 1) forwards;
+  min-width: 260px;
 }
 
-.success {
-  border-color: oklch(0.73 0.2318 148.3 / 0.3);
-}
-.success .icon { color: var(--color-success, #22c55e); }
-
-.error {
-  border-color: oklch(0.637 0.2078 25.3 / 0.3);
-}
-.error .icon { color: var(--color-danger, #ef4444); }
-
-.warning {
-  border-color: oklch(0.774 0.1784 79.8 / 0.3);
-}
-.warning .icon { color: var(--color-warning, #f59e0b); }
-
-.info {
-  border-color: oklch(0.566 0.2532 291.3 / 0.3);
-}
-.info .icon { color: var(--color-info, #6366f1); }
-
-.icon {
-  flex-shrink: 0;
+/* Soft accent wash bleeding in from the icon side. */
+.toast::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--toast-accent) 10%, transparent) 0%,
+    transparent 42%
+  );
+  pointer-events: none;
 }
 
-.message {
-  flex: 1;
-  line-height: 1.4;
-}
+.success { --toast-accent: var(--color-success, #22c55e); }
+.error   { --toast-accent: var(--color-danger, #ef4444); }
+.warning { --toast-accent: var(--color-warning, #f59e0b); }
+.info    { --toast-accent: var(--color-info, #6366f1); }
 
-.close {
+/* Type-tinted icon chip. */
+.icon-chip {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  color: var(--toast-accent);
+  background: color-mix(in oklab, var(--toast-accent) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--toast-accent) 22%, transparent);
+}
+
+.message {
+  position: relative;
+  flex: 1;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.close {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
   background: none;
   border: none;
   color: var(--text-muted, #71717a);
   cursor: pointer;
-  border-radius: 6px;
-  transition: color 0.15s ease, background 0.15s ease;
+  border-radius: 8px;
+  transition: color 0.15s ease, background 0.15s ease, transform 0.15s ease;
   flex-shrink: 0;
   padding: 0;
 }
 
 .close:hover {
   color: var(--text-primary, #e4e4e7);
-  background: var(--background-surface, oklch(1 0 0 / 0.06));
+  background: color-mix(in oklab, currentColor 10%, transparent);
 }
 
-@keyframes toast-slide-in {
+.close:active {
+  transform: scale(0.92);
+}
+
+/* Auto-dismiss progress rail. */
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  background: linear-gradient(
+    90deg,
+    var(--toast-accent),
+    color-mix(in oklab, var(--toast-accent) 45%, transparent)
+  );
+  animation: toast-progress var(--toast-duration, 3500ms) linear forwards;
+}
+
+@keyframes toast-enter {
   from {
     opacity: 0;
-    transform: translateX(24px);
+    transform: translateX(28px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: toast-fade-in 0.2s ease forwards;
+  }
+  .progress {
+    animation-duration: 0.001ms;
+    opacity: 0;
+  }
+  @keyframes toast-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }

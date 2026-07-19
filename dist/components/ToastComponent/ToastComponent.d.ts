@@ -2,6 +2,8 @@ export interface ToastEntry {
     id: number;
     message: string;
     type: "success" | "warning" | "error" | "info" | string;
+    /** Auto-dismiss duration in ms — drives the progress rail. 0 = sticky. */
+    duration?: number;
 }
 /**
  * useToast — multi-toast queue hook.

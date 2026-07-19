@@ -20,7 +20,7 @@ export function useToast(defaultDuration = 3500) {
     const idRef = useRef(0);
     const addToast = useCallback((message, type = "info", duration = defaultDuration) => {
         const id = ++idRef.current;
-        setToasts((prev) => [...prev, { id, message, type }]);
+        setToasts((prev) => [...prev, { id, message, type, duration }]);
         if (duration > 0) {
             setTimeout(() => {
                 setToasts((prev) => prev.filter((toast) => toast.id !== id));
@@ -41,7 +41,8 @@ export default function ToastComponent({ toasts = [], onRemove }) {
         return null;
     return (_jsx("div", { className: `toast-component ${styles['container']}`, id: "toast-container", children: toasts.map((toast) => {
             const Icon = ICONS[toast.type] || Info;
-            return (_jsxs("div", { className: `${styles['toast']} ${styles[toast.type] || ""}`, children: [_jsx(Icon, { size: 16, className: styles['icon'] }), _jsx("span", { className: styles['message'], children: toast.message }), onRemove && (_jsx("button", { className: styles['close'], onClick: () => onRemove(toast.id), "aria-label": "Dismiss", children: _jsx(X, { size: 14 }) }))] }, toast.id));
+            const duration = toast.duration ?? 0;
+            return (_jsxs("div", { role: "status", className: `${styles['toast']} ${styles[toast.type] || ""}`, style: duration > 0 ? { "--toast-duration": `${duration}ms` } : undefined, children: [_jsx("span", { className: styles['icon-chip'], children: _jsx(Icon, { size: 15 }) }), _jsx("span", { className: styles['message'], children: toast.message }), onRemove && (_jsx("button", { className: styles['close'], onClick: () => onRemove(toast.id), "aria-label": "Dismiss", children: _jsx(X, { size: 14 }) })), duration > 0 && _jsx("span", { className: styles['progress'] })] }, toast.id));
         }) }));
 }
 //# sourceMappingURL=ToastComponent.js.map
