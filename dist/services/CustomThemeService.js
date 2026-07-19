@@ -11,6 +11,7 @@
  *
  * CSS selector:  `[data-theme="custom-<id>"]`
  */
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import { THEME_CATALOG } from "../components/ThemeProvider/ThemeProvider.js";
 // ── Configuration ──────────────────────────────────────────────────────
 let STORAGE_KEY = "custom-themes";
@@ -46,8 +47,8 @@ function hexToRgb(hex) {
 }
 /** Convert [r,g,b] to hex string */
 function rgbToHex(r, g, b) {
-    const clamp = (channelValue) => Math.max(0, Math.min(255, Math.round(channelValue)));
-    return `#${[clamp(r), clamp(g), clamp(b)].map((channelValue) => channelValue.toString(16).padStart(2, "0")).join("")}`;
+    const toChannel = (channelValue) => clamp(Math.round(channelValue), 0, 255);
+    return `#${[toChannel(r), toChannel(g), toChannel(b)].map((channelValue) => channelValue.toString(16).padStart(2, "0")).join("")}`;
 }
 /** Darken a hex color by a percentage (0–100) */
 function darken(hex, percent) {

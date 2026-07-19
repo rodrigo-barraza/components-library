@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, forwardRef } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./SearchInputComponent.module.css";
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -210,8 +211,7 @@ const SearchInputComponent = forwardRef<HTMLInputElement, SearchInputProps>(func
     .filter(Boolean)
     .join(" ");
 
-  const rootClasses = [
-    "search-input-component",styles['search-root'], className].filter(Boolean).join(" ");
+  const rootClasses = cx("search-input-component", styles['search-root'], className);
 
   /* ── Default leading icon (search magnifier) ──────────────────── */
 

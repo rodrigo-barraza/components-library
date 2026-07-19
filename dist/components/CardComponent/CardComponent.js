@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { forwardRef } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./CardComponent.module.css";
 /**
  * CardComponent — M3-inspired compound card with elevated / filled / outlined variants.
@@ -63,7 +64,7 @@ function CardFooter({ children, className }) {
  * Renders a full-surface interactive layer with ripple and state layer.
  */
 const CardActionArea = forwardRef(function CardActionArea({ onClick, href, className, children, ...rest }, ref) {
-    const classes = [styles['action-area'], className].filter(Boolean).join(" ");
+    const classes = cx(styles['action-area'], className);
     if (href) {
         return (_jsxs("a", { ref: ref, href: href, className: classes, ...rest, children: [_jsx("span", { className: styles['state-layer'] }), children] }));
     }

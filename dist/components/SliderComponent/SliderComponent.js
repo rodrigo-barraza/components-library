@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useCallback, useState, useMemo } from "react";
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./SliderComponent.module.css";
@@ -55,7 +56,7 @@ export default function SliderComponent({ value, min = 0, max = 100, step = 1, o
    ───────────────────────────────────────────────────────── */
 function clampAndSnap(clientX, trackEl, min, max, step) {
     const rect = trackEl.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const ratio = clamp((clientX - rect.left) / rect.width, 0, 1);
     let raw = min + ratio * (max - min);
     if (step > 0) {
         raw = Math.round(raw / step) * step;

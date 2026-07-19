@@ -6,6 +6,7 @@ import {
   useEffect,
   forwardRef,
 } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./TopAppBarComponent.module.css";
 
 /**
@@ -226,7 +227,7 @@ const TopAppBarAction = forwardRef<HTMLButtonElement, TopAppBarActionProps>(func
   { icon: Icon, ariaLabel, disabled = false, onClick, className, children, ...rest },
   ref,
 ) {
-  const classes = [styles['action-button'], className].filter(Boolean).join(" ");
+  const classes = cx(styles['action-button'], className);
 
   return (
     <button

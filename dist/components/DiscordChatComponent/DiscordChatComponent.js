@@ -1,7 +1,7 @@
 "use client";
 import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
-import { DISCORD_STICKER_FORMAT, discordBannerUrl, discordEmojiUrl, discordGuildIconUrl, discordSplashUrl, discordStickerUrl, } from "@rodrigo-barraza/utilities-library";
+import { DISCORD_STICKER_FORMAT, clamp, discordBannerUrl, discordEmojiUrl, discordGuildIconUrl, discordSplashUrl, discordStickerUrl, formatMediaTimestamp, } from "@rodrigo-barraza/utilities-library";
 import styles from "./DiscordChatComponent.module.css";
 // ── Discord role colors (fallback when no role color from API) ───
 const ROLE_COLORS = [
@@ -708,7 +708,7 @@ function VoiceMessagePlayer({ attachment }) {
         const rect = event.currentTarget.getBoundingClientRect();
         const clickX = event.clientX - rect.left;
         const width = rect.width;
-        const percentage = Math.min(Math.max(0, clickX / width), 1);
+        const percentage = clamp(clickX / width, 0, 1);
         audio.currentTime = percentage * duration;
         setCurrentTime(audio.currentTime);
     };
@@ -725,25 +725,12 @@ function VoiceMessagePlayer({ attachment }) {
             audio.removeEventListener("pause", onPause);
         };
     }, []);
-    const formatTime = (seconds) => {
-        if (isNaN(seconds))
-            return "0:00";
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        const secondsString = remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
-        if (hours > 0) {
-            const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
-            return `${hours}:${minutesString}:${secondsString}`;
-        }
-        return `${minutes}:${secondsString}`;
-    };
     const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
     const activeBarIndex = Math.floor((progressPercent / 100) * bars.length);
     return (_jsxs("div", { className: styles['voice-player'], children: [_jsx("audio", { ref: audioRef, src: attachment.url, preload: "metadata", onTimeUpdate: handleTimeUpdate, onLoadedMetadata: handleLoadedMetadata, onEnded: handleAudioEnded }), _jsx("button", { className: styles['voice-play-button'], onClick: togglePlay, type: "button", children: playing ? (_jsxs("svg", { className: styles['voice-pause-icon'], viewBox: "0 0 24 24", children: [_jsx("rect", { x: "5", y: "4", width: "4", height: "16", rx: "1" }), _jsx("rect", { x: "15", y: "4", width: "4", height: "16", rx: "1" })] })) : (_jsx("svg", { className: styles['voice-play-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M8 5v14l11-7z" }) })) }), _jsx("div", { className: styles['voice-waveform'], onClick: handleWaveformClick, children: bars.map((height, barIndex) => {
                     const isPlayed = barIndex <= activeBarIndex;
                     return (_jsx("div", { className: `${styles['voice-waveform-bar']} ${isPlayed ? styles['voice-waveform-bar-played'] : ""}`, style: { "--bar-height": `${height}%` } }, barIndex));
-                }) }), _jsx("span", { className: styles['voice-duration'], children: formatTime(playing ? currentTime : duration) }), _jsxs("button", { className: styles['voice-speed'], onClick: cycleSpeed, type: "button", children: [playbackRate, "X"] }), _jsx("button", { className: styles['voice-volume'], onClick: toggleMute, type: "button", children: muted ? (_jsx("svg", { className: styles['voice-volume-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" }) })) : (_jsx("svg", { className: styles['voice-volume-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" }) })) })] }));
+                }) }), _jsx("span", { className: styles['voice-duration'], children: formatMediaTimestamp(playing ? currentTime : duration) }), _jsxs("button", { className: styles['voice-speed'], onClick: cycleSpeed, type: "button", children: [playbackRate, "X"] }), _jsx("button", { className: styles['voice-volume'], onClick: toggleMute, type: "button", children: muted ? (_jsx("svg", { className: styles['voice-volume-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" }) })) : (_jsx("svg", { className: styles['voice-volume-icon'], viewBox: "0 0 24 24", children: _jsx("path", { d: "M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" }) })) })] }));
 }
 // Voice messages only — regular audio files render as file cards
 // with a player (see FileAttachments), matching Discord.

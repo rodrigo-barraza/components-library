@@ -1,5 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useState } from "react";
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import styles from "./ProgressBarComponent.module.css";
 /**
  * ProgressBarComponent — M3 Linear Progress Indicator.
@@ -10,7 +11,7 @@ import styles from "./ProgressBarComponent.module.css";
  */
 export default function ProgressBarComponent({ value, variant = "accent", size = "md", label, showValue = false, animated = true, striped = false, className, ...rest }) {
     const isIndeterminate = value === undefined || value === null;
-    const clampedValue = isIndeterminate ? 0 : Math.max(0, Math.min(100, value));
+    const clampedValue = isIndeterminate ? 0 : clamp(value, 0, 100);
     const trackRef = useRef(null);
     // Animate from 0 on mount for determinate
     const [displayValue, setDisplayValue] = useState(0);

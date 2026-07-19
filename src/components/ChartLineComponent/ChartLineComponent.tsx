@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import styles from "./ChartLineComponent.module.css";
 
 export interface ChartLineComponentProps {
@@ -85,7 +86,7 @@ export default function ChartLineComponent({
       const ratio = (mouseX - padding.left) / chartW;
       const floatIndex = ratio * (historyMax - 1);
       const nearestIndex = Math.round(floatIndex);
-      const clampedIndex = Math.max(0, Math.min(data.length - 1, nearestIndex));
+      const clampedIndex = clamp(nearestIndex, 0, data.length - 1);
 
       const dataPointValue = data[clampedIndex];
       const pointX =
@@ -222,7 +223,7 @@ export default function ChartLineComponent({
       const hoverIndex = Math.round(
         ((hoverX - padding.left) / chartW) * (historyMax - 1),
       );
-      const clampedDataIndex = Math.max(0, Math.min(data.length - 1, hoverIndex));
+      const clampedDataIndex = clamp(hoverIndex, 0, data.length - 1);
       const hoverY =
         padding.top +
         chartH -

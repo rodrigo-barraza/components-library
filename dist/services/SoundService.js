@@ -9,6 +9,7 @@
  * gain values (0–100) routed through a ChannelSplitter → per-channel
  * GainNode → ChannelMerger topology.
  */
+import { clamp } from "@rodrigo-barraza/utilities-library";
 let context = null;
 let hoverBuffer = null;
 let clickBuffer = null;
@@ -203,7 +204,7 @@ function spatialFromEvent(event) {
         return { left: 50, right: 50 };
     const rect = element.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
-    const ratio = Math.max(0, Math.min(1, centerX / window.innerWidth));
+    const ratio = clamp(centerX / window.innerWidth, 0, 1);
     return {
         left: Math.round((1 - ratio) * 100),
         right: Math.round(ratio * 100),

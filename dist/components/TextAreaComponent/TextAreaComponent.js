@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useRef, useEffect, useCallback } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./TextAreaComponent.module.css";
 export default function TextAreaComponent({ value, onChange, placeholder, minRows = 3, maxRows = 12, autoResize = true, disabled = false, readOnly = false, className, id, ...rest }) {
     const textAreaRef = useRef(null);
@@ -24,9 +25,7 @@ export default function TextAreaComponent({ value, onChange, placeholder, minRow
     const handleChange = (event) => {
         onChange?.(event);
     };
-    const classes = [
-        "text-area-component", styles['textarea'], className || ""
-    ].filter(Boolean).join(" ");
+    const classes = cx("text-area-component", styles['textarea'], className || "");
     return (_jsx("textarea", { ref: textAreaRef, id: id, className: classes, value: value, onChange: handleChange, placeholder: placeholder, disabled: disabled, readOnly: readOnly, rows: minRows, ...rest }));
 }
 //# sourceMappingURL=TextAreaComponent.js.map

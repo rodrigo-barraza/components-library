@@ -10,6 +10,8 @@
  * GainNode → ChannelMerger topology.
  */
 
+import { clamp } from "@rodrigo-barraza/utilities-library";
+
 export interface SoundOptions {
   /** DOM or React synthetic event for spatial stereo positioning */
   event?: { currentTarget?: EventTarget | null };
@@ -262,7 +264,7 @@ function spatialFromEvent(event?: { currentTarget?: EventTarget | null }): Stere
 
   const rect = (element as Element).getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
-  const ratio = Math.max(0, Math.min(1, centerX / window.innerWidth));
+  const ratio = clamp(centerX / window.innerWidth, 0, 1);
 
   return {
     left: Math.round((1 - ratio) * 100),

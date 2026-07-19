@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useState, useEffect, forwardRef, } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./TopAppBarComponent.module.css";
 export default function TopAppBarComponent({ variant = "small", title, navigationIcon, onNavigationClick, navigationAriaLabel = "Navigate back", position = "sticky", scrollTargetRef, scrollThreshold = 4, showScrollIndicator = false, headingLevel = 1, ariaLabel, className, style, children, ...rest }) {
     const barRef = useRef(null);
@@ -72,7 +73,7 @@ export default function TopAppBarComponent({ variant = "small", title, navigatio
     return (_jsxs("header", { ref: barRef, role: "banner", "aria-label": ariaLabel, className: rootClasses, style: style, ...rest, children: [_jsxs("div", { className: styles['main-row'], children: [navigationIcon && (_jsx("div", { className: styles['navigation-slot'], children: _jsx("button", { type: "button", className: styles['navigation-button'], "aria-label": navigationAriaLabel, onClick: onNavigationClick, children: navigationIcon }) })), _jsx("div", { className: styles['title-area'], children: _jsx(Heading, { className: styles['title'], children: title }) }), children && _jsx("div", { className: styles['actions-slot'], children: children })] }), isExpandable && (_jsx("div", { className: styles['expanded-row'], children: _jsx("span", { className: styles['expanded-title'], children: title }) })), showScrollIndicator && (_jsx("div", { className: styles['scroll-indicator'], style: { width: `${scrollProgress * 100}%` }, "aria-hidden": "true" }))] }));
 }
 const TopAppBarAction = forwardRef(function TopAppBarAction({ icon: Icon, ariaLabel, disabled = false, onClick, className, children, ...rest }, ref) {
-    const classes = [styles['action-button'], className].filter(Boolean).join(" ");
+    const classes = cx(styles['action-button'], className);
     return (_jsx("button", { ref: ref, type: "button", className: classes, "aria-label": ariaLabel, disabled: disabled, onClick: onClick, ...rest, children: children || (Icon && _jsx(Icon, { size: 24 })) }));
 });
 /* ── Attach sub-components ──────────────────────────────────────────── */

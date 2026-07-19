@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, ElementType, ComponentPropsWithoutRef, ReactNode } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./AvatarComponent.module.css";
 
 export interface AvatarComponentProps extends ComponentPropsWithoutRef<"div"> {
@@ -47,7 +48,7 @@ export default function AvatarComponent({
   const iconSize =
     size === "xs" ? 12 : size === "sm" ? 14 : size === "lg" ? 22 : size === "xl" ? 28 : 18;
 
-  const classes = ["avatar-component", styles['avatar'], styles[size], className].filter(Boolean).join(" ");
+  const classes = cx("avatar-component", styles['avatar'], styles[size], className);
 
   return (
     <div className={classes} style={style} {...rest}>

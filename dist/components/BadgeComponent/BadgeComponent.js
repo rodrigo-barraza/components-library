@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useMemo, useState, useEffect, useRef } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import { Calendar } from "lucide-react";
 import { DateTime } from "luxon";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
@@ -78,15 +79,7 @@ function MetricBadge({ value, label, icon, tooltip, formatFn, color, tween = fal
     const customColorStyle = color && !styles[color]
         ? { "--metric-color": color }
         : undefined;
-    return (_jsx(TooltipComponent, { label: tooltipText, position: "top", children: _jsxs("span", { className: [
-                "badge-component",
-                styles['metric-badge'],
-                colorClass,
-                !colorClass && color ? styles['custom-metric'] : "",
-                mini ? styles['mini-metric'] : "",
-                isTweening ? styles['is-tweening-metric'] : "",
-                className,
-            ].filter(Boolean).join(" "), style: customColorStyle, children: [icon && _jsx("span", { className: styles['metric-icon'], children: icon }), _jsx("span", { children: formattedDisplayValue }), label && _jsx("span", { children: label })] }) }));
+    return (_jsx(TooltipComponent, { label: tooltipText, position: "top", children: _jsxs("span", { className: cx("badge-component", styles['metric-badge'], colorClass, !colorClass && color ? styles['custom-metric'] : "", mini ? styles['mini-metric'] : "", isTweening ? styles['is-tweening-metric'] : "", className), style: customColorStyle, children: [icon && _jsx("span", { className: styles['metric-icon'], children: icon }), _jsx("span", { children: formattedDisplayValue }), label && _jsx("span", { children: label })] }) }));
 }
 function DateTimeBadge({ date, showIcon = true, relative = true, highlightNew = false, className = "", }) {
     const dateTimeInstance = useMemo(() => {

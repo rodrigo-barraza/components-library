@@ -1,5 +1,6 @@
 import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useMemo } from "react";
+import { clamp, cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./LoadingIndicatorComponent.module.css";
 /**
  * LoadingIndicatorComponent — M3-compliant progress indicator with circular
@@ -23,7 +24,7 @@ import styles from "./LoadingIndicatorComponent.module.css";
  */
 export default function LoadingIndicatorComponent({ variant = "circular", mode = "indeterminate", value = 0, buffer = null, size = "medium", trackSize = "default", color = "primary", showPercentage = false, label, ariaLabel = "Loading", className = "", id, }) {
     const isIndeterminate = mode === "indeterminate";
-    const clampedValue = Math.max(0, Math.min(100, value));
+    const clampedValue = clamp(value, 0, 100);
     if (variant === "circular") {
         return (_jsx(CircularIndicator, { isIndeterminate: isIndeterminate, value: clampedValue, size: size, color: color, showPercentage: showPercentage, label: label, ariaLabel: ariaLabel, className: className, id: id }));
     }
@@ -43,25 +44,15 @@ function CircularIndicator({ isIndeterminate, value, size, color, showPercentage
     const dashOffset = useMemo(() => {
         if (isIndeterminate)
             return undefined;
-        return CIRCUMFERENCE - (clamp(value) / 100) * CIRCUMFERENCE;
+        return CIRCUMFERENCE - (clamp(value, 0, 100) / 100) * CIRCUMFERENCE;
     }, [isIndeterminate, value, CIRCUMFERENCE]);
     /* ── CSS class assembly ── */
     const sizeClass = size === "small" ? styles['size-small'] :
         size === "large" ? styles['size-large'] :
             styles['size-medium'];
     const colorClass = getColorClass(color);
-    const rootClasses = [
-        "loading-indicator-component",
-        styles['wrapper'],
-        styles['fade-in'],
-        className,
-    ].filter(Boolean).join(" ");
-    const circularClasses = [
-        styles['circular'],
-        sizeClass,
-        colorClass,
-        isIndeterminate && styles['circular-indeterminate'],
-    ].filter(Boolean).join(" ");
+    const rootClasses = cx("loading-indicator-component", styles['wrapper'], styles['fade-in'], className);
+    const circularClasses = cx(styles['circular'], sizeClass, colorClass, isIndeterminate && styles['circular-indeterminate']);
     /* ── ARIA attributes ── */
     const ariaProps = {
         role: "progressbar",
@@ -83,17 +74,8 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
         trackSize === "thick" ? styles['track-thick'] :
             styles['track-default'];
     const colorClass = getColorClass(color);
-    const rootClasses = [
-        styles['wrapper-linear'],
-        styles['fade-in'],
-        className,
-    ].filter(Boolean).join(" ");
-    const linearClasses = [
-        styles['linear'],
-        trackSizeClass,
-        colorClass,
-        isIndeterminate && styles['linear-indeterminate'],
-    ].filter(Boolean).join(" ");
+    const rootClasses = cx(styles['wrapper-linear'], styles['fade-in'], className);
+    const linearClasses = cx(styles['linear'], trackSizeClass, colorClass, isIndeterminate && styles['linear-indeterminate']);
     /* ── ARIA attributes ── */
     const ariaProps = {
         role: "progressbar",
@@ -102,15 +84,11 @@ function LinearIndicator({ isIndeterminate, value, buffer = null, trackSize, col
         "aria-valuemax": 100,
         ...(isIndeterminate ? {} : { "aria-valuenow": value }),
     };
-    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsx("div", { className: linearClasses, ...ariaProps, children: isIndeterminate ? (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar1']}` }), _jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar2']}` })] })) : (_jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles['label'], "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
+    return (_jsxs("div", { className: rootClasses, id: id, children: [_jsx("div", { className: linearClasses, ...ariaProps, children: isIndeterminate ? (_jsxs(_Fragment, { children: [_jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar1']}` }), _jsx("div", { className: `${styles['linear-indicator']} ${styles['linear-bar2']}` })] })) : (_jsxs(_Fragment, { children: [buffer !== null && buffer !== undefined && (_jsx("div", { className: styles['linear-buffer'], style: { width: `${clamp(buffer, 0, 100)}%` } })), _jsx("div", { className: styles['linear-indicator'], style: { width: `${clamp(value, 0, 100)}%` } }), _jsx("div", { className: `${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`, style: { left: `${clamp(value, 0, 100)}%` }, "aria-hidden": "true" })] })) }), label && (_jsx("span", { className: styles['label'], "aria-live": "polite", children: isIndeterminate ? label : `${label} — ${Math.round(value)}%` }))] }));
 }
 /* ═══════════════════════════════════════════════════════════ */
 /*  UTILITIES                                                 */
 /* ═══════════════════════════════════════════════════════════ */
-/** Clamp a number between 0 and 100 */
-function clamp(value) {
-    return Math.max(0, Math.min(100, value));
-}
 /** Map color prop to CSS module class */
 function getColorClass(color) {
     switch (color) {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ElementType, ComponentPropsWithoutRef, ReactNode, useMemo, useState, useEffect, useRef } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import { Calendar } from "lucide-react";
 import { DateTime } from "luxon";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
@@ -134,7 +135,7 @@ function MetricBadge({
   return (
     <TooltipComponent label={tooltipText} position="top">
       <span
-        className={[
+        className={cx(
           "badge-component",
           styles['metric-badge'],
           colorClass,
@@ -142,7 +143,7 @@ function MetricBadge({
           mini ? styles['mini-metric'] : "",
           isTweening ? styles['is-tweening-metric'] : "",
           className,
-        ].filter(Boolean).join(" ")}
+        )}
         style={customColorStyle}
       >
         {icon && <span className={styles['metric-icon']}>{icon}</span>}

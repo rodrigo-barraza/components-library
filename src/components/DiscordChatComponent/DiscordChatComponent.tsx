@@ -3,11 +3,13 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import {
   DISCORD_STICKER_FORMAT,
+  clamp,
   discordBannerUrl,
   discordEmojiUrl,
   discordGuildIconUrl,
   discordSplashUrl,
   discordStickerUrl,
+  formatMediaTimestamp,
 } from "@rodrigo-barraza/utilities-library";
 import styles from "./DiscordChatComponent.module.css";
 
@@ -1036,7 +1038,7 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
     const rect = event.currentTarget.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const width = rect.width;
-    const percentage = Math.min(Math.max(0, clickX / width), 1);
+    const percentage = clamp(clickX / width, 0, 1);
     
     audio.currentTime = percentage * duration;
     setCurrentTime(audio.currentTime);
@@ -1057,19 +1059,6 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
       audio.removeEventListener("pause", onPause);
     };
   }, []);
-
-  const formatTime = (seconds: number) => {
-    if (isNaN(seconds)) return "0:00";
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    const secondsString = remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
-    if (hours > 0) {
-      const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      return `${hours}:${minutesString}:${secondsString}`;
-    }
-    return `${minutes}:${secondsString}`;
-  };
 
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
   const activeBarIndex = Math.floor((progressPercent / 100) * bars.length);
@@ -1112,7 +1101,7 @@ function VoiceMessagePlayer({ attachment }: { attachment: DiscordAttachment }) {
       </div>
 
       <span className={styles['voice-duration']}>
-        {formatTime(playing ? currentTime : duration)}
+        {formatMediaTimestamp(playing ? currentTime : duration)}
       </span>
 
       <button className={styles['voice-speed']} onClick={cycleSpeed} type="button">

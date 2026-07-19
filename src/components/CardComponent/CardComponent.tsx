@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, type ReactNode, type CSSProperties, type MouseEvent } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./CardComponent.module.css";
 
 interface CardComponentProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -170,7 +171,7 @@ const CardActionArea = forwardRef<HTMLAnchorElement | HTMLButtonElement, CardAct
   { onClick, href, className, children, ...rest },
   ref,
 ) {
-  const classes = [styles['action-area'], className].filter(Boolean).join(" ");
+  const classes = cx(styles['action-area'], className);
 
   if (href) {
     return (

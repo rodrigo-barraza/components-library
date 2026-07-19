@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./TextAreaComponent.module.css";
 
 /**
@@ -54,8 +55,7 @@ export default function TextAreaComponent({
     onChange?.(event);
   };
 
-  const classes = [
-    "text-area-component",styles['textarea'], className || ""].filter(Boolean).join(" ");
+  const classes = cx("text-area-component", styles['textarea'], className || "");
 
   return (
     <textarea

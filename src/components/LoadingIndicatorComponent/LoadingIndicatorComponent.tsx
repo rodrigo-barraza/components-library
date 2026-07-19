@@ -1,4 +1,5 @@
 import { useMemo, ReactNode } from "react";
+import { clamp, cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./LoadingIndicatorComponent.module.css";
 
 export interface LoadingIndicatorComponentProps {
@@ -51,7 +52,7 @@ export default function LoadingIndicatorComponent({
   id,
 }: LoadingIndicatorComponentProps) {
   const isIndeterminate = mode === "indeterminate";
-  const clampedValue = Math.max(0, Math.min(100, value));
+  const clampedValue = clamp(value, 0, 100);
 
   if (variant === "circular") {
     return (
@@ -130,7 +131,7 @@ function CircularIndicator({
   /* Determinate: calculate stroke-dashoffset from value */
   const dashOffset = useMemo(() => {
     if (isIndeterminate) return undefined;
-    return CIRCUMFERENCE - (clamp(value) / 100) * CIRCUMFERENCE;
+    return CIRCUMFERENCE - (clamp(value, 0, 100) / 100) * CIRCUMFERENCE;
   }, [isIndeterminate, value, CIRCUMFERENCE]);
 
   /* ── CSS class assembly ── */
@@ -141,19 +142,19 @@ function CircularIndicator({
 
   const colorClass = getColorClass(color);
 
-  const rootClasses = [
+  const rootClasses = cx(
     "loading-indicator-component",
     styles['wrapper'],
     styles['fade-in'],
     className,
-  ].filter(Boolean).join(" ");
+  );
 
-  const circularClasses = [
+  const circularClasses = cx(
     styles['circular'],
     sizeClass,
     colorClass,
     isIndeterminate && styles['circular-indeterminate'],
-  ].filter(Boolean).join(" ");
+  );
 
   /* ── ARIA attributes ── */
   const ariaProps = {
@@ -249,18 +250,18 @@ function LinearIndicator({
 
   const colorClass = getColorClass(color);
 
-  const rootClasses = [
+  const rootClasses = cx(
     styles['wrapper-linear'],
     styles['fade-in'],
     className,
-  ].filter(Boolean).join(" ");
+  );
 
-  const linearClasses = [
+  const linearClasses = cx(
     styles['linear'],
     trackSizeClass,
     colorClass,
     isIndeterminate && styles['linear-indeterminate'],
-  ].filter(Boolean).join(" ");
+  );
 
   /* ── ARIA attributes ── */
   const ariaProps = {
@@ -287,17 +288,17 @@ function LinearIndicator({
             {buffer !== null && buffer !== undefined && (
               <div
                 className={styles['linear-buffer']}
-                style={{ width: `${clamp(buffer)}%` }}
+                style={{ width: `${clamp(buffer, 0, 100)}%` }}
               />
             )}
             <div
               className={styles['linear-indicator']}
-              style={{ width: `${clamp(value)}%` }}
+              style={{ width: `${clamp(value, 0, 100)}%` }}
             />
             {/* M3 stop indicator — small dot at the leading edge */}
             <div
               className={`${styles['linear-stop']}${value > 0 ? ` ${styles['is-visible-state']}` : ""}`}
-              style={{ left: `${clamp(value)}%` }}
+              style={{ left: `${clamp(value, 0, 100)}%` }}
               aria-hidden="true"
             />
           </>
@@ -318,11 +319,6 @@ function LinearIndicator({
 /* ═══════════════════════════════════════════════════════════ */
 /*  UTILITIES                                                 */
 /* ═══════════════════════════════════════════════════════════ */
-
-/** Clamp a number between 0 and 100 */
-function clamp(value: number): number {
-  return Math.max(0, Math.min(100, value));
-}
 
 /** Map color prop to CSS module class */
 function getColorClass(color: string): string {

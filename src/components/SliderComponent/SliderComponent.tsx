@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useCallback, useState, useMemo } from "react";
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./SliderComponent.module.css";
@@ -124,7 +125,7 @@ export default function SliderComponent<T extends number | number[]>({
    ───────────────────────────────────────────────────────── */
 function clampAndSnap(clientX: number, trackEl: HTMLDivElement, min: number, max: number, step: number): number {
   const rect = trackEl.getBoundingClientRect();
-  const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  const ratio = clamp((clientX - rect.left) / rect.width, 0, 1);
   let raw = min + ratio * (max - min);
   if (step > 0) {
     raw = Math.round(raw / step) * step;

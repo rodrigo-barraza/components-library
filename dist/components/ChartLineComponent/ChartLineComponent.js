@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useEffect, useState, useCallback } from "react";
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import styles from "./ChartLineComponent.module.css";
 /**
  * ChartLineComponent — GPU-composited Canvas sparkline area chart.
@@ -56,7 +57,7 @@ export default function ChartLineComponent({ data, color = "#10b981", maxValue =
         const ratio = (mouseX - padding.left) / chartW;
         const floatIndex = ratio * (historyMax - 1);
         const nearestIndex = Math.round(floatIndex);
-        const clampedIndex = Math.max(0, Math.min(data.length - 1, nearestIndex));
+        const clampedIndex = clamp(nearestIndex, 0, data.length - 1);
         const dataPointValue = data[clampedIndex];
         const pointX = padding.left + (clampedIndex / (historyMax - 1)) * chartW;
         setHover({ x: pointX, value: dataPointValue, containerWidth });
@@ -168,7 +169,7 @@ export default function ChartLineComponent({ data, color = "#10b981", maxValue =
             canvasContext.restore();
             // Find the Y coordinate for this hover point
             const hoverIndex = Math.round(((hoverX - padding.left) / chartW) * (historyMax - 1));
-            const clampedDataIndex = Math.max(0, Math.min(data.length - 1, hoverIndex));
+            const clampedDataIndex = clamp(hoverIndex, 0, data.length - 1);
             const hoverY = padding.top +
                 chartH -
                 (Math.min(data[clampedDataIndex], clampedMax) / clampedMax) * chartH;

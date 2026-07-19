@@ -12,6 +12,8 @@
  * CSS selector:  `[data-theme="custom-<id>"]`
  */
 
+import { clamp } from "@rodrigo-barraza/utilities-library";
+
 import { THEME_CATALOG } from "../components/ThemeProvider/ThemeProvider.js";
 import type { ThemeCatalogEntry } from "../components/ThemeProvider/ThemeProvider.js";
 
@@ -88,8 +90,8 @@ function hexToRgb(hex: string): [number, number, number] {
 
 /** Convert [r,g,b] to hex string */
 function rgbToHex(r: number, g: number, b: number): string {
-  const clamp = (channelValue: number) => Math.max(0, Math.min(255, Math.round(channelValue)));
-  return `#${[clamp(r), clamp(g), clamp(b)].map((channelValue) => channelValue.toString(16).padStart(2, "0")).join("")}`;
+  const toChannel = (channelValue: number) => clamp(Math.round(channelValue), 0, 255);
+  return `#${[toChannel(r), toChannel(g), toChannel(b)].map((channelValue) => channelValue.toString(16).padStart(2, "0")).join("")}`;
 }
 
 /** Darken a hex color by a percentage (0–100) */

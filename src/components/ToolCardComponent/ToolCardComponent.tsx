@@ -1,5 +1,6 @@
 "use client";
 
+import { cx } from "@rodrigo-barraza/utilities-library";
 import styles from "./ToolCardComponent.module.css";
 
 /**
@@ -28,8 +29,7 @@ export default function ToolCardComponent({
   children,
   className,
 }: ToolCardComponentProps) {
-  const classes = [
-    "tool-card-component",styles['tool-card'], className].filter(Boolean).join(" ");
+  const classes = cx("tool-card-component", styles['tool-card'], className);
 
   return (
     <div className={classes} onClick={onClick}>

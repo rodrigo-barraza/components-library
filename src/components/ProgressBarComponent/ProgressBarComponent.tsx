@@ -1,5 +1,6 @@
 import { ReactNode, ComponentPropsWithoutRef } from "react";
 import { useEffect, useRef, useState } from "react";
+import { clamp } from "@rodrigo-barraza/utilities-library";
 import styles from "./ProgressBarComponent.module.css";
 
 export interface ProgressBarComponentProps extends ComponentPropsWithoutRef<"div"> {
@@ -31,7 +32,7 @@ export default function ProgressBarComponent({
   ...rest
 }: ProgressBarComponentProps) {
   const isIndeterminate = value === undefined || value === null;
-  const clampedValue = isIndeterminate ? 0 : Math.max(0, Math.min(100, value as number));
+  const clampedValue = isIndeterminate ? 0 : clamp(value as number, 0, 100);
   const trackRef = useRef<HTMLDivElement>(null);
 
   // Animate from 0 on mount for determinate
