@@ -44,6 +44,14 @@
   padding: 2px 0;
 }
 
+/* base.css has a global `textarea:focus` accent ring — the container
+   owns the focus ring here, so neutralize it (same specificity as the
+   global rule, hence the !important). */
+.textarea:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
 .textarea::placeholder {
   color: var(--text-tertiary);
 }
