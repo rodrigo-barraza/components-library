@@ -91,6 +91,9 @@ export { DATE_PRESETS, DATE_PRESETS_DATE_ONLY, formatDate, daysAgo, parseDateVal
 export { formatPercent, formatCurrency, } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
 export { getReadableTextColor, relativeLuminance } from "./utils/colorContrast.js";
+export { sanitizeInlineLatex } from "./utils/latexSanitizer.js";
+export { escapeXmlDelimiterTags } from "./utils/xmlTagEscaper.js";
+export { splitStreamingTail } from "./utils/streamingText.js";
 // ── Hooks ───────────────────────────────────────────────
 export { default as useClickOutside } from "./hooks/useClickOutside.js";
 export { default as useClipboard } from "./hooks/useClipboard.js";
