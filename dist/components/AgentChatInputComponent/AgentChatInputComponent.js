@@ -7,7 +7,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 // while a response is streaming.
 // ─────────────────────────────────────────────────────────────
 import { useCallback, useEffect, useRef, useState, } from "react";
-import { ArrowUp, Square } from "lucide-react";
+import { SendHorizontal, Square } from "lucide-react";
 import { AGENT_CHAT_DEFAULTS } from "../../constants/agentChat.js";
 import styles from "./AgentChatInputComponent.module.css";
 export default function AgentChatInputComponent({ onSend, onStop, isStreaming = false, disabled = false, placeholder = "Type a message…", maxLength = AGENT_CHAT_DEFAULTS.MAX_MESSAGE_LENGTH, autoFocus = false, className, }) {
@@ -48,6 +48,6 @@ export default function AgentChatInputComponent({ onSend, onStop, isStreaming = 
     const showStop = isStreaming && Boolean(onStop);
     const canSend = value.trim().length > 0 && !isStreaming && !disabled;
     const isNearLimit = value.length > maxLength * 0.9;
-    return (_jsxs("div", { className: `agent-chat-input-component ${styles['input-bar']} ${className || ""}`, children: [_jsxs("div", { className: styles['input-container'], children: [_jsx("textarea", { ref: textareaRef, className: styles['textarea'], value: value, onChange: handleChange, onKeyDown: handleKeyDown, placeholder: placeholder, rows: 1, disabled: disabled, maxLength: maxLength, autoFocus: autoFocus, "aria-label": "Message input" }), showStop ? (_jsx("button", { type: "button", className: `${styles['action-button']} ${styles['stop-button']}`, onClick: onStop, "aria-label": "Stop generating", children: _jsx(Square, { size: 14, fill: "currentColor" }) })) : (_jsx("button", { type: "button", className: `${styles['action-button']} ${canSend ? styles['send-active'] : ""}`, onClick: handleSubmit, disabled: !canSend, "aria-label": "Send message", children: _jsx(ArrowUp, { size: 16 }) }))] }), isNearLimit && (_jsxs("span", { className: `${styles['char-count']} ${value.length >= maxLength ? styles['char-count-over'] : ""}`, children: [value.length, "/", maxLength] }))] }));
+    return (_jsxs("div", { className: `agent-chat-input-component ${styles['input-bar']} ${className || ""}`, children: [_jsxs("div", { className: styles['input-container'], children: [_jsx("textarea", { ref: textareaRef, className: styles['textarea'], value: value, onChange: handleChange, onKeyDown: handleKeyDown, placeholder: placeholder, rows: 1, disabled: disabled, maxLength: maxLength, autoFocus: autoFocus, "aria-label": "Message input" }), showStop ? (_jsx("button", { type: "button", className: `${styles['action-button']} ${styles['stop-button']}`, onClick: onStop, "aria-label": "Stop generating", children: _jsx(Square, { size: 14, fill: "currentColor" }) })) : (_jsx("button", { type: "button", className: `${styles['action-button']} ${canSend ? styles['send-active'] : ""}`, onClick: handleSubmit, disabled: !canSend, "aria-label": "Send message", children: _jsx(SendHorizontal, { size: 16 }) }))] }), isNearLimit && (_jsxs("span", { className: `${styles['char-count']} ${value.length >= maxLength ? styles['char-count-over'] : ""}`, children: [value.length, "/", maxLength] }))] }));
 }
 //# sourceMappingURL=AgentChatInputComponent.js.map

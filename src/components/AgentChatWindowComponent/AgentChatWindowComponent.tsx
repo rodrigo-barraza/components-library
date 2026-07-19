@@ -36,6 +36,10 @@ export interface AgentChatWindowComponentProps extends UseAgentChatOptions {
   /** Shown inside the list while there are no messages. */
   emptyState?: ReactNode;
   renderAvatar?: (role: AgentChatRole) => ReactNode;
+  /** Role label above user messages. Default "User". */
+  userLabel?: string;
+  /** Role label above assistant messages. Default "Assistant". */
+  assistantLabel?: string;
   inputPlaceholder?: string;
   showThinking?: boolean;
   showToolCalls?: boolean;
@@ -48,6 +52,8 @@ export default function AgentChatWindowComponent({
   footer,
   emptyState,
   renderAvatar,
+  userLabel,
+  assistantLabel,
   inputPlaceholder,
   showThinking,
   showToolCalls,
@@ -63,6 +69,8 @@ export default function AgentChatWindowComponent({
       <AgentChatMessageListComponent
         messages={messages}
         renderAvatar={renderAvatar}
+        userLabel={userLabel}
+        assistantLabel={assistantLabel}
         emptyState={emptyState}
         showThinking={showThinking}
         showToolCalls={showToolCalls}

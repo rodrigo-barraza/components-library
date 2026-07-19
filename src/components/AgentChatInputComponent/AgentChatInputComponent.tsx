@@ -15,7 +15,7 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
 } from "react";
-import { ArrowUp, Square } from "lucide-react";
+import { SendHorizontal, Square } from "lucide-react";
 import { AGENT_CHAT_DEFAULTS } from "../../constants/agentChat.js";
 import styles from "./AgentChatInputComponent.module.css";
 
@@ -122,7 +122,7 @@ export default function AgentChatInputComponent({
             disabled={!canSend}
             aria-label="Send message"
           >
-            <ArrowUp size={16} />
+            <SendHorizontal size={16} />
           </button>
         )}
       </div>

@@ -1,23 +1,31 @@
-/* AgentChatInputComponent — chat window message input */
+/* AgentChatInputComponent — prism-/chat-style message input */
 
 .input-bar {
   position: relative;
-  padding: 10px 12px;
+  padding: 10px 18px 12px;
 }
 
+/* Mirrors prism's InputBoxComponent shell: surface, border,
+   accent focus ring, drop shadow. */
 .input-container {
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  padding: 8px 8px 8px 14px;
+  padding: 10px 10px 10px 14px;
   background: var(--background-surface);
   border: 1px solid var(--calculated-border-color, transparent);
-  border-radius: var(--border-radius-xl, 18px);
-  transition: border-color 0.15s ease;
+  border-radius: var(--border-radius-md, 10px);
+  box-shadow: 0 4px 20px oklch(0% 0 0 / 0.2);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .input-container:focus-within {
   border-color: var(--accent-primary);
+  box-shadow:
+    0 0 0 2px var(--calculated-accent-primary-glow, transparent),
+    0 4px 20px oklch(0% 0 0 / 0.3);
 }
 
 .textarea {
@@ -46,14 +54,14 @@
 
 .action-button {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 50%;
-  background: var(--background-elevated);
+  border-radius: var(--border-radius-sm, 6px);
+  background: transparent;
   color: var(--text-tertiary);
   cursor: pointer;
   transition:
@@ -81,8 +89,8 @@
 
 .char-count {
   position: absolute;
-  right: 18px;
-  bottom: -6px;
+  right: 24px;
+  bottom: -4px;
   font-size: 10px;
   color: var(--text-tertiary);
 }

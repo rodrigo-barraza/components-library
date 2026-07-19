@@ -2,9 +2,10 @@
 
 // ─────────────────────────────────────────────────────────────
 // AgentChatMessageListComponent — Lean "chat mode" message list
-// for the agent chat window: markdown assistant bubbles, plain
-// user bubbles, collapsible thinking, tool-call summary pills,
-// inline images, and a streaming cursor.
+// for the agent chat window, styled after prism-client's /chat:
+// left-aligned avatar rows with role labels, full-width markdown
+// content (no bubbles), thinking/tool summary pills, and the
+// scramble streaming cursor.
 // ─────────────────────────────────────────────────────────────
 
 import {
@@ -14,7 +15,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { AlertCircle, Brain, Check, ChevronDown, Loader2 } from "lucide-react";
+import { AlertCircle, Bot, Check, ChevronDown, Loader2, User } from "lucide-react";
 import MarkdownContentComponent from "../MarkdownContentComponent/MarkdownContentComponent.js";
 import StreamingCursorComponent from "../StreamingCursorComponent/StreamingCursorComponent.js";
 import { splitStreamingTail } from "../../utils/streamingText.js";
@@ -29,11 +30,15 @@ import styles from "./AgentChatMessageListComponent.module.css";
 
 export interface AgentChatMessageListComponentProps {
   messages: AgentChatMessage[];
-  /** Render an avatar for a message role. Return null to hide avatars. */
+  /** Render an avatar for a message role. Defaults to User/Bot icons. */
   renderAvatar?: (role: AgentChatRole) => ReactNode;
+  /** Role label above user messages. Default "User". */
+  userLabel?: string;
+  /** Role label above assistant messages. Default "Assistant". */
+  assistantLabel?: string;
   /** Shown when there are no messages. */
   emptyState?: ReactNode;
-  /** Render collapsible thinking sections. Default true. */
+  /** Render thinking pills. Default true. */
   showThinking?: boolean;
   /** Render tool-call summary pills. Default true. */
   showToolCalls?: boolean;
@@ -46,19 +51,19 @@ function ToolCallPill({ toolCall }: { toolCall: AgentToolCallSummary }) {
   const label = toolCall.label || toolCall.name;
   return (
     <span
-      className={`${styles['tool-pill']} ${isRunning ? styles['tool-pill-running'] : ""} ${isError ? styles['tool-pill-error'] : ""}`}
+      className={`${styles['tool-pill']} ${isRunning ? styles['pill-active'] : ""} ${isError ? styles['tool-pill-error'] : ""}`}
       title={toolCall.name}
     >
       {isRunning ? (
-        <Loader2 size={11} className={styles['tool-pill-spinner']} />
+        <Loader2 size={12} className={styles['tool-pill-spinner']} />
       ) : isError ? (
-        <AlertCircle size={11} />
+        <AlertCircle size={12} />
       ) : toolCall.emoji ? (
-        <span className={styles['tool-pill-emoji']}>{toolCall.emoji}</span>
+        <span className={styles['pill-emoji']}>{toolCall.emoji}</span>
       ) : (
-        <Check size={11} />
+        <Check size={12} />
       )}
-      <span className={styles['tool-pill-label']}>{label}</span>
+      <span className={styles['pill-label']}>{label}</span>
       {typeof toolCall.durationMs === "number" && !isRunning && (
         <span className={styles['tool-pill-duration']}>
           {(toolCall.durationMs / 1000).toFixed(1)}s
@@ -68,7 +73,7 @@ function ToolCallPill({ toolCall }: { toolCall: AgentToolCallSummary }) {
   );
 }
 
-function ThinkingBlock({
+function ThinkingPill({
   thinking,
   streaming,
 }: {
@@ -80,14 +85,16 @@ function ThinkingBlock({
     <div className={styles['thinking-block']}>
       <button
         type="button"
-        className={styles['thinking-toggle']}
+        className={`${styles['thinking-pill']} ${streaming ? styles['pill-active'] : ""}`}
         onClick={() => setExpanded((previous) => !previous)}
         aria-expanded={expanded}
       >
-        <Brain size={12} />
-        <span>{streaming && !expanded ? "Thinking…" : "Thinking"}</span>
+        <span className={styles['pill-emoji']}>🧠</span>
+        <span className={styles['pill-label']}>
+          {streaming ? "Thinking…" : "Thought"}
+        </span>
         <ChevronDown
-          size={12}
+          size={13}
           className={`${styles['thinking-chevron']} ${expanded ? styles['thinking-chevron-open'] : ""}`}
         />
       </button>
@@ -98,19 +105,11 @@ function ThinkingBlock({
   );
 }
 
-function TypingIndicator() {
-  return (
-    <span className={styles['typing-indicator']} aria-label="Assistant is typing">
-      <span className={styles['typing-dot']} />
-      <span className={styles['typing-dot']} />
-      <span className={styles['typing-dot']} />
-    </span>
-  );
-}
-
 export default function AgentChatMessageListComponent({
   messages,
   renderAvatar,
+  userLabel = "User",
+  assistantLabel = "Assistant",
   emptyState,
   showThinking = true,
   showToolCalls = true,
@@ -147,6 +146,13 @@ export default function AgentChatMessageListComponent({
     }
   }, [messages, scrollToBottom]);
 
+  const formatTime = (iso?: string) => {
+    if (!iso) return null;
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return null;
+    return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  };
+
   return (
     <div
       ref={scrollContainerRef}
@@ -156,7 +162,13 @@ export default function AgentChatMessageListComponent({
       {messages.map((message) => {
         if (message.role === AGENT_CHAT_ROLES.SYSTEM) return null;
         const isUser = message.role === AGENT_CHAT_ROLES.USER;
-        const avatar = renderAvatar?.(message.role);
+        const avatar = renderAvatar ? (
+          renderAvatar(message.role)
+        ) : isUser ? (
+          <User size={16} />
+        ) : (
+          <Bot size={16} />
+        );
         const isPending =
           message.streaming &&
           !message.content &&
@@ -165,20 +177,27 @@ export default function AgentChatMessageListComponent({
         const { body, token } = message.streaming
           ? splitStreamingTail(message.content)
           : { body: message.content, token: "" };
+        const timestamp = formatTime(message.createdAt);
 
         return (
           <div
             key={message.id}
-            className={`${styles['message-row']} ${isUser ? styles['message-row-user'] : styles['message-row-assistant']}`}
+            className={`${styles['message-row']} ${isUser ? styles['user-node'] : styles['assistant-node']}`}
           >
-            {avatar != null && (
-              <div className={styles['message-avatar']}>{avatar}</div>
-            )}
-            <div
-              className={`${styles['message-bubble']} ${isUser ? styles['bubble-user'] : styles['bubble-assistant']} ${message.error ? styles['bubble-error'] : ""}`}
-            >
+            {avatar != null && <div className={styles['avatar']}>{avatar}</div>}
+            <div className={styles['content']}>
+              <div className={styles['message-header']}>
+                <span className={styles['role-label']}>
+                  {isUser ? userLabel : assistantLabel}
+                  {timestamp && (
+                    <span className={styles['message-timestamp']}>
+                      {timestamp}
+                    </span>
+                  )}
+                </span>
+              </div>
               {!isUser && showThinking && message.thinking && (
-                <ThinkingBlock
+                <ThinkingPill
                   thinking={message.thinking}
                   streaming={message.streaming}
                 />
@@ -196,14 +215,18 @@ export default function AgentChatMessageListComponent({
               {isUser ? (
                 <p className={styles['user-text']}>{message.content}</p>
               ) : isPending ? (
-                <TypingIndicator />
+                <StreamingCursorComponent active standalone />
               ) : (
-                <MarkdownContentComponent content={body}>
-                  <StreamingCursorComponent
-                    active={message.streaming}
-                    token={token}
-                  />
-                </MarkdownContentComponent>
+                <div
+                  className={`${styles['message-body']} ${message.error ? styles['message-body-error'] : ""}`}
+                >
+                  <MarkdownContentComponent content={body}>
+                    <StreamingCursorComponent
+                      active={message.streaming}
+                      token={token}
+                    />
+                  </MarkdownContentComponent>
+                </div>
               )}
               {message.images && message.images.length > 0 && (
                 <div className={styles['image-row']}>
