@@ -34,7 +34,8 @@
   max-height: 144px;
   resize: none;
   border: none;
-  outline: none;
+  /* The container draws the focus ring — suppress the UA's ring. */
+  outline: none !important;
   background: transparent;
   color: var(--text-primary);
   font-family: inherit;
