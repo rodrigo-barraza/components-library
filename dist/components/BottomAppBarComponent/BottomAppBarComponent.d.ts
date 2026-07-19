@@ -33,10 +33,10 @@ export interface BottomAppBarComponentProps extends HTMLAttributes<HTMLDivElemen
  *   • All buttons require aria-labels
  */
 declare function BottomAppBarComponent({ fab, position, hideOnScroll, scrollTargetRef, scrollThreshold, ariaLabel, className, style, children, ...rest }: BottomAppBarComponentProps): import("react").JSX.Element;
-declare namespace BottomAppBarComponent {
-    var Action: import("react").ForwardRefExoticComponent<BottomAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
-}
 export default BottomAppBarComponent;
+declare namespace BottomAppBarComponent {
+    export { BottomAppBarAction as Action };
+}
 /**
  * BottomAppBarAction — icon button within the bottom app bar.
  *
@@ -50,4 +50,5 @@ interface BottomAppBarActionProps extends React.ButtonHTMLAttributes<HTMLButtonE
     ariaLabel?: string;
     active?: boolean;
 }
+declare const BottomAppBarAction: import("react").ForwardRefExoticComponent<BottomAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
 //# sourceMappingURL=BottomAppBarComponent.d.ts.map

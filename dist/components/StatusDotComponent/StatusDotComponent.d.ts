@@ -6,9 +6,9 @@
  */
 export default function StatusDotComponent({ variant, size, pulse, className, ...rest }: {
     [x: string]: any;
-    variant?: string | undefined;
-    size?: string | undefined;
-    pulse?: boolean | undefined;
     className?: string | undefined;
+    pulse?: boolean | undefined;
+    size?: string | undefined;
+    variant?: string | undefined;
 }): import("react").JSX.Element;
 //# sourceMappingURL=StatusDotComponent.d.ts.map

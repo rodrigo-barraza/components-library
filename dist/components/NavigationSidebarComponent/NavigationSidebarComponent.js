@@ -1,5 +1,5 @@
 "use client";
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import * as Icons from "lucide-react";
 import useMediaQuery from "../../hooks/useMediaQuery.js";

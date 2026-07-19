@@ -29,10 +29,10 @@ export interface RadioComponentProps<T extends string | number | boolean = strin
  *   Tab moves focus into/out of the group; arrows cycle within.
  */
 declare function RadioComponent<T extends string | number | boolean = string | number | boolean>({ value, selectedValue, onChange, label, disabled, error, className, id, name, labelPlacement, }: RadioComponentProps<T>): import("react").JSX.Element;
+export default RadioComponent;
 declare namespace RadioComponent {
     var Group: ({ legend, orientation, className, children, }: RadioGroupComponentProps) => import("react").JSX.Element;
 }
-export default RadioComponent;
 export interface RadioGroupComponentProps {
     legend: string;
     orientation?: "vertical" | "horizontal";

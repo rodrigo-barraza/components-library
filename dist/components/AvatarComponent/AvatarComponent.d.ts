@@ -15,10 +15,10 @@ export interface AvatarComponentProps extends ComponentPropsWithoutRef<"div"> {
  * overlapping borders and a "+N" overflow indicator.
  */
 declare function AvatarComponent({ src, alt, name, icon: Icon, size, status, className, style, ...rest }: AvatarComponentProps): import("react").JSX.Element;
-declare namespace AvatarComponent {
-    var Group: typeof AvatarGroup;
-}
 export default AvatarComponent;
+declare namespace AvatarComponent {
+    export { AvatarGroup as Group };
+}
 export interface AvatarGroupProps {
     max?: number;
     size?: "xs" | "sm" | "md" | "lg" | "xl";

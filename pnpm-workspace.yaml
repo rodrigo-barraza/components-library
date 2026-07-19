@@ -6,3 +6,4 @@ allowBuilds:
   canvas: true
   unrs-resolver: true
   sharp: true
+  '@rodrigo-barraza/utilities-library@https://codeload.github.com/rodrigo-barraza/utilities-library/tar.gz/ef70da8952b9062ec86092b9b7a214204cf02393': true

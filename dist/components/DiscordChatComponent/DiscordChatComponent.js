@@ -1,6 +1,7 @@
 "use client";
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
+import { DISCORD_STICKER_FORMAT, discordBannerUrl, discordEmojiUrl, discordGuildIconUrl, discordSplashUrl, discordStickerUrl, } from "@rodrigo-barraza/utilities-library";
 import styles from "./DiscordChatComponent.module.css";
 // ── Discord role colors (fallback when no role color from API) ───
 const ROLE_COLORS = [
@@ -154,8 +155,7 @@ function extractTenorUrls(content) {
 // ── Discord Custom Emoji ─────────────────────────────────────────
 const CUSTOM_EMOJI_RE = /<(a?):(\w+):(\d+)>/g;
 function emojiUrl(id, animated) {
-    const imageFormat = animated ? "gif" : "webp";
-    return `https://cdn.discordapp.com/emojis/${id}.${imageFormat}?size=48&quality=lossless`;
+    return discordEmojiUrl(id, animated);
 }
 // Click-to-reveal inline spoiler (||text||), Discord-style.
 function TextSpoiler({ children }) {
@@ -794,10 +794,7 @@ function stickerUrl(sticker) {
         return null;
     if (sticker.url)
         return sticker.url;
-    const ext = sticker.format === 4 ? "gif" : "png";
-    // passthrough=true preserves APNG animation frames
-    const passthrough = sticker.format === 2 ? "&passthrough=true" : "";
-    return `https://media.discordapp.net/stickers/${sticker.id}.${ext}?size=160${passthrough}`;
+    return discordStickerUrl(sticker.id, sticker.format ?? DISCORD_STICKER_FORMAT.png);
 }
 function Stickers({ stickers }) {
     if (!stickers?.length)
@@ -1172,18 +1169,14 @@ export default function DiscordChatComponent({ messageCount = 500, joinMode = fa
                             setServerName((prev) => prev || firstMsg.guildName);
                         }
                         // Build guild icon/banner CDN URLs from stored hashes
-                        if (firstMsg.guildIcon && firstMsg.guildId) {
-                            const iconFormat = firstMsg.guildIcon.startsWith("a_") ? "gif" : "png";
-                            const url = `https://cdn.discordapp.com/icons/${firstMsg.guildId}/${firstMsg.guildIcon}.${iconFormat}?size=128`;
-                            setServerIcon((prev) => prev || url);
+                        const iconUrl = discordGuildIconUrl(firstMsg.guildId, firstMsg.guildIcon);
+                        if (iconUrl) {
+                            setServerIcon((prev) => prev || iconUrl);
                         }
-                        if (firstMsg.guildBanner && firstMsg.guildId) {
-                            const url = `https://cdn.discordapp.com/banners/${firstMsg.guildId}/${firstMsg.guildBanner}.png?size=480`;
-                            setServerBannerUrl((prev) => prev || url);
-                        }
-                        else if (firstMsg.guildSplash && firstMsg.guildId) {
-                            const url = `https://cdn.discordapp.com/splashes/${firstMsg.guildId}/${firstMsg.guildSplash}.png?size=480`;
-                            setServerBannerUrl((prev) => prev || url);
+                        const bannerUrl = discordBannerUrl(firstMsg.guildId, firstMsg.guildBanner) ||
+                            discordSplashUrl(firstMsg.guildId, firstMsg.guildSplash);
+                        if (bannerUrl) {
+                            setServerBannerUrl((prev) => prev || bannerUrl);
                         }
                         // Build channel name map from all messages in the batch
                         setChannels((prev) => {

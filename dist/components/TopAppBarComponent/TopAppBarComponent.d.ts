@@ -46,10 +46,10 @@ export interface TopAppBarComponentProps extends Omit<React.HTMLAttributes<HTMLE
     ariaLabel?: string;
 }
 declare function TopAppBarComponent({ variant, title, navigationIcon, onNavigationClick, navigationAriaLabel, position, scrollTargetRef, scrollThreshold, showScrollIndicator, headingLevel, ariaLabel, className, style, children, ...rest }: TopAppBarComponentProps): import("react").JSX.Element;
-declare namespace TopAppBarComponent {
-    var Action: import("react").ForwardRefExoticComponent<TopAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
-}
 export default TopAppBarComponent;
+declare namespace TopAppBarComponent {
+    export { TopAppBarAction as Action };
+}
 /**
  * TopAppBarAction — trailing icon button in the app bar.
  *
@@ -63,4 +63,5 @@ interface TopAppBarActionProps extends React.ButtonHTMLAttributes<HTMLButtonElem
     ariaLabel?: string;
     children?: React.ReactNode;
 }
+declare const TopAppBarAction: import("react").ForwardRefExoticComponent<TopAppBarActionProps & import("react").RefAttributes<HTMLButtonElement>>;
 //# sourceMappingURL=TopAppBarComponent.d.ts.map

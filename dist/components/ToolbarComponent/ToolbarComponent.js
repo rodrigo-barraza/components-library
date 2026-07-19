@@ -1,5 +1,5 @@
 "use client";
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useCallback, forwardRef } from "react";
 import styles from "./ToolbarComponent.module.css";
 export default function ToolbarComponent({ variant = "standard", orientation = "horizontal", divider = false, sticky = false, elevated = false, ariaLabel, className, style, children, ...rest }) {

@@ -27,12 +27,12 @@ export interface CarouselComponentProps {
  *   CarouselComponent.ItemLabel  — overlaid label with gradient scrim
  */
 declare function CarouselComponent({ layout, showArrows, showIndicators, peekEdge, autoPlay, loop, gap, className, ariaLabel, children, }: CarouselComponentProps): React.JSX.Element;
-declare namespace CarouselComponent {
-    var Item: typeof CarouselItem;
-    var ItemMedia: typeof CarouselItemMedia;
-    var ItemLabel: typeof CarouselItemLabel;
-}
 export default CarouselComponent;
+declare namespace CarouselComponent {
+    export { CarouselItem as Item };
+    export { CarouselItemMedia as ItemMedia };
+    export { CarouselItemLabel as ItemLabel };
+}
 export interface CarouselItemProps extends React.HTMLAttributes<HTMLDivElement> {
     width?: number | string;
     height?: number | string;

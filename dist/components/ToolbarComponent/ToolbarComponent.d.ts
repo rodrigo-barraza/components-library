@@ -29,23 +29,14 @@ export interface ToolbarComponentProps extends React.HTMLAttributes<HTMLDivEleme
     ariaLabel?: string;
 }
 declare function ToolbarComponent({ variant, orientation, divider, sticky, elevated, ariaLabel, className, style, children, ...rest }: ToolbarComponentProps): import("react").JSX.Element;
-declare namespace ToolbarComponent {
-    var Group: typeof ToolbarGroup;
-    var Item: import("react").ForwardRefExoticComponent<import("react").ButtonHTMLAttributes<HTMLButtonElement> & {
-        icon?: React.ComponentType<{
-            size?: number;
-            strokeWidth?: number;
-            className?: string;
-        }>;
-        label?: string;
-        ariaLabel?: string;
-        active?: boolean;
-    } & import("react").RefAttributes<HTMLButtonElement>>;
-    var Separator: typeof ToolbarSeparator;
-    var Title: typeof ToolbarTitle;
-    var Spacer: typeof ToolbarSpacer;
-}
 export default ToolbarComponent;
+declare namespace ToolbarComponent {
+    export { ToolbarGroup as Group };
+    export { ToolbarItem as Item };
+    export { ToolbarSeparator as Separator };
+    export { ToolbarTitle as Title };
+    export { ToolbarSpacer as Spacer };
+}
 /**
  * ToolbarGroup — logically groups related toolbar items.
  *
@@ -58,6 +49,24 @@ interface ToolbarGroupProps {
     children?: React.ReactNode;
 }
 declare function ToolbarGroup({ ariaLabel, className, children }: ToolbarGroupProps): import("react").JSX.Element;
+/**
+ * ToolbarItem — individual interactive element within a toolbar.
+ *
+ * Renders a button with M3 state-layer feedback (hover, focus, press).
+ * Participates in roving tabindex via `data-toolbar-item`.
+ *
+ * M3 spec: 48×48dp touch target, 24×24dp icon optical size.
+ */
+declare const ToolbarItem: import("react").ForwardRefExoticComponent<import("react").ButtonHTMLAttributes<HTMLButtonElement> & {
+    icon?: React.ComponentType<{
+        size?: number;
+        strokeWidth?: number;
+        className?: string;
+    }>;
+    label?: string;
+    ariaLabel?: string;
+    active?: boolean;
+} & import("react").RefAttributes<HTMLButtonElement>>;
 /**
  * ToolbarSeparator — visual divider between toolbar groups.
  *

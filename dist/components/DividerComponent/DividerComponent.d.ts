@@ -20,10 +20,10 @@ export interface DividerComponentProps extends HTMLAttributes<HTMLElement> {
  * @see https://m3.material.io/components/divider/specs
  */
 declare function DividerComponent({ variant, orientation, spacing, decorative, className, style, ...rest }: DividerComponentProps): import("react").JSX.Element;
-declare namespace DividerComponent {
-    var Subheader: typeof DividerSubheader;
-}
 export default DividerComponent;
+declare namespace DividerComponent {
+    export { DividerSubheader as Subheader };
+}
 export interface DividerSubheaderProps extends HTMLAttributes<HTMLDivElement> {
     label: ReactNode;
     variant?: "fullWidth" | "inset" | "middleInset";

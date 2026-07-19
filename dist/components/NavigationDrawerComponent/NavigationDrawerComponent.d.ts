@@ -29,13 +29,13 @@ export interface NavigationDrawerComponentProps extends HTMLAttributes<HTMLEleme
  * @see https://m3.material.io/components/navigation-drawer/overview
  */
 declare function NavigationDrawerComponent({ variant, anchor, open, onClose, headline, ariaLabel, className, style, children, ...rest }: NavigationDrawerComponentProps): import("react").JSX.Element;
-declare namespace NavigationDrawerComponent {
-    var Item: typeof DrawerItem;
-    var SectionHeader: typeof DrawerSectionHeader;
-    var Divider: typeof DrawerDivider;
-    var Footer: typeof DrawerFooter;
-}
 export default NavigationDrawerComponent;
+declare namespace NavigationDrawerComponent {
+    export { DrawerItem as Item };
+    export { DrawerSectionHeader as SectionHeader };
+    export { DrawerDivider as Divider };
+    export { DrawerFooter as Footer };
+}
 export interface DrawerItemProps extends Record<string, unknown> {
     icon?: ElementType;
     label?: ReactNode;
