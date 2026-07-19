@@ -59,13 +59,15 @@ export default function useAgentChat(options) {
         service.persistMessages(messages);
     }, [service, messages]);
     // ── Initial greeting ───────────────────────────────────────
+    // `hasGreeted` flips only when the greeting actually lands, so a
+    // re-run of this effect (deps change, StrictMode double-invoke)
+    // reschedules the timer instead of silently cancelling it.
     useEffect(() => {
         if (hasGreeted || !greeting || messages.length > 0)
             return;
-        setHasGreeted(true);
         setIsStreaming(true);
         const [minDelay, maxDelay] = simulatedDelayMs || [800, 1400];
-        greetingTimerRef.current = setTimeout(() => {
+        const timer = setTimeout(() => {
             const content = Array.isArray(greeting)
                 ? pickRandom(greeting)
                 : greeting;
@@ -78,10 +80,12 @@ export default function useAgentChat(options) {
                 },
             ]);
             setIsStreaming(false);
+            setHasGreeted(true);
         }, minDelay + Math.random() * Math.max(0, maxDelay - minDelay));
+        greetingTimerRef.current = timer;
         return () => {
-            if (greetingTimerRef.current)
-                clearTimeout(greetingTimerRef.current);
+            clearTimeout(timer);
+            setIsStreaming(false);
         };
     }, [hasGreeted, greeting, messages.length, simulatedDelayMs]);
     const updateMessage = useCallback((id, patch) => {
