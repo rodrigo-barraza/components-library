@@ -5,6 +5,8 @@ import {
   AUTO_THEME,
   AUTO_DAY_THEME,
   AUTO_NIGHT_THEME,
+  AUTO_LATITUDE,
+  AUTO_LONGITUDE,
   THEME_TRANSITION_MS,
   THEMES_DEFAULT,
   resolveAutoTheme,
@@ -17,7 +19,11 @@ export {
   AUTO_DAY_END_HOUR,
   AUTO_DAY_THEME,
   AUTO_NIGHT_THEME,
+  AUTO_LATITUDE,
+  AUTO_LONGITUDE,
   THEMES_DEFAULT,
+  computeSunTimesMinutes,
+  autoDayWindowMinutes,
   resolveAutoTheme,
   msUntilNextAutoBoundary,
 } from "./themeConstants.js";
@@ -36,8 +42,11 @@ export {
  * Designed for extensibility — `themes` prop accepts an array of valid theme
  * names. Toggle cycles through them in order; `setTheme` sets directly.
  *
- * The special "auto" theme resolves to Daylight during the day and Twilight
- * at night (07:00–19:00 local, see themeConstants). The raw selection is what
+ * The special "auto" theme resolves to Daylight between sunrise and sunset
+ * and Twilight at night. Sun times are computed locally from the configured
+ * coordinates (NOAA sunrise equation, see themeConstants — defaults to
+ * Vancouver, BC); fixed 07:00–19:00 hours are the polar-edge fallback.
+ * The raw selection is what
  * gets persisted; `resolvedTheme` exposes what is actually applied. Theme
  * swaps after mount are animated via a transient `data-theme-transition`
  * attribute picked up by base.css.
@@ -331,10 +340,13 @@ interface ThemeProviderProps {
   themes?: string[];
   /** HTML attribute set on <html> */
   attribute?: string;
-  /** what the Auto theme resolves to during the day (07:00–19:00 local) */
+  /** what the Auto theme resolves to during the day (sunrise–sunset) */
   autoDayTheme?: string;
   /** what the Auto theme resolves to at night */
   autoNightTheme?: string;
+  /** coordinates the Auto theme computes sunrise/sunset for (default: Vancouver, BC) */
+  autoLatitude?: number;
+  autoLongitude?: number;
   children: ReactNode;
 }
 
@@ -348,6 +360,8 @@ export function ThemeProvider({
   attribute = "data-theme",
   autoDayTheme = AUTO_DAY_THEME,
   autoNightTheme = AUTO_NIGHT_THEME,
+  autoLatitude = AUTO_LATITUDE,
+  autoLongitude = AUTO_LONGITUDE,
   children,
 }: ThemeProviderProps) {
   // Always start with defaultTheme to match SSR — avoids hydration mismatch.
@@ -375,8 +389,11 @@ export function ThemeProvider({
 
   /** Map a selection to the theme actually applied ("auto" → day/night theme) */
   const resolveTheme = useCallback(
-    (name: string) => (name === AUTO_THEME ? resolveAutoTheme(new Date(), autoDayTheme, autoNightTheme) : name),
-    [autoDayTheme, autoNightTheme],
+    (name: string) =>
+      name === AUTO_THEME
+        ? resolveAutoTheme(new Date(), autoDayTheme, autoNightTheme, autoLatitude, autoLongitude)
+        : name,
+    [autoDayTheme, autoNightTheme, autoLatitude, autoLongitude],
   );
 
   /**
@@ -438,7 +455,7 @@ export function ThemeProvider({
       timer = setTimeout(() => {
         setResolvedTheme(resolveTheme(AUTO_THEME));
         schedule();
-      }, msUntilNextAutoBoundary() + 1000);
+      }, msUntilNextAutoBoundary(new Date(), autoLatitude, autoLongitude) + 1000);
     };
     schedule();
 

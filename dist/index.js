@@ -78,7 +78,7 @@ export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleB
 export { ChatProvider, useChat } from "./components/ChatProvider.js";
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
 export { ThemeProvider, useTheme, THEME_CATALOG, } from "./components/ThemeProvider/ThemeProvider.js";
-export { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, THEMES_DEFAULT, THEME_TRANSITION_MS, resolveAutoTheme, msUntilNextAutoBoundary, } from "./components/ThemeProvider/themeConstants.js";
+export { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, AUTO_LATITUDE, AUTO_LONGITUDE, THEMES_DEFAULT, THEME_TRANSITION_MS, computeSunTimesMinutes, autoDayWindowMinutes, resolveAutoTheme, msUntilNextAutoBoundary, } from "./components/ThemeProvider/themeConstants.js";
 // ── Services ────────────────────────────────────────────
 export { default as ChatService } from "./services/ChatService.js";
 export { default as CustomThemeService } from "./services/CustomThemeService.js";

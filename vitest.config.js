@@ -8,6 +8,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     globals: true,
+    // Sun-time math in themeConstants resolves against the local clock —
+    // pin the zone so those tests are deterministic on any machine.
+    env: { TZ: 'America/Vancouver' },
   },
   resolve: {
     alias: {

@@ -111,8 +111,12 @@ export {
   AUTO_DAY_END_HOUR,
   AUTO_DAY_THEME,
   AUTO_NIGHT_THEME,
+  AUTO_LATITUDE,
+  AUTO_LONGITUDE,
   THEMES_DEFAULT,
   THEME_TRANSITION_MS,
+  computeSunTimesMinutes,
+  autoDayWindowMinutes,
   resolveAutoTheme,
   msUntilNextAutoBoundary,
 } from "./components/ThemeProvider/themeConstants.js";

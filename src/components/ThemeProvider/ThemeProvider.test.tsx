@@ -4,9 +4,10 @@ import userEvent from "@testing-library/user-event";
 import { ThemeProvider, useTheme } from "./ThemeProvider.js";
 import {
   AUTO_THEME,
-  AUTO_DAY_START_HOUR,
-  AUTO_DAY_END_HOUR,
+  AUTO_LATITUDE,
+  AUTO_LONGITUDE,
   THEME_TRANSITION_MS,
+  computeSunTimesMinutes,
   resolveAutoTheme,
   msUntilNextAutoBoundary,
 } from "./themeConstants.js";
@@ -193,14 +194,55 @@ describe("themeConstants", () => {
     vi.useRealTimers();
   });
 
-  it("resolveAutoTheme maps day hours to light and night hours to twilight", () => {
-    expect(resolveAutoTheme(new Date(2026, 6, 15, AUTO_DAY_START_HOUR, 0))).toBe("light");
+  // Tests run pinned to America/Vancouver (vitest.config env.TZ), matching
+  // the default AUTO_LATITUDE/AUTO_LONGITUDE coordinates.
+
+  it("computeSunTimesMinutes matches published Vancouver sun times (±10 min)", () => {
+    // 2026-07-15: sunrise 05:21 (321), sunset 21:14 (1274)
+    const july = computeSunTimesMinutes(new Date(2026, 6, 15, 12, 0), AUTO_LATITUDE, AUTO_LONGITUDE)!;
+    expect(Math.abs(july.sunrise - 321)).toBeLessThan(10);
+    expect(Math.abs(july.sunset - 1274)).toBeLessThan(10);
+    // 2026-01-15: sunrise 08:04 (484), sunset 16:44 (1004)
+    const january = computeSunTimesMinutes(new Date(2026, 0, 15, 12, 0), AUTO_LATITUDE, AUTO_LONGITUDE)!;
+    expect(Math.abs(january.sunrise - 484)).toBeLessThan(10);
+    expect(Math.abs(january.sunset - 1004)).toBeLessThan(10);
+  });
+
+  it("computeSunTimesMinutes returns null during polar day/night", () => {
+    expect(computeSunTimesMinutes(new Date(2026, 6, 15, 12, 0), 80, -123.14)).toBeNull();
+    expect(computeSunTimesMinutes(new Date(2026, 0, 15, 12, 0), 80, -123.14)).toBeNull();
+  });
+
+  it("computeSunTimesMinutes is self-contained and survives toString embedding", () => {
+    // themeInit embeds the function source into the pre-paint script — a
+    // captured import or constant would throw when rebuilt in isolation.
+    const rebuilt = new Function(
+      `return (${computeSunTimesMinutes.toString()});`,
+    )() as typeof computeSunTimesMinutes;
+    const date = new Date(2026, 6, 15, 12, 0);
+    expect(rebuilt(date, AUTO_LATITUDE, AUTO_LONGITUDE)).toEqual(
+      computeSunTimesMinutes(date, AUTO_LATITUDE, AUTO_LONGITUDE),
+    );
+  });
+
+  it("resolveAutoTheme follows sunrise/sunset, not fixed hours", () => {
+    // July: 20:30 is before the ~21:14 sunset — still day (old fixed-hour
+    // logic flipped to night at 19:00)
     expect(resolveAutoTheme(new Date(2026, 6, 15, 12, 30))).toBe("light");
-    expect(resolveAutoTheme(new Date(2026, 6, 15, AUTO_DAY_END_HOUR - 1, 59))).toBe("light");
-    expect(resolveAutoTheme(new Date(2026, 6, 15, AUTO_DAY_END_HOUR, 0))).toBe("twilight");
-    expect(resolveAutoTheme(new Date(2026, 6, 15, 23, 0))).toBe("twilight");
-    expect(resolveAutoTheme(new Date(2026, 6, 15, 3, 0))).toBe("twilight");
-    expect(resolveAutoTheme(new Date(2026, 6, 15, AUTO_DAY_START_HOUR - 1, 59))).toBe("twilight");
+    expect(resolveAutoTheme(new Date(2026, 6, 15, 20, 30))).toBe("light");
+    expect(resolveAutoTheme(new Date(2026, 6, 15, 21, 30))).toBe("twilight");
+    expect(resolveAutoTheme(new Date(2026, 6, 15, 5, 0))).toBe("twilight");
+    expect(resolveAutoTheme(new Date(2026, 6, 15, 5, 45))).toBe("light");
+    // January: 17:30 is after the ~16:44 sunset — night (old logic stayed
+    // day until 19:00), and 07:30 is before the ~08:04 sunrise — night
+    expect(resolveAutoTheme(new Date(2026, 0, 15, 12, 0))).toBe("light");
+    expect(resolveAutoTheme(new Date(2026, 0, 15, 17, 30))).toBe("twilight");
+    expect(resolveAutoTheme(new Date(2026, 0, 15, 7, 30))).toBe("twilight");
+  });
+
+  it("resolveAutoTheme falls back to fixed hours at polar latitudes", () => {
+    expect(resolveAutoTheme(new Date(2026, 6, 15, 12, 0), "light", "twilight", 80)).toBe("light");
+    expect(resolveAutoTheme(new Date(2026, 6, 15, 20, 0), "light", "twilight", 80)).toBe("twilight");
   });
 
   it("resolveAutoTheme honors custom day/night themes", () => {
@@ -208,13 +250,27 @@ describe("themeConstants", () => {
     expect(resolveAutoTheme(new Date(2026, 6, 15, 23, 0), "muted", "oceanic")).toBe("oceanic");
   });
 
-  it("msUntilNextAutoBoundary targets the next boundary hour", () => {
-    // 05:00 → next boundary 07:00 (2h)
-    expect(msUntilNextAutoBoundary(new Date(2026, 6, 15, 5, 0, 0, 0))).toBe(2 * 3600_000);
-    // 12:00 → next boundary 19:00 (7h)
-    expect(msUntilNextAutoBoundary(new Date(2026, 6, 15, 12, 0, 0, 0))).toBe(7 * 3600_000);
-    // 22:00 → next boundary tomorrow 07:00 (9h)
-    expect(msUntilNextAutoBoundary(new Date(2026, 6, 15, 22, 0, 0, 0))).toBe(9 * 3600_000);
+  it("msUntilNextAutoBoundary lands on a moment where the resolution flips", () => {
+    const flipsAt = (start: Date) => {
+      const ms = msUntilNextAutoBoundary(start);
+      const before = resolveAutoTheme(new Date(start.getTime() + ms - 90_000));
+      const after = resolveAutoTheme(new Date(start.getTime() + ms + 90_000));
+      return { ms, before, after };
+    };
+    // Pre-dawn → next boundary is sunrise
+    const dawn = flipsAt(new Date(2026, 6, 15, 3, 0));
+    expect(dawn.before).toBe("twilight");
+    expect(dawn.after).toBe("light");
+    // Midday → next boundary is sunset (~21:14, i.e. more than 9h away)
+    const dusk = flipsAt(new Date(2026, 6, 15, 12, 0));
+    expect(dusk.ms).toBeGreaterThan(9 * 3600_000);
+    expect(dusk.before).toBe("light");
+    expect(dusk.after).toBe("twilight");
+    // Late night → next boundary is tomorrow's sunrise
+    const overnight = flipsAt(new Date(2026, 6, 15, 22, 0));
+    expect(overnight.ms).toBeGreaterThan(6 * 3600_000);
+    expect(overnight.before).toBe("twilight");
+    expect(overnight.after).toBe("light");
   });
 });
 
@@ -260,7 +316,8 @@ describe("ThemeProvider auto theme", () => {
 
   it("flips day → night when the boundary timer fires", async () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2026, 6, 15, 18, 59));
+    // Mid-July Vancouver sunset is ~21:14 — start just before it
+    vi.setSystemTime(new Date(2026, 6, 15, 21, 0));
     renderWithTheme({ defaultTheme: "auto" });
 
     await act(async () => {
@@ -268,9 +325,9 @@ describe("ThemeProvider auto theme", () => {
     });
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
 
-    // Cross the 19:00 boundary (timer fires at boundary + 1s grace)
+    // Cross the sunset boundary (timer fires at boundary + 1s grace)
     await act(async () => {
-      await vi.advanceTimersByTimeAsync(2 * 60_000);
+      await vi.advanceTimersByTimeAsync(30 * 60_000);
     });
     expect(document.documentElement.getAttribute("data-theme")).toBe("twilight");
     expect(screen.getByTestId("theme").textContent).toBe("auto");

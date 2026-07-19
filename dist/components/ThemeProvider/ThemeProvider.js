@@ -1,8 +1,8 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { AUTO_THEME, AUTO_DAY_THEME, AUTO_NIGHT_THEME, THEME_TRANSITION_MS, THEMES_DEFAULT, resolveAutoTheme, msUntilNextAutoBoundary, } from "./themeConstants.js";
-export { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, THEMES_DEFAULT, resolveAutoTheme, msUntilNextAutoBoundary, } from "./themeConstants.js";
+import { AUTO_THEME, AUTO_DAY_THEME, AUTO_NIGHT_THEME, AUTO_LATITUDE, AUTO_LONGITUDE, THEME_TRANSITION_MS, THEMES_DEFAULT, resolveAutoTheme, msUntilNextAutoBoundary, } from "./themeConstants.js";
+export { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, AUTO_LATITUDE, AUTO_LONGITUDE, THEMES_DEFAULT, computeSunTimesMinutes, autoDayWindowMinutes, resolveAutoTheme, msUntilNextAutoBoundary, } from "./themeConstants.js";
 export const THEME_CATALOG = {
     auto: {
         label: "Auto",
@@ -235,7 +235,7 @@ const ThemeContext = createContext({
 });
 /** Custom themes use a `custom-` prefix — accept them without strict list membership */
 const isCustomTheme = (name) => name.startsWith("custom-");
-export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "twilight", themes: initialThemes = THEMES_DEFAULT, attribute = "data-theme", autoDayTheme = AUTO_DAY_THEME, autoNightTheme = AUTO_NIGHT_THEME, children, }) {
+export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "twilight", themes: initialThemes = THEMES_DEFAULT, attribute = "data-theme", autoDayTheme = AUTO_DAY_THEME, autoNightTheme = AUTO_NIGHT_THEME, autoLatitude = AUTO_LATITUDE, autoLongitude = AUTO_LONGITUDE, children, }) {
     // Always start with defaultTheme to match SSR — avoids hydration mismatch.
     // Auto resolves deterministically to the night theme on the server; the
     // client corrects it on mount (the FOUC script already painted correctly).
@@ -249,7 +249,9 @@ export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "twilig
     /** Check if a theme name is valid (in the list OR a custom theme) */
     const isValidTheme = useCallback((name) => themes.includes(name) || isCustomTheme(name), [themes]);
     /** Map a selection to the theme actually applied ("auto" → day/night theme) */
-    const resolveTheme = useCallback((name) => (name === AUTO_THEME ? resolveAutoTheme(new Date(), autoDayTheme, autoNightTheme) : name), [autoDayTheme, autoNightTheme]);
+    const resolveTheme = useCallback((name) => name === AUTO_THEME
+        ? resolveAutoTheme(new Date(), autoDayTheme, autoNightTheme, autoLatitude, autoLongitude)
+        : name, [autoDayTheme, autoNightTheme, autoLatitude, autoLongitude]);
     /**
      * Swap the DOM theme attribute. When the value actually changes after
      * mount, briefly tag <html data-theme-transition> so base.css animates
@@ -308,7 +310,7 @@ export function ThemeProvider({ storageKey = "app:theme", defaultTheme = "twilig
             timer = setTimeout(() => {
                 setResolvedTheme(resolveTheme(AUTO_THEME));
                 schedule();
-            }, msUntilNextAutoBoundary() + 1000);
+            }, msUntilNextAutoBoundary(new Date(), autoLatitude, autoLongitude) + 1000);
         };
         schedule();
         const handleVisibility = () => {

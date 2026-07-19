@@ -21,14 +21,24 @@
  *     suppressHydrationWarning
  *   />
  */
-import { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, THEMES_DEFAULT, } from "../components/ThemeProvider/themeConstants.js";
-export function generateThemeInitScript(storageKey, validThemes = THEMES_DEFAULT, customThemesKey) {
+import { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, AUTO_LATITUDE, AUTO_LONGITUDE, THEMES_DEFAULT, computeSunTimesMinutes, } from "../components/ThemeProvider/themeConstants.js";
+export function generateThemeInitScript(storageKey, validThemes = THEMES_DEFAULT, customThemesKey, coordinates) {
     const themeList = JSON.stringify(validThemes);
     // Derive the custom themes storage key from the main storageKey if not provided
     // e.g. "prism:theme" -> "prism:custom-themes"
     const customKey = customThemesKey || storageKey.replace(/:theme$/, ":custom-themes");
-    // "auto" must resolve pre-paint too, mirroring resolveAutoTheme()
-    const autoResolve = `if(t===${JSON.stringify(AUTO_THEME)}){var h=(new Date()).getHours();t=(h>=${AUTO_DAY_START_HOUR}&&h<${AUTO_DAY_END_HOUR})?${JSON.stringify(AUTO_DAY_THEME)}:${JSON.stringify(AUTO_NIGHT_THEME)}}`;
+    const latitude = coordinates?.latitude ?? AUTO_LATITUDE;
+    const longitude = coordinates?.longitude ?? AUTO_LONGITUDE;
+    // "auto" must resolve pre-paint too, mirroring resolveAutoTheme(): compare
+    // minutes-since-midnight against computed sunrise/sunset, falling back to
+    // the fixed hours during polar day/night. computeSunTimesMinutes is
+    // embedded by source — it is written self-contained for exactly this.
+    const autoResolve = `if(t===${JSON.stringify(AUTO_THEME)}){` +
+        `var d=new Date();` +
+        `var s=(${computeSunTimesMinutes.toString()})(d,${latitude},${longitude});` +
+        `var m=d.getHours()*60+d.getMinutes()+d.getSeconds()/60;` +
+        `var y=s?(m>=s.sunrise&&m<s.sunset):(d.getHours()>=${AUTO_DAY_START_HOUR}&&d.getHours()<${AUTO_DAY_END_HOUR});` +
+        `t=y?${JSON.stringify(AUTO_DAY_THEME)}:${JSON.stringify(AUTO_NIGHT_THEME)}}`;
     // The blocking script:
     // 1. Read theme preference (resolving "auto" by local time) and apply data-theme attribute
     // 2. Read custom themes and inject their CSS as <style> blocks
