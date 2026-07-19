@@ -1,0 +1,92 @@
+/* AgentChatInputComponent — chat window message input */
+
+.input-bar {
+  position: relative;
+  padding: 10px 12px;
+}
+
+.input-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px 8px 8px 14px;
+  background: var(--background-surface);
+  border: 1px solid var(--calculated-border-color, transparent);
+  border-radius: var(--border-radius-xl, 18px);
+  transition: border-color 0.15s ease;
+}
+
+.input-container:focus-within {
+  border-color: var(--accent-primary);
+}
+
+.textarea {
+  flex: 1;
+  min-height: 22px;
+  max-height: 144px;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 2px 0;
+}
+
+.textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-button {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--background-elevated);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.action-button:disabled {
+  cursor: default;
+}
+
+.send-active {
+  background: var(--accent-primary);
+  color: var(--calculated-accent-primary-contrast, var(--accent-primary-contrast, #fff));
+}
+
+.send-active:hover {
+  background: var(--calculated-accent-primary-hover, var(--accent-primary));
+}
+
+.stop-button {
+  background: var(--color-danger, #e5484d);
+  color: #fff;
+}
+
+.char-count {
+  position: absolute;
+  right: 18px;
+  bottom: -6px;
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.char-count-over {
+  color: var(--color-danger, #e5484d);
+}

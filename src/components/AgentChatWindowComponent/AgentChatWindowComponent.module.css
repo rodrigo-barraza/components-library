@@ -1,0 +1,14 @@
+/* AgentChatWindowComponent — embeddable agent chat window */
+
+.window {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--background-base);
+  color: var(--text-primary);
+}
+
+.input-area {
+  flex-shrink: 0;
+}

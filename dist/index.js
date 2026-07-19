@@ -5,11 +5,11 @@ export { default as BottomAppBarComponent } from "./components/BottomAppBarCompo
 export { default as ButtonComponent } from "./components/ButtonComponent/ButtonComponent.js";
 export { default as CardComponent } from "./components/CardComponent/CardComponent.js";
 export { default as CarouselComponent } from "./components/CarouselComponent/CarouselComponent.js";
-export { default as ChatComponent } from "./components/ChatComponent/ChatComponent.js";
-export { default as ChatInputComponent } from "./components/ChatInputComponent/ChatInputComponent.js";
-export { default as ChatLauncherComponent } from "./components/ChatLauncherComponent/ChatLauncherComponent.js";
-export { default as ChatMessageComponent } from "./components/ChatMessageComponent/ChatMessageComponent.js";
-export { default as ChatPanelComponent } from "./components/ChatPanelComponent/ChatPanelComponent.js";
+export { default as AgentChatWindowComponent } from "./components/AgentChatWindowComponent/AgentChatWindowComponent.js";
+export { default as AgentChatMessageListComponent } from "./components/AgentChatMessageListComponent/AgentChatMessageListComponent.js";
+export { default as AgentChatInputComponent } from "./components/AgentChatInputComponent/AgentChatInputComponent.js";
+export { default as MarkdownContentComponent } from "./components/MarkdownContentComponent/MarkdownContentComponent.js";
+export { default as StreamingCursorComponent } from "./components/StreamingCursorComponent/StreamingCursorComponent.js";
 export { default as CheckboxComponent } from "./components/CheckboxComponent/CheckboxComponent.js";
 export { default as ChipComponent } from "./components/ChipComponent/ChipComponent.js";
 export { default as CloseButtonComponent } from "./components/CloseButtonComponent/CloseButtonComponent.js";
@@ -75,18 +75,17 @@ export { default as TopAppBarComponent } from "./components/TopAppBarComponent/T
 export { default as TooltipComponent } from "./components/TooltipComponent/TooltipComponent.js";
 export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.js";
 // ── Providers ───────────────────────────────────────────
-export { ChatProvider, useChat } from "./components/ChatProvider.js";
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
 export { ThemeProvider, useTheme, THEME_CATALOG, } from "./components/ThemeProvider/ThemeProvider.js";
 export { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, AUTO_LATITUDE, AUTO_LONGITUDE, THEMES_DEFAULT, THEME_TRANSITION_MS, computeSunTimesMinutes, autoDayWindowMinutes, resolveAutoTheme, msUntilNextAutoBoundary, } from "./components/ThemeProvider/themeConstants.js";
 // ── Services ────────────────────────────────────────────
-export { default as ChatService } from "./services/ChatService.js";
+export { default as AgentChatService } from "./services/AgentChatService.js";
 export { default as CustomThemeService } from "./services/CustomThemeService.js";
 export { default as SoundService } from "./services/SoundService.js";
 export { createApiClient } from "./services/ApiClient.js";
 export { createSessionService } from "./services/SessionService.js";
 // ── Constants ───────────────────────────────────────────
-export { CHAT_STATES, CHAT_EVENTS, CHAT_DEFAULTS, MESSAGE_ROLES, } from "./constants/chat.js";
+export { AGENT_CHAT_ROLES, AGENT_CHAT_DEFAULTS, AGENT_TOOL_CALL_STATUS, } from "./constants/agentChat.js";
 // ── Utilities ───────────────────────────────────────────
 export { DATE_PRESETS, DATE_PRESETS_DATE_ONLY, formatDate, daysAgo, parseDateValue, formatDateDisplay, getActiveDatePreset, } from "./utils/datePresets.js";
 export { formatPercent, formatCurrency, } from "./utils/formatters.js";
@@ -105,4 +104,5 @@ export { default as useMediaQuery } from "./hooks/useMediaQuery.js";
 export { default as usePolling } from "./hooks/usePolling.js";
 export { default as useSetToggle } from "./hooks/useSetToggle.js";
 export { default as useTweenValue } from "./hooks/useTweenValue.js";
+export { default as useAgentChat } from "./hooks/useAgentChat.js";
 //# sourceMappingURL=index.js.map

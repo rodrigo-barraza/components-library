@@ -1,0 +1,1 @@
+{"version":3,"file":"streamingText.d.ts","sourceRoot":"","sources":["../../src/utils/streamingText.ts"],"names":[],"mappings":"AAaA,MAAM,WAAW,kBAAkB;IACjC,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;CACf;AAED,wBAAgB,kBAAkB,CAAC,IAAI,EAAE,MAAM,GAAG,kBAAkB,CAanE"}

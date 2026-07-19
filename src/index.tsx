@@ -6,11 +6,11 @@ export { default as BottomAppBarComponent } from "./components/BottomAppBarCompo
 export { default as ButtonComponent } from "./components/ButtonComponent/ButtonComponent.js";
 export { default as CardComponent } from "./components/CardComponent/CardComponent.js";
 export { default as CarouselComponent } from "./components/CarouselComponent/CarouselComponent.js";
-export { default as ChatComponent } from "./components/ChatComponent/ChatComponent.js";
-export { default as ChatInputComponent } from "./components/ChatInputComponent/ChatInputComponent.js";
-export { default as ChatLauncherComponent } from "./components/ChatLauncherComponent/ChatLauncherComponent.js";
-export { default as ChatMessageComponent } from "./components/ChatMessageComponent/ChatMessageComponent.js";
-export { default as ChatPanelComponent } from "./components/ChatPanelComponent/ChatPanelComponent.js";
+export { default as AgentChatWindowComponent } from "./components/AgentChatWindowComponent/AgentChatWindowComponent.js";
+export { default as AgentChatMessageListComponent } from "./components/AgentChatMessageListComponent/AgentChatMessageListComponent.js";
+export { default as AgentChatInputComponent } from "./components/AgentChatInputComponent/AgentChatInputComponent.js";
+export { default as MarkdownContentComponent } from "./components/MarkdownContentComponent/MarkdownContentComponent.js";
+export { default as StreamingCursorComponent } from "./components/StreamingCursorComponent/StreamingCursorComponent.js";
 export { default as CheckboxComponent } from "./components/CheckboxComponent/CheckboxComponent.js";
 export type { CheckboxComponentProps } from "./components/CheckboxComponent/CheckboxComponent.js";
 export { default as ChipComponent } from "./components/ChipComponent/ChipComponent.js";
@@ -97,7 +97,6 @@ export { default as TooltipComponent } from "./components/TooltipComponent/Toolt
 export { default as ThemeToggleButtonComponent } from "./components/ThemeToggleButtonComponent/ThemeToggleButtonComponent.js";
 
 // ── Providers ───────────────────────────────────────────
-export { ChatProvider, useChat } from "./components/ChatProvider.js";
 export { ComponentsProvider, useComponents } from "./components/ComponentsProvider.js";
 export {
   ThemeProvider,
@@ -122,7 +121,7 @@ export {
 } from "./components/ThemeProvider/themeConstants.js";
 
 // ── Services ────────────────────────────────────────────
-export { default as ChatService } from "./services/ChatService.js";
+export { default as AgentChatService } from "./services/AgentChatService.js";
 export { default as CustomThemeService } from "./services/CustomThemeService.js";
 export { default as SoundService } from "./services/SoundService.js";
 export { createApiClient } from "./services/ApiClient.js";
@@ -130,11 +129,10 @@ export { createSessionService } from "./services/SessionService.js";
 
 // ── Constants ───────────────────────────────────────────
 export {
-  CHAT_STATES,
-  CHAT_EVENTS,
-  CHAT_DEFAULTS,
-  MESSAGE_ROLES,
-} from "./constants/chat.js";
+  AGENT_CHAT_ROLES,
+  AGENT_CHAT_DEFAULTS,
+  AGENT_TOOL_CALL_STATUS,
+} from "./constants/agentChat.js";
 
 // ── Utilities ───────────────────────────────────────────
 export {
@@ -167,31 +165,37 @@ export { default as useMediaQuery } from "./hooks/useMediaQuery.js";
 export { default as usePolling } from "./hooks/usePolling.js";
 export { default as useSetToggle } from "./hooks/useSetToggle.js";
 export { default as useTweenValue } from "./hooks/useTweenValue.js";
+export { default as useAgentChat } from "./hooks/useAgentChat.js";
 
 // ── Type re-exports ────────────────────────────────────
 export type { CustomThemeBootComponentProps } from "./components/CustomThemeBootComponent/CustomThemeBootComponent.js";
 export type { CustomThemeTokens, CustomTheme } from "./services/CustomThemeService.js";
-export type { ChatComponentProps } from "./components/ChatComponent/ChatComponent.js";
-export type { ChatInputComponentProps } from "./components/ChatInputComponent/ChatInputComponent.js";
-export type { ChatLauncherComponentProps } from "./components/ChatLauncherComponent/ChatLauncherComponent.js";
-export type { ChatMessageComponentProps } from "./components/ChatMessageComponent/ChatMessageComponent.js";
-export type { ChatPanelComponentProps } from "./components/ChatPanelComponent/ChatPanelComponent.js";
-export type { ChatContextValue, ChatProviderProps } from "./components/ChatProvider.js";
+export type { AgentChatWindowComponentProps } from "./components/AgentChatWindowComponent/AgentChatWindowComponent.js";
+export type { AgentChatMessageListComponentProps } from "./components/AgentChatMessageListComponent/AgentChatMessageListComponent.js";
+export type { AgentChatInputComponentProps } from "./components/AgentChatInputComponent/AgentChatInputComponent.js";
+export type { MarkdownContentProps } from "./components/MarkdownContentComponent/MarkdownContentComponent.js";
+export type { StreamingCursorComponentProps } from "./components/StreamingCursorComponent/StreamingCursorComponent.js";
 export type { ComponentsContextValue } from "./components/ComponentsProvider.js";
 export type { LayoutHeaderComponentProps, LayoutHeaderToggleButtonProps } from "./components/LayoutHeaderComponent/LayoutHeaderComponent.js";
 export type { ThemeContextValue } from "./components/ThemeProvider/ThemeProvider.js";
-export type { ChatServiceOptions } from "./services/ChatService.js";
+export type {
+  AgentChatServiceConfig,
+  AgentChatStreamCallbacks,
+} from "./services/AgentChatService.js";
+export type {
+  UseAgentChatOptions,
+  UseAgentChatResult,
+} from "./hooks/useAgentChat.js";
 export type { SoundOptions } from "./services/SoundService.js";
 export type { ApiClientOptions } from "./services/ApiClient.js";
 export type { SessionServiceOptions, SessionServiceInstance } from "./services/SessionService.js";
 export type {
-  ChatMessage,
-  ChatWidgetConfig,
-  AgentStreamCallbacks,
-  ChatState,
-  ChatEvent,
-  MessageRole,
-} from "./constants/chat.js";
+  AgentChatMessage,
+  AgentChatRole,
+  AgentChatDoneInfo,
+  AgentToolCallSummary,
+  AgentToolCallStatus,
+} from "./constants/agentChat.js";
 export type { UseFetchOptions, UseFetchResult } from "./hooks/useFetch.js";
 export type { UsePollingOptions, UsePollingResult } from "./hooks/usePolling.js";
 export type { UseCrudOptions, UseCrudResult } from "./hooks/useCrud.js";
