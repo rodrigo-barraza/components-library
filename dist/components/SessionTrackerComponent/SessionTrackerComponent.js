@@ -15,8 +15,10 @@
 // ============================================================
 import { useEffect, useRef, useMemo } from "react";
 import { createSessionService } from "../../services/SessionService.js";
+import { startReplayRecorder, } from "../../services/ReplayRecorderService.js";
+import { startHeatmapSampler, } from "../../services/HeatmapSamplerService.js";
 const HEARTBEAT_INTERVAL_MS = 5000;
-export default function SessionTrackerComponent({ projectId, pathname, apiBase, userId }) {
+export default function SessionTrackerComponent({ projectId, pathname, apiBase, userId, replay = false, heatmap = false, }) {
     const initialized = useRef(false);
     const lastTrackedUrl = useRef(null);
     const service = useMemo(() => createSessionService(projectId, apiBase ? { apiBase } : undefined), [projectId, apiBase]);
@@ -35,6 +37,29 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
         // Record initial page view
         lastTrackedUrl.current = window.location.href;
         service.pageView(window.location.href, document.title, document.referrer || undefined);
+        // ── Session replay + heatmap capture (opt-in) ──────────────
+        // Declared here so trackNavigation() and the page-hide handlers below can
+        // reach them. The recorder lazy-loads, so a disposed flag stops it if the
+        // component unmounts before the import resolves.
+        let replayRecorder = null;
+        let heatmapSampler = null;
+        let captureDisposed = false;
+        if (heatmap) {
+            heatmapSampler = startHeatmapSampler((points, useBeacon) => service.interactions(points, useBeacon), window.location.pathname);
+        }
+        if (replay) {
+            void startReplayRecorder((batch, useBeacon) => service.replay(batch, useBeacon)).then((recorder) => {
+                if (captureDisposed) {
+                    recorder?.stop();
+                    return;
+                }
+                replayRecorder = recorder;
+            });
+        }
+        function flushCapture() {
+            replayRecorder?.flush(true);
+            heatmapSampler?.flush(true);
+        }
         // Session heartbeat — fire immediately so sub-interval visits still
         // create a session, then accumulate on an interval.
         let lastBeatAt = Date.now();
@@ -50,10 +75,13 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
         // sendBeacon survives navigation, so short visits are not lost.
         function handlePageHide() {
             beat(true);
+            flushCapture();
         }
         function handleVisibilityChange() {
-            if (document.visibilityState === "hidden")
+            if (document.visibilityState === "hidden") {
                 beat(true);
+                flushCapture();
+            }
         }
         window.addEventListener("pagehide", handlePageHide);
         document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -67,6 +95,9 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
                     return;
                 lastTrackedUrl.current = url;
                 service.pageView(url, document.title, undefined);
+                // Keep replay page markers + heatmap path attribution in sync.
+                replayRecorder?.markRoute(window.location.pathname);
+                heatmapSampler?.setPath(window.location.pathname);
             }, 0);
         }
         const originalPushState = history.pushState.bind(history);
@@ -98,8 +129,11 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
             history.pushState = originalPushState;
             history.replaceState = originalReplaceState;
             document.removeEventListener("click", handleClick, { capture: true });
+            captureDisposed = true;
+            replayRecorder?.stop();
+            heatmapSampler?.stop();
         };
-    }, [service]);
+    }, [service, replay, heatmap]);
     // ── Track route changes from an explicit pathname prop ─────
     // Redundant with History API detection for most apps (deduped via
     // lastTrackedUrl), but kept for routers that bypass pushState.

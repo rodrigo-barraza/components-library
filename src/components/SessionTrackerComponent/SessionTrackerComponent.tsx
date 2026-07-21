@@ -17,6 +17,14 @@
 
 import { useEffect, useRef, useMemo } from "react";
 import { createSessionService } from "../../services/SessionService.js";
+import {
+  startReplayRecorder,
+  type ReplayRecorderInstance,
+} from "../../services/ReplayRecorderService.js";
+import {
+  startHeatmapSampler,
+  type HeatmapSamplerInstance,
+} from "../../services/HeatmapSamplerService.js";
 
 const HEARTBEAT_INTERVAL_MS = 5000;
 
@@ -36,9 +44,27 @@ export interface SessionTrackerProps {
   apiBase?: string;
   /** Logged-in user id — links the anonymous visitor to a known identity. */
   userId?: string | null;
+  /**
+   * Capture a full rrweb DOM recording of the session for replay. Off by
+   * default — recording is PII-heavy (see the service's masking defaults).
+   * The recorder lazy-loads, so it costs nothing until enabled.
+   */
+  replay?: boolean;
+  /**
+   * Sample cursor/click/scroll interactions for page heatmaps. Off by default.
+   * Lightweight and independent of `replay`.
+   */
+  heatmap?: boolean;
 }
 
-export default function SessionTrackerComponent({ projectId, pathname, apiBase, userId }: SessionTrackerProps) {
+export default function SessionTrackerComponent({
+  projectId,
+  pathname,
+  apiBase,
+  userId,
+  replay = false,
+  heatmap = false,
+}: SessionTrackerProps) {
   const initialized = useRef(false);
   const lastTrackedUrl = useRef<string | null>(null);
   const service = useMemo(
@@ -74,6 +100,37 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
       document.referrer || undefined,
     );
 
+    // ── Session replay + heatmap capture (opt-in) ──────────────
+    // Declared here so trackNavigation() and the page-hide handlers below can
+    // reach them. The recorder lazy-loads, so a disposed flag stops it if the
+    // component unmounts before the import resolves.
+    let replayRecorder: ReplayRecorderInstance | null = null;
+    let heatmapSampler: HeatmapSamplerInstance | null = null;
+    let captureDisposed = false;
+
+    if (heatmap) {
+      heatmapSampler = startHeatmapSampler(
+        (points, useBeacon) => service.interactions(points, useBeacon),
+        window.location.pathname,
+      );
+    }
+    if (replay) {
+      void startReplayRecorder((batch, useBeacon) => service.replay(batch, useBeacon)).then(
+        (recorder) => {
+          if (captureDisposed) {
+            recorder?.stop();
+            return;
+          }
+          replayRecorder = recorder;
+        },
+      );
+    }
+
+    function flushCapture() {
+      replayRecorder?.flush(true);
+      heatmapSampler?.flush(true);
+    }
+
     // Session heartbeat — fire immediately so sub-interval visits still
     // create a session, then accumulate on an interval.
     let lastBeatAt = Date.now();
@@ -90,9 +147,13 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
     // sendBeacon survives navigation, so short visits are not lost.
     function handlePageHide() {
       beat(true);
+      flushCapture();
     }
     function handleVisibilityChange() {
-      if (document.visibilityState === "hidden") beat(true);
+      if (document.visibilityState === "hidden") {
+        beat(true);
+        flushCapture();
+      }
     }
     window.addEventListener("pagehide", handlePageHide);
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -106,6 +167,9 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
         if (url === lastTrackedUrl.current) return;
         lastTrackedUrl.current = url;
         service.pageView(url, document.title, undefined);
+        // Keep replay page markers + heatmap path attribution in sync.
+        replayRecorder?.markRoute(window.location.pathname);
+        heatmapSampler?.setPath(window.location.pathname);
       }, 0);
     }
 
@@ -147,8 +211,11 @@ export default function SessionTrackerComponent({ projectId, pathname, apiBase, 
       history.pushState = originalPushState;
       history.replaceState = originalReplaceState;
       document.removeEventListener("click", handleClick, { capture: true });
+      captureDisposed = true;
+      replayRecorder?.stop();
+      heatmapSampler?.stop();
     };
-  }, [service]);
+  }, [service, replay, heatmap]);
 
   // ── Track route changes from an explicit pathname prop ─────
   // Redundant with History API detection for most apps (deduped via

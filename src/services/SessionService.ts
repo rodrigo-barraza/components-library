@@ -139,6 +139,48 @@ function send(
   }
 }
 
+// ─── Batch transport (replay / interactions) ───────────────────
+// Deliberately NOT the `send()` helper above: that pins `keepalive: true`, and
+// keepalive requests (like sendBeacon) share a 64 KiB body cap — a single rrweb
+// full snapshot blows past it. Interval flushes use a plain fetch (no cap);
+// sendBeacon is reserved for the tiny unload tail, with a fetch fallback if the
+// beacon is rejected.
+
+function sendBatch(
+  apiBase: string,
+  projectId: string,
+  path: string,
+  body: Record<string, unknown>,
+  useBeacon: boolean,
+): void {
+  try {
+    const payload = JSON.stringify({ ...body, projectId });
+
+    if (useBeacon && typeof navigator !== "undefined" && navigator.sendBeacon) {
+      const queued = navigator.sendBeacon(
+        `${apiBase}${path}`,
+        new Blob([payload], { type: "application/json" }),
+      );
+      if (queued) return;
+      // Beacon rejected (over the 64 KiB cap or the queue is full) — fall
+      // through to a keepalive fetch so the unload tail still has a chance.
+    }
+
+    fetch(`${apiBase}${path}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-session-id": getSessionId(),
+      },
+      body: payload,
+      // No keepalive on the live-page path — batches routinely exceed 64 KiB.
+      keepalive: useBeacon,
+    }).catch(() => {});
+  } catch {
+    // Analytics should never break the app
+  }
+}
+
 // ─── Factory ───────────────────────────────────────────────────
 
 export interface SessionServiceOptions {
@@ -159,6 +201,10 @@ export interface SessionServiceInstance {
   heartbeat(duration: number, width: number, height: number, useBeacon?: boolean): void;
   pageView(url: string, title: string, referrer?: string): void;
   event(category: string, action: string, label?: string, value?: string | number): void;
+  /** Ship one flushed batch of rrweb session-replay events. */
+  replay(batch: { recorderId: string; chunkSeq: number; events: unknown[] }, useBeacon?: boolean): void;
+  /** Ship one flushed batch of normalized heatmap interaction points. */
+  interactions(points: unknown[], useBeacon?: boolean): void;
 }
 
 /**
@@ -240,6 +286,43 @@ export function createSessionService(projectId: string, options: SessionServiceO
         label: label ?? null,
         value: value ?? null,
       });
+    },
+
+    /**
+     * Ship one flushed batch of rrweb session-replay events. Uses the
+     * non-keepalive batch transport (replay batches exceed the 64 KiB cap).
+     */
+    replay(batch: { recorderId: string; chunkSeq: number; events: unknown[] }, useBeacon = false): void {
+      sendBatch(
+        apiBase,
+        projectId,
+        "/replay",
+        {
+          sessionId: getSessionId(),
+          visitorId: getVisitorId(),
+          recorderId: batch.recorderId,
+          chunkSeq: batch.chunkSeq,
+          events: batch.events,
+        },
+        useBeacon,
+      );
+    },
+
+    /**
+     * Ship one flushed batch of normalized heatmap interaction points.
+     */
+    interactions(points: unknown[], useBeacon = false): void {
+      sendBatch(
+        apiBase,
+        projectId,
+        "/interactions",
+        {
+          sessionId: getSessionId(),
+          visitorId: getVisitorId(),
+          points,
+        },
+        useBeacon,
+      );
     },
   };
 }

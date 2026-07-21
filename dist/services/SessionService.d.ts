@@ -14,6 +14,14 @@ export interface SessionServiceInstance {
     heartbeat(duration: number, width: number, height: number, useBeacon?: boolean): void;
     pageView(url: string, title: string, referrer?: string): void;
     event(category: string, action: string, label?: string, value?: string | number): void;
+    /** Ship one flushed batch of rrweb session-replay events. */
+    replay(batch: {
+        recorderId: string;
+        chunkSeq: number;
+        events: unknown[];
+    }, useBeacon?: boolean): void;
+    /** Ship one flushed batch of normalized heatmap interaction points. */
+    interactions(points: unknown[], useBeacon?: boolean): void;
 }
 /**
  * Create a SessionService instance for a specific project.

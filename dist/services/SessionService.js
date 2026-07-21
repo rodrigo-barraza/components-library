@@ -115,6 +115,37 @@ function send(apiBase, projectId, path, body, useBeacon = false) {
         // Analytics should never break the app
     }
 }
+// ─── Batch transport (replay / interactions) ───────────────────
+// Deliberately NOT the `send()` helper above: that pins `keepalive: true`, and
+// keepalive requests (like sendBeacon) share a 64 KiB body cap — a single rrweb
+// full snapshot blows past it. Interval flushes use a plain fetch (no cap);
+// sendBeacon is reserved for the tiny unload tail, with a fetch fallback if the
+// beacon is rejected.
+function sendBatch(apiBase, projectId, path, body, useBeacon) {
+    try {
+        const payload = JSON.stringify({ ...body, projectId });
+        if (useBeacon && typeof navigator !== "undefined" && navigator.sendBeacon) {
+            const queued = navigator.sendBeacon(`${apiBase}${path}`, new Blob([payload], { type: "application/json" }));
+            if (queued)
+                return;
+            // Beacon rejected (over the 64 KiB cap or the queue is full) — fall
+            // through to a keepalive fetch so the unload tail still has a chance.
+        }
+        fetch(`${apiBase}${path}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-session-id": getSessionId(),
+            },
+            body: payload,
+            // No keepalive on the live-page path — batches routinely exceed 64 KiB.
+            keepalive: useBeacon,
+        }).catch(() => { });
+    }
+    catch {
+        // Analytics should never break the app
+    }
+}
 /**
  * Create a SessionService instance for a specific project.
  */
@@ -182,6 +213,29 @@ export function createSessionService(projectId, options = {}) {
                 label: label ?? null,
                 value: value ?? null,
             });
+        },
+        /**
+         * Ship one flushed batch of rrweb session-replay events. Uses the
+         * non-keepalive batch transport (replay batches exceed the 64 KiB cap).
+         */
+        replay(batch, useBeacon = false) {
+            sendBatch(apiBase, projectId, "/replay", {
+                sessionId: getSessionId(),
+                visitorId: getVisitorId(),
+                recorderId: batch.recorderId,
+                chunkSeq: batch.chunkSeq,
+                events: batch.events,
+            }, useBeacon);
+        },
+        /**
+         * Ship one flushed batch of normalized heatmap interaction points.
+         */
+        interactions(points, useBeacon = false) {
+            sendBatch(apiBase, projectId, "/interactions", {
+                sessionId: getSessionId(),
+                visitorId: getVisitorId(),
+                points,
+            }, useBeacon);
         },
     };
 }

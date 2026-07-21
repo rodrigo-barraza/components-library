@@ -14,6 +14,17 @@ export interface SessionTrackerProps {
     apiBase?: string;
     /** Logged-in user id — links the anonymous visitor to a known identity. */
     userId?: string | null;
+    /**
+     * Capture a full rrweb DOM recording of the session for replay. Off by
+     * default — recording is PII-heavy (see the service's masking defaults).
+     * The recorder lazy-loads, so it costs nothing until enabled.
+     */
+    replay?: boolean;
+    /**
+     * Sample cursor/click/scroll interactions for page heatmaps. Off by default.
+     * Lightweight and independent of `replay`.
+     */
+    heatmap?: boolean;
 }
-export default function SessionTrackerComponent({ projectId, pathname, apiBase, userId }: SessionTrackerProps): null;
+export default function SessionTrackerComponent({ projectId, pathname, apiBase, userId, replay, heatmap, }: SessionTrackerProps): null;
 //# sourceMappingURL=SessionTrackerComponent.d.ts.map
