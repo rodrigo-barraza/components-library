@@ -93,6 +93,8 @@ export { DATE_PRESETS, DATE_PRESETS_DATE_ONLY, formatDate, daysAgo, parseDateVal
 export type { DatePreset, DateRange } from "./utils/datePresets.js";
 export { formatPercent, formatCurrency, } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
+export { estimateClientCoordinates, TIMEZONE_COORDINATE_COUNT, } from "./utils/clientCoordinates.js";
+export type { GeoCoordinates } from "./utils/clientCoordinates.js";
 export { getReadableTextColor, relativeLuminance } from "./utils/colorContrast.js";
 export { sanitizeInlineLatex } from "./utils/latexSanitizer.js";
 export { escapeXmlDelimiterTags } from "./utils/xmlTagEscaper.js";

@@ -150,6 +150,11 @@ export {
   formatCurrency,
 } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
+export {
+  estimateClientCoordinates,
+  TIMEZONE_COORDINATE_COUNT,
+} from "./utils/clientCoordinates.js";
+export type { GeoCoordinates } from "./utils/clientCoordinates.js";
 export { getReadableTextColor, relativeLuminance } from "./utils/colorContrast.js";
 export { sanitizeInlineLatex } from "./utils/latexSanitizer.js";
 export { escapeXmlDelimiterTags } from "./utils/xmlTagEscaper.js";

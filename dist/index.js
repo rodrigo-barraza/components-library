@@ -90,6 +90,7 @@ export { AGENT_CHAT_ROLES, AGENT_CHAT_DEFAULTS, AGENT_TOOL_CALL_STATUS, } from "
 export { DATE_PRESETS, DATE_PRESETS_DATE_ONLY, formatDate, daysAgo, parseDateValue, formatDateDisplay, getActiveDatePreset, } from "./utils/datePresets.js";
 export { formatPercent, formatCurrency, } from "./utils/formatters.js";
 export { generateThemeInitScript } from "./utils/themeInit.js";
+export { estimateClientCoordinates, TIMEZONE_COORDINATE_COUNT, } from "./utils/clientCoordinates.js";
 export { getReadableTextColor, relativeLuminance } from "./utils/colorContrast.js";
 export { sanitizeInlineLatex } from "./utils/latexSanitizer.js";
 export { escapeXmlDelimiterTags } from "./utils/xmlTagEscaper.js";
