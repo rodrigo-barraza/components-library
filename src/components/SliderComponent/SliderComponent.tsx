@@ -154,7 +154,7 @@ function handleSliderKeyDown(
   onChange: (val: number) => void
 ) {
   const bigStep = Math.max(step, (max - min) * 0.1);
-  let next = value;
+  let next: number;
 
   switch (e.key) {
     case "ArrowRight":

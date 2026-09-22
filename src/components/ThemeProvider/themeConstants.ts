@@ -60,22 +60,22 @@ export function computeSunTimesMinutes(
   latitude: number,
   longitude: number,
 ): { sunrise: number; sunset: number } | null {
-  var rad = Math.PI / 180;
-  var dayOfYear = Math.floor(
+  const rad = Math.PI / 180;
+  const dayOfYear = Math.floor(
     (date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 86400000,
   );
-  var b = (360 / 365) * (dayOfYear - 81) * rad;
-  var equationOfTime =
+  const b = (360 / 365) * (dayOfYear - 81) * rad;
+  const equationOfTime =
     9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b);
-  var declination =
+  const declination =
     -23.44 * rad * Math.cos((360 / 365) * (dayOfYear + 10) * rad);
-  var latitudeRad = latitude * rad;
-  var cosHourAngle =
+  const latitudeRad = latitude * rad;
+  const cosHourAngle =
     (Math.sin(-0.833 * rad) - Math.sin(latitudeRad) * Math.sin(declination)) /
     (Math.cos(latitudeRad) * Math.cos(declination));
   if (cosHourAngle < -1 || cosHourAngle > 1) return null;
-  var halfDayMinutes = (Math.acos(cosHourAngle) / rad) * 4;
-  var solarNoonLocal =
+  const halfDayMinutes = (Math.acos(cosHourAngle) / rad) * 4;
+  const solarNoonLocal =
     720 - 4 * longitude - equationOfTime - date.getTimezoneOffset();
   return {
     sunrise: solarNoonLocal - halfDayMinutes,

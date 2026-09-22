@@ -76,7 +76,7 @@ function defaultFormat(v) {
    ───────────────────────────────────────────────────────── */
 function handleSliderKeyDown(e, value, min, max, step, onChange) {
     const bigStep = Math.max(step, (max - min) * 0.1);
-    let next = value;
+    let next;
     switch (e.key) {
         case "ArrowRight":
         case "ArrowUp":

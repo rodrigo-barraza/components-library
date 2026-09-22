@@ -1,11 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, act, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import MenuComponent, {
   MenuItem,
   MenuDivider,
   MenuGroupLabel,
-  SubMenu,
 } from "./MenuComponent.js";
 
 // ── Minimal ComponentsProvider mock ──────────────────────

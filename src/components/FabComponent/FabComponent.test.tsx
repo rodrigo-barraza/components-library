@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import FabComponent from "./FabComponent.js";
 import { ComponentsProvider } from "../ComponentsProvider.js";
@@ -82,6 +82,14 @@ describe("FabComponent", () => {
       <FabComponent icon={PlusIcon} color="surface" aria-label="Add" />,
     );
     expect(screen.getByRole("button").className).toContain("surface");
+    for (const color of ["primary", "secondary", "tertiary"] as const) {
+      rerender(
+        <ComponentsProvider>
+          <FabComponent icon={PlusIcon} color={color} aria-label="Add" />
+        </ComponentsProvider>,
+      );
+      expect(screen.getByRole("button").className).toContain(color);
+    }
   });
 
   it("applies lowered class", () => {

@@ -26,7 +26,7 @@ function copyViaLegacyExecCommand(text: string): boolean {
   textAreaElement.select();
   textAreaElement.setSelectionRange(0, text.length);
 
-  let isSuccessful = false;
+  let isSuccessful: boolean;
   try {
     isSuccessful = document.execCommand("copy");
   } catch {
@@ -49,7 +49,7 @@ export default function useClipboard(resetMs = 2000): UseClipboardResult {
 
   const copy = useCallback(
     async (text: string): Promise<boolean> => {
-      let isSuccessful = false;
+      let isSuccessful: boolean;
 
       if (navigator.clipboard?.writeText) {
         try {

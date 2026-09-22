@@ -10,7 +10,7 @@ function copyViaLegacyExecCommand(text) {
     document.body.appendChild(textAreaElement);
     textAreaElement.select();
     textAreaElement.setSelectionRange(0, text.length);
-    let isSuccessful = false;
+    let isSuccessful;
     try {
         isSuccessful = document.execCommand("copy");
     }
@@ -30,7 +30,7 @@ export default function useClipboard(resetMs = 2000) {
         };
     }, []);
     const copy = useCallback(async (text) => {
-        let isSuccessful = false;
+        let isSuccessful;
         if (navigator.clipboard?.writeText) {
             try {
                 await navigator.clipboard.writeText(text);

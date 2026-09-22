@@ -1,4 +1,4 @@
-import { ReactNode, ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import { useEffect, useRef, useState } from "react";
 import { clamp } from "@rodrigo-barraza/utilities-library";
 import styles from "./ProgressBarComponent.module.css";

@@ -101,13 +101,6 @@ function darken(hex: string, percent: number): string {
   return rgbToHex(r * factor, g * factor, b * factor);
 }
 
-/** Lighten a hex color by a percentage (0–100) */
-function lighten(hex: string, percent: number): string {
-  const [r, g, b] = hexToRgb(hex);
-  const factor = percent / 100;
-  return rgbToHex(r + (255 - r) * factor, g + (255 - g) * factor, b + (255 - b) * factor);
-}
-
 /** Produce rgba() string from hex + alpha */
 function hexToRgba(hex: string, alpha: number): string {
   const [r, g, b] = hexToRgb(hex);
