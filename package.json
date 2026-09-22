@@ -20,7 +20,7 @@
     "build": "tsc",
     "postbuild": "copyfiles -u 1 \"src/**/*.css\" dist",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src",
+    "lint": "oxlint",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "test": "vitest run --passWithNoTests",
@@ -36,7 +36,6 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -48,15 +47,12 @@
     "@vitejs/plugin-react": "^6.0.1",
     "copyfiles": "^2.4.1",
     "esbuild": "^0.28.0",
-    "eslint": "^10.4.0",
-    "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.6.0",
     "jsdom": "^29.1.1",
+    "oxlint": "^1.85.0",
     "prettier": "^3.8.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "typescript": "next",
-    "typescript-eslint": "^8.33.0",
     "vitest": "^4.1.5"
   },
   "repository": {

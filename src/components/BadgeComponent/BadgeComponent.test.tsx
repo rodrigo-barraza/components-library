@@ -2,11 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import BadgeComponent from "./BadgeComponent.js";
-import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 
 describe("BadgeComponent", () => {
   it("renders with default info variant", () => {
-    const { container } = render(<BadgeComponent>Info Label</BadgeComponent>);
+    render(<BadgeComponent>Info Label</BadgeComponent>);
     const badge = screen.getByText("Info Label");
     expect(badge).toBeInTheDocument();
     // Assuming CSS modules produce a class string that contains "info" somewhere, but since it's mocked by jsdom it might just have the raw object keys if we mocked css modules.

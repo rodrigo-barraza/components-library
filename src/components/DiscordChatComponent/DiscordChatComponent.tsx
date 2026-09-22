@@ -688,7 +688,7 @@ function renderMarkdown(text: string, ctx: MarkdownContext): React.ReactNode[] {
   }
   let tail = text.slice(lastIndex);
   if (lastIndex > 0) tail = tail.replace(/^\n/, "");
-  if (tail) nodes.push(...renderBlockLines(tail, ctx, `b${blockIndex++}`));
+  if (tail) nodes.push(...renderBlockLines(tail, ctx, `b${blockIndex}`));
   return nodes;
 }
 
@@ -703,7 +703,10 @@ function isEmojiOnly(text: string, emojiMap: EmojiMap): boolean {
     return full;
   });
   rest = rest.replace(/\p{Extended_Pictographic}/gu, () => { count++; return ""; });
-  rest = rest.replace(/[\u{1F3FB}-\u{1F3FF}\u{1F1E6}-\u{1F1FF}\u200d\ufe0f\u20e3]/gu, "");
+  // Skin tones, regional indicators, ZWJ, VS16 and the keycap mark, one at
+  // a time (an alternation — joiners and combining marks inside a character
+  // class read as if they joined their neighbours).
+  rest = rest.replace(/[\u{1F3FB}-\u{1F3FF}\u{1F1E6}-\u{1F1FF}]|\u200d|\ufe0f|\u20e3/gu, "");
   return rest.trim().length === 0 && count > 0 && count <= 30;
 }
 

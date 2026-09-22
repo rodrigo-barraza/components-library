@@ -73,7 +73,7 @@ export default function TabBarComponent({
     const enabledTabs = tabs.filter((tab) => !tab.disabled);
     const currentIdx = enabledTabs.findIndex((tab) => tab.key === activeTab);
 
-    let nextIdx = -1;
+    let nextIdx: number;
 
     switch (event.key) {
       case "ArrowRight":

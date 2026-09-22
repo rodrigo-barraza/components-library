@@ -82,7 +82,7 @@ export default function NavigationRailComponent({
       );
       if (!buttons.length) return;
 
-      let nextIndex = focusedIndex;
+      let nextIndex: number;
 
       switch (event.key) {
         case "ArrowDown":

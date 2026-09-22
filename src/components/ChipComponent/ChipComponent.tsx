@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useCallback, type MouseEvent, type KeyboardEvent } from "react";
+import { forwardRef, useCallback, type MouseEvent } from "react";
 import styles from "./ChipComponent.module.css";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";

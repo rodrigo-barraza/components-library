@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { useComponents } from "../ComponentsProvider.js";
 import SoundService from "../../services/SoundService.js";
 import styles from "./SwitchComponent.module.css";

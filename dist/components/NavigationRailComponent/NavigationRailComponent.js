@@ -42,7 +42,7 @@ export default function NavigationRailComponent({ items = [], activeItem, onNavi
         const buttons = destinationsRef.current.querySelectorAll(`[data-rail-destination]`);
         if (!buttons.length)
             return;
-        let nextIndex = focusedIndex;
+        let nextIndex;
         switch (event.key) {
             case "ArrowDown":
                 event.preventDefault();

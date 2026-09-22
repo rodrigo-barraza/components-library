@@ -182,7 +182,7 @@ export default function BadgeComponent(props) {
             if (!repo)
                 return null;
             const { Github } = icons || {};
-            let repositorySlug = repo;
+            let repositorySlug;
             let targetHref = repo;
             const sshMatchResult = repo.match(/^git@github\.com:(.+?)(?:\.git)?$/);
             if (sshMatchResult) {

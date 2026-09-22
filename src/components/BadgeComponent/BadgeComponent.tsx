@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ElementType, ComponentPropsWithoutRef, ReactNode, useMemo, useState, useEffect, useRef } from "react";
+import React, { ElementType, ReactNode, useMemo, useState, useEffect, useRef } from "react";
 import { cx } from "@rodrigo-barraza/utilities-library";
 import { Calendar } from "lucide-react";
 import { DateTime } from "luxon";
@@ -473,7 +473,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const { Github } = icons || {};
 
-      let repositorySlug = repo;
+      let repositorySlug: string;
       let targetHref = repo;
 
       const sshMatchResult = repo.match(/^git@github\.com:(.+?)(?:\.git)?$/);

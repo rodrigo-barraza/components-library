@@ -247,7 +247,7 @@ npm run test:ui    # Vitest UI
 ## Scripts
 
 ```bash
-npm run lint            # Run ESLint
+npm run lint            # Run oxlint (.oxlintrc.json)
 npm run format          # Format with Prettier
 npm run format:check    # Check formatting
 npm test                # Run tests (Vitest)

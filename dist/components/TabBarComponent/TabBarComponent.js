@@ -14,7 +14,7 @@ export default function TabBarComponent({ tabs = [], activeTab, onChange, varian
     const handleKeyDown = (event) => {
         const enabledTabs = tabs.filter((tab) => !tab.disabled);
         const currentIdx = enabledTabs.findIndex((tab) => tab.key === activeTab);
-        let nextIdx = -1;
+        let nextIdx;
         switch (event.key) {
             case "ArrowRight":
             case "ArrowDown":
