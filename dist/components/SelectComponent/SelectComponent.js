@@ -68,9 +68,11 @@ export default function SelectComponent({ value, options = [], onChange, placeho
     }, [multiple, handleToggleOption, handleSelectOption]);
     const handleRemoveChip = useCallback((event, optionValue) => {
         event.stopPropagation();
+        if (disabled)
+            return;
         const nextValues = selectedValues.filter((item) => item !== optionValue);
         onChange?.(nextValues);
-    }, [selectedValues, onChange]);
+    }, [selectedValues, onChange, disabled]);
     const handleToggle = useCallback(() => {
         if (disabled || isLoading)
             return;
@@ -139,7 +141,7 @@ export default function SelectComponent({ value, options = [], onChange, placeho
     ]
         .filter(Boolean)
         .join(" ");
-    const triggerButton = (_jsxs("button", { ref: setTriggerRef, type: "button", className: triggerClassNames, onClick: handleToggle, onMouseEnter: onMouseEnter, disabled: disabled, style: disabled ? { cursor: "default" } : undefined, children: [_jsxs("span", { className: styles['trigger-content'], children: [isLoading && (_jsx(Loader2, { size: 14, className: styles['trigger-spinner'] })), !isLoading && icon && _jsx("span", { className: styles['trigger-icon'], children: icon }), !isLoading && !icon && !multiple && selected?.icon && _jsx("span", { className: styles['option-icon'], children: selected.icon }), multiple && !isLoading ? (allSelected ? (_jsx("span", { className: styles['trigger-label'], children: allLabel })) : compact ? (_jsxs("span", { className: styles['trigger-label'], children: [selectedOptions.length, " selected"] })) : selectedOptions.length === 0 ? (_jsx("span", { className: styles['trigger-label'], children: placeholder })) : (selectedOptions.map((option) => (_jsxs("span", { className: styles["chip-element"], children: [option.label, _jsx("button", { type: "button", className: styles["chip-remove-button"], onClick: (event) => handleRemoveChip(event, option.value), tabIndex: -1, disabled: disabled, children: _jsx(X, { size: 10 }) })] }, option.value))))) : (_jsx("span", { className: styles['trigger-label'], children: isLoading
+    const triggerButton = (_jsxs("button", { ref: setTriggerRef, type: "button", className: triggerClassNames, onClick: handleToggle, onMouseEnter: onMouseEnter, disabled: disabled, style: disabled ? { cursor: "default" } : undefined, children: [_jsxs("span", { className: styles['trigger-content'], children: [isLoading && (_jsx(Loader2, { size: 14, className: styles['trigger-spinner'] })), !isLoading && icon && _jsx("span", { className: styles['trigger-icon'], children: icon }), !isLoading && !icon && !multiple && selected?.icon && _jsx("span", { className: styles['option-icon'], children: selected.icon }), multiple && !isLoading ? (allSelected ? (_jsx("span", { className: styles['trigger-label'], children: allLabel })) : compact ? (_jsxs("span", { className: styles['trigger-label'], children: [selectedOptions.length, " selected"] })) : selectedOptions.length === 0 ? (_jsx("span", { className: styles['trigger-label'], children: placeholder })) : (selectedOptions.map((option) => (_jsxs("span", { className: styles["chip-element"], children: [option.label, _jsx("span", { className: styles["chip-remove-button"], onClick: (event) => handleRemoveChip(event, option.value), "aria-hidden": "true", children: _jsx(X, { size: 10 }) })] }, option.value))))) : (_jsx("span", { className: styles['trigger-label'], children: isLoading
                             ? loadingProgress
                                 ? `Loading… ${Math.round(loadingProgress * 100)}%`
                                 : "Loading…"

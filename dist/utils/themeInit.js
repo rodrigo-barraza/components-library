@@ -6,20 +6,22 @@
  * CSS custom properties as inline `<style>` blocks so custom themes render
  * without a flash.
  *
- * This script is designed to be injected into the `<head>` of a Next.js layout
- * via a `<template>` tag with `dangerouslySetInnerHTML`.
- *
+ * Render it as a plain `<script>` in the `<head>` of the root (server)
+ * layout, so the browser runs it while parsing, before first paint. Do NOT
+ * wrap it in a `<template>`: template content is inert, so the script never
+ * runs and every non-default theme flashes after hydration.
  *
  * @example
  *   import { generateThemeInitScript } from "@rodrigo-barraza/components-library";
  *
- *   // In layout.js:
- *   <template
- *     dangerouslySetInnerHTML={{
- *       __html: `<script>${generateThemeInitScript("portal:theme")}</script>`,
- *     }}
- *     suppressHydrationWarning
- *   />
+ *   // In app/layout.tsx:
+ *   <head>
+ *     <script
+ *       dangerouslySetInnerHTML={{
+ *         __html: generateThemeInitScript("portal:theme"),
+ *       }}
+ *     />
+ *   </head>
  */
 import { AUTO_THEME, AUTO_DAY_START_HOUR, AUTO_DAY_END_HOUR, AUTO_DAY_THEME, AUTO_NIGHT_THEME, AUTO_LATITUDE, AUTO_LONGITUDE, THEMES_DEFAULT, computeSunTimesMinutes, } from "../components/ThemeProvider/themeConstants.js";
 export function generateThemeInitScript(storageKey, validThemes = THEMES_DEFAULT, customThemesKey, coordinates) {
