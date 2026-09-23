@@ -1,234 +1,114 @@
 "use client";
 
 // ============================================================
-// SessionTrackerComponent — Invisible analytics telemetry layer
+// SessionTrackerComponent — first-party analytics loader
 // ============================================================
-// Drop into the root layout to enable:
-//   • Session heartbeat (immediate + 5s interval, final beat on page hide)
-//   • Automatic page view tracking (SPA route changes auto-detected)
-//   • New vs returning session events
-//   • External link click tracking
-//   • Logged-in user linkage via the userId prop
+// Loads the tracker that sessions-service serves (through the host app's
+// /api/sessions proxy) and hands it this app's settings. The tracker
+// itself — pageviews, engaged time, sessions, heatmap, replay — lives in
+// sessions-service/tracker and deploys with the service, so changing it
+// never needs this library, or the apps that use it, to rebuild.
 //
-// Usage:
-//   import { SessionTrackerComponent } from "@rodrigo-barraza/components-library";
-//   <SessionTrackerComponent projectId="my-client" />
+// Usage (root layout):
+//   <SessionTrackerComponent projectId="my-client" userId={email} replay heatmap />
+// Custom events, anywhere:
+//   import { trackEvent } from "@rodrigo-barraza/components-library";
+//   trackEvent("signup", { plan: "pro" });
 // ============================================================
 
-import { useEffect, useRef, useMemo } from "react";
-import { createSessionService } from "../../services/SessionService.js";
-import {
-  startReplayRecorder,
-  type ReplayRecorderInstance,
-} from "../../services/ReplayRecorderService.js";
-import {
-  startHeatmapSampler,
-  type HeatmapSamplerInstance,
-} from "../../services/HeatmapSamplerService.js";
+import { useEffect } from "react";
 
-const HEARTBEAT_INTERVAL_MS = 5000;
+type Command = [name: string, ...args: unknown[]];
 
-/**
- * SessionTrackerComponent — Invisible analytics telemetry layer.
- *
- * Renders nothing. Tracks session heartbeats, page views, and link clicks.
- */
+interface SessionsGlobal {
+  (...command: Command): void;
+  q?: Command[];
+  loaded?: boolean;
+}
+
+declare global {
+  interface Window {
+    __sessions?: SessionsGlobal;
+  }
+}
+
+export type TrackEventProps = Record<string, string | number | boolean | null>;
+
+const SCRIPT_ID = "sessions-tracker";
+
+/** The page's command function — a queue until the tracker script arrives. */
+function sessions(): SessionsGlobal {
+  if (!window.__sessions) {
+    const queue: SessionsGlobal = (...command) => {
+      (queue.q ??= []).push(command);
+    };
+    window.__sessions = queue;
+  }
+  return window.__sessions;
+}
+
+function loadTracker(apiBase: string): void {
+  if (document.getElementById(SCRIPT_ID)) return;
+  const script = document.createElement("script");
+  script.id = SCRIPT_ID;
+  script.type = "module";
+  script.src = `${apiBase.replace(/\/+$/, "")}/tracker/client.js`;
+  document.head.appendChild(script);
+}
+
 export interface SessionTrackerProps {
+  /** The registry id of the app — the key its analytics are filed under. */
   projectId: string;
   /**
-   * Optional route path from the host app's router (e.g. usePathname()).
-   * Route changes are also auto-detected via the History API, so this is
-   * only needed for routers that bypass pushState/replaceState.
+   * Route hint for routers that bypass the History API. Route changes are
+   * detected on their own otherwise, so most apps leave this out.
    */
   pathname?: string;
+  /** The app's proxy to sessions-service (default "/api/sessions"). */
   apiBase?: string;
   /** Logged-in user id — links the anonymous visitor to a known identity. */
   userId?: string | null;
   /**
-   * Capture a full rrweb DOM recording of the session for replay. Off by
-   * default — recording is PII-heavy (see the service's masking defaults).
-   * The recorder lazy-loads, so it costs nothing until enabled.
+   * Record the session for replay (rrweb; every input masked, `.rr-block`
+   * blocks a subtree). Loaded only when on.
    */
   replay?: boolean;
-  /**
-   * Sample cursor/click/scroll interactions for page heatmaps. Off by default.
-   * Lightweight and independent of `replay`.
-   */
+  /** Sample clicks and cursor movement for page heatmaps. */
   heatmap?: boolean;
+  /** Also track on localhost — dev servers are skipped by default. */
+  trackLocalhost?: boolean;
 }
 
+/** Renders nothing: loads the tracker and keeps its settings current. */
 export default function SessionTrackerComponent({
   projectId,
   pathname,
-  apiBase,
+  apiBase = "/api/sessions",
   userId,
   replay = false,
   heatmap = false,
+  trackLocalhost = false,
 }: SessionTrackerProps) {
-  const initialized = useRef(false);
-  const lastTrackedUrl = useRef<string | null>(null);
-  const service = useMemo(
-    () => createSessionService(projectId, apiBase ? { apiBase } : undefined),
-    [projectId, apiBase],
-  );
-
-  // ── Logged-in user linkage ─────────────────────────────────
+  // Before init, so the landing pageview already carries a known user.
   useEffect(() => {
-    service.identify(userId ?? null);
-  }, [userId, service]);
+    sessions()("identify", userId ?? null);
+  }, [userId]);
 
-  // ── Bootstrap once on mount ────────────────────────────────
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
+    sessions()("init", { projectId, apiBase, replay, heatmap, trackLocalhost });
+    loadTracker(apiBase);
+    return () => sessions()("stop");
+  }, [projectId, apiBase, replay, heatmap, trackLocalhost]);
 
-    const { isNew } = service.init();
-
-    // Record session type
-    service.event(
-      "session",
-      isNew ? "new-visit" : "returning-visit",
-      document.referrer || undefined,
-      window.location.href,
-    );
-
-    // Record initial page view
-    lastTrackedUrl.current = window.location.href;
-    service.pageView(
-      window.location.href,
-      document.title,
-      document.referrer || undefined,
-    );
-
-    // ── Session replay + heatmap capture (opt-in) ──────────────
-    // Declared here so trackNavigation() and the page-hide handlers below can
-    // reach them. The recorder lazy-loads, so a disposed flag stops it if the
-    // component unmounts before the import resolves.
-    let replayRecorder: ReplayRecorderInstance | null = null;
-    let heatmapSampler: HeatmapSamplerInstance | null = null;
-    let captureDisposed = false;
-
-    if (heatmap) {
-      heatmapSampler = startHeatmapSampler(
-        (points, useBeacon) => service.interactions(points, useBeacon),
-        window.location.pathname,
-      );
-    }
-    if (replay) {
-      void startReplayRecorder((batch, useBeacon) => service.replay(batch, useBeacon)).then(
-        (recorder) => {
-          if (captureDisposed) {
-            recorder?.stop();
-            return;
-          }
-          replayRecorder = recorder;
-        },
-      );
-    }
-
-    function flushCapture() {
-      replayRecorder?.flush(true);
-      heatmapSampler?.flush(true);
-    }
-
-    // Session heartbeat — fire immediately so sub-interval visits still
-    // create a session, then accumulate on an interval.
-    let lastBeatAt = Date.now();
-    const beat = (useBeacon = false) => {
-      const now = Date.now();
-      const elapsed = now - lastBeatAt;
-      lastBeatAt = now;
-      service.heartbeat(elapsed, window.innerWidth, window.innerHeight, useBeacon);
-    };
-    beat();
-    const heartbeat = setInterval(() => beat(), HEARTBEAT_INTERVAL_MS);
-
-    // Flush the residual duration when the page is hidden/unloaded —
-    // sendBeacon survives navigation, so short visits are not lost.
-    function handlePageHide() {
-      beat(true);
-      flushCapture();
-    }
-    function handleVisibilityChange() {
-      if (document.visibilityState === "hidden") {
-        beat(true);
-        flushCapture();
-      }
-    }
-    window.addEventListener("pagehide", handlePageHide);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    // Track SPA navigations (App Router and anything else that uses the
-    // History API) without requiring a pathname prop from the host app.
-    function trackNavigation() {
-      // Defer one tick so document.title reflects the new route
-      setTimeout(() => {
-        const url = window.location.href;
-        if (url === lastTrackedUrl.current) return;
-        lastTrackedUrl.current = url;
-        service.pageView(url, document.title, undefined);
-        // Keep replay page markers + heatmap path attribution in sync.
-        replayRecorder?.markRoute(window.location.pathname);
-        heatmapSampler?.setPath(window.location.pathname);
-      }, 0);
-    }
-
-    const originalPushState = history.pushState.bind(history);
-    const originalReplaceState = history.replaceState.bind(history);
-    history.pushState = (...args) => {
-      originalPushState(...args);
-      trackNavigation();
-    };
-    history.replaceState = (...args) => {
-      originalReplaceState(...args);
-      trackNavigation();
-    };
-    window.addEventListener("popstate", trackNavigation);
-
-    // Track external link clicks
-    function handleClick(event: MouseEvent) {
-      const anchor = (event.target as HTMLElement).closest("a");
-      if (!anchor?.href) return;
-
-      const isInternal =
-        anchor.href.includes(window.location.hostname) ||
-        anchor.href.startsWith("/");
-
-      service.event(
-        isInternal ? "navigation" : "link",
-        "click",
-        anchor.href,
-      );
-    }
-
-    document.addEventListener("click", handleClick, { capture: true });
-
-    return () => {
-      clearInterval(heartbeat);
-      window.removeEventListener("pagehide", handlePageHide);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("popstate", trackNavigation);
-      history.pushState = originalPushState;
-      history.replaceState = originalReplaceState;
-      document.removeEventListener("click", handleClick, { capture: true });
-      captureDisposed = true;
-      replayRecorder?.stop();
-      heatmapSampler?.stop();
-    };
-  }, [service, replay, heatmap]);
-
-  // ── Track route changes from an explicit pathname prop ─────
-  // Redundant with History API detection for most apps (deduped via
-  // lastTrackedUrl), but kept for routers that bypass pushState.
   useEffect(() => {
-    if (!initialized.current) return;
-    if (pathname === undefined) return;
-
-    const url = window.location.href;
-    if (url === lastTrackedUrl.current) return;
-    lastTrackedUrl.current = url;
-    service.pageView(url, document.title, undefined);
-  }, [pathname, service]);
+    if (pathname !== undefined) sessions()("page");
+  }, [pathname]);
 
   return null;
+}
+
+/** Record a custom event on the current page (a no-op on the server). */
+export function trackEvent(name: string, props?: TrackEventProps): void {
+  if (typeof window === "undefined") return;
+  sessions()("event", name, props ?? null);
 }

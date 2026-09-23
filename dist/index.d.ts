@@ -52,7 +52,8 @@ export { default as ProgressBarComponent } from "./components/ProgressBarCompone
 export { default as RadioComponent } from "./components/RadioComponent/RadioComponent.js";
 export { default as SearchInputComponent } from "./components/SearchInputComponent/SearchInputComponent.js";
 export { default as SegmentedControlComponent } from "./components/SegmentedControlComponent/SegmentedControlComponent.js";
-export { default as SessionTrackerComponent } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
+export { default as SessionTrackerComponent, trackEvent } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
+export type { SessionTrackerProps, TrackEventProps } from "./components/SessionTrackerComponent/SessionTrackerComponent.js";
 export { default as SelectComponent } from "./components/SelectComponent/SelectComponent.js";
 export type { SelectOption, SelectComponentProps } from "./components/SelectComponent/SelectComponent.js";
 export { default as SkeletonComponent, SkeletonGroup } from "./components/SkeletonComponent/SkeletonComponent.js";
@@ -87,7 +88,6 @@ export { default as AgentChatService } from "./services/AgentChatService.js";
 export { default as CustomThemeService } from "./services/CustomThemeService.js";
 export { default as SoundService } from "./services/SoundService.js";
 export { createApiClient } from "./services/ApiClient.js";
-export { createSessionService } from "./services/SessionService.js";
 export { AGENT_CHAT_ROLES, AGENT_CHAT_DEFAULTS, AGENT_TOOL_CALL_STATUS, } from "./constants/agentChat.js";
 export { DATE_PRESETS, DATE_PRESETS_DATE_ONLY, formatDate, daysAgo, parseDateValue, formatDateDisplay, getActiveDatePreset, } from "./utils/datePresets.js";
 export type { DatePreset, DateRange } from "./utils/datePresets.js";
@@ -127,7 +127,6 @@ export type { AgentChatServiceConfig, AgentChatStreamCallbacks, } from "./servic
 export type { UseAgentChatOptions, UseAgentChatResult, } from "./hooks/useAgentChat.js";
 export type { SoundOptions } from "./services/SoundService.js";
 export type { ApiClientOptions, ApiRequestFn, ApiRequestOptions } from "./services/ApiClient.js";
-export type { SessionServiceOptions, SessionServiceInstance } from "./services/SessionService.js";
 export type { AgentChatMessage, AgentChatRole, AgentChatDoneInfo, AgentToolCallSummary, AgentToolCallStatus, } from "./constants/agentChat.js";
 export type { UseFetchOptions, UseFetchResult } from "./hooks/useFetch.js";
 export type { UsePollingOptions, UsePollingResult } from "./hooks/usePolling.js";
