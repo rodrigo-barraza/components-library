@@ -1,10 +1,9 @@
 allowBuilds:
-  '@rodrigo-barraza/utilities-library': true
-  '@rodrigo-barraza/utilities-library@https://codeload.github.com/rodrigo-barraza/utilities-library/tar.gz/8ebb9ca5dbf6ae7eccd329c9fcfdded30b8b31d6': true
+  # Git-hosted libs ship a built dist/ and run no scripts. `false` by NAME covers every
+  # SHA; a name-level `true` makes pnpm 11 abort each new SHA as a "revoked" build.
+  '@rodrigo-barraza/utilities-library': false
   esbuild: true
   protobufjs: true
   canvas: true
   unrs-resolver: true
   sharp: true
-  '@rodrigo-barraza/utilities-library@https://codeload.github.com/rodrigo-barraza/utilities-library/tar.gz/ef70da8952b9062ec86092b9b7a214204cf02393': true
-  '@rodrigo-barraza/utilities-library@https://codeload.github.com/rodrigo-barraza/utilities-library/tar.gz/4ab40ec567d179fec8e9209d9b67d960547469f7': true
