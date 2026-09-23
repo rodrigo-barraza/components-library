@@ -876,6 +876,15 @@ function MediaSpoiler({ spoiler, children }: { spoiler: boolean; children: React
   );
 }
 
+/**
+ * The URL to load an attachment from. `url` first: tools-service replaces
+ * it with the archived MinIO copy and leaves `proxyURL` as Discord's
+ * signed CDN link, which stops working when its signature expires.
+ */
+export function attachmentSource(attachment: Pick<DiscordAttachment, "url" | "proxyURL">): string | undefined {
+  return attachment.url || attachment.proxyURL;
+}
+
 // ── Image Attachments ────────────────────────────────────────────
 function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }) {
   if (!attachments?.length) return null;
@@ -884,11 +893,11 @@ function ImageAttachments({ attachments }: { attachments?: DiscordAttachment[] }
   return (
     <div className={styles['attachments']}>
       {images.map((image: DiscordAttachment, i: number) => {
-        const imageSource = image.proxyURL || image.url;
+        const imageSource = attachmentSource(image);
         const { width: imageWidth, height: imageHeight } = fitMediaDimensions(image.width, image.height);
         return (
           <MediaSpoiler key={i} spoiler={isSpoilerAttachment(image)}>
-            <a href={image.url || imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
+            <a href={imageSource} target="_blank" rel="noopener noreferrer" className={styles['attachment-link']}>
               <img src={imageSource} alt={image.name || "attachment"} width={imageWidth} height={imageHeight}
                 className={styles['attachment-image']} loading="lazy" />
             </a>
@@ -913,7 +922,7 @@ function VideoAttachments({ attachments }: { attachments?: DiscordAttachment[] }
         return (
           <MediaSpoiler key={i} spoiler={isSpoilerAttachment(video)}>
             <video
-              src={video.proxyURL || video.url}
+              src={attachmentSource(video)}
               className={styles['attachment-video']}
               width={videoWidth}
               height={videoHeight}
