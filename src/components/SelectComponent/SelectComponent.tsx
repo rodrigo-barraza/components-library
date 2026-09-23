@@ -155,12 +155,13 @@ export default function SelectComponent<T extends string | string[] = string | s
   );
 
   const handleRemoveChip = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>, optionValue: string) => {
+    (event: React.MouseEvent<HTMLElement>, optionValue: string) => {
       event.stopPropagation();
+      if (disabled) return;
       const nextValues = selectedValues.filter((item) => item !== optionValue);
       onChange?.(nextValues as T);
     },
-    [selectedValues, onChange],
+    [selectedValues, onChange, disabled],
   );
 
   const handleToggle = useCallback(() => {
@@ -312,15 +313,17 @@ export default function SelectComponent<T extends string | string[] = string | s
             selectedOptions.map((option) => (
               <span key={option.value} className={styles["chip-element"]}>
                 {option.label}
-                <button
-                  type="button"
+                {/* A span, not a button: it sits inside the trigger <button>, and
+                    a button inside a button is invalid HTML — SSR apps failed
+                    hydration on every multi-select. It is a mouse shortcut
+                    only; the option list deselects from the keyboard. */}
+                <span
                   className={styles["chip-remove-button"]}
                   onClick={(event) => handleRemoveChip(event, option.value)}
-                  tabIndex={-1}
-                  disabled={disabled}
+                  aria-hidden="true"
                 >
                   <X size={10} />
-                </button>
+                </span>
               </span>
             ))
           )
