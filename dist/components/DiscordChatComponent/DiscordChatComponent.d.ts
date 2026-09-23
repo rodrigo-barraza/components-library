@@ -168,6 +168,12 @@ declare function isVideoAttachment(attachment: DiscordAttachment): boolean;
 declare function isAudioAttachment(attachment: DiscordAttachment): boolean;
 declare function isVoiceMessage(attachment: DiscordAttachment): boolean;
 declare function isSpoilerAttachment(attachment: DiscordAttachment): boolean;
+/**
+ * The URL to load an attachment from. `url` first: tools-service replaces
+ * it with the archived MinIO copy and leaves `proxyURL` as Discord's
+ * signed CDN link, which stops working when its signature expires.
+ */
+export declare function attachmentSource(attachment: Pick<DiscordAttachment, "url" | "proxyURL">): string | undefined;
 declare function formatFileSize(bytes?: number | null): string;
 declare function stickerUrl(sticker: DiscordSticker): string | null;
 export declare const __internal: {

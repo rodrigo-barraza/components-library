@@ -579,6 +579,14 @@ function MediaSpoiler({ spoiler, children }) {
         return _jsx(_Fragment, { children: children });
     return (_jsxs("div", { className: revealed ? styles['spoiler-media-revealed'] : styles['spoiler-media'], onClick: revealed ? undefined : (event) => { event.preventDefault(); setRevealed(true); }, role: revealed ? undefined : "button", title: revealed ? undefined : "Spoiler — click to reveal", children: [_jsx("div", { className: styles['spoiler-media-content'], children: children }), !revealed && _jsx("span", { className: styles['spoiler-pill'], children: "SPOILER" })] }));
 }
+/**
+ * The URL to load an attachment from. `url` first: tools-service replaces
+ * it with the archived MinIO copy and leaves `proxyURL` as Discord's
+ * signed CDN link, which stops working when its signature expires.
+ */
+export function attachmentSource(attachment) {
+    return attachment.url || attachment.proxyURL;
+}
 // ── Image Attachments ────────────────────────────────────────────
 function ImageAttachments({ attachments }) {
     if (!attachments?.length)
@@ -587,9 +595,9 @@ function ImageAttachments({ attachments }) {
     if (!images.length)
         return null;
     return (_jsx("div", { className: styles['attachments'], children: images.map((image, i) => {
-            const imageSource = image.proxyURL || image.url;
+            const imageSource = attachmentSource(image);
             const { width: imageWidth, height: imageHeight } = fitMediaDimensions(image.width, image.height);
-            return (_jsx(MediaSpoiler, { spoiler: isSpoilerAttachment(image), children: _jsx("a", { href: image.url || imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['attachment-link'], children: _jsx("img", { src: imageSource, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles['attachment-image'], loading: "lazy" }) }) }, i));
+            return (_jsx(MediaSpoiler, { spoiler: isSpoilerAttachment(image), children: _jsx("a", { href: imageSource, target: "_blank", rel: "noopener noreferrer", className: styles['attachment-link'], children: _jsx("img", { src: imageSource, alt: image.name || "attachment", width: imageWidth, height: imageHeight, className: styles['attachment-image'], loading: "lazy" }) }) }, i));
         }) }));
 }
 // ── Video Attachments ────────────────────────────────────────────
@@ -603,7 +611,7 @@ function VideoAttachments({ attachments }) {
         return null;
     return (_jsx("div", { className: styles['attachments'], children: videos.map((video, i) => {
             const { width: videoWidth, height: videoHeight } = fitMediaDimensions(video.width, video.height);
-            return (_jsx(MediaSpoiler, { spoiler: isSpoilerAttachment(video), children: _jsx("video", { src: video.proxyURL || video.url, className: styles['attachment-video'], width: videoWidth, height: videoHeight, controls: true, preload: "metadata", playsInline: true }) }, i));
+            return (_jsx(MediaSpoiler, { spoiler: isSpoilerAttachment(video), children: _jsx("video", { src: attachmentSource(video), className: styles['attachment-video'], width: videoWidth, height: videoHeight, controls: true, preload: "metadata", playsInline: true }) }, i));
         }) }));
 }
 // ── Voice Message Player ─────────────────────────────────────────
