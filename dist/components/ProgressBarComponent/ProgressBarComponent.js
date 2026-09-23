@@ -1,6 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useState } from "react";
 import { clamp } from "@rodrigo-barraza/utilities-library";
+import { sizeClass, variantClass } from "../../utils/moduleClasses.js";
 import styles from "./ProgressBarComponent.module.css";
 /**
  * ProgressBarComponent — M3 Linear Progress Indicator.
@@ -33,13 +34,13 @@ export default function ProgressBarComponent({ value, variant = "accent", size =
         .join(" ");
     const trackClasses = [
         styles['track'],
-        styles[size],
+        sizeClass(styles, size) ?? styles['size-medium'],
     ]
         .filter(Boolean)
         .join(" ");
     const barClasses = [
         styles['bar'],
-        styles[variant],
+        variantClass(styles, variant, { aliases: { error: "danger" }, fallback: "accent" }),
         isIndeterminate && styles['indeterminate'],
         animated && !isIndeterminate && styles['animated'],
         striped && styles['striped'],

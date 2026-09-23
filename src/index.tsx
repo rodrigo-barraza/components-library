@@ -196,7 +196,7 @@ export type {
   UseAgentChatResult,
 } from "./hooks/useAgentChat.js";
 export type { SoundOptions } from "./services/SoundService.js";
-export type { ApiClientOptions } from "./services/ApiClient.js";
+export type { ApiClientOptions, ApiRequestFn, ApiRequestOptions } from "./services/ApiClient.js";
 export type { SessionServiceOptions, SessionServiceInstance } from "./services/SessionService.js";
 export type {
   AgentChatMessage,

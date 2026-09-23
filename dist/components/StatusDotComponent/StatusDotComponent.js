@@ -1,5 +1,6 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
+import { sizeClass } from "../../utils/moduleClasses.js";
 import styles from "./StatusDotComponent.module.css";
 /**
  * StatusDotComponent — Reusable health/connectivity indicator dot.
@@ -11,7 +12,7 @@ export default function StatusDotComponent({ variant = "healthy", size = "md", p
     const classes = [
         "status-dot-component",
         styles['dot'],
-        styles[size],
+        sizeClass(styles, size),
         styles[variant],
         pulse ? styles['pulse'] : "",
         className,

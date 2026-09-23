@@ -1,7 +1,8 @@
 import { ComponentPropsWithoutRef } from "react";
 export interface ProgressBarComponentProps extends ComponentPropsWithoutRef<"div"> {
     value?: number | null;
-    variant?: "accent" | "primary" | "secondary" | "tertiary" | string;
+    /** "error" is accepted as "danger"; any other unknown token draws the accent fill. */
+    variant?: "accent" | "success" | "warning" | "danger" | "info" | string;
     size?: "xs" | "sm" | "md" | "lg" | string;
     label?: string;
     showValue?: boolean;

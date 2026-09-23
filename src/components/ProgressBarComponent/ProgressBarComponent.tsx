@@ -1,11 +1,13 @@
 import { ComponentPropsWithoutRef } from "react";
 import { useEffect, useRef, useState } from "react";
 import { clamp } from "@rodrigo-barraza/utilities-library";
+import { sizeClass, variantClass } from "../../utils/moduleClasses.js";
 import styles from "./ProgressBarComponent.module.css";
 
 export interface ProgressBarComponentProps extends ComponentPropsWithoutRef<"div"> {
   value?: number | null;
-  variant?: "accent" | "primary" | "secondary" | "tertiary" | string;
+  /** "error" is accepted as "danger"; any other unknown token draws the accent fill. */
+  variant?: "accent" | "success" | "warning" | "danger" | "info" | string;
   size?: "xs" | "sm" | "md" | "lg" | string;
   label?: string;
   showValue?: boolean;
@@ -57,14 +59,14 @@ export default function ProgressBarComponent({
 
   const trackClasses = [
     styles['track'],
-    styles[size],
+    sizeClass(styles, size) ?? styles['size-medium'],
   ]
     .filter(Boolean)
     .join(" ");
 
   const barClasses = [
     styles['bar'],
-    styles[variant],
+    variantClass(styles, variant, { aliases: { error: "danger" }, fallback: "accent" }),
     isIndeterminate && styles['indeterminate'],
     animated && !isIndeterminate && styles['animated'],
     striped && styles['striped'],

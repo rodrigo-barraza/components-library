@@ -2,6 +2,7 @@
 
 import { useState, ElementType, ComponentPropsWithoutRef, ReactNode } from "react";
 import { cx } from "@rodrigo-barraza/utilities-library";
+import { sizeClass } from "../../utils/moduleClasses.js";
 import styles from "./AvatarComponent.module.css";
 
 export interface AvatarComponentProps extends ComponentPropsWithoutRef<"div"> {
@@ -48,7 +49,7 @@ export default function AvatarComponent({
   const iconSize =
     size === "xs" ? 12 : size === "sm" ? 14 : size === "lg" ? 22 : size === "xl" ? 28 : 18;
 
-  const classes = cx("avatar-component", styles['avatar'], styles[size], className);
+  const classes = cx("avatar-component", styles['avatar'], sizeClass(styles, size), className);
 
   return (
     <div className={classes} style={style} {...rest}>
@@ -103,7 +104,7 @@ function AvatarGroup({ max = 5, size = "md", className, children }: AvatarGroupP
         </div>
       ))}
       {overflow > 0 && (
-        <div className={`${styles['avatar']} ${styles[size]} ${styles['overflow']}`}>
+        <div className={`${styles['avatar']} ${sizeClass(styles, size)} ${styles['overflow']}`}>
           <span className={styles['initials']}>+{overflow}</span>
         </div>
       )}

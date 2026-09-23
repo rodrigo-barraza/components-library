@@ -1,6 +1,7 @@
 "use client";
 import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useState, useCallback, useEffect } from "react";
+import { variantClass } from "../../utils/moduleClasses.js";
 import styles from "./CarouselComponent.module.css";
 /**
  * CarouselComponent — M3-inspired carousel with scroll-snap, nav arrows,
@@ -136,7 +137,7 @@ export default function CarouselComponent({ layout = "multiBrowse", showArrows =
     const rootClasses = [
         "carousel-component",
         styles['carousel'],
-        styles[layout],
+        variantClass(styles, layout),
         peekEdge && styles['has-peek'],
         className,
     ]

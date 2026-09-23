@@ -3,6 +3,8 @@ export interface SegmentDefinition {
     value: string;
     label?: ReactNode;
     icon?: ReactNode;
+    /** Accessible name — required for an icon-only segment, which has no text label. */
+    ariaLabel?: string;
     disabled?: boolean;
 }
 export interface SegmentedControlComponentProps {

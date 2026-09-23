@@ -12,7 +12,7 @@ export interface StatsCardComponentProps {
         size?: number;
         className?: string;
     }>;
-    variant?: "accent" | "success" | "warning" | "error" | "info" | string;
+    variant?: "accent" | "success" | "warning" | "danger" | "error" | "info" | string;
     color?: string;
     loading?: boolean;
     glow?: boolean;

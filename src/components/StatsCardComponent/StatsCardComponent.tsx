@@ -1,5 +1,6 @@
 "use client";
 
+import { variantClass } from "../../utils/moduleClasses.js";
 import styles from "./StatsCardComponent.module.css";
 
 /**
@@ -13,7 +14,7 @@ export interface StatsCardComponentProps {
   value: React.ReactNode;
   subtitle?: React.ReactNode;
   icon?: React.ComponentType<{ size?: number; className?: string }>;
-  variant?: "accent" | "success" | "warning" | "error" | "info" | string;
+  variant?: "accent" | "success" | "warning" | "danger" | "error" | "info" | string;
   color?: string;
   loading?: boolean;
   glow?: boolean;
@@ -56,7 +57,7 @@ export default function StatsCardComponent({
       <div className={styles['header']}>
         <span className={styles['label']}>{label}</span>
         {Icon && (
-          <div className={`${styles['icon']} ${styles[variant] || ""}`}>
+          <div className={`${styles['icon']} ${variantClass(styles, variant, { aliases: { error: "danger" } }) || ""}`}>
             <Icon size={14} />
           </div>
         )}

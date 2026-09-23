@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useCallback, useEffect } from "react";
+import { variantClass } from "../../utils/moduleClasses.js";
 import styles from "./CarouselComponent.module.css";
 
 export interface CarouselComponentProps {
@@ -176,7 +177,7 @@ export default function CarouselComponent({
   const rootClasses = [
     "carousel-component",
     styles['carousel'],
-    styles[layout],
+    variantClass(styles, layout),
     peekEdge && styles['has-peek'],
     className,
   ]
