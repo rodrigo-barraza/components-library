@@ -8,7 +8,8 @@
 // sessions-service/tracker and deploys with the service, so changing it
 // never needs this library, or the apps that use it, to rebuild.
 //
-// Usage (root layout):
+// Usage (root layout — ONE per page: the page has one tracker, and a
+// second component with another projectId takes it over):
 //   <SessionTrackerComponent projectId="my-client" userId={email} replay heatmap />
 // Custom events, anywhere:
 //   import { trackEvent } from "@rodrigo-barraza/components-library";
