@@ -78,6 +78,10 @@
   margin-bottom: auto;
 }
 
+.align-bottom {
+  margin-top: auto;
+}
+
 /* ── Single Destination ─────────────────────────────────── */
 
 .destination-wrapper {

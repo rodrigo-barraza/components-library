@@ -38,6 +38,10 @@
   position: relative;
 }
 
+.size-extra-small {
+  height: 2px;
+}
+
 .size-small {
   height: 3px;
 }

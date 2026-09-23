@@ -1,11 +1,21 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
+import { variantClass } from "../../utils/moduleClasses.js";
 import styles from "./SkeletonComponent.module.css";
+// The shapes the CSS draws; every documented variant is one of them.
+const SKELETON_SHAPES = {
+    avatar: "circular",
+    circle: "circular",
+    image: "rectangular",
+    card: "rectangular",
+    button: "rectangular",
+    rect: "rectangular",
+};
 export default function SkeletonComponent({ variant = "text", width, height, lines = 1, animate = true, className = "", id, }) {
     const resolveSize = (value) => value == null ? undefined : typeof value === "number" ? `${value}px` : value;
     const baseClass = [
         styles['skeleton'],
-        styles[variant],
+        variantClass(styles, variant, { aliases: SKELETON_SHAPES }),
         animate && styles['animate'],
         className,
     ]

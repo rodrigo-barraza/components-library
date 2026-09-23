@@ -7,6 +7,7 @@ import { DateTime } from "luxon";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import StatusDotComponent from "../StatusDotComponent/StatusDotComponent.js";
 import useTweenValue from "../../hooks/useTweenValue.js";
+import { variantClass } from "../../utils/moduleClasses.js";
 import styles from "./BadgeComponent.module.css";
 const SECONDS_PER_DAY = 86_400;
 /**
@@ -141,7 +142,7 @@ function DateTimeBadge({ date, showIcon = true, relative = true, highlightNew = 
 export default function BadgeComponent(props) {
     if (props.type === undefined) {
         const { variant = "info", children, className = "", mini = false, tooltip, ...rest } = props;
-        const badgeElement = (_jsx("span", { className: `badge-component ${styles['badge']} ${styles[variant] || ""} ${mini ? styles['mini'] : ""} ${className}`, ...rest, children: children }));
+        const badgeElement = (_jsx("span", { className: `badge-component ${styles['badge']} ${variantClass(styles, variant, { aliases: { danger: "error" } }) || ""} ${mini ? styles['mini'] : ""} ${className}`, ...rest, children: children }));
         if (tooltip) {
             return (_jsx(TooltipComponent, { label: tooltip, position: "top", children: badgeElement }));
         }
@@ -173,7 +174,7 @@ export default function BadgeComponent(props) {
             const { port, variant = "accent", className = "", tooltip, ...rest } = props;
             if (!port)
                 return null;
-            const badgeElement = (_jsxs("span", { className: `badge-component ${styles['badge']} ${styles[variant] || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`, ...rest, children: [":", port] }));
+            const badgeElement = (_jsxs("span", { className: `badge-component ${styles['badge']} ${variantClass(styles, variant, { aliases: { danger: "error" } }) || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`, ...rest, children: [":", port] }));
             const tooltipContent = tooltip || `Listening on port ${port}`;
             return (_jsx(TooltipComponent, { label: tooltipContent, position: "top", children: badgeElement }));
         }

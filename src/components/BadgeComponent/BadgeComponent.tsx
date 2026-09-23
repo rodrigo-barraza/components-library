@@ -7,6 +7,7 @@ import { DateTime } from "luxon";
 import TooltipComponent from "../TooltipComponent/TooltipComponent.js";
 import StatusDotComponent from "../StatusDotComponent/StatusDotComponent.js";
 import useTweenValue from "../../hooks/useTweenValue.js";
+import { variantClass } from "../../utils/moduleClasses.js";
 import styles from "./BadgeComponent.module.css";
 
 const SECONDS_PER_DAY = 86_400;
@@ -357,7 +358,7 @@ export default function BadgeComponent(props: BadgeProps) {
     const { variant = "info", children, className = "", mini = false, tooltip, ...rest } = props;
     const badgeElement = (
       <span
-        className={`badge-component ${styles['badge']} ${styles[variant] || ""} ${mini ? styles['mini'] : ""} ${className}`}
+        className={`badge-component ${styles['badge']} ${variantClass(styles, variant, { aliases: { danger: "error" } }) || ""} ${mini ? styles['mini'] : ""} ${className}`}
         {...rest}
       >
         {children}
@@ -451,7 +452,7 @@ export default function BadgeComponent(props: BadgeProps) {
 
       const badgeElement = (
         <span
-          className={`badge-component ${styles['badge']} ${styles[variant] || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`}
+          className={`badge-component ${styles['badge']} ${variantClass(styles, variant, { aliases: { danger: "error" } }) || ""} ${styles['mono-font']} ${styles['port-badge']} ${className}`}
           {...rest}
         >
           :{port}

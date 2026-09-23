@@ -1,5 +1,6 @@
 "use client";
 
+import { sizeClass } from "../../utils/moduleClasses.js";
 import styles from "./StatusDotComponent.module.css";
 
 /**
@@ -18,7 +19,7 @@ export default function StatusDotComponent({
   const classes = [
     "status-dot-component",
     styles['dot'],
-    styles[size],
+    sizeClass(styles, size),
     styles[variant],
     pulse ? styles['pulse'] : "",
     className,

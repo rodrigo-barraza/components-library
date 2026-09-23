@@ -126,7 +126,7 @@ export type { ThemeContextValue } from "./components/ThemeProvider/ThemeProvider
 export type { AgentChatServiceConfig, AgentChatStreamCallbacks, } from "./services/AgentChatService.js";
 export type { UseAgentChatOptions, UseAgentChatResult, } from "./hooks/useAgentChat.js";
 export type { SoundOptions } from "./services/SoundService.js";
-export type { ApiClientOptions } from "./services/ApiClient.js";
+export type { ApiClientOptions, ApiRequestFn, ApiRequestOptions } from "./services/ApiClient.js";
 export type { SessionServiceOptions, SessionServiceInstance } from "./services/SessionService.js";
 export type { AgentChatMessage, AgentChatRole, AgentChatDoneInfo, AgentToolCallSummary, AgentToolCallStatus, } from "./constants/agentChat.js";
 export type { UseFetchOptions, UseFetchResult } from "./hooks/useFetch.js";

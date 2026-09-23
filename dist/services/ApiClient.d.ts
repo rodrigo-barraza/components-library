@@ -8,6 +8,8 @@
  *
  *   export const listFiscalYears = () => request("GET", "/fiscal-years");
  *   export const createFiscalYear = (data) => request("POST", "/fiscal-years", data);
+ *   // Cancel a superseded request:
+ *   export const search = (query, signal) => request("GET", `/search?q=${query}`, null, { signal });
  */
 export interface ApiClientOptions {
     /** headers merged into every request */
@@ -15,8 +17,12 @@ export interface ApiClientOptions {
     /** set `cache: "no-store"` on every request */
     noCache?: boolean;
 }
+export interface ApiRequestOptions {
+    /** aborts the request — e.g. when the component that asked unmounts */
+    signal?: AbortSignal;
+}
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: object | string | number | boolean | null) => Promise<T>;
+export type ApiRequestFn = <T = unknown>(method: HttpMethod, path: string, body?: object | string | number | boolean | null, requestOptions?: ApiRequestOptions) => Promise<T>;
 /**
  * Create a pre-configured fetch helper bound to a base URL.
  */

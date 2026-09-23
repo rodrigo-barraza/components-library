@@ -16,6 +16,8 @@ export interface SegmentDefinition {
   value: string;
   label?: ReactNode;
   icon?: ReactNode;
+  /** Accessible name — required for an icon-only segment, which has no text label. */
+  ariaLabel?: string;
   disabled?: boolean;
 }
 
@@ -153,6 +155,7 @@ export default function SegmentedControlComponent({
             type="button"
             role="radio"
             aria-checked={isSelected}
+            aria-label={segment.ariaLabel}
             disabled={segment.disabled}
             className={`${styles["segment-button"]}${isSelected ? ` ${styles["is-selected-state"]}` : ""}`}
             onClick={(event) => handleSegmentClick(segment.value, event)}
