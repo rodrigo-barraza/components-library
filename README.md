@@ -136,7 +136,7 @@ The library provides a comprehensive set of premium, high-performance UI compone
 | `ChatPanelComponent` | Drawer workspace container showing prompt settings and system details. |
 | `ChatLauncherComponent` | Circular floating action launcher presenting quick overlay chat prompts. |
 | `DiscordChatComponent` | Pixel-perfect Discord channel mockup stream showing message lists and avatar details. |
-| `SessionTrackerComponent` | Execution progress flow tracing agent actions. |
+| `SessionTrackerComponent` | First-party analytics: loads the sessions-service tracker (`trackEvent` for custom events). |
 | `ToolCardComponent` | Detailed cards visualizing agent tool metadata, call counters, description text, and toggles. |
 | `ThemePickerComponent` | Theme selection grids displaying preset choices. |
 | `ThemeToggleButtonComponent` | Quick theme toggler button switching active presets. |
